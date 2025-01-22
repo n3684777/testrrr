@@ -1,0 +1,1148 @@
+trinity,53,33,4	script	魔物要塞管理者	10099,{
+
+	//模式選擇
+	switch(select("魔物要塞(普通)","榮譽排行榜")){
+
+	case 1:
+	//挑戰次數
+	if ( day_Instance_S_Bout_07 < gettime(8) ){
+	set Instance_S_Bout_07,3;
+	set day_Instance_S_Bout_07,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_07 < 1) {
+		mes "[魔物要塞管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[魔物要塞管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "魔物要塞(普通)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+
+	mes "[魔物要塞管理者]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_07+"^000000 ]";
+	mes "副本難度：★★";
+	mes "副本獎勵：^i[34123]x1";
+	mes "自創副本積分x20";
+	mes "6人以上：自創副本積分x10";
+	mes "10人以上：^i[34123]x1、自創副本積分x10";
+	next;
+
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[魔物要塞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[魔物要塞管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 準備挑戰【 "+.@md_name$+" 】副本，請在90秒內入場！",15,0x33ea91;
+		mes "[魔物要塞管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		//副本難度
+		set 'Fort_Level,1;
+		close;
+	case 1:
+		if(!instance_id(IM_PARTY)){
+			mes "還未生成副本";
+			close;
+		}
+		if(BaseLevel < 200) {
+			mes "[魔物要塞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_S_Bout_07,Instance_S_Bout_07-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+			close;
+		}
+	}
+	close;
+
+//--------------------------------------------------
+	case 2:
+Levent4:
+	mes "[榮譽排行榜]";
+	mes "^0000FF"+$@Wave_1_ming$+"^000000副本榮譽排行榜，請選擇你想要查看哪個。";
+	next;
+	set @i,select("第一名 [ ^FF0000"+$Wave_1_dui1$[1]+"^000000 隊伍]","第二名 [ ^0000FF"+$Wave_1_dui1$[2]+"^000000 隊伍]","第三名 [ ^228B22"+$Wave_1_dui1$[3]+"^000000 隊伍]");
+	mes "---------[榮譽排行榜]---------";
+	mes "隊伍名稱：^FF0000"+$Wave_1_dui1$[@i]+"^000000";
+	mes "挑戰時間：^228B22"+$Wave_1_dui3$[@i]+"^000000";
+	mes "消耗時間：^FFA500"+($Wave_1_dui4[@i]/60)+"分"+($Wave_1_dui4[@i]%60)+"秒^000000";
+	mes "隊長名字：^0000FF"+$Wave_1_dui2$[@i]+"^000000";
+	mes "ＭＶＰ王：^FF1493"+$Wave_1_dui6$[@i]+"^000000";
+	mes "隊員名單：^8A2BE2"+$Wave_1_dui5$[@i]+"^000000";
+	next;
+	menu "繼續查詢",Levent4,"查詢完畢",-;
+	close;
+
+//--------------------------------------------------
+	case 3:
+	//挑戰次數
+	if ( day_Instance_S_Bout_07 < gettime(8) ){
+	set Instance_S_Bout_07,3;
+	set day_Instance_S_Bout_07,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_07 < 1) {
+		mes "[魔物要塞管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[魔物要塞管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "魔物要塞(困難)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[魔物要塞管理者]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP_S+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_07+"^000000 ]";
+	mes "副本難度：★★★";
+	mes "副本獎勵：";
+	mes "<ITEM>魔物要塞寶箱<INFO>34123</INFO></ITEM>x1";
+	mes "<ITEM>商城10點金幣<INFO>61007</INFO></ITEM>x2";
+	mes "<ITEM>寶石碎片<INFO>82001</INFO></ITEM>x1";
+	mes "自創副本積分x10";
+	mes "6人以上：<ITEM>商城10點金幣<INFO>61007</INFO></ITEM>x1、自創副本積分x10";
+	mes "10人以上：<ITEM>魔物要塞寶箱<INFO>34123</INFO></ITEM>x1、<ITEM>寶石碎片<INFO>82001</INFO></ITEM>x1、自創副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[魔物要塞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[魔物要塞管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 準備挑戰【 "+.@md_name$+" 】副本，請在90秒內入場！",15,0x33ea91;
+		mes "[魔物要塞管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		//副本難度
+		set 'Fort_Level,2;
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[魔物要塞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_S_Bout_07,Instance_S_Bout_07-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",62,204;
+			end; }
+			close;
+		}
+	}
+	close;
+
+}
+OnInit:
+	waitingroom "魔物要塞",0;
+	end;
+}
+
+
+//------------------------------ 怪物加成
+1@fort,0,0,0	script	Fort_Settings	-1,{
+
+Oninit:
+	//每層小怪加成屬性
+	$@Fort_HP_mob=5000000;
+	$@Fort_ATKMIN_mob=4000;
+	$@Fort_ATKMAX_mob=8000;
+	$@Fort_MATKMIN_mob=3000;
+	$@Fort_MATKMAX_mob=6000;
+	$@Fort_DEF_mob=250;
+	$@Fort_MDEF_mob=100;
+	$@Fort_HIT_mob=150;
+
+	//每層MVP加成屬性
+	$@Fort_HP_mvp=50000000;
+	$@Fort_ATKMIN_mvp=10000;
+	$@Fort_ATKMAX_mvp=18000;
+	$@Fort_MATKMIN_mvp =6000;
+	$@Fort_MATKMAX_mvp =12000;
+	$@Fort_DEF_mvp=300;
+	$@Fort_MDEF_mvp=150;
+	$@Fort_HIT_mvp=150;
+	end;
+}
+
+// 核心計算
+//============================================================
+function	script	better_Mon1	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_mobid1[rand(0,19)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mob);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mob);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mob);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mob);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mob);
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mob);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	better_Mon2	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_mobid1[rand(20,30)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mob);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mob);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mob);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mob);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mob);
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mob);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+//------------------------------------------------困難
+function	script	better_Mon3	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_mobid1[rand(0,19)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mob)*2;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mob)*2;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mob*2);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mob)*2;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mob)*2;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mob)*2;
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,600;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,600;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	better_Mon4	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_mobid1[rand(20,30)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mob)*2;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mob)*2;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mob)*2;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mob)*2;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mob)*2;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mob)*2;
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,600;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,600;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+
+//------------------------------------------------
+function	script	better_Mvp1	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_MVPmobid1[rand(0,49)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp);
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	better_Mvp2	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_MVPmobid1[rand(0,49)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp);
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+function	script	better_Mvp3	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp);
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+//------------------------------------------------困難
+function	script	better_Mvp4	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_MVPmobid1[rand(0,21)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp)*3;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp)*2;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp)*2;
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,800;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,800;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	better_Mvp5	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'Fort_MVPmobid1[rand(22,23)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp)*3;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp)*2;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp)*2;
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,800;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,800;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+function	script	better_Mvp6	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Fort_HP_mvp)*3;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Fort_ATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Fort_ATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Fort_MATKMIN_mvp)*2;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Fort_MATKMAX_mvp)*2;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Fort_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Fort_MDEF_mvp)*2;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Fort_HIT_mvp)*2;
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,800;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,800;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+//------------------------------魔物要塞事件
+1@fort,0,0,0	script	Fort_Event1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@fort");
+	'map_name$[1] = instance_mapname("2@fort");
+
+	//副本MVP資訊
+	setarray 'Fort_MVPmobid1[0],1038,1039,1046,1059,1086,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1689,1719,1734,1751,1768,1779,1785,1832,1871,1874,1890,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+	//副本MOD資訊
+	setarray 'Fort_mobid1[0],1986,1987,1988,1989,1992,1993,1994,1995,1997,2013,2015,2024,2201,2203,2204,2083,2084,2085,2086,2284,2285,2286,2287,2309,2310,2311,2312,2313,2314,2315,2316;
+
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("魔物要塞傳送門#Fort01");
+	disablenpc instance_npcname("魔物要塞傳送門#Fort02");
+
+	//防禦線(無型牆)
+	setcell 'map_name$[0],136,66,148,66,cell_walkable,0;
+	setcell 'map_name$[0],136,66,148,66,cell_shootable,0;
+	setcell 'map_name$[0],136,68,148,68,cell_walkable,0;
+	setcell 'map_name$[0],139,155,149,155,cell_walkable,0;
+	setcell 'map_name$[0],139,155,149,155,cell_shootable,0;
+	setcell 'map_name$[0],139,157,149,157,cell_walkable,0;
+	setcell 'map_name$[0],138,208,148,208,cell_walkable,0;
+	setcell 'map_name$[0],138,208,148,208,cell_shootable,0;
+	setcell 'map_name$[0],138,210,148,210,cell_walkable,0;
+	setcell 'map_name$[0],138,262,148,262,cell_walkable,0;
+	setcell 'map_name$[0],138,262,148,262,cell_shootable,0;
+	setcell 'map_name$[0],138,264,148,264,cell_walkable,0;
+//------守護石+BOSS
+	areamonster 'map_name$[0],211,150,211,150,"--ja--",28001,1, instance_npcname("Fort_Event1") + "::OnCcdd1";
+	areamonster 'map_name$[0],65,172,65,172,"--ja--",28001,1, instance_npcname("Fort_Event1") + "::OnCcdd1";
+	callfunc "better_Mvp1",65,159,65,159,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",65,159,65,159,28004,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",211,69,211,69,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",211,69,211,69,28004,instance_npcname("Fort_Event1")+"::OnCcdd0";
+//------開始放怪
+	callfunc "better_Mvp3",122,62,122,62,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",122,59,122,59,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",161,62,161,62,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",161,59,161,59,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",127,60,127,60,2008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",158,61,158,61,2008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "better_Mon2",131,61,116,58,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "better_Mon2",152,63,167,58,instance_npcname("Fort_Event1")+"::OnCcdd0";
+//------左側走道放怪
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",120,56,64,51,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",49,104,82,89,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",62,141,69,103,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon2",48,159,82,156,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",67,152,65,152,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",64,152,65,152,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",64,152,65,152,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+//------右側走道放怪
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",163,56,215,50,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",215,50,209,88,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",208,102,215,132,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon2",197,159,226,148,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",213,142,213,142,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",210,142,210,142,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",210,142,210,142,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+//------防禦線(可攻擊)
+	areamonster 'map_name$[0],137,67,137,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],138,67,138,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],139,67,139,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],140,67,140,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],141,67,141,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],142,67,142,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],143,67,143,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],144,67,144,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],145,67,145,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],146,67,146,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+	areamonster 'map_name$[0],147,67,147,67,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd2";
+
+	areamonster 'map_name$[0],139,156,139,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+	areamonster 'map_name$[0],140,156,140,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+	areamonster 'map_name$[0],141,156,141,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+	areamonster 'map_name$[0],142,156,142,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+	areamonster 'map_name$[0],143,156,143,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+	areamonster 'map_name$[0],144,156,144,156,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd3";
+
+	areamonster 'map_name$[0],138,209,138,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],139,209,139,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],140,209,140,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],141,209,141,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],142,209,142,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],143,209,143,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],144,209,144,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+	areamonster 'map_name$[0],145,209,145,209,"--ja--",28003,1, instance_npcname("Fort_Event1") + "::OnCcdd4";
+
+	areamonster 'map_name$[0],138,263,138,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],139,263,139,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],140,263,140,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],141,263,141,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],142,263,142,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],143,263,143,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],144,263,144,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+	areamonster 'map_name$[0],145,263,145,263,"--ja--",28002,1, instance_npcname("Fort_Event1") + "::OnCcdd5";
+
+	//副本標籤
+	set 'CD_Fort_1,2;
+	set 'CD_Fort_2,2;
+	set 'CD_Fort_3,2;
+	set 'CD_Fort_4,2;
+	set 'CD_Fort_5,2;
+	set 'CD_Fort1_1,11;
+	set 'CD_Fort1_2,6;
+	set 'CD_Fort1_3,8;
+	set 'CD_Fort1_4,8;
+	set 'CD_Fort2_1,0;
+	set 'CD_Fort2_2,0;
+	set 'CD_Fort3_1,0;
+	//記錄副本開始的時間
+	setd "$@Wave_shi_"+instance_id(1),gettimetick(2);
+	//副本開始關閉入場
+	sleep 90000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始，請消滅在各地區的怪物!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd0:
+	callfunc "Gem_item_Lv1";
+	end;
+
+	OnCcdd1:
+	set 'CD_Fort_1,'CD_Fort_1-1;
+	if ('CD_Fort_1>0) end;
+	instance_announce 0, "二邊守護石都破壞了，中間的第一防禦線已經可以破壞了!!",bc_map,"0xFFFF33";
+	setcell 'map_name$[0],136,66,148,66,cell_walkable,1;
+	setcell 'map_name$[0],136,66,148,66,cell_shootable,1;
+	end;
+
+	OnCcdd2:
+	set 'CD_Fort1_1,'CD_Fort1_1-1;
+	if ('CD_Fort1_1>0) end;
+	instance_announce 0, "第一防禦線已經破壞了!!",bc_map,"0xFFFF33";
+	if('Fort_Level==1){
+	callfunc "better_Mvp3",112,149,112,149,28005,instance_npcname("Fort_Event1")+"::OnCcdd6";
+	callfunc "better_Mvp3",171,149,171,149,28005,instance_npcname("Fort_Event1")+"::OnCcdd6";
+	//MVP怪物
+	callfunc "better_Mvp1",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp1",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon1",110,101,173,72,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon1",138,104,145,151,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon1",138,104,145,151,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon1",110,151,118,143,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon1",174,151,165,143,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	} else if('Fort_Level==2){
+	callfunc "better_Mvp6",112,149,112,149,27065,instance_npcname("Fort_Event1")+"::OnCcdd6";
+	callfunc "better_Mvp6",171,149,171,149,27065,instance_npcname("Fort_Event1")+"::OnCcdd6";
+	//MVP怪物
+	callfunc "better_Mvp4",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp4",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp4",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp4",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp4",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp4",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon3",110,101,173,72,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon3",138,104,145,151,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon3",138,104,145,151,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon3",110,151,118,143,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "better_Mon3",174,151,165,143,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	}
+	setcell 'map_name$[0],136,68,148,68,cell_walkable,1;
+	end;
+
+	OnCcdd3:
+	set 'CD_Fort1_2,'CD_Fort1_2-1;
+	if ('CD_Fort1_2>0) end;
+	setcell 'map_name$[0],139,157,149,157,cell_walkable,1;
+	instance_announce 0, "第二防禦線已經破壞了!!",bc_map,"0xFFFF33";
+
+	if('Fort_Level==1){
+	callfunc "better_Mvp3",124,205,124,205,2008,instance_npcname("Fort_Event1")+"::OnCcdd7";
+	callfunc "better_Mvp3",159,205,159,205,2008,instance_npcname("Fort_Event1")+"::OnCcdd7";
+	//MVP怪物
+	for(.@i=0;.@i<6;.@i++)
+	callfunc "better_Mvp1",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon2",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",137,170,137,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",146,170,146,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",140,170,140,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",143,170,143,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",143,191,143,191,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",140,191,140,191,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",136,191,136,191,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",147,191,147,191,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	} else if('Fort_Level==2){
+	callfunc "better_Mvp6",124,205,124,205,2008,instance_npcname("Fort_Event1")+"::OnCcdd7";
+	callfunc "better_Mvp6",159,205,159,205,2008,instance_npcname("Fort_Event1")+"::OnCcdd7";
+	//MVP怪物
+	for(.@i=0;.@i<6;.@i++)
+	callfunc "better_Mvp4",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon3",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "better_Mon4",126,201,157,162,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",137,170,137,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",146,170,146,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",140,170,140,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",143,170,143,170,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",143,191,143,191,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",140,191,140,191,28009,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",136,191,136,191,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",147,191,147,191,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	}
+	end;
+
+
+	OnCcdd4:
+	set 'CD_Fort1_3,'CD_Fort1_3-1;
+	if ('CD_Fort1_3>0) end;
+	instance_announce 0, "第三防禦線已經破壞了!!",bc_map,"0xFFFF33";
+	setcell 'map_name$[0],138,210,148,210,cell_walkable,1;
+
+	if('Fort_Level==1){
+	callfunc "better_Mvp3",120,259,120,259,28004,instance_npcname("Fort_Event1")+"::OnCcdd8";
+	callfunc "better_Mvp3",163,259,163,259,28004,instance_npcname("Fort_Event1")+"::OnCcdd8";
+	//MVP怪物
+	for(.@i=0;.@i<3;.@i++)
+	callfunc "better_Mvp1",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<3;.@i++)
+	callfunc "better_Mvp1",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<25;.@i++)
+	callfunc "better_Mon1",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<6;.@i++)
+	callfunc "better_Mon2",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	} else if('Fort_Level==2){
+	callfunc "better_Mvp6",120,259,120,259,27064,instance_npcname("Fort_Event1")+"::OnCcdd8";
+	callfunc "better_Mvp6",163,259,163,259,27064,instance_npcname("Fort_Event1")+"::OnCcdd8";
+	//MVP怪物
+	for(.@i=0;.@i<3;.@i++)
+	callfunc "better_Mvp4",130,259,153,244,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<3;.@i++)
+	callfunc "better_Mvp4",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	//一般怪物
+	for(.@i=0;.@i<25;.@i++)
+	callfunc "better_Mon3",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<6;.@i++)
+	callfunc "better_Mon4",121,243,161,217,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	}
+	end;
+
+
+	OnCcdd5:
+	set 'CD_Fort1_4,'CD_Fort1_4-1;
+	if ('CD_Fort1_4>0) end;
+	setcell 'map_name$[0],138,264,148,264,cell_walkable,1;
+	instance_announce 0, "第四防禦線已經破壞了!!",bc_map,"0xFFFF33";
+
+	if('Fort_Level==1){
+	callfunc "better_Mvp2",115,294,115,294,instance_npcname("Fort_Event1")+"::OnCcdd9";
+	callfunc "better_Mvp2",168,294,168,294,instance_npcname("Fort_Event1")+"::OnCcdd9";
+	callfunc "better_Mvp3",149,282,149,282,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",134,282,138,282,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",138,282,138,282,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",145,282,145,282,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",162,306,162,306,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",121,306,121,306,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",164,306,164,306,28010,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",119,306,119,306,28010,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",130,282,130,282,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",132,282,132,282,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",153,282,153,282,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp3",151,282,151,282,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon1",111,272,172,267,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "better_Mon2",111,272,172,267,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	} else if('Fort_Level==2){
+	callfunc "better_Mvp5",115,294,115,294,instance_npcname("Fort_Event1")+"::OnCcdd9";
+	callfunc "better_Mvp5",168,294,168,294,instance_npcname("Fort_Event1")+"::OnCcdd9";
+	callfunc "better_Mvp6",149,282,149,282,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",134,282,138,282,28007,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",138,282,138,282,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",145,282,145,282,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",162,306,162,306,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",121,306,121,306,28008,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",164,306,164,306,28010,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",119,306,119,306,28010,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",130,282,130,282,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",132,282,132,282,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",153,282,153,282,1960,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	callfunc "better_Mvp6",151,282,151,282,1959,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<12;.@i++)
+	callfunc "better_Mon3",111,272,172,267,instance_npcname("Fort_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "better_Mon4",111,272,172,267,instance_npcname("Fort_Event1")+"::OnCcdd0";
+
+	}
+	end;
+
+
+	OnCcdd6:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Fort_2,'CD_Fort_2-1;
+	if ('CD_Fort_2>0) end;
+	instance_announce 0, "守護BOSS都消滅了，中間的第二防禦線已經可以破壞了!!",bc_map,"0xFFFF33";
+	setcell 'map_name$[0],139,155,149,155,cell_walkable,1;
+	setcell 'map_name$[0],139,155,149,155,cell_shootable,1;
+	end;
+
+	OnCcdd7:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Fort_3,'CD_Fort_3-1;
+	if ('CD_Fort_3>0) end;
+	instance_announce 0, "守護BOSS都消滅了，中間的第三防禦線已經可以破壞了!!",bc_map,"0xFFFF33";
+	setcell 'map_name$[0],138,208,148,208,cell_walkable,1;
+	setcell 'map_name$[0],138,208,148,208,cell_shootable,1;
+	end;
+
+	OnCcdd8:
+	set 'CD_Fort_4,'CD_Fort_4-1;
+	if ('CD_Fort_4>0) end;
+	instance_announce 0, "守護BOSS都消滅了，中間的第四防禦線已經可以破壞了!!",bc_map,"0xFFFF33";
+	setcell 'map_name$[0],138,262,148,262,cell_walkable,1;
+	setcell 'map_name$[0],138,262,148,262,cell_shootable,1;
+	end;
+
+	OnCcdd9:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Fort_5,'CD_Fort_5-1;
+	if ('CD_Fort_5>0) end;
+	instance_announce 0, "守護BOSS都消滅了，通往地下層的傳點出現了!!",bc_all,"0xFFFF33";
+	enablenpc instance_npcname("魔物要塞傳送門#Fort01");
+	enablenpc instance_npcname("魔物要塞傳送門#Fort02");
+
+	if('Fort_Level==1){
+	areamonster 'map_name$[1],33,68,67,35,"--ja--",28006,1, instance_npcname("Fort_Event1") + "::OnEnd1";
+
+	} else if('Fort_Level==2){
+	areamonster 'map_name$[1],33,68,67,35,"--ja--",27066,1, instance_npcname("Fort_Event1") + "::OnEnd1";
+
+	}
+	sleep2 1000;
+	instance_announce 0, "????：想不到有人類能到達這裡，是我的手下們大意了還是你們的運氣好?",bc_all,"0xFF0033";
+	sleep2 2000;
+	instance_announce 0, "????：那接下來就由我來讓你們見證真正的地獄...",bc_all,"0xFF0033";
+	sleep2 2000;
+	instance_announce 0, "????：你們將會後悔來到這裡..不過也只能在地獄裡痛苦的懊悔了...",bc_all,"0xFF0033";
+	end;
+
+	OnEnd1:
+//排行榜對比
+	set $@Wave_miao,gettimetick(2)-getd("$@Wave_shi_"+instance_id(1));
+	set $@Wave_1_pai,0;
+	if ($@Wave_miao<$Wave_1_dui4[3] || $Wave_1_dui4[3]==0) set $@Wave_1_pai,3;
+	if ($@Wave_miao<$Wave_1_dui4[2] || $Wave_1_dui4[2]==0) set $@Wave_1_pai,2;
+	if ($@Wave_miao<$Wave_1_dui4[1] || $Wave_1_dui4[1]==0) set $@Wave_1_pai,1;
+	if ($@Wave_1_pai>0) {
+	if ($@Wave_1_pai<3) {
+	setarray $Wave_1_dui1$[3],$Wave_1_dui1$[2];
+	setarray $Wave_1_dui2$[3],$Wave_1_dui2$[2];
+	setarray $Wave_1_dui3$[3],$Wave_1_dui3$[2];
+	setarray $Wave_1_dui4[3],$Wave_1_dui4[2];
+	setarray $Wave_1_dui5$[3],$Wave_1_dui5$[2];
+	setarray $Wave_1_dui6$[3],$Wave_1_dui6$[2]; }
+	if ($@Wave_1_pai<2) {
+	setarray $Wave_1_dui1$[2],$Wave_1_dui1$[1];
+	setarray $Wave_1_dui2$[2],$Wave_1_dui2$[1];
+	setarray $Wave_1_dui3$[2],$Wave_1_dui3$[1];
+	setarray $Wave_1_dui4[2],$Wave_1_dui4[1];
+	setarray $Wave_1_dui5$[2],$Wave_1_dui5$[1];
+	setarray $Wave_1_dui6$[2],$Wave_1_dui6$[1]; }
+//記錄隊伍資訊
+	getpartymember getcharid(1),2;
+	set $@Wave_1_biao$,"";
+	set $@Wave_Aid,getcharid(3);
+	set $@Wave_dui,$@partymembercount;
+	getmapxy($@Wave_map1$,$@Wave_x1,$@Wave_y1,BL_PC);
+	while($@Wave_dui) {
+	set $@Wave_dui,$@Wave_dui-1;
+	attachrid $@partymemberaid[$@Wave_dui];
+	if ($@Wave_1_lengfou==2) set Wave_1_lengque,gettimetick(2)+$@Wave_1_lengque;
+	getmapxy($@Wave_map2$,$@Wave_x2,$@Wave_y2,0,strcharinfo(0));
+	if ($@Wave_map1$==$@Wave_map2$ && strcharinfo(0)!=getpartyleader(getcharid(1),0)) set $@Wave_1_biao$,$@Wave_1_biao$+"，"+strcharinfo(0);
+	attachrid $@Wave_Aid; }
+	setarray $Wave_1_dui1$[$@Wave_1_pai],strcharinfo(1);
+	setarray $Wave_1_dui2$[$@Wave_1_pai],getpartyleader(getcharid(1),0);
+	setarray $Wave_1_dui3$[$@Wave_1_pai],gettimestr("%m月%d日%H時%M分",50);
+	setarray $Wave_1_dui4[$@Wave_1_pai],$@Wave_miao;
+	setarray $Wave_1_dui5$[$@Wave_1_pai],$@Wave_1_biao$;
+	setarray $Wave_1_dui6$[$@Wave_1_pai],strcharinfo(0); }
+
+
+	callfunc "Gem_item_Lv2";
+	enablenpc instance_npcname("魔物要塞管理者#Fort01");
+	//判斷過關人數時間
+	set 'Fort_count1,getmapusers('map_name$[0])+getmapusers('map_name$[1]);
+	//出場公告時間
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	'win = 1;
+	announce "【魔物要塞】：隊伍 ["+strcharinfo(1)+"] ["+'Fort_count1+"]人 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------ 領取獎勵
+2@fort,45,45,4	script	魔物要塞管理者#Fort01	751,{
+
+	mes "[魔物要塞管理者]";
+	mes "讓我把你們送出魔物要塞吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+
+	if('Fort_count1>=6){
+	dispbottom "達到6人額外獎勵：";
+	callfunc "Custom_instance_reward";
+	}
+	if('Fort_count1>=10){
+	dispbottom "達到10人額外獎勵：";
+	getitem 34123,1;	//魔物要塞寶箱
+	callfunc "Custom_instance_reward";
+	}
+	getitem 34123,1;	//魔物要塞寶箱
+	callfunc "Custom_instance_reward";
+
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	close;
+
+	case 2:
+	close;
+
+
+OnInstanceInit:
+	disablenpc instance_npcname("魔物要塞管理者#Fort01");
+	end;
+	}
+}
+
+//------------------------------傳點資訊
+1@fort,141,293,0	warp	魔物要塞傳送門#Fort01	2,2,2@fort,26,50
+2@fort,21,50,0	warp	魔物要塞傳送門#Fort02	2,2,1@fort,141,302
+
+
+//------------------------------地圖屬性
+1@fort	mapflag	nomemo
+1@fort	mapflag	nosave	SavePoint
+1@fort	mapflag	monster_noteleport
+1@fort	mapflag	noteleport
+1@fort	mapflag	noicewall
+1@fort	mapflag	partylock
+1@fort	mapflag	restricted	6
+
+2@fort	mapflag	nomemo
+2@fort	mapflag	nosave	SavePoint
+2@fort	mapflag	monster_noteleport
+2@fort	mapflag	noteleport
+2@fort	mapflag	noicewall
+2@fort	mapflag	partylock
+2@fort	mapflag	restricted	6
+

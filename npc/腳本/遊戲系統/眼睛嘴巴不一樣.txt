@@ -1,0 +1,176 @@
+//==== 腳本名稱 =======================================
+//= 眼睛嘴巴不一樣
+//==== 作者 ===========================================
+//= 阿神
+//==== 最新版本 =======================================
+//= 1.5
+//==== 測試端口: ======================================
+//= eAthena.Sinaean eAthana
+//==== 說明 ===========================================
+//= http://ppt.cc/1D11
+//==== 更新 ===========================================
+//= 1.5 修正領獎時MAP報錯
+// ----------------------------------------------------
+//= 1.4 修正一個嚴重錯誤BUG
+// ----------------------------------------------------
+//= 1.3	添加點擊NPC錯誤處罰方式(預設'死亡')
+// ----------------------------------------------------
+//= 1.2	添加回答方式版本：鑑入答案與點擊NPC皆可
+// ----------------------------------------------------
+//= 1.1	修正遊戲範圍14x14
+// ----------------------------------------------------
+//= 1.0	加入反應時間設置，回答時間越來越短
+//======================================================
+
+trinity,49,120,3	script	眼睛嘴巴不一樣	715,{
+	if (!getgmlevel()) end;
+//-- GM手動開啟
+	select(.gap!=0&&.gap!=2?"開啟遊戲":"遊戲進行中");
+	mes "遊戲成功開啟";
+	close2;
+	donpcevent strnpcinfo(0)+"::OnStart";
+	end;
+
+OnClock1617:
+OnClock1717:
+OnClock0137:
+OnClock0337:
+	set .gap,0;
+	announce "【眼睛嘴巴不一樣】將在3分鐘後開始，請找小遊戲區的眼睛嘴巴不一樣管理員報名!!",bc_all,0x00FF00;
+	end;
+
+OnClock1620:
+OnClock1720:
+OnClock0140:
+OnClock0340:
+OnStart:
+	set .gap,2;
+	announce "【眼睛嘴巴不一樣】本活動開始囉！請按照題目提示回答'文字'或者'顏色'，點擊對應的貍貓！",bc_all,0x00FF00;
+	enablenpc "紅";
+	enablenpc "黃";
+	enablenpc "綠";
+	enablenpc "藍";
+	enablenpc "紫";
+	enablenpc "黑";
+	enablenpc "白";
+	enablenpc "灰";
+	getmapxy(.@m$,.@x,.@y,BL_NPC,strnpcinfo(0));
+	setarray .@npcx,.@x,.@x-5,.@x-8,.@x-5,.@x,.@x+5,.@x+8,.@x+5;
+	setarray .@npcy,.@y+8,.@y+5,.@y,.@y-5,.@y-8,.@y-5,.@y,.@y+5;
+	while(.@t<getarraysize(.Word$)) moveNPC .Word$[set(.@l,set(.@t,.@t+1)-1)],.@npcx[.@l],.@npcy[.@l];
+	while(.k<=.q) {
+		set .h,0;
+		switch(rand(1,2)) {
+			case 1:
+				areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"[出現的文字] "+.Word$[set(.d,rand(getarraysize(.Word$)))],0,.Color$[rand(getarraysize(.Color$))],0,72;
+				break;
+			case 2:
+				areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"[出現的顏色] "+.Word$[rand(getarraysize(.Word$))],0,.Color$[set(.d,rand(getarraysize(.Color$)))],0,72;
+				break;
+		}
+
+//		defpattern 1,".*:\\s(.*)","OnColor"; // 若要刪除鍵入方式請刪除此行
+//		activatepset 1; // 若要刪除鍵入方式請刪除此行
+
+		sleep 60000;
+		set .k,.k+1;
+		if(!.h) areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"["+strnpcinfo(0)+"] 這題的答案為 '"+.Word$[.d]+"', 你猜對了嗎 ？",0,0x00e6e6,0,12;
+//		deletepset 1; // 若要刪除鍵入方式請刪除此行
+	}
+	announce "【眼睛嘴巴不一樣】活動結束了，開放時間：16:20、17:20、01:40、03:40",bc_all,0x00FF00;
+
+	set .d,0;
+	set .h,0;
+	set .gap,1;
+	set .k,0;
+	disablenpc "紅";
+	disablenpc "黃";
+	disablenpc "綠";
+	disablenpc "藍";
+	disablenpc "紫";
+	disablenpc "黑";
+	disablenpc "白";
+	disablenpc "灰";
+	end;
+
+OnColor:
+	if(.h||!Hp) end;
+	if($@p1$!=.Word$[.d] && @npc$!=.Word$[.d]) {
+		specialeffect2 622;
+		percentheal -100,-100;
+		end;
+	}
+	set .h,1;
+	getmapxy(.@m$,.@x,.@y,BL_NPC,strnpcinfo(0));
+	areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"["+strnpcinfo(0)+"] '"+strcharinfo(0)+"' 的答案是 '"+.Word$[.d]+"', 正解！",0,0xffff37,0,12;
+	switch(rand(1,3)) {
+		case 1:
+			set #Game_Points,#Game_Points+(set(.@i,.Cash[0]));
+			getitem 61007,4;
+			areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"["+strnpcinfo(0)+"] : 恭喜玩家 '"+strcharinfo(0)+"' 獲得商城10點金幣x4、小遊戲積分"+.@i+"點！",0,0xffff37,0,12;
+			break; 
+		case 2:
+			set #Game_Points,#Game_Points+(set(.@i,.Cash[0]));
+			getitem 61007,4;
+			areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"["+strnpcinfo(0)+"] : 恭喜玩家 '"+strcharinfo(0)+"' 獲得商城10點金幣x4、小遊戲積分"+.@i+"點！",0,0xffff37,0,12;
+			break;
+		case 3:
+			set #Game_Points,#Game_Points+(set(.@i,.Cash[0]));
+			getitem 61007,4;
+			areaannounce .@m$,.@x-14,.@y-14,.@x+14,.@y+14,"["+strnpcinfo(0)+"] : 恭喜玩家 '"+strcharinfo(0)+"' 獲得商城10點金幣x4、小遊戲積分"+.@i+"點！",0,0xffff37,0,12;
+			break;
+	}
+	set $@p1$,"";
+	set @npc$,"";
+	specialeffect2 131;
+	end;
+
+OnInit:
+	set .h,0;
+	set .gap,1;
+	set .k,0;
+	disablenpc "紅";
+	disablenpc "黃";
+	disablenpc "綠";
+	disablenpc "藍";
+	disablenpc "紫";
+	disablenpc "黑";
+	disablenpc "白";
+	disablenpc "灰";
+
+	//-- 關數設置
+	set .q,10;
+
+	//-- 反應秒數與關數設置對應(單位:秒)
+	setarray .Leveltimer,9,8,7,6,5,5,5,5,5;
+
+	//-- 出現公告設置(需與下面色碼對應)
+	setarray .Word$,"紅","黃","綠","藍","紫","黑","白","灰";
+
+	//-- 色碼公告設置(需與上面中文對應)
+	setarray .Color$,"0xff0000","0xFFFF37","0x00DB00","0x0000ff","0x5B00AE","0x000000","0xffffff","0xCECECE";
+
+	//-- 獎金設置(最小/最大)
+	setarray .ColorZeny,10000000,10000000;
+
+	//-- 獎品設置(編號與數量需對應)
+	setarray .ColorItem,6438,6439,61007;
+	setarray .ItemCount,1,1,1;
+
+	//-- 商城點數設置(最小/最大)
+	setarray .Cash,20;
+	end;
+}
+
+trinity,49,120,3	script	紅	543,{
+	set @npc$,strnpcinfo(0);
+	set $@p1$,strnpcinfo(0);
+	doevent "眼睛嘴巴不一樣::OnColor";
+}
+trinity,49,120,3	duplicate(紅)	黃	543
+trinity,49,120,3	duplicate(紅)	綠	543
+trinity,49,120,3	duplicate(紅)	藍	543
+trinity,49,120,3	duplicate(紅)	紫	543
+trinity,49,120,3	duplicate(紅)	黑	543
+trinity,49,120,3	duplicate(紅)	白	543
+trinity,49,120,3	duplicate(紅)	灰	543

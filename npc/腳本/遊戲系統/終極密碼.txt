@@ -1,0 +1,645 @@
+//	========== 設定說明 ==========
+//	$@Code_State		活動狀態(0:關閉 1:報名 2:進行中)
+//	$@Code_Type		活動類型(1:搶頭香 2:淘汰賽)
+//	$@Code_Bom_Prize[]	第二活動類型自訂獎品
+//	$@Code_People_Num	報名人數
+//	$@Code_People_Temp[]	報名人員名單(Char ID)
+//	$@Code_People_Temp$	報名人員名單(角色名字)
+//	Get_Code		個人報名狀態(0:未報名 1:完成報名)
+//	
+//	@Prize_Name$		暫存活動獎品列表
+//	$@TEMP_P		暫存猜碼人員
+//	$@TEMP_N		暫存有獎人數
+//	$@TEMP_C_MIN		暫存密碼最小值
+//	$@TEMP_C_MAX		暫存密碼最大值
+//	$@TEMP_CODE		暫存賓果密碼值
+//	
+//	-----------------------------------------*/
+
+//=============== 活動地圖設置 ===============
+boss	mapflag	nomemo
+boss	mapflag	noteleport
+boss	mapflag	nosave
+boss	mapflag	nopenalty
+boss	mapflag	noskill
+boss	mapflag	nobranch
+
+//=============== 主城ＮＰＣ ================
+trinity,62,121,4	script	終極飄飄	793,{
+	callfunc "f_Code_Main_NPC",0;
+	end;
+
+// 每天固定場次【終極密碼】，修改/增加OnClockHHMM，即可調整活動時間/場次
+OnClock1357:
+OnClock1837:
+	if ($@Code_State != 0) end;
+	set $@Code_Type,1;
+	set $@Code_Name$,"密碼";
+	initnpctimer "SYS_Code_Join";
+	waitingroom "＊【終極" + $@Code_Name$ + "】＊",0;
+	end;
+
+OnInit:
+//=============== 終極密碼設置 ===============
+// 活動狀態(0:停止 1:報名中 2:活動進行中)
+	set $@Code_State,0;
+// 活動類型(1:搶頭香 2:淘汰賽)
+	set $@Code_Type,1;
+// 活動名稱
+	set $@Code_Name$,"密碼";
+// 活動費用
+	set $@Code_Zeny,1;
+// 最低啟動人數限制
+	set $@Code_P1,3;
+// 最多進行人數限制
+	set $@Code_P2,50;
+// 可領取獎品人數(搶頭香)
+	set $@Code_P3,3;
+// 可領取獎品人數(淘汰賽)
+	set $@Code_P4,3;
+// 一般固定活動獎品列表，單數是獎品ID，偶數是獎品數量(隨機取得，名次決定抽獎次數)
+// 例:setarray $@Code_Prize[1],7723,1,7723,2,7606,1,7606,2,668,5,668,4,668,2;
+// 501:紅色藥水ID，1:數量1個；502:赤色藥水ID，2:數量2個；503:黃色藥水，3:數量3個；最後以;結尾
+
+	setarray $@Code_Prize[1],61007,5,61007,5;
+// 主城設定
+	set $@Main_Twon$,"trinity,50,120";
+	//waitingroom "終極飄飄",0;
+	end;
+}
+
+
+function	script	f_Code_Main_NPC	{
+// 固定場次判定/啟動
+if ( getarg(0) == 1) goto OpenDailyCode;
+
+// GM管理選單
+if ( 90 <= getgmlevel()) {
+	mes "[終極飄飄]";
+	mes "GM管理選單";
+	switch($@Code_State) {
+		case 0:
+			mes "現在的活動狀態：^ff0000關閉中^000000";
+			mes "現在時間:^FF0000"+ gettimestr("%Y-%m/%d %H:%M:%S",20)+"^000000";
+			menu	"跳過GM選單",MENU01,
+				"現在開啟【終極密碼】",Start_Code,
+				"現在開啟【終極炸彈】",Start_Bom,
+				"進入活動場地(隱身)",GMIn01,
+				"進入活動場地",GMIn02;
+			break;
+		case 1:
+			mes "現在的活動狀態：^ffa500報名中^000000";
+			mes "現在時間:^FF0000"+ gettimestr("%Y-%m/%d %H:%M:%S",20)+"^000000";
+			menu	"跳過GM選單",MENU01,
+				"現在進行【活動】",-,
+				"進入活動場地(隱身)",GMIn01,
+				"進入活動場地",GMIn02;
+			next;
+			setnpctimer 175000,"SYS_Code_Join";
+			mes "[終極飄飄]";
+			announce "【終極" + $@Code_Name$ + "】被GM啟動了，五秒後進行，要參加的請找【終極飄飄】ＮＰＣ報名！",15,"0xff0000";
+			mes "【終極" + $@Code_Name$ + "】五秒後進行";
+			close;
+		case 2:
+			mes "現在的活動狀態：^008000進行中^000000";
+			mes "現在時間:^FF0000"+ gettimestr("%Y-%m/%d %H:%M:%S",20)+"^000000";
+			menu	"跳過GM選單",MENU01,
+				"進入活動場地(隱身)",GMIn01,
+				"進入活動場地",GMIn02;
+			break;
+	}
+
+MENU01:
+	next;
+}
+
+set @Prize_Name$,getitemname($@Code_Prize[1]) + "[" + $@Code_Prize[2] + "個]";
+for (set @TEMP,3;@TEMP<getarraysize($@Code_Prize);set @TEMP,@TEMP+2){
+	set @Prize_Name$,@Prize_Name$ + "、" + getitemname($@Code_Prize[@TEMP]) + "[" + $@Code_Prize[@TEMP+1] + "]";
+}
+
+// 活動在關閉狀態
+if ($@Code_State == 0) {
+	if (Get_Code ==1) {
+		mes "[終極飄飄]";
+		mes "活動費用退回了，請確認";
+		set Get_Code,0;
+		next;
+	}
+	mes "[終極飄飄]";
+	mes "活動時間：14:30、18:30";
+	mes "活動獎品：^FF6600隨機取得" + @Prize_Name$ + "^000000：";
+	mes "請踴躍參加，謝謝!!";
+	close;
+}
+
+// 活動在進行中狀態
+if ($@Code_State == 2) {
+	mes "[終極飄飄]";
+	mes "【終極" + $@Code_Name$ + "】已經開始了，請參加下一場次的活動吧";
+	close;
+}
+
+// 活動在報名狀態(報名名單查核)
+if ($@Code_State == 1 && Get_Code == 1) {
+	for (set @TEMP,1;@TEMP<=$@Code_People_Num+1;set @TEMP,@TEMP+1){
+		if ($@Code_People_Temp[@TEMP] == getcharid(0)) goto Code_Waiting;
+	}
+	mes "[終極飄飄]";
+	mes "您有[報名但未參與活動記錄]";
+	mes "前回報名費用退回了，請確認";
+	set Get_Code,0;
+	next;
+}
+
+// 活動在報名狀態(報名)
+if ($@Code_State == 1) {
+	mes "[終極飄飄]";
+	mes "【終極" + $@Code_Name$ + "】規則如下：";
+	switch($@Code_Type) {
+		case 1:
+			mes "^FF6600☆ 優先猜中金庫密碼的為勝利者";
+			break;
+		case 2:
+			mes "^FF6600☆ 不踩到炸彈，存活越久的為勝利者";		
+			break;
+	}
+	mes "☆ " + $@Code_Name$ + "範圍為：１～人數×２００";
+	mes "☆ 超時未輸入【終極" + $@Code_Name$ + "】者淘汰^000000";
+	next;
+	if ($@Code_People_Num != 0) {
+		mes "[終極飄飄]";
+		mes "目前的報名名單如下：";
+		for (set @TEMP,1;@TEMP<$@Code_People_Num+1;set @TEMP,@TEMP+1){
+			mes @TEMP + ". ^FF6600" + $@Code_People_Temp$[@TEMP] + "^000000[" + $@Code_People_Temp[@TEMP] + "]";
+		}
+		mes "------------------------";
+		next;
+	}
+	mes "【終極" + $@Code_Name$ + "】開放報名中";
+	mes "報名費用：^FF6600" + $@Code_Zeny + " Zeny^000000";
+	if ($@Code_Bom_Prize[1] != 0 && $@Code_Type == 2){
+		mes "活動獎品：^FF6600";
+		for (set @TEMP,1;@TEMP<=$@Code_P4*2;set @TEMP,@TEMP+2){
+			if ($@Code_Bom_Prize[@TEMP] != 0){
+				mes "第" + (@TEMP+1)/2 + "名：" + getitemname($@Code_Bom_Prize[@TEMP]) + "[" + $@Code_Bom_Prize[@TEMP+1] + "個]";
+			}
+		}
+	}else{
+		mes "活動獎品^FF6600(隨機取得)^000000：";
+		mes "^FF6600" + @Prize_Name$ + "^000000";
+	}
+	mes "^FF0000報名前，請詳讀規則，以免權益受損^000000";
+	mes "你想要參加嗎??";
+	next;
+	menu	"我要參加",-,
+		"我不想要參加",EXIT;
+
+	if (Zeny < $@Code_Zeny) goto NO_ZENY;
+
+	if ($@Code_People_Num >= $@Code_P2) {
+		mes "[終極飄飄]";
+		mes "抱歉，現在活動人數已滿";
+		mes "(最多" + $@Code_P2 + "人進行【終極" + $@Code_Name$ + "】)";
+		mes "請參加下一場次的活動吧";
+		close;
+	}
+
+	set Get_Code,1;
+	set $@Code_People_Num,$@Code_People_Num+1;
+	setarray $@Code_People_Temp[$@Code_People_Num],getcharid(0);
+	setarray $@Code_People_Temp$[$@Code_People_Num],strcharinfo(0);
+	set Zeny,Zeny-$@Code_Zeny;
+	goto Code_Waiting;
+	close;
+}
+
+NO_ZENY:
+	mes "[終極飄飄]";
+	mes "你的金錢不足，不能參加哦!!";
+	close;
+
+Code_Waiting:
+	mes "[終極飄飄]";
+	mes "你已經報名了，請等待活動開始";
+	mes "^FF6600時間到，會自動傳送入場!!^000000";
+	mes "目前的報名名單如下：";
+	for (set @TEMP,1;@TEMP<$@Code_People_Num+1;set @TEMP,@TEMP+1){
+		mes @TEMP + ". ^FF6600" + $@Code_People_Temp$[@TEMP] + "^000000[" + $@Code_People_Temp[@TEMP] + "]";
+	}
+	mes "------------------------";
+	close;
+
+EXIT:
+	mes "[終極飄飄]";
+	mes "想要參加時，再來找我吧";
+	close;
+
+
+// 開啟【終極密碼】
+Start_Code:
+	next;
+	set $@Code_Type,1;
+	set $@Code_Name$,"密碼";
+	initnpctimer "SYS_Code_Join";
+	waitingroom "＊【終極" + $@Code_Name$ + "】＊",0;
+	mes "[終極飄飄]";
+	mes "已開啟【終極" + $@Code_Name$ + "】";
+	//sleep2(1000);
+	goto MENU01;
+
+// 開啟【終極炸彈】
+Start_Bom:
+	deletearray $@Code_Bom_Prize[1],$@Code_P4*2;
+	next;
+// 【終極炸彈】自訂獎品
+	for (set @TEMP,1;@TEMP<=$@Code_P4;set @TEMP,@TEMP+1){
+Bom_Prize_Name:
+		mes "[終極飄飄]";
+		mes "^FF6600請設置活動獎品、數量";
+		mes "若設置錯誤，活動將不開啟^000000";
+		if (@TEMP == 1) {
+			mes "輸入^FF0000[9]^000000，取消自訂獎品";
+		}else{
+			mes "輸入^FF0000[9]^000000，終止自訂獎品^000000";
+		}
+		mes "最多設置到第" + $@Code_P4 + "名獎品";
+		mes "請輸入^FF0000第" + @TEMP + "名^000000獎品";
+		next;
+		input @TEMP1;
+		// 不要、停止自訂獎品(輸入9)
+		if (@TEMP1 == 9) {
+			goto Bom_menu;
+		}
+		// 自訂獎品查驗
+		if (getitemname(@TEMP1) == "null"){
+			mes "^FF0000沒有這個物品，請重新輸入^000000";
+			next;
+			goto Bom_Prize_Name;
+		}
+Bom_Prize_Num:
+		next;
+		mes "請輸入數量";
+		input @TEMP2;
+		if (@TEMP2 == 0){
+			mes "^FF0000數量不可低於0，請重新輸入^000000";
+			goto Bom_Prize_Num;
+		}
+		next;
+		setarray $@Code_Bom_Prize[(@TEMP*2)-1],@TEMP1,@TEMP2;
+	}
+Bom_menu:
+	if ($@Code_Bom_Prize[1] != 0){
+		mes "[終極飄飄]";
+		mes "您設置的活動獎品、數量：^FF6600";
+		for (set @TEMP,1;@TEMP<=$@Code_P4*2;set @TEMP,@TEMP+2){
+			if ($@Code_Bom_Prize[@TEMP] != 0){
+				mes "第" + (@TEMP+1)/2 + "名：" + getitemname($@Code_Bom_Prize[@TEMP]) + "[" + $@Code_Bom_Prize[@TEMP+1] + "個]";
+			}
+		}
+		mes "^000000------------------------";
+		mes "是否正確??";
+		menu	"正確",-,
+			"返回修改",Start_Bom;
+		next;
+	}
+	set $@Code_Type,2;
+	set $@Code_Name$,"炸彈";
+	initnpctimer "SYS_Code_Join";
+	waitingroom "＊【終極" + $@Code_Name$ + "】＊",0;
+	mes "[飄飄]";
+	mes "已開啟【終極" + $@Code_Name$ + "】";
+	//sleep2(1000);
+	goto MENU01;
+
+// GM活動場地突入
+GMIn01:
+	setoption(64);
+GMIn02:
+	warp "boss",51,34;
+	end;
+
+OpenDailyCode:
+	if ($@Code_State != 0) end;
+	set $@Code_Type,1;
+	set $@Code_Name$,"密碼";
+	initnpctimer "SYS_Code_Join";
+	waitingroom "＊【終極" + $@Code_Name$ + "】＊",0;
+	end;
+
+}
+
+//=============== 報　名 ===============
+boss,0,0,0	script	SYS_Code_Join	111,{
+//-	script	SYS_Code_Join	-1,{
+
+// 活動報名廣播
+OnTimer1000:
+	disablenpc "主持人【終極飄飄】";
+	deletearray $@Code_People_Temp,$@Code_P2+1;
+	deletearray $@Code_People_Temp$,$@Code_P2+1;
+	set $@Code_People_Num,0;
+	set $@Code_State,1;
+	announce "【終極" + $@Code_Name$ + "】還有3分鐘就要開始，要參加的請找【終極飄飄】報名(禁止多開)",15;
+	end;
+
+OnTimer60000:
+	announce "【終極" + $@Code_Name$ + "】還有2分鐘就要開始，要參加的請找【終極飄飄】報名(禁止多開)",15;
+	end;
+
+OnTimer120000:
+	announce "【終極" + $@Code_Name$ + "】還有1分鐘就要開始，要參加的請找【終極飄飄】報名(禁止多開)",15;
+	end;
+
+OnTimer180000:
+// 報名名單查核 離線者刪除
+	for (set .TEMP,1;.TEMP<=$@Code_People_Num;set .TEMP,.TEMP+1){
+Check_Code1:
+		if (attachrid(getcharid(3,$@Code_People_Temp$[.TEMP])) == 0) {
+			set $@Code_People_Num,$@Code_People_Num-1;
+			deletearray $@Code_People_Temp[.TEMP],1;
+			deletearray $@Code_People_Temp$[.TEMP],1;
+			detachrid;
+			goto Check_Code1;
+		}
+	}
+	if ($@Code_People_Num == 0) goto No_people;
+	if ($@Code_People_Num < $@Code_P1) goto LESS_PEOPLE;
+// 自動傳送入場
+	set $@Code_State,2;
+//	announce "【終極" + $@Code_Name$ + "】參加人員：",15;
+//	announce "------------------------",15;
+	for (set .TEMP,1;.TEMP<=$@Code_People_Num;set .TEMP,.TEMP+1){
+//		announce .TEMP + ". " + $@Code_People_Temp$[.TEMP] + "[" + $@Code_People_Temp[.TEMP] + "]",15;
+		attachrid(getcharid(3,$@Code_People_Temp$[.TEMP]));
+		//atcommand $@Code_People_Temp$[.TEMP] + ":@warp boss 51 34";
+		warp "boss",51,34;
+		detachrid;
+	}
+
+//	announce "------------------------",15;
+	announce "【終極" + $@Code_Name$ + "】參加人數" + $@Code_People_Num + "人，現在開始！！",15;
+
+	initnpctimer "SYS_Code_Index";
+	goto SYS_EndTime;
+
+LESS_PEOPLE:
+	announce "【終極" + $@Code_Name$ + "】報名人數：" + $@Code_People_Num + "人 (報名且在線人數)！！",15;
+	announce "【終極" + $@Code_Name$ + "】人數低於" + $@Code_P1 + "人參加，本回活動取消！！",15;
+	announce "【終極飄飄】有報名的，請找我領回報名費用",15;
+	goto SYS_EndTimer;
+
+No_people:
+	announce "【終極" + $@Code_Name$ + "】無人參加，本回活動取消！！",15;
+
+SYS_EndTimer:
+	set $@Code_State,0;
+
+SYS_EndTime:
+	stopnpctimer;
+	setnpctimer 0,"SYS_Code_Join";
+	delwaitingroom "終極飄飄";
+	end;
+
+}
+
+//=============== 活動規則說明 ===============
+boss,41,33,5	script	SYS_Code_Index	-1,{
+OnTimer100:
+	MapAnnounce "boss","【終極" + $@Code_Name$ + "】開始前，請先詳讀規則：",17,"0xff0000";
+	switch($@Code_Type) {
+		case 1:
+			MapAnnounce "boss","☆ 優先猜中金庫密碼的為勝利者",17,"0xff0000";
+			break;
+		case 2:
+			MapAnnounce "boss","☆ 不踩到炸彈，存活越久的為勝利者",17,"0xff0000";
+			break;
+	}
+	MapAnnounce "boss","☆ 密碼範圍為：１～人數×２００",17,"0xff0000";
+	MapAnnounce "boss","☆ 超時未輸入【終極" + $@Code_Name$ + "】者淘汰",17,"0xff0000";
+	MapAnnounce "boss","☆ 再給各位20秒準備，【終極" + $@Code_Name$ + "】即將開始。",17,"0xff0000";
+	end;
+
+OnTimer20100:
+// 暫存變數初始化
+	set $@TEMP_P,1;
+	switch($@Code_Type) {
+		case 1:
+			set $@TEMP_N,$@Code_P3;
+			if ($@Code_People_Num < $@TEMP_N) set $@TEMP_N,$@Code_People_Num;
+			break;
+		case 2:
+			set $@TEMP_N,$@Code_P4;
+			if ($@Code_Bom_Prize[1] != 0){
+				for (set .TEMP,2;.TEMP<=$@Code_P4*2;set .TEMP,.TEMP+2){
+					if ($@Code_Bom_Prize[.TEMP] == 0){
+						set $@TEMP_N,$@TEMP_N-1;
+					}
+				}
+			}
+			if ($@Code_People_Num < $@TEMP_N) set $@TEMP_N,$@Code_People_Num;
+			break;
+	}
+	set $@TEMP_C_MIN,1;
+	set $@TEMP_C_MAX,((getarraysize($@Code_People_Temp)-1)*200);
+	set $@TEMP_CODE,rand(2,(((getarraysize($@Code_People_Temp)-1)*200)-1));
+	enablenpc "主持人【終極飄飄】";
+	initnpctimer "主持人【終極飄飄】";
+	stopnpctimer;
+	setnpctimer 0,"SYS_Code_Index";
+	end;
+}
+
+//=============== 【終極密碼】 ===============
+boss,51,43,5	script	主持人【終極飄飄】	793,{
+set Get_Code,0;
+if (getcharid(0) == $@Code_People_Temp[$@TEMP_P]){
+	MapAnnounce "boss","【終極" + $@Code_Name$ + "】：" + $@TEMP_C_MIN + " ～ " + $@TEMP_C_MAX,17;
+// 測試階段GM除錯用 ==== 密碼顯示 ====
+//	MapAnnounce "boss","【終極" + $@Code_Name$ + "】：" + $@TEMP_CODE,17;
+	MapAnnounce "boss",strcharinfo(0) + "，請於時限內輸入：【終極" + $@Code_Name$ + "】",17;
+	input @temp;
+// 猜中的處理
+	if (@temp == $@TEMP_CODE){
+		switch($@Code_Type) {
+		// 【終極密碼】猜中的處理
+			case 1:
+				MapAnnounce "boss",strcharinfo(0) + "，恭喜你，【終極" + $@Code_Name$ + "】被你猜中囉",17,"0x0fff8c";
+		// 【終極密碼】第一名獎品處理
+		Code_Code_F1:
+				emotion 46;
+				announce "【終極" + $@Code_Name$ + "】的第[" + ($@Code_P3-$@TEMP_N+1) + "]名：[ " + strcharinfo(0) + " ]，恭喜你啦!!",15;
+				for (set @Prize,1;@Prize<=$@TEMP_N;set @Prize,@Prize+1){
+					set @i,rand(1,(getarraysize($@Code_Prize)-1)/2);
+					getitem $@Code_Prize[(@i*2)-1],$@Code_Prize[@i*2];
+					set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+					announce "【終極" + $@Code_Name$ + "】：恭喜 " + strcharinfo(0) + " 領到獎品 [" + getitemname($@Code_Prize[(@i*2)-1]) + "(" + $@Code_Prize[@i*2] + "個)]",15;
+				}
+				set $@TEMP_N,$@TEMP_N-1;
+				if ($@Code_State == 0) goto End_Code_Warp;
+				break;
+		// 【終極炸彈】猜中的處理
+			case 2:
+				if ($@TEMP_N < $@Code_People_Num){
+					MapAnnounce "boss",strcharinfo(0) + "，【終極" + $@Code_Name$ + "】被你踩到了爆炸了",17,"0xff0000";
+					atcommand "@load "+strcharinfo(0);
+					emotion 23;
+				}
+				if ($@TEMP_N >= $@Code_People_Num){
+		// 【終極炸彈】第一名獎品處理
+		Code_Bom_F1:
+					MapAnnounce "boss",strcharinfo(0) + "，恭喜你，在【終極" + $@Code_Name$ + "】存活下來，成為[第" + $@TEMP_N + "名]",17,"0x0fff8c";
+					emotion 14;
+					announce "【終極" + $@Code_Name$ + "】的第[" + $@TEMP_N + "]名：[ " + strcharinfo(0) + " ]，恭喜你啦!!",15;
+		// 【終極炸彈】獎品處理
+					if ($@Code_Bom_Prize[1] != 0){
+					getitem $@Code_Bom_Prize[($@TEMP_N*2)-1],$@Code_Bom_Prize[($@TEMP_N*2)];
+					set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+						announce "【終極" + $@Code_Name$ + "】：恭喜 " + strcharinfo(0) + " 領到獎品 [" + getitemname($@Code_Bom_Prize[($@TEMP_N*2)-1]) + "(" + $@Code_Bom_Prize[($@TEMP_N*2)] + "個)]",15;
+					}else{
+						for (set @Prize,1;@Prize<=($@Code_P4-$@TEMP_N+1);set @Prize,@Prize+1){
+							set @i,rand(1,(getarraysize($@Code_Prize)-1)/2);
+							getitem $@Code_Prize[(@i*2)-1],$@Code_Prize[@i*2];
+							set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+							announce "【終極" + $@Code_Name$ + "】：恭喜 " + strcharinfo(0) + " 領到獎品 [" + getitemname($@Code_Prize[(@i*2)-1]) + "(" + $@Code_Prize[@i*2] + "個)]",15;
+						}
+					}
+					set $@TEMP_N,$@TEMP_N-1;
+					if ($@Code_State == 0) goto End_Code_Warp;
+				}
+				break;
+		}
+		//sleep2(2000);
+		//atcommand "@warp " + $@Main_Twon$;
+		warp "trinity",50,120;
+		set $@Code_People_Num,$@Code_People_Num-1;
+		deletearray $@Code_People_Temp[$@TEMP_P],1;
+		deletearray $@Code_People_Temp$[$@TEMP_P],1;
+		set $@TEMP_C_MIN,1;
+		set $@TEMP_C_MAX,((getarraysize($@Code_People_Temp)-1)*200);
+		set $@TEMP_CODE,rand(2,(((getarraysize($@Code_People_Temp)-1)*200)-1));
+		setnpctimer 0,"主持人【終極飄飄】";
+		end;
+	}
+// 沒猜中的處理
+	if (@temp > $@TEMP_C_MIN && @temp < $@TEMP_C_MAX){
+		switch($@Code_Type) {
+			case 1:
+				MapAnnounce "boss",strcharinfo(0) + "，可惜，並沒有猜中密碼！！",17,"0xffff00";
+				break;
+			case 2:
+				MapAnnounce "boss",strcharinfo(0) + "，好險，沒有踩到炸彈！！",17,"0xffff00";
+				break;
+		}
+		if (@temp > $@TEMP_CODE) set $@TEMP_C_MAX,@temp;
+		if (@temp < $@TEMP_CODE) set $@TEMP_C_MIN,@temp;
+		set $@TEMP_P,$@TEMP_P+1;
+		setnpctimer 0,"主持人【終極飄飄】";
+		end;
+	}
+// 猜錯(超過範圍)的處理
+	if (@temp <= $@TEMP_C_MIN || @temp >= $@TEMP_C_MAX){
+		MapAnnounce "boss",strcharinfo(0) + "，請輸入範圍內的數字，別亂猜",17,"0xff0000";
+		end;
+	}
+}
+	mes strcharinfo(0) + "，還沒輪到你，別亂點!!";
+	end;
+
+OnTimer100:
+// 剩下最後1人 直接成為第一名
+	if ($@TEMP_N >= 1 && $@Code_People_Num == 1){
+		set $@Code_State,0;
+		stopnpctimer;
+		attachrid(getcharid(3,$@Code_People_Temp$[1]));
+		switch($@Code_Type) {
+			case 1:
+				goto Code_Code_F1;
+				break;
+			case 2:
+				set $@TEMP_N,1;
+				goto Code_Bom_F1;
+				break;
+		}
+		end;
+	}
+	delwaitingroom "主持人【終極飄飄】";
+	waitingroom "＊活動主持人＊",0;
+	if ($@TEMP_N == 0) goto End_Code_Warp;
+Check_Code:
+// 活動名單查核 沒人結束活動
+	if ($@Code_People_Num == 0) goto End_Code;
+// 活動名單查核 離線者刪除
+	if ($@Code_People_Temp$[$@TEMP_P] != ""){
+		if (attachrid(getcharid(3,$@Code_People_Temp$[$@TEMP_P])) == 0) {
+			set $@Code_People_Num,$@Code_People_Num-1;
+			deletearray $@Code_People_Temp[$@TEMP_P],1;
+			deletearray $@Code_People_Temp$[$@TEMP_P],1;
+			goto Check_Code;
+		}
+	}
+// 活動名單查核 最後一人，回到第一人
+	if ($@Code_People_Temp$[$@TEMP_P] == ""){
+		set $@TEMP_P,1;
+	}
+
+	MapAnnounce "boss","【終極" + $@Code_Name$ + "】：[剩 " + $@TEMP_N + " 個獎項][輪到第 " + $@TEMP_P + " / " + $@Code_People_Num + " 位玩家]",17;
+	MapAnnounce "boss","【終極" + $@Code_Name$ + "】：" + $@TEMP_C_MIN + " ～ " + $@TEMP_C_MAX,17;
+	MapAnnounce "boss","請[ " + $@Code_People_Temp$[$@TEMP_P] + " ]，於20秒內，點我輸入【終極" + $@Code_Name$ + "】",17;
+	end;
+
+// 太久沒猜的處理(淘汰)
+OnTimer20100:
+	MapAnnounce "boss","[ " + $@Code_People_Temp$[$@TEMP_P] + " ]，超時未輸入【終極" + $@Code_Name$ + "】，取消資格",17;
+	attachrid(getcharid(3,$@Code_People_Temp$[$@TEMP_P]));
+	//atcommand $@Code_People_Temp$[$@TEMP_P] + ":@warp " + $@Main_Twon$;
+	warp "trinity",50,120;
+	detachrid;
+	deletearray $@Code_People_Temp[$@TEMP_P],1;
+	deletearray $@Code_People_Temp$[$@TEMP_P],1;
+	set $@Code_People_Num,$@Code_People_Num-1;
+	end;
+
+OnTimer21500:
+	setnpctimer 0,"主持人【終極飄飄】";
+	initnpctimer "主持人【終極飄飄】";
+	end;
+
+// 活動結束 自動傳送回主城
+End_Code_Warp:
+	if ($@Code_People_Num == 0) goto End_Code;
+	for (set .TEMP,1;.TEMP<=$@Code_People_Num;set .TEMP,.TEMP+1){
+		attachrid(getcharid(3,$@Code_People_Temp$[.TEMP]));
+		//atcommand $@Code_People_Temp$[.TEMP] + ":@warp " + $@Main_Twon$;
+		warp "trinity",50,120;
+		detachrid;
+		//sleep2(100);
+	}
+
+End_Code:
+	disablenpc "主持人【終極飄飄】";
+	delwaitingroom "主持人【終極飄飄】";
+	waitingroom "請等待活動開始",0;
+	announce "【終極" + $@Code_Name$ + "】本回結束了，謝謝各位的參與",15;
+	stopnpctimer;
+	setnpctimer 0,"主持人【終極飄飄】";
+	set $@TEMP_P,0;
+	set $@Code_State,0;
+	end;
+
+OnInit:
+	disablenpc "主持人【終極飄飄】";
+	waitingroom "請等待活動開始",0;
+// 測試階段GM除錯用 ==== 活動中的名單 ====
+//	if ( 1 <= getgmlevel() ) {
+//		for (set .TEMP,1;.TEMP<$@Code_People_Num+1;set .TEMP,.TEMP+1){
+//			mes .TEMP + ". ^FF6600" + $@Code_People_Temp$[.TEMP] + "[" + $@Code_People_Temp[.TEMP] + "]^000000";
+//		}
+//	}
+// 測試階段GM除錯用 ==== 活動中的名單 ====
+//	announce "[這是測試點1]",15;
+//	for (set .TEMP,1;.TEMP<$@Code_People_Num+1;set .TEMP,.TEMP+1){
+//		announce .TEMP + ". " + $@Code_People_Temp$[.TEMP] + "[" + $@Code_People_Temp[.TEMP] + "]",15;
+//	}
+
+}

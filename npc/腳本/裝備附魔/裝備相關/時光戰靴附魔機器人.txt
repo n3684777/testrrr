@@ -1,0 +1,252 @@
+﻿vdistrict1,62,15,6	script	<時光戰靴>附魔機器人	563,{
+
+	mes "[<時光戰靴>附魔機器人]";
+	mes "各種克雷斯特漢姆時光戰靴";
+	mes "只要給我對應的報酬";
+	mes "我就能幫你進行強化";
+	next;
+	switch(select("強化 0S時光戰靴:強化 1S時光戰靴:取消")){
+
+case 1:
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Temporal_S_Slots,getequipcardid(.@is,0);
+	set @Temporal_S_Slots2,getequipcardid(.@is,1);
+	set @Temporal_S_Slots3,getequipcardid(.@is,2);
+	set @Temporal_S_Slots4,getequipcardid(.@is,3);
+	set @Killed_S_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 22000) goto Temporal_0S_net;	//0S時光力量戰靴
+	if(@abd == 22001) goto Temporal_0S_net;	//0S時光智慧戰靴
+	if(@abd == 22002) goto Temporal_0S_net;	//0S時光敏捷戰靴
+	if(@abd == 22003) goto Temporal_0S_net;	//0S時光體力戰靴
+	if(@abd == 22004) goto Temporal_0S_net;	//0S時光靈巧戰靴
+	if(@abd == 22005) goto Temporal_0S_net;	//0S時光幸運戰靴
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Temporal_0S_net:
+	mes "[<時光戰靴>附魔機器人]";
+	mes "我只能對第二洞進行強化";
+	mes "你想要進行哪種附魔操作";
+	next;
+	switch(select("第三洞特殊附魔:取消")){
+
+	case 1:
+		if(@Temporal_S_Slots4 == 0){
+		mes "[<時光戰靴>附魔機器人]";
+		mes "第四洞尚未附魔";
+		close;
+		}
+		mes "[<時光戰靴>附魔機器人]";
+		mes "需求材料：";
+		mes "凝結的魔力x100";
+		mes "5,000,000Zeny";
+		mes "選擇你要強化的能力";
+		next;
+		switch(select("餓熊威力:暴走魔法:光速瞬移:無感肌肉:犀利應眼:幸運之日:取消")){
+
+		case 1:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4875;
+		close;
+
+		case 2:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4876;
+		close;
+
+		case 3:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4877;
+		close;
+
+		case 4:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4878;
+		close;
+
+		case 5:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4879;
+		close;
+
+		case 6:
+		callfunc "fumoTemporal_0S3",6608,100,5000000,4880;
+		close;
+
+		case 7:
+		close;
+		}
+
+	case 2:
+	close;
+	}
+
+case 2:
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Temporal_S_Slots,getequipcardid(.@is,0);
+	set @Temporal_S_Slots2,getequipcardid(.@is,1);
+	set @Temporal_S_Slots3,getequipcardid(.@is,2);
+	set @Temporal_S_Slots4,getequipcardid(.@is,3);
+	set @Killed_S_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 22006) goto Temporal_1S_net;	//1S時光力量戰靴
+	if(@abd == 22007) goto Temporal_1S_net;	//1S時光智慧戰靴
+	if(@abd == 22008) goto Temporal_1S_net;	//1S時光敏捷戰靴
+	if(@abd == 22009) goto Temporal_1S_net;	//1S時光體力戰靴
+	if(@abd == 22010) goto Temporal_1S_net;	//1S時光靈巧戰靴
+	if(@abd == 22011) goto Temporal_1S_net;	//1S時光幸運戰靴
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Temporal_1S_net:
+	mes "[<時光戰靴>附魔機器人]";
+	mes "我只能對第二洞進行強化";
+	mes "你想要進行哪種附魔操作";
+	next;
+	switch(select("第三洞特殊附魔:取消")){
+
+	case 1:
+		if(@Temporal_S_Slots4 == 0){
+		mes "[<時光戰靴>附魔機器人]";
+		mes "第四洞尚未附魔";
+		close;
+		}
+		mes "[<時光戰靴>附魔機器人]";
+		mes "需求材料：";
+		mes "凝結的魔力x150";
+		mes "受汙染的魔力x50";
+		mes "強力精華球x1";
+		mes "15,000,000Zeny";
+		mes "選擇你要強化的能力";
+		next;
+		switch(select("餓熊威力:暴走魔法:光速瞬移:無感肌肉:犀利應眼:幸運之日:取消")){
+
+		case 1:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4875;
+		close;
+
+		case 2:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4876;
+		close;
+
+		case 3:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4877;
+		close;
+
+		case 4:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4878;
+		close;
+
+		case 5:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4879;
+		close;
+
+		case 6:
+		callfunc "fumoTemporal_1S3",6608,150,6755,50,7925,1,15000000,4880;
+		close;
+
+		case 7:
+		close;
+		}
+
+	case 2:
+	close;
+	}
+
+case 3:
+	close;
+	}
+
+OnInit:
+	waitingroom "<時光戰靴>附魔機器人",0;
+	end;
+}
+
+
+//------------------------------------ 0S時光戰靴附魔
+function	script	fumoTemporal_0S3	{
+	if(countitem(getarg(0)) < getarg(1)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上凝結的魔力不夠。";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem getarg(0),getarg(1);
+	set zeny,zeny-getarg(2);
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Temporal_S_Slots,@Temporal_S_Slots1,getarg(3),@Temporal_S_Slots4;
+	close;
+}
+
+//------------------------------------ 1S時光戰靴附魔
+function	script	fumoTemporal_1S3	{
+	if(countitem(getarg(0)) < getarg(1)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上凝結的魔力不夠。";
+	close;
+	}
+	if(countitem(getarg(2)) < getarg(3)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上凝結的魔力不夠。";
+	close;
+	}
+	if(countitem(getarg(4)) < getarg(5)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上凝結的魔力不夠。";
+	close;
+	}
+	if(zeny<getarg(6)){
+	mes "[<時光戰靴>附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem getarg(0),getarg(1);
+	delitem getarg(2),getarg(3);
+	delitem getarg(4),getarg(5);
+	set zeny,zeny-getarg(6);
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Temporal_S_Slots,@Temporal_S_Slots1,getarg(7),@Temporal_S_Slots4;
+	close;
+}
+
+
+
+

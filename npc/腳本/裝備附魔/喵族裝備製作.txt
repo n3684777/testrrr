@@ -1,0 +1,369 @@
+﻿
+vdistrict1,86,84,6	script	喵族裝備製作	546,{
+
+	mes "[喵族裝備製作]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("升級護符","兌換護符","回收喵族武器","回收喵族防具","取消")){
+
+case 1:
+	mes "[細心的老大]";
+	mes "你如果有^00cc00喵族信物^000000跟對應的^00cc00下級護符^000000";
+	mes "我可以幫你升級為中級跟高級護符";
+	mes "你想要升級哪種護符?";
+	next;
+	switch(select("升級中級護符","升級高級護符","取消")){
+
+	case 1:
+		mes "[細心的老大]";
+		mes "各種升級護符需要30個^00cc00喵族信物^000000跟對應的^00cc00下級護符^000000";
+		mes "你想要升級哪種護符?";
+		next;
+		switch(select("兌換^00cc00中級竹莢魚護符^000000","兌換^00cc00中級楓葉護符^000000","兌換^00cc00中級兔子護符^000000","取消")){
+
+		case 1:
+			if(countitem(25142)<10 || (countitem(28413) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			delitem	28413,1;
+			getitem	28414,1;
+			close;
+		case 2:
+			if(countitem(25142)<10 || (countitem(28416) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			delitem	28416,1;
+			getitem	28417,1;
+			close;
+		case 3:
+			if(countitem(25142)<10 || (countitem(28419) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			delitem	28419,1;
+			getitem	28420,1;
+			close;
+		case 4:
+			mes "[細心的老大]";
+			mes "有需要時再來找我吧";
+			close;
+		}
+
+	case 2:
+		mes "[細心的老大]";
+		mes "各種升級護符需要90個^00cc00喵族信物^000000跟對應的^00cc00中級護符^000000";
+		mes "你想要升級哪種護符?";
+		next;
+		switch(select("升級^00cc00中級竹莢魚護符^000000","升級^00cc00中級楓葉護符^000000","升級^00cc00中級兔子護符^000000","取消")){
+
+		case 1:
+			if(countitem(25142)<90 || (countitem(28414) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,90;
+			delitem	28414,1;
+			getitem	28415,1;
+			close;
+		case 2:
+			if(countitem(25142)<90 || (countitem(28417) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,90;
+			delitem	28417,1;
+			getitem	28418,1;
+			close;
+		case 3:
+			if(countitem(25142)<90 || (countitem(28420) <1)) {
+			mes "[細心的老大]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,90;
+			delitem	28420,1;
+			getitem	28421,1;
+			close;
+		case 4:
+			mes "[細心的老大]";
+			mes "有需要時再來找我吧";
+			close;
+		}
+
+	case 3:
+		mes "[細心的老大]";
+		mes "有需要時再來找我吧";
+		close;
+	}
+
+case 2:
+
+	mes "[誠實的老二]";
+	mes "你如果有^00cc00喵族信物^000000";
+	mes "可以拿來給我兌換成各種喵族下級跟特殊的護符哦";
+	mes "你想要兌換哪種護符?";
+	next;
+	switch(select("兌換下級護符","兌換特殊護符","取消")){
+
+	case 1:
+		mes "[誠實的老二]";
+		mes "各種初級護符需要10個^00cc00喵族信物^000000";
+		mes "你想要兌換哪種護符?";
+		next;
+		switch(select("兌換^00cc00下級竹莢魚護符^000000","兌換^00cc00下級楓葉護符^000000","兌換^00cc00下級兔子護符^000000","取消")){
+
+		case 1:
+			if(countitem(25142)<10 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,10;
+			getitem	28413,1;
+			close;
+		case 2:
+			if(countitem(25142)<10 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,10;
+			getitem	28416,1;
+			close;
+		case 3:
+			if(countitem(25142)<10 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,10;
+			getitem	28419,1;
+			close;
+		case 4:
+			mes "[誠實的老二]";
+			mes "有需要時再來找我吧";
+			close;
+		}
+
+	case 2:
+		mes "[誠實的老二]";
+		mes "各種特殊護符需要30個^00cc00喵族信物^000000";
+		mes "你想要兌換哪種護符?";
+		next;
+		switch(select("兌換^00cc00發光枝莖護符^000000","兌換^00cc00新鮮鮪魚護符^000000","兌換^00cc00胖嘟嘟蚯蚓護符^000000","取消")){
+
+		case 1:
+			if(countitem(25142)<30 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			getitem	28422,1;
+			close;
+		case 2:
+			if(countitem(25142)<30 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			getitem	28423,1;
+			close;
+		case 3:
+			if(countitem(25142)<30 ) {
+			mes "[誠實的老二]";
+			mes "你的^00cc00喵族信物^000000不夠!";
+			close; }
+			delitem	25142,30;
+			getitem	28424,1;
+			close;
+		case 4:
+			mes "[誠實的老二]";
+			mes "有需要時再來找我吧";
+			close;
+		}
+
+	case 3:
+		mes "[誠實的老二]";
+		mes "有需要時再來找我吧";
+		close;
+	}
+
+case 3:
+	mes "[勇敢的老三]";
+	mes "打怪蒐集到的喵族武器";
+	mes "都可以拿來給我兌換成喵族信物";
+	mes "^ff0000不要換的裝備請別放在身上^000000";
+	next;
+	switch(select("兌換喵族信物","取消")){
+case 1:
+	menu 
+	countitem(1695)>=1?"精美狐尾草模型持有":"^CECECE精美狐尾草模型不足^000000",Cat01,
+	countitem(1691)>=1?"奇妙狐尾草手杖持有":"^CECECE奇妙狐尾草手杖不足^000000",Cat02,
+	countitem(1696)>=1?"精工狐尾草模型持有":"^CECECE精工狐尾草模型不足^000000",Cat03,
+	countitem(1692)>=1?"魔力狐尾草手杖持有":"^CECECE魔力狐尾草手杖不足^000000",Cat04,
+	countitem(1697)>=1?"黃色狐尾草模型持有":"^CECECE黃色狐尾草模型不足^000000",Cat05,
+	countitem(1693)>=1?"黃色狐尾草手杖持有":"^CECECE黃色狐尾草手杖不足^000000",Cat06,
+	"取消",no;
+
+	Cat01:	set @Keepsake,1695; goto land2;
+	Cat02:	set @Keepsake,1691; goto land2;
+	Cat03:	set @Keepsake,1696; goto land3;
+	Cat04:	set @Keepsake,1692; goto land3;
+	Cat05:	set @Keepsake,1697; goto land4;
+	Cat06:	set @Keepsake,1693; goto land4;
+
+case 2:
+	mes "[勇敢的老三]";
+	mes "你有喵族裝備時再來找我吧";
+	close;
+	}
+
+
+case 4:
+	mes "[柔弱的老四]";
+	mes "打怪蒐集到的喵族防具";
+	mes "都可以拿來給我兌換成喵族信物";
+	mes "^ff0000不要換的裝備請別放在身上^000000";
+	next;
+	switch(select("兌換喵族信物","取消")){
+case 1:
+	menu 
+	countitem(15126)>=1?"喵族專屬外套持有":"^CECECE喵族專屬外套不足^000000",Cat001,
+	countitem(20788)>=1?"喵族專屬斗篷持有":"^CECECE喵族專屬斗篷不足^000000",Cat002,
+	countitem(22083)>=1?"喵族專屬鞋子持有":"^CECECE喵族專屬鞋子不足^000000",Cat003,
+	countitem(28380)>=1?"青澀草項鍊持有":"^CECECE青澀草項鍊不足^000000",Cat004,
+	countitem(28381)>=1?"萌萌草項鍊持有":"^CECECE萌萌草項鍊不足^000000",Cat005,
+	countitem(28382)>=1?"護符草項鍊持有":"^CECECE護符草項鍊不足^000000",Cat006,
+	countitem(28413)>=1?"下級竹莢魚護符持有":"^CECECE下級竹莢魚護符不足^000000",Cat007,
+	countitem(28416)>=1?"下級楓葉護符持有":"^CECECE下級楓葉護符不足^000000",Cat008,
+	countitem(28419)>=1?"下級兔子護符持有":"^CECECE下級兔子護符不足^000000",Cat009,
+	countitem(28422)>=1?"發光枝莖護符持有":"^CECECE發光枝莖護符不足^000000",Cat010,
+	countitem(28423)>=1?"新鮮鮪魚護符持有":"^CECECE新鮮鮪魚護符不足^000000",Cat011,
+	countitem(28424)>=1?"胖嘟嘟蚯蚓護符持有":"^CECECE胖嘟嘟蚯蚓護符不足^000000",Cat012,
+	countitem(15129)>=1?"喵族高級外套持有":"^CECECE喵族高級外套不足^000000",Cat013,
+	countitem(20789)>=1?"喵族高級斗篷持有":"^CECECE喵族高級斗篷不足^000000",Cat014,
+	countitem(22084)>=1?"喵族高級鞋子持有":"^CECECE喵族高級鞋子不足^000000",Cat015,
+	countitem(28414)>=1?"中級竹莢魚護符持有":"^CECECE中級竹莢魚護符不足^000000",Cat016,
+	countitem(28417)>=1?"中級楓葉護符持有":"^CECECE中級楓葉護符不足^000000",Cat017,
+	countitem(28420)>=1?"中級兔子護符持有":"^CECECE中級兔子護符不足^000000",Cat018,
+	countitem(15156)>=1?"喵族優雅外套持有":"^CECECE喵族優雅外套不足^000000",Cat019,
+	countitem(20790)>=1?"喵族優雅斗篷持有":"^CECECE喵族優雅斗篷不足^000000",Cat020,
+	countitem(22086)>=1?"喵族優雅鞋子持有":"^CECECE喵族優雅鞋子不足^000000",Cat021,
+	countitem(28415)>=1?"高級竹莢魚護符持有":"^CECECE高級竹莢魚護符不足^000000",Cat022,
+	countitem(28418)>=1?"高級楓葉護符持有":"^CECECE高級楓葉護符不足^000000",Cat023,
+	countitem(28421)>=1?"高級兔子護符持有":"^CECECE高級兔子護符不足^000000",Cat024,
+	"取消",no;
+
+	Cat001:	set @Keepsake,15126; goto land2;
+	Cat002:	set @Keepsake,20788; goto land2;
+	Cat003:	set @Keepsake,22083; goto land2;
+	Cat004:	set @Keepsake,28380; goto land2;
+	Cat005:	set @Keepsake,28381; goto land2;
+	Cat006:	set @Keepsake,28382; goto land2;
+	Cat007:	set @Keepsake,28413; goto land2;
+	Cat008:	set @Keepsake,28416; goto land2;
+	Cat009:	set @Keepsake,28419; goto land2;
+	Cat010:	set @Keepsake,28422; goto land2;
+	Cat011:	set @Keepsake,28423; goto land2;
+	Cat012:	set @Keepsake,28424; goto land2;
+	Cat013:	set @Keepsake,15129; goto land3;
+	Cat014:	set @Keepsake,20789; goto land3;
+	Cat015:	set @Keepsake,22084; goto land3;
+	Cat016:	set @Keepsake,28414; goto land3;
+	Cat017:	set @Keepsake,28417; goto land3;
+	Cat018:	set @Keepsake,28420; goto land3;
+	Cat019:	set @Keepsake,15156; goto land4;
+	Cat020:	set @Keepsake,20790; goto land4;
+	Cat021:	set @Keepsake,22086; goto land4;
+	Cat022:	set @Keepsake,28415; goto land4;
+	Cat023:	set @Keepsake,28418; goto land4;
+	Cat024:	set @Keepsake,28421; goto land4;
+
+no:
+	close;
+//---------------------------------- 2個喵族信物
+land2:
+	if(countitem(@Keepsake)<1){
+	mes"[柔弱的老四]";
+	mes"你少於一個物品不能兌換";
+	close;
+	}
+	mes"[柔弱的老四]";
+	mes "回收這個個喵族防具可以獲得^0000ff2個^000000喵族信物";
+	mes "你想要回收幾個喵族防具";
+	input @Cnum,0,100;
+
+	if(countitem(@Keepsake) <@Cnum){
+	mes"[柔弱的老四]";
+	mes"你少於輸入的數量不能兌換";
+	close;
+	}
+	getitem 25142,@Cnum*2;
+	delitem @Keepsake,(@Cnum*1);
+	mes "喵族信物兌換已完成";
+	close;
+	end;
+
+//---------------------------------- 3個喵族信物
+land3:
+	if(countitem(@Keepsake)<1){
+	mes"[柔弱的老四]";
+	mes"你少於一個物品不能兌換";
+	close;
+	}
+	mes"[柔弱的老四]";
+	mes "回收這個個喵族防具可以獲得^0000ff3個^000000喵族信物";
+	mes "你想要回收幾個喵族防具";
+	input @Cnum,0,100;
+
+	if(countitem(@Keepsake) <@Cnum){
+	mes"[柔弱的老四]";
+	mes"你少於輸入的數量不能兌換";
+	close;
+	}
+	getitem 25142,@Cnum*3;
+	delitem @Keepsake,(@Cnum*1);
+	mes "喵族信物兌換已完成";
+	close;
+	end;
+
+//---------------------------------- 4個喵族信物
+land4:
+	if(countitem(@Keepsake)<1){
+	mes"[柔弱的老四]";
+	mes"你少於一個物品不能兌換";
+	close;
+	}
+	mes"[柔弱的老四]";
+	mes "回收這個個喵族防具可以獲得^0000ff4個^000000喵族信物";
+	mes "你想要回收幾個喵族防具";
+	input @Cnum,0,100;
+
+	if(countitem(@Keepsake) <@Cnum){
+	mes"[柔弱的老四]";
+	mes"你少於輸入的數量不能兌換";
+	close;
+	}
+	getitem 25142,@Cnum*4;
+	delitem @Keepsake,(@Cnum*1);
+	mes "喵族信物兌換已完成";
+	close;
+	end;
+
+case 2:
+	mes "[柔弱的老四]";
+	mes "你有喵族裝備時再來找我吧";
+	close;
+	}
+
+}
+OnInit:
+	waitingroom "喵族裝備製作",0;
+	end;
+}
+
+
+
+
+

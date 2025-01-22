@@ -1,0 +1,679 @@
+vdistrict1,28,79,4	script	克雷斯特漢姆的殞落管理者	10307,{
+
+
+	//模式選擇
+	switch(select("克雷斯特漢姆的殞落(普通):克雷斯特漢姆的殞落(困難)")){
+
+case 1:
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_51 < gettime(8) ){
+	set Instance_Bout_51,10;
+	set day_Instance_Bout_51,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_51 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[奧斯卡]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "克雷斯特漢姆的殞落[普通模式]";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[奧斯卡]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_51+"^000000 ]";
+	mes "副本獎勵：";
+	mes "詛咒水晶x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[奧斯卡]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[奧斯卡]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[奧斯卡]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		//副本難度
+		set EDDAGH_Level,1;
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[奧斯卡]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_51,Instance_Bout_51-1;
+
+			//副本任務
+			if(checkquest(32000,HUNTING)<0 ){setquest 32000;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	end;
+
+case 2:
+	//副本任務獎勵
+	if(checkquest(32040,HUNTING)==2 ) { 
+	dispbottom "克雷斯特漢姆的殞落[困難模式]任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+20;	//副本積分+20
+	dispbottom "副本積分+20";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32040; }
+
+	//挑戰次數
+	if ( day_Instance_Bout_52 < gettime(8) ){
+	set Instance_Bout_52,3;
+	set day_Instance_Bout_52,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_52 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[奧斯卡]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "克雷斯特漢姆的殞落[困難模式]";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[奧斯卡]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_52+"^000000 ]";
+	mes "副本獎勵：";
+	mes "詛咒寶石x6";
+	mes "官方副本積分x20";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 160) {
+			mes "[奧斯卡]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[奧斯卡]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[奧斯卡]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		//副本難度
+		set EDDAGH_Level,2;
+		//副本難度
+		set Gl_Level,2;
+		close;
+	case 1:
+		if(BaseLevel < 160) {
+			mes "[奧斯卡]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+		
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_52,Instance_Bout_52-1;
+
+			//副本任務
+			if(checkquest(32040,HUNTING)<0 ){setquest 32040;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	end;
+}
+
+OnInit:
+	waitingroom "EDDA克雷斯特漢姆的殞落",0;
+	end;
+}
+
+
+//------------------------------古城殞落[普通模式]事件1
+1@gl_prq,0,0,0	script	古城殞落[普通模式]事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@gl_prq");
+	//關閉普通模式NPC
+	disablenpc instance_npcname("奧斯卡#Gl_201");
+	disablenpc instance_npcname("奧斯卡#Gl_202");
+	disablenpc instance_npcname("奧斯卡#Gl_203");
+	disablenpc instance_npcname("奧斯卡#Gl_204");
+	disablenpc instance_npcname("奧斯卡#Gl_210");
+	//關閉困難模式NPC
+	disablenpc instance_npcname("奧斯卡#Gl_301");
+	disablenpc instance_npcname("奧斯卡#Gl_302");
+	disablenpc instance_npcname("奧斯卡#Gl_303");
+	disablenpc instance_npcname("奧斯卡#Gl_304");
+	disablenpc instance_npcname("奧斯卡#Gl_310");
+	//普通模式副本標籤
+	set 'Gl_2_01,0;
+	set 'Gl_2_02,0;
+	set 'Gl_2_03,0;
+	set 'Gl_2_04,0;
+	set 'Gl_2_05,0;
+	set 'Gl_2_Mob_01,0;
+	//困難模式副本標籤
+	set 'Gl_3_01,0;
+	set 'Gl_3_02,0;
+	set 'Gl_3_03,0;
+	set 'Gl_3_04,0;
+	set 'Gl_3_Mob_01,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'Win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd0:
+	set 'Gl_2_Mob_01,20;
+	areamonster 'map_name$[0],13,80,78,32,"--ja--",20252,10;
+	areamonster 'map_name$[0],20,68,20,42,"--ja--",20392,4,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],36,74,66,74,"--ja--",20392,4,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],63,71,63,53,"--ja--",20392,4,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],58,49,79,36,"--ja--",20392,4,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],30,40,46,40,"--ja--",20392,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],26,61,51,61,"--ja--",20392,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd1";
+	end;
+
+	OnCcdd1:
+	set 'Gl_2_Mob_01,'Gl_2_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_2_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_2_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_201");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",119,63;
+	set 'Gl_2_Mob_01,20;
+	areamonster 'map_name$[0],126,69,183,18,"--ja--",20252,10;
+	areamonster 'map_name$[0],168,39,184,19,"--ja--",20394,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],129,22,165,22,"--ja--",20388,5,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],166,75,184,52,"--ja--",20388,5,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],154,70,154,32,"--ja--",20388,5,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],134,53,134,32,"--ja--",20388,3,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	set 'Gl_2_Mob_01,'Gl_2_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_2_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_2_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_202");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",149,113;
+	set 'Gl_2_Mob_01,20;
+	areamonster 'map_name$[0],125,186,184,112,"--ja--",20252,10;
+	areamonster 'map_name$[0],159,124,181,112,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],147,132,147,155,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],160,167,173,158,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],156,180,181,180,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],131,186,131,111,"--ja--",20390,8,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],158,118,181,118,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],158,118,181,118,"--ja--",20390,3,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'Gl_2_Mob_01,'Gl_2_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_2_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_2_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_203");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",77,176;
+	set 'Gl_2_Mob_01,20;
+	areamonster 'map_name$[0],126,69,183,18,"--ja--",20252,10;
+	areamonster 'map_name$[0],55,185,55,185,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	sleep2 3000;
+	areamonster 'map_name$[0],60,172,60,172,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],57,174,57,118,"--ja--",20390,3,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	sleep2 3000;
+	areamonster 'map_name$[0],63,166,63,166,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,159,67,159,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,164,67,118,"--ja--",20390,4,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],46,178,22,178,"--ja--",20394,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],46,167,14,167,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],46,167,14,167,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	sleep2 10000;
+	areamonster 'map_name$[0],46,178,22,178,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],17,129,17,129,"--ja--",20394,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],17,129,17,129,"--ja--",20390,2,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd4:
+	set 'Gl_2_Mob_01,'Gl_2_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_2_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_2_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_204");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",52,246;
+	end;
+
+	OnCcdd5:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【克雷斯特漢姆的殞落[普通模式]】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("奧斯卡#Gl_210");
+	instance_announce 0, "奧斯卡：這個空間開始崩裂了，來找我離開這裡吧!",bc_map,"0x00cc66";
+	end;
+}
+
+//------------------------------古城殞落[困難模式]事件1
+1@gl_prq,0,0,0	script	古城殞落[困難模式]事件1	-1,{
+
+	OnCcdd0:
+	set 'Gl_3_Mob_01,20;
+	areamonster 'map_name$[0],13,80,78,32,"--ja--",20252,10;
+	areamonster 'map_name$[0],20,68,20,42,"--ja--",20392,4,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],36,74,66,74,"--ja--",20392,4,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],63,71,63,53,"--ja--",20392,4,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],58,49,79,36,"--ja--",20392,4,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],30,40,46,40,"--ja--",20392,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],26,61,51,61,"--ja--",20392,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd1";
+	end;
+
+	OnCcdd1:
+	set 'Gl_3_Mob_01,'Gl_3_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_3_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_3_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_301");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",119,63;
+	set 'Gl_3_Mob_01,20;
+	areamonster 'map_name$[0],126,69,183,18,"--ja--",20252,10;
+	areamonster 'map_name$[0],168,39,184,19,"--ja--",20394,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],129,22,165,22,"--ja--",20389,5,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],166,75,184,52,"--ja--",20389,5,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],154,70,154,32,"--ja--",20389,5,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd2";
+	sleep2 3000;
+	areamonster 'map_name$[0],134,53,134,32,"--ja--",20389,3,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	set 'Gl_3_Mob_01,'Gl_3_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_3_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_3_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_302");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",149,113;
+	set 'Gl_3_Mob_01,20;
+	areamonster 'map_name$[0],125,186,184,112,"--ja--",20252,10;
+	areamonster 'map_name$[0],159,124,181,112,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],147,132,147,155,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],160,167,173,158,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],156,180,181,180,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],131,186,131,111,"--ja--",20391,8,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	sleep2 3000;
+	areamonster 'map_name$[0],158,118,181,118,"--ja--",20394,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],158,118,181,118,"--ja--",20391,3,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'Gl_3_Mob_01,'Gl_3_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_3_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_3_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_303");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",77,176;
+	set 'Gl_3_Mob_01,30;
+	areamonster 'map_name$[0],126,69,183,18,"--ja--",20252,10;
+	areamonster 'map_name$[0],57,176,32,176,"--ja--",20389,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],57,176,32,176,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	sleep2 3000;
+	areamonster 'map_name$[0],60,172,60,172,"--ja--",20389,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],57,174,57,118,"--ja--",20391,3,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,167,15,167,"--ja--",20389,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,167,15,167,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],64,167,64,118,"--ja--",20389,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	sleep2 6000;
+	areamonster 'map_name$[0],63,166,63,166,"--ja--",20389,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,159,67,159,"--ja--",20389,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],67,164,67,118,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],46,178,22,178,"--ja--",20389,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],46,167,14,167,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	sleep2 10000;
+	areamonster 'map_name$[0],46,178,22,178,"--ja--",20389,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],20,129,20,146,"--ja--",20389,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],20,129,20,146,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	sleep2 10000;
+	areamonster 'map_name$[0],43,151,43,120,"--ja--",20389,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],43,151,43,120,"--ja--",20391,2,instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd4:
+	set 'Gl_3_Mob_01,'Gl_3_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Gl_3_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('Gl_3_Mob_01>0) end;
+	enablenpc instance_npcname("奧斯卡#Gl_304");
+	instance_announce 0, "奧斯卡：這區域怪物清除完畢，將傳送你們到下個區域。",bc_map,"0x00cc66";
+	sleep2 1000;
+	instance_warpall "1@gl_prq",52,246;
+	end;
+
+	OnEnd:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【克雷斯特漢姆的殞落[困難模式]】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("奧斯卡#Gl_310");
+	instance_announce 0, "奧斯卡：這個空間開始崩裂了，來找我離開這裡吧!",bc_map,"0x00cc66";
+	end;
+}
+
+
+//------------------------------普通模式相關NPC
+1@gl_prq,127,63,4	script	奧斯卡#Gl_201	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_2_01==1) {end;}
+	set 'Gl_2_01,1;
+	npctalk "淨化這些被吸走靈魂的卡利斯格成員吧";
+	sleep2 1000;
+	npctalk "要注意裡面有血腥騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_201");
+	end;
+}
+
+1@gl_prq,148,121,4	script	奧斯卡#Gl_202	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_2_02==1) {end;}
+	set 'Gl_2_02,1;
+	npctalk "淨化這些被吸走靈魂的白衣騎士成員吧";
+	sleep2 1000;
+	npctalk "要注意裡面有血腥騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_202");
+	end;
+}
+
+
+1@gl_prq,67,176,4	script	奧斯卡#Gl_203	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_2_03==1) {end;}
+	set 'Gl_2_03,1;
+	npctalk "淨化這些被吸走靈魂的血腥騎士團成員吧";
+	sleep2 1000;
+	npctalk "這裡面還有白衣騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_203");
+	end;
+}
+
+1@gl_prq,52,278,4	script	奧斯卡#Gl_204	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_2_04==1) {end;}
+	set 'Gl_2_04,1;
+	npctalk "見證施密特他最後的情況吧...";
+	sleep2 1000;
+	areamonster 'map_name$[0],50,280,50,280,"--ja--",20386,1,instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd5";
+	instance_warpall "1@gl_prq",52,246;
+	disablenpc instance_npcname("奧斯卡#Gl_204");
+	end;
+}
+
+1@gl_prq,80,22,6	script	普通模式觸發點#Gl_0	-1,5,5,{end;
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+OnTouch:
+	donpcevent instance_npcname("古城殞落[普通模式]事件1")+"::OnCcdd0";
+	disablenpc instance_npcname("普通模式觸發點#Gl_0");
+	end;
+}
+
+
+//------------------------------困難模式相關NPC
+1@gl_prq,127,63,4	script	奧斯卡#Gl_301	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_3_01==1) {end;}
+	set 'Gl_3_01,1;
+	npctalk "淨化這些被吸走靈魂的卡利斯格成員吧";
+	sleep2 1000;
+	npctalk "要注意裡面有血腥騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_301");
+	end;
+}
+
+1@gl_prq,148,121,4	script	奧斯卡#Gl_302	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_3_02==1) {end;}
+	set 'Gl_3_02,1;
+	npctalk "淨化這些被吸走靈魂的白衣騎士成員吧";
+	sleep2 1000;
+	npctalk "要注意裡面有血腥騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_302");
+	end;
+}
+
+1@gl_prq,67,176,4	script	奧斯卡#Gl_303	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_3_03==1) {end;}
+	set 'Gl_3_03,1;
+	npctalk "淨化這些被吸走靈魂的血腥騎士團成員吧";
+	sleep2 1000;
+	npctalk "這裡面還有白衣騎士...";
+	sleep2 1000;
+	disablenpc instance_npcname("奧斯卡#Gl_303");
+	end;
+}
+
+1@gl_prq,52,278,4	script	奧斯卡#Gl_304	10307,5,5,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('Gl_3_04==1) {end;}
+	set 'Gl_3_04,1;
+	npctalk "現在是最後一個房間了，確認一下有沒有施密特國王的思念徘迴";
+	sleep2 1000;
+	areamonster 'map_name$[0],50,280,50,280,"--ja--",20387,1,instance_npcname("古城殞落[困難模式]事件1")+"::OnEnd";
+	instance_warpall "1@gl_prq",52,246;
+	disablenpc instance_npcname("奧斯卡#Gl_304");
+	end;
+}
+
+1@gl_prq,14,16,6	script	困難模式觸發點#Gl_0	-1,5,5,{end;
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+OnTouch:
+	donpcevent instance_npcname("古城殞落[困難模式]事件1")+"::OnCcdd0";
+	disablenpc instance_npcname("困難模式觸發點#Gl_0");
+	end;
+}
+
+
+
+//------------------------------
+1@gl_prq,52,278,4	script	奧斯卡#Gl_210	10307,{
+
+	cutin "OSCAR01",0;
+	mes "[奧斯卡]";
+	mes "這一次還是無法改變什麼..";
+	mes "讓我送你們出去出吧";
+	next;
+	switch (select("請送我出去吧:我還要再逛逛這裡")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32000,HUNTING)==2 ) { 
+	dispbottom "克雷斯特漢姆的殞落[普通]任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25739,3*$EP1501;	//詛咒水晶
+	erasequest 32000; }
+	set Edda_glast,1;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------
+1@gl_prq,52,278,4	script	奧斯卡#Gl_310	10307,{
+	cutin "OSCAR01",0;
+	mes "[奧斯卡]";
+	mes "這一次還是無法改變什麼..";
+	mes "讓我送你們出去出吧";
+	next;
+	switch (select("請送我出去吧:我還要再逛逛這裡")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32040,HUNTING)==2 ) { 
+	dispbottom "克雷斯特漢姆的殞落[困難]任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",8;
+	set #Instance_Points,#Instance_Points+20;	//副本積分+20
+	dispbottom "副本積分+20";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25740,6*$EP1501;	//詛咒寶石
+	erasequest 32040; }
+	set Edda_glast,1;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------地圖屬性
+1@gl_prq	mapflag	nomemo
+1@gl_prq	mapflag	nosave	SavePoint
+1@gl_prq	mapflag	monster_noteleport
+1@gl_prq	mapflag	noteleport
+1@gl_prq	mapflag	noicewall
+1@gl_prq	mapflag	restricted	6
+
+

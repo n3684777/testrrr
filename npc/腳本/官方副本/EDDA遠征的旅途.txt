@@ -1,0 +1,694 @@
+vdistrict1,31,76,4	script	遠征的旅途管理者	982,{
+
+
+	//副本任務獎勵
+	if(checkquest(32016,HUNTING)==2 ) { 
+	dispbottom "遠征的旅途任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點兌換券
+	erasequest 32016; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_50 < gettime(8) ){
+	set Instance_Bout_50,10;
+	set day_Instance_Bout_50,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_50 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[科學家_內華達]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "遠征的旅途";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "副本獎勵倍數[ ^0000FF"+$EP1701+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_50+"^000000 ]";
+	mes "副本獎勵：";
+	mes "生物研究零件x5";
+	mes "生物研究卷宗x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[科學家_內華達]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[科學家_內華達]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[科學家_內華達]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[科學家_內華達]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_50,Instance_Bout_50-1;
+
+			//副本任務
+			if(checkquest(32016,HUNTING)<0 ){setquest 32016;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "EDDA遠征的旅途",0;
+	end;
+}
+
+
+//------------------------------遠征的旅途事件
+1@gol1,0,0,0	script	遠征的旅途事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@gol1");
+	'map_name$[1] = instance_mapname("1@gol2");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("科學家_內華達#gol102");
+	disablenpc instance_npcname("科學家_內華達#gol103");
+	disablenpc instance_npcname("科學家_內華達#gol104");
+	disablenpc instance_npcname("科學家_內華達#gol105");
+	disablenpc instance_npcname("科學家_內華達#gol106");
+	disablenpc instance_npcname("科學家_內華達#gol107");
+	disablenpc instance_npcname("科學家_內華達#gol108");
+	disablenpc instance_npcname("科學家_內華達#gol109");
+	disablenpc instance_npcname("科學家_內華達#gol110");
+	disablenpc instance_npcname("科學家_內華達#gol111");
+	disablenpc instance_npcname("詭異的火焰#gol101");
+	disablenpc instance_npcname("詭異的火焰#gol102");
+	disablenpc instance_npcname("詭異的火焰#gol103");
+	disablenpc instance_npcname("詭異的火焰#gol104");
+	disablenpc instance_npcname("詭異的火焰#gol105");
+	disablenpc instance_npcname("詭異的火焰#gol106");
+	disablenpc instance_npcname("詭異的火焰#gol107");
+	disablenpc instance_npcname("詭異的火焰#gol108");
+	disablenpc instance_npcname("詭異的火焰#gol109");
+	disablenpc instance_npcname("詭異的火焰#gol110");
+	disablenpc instance_npcname("詭異的火焰#gol111");
+	disablenpc instance_npcname("詭異的火焰#gol112");
+	disablenpc instance_npcname("詭異的火焰#gol113");
+	disablenpc instance_npcname("詭異的火焰#gol114");
+	disablenpc instance_npcname("詭異的火焰#gol115");
+	disablenpc instance_npcname("詭異的火焰#gol116");
+	disablenpc instance_npcname("詭異的火焰#gol117");
+	disablenpc instance_npcname("詭異的火焰#gol118");
+	disablenpc instance_npcname("詭異的火焰#gol119");
+	disablenpc instance_npcname("詭異的火焰#gol120");
+	disablenpc instance_npcname("詭異的火焰#gol121");
+	disablenpc instance_npcname("詭異的火焰#gol122");
+	disablenpc instance_npcname("詭異的火焰#gol123");
+	disablenpc instance_npcname("詭異的火焰#gol124");
+	disablenpc instance_npcname("詭異的火焰#gol125");
+	disablenpc instance_npcname("詭異的火焰#gol126");
+	disablenpc instance_npcname("詭異的火焰#gol127");
+	disablenpc instance_npcname("詭異的火焰#gol128");
+	disablenpc instance_npcname("出怪點#gol101");
+	disablenpc instance_npcname("出怪點#gol102");
+	disablenpc instance_npcname("出怪點#gol103");
+	disablenpc instance_npcname("出怪點#gol104");
+	//disablenpc instance_npcname("???寶箱#gol101");
+	//副本標籤
+	set 'CD_gol1_1,0;
+	set 'CD_gol1_2,0;
+	set 'CD_gol1_3,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'Win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,26;
+	areamonster 'map_name$[0],65,294,71,292,"--ja--",20543,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],65,294,71,292,"--ja--",20542,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],65,294,71,292,"--ja--",20541,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],65,306,65,304,"--ja--",20541,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],9,321,13,317,"--ja--",20541,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],9,321,13,317,"--ja--",20543,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],9,321,13,317,"--ja--",20542,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd2";
+	instance_warpall "1@gol1",67,274;
+	enablenpc instance_npcname("科學家_內華達#gol103");
+	end;
+
+	OnCcdd2:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,22;
+	areamonster 'map_name$[0],104,195,104,191,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],106,203,107,207,"--ja--",20543,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],130,196,133,196,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],130,206,133,206,"--ja--",20541,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],117,221,120,219,"--ja--",20543,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],94,221,99,220,"--ja--",20542,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd3";
+	instance_warpall "1@gol1",113,190;
+	enablenpc instance_npcname("科學家_內華達#gol104");
+	end;
+
+	OnCcdd3:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,23;
+	areamonster 'map_name$[0],54,111,59,108,"--ja--",20541,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],54,111,59,108,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],54,111,59,108,"--ja--",20543,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],76,92,88,88,"--ja--",20538,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],76,92,88,88,"--ja--",20541,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],76,92,88,88,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],88,139,91,135,"--ja--",20541,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],54,139,63,134,"--ja--",20541,1,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],54,139,63,134,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],54,139,63,134,"--ja--",20538,1,instance_npcname("遠征的旅途事件1")+"::OnCcdd4";
+	instance_warpall "1@gol1",80,110;
+	enablenpc instance_npcname("科學家_內華達#gol105");
+	end;
+
+	OnCcdd4:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	//防禦線1
+	setcell instance_mapname("1@gol1"),128,36,133,36,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),128,36,133,36,cell_shootable,0;
+	set 'gol11_mob_01,5;
+	areamonster 'map_name$[0],111,19,114,16,"--ja--",20541,1,instance_npcname("遠征的旅途事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],111,19,114,16,"--ja--",20542,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd5";
+	instance_warpall "1@gol1",120,20;
+	enablenpc instance_npcname("詭異的火焰#gol101");
+	enablenpc instance_npcname("科學家_內華達#gol106");
+	end;
+
+	OnCcdd5:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	enablenpc instance_npcname("出怪點#gol101");
+	donpcevent instance_npcname("詭異的火焰#gol101")+"::OnCcdd1";
+	disablenpc instance_npcname("詭異的火焰#gol101");
+	setcell instance_mapname("1@gol1"),128,36,133,36,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),128,36,133,36,cell_shootable,1;
+	end;
+
+	OnCcdd6:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	enablenpc instance_npcname("出怪點#gol102");
+	donpcevent instance_npcname("詭異的火焰#gol102")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol103")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol104")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol105")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol106")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol107")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol108")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol109")+"::OnCcdd1";
+	disablenpc instance_npcname("詭異的火焰#gol102");
+	disablenpc instance_npcname("詭異的火焰#gol103");
+	disablenpc instance_npcname("詭異的火焰#gol104");
+	disablenpc instance_npcname("詭異的火焰#gol105");
+	disablenpc instance_npcname("詭異的火焰#gol106");
+	disablenpc instance_npcname("詭異的火焰#gol107");
+	disablenpc instance_npcname("詭異的火焰#gol108");
+	disablenpc instance_npcname("詭異的火焰#gol109");
+	setcell instance_mapname("1@gol1"),136,54,148,54,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),136,54,148,54,cell_shootable,1;
+	setcell instance_mapname("1@gol1"),135,71,135,75,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),135,71,135,75,cell_shootable,1;
+	end;
+
+	OnCcdd7:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	enablenpc instance_npcname("出怪點#gol103");
+	donpcevent instance_npcname("詭異的火焰#gol110")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol111")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol112")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol113")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol114")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol115")+"::OnCcdd1";
+	disablenpc instance_npcname("詭異的火焰#gol110");
+	disablenpc instance_npcname("詭異的火焰#gol111");
+	disablenpc instance_npcname("詭異的火焰#gol112");
+	disablenpc instance_npcname("詭異的火焰#gol113");
+	disablenpc instance_npcname("詭異的火焰#gol114");
+	disablenpc instance_npcname("詭異的火焰#gol115");
+	setcell instance_mapname("1@gol1"),140,31,152,31,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),140,31,152,31,cell_shootable,1;
+	instance_announce 0, "左上方發出異常騷動",bc_map,"3399ff";
+	end;
+
+	OnCcdd8:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	enablenpc instance_npcname("出怪點#gol104");
+	donpcevent instance_npcname("詭異的火焰#gol116")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol117")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol118")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol119")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol120")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol121")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol122")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol123")+"::OnCcdd1";
+	disablenpc instance_npcname("詭異的火焰#gol116");
+	disablenpc instance_npcname("詭異的火焰#gol117");
+	disablenpc instance_npcname("詭異的火焰#gol118");
+	disablenpc instance_npcname("詭異的火焰#gol119");
+	disablenpc instance_npcname("詭異的火焰#gol120");
+	disablenpc instance_npcname("詭異的火焰#gol121");
+	disablenpc instance_npcname("詭異的火焰#gol122");
+	disablenpc instance_npcname("詭異的火焰#gol123");
+	setcell instance_mapname("1@gol1"),88,54,100,54,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),88,54,100,54,cell_shootable,1;
+	setcell instance_mapname("1@gol1"),100,76,100,72,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),100,76,100,72,cell_shootable,1;
+	end;
+
+	OnCcdd9:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,20;
+	areamonster 'map_name$[0],154,109,157,109,"--ja--",20537,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],162,120,164,119,"--ja--",20542,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],139,113,141,111,"--ja--",20539,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],149,120,150,118,"--ja--",20538,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],141,109,148,106,"--ja--",20543,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd10";
+	enablenpc instance_npcname("科學家_內華達#gol107");
+	donpcevent instance_npcname("詭異的火焰#gol124")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol125")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol126")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol127")+"::OnCcdd1";
+	donpcevent instance_npcname("詭異的火焰#gol128")+"::OnCcdd1";
+	disablenpc instance_npcname("詭異的火焰#gol124");
+	disablenpc instance_npcname("詭異的火焰#gol125");
+	disablenpc instance_npcname("詭異的火焰#gol126");
+	disablenpc instance_npcname("詭異的火焰#gol127");
+	disablenpc instance_npcname("詭異的火焰#gol128");
+	setcell instance_mapname("1@gol1"),84,31,96,31,cell_walkable,1;
+	setcell instance_mapname("1@gol1"),84,31,96,31,cell_shootable,1;
+	instance_warpall "1@gol1",168,104;
+	end;
+
+	OnCcdd10:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,22;
+	areamonster 'map_name$[0],151,139,165,133,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],151,139,165,133,"--ja--",20543,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],151,139,165,133,"--ja--",20537,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],151,139,165,133,"--ja--",20538,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],151,139,165,133,"--ja--",20539,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd11";
+	end;
+
+	OnCcdd11:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	set 'gol11_mob_01,17;
+	areamonster 'map_name$[0],172,301,175,298,"--ja--",20537,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],152,301,153,299,"--ja--",20541,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],145,298,149,295,"--ja--",20543,5,instance_npcname("遠征的旅途事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],145,308,150,306,"--ja--",20542,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd12";
+	enablenpc instance_npcname("科學家_內華達#gol108");
+	instance_warpall "1@gol1",160,297;
+	end;
+
+	OnCcdd12:
+	set 'gol11_mob_01,'gol11_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'gol11_mob_01+"個警備兵",bc_all,0xD7BA98;
+	if ('gol11_mob_01>0) end;
+	enablenpc instance_npcname("科學家_內華達#gol109");
+	enablenpc instance_npcname("科學家_內華達#gol110");
+	instance_warpall "1@gol2",49,20;
+	end;
+
+	OnEnd:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【遠征的旅途】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("科學家_內華達#gol111");
+	instance_announce instance_id(1),"科學家_內華達：一切都結束了來找我離開這裡吧，我會給你們一些獎勵的",bc_all,0xD7BA98;
+	//enablenpc instance_npcname("???寶箱#gol101");
+	end;
+}
+
+
+//------------------------------ 副本NPC
+1@gol1,196,38,6	script	科學家_內華達#gol101	982,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_gol1_1==1) {end;}
+	set 'CD_gol1_1,1;
+	sleep2 300;
+	npctalk ".......";
+	sleep2 2000;
+	npctalk "你的隊友還沒進來嗎?";
+	sleep2 2000;
+	npctalk "很好，看來你的隊友都到齊了";
+	sleep2 10000;
+	npctalk "接下來我將帶領你們體驗殘存在這建築中過往的記憶";
+	sleep2 500;
+	instance_warpall "1@gol1",164,186;
+	set 'gol11_mob_01,16;
+	areamonster 'map_name$[0],156,188,159,188,"--ja--",20542,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],172,188,176,188,"--ja--",20543,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,205,159,205,"--ja--",20541,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],172,205,176,205,"--ja--",20543,4,instance_npcname("遠征的旅途事件1")+"::OnCcdd1";
+	disablenpc instance_npcname("科學家_內華達#gol101");
+	enablenpc instance_npcname("科學家_內華達#gol102");
+	sleep2 3000;
+	instance_announce 0, "發現不明人士入侵研究所，保安系統啟動",bc_map,"0x3399ff";
+	end;
+}
+
+
+1@gol1,171,204,4	script	科學家_內華達#gol102	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+
+1@gol1,64,276,4	script	科學家_內華達#gol103	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+
+1@gol1,119,196,4	script	科學家_內華達#gol104	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol1,74,118,4	script	科學家_內華達#gol105	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol1,113,26,4	script	科學家_內華達#gol106	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol1,159,112,4	script	科學家_內華達#gol107	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol1,170,305,4	script	科學家_內華達#gol108	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol2,50,25,4	script	科學家_內華達#gol109	982,{
+	mes "[科學家_內華達]";
+	mes ".................";
+	close;
+}
+
+1@gol2,51,65,4	script	科學家_內華達#gol110	982,3,3,{end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_gol1_2==1) {end;}
+	set 'CD_gol1_2,1;
+	disablenpc instance_npcname("科學家_內華達#gol109");
+	sleep2 3000;
+	npctalk "科學家 內華達 : 你們做好準備了嗎?";
+	sleep2 3000;
+	instance_announce 0, "空氣中開始瀰漫者異常的氣息",bc_map,"0xFFFF00";
+	sleep2 3000;
+	disablenpc instance_npcname("科學家_內華達#gol110");
+	instance_warpall "1@gol2",50,58;
+	sleep2 3000;
+	areamonster 'map_name$[1],50,63,50,63,"--ja--",20536,1,instance_npcname("遠征的旅途事件1")+"::OnEnd";
+	end;
+}
+
+
+1@gol1,141,71,4	script	出怪點#gol101	10248,5,5,{end;
+OnTouch:
+	disablenpc instance_npcname("出怪點#gol101");
+	set 'gol11_mob_01,5;
+	areamonster 'map_name$[0],139,73,142,70,"--ja--",20541,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],139,73,142,70,"--ja--",20542,3,instance_npcname("遠征的旅途事件1")+"::OnCcdd6";
+	//防禦線2~3
+	setcell instance_mapname("1@gol1"),136,54,148,54,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),136,54,148,54,cell_shootable,0;
+	setcell instance_mapname("1@gol1"),135,71,135,75,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),135,71,135,75,cell_shootable,0;
+	enablenpc instance_npcname("詭異的火焰#gol102");
+	enablenpc instance_npcname("詭異的火焰#gol103");
+	enablenpc instance_npcname("詭異的火焰#gol104");
+	enablenpc instance_npcname("詭異的火焰#gol105");
+	enablenpc instance_npcname("詭異的火焰#gol106");
+	enablenpc instance_npcname("詭異的火焰#gol107");
+	enablenpc instance_npcname("詭異的火焰#gol108");
+	enablenpc instance_npcname("詭異的火焰#gol109");
+	enablenpc instance_npcname("出怪點#gol102");
+	end;
+}
+
+1@gol1,146,18,4	script	出怪點#gol102	10248,5,5,{end;
+OnTouch:
+	disablenpc instance_npcname("出怪點#gol102");
+	set 'gol11_mob_01,10;
+	areamonster 'map_name$[0],143,19,149,12,"--ja--",20537,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],143,19,149,12,"--ja--",20542,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],143,19,149,12,"--ja--",20541,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd7";
+	//防禦線4
+	setcell instance_mapname("1@gol1"),140,31,152,31,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),140,31,152,31,cell_shootable,0;
+	enablenpc instance_npcname("詭異的火焰#gol110");
+	enablenpc instance_npcname("詭異的火焰#gol111");
+	enablenpc instance_npcname("詭異的火焰#gol112");
+	enablenpc instance_npcname("詭異的火焰#gol113");
+	enablenpc instance_npcname("詭異的火焰#gol114");
+	enablenpc instance_npcname("詭異的火焰#gol115");
+	end;
+}
+
+1@gol1,94,69,4	script	出怪點#gol103	10248,5,5,{end;
+OnTouch:
+	disablenpc instance_npcname("出怪點#gol103");
+	set 'gol11_mob_01,8;
+	areamonster 'map_name$[0],92,76,95,69,"--ja--",20541,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],92,76,95,69,"--ja--",20542,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd8";
+	//防禦線5~6
+	setcell instance_mapname("1@gol1"),88,54,100,54,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),88,54,100,54,cell_shootable,0;
+	setcell instance_mapname("1@gol1"),100,76,100,72,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),100,76,100,72,cell_shootable,0;
+	enablenpc instance_npcname("詭異的火焰#gol116");
+	enablenpc instance_npcname("詭異的火焰#gol117");
+	enablenpc instance_npcname("詭異的火焰#gol118");
+	enablenpc instance_npcname("詭異的火焰#gol119");
+	enablenpc instance_npcname("詭異的火焰#gol120");
+	enablenpc instance_npcname("詭異的火焰#gol121");
+	enablenpc instance_npcname("詭異的火焰#gol122");
+	enablenpc instance_npcname("詭異的火焰#gol123");
+	end;
+}
+
+1@gol1,90,18,4	script	出怪點#gol104	10248,5,5,{end;
+OnTouch:
+	disablenpc instance_npcname("出怪點#gol104");
+	set 'gol11_mob_01,8;
+	areamonster 'map_name$[0],87,18,92,13,"--ja--",20541,2,instance_npcname("遠征的旅途事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],87,18,92,13,"--ja--",20542,6,instance_npcname("遠征的旅途事件1")+"::OnCcdd9";
+	//防禦線7
+	setcell instance_mapname("1@gol1"),84,31,96,31,cell_walkable,0;
+	setcell instance_mapname("1@gol1"),84,31,96,31,cell_shootable,0;
+	enablenpc instance_npcname("詭異的火焰#gol124");
+	enablenpc instance_npcname("詭異的火焰#gol125");
+	enablenpc instance_npcname("詭異的火焰#gol126");
+	enablenpc instance_npcname("詭異的火焰#gol127");
+	enablenpc instance_npcname("詭異的火焰#gol128");
+	end;
+}
+
+
+//------------------------------ 詭異的火焰
+1@gol1,130,37,3	script	詭異的火焰#gol101	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,137,54,3	script	詭異的火焰#gol102	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,139,54,3	script	詭異的火焰#gol103	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,141,54,3	script	詭異的火焰#gol104	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,143,54,3	script	詭異的火焰#gol105	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,145,54,3	script	詭異的火焰#gol106	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,147,54,3	script	詭異的火焰#gol107	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,135,72,3	script	詭異的火焰#gol108	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,135,74,3	script	詭異的火焰#gol109	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,141,31,3	script	詭異的火焰#gol110	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,143,31,3	script	詭異的火焰#gol111	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,145,31,3	script	詭異的火焰#gol112	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,147,31,3	script	詭異的火焰#gol113	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,149,31,3	script	詭異的火焰#gol114	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,151,31,3	script	詭異的火焰#gol115	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,89,54,3	script	詭異的火焰#gol116	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,91,54,3	script	詭異的火焰#gol117	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,93,54,3	script	詭異的火焰#gol118	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,95,54,3	script	詭異的火焰#gol119	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,97,54,3	script	詭異的火焰#gol120	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,99,54,3	script	詭異的火焰#gol121	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,100,76,3	script	詭異的火焰#gol122	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,100,74,3	script	詭異的火焰#gol123	802,{end; OnCcdd1: specialeffect 16; end;}
+
+1@gol1,85,31,3	script	詭異的火焰#gol124	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,87,31,3	script	詭異的火焰#gol125	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,89,31,3	script	詭異的火焰#gol126	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,91,31,3	script	詭異的火焰#gol127	802,{end; OnCcdd1: specialeffect 16; end;}
+1@gol1,93,31,3	script	詭異的火焰#gol128	802,{end; OnCcdd1: specialeffect 16; end;}
+
+
+//------------------------------ 獎勵2
+1@gol2,51,65,4	script	科學家_內華達#gol111	982,{
+
+	//副本任務獎勵
+	if(checkquest(32016,HUNTING)==2 ) { 
+	dispbottom "遠征的旅途任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",9;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點兌換券
+
+
+	erasequest 32016; }
+
+	mes "[科學家_內華達]";
+	mes "讓我送你們這裡吧";
+	next;
+	switch (select("請送我出去(領取獎勵):我還想四處看看.")) {
+	case 1:
+
+	//正常獎勵
+	getitem 25787,5*$EP1701;	//生物研究零件
+	getitem 25786,3*$EP1701;	//生物研究卷宗
+	//if(checkquest(16400,HUNTING)==2 ) { 
+		set @pay,rand(1,10000);
+		if(@pay>0 && @pay<=3999){
+		getitem 25787,3*$EP1701;	//生物研究零件
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+		}
+		if(@pay>=4000 && @pay<=8000){
+		getitem 25786,3*$EP1701;	//生物研究卷宗
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+		}
+		set @Ccard,F_Rand(21051,21052,32023,32024,32025,1333,28138,28765,28766,28042,28044,26158,26161,2055,2056,2057,18185,18186,18187,32350,32351,16092,16093,16094,16095,28767,28768,18184,28633,26159,26160,1865,1866,16096,18188,26212,26213,32107,32108);
+		getitem @Ccard,1;
+		announce "【遠征的旅途】 恭喜玩家 " + strcharinfo(0) + "，開到 "+getitemname(@Ccard)+"!!!",bc_all,0xD7BA98;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+	//erasequest 16400; }
+	//dispbottom "沒有見證到無名劍士死亡，沒有完成任務";
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+
+}
+
+
+//------------------------------ 地圖屬性
+1@gol1	mapflag	nomemo
+1@gol1	mapflag	nosave	SavePoint
+1@gol1	mapflag	monster_noteleport
+1@gol1	mapflag	noteleport
+1@gol1	mapflag	restricted	6
+
+1@gol2	mapflag	nomemo
+1@gol2	mapflag	nosave	SavePoint
+1@gol2	mapflag	monster_noteleport
+1@gol2	mapflag	noteleport
+1@gol2	mapflag	restricted	6
+

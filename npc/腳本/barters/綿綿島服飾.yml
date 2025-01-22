@@ -1,0 +1,284 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+
+#第一期服飾
+   - Name: 第一期服飾
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: C_Pitaya_G_Bag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: C_2022RTC_V_Coat4_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: C_Head_Item_23458
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_23360
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_22782
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_23775
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_23858
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_44302
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: C_Head_Item_23626
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: C_Full_Bloom_Hairpin
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+#第二期服飾
+   - Name: 第二期服飾
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: C_Evil_Scythe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: C_GiantCatBag_JP_BL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: C_Head_Item_44822
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_44823
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_23457
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: C_Bouquet_Hat
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_22402
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_44524
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: C_Head_Item_44525
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: C_Head_Item_22568
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+#第三期服飾
+   - Name: 第三期服飾
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: C_Big_Ribbon_Cloak
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: C_Cat_Doll_WH
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: C_Little_Abyss_Dragon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: C_JRO_Eis_Spinne
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: C_Lord_of_Royals
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_23798
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_23774
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: C_Imperial_Glory
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: C_Vassalage_Necklace
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: C_Commandments_Of_Chain
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+
+
+
+
+
+
+
+
+
+

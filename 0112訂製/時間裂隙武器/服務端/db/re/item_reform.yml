@@ -1,0 +1,217 @@
+
+#時間裂隙武器精煉鎚
+  - Item: Time_Gap_Refine_Hammer
+    BaseItems:
+      - BaseItem: Time_Gap_Spear_IG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_Spear_IG
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_Staff_AG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_Staff_AG
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_Revolver_NW
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_Revolver_NW
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_MT_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_MT_Axe
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_HN_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_HN_Staff
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_TR_Vilolin
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_TR_Vilolin
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_TR_Ribbon
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_TR_Ribbon
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_BO_Blade
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_BO_Blade
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger1
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger2
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SOA_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SOA_Rod
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_DK_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_DK_Spear
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SKE_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SKE_Book
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_CD_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_CD_Staff
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_ABC_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_ABC_Dagger
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SH_Foxtail
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SH_Foxtail
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_IQ_Knuckle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_IQ_Knuckle
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_WH_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_WH_Bow
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SS_Dagger1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SS_Dagger1
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SS_Dagger2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_SS_Dagger2
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_EM_S_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+         - Material: Blacksmith_Blessing
+           Amount: 12
+         - Material: Time_D_Ma_Rune
+           Amount: 2
+        ResultItem: Time_Gap_EM_S_Book
+        ChangeRefine: 1
+
+
+

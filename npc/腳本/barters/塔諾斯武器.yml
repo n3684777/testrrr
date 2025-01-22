@@ -1,0 +1,181 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+  #塔諾斯武器
+  - Name: 塔諾斯武器兌換員
+    Map: prontera
+    X: 1
+    Y: 1
+    Direction: SouthWest
+    Sprite: 4_MAL_KAFRA
+    Items:
+      - Index: 0
+        Item: Gray_Charcoal_Melee
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 5
+      - Index: 1
+        Item: Gray_Charcoal_Magic
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 5
+      - Index: 2
+        Item: Gray_Charcoal_Range
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 5
+      - Index: 3
+        Item: Thanos_Sword
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 4
+        Item: Thanos_Long_Spear
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 5
+        Item: Thanos_Spear
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 6
+        Item: Thanos_Staff
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 7
+        Item: Thanos_Knuckle
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 8
+        Item: Thanos_Violin
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 9
+        Item: Thanos_Whip
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 10
+        Item: Thanos_Rod
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 11
+        Item: Thanos_Dagger
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 12
+        Item: Thanos_Hammer
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 13
+        Item: Thanos_Bow
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 14
+        Item: Thanos_Great_Sword
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 15
+        Item: Thanos_Katar
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 16
+        Item: Thanos_Axe
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 50
+      - Index: 17
+        Item: Thanos_Helm_1
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 80
+      - Index: 18
+        Item: Thanos_Helm_2
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 80
+      - Index: 19
+        Item: Thanos_Helm_3
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 80
+      - Index: 20
+        Item: Thanos_Helm_4
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Lv_Coin
+            Amount: 80

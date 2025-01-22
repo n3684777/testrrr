@@ -1,0 +1,1521 @@
+
+function	script	Oro_Bot	{
+	doevent "E_Oro_Bot::OnBotRun";
+	end;
+}
+
+
+-	script	E_Oro_Bot	-1,{
+function bot_find_target;
+function bot_move_rand;
+function bot_attack_target;
+function bot_attack_sk_id;
+function bot_attack_range;
+function bot_move_to_target;
+function bot_skill_delay;
+function bot_init_var;
+function bot_auto_heal;
+function bot_clear_timer;
+function bot_check_enemy_size;
+function bot_end_loot;
+function bot_change_target;
+function bot_check_cell;
+function bot_check_dir;
+function to_abs;
+function distance_mob;
+
+
+end;
+
+// 初始化設定
+OnInit:
+	setarray $@dir_name$[0],"原坐標","正東(右)","東北(右上)","正北(上)","西北(左上)","正西(左)","西南(左下)","正南(下)","東南(右下)";
+	setarray $@dir_idx[0],0,1,2,3,4,5,6,7,8;
+	end;
+
+
+OnBotMain:
+	if(@bot_run == 1) {
+		doevent "E_Oro_Bot::OnBotStop";
+	}else{
+		if(isdead()){
+			mes "死亡狀態下無法使用掛機!!";
+			close;
+		}
+		@bot_Map$ = strcharinfo(3);
+		.@limit_idx = inarray($@bot_limit_map$, @bot_Map$);
+		if(.@limit_idx != -1){
+			mes "["+@bot_Map$+"]";
+			mes "本地圖限制使用此功能!!";
+			close;
+		}
+		.@f1 = getmapflag(@bot_Map$,MF_GVG);
+		.@f2 = getmapflag(@bot_Map$,MF_GVG_CASTLE);
+		.@f3 = getmapflag(@bot_Map$,MF_GVG_DUNGEON);
+		.@f4 = getmapflag(@bot_Map$,MF_TOWN);
+		if (.@f1 || .@f2 || .@f3 ||.@f4) {
+			mes "當前地圖內無法使用本服務!!";
+			dispbottom "[ 掛機 ]: 當前地圖內無法使用本服務!!",0xFF0000;
+			close;
+		}
+			
+		if(Oro_Bot_Atk_Mode){
+			mes "- 攻擊模式 [^008000技能^000000]";
+			if(Oro_Bot_Atk_Mode == 1){
+				if(!bot_atk1_sk_id){
+					mes "單一技能未設置!!";
+					close;
+				}
+			}
+			if(Oro_Bot_Atk_Mode == 2){
+				if(!getarraysize(bot_atk_sk_list)){
+					mes "組合技能未設置!!";
+					close;
+				}
+			}
+		}else{
+			mes "- 攻擊模式 [^FF8C00普攻^000000]";
+		}
+		if( Weight > (MaxWeight * 70) / 100 ){ mes "- 負重不能超過70% [^FF8C00!!^000000]"; close; } else mes"- 檢查負重狀態 [^008000OK^000000]";
+		if(!countitem(601)) mes "- 沒有檢測到瞬移道具 [^FF8C00!!^000000]"; else mes"- 檢查瞬移道具 [^008000OK^000000]";
+		if(Oro_Bot_Rec == 1 && !countitem(7621)) mes "- 沒有檢測到復活道具 [^FF8C00!!^000000]"; else mes"- 檢查復活道具[^008000OK^000000]";
+		if(bot_hp_item_id){
+			if(Oro_Bot_HP && !countitem(bot_hp_item_id)) mes "- 沒有檢測到HP恢復道具 [^FF8C00!!^000000]"; else mes"- 檢查HP恢復道具 [^008000OK^000000]";
+		}
+		if(bot_sp_item_id){
+			if(Oro_Bot_SP && !countitem(bot_sp_item_id)) mes "- 沒有檢測到SP恢復道具 [^FF8C00!!^000000]"; else mes"- 檢查SP恢復道具 [^008000OK^000000]";
+		}
+		.@s = select("在線掛機");
+		//.@s = select("在線掛機","離線掛機");
+		mes "^777777點擊關閉,開始掛機^000000";
+		close2;
+		if(.@s == 1){
+			callsub OnBotReady;
+		}else{
+			callsub OnMakeLogin;
+		}
+
+	}
+	end;
+
+OnMakeLogin:
+	.@char_id = getcharid(0);
+	.@account_id = getcharid(3);
+	logout(3);
+	sleep 2000;
+	.@result = login(.@char_id);
+	sleep 2000;
+	attachrid(.@account_id, true);
+	addtimer 1000, strnpcinfo(3)+"::OnBotReady";
+	end;
+
+OnBotReady:
+	deltimer strnpcinfo(3)+"::OnBotReady";
+	if(sitting) stand strcharinfo(0);
+	if(getarraysize(bot_buff_sc_list)){
+		deletearray bot_buff_sc_list[0], getarraysize(bot_buff_sc_list);						// 清除狀態列表
+		dispbottom "[ 掛機 ] : 清除BUFF狀態列表";
+	}
+	@bot_run = 1;
+	dispbottom "[ 掛機 ] : 開始掛機!!",0x8DEEEE;
+	showscript "開始掛機!!", getcharid(3), SELF;
+	unitaura getcharid(3), $@bot_view_id;
+	@bot_sk_idx = 0;
+
+	addtimer 1000, "E_Oro_Bot::OnBotCheckStatus";
+	callsub L_bot_autoitems;
+	sleep2 100;
+	callfunc "F_bot_auto_loot";
+	sleep2 100;
+	callfunc "F_bot_buffs";
+	sleep2 100;
+	callfunc "F_bot_skill_buff";
+	sleep2 100;
+	callsub OnBotStart;
+	end;
+	
+// 腳本運行結束
+OnBotStop:
+	unitaura getcharid(3), 0;
+	bot_clear_timer();
+	bot_end_loot();
+	dispbottom "[ 掛機 ] : 結束掛機!!",0x8DEEEE;
+	showscript "結束掛機!!", getcharid(3), SELF;
+	@bot_run = 0;
+	end;
+
+// 腳本運行開始
+OnBotRun:
+	if(@bot_run == 1) {
+		callsub OnBotStop;
+	}else{
+		callfunc "F_bot_menu";
+	}
+	end;
+
+
+// 開啟掛機
+OnBotStart:
+	if(!@bot_run) { dispbottom "[ 掛機 ] : 非掛機狀態!!"; callsub OnBotStop; end; }
+	bot_init_var();
+	addtimer 100, "E_Oro_Bot::OnBotCheckAttack";
+	end;
+	
+
+OnBotCheckAttack:
+
+	deltimer "E_Oro_Bot::OnBotCheckAttack";
+	if(@bot_run){
+
+		.@aid = getcharid(3);
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		if(!isdead(.@aid) && !@bot_use_attack_sk && !@bot_use_buff_sk && !@bot_heal && !@bot_is_moving){
+			if(!@mob_target_gid){
+				@new_target = 1;
+				// 如果不存在攻擊目標
+				.@size = getarraysize(bot_attack_id_list);
+				.@result_gid = bot_find_target(.@aid,.@size);
+				if(.@result_gid < 1){
+					if(.@result_gid == -2){
+						callsub OnBotDoWarp;
+					}
+					//dispbottom "[ 掛機 ] : 移動尋找攻擊目標.",0xCD8162;
+					.@result = bot_move_rand(.@aid, 4);
+					if(!.@result) {
+						dispbottom "[ 掛機 ] : 找不到合適的坐標.",0xFFC125;
+						callsub OnBotDoWarp;
+					}
+				}else{
+					getunitdata(.@result_gid, .@mob_db);
+					.@mob_x = .@mob_db[UMOB_X];
+					.@mob_y = .@mob_db[UMOB_Y];
+					getmapxy(.@m$, .@x, .@y, BL_PC);
+					.@dir = bot_check_dir(.@mob_x, .@mob_y, .@x, .@y);
+					.@dir_name$ = $@dir_name$[.@dir];
+					@mob_target_gid = .@result_gid;
+					//dispbottom "[ 掛機 ] : ("+.@dir_name$+")發現攻擊目標."+getunitname(@mob_target_gid),0xCD8162;
+					callsub L_attack_targe, @mob_target_gid;
+				}
+			}else{
+				@new_target = 0;
+				// 如果存在攻擊目標,繼續攻擊
+				if(unitexists(@mob_target_gid,1)){
+					getunitdata @mob_target_gid, .@mob_db;
+					.@mob_hp = .@mob_db[UMOB_HP];
+					if(.@mob_hp){
+						//dispbottom "[ 掛機 ] : 目標存在("+getunitname(@mob_target_gid)+")...",0xCD8162;
+						callsub L_attack_targe, @mob_target_gid;
+					}else{
+						dispbottom "[ 掛機 ] : 目標死亡...",0x678912;
+					}
+				}else{
+					dispbottom "[ 掛機 ] : 目標不存在...",0x678912;
+				}
+			}		
+
+		}else{
+			if(@bot_use_buff_sk){
+				dispbottom "[ 掛機 ] : 正在使用BUFF技能...",0x678912;
+			}else if(@bot_use_attack_sk){
+				dispbottom "[ 掛機 ] : 正在使用攻擊技能...",0x678912;
+			}else if(@bot_is_moving) {
+				dispbottom "[ 掛機 ] : 正在移動...",0x678912;
+			}
+		}
+	}
+	end;
+
+OnBotCheckStatus:
+	deltimer "E_Oro_Bot::OnBotCheckStatus";
+	if(@bot_run){
+		.@aid = getcharid(3);
+		if(isdead(.@aid)){
+			dispbottom "[ 掛機 ] : 角色死亡!!!";
+			end;
+		}
+		addtimer 1000, "E_Oro_Bot::OnBotCheckStatus";
+		Oro_Bot_Run_Time += 1;
+
+		// HPSP狀態檢測
+		bot_auto_heal();
+		/*
+		// 檢測移動是否中斷
+		if(@bot_is_moving){
+			getmapxy(.@m$, .@x, .@y, BL_PC);
+			if(.@x != @next_x && .@y != @next_y){
+				if(@check_move_break > 3) {
+					dispbottom "[ 掛機 ] : 移動中斷了!!",0xFF3322;
+					@check_move_break = 0;
+					@bot_is_moving = 0;
+					callsub OnBotDoWarp;
+				}
+				@check_move_break++;
+			}
+		}
+		*/
+		// 檢測是否技能使用中斷
+		if(@bot_use_attack_sk){
+			if(@check_skill_break > 2){
+				@check_skill_break = 0;
+				@bot_use_attack_sk = 0;
+				dispbottom "[ 掛機 ] : 攻擊技能使用中斷了!!",0xFF3322;
+				if(!@bot_is_moving)
+					bot_move_rand(getcharid(3), 3);
+				else
+					callsub OnBotStart;
+			}
+			@check_skill_break++;
+		}
+		
+
+		if(@bot_use_buff_sk){
+			if(@check_bfskill_break > 3){
+				@check_bfskill_break = 0;
+				@bot_use_buff_sk = 0;
+				dispbottom "[ 掛機 ] : BUFF技能使用中斷了!!",0xFF3322;
+				if(!@bot_is_moving)
+					bot_move_rand(getcharid(3), 3);
+				else
+					callsub OnBotStart;
+			}
+			@check_bfskill_break ++;
+		}
+		
+		// 檢測原地停留
+		if(!@bot_heal && !@bot_killed){
+			getmapxy(.@m$, .@x, .@y, BL_PC);
+			if(!@bot_stay_x) @bot_stay_x = .@x;
+			if(!@bot_stay_y) @bot_stay_y = .@y;
+			
+			if(@bot_stay_x == .@x && @bot_stay_y == .@y){
+				if(!@bot_use_attack_sk && !@bot_use_buff_sk && !@mob_target_gid){
+					if(@bot_check_stay < 5){
+						if(@bot_check_stay){
+							dispbottom "[ 掛機 ] : 檢測到原地停留!!"+@bot_check_stay;
+							if(@bot_rand_move < 5 && !@bot_is_moving){
+									dispbottom "[ 掛機 ] : 嘗試移動!!";
+									bot_move_rand(getcharid(3), 4);
+									@bot_rand_move ++;
+							}
+						}
+
+						@bot_check_stay++;
+					}else{
+						@bot_rand_move = 0;
+						@bot_check_stay = 0;
+						@bot_stay_x = 0;
+						@bot_stay_y = 0;
+						dispbottom "[ 掛機 ] : 原地停留超過5秒!!";
+						callsub OnBotDoWarp;
+					}
+					@bot_free = 0;
+				}
+			}else{
+				@bot_stay_x = .@x;
+				@bot_stay_y = .@y;
+				@bot_check_stay = 0;
+				//dispbottom "[ 掛機 ] : 更新Bot坐標!!";
+			}
+		}
+
+		// 攻擊對像不存在並且沒有死亡則繼續讀秒
+		if(Oro_Bot_Fly_Time && !@mob_target_gid && !@bot_killed && !@bot_heal && !@bot_use_attack_sk && !@bot_use_buff_sk) {
+			if(@bot_free >= Oro_Bot_Fly_Time){
+				@bot_free = 0;
+				dispbottom "[ 掛機 ] : "+Oro_Bot_Fly_Time+"秒內未發現目標, 強制瞬移.";
+				callsub OnBotDoWarp;
+			}
+			@bot_free ++;
+		}
+		
+		// 區域檢查
+		if(@bot_Map$ != strcharinfo(3)){
+			dispbottom "[ 掛機 ] : 檢測離開掛機地圖, 即將返回掛機地圖!!";
+			warp @bot_Map$,0,0;
+		}
+
+		// 狀態BUFF
+		if(@buff_time > $@bot_buff_time) {
+			@buff_time = 0;
+			callfunc "F_bot_buffs";
+		}
+		@buff_time ++;
+
+		// 圍攻數量超過設定則瞬移
+		if(Oro_Bot_Enemy_Size){
+			.@enemy = bot_check_enemy_size();
+			if(.@enemy > Oro_Bot_Enemy_Size) {
+				dispbottom "[ 掛機 ] : 被圍攻,瞬移.",0xCD8162;
+				deletearray @bot_attacked_list;
+				callsub OnBotDoWarp;
+				end;
+			}
+		}
+
+		//quick_buy_list
+		if( bot_auto_buy_enable[0] ){
+			// 紅
+			.@item_id = bot_hp_item_id;
+			if(.@item_id){
+				.@item_type = getiteminfo(.@item_id,ITEMINFO_TYPE);
+				if(.@item_type != -1){
+					.@below = bot_auto_buy_0[0];
+					.@count = bot_auto_buy_0[1];
+					.@item_idx = inarray($@bot_auto_item_hp,.@item_id);
+					if(countitem(.@item_id) < .@below && .@item_idx != -1){
+						.@price = getiteminfo(.@item_id, ITEMINFO_BUY);
+						if(!.@price) .@price = 10;
+						.@all_price = .@price * .@count;
+						if(.@all_price >= .@count){
+							if(Zeny >= .@all_price){
+								Zeny -= .@all_price;
+								getitem .@item_id, .@count;
+								dispbottom "[ 掛機 ] : 自動購買 "+getitemname(.@item_id)+" * "+.@count+" , 花費 "+.@all_price+" Zeny!!", 0x8DEEEE;
+							}else{
+								dispbottom "[ 掛機 ] : Zeny不足"+.@all_price+", 自動購買失敗!!", 0x8DEEEE;
+								@quick_buy_no_zeny = 1;
+							}
+						}
+					}
+				}
+			}
+		}
+		if( bot_auto_buy_enable[1] ){
+			// 藍
+			.@item_id = bot_sp_item_id;
+			if(.@item_id){
+				.@item_type = getiteminfo(.@item_id,ITEMINFO_TYPE);
+				if(.@item_type != -1){
+					.@below = bot_auto_buy_1[0];
+					.@count = bot_auto_buy_1[1];
+					.@item_idx = inarray($@bot_auto_item_sp,.@item_id);
+					if(countitem(.@item_id) < .@below && .@item_idx != -1){
+						.@price = getiteminfo(.@item_id, ITEMINFO_BUY);
+						if(!.@price) .@price = 10;
+						.@all_price = .@price * .@count;
+						if(.@all_price >= .@count){
+							if(Zeny >= .@all_price){
+								Zeny -= .@all_price;
+								getitem .@item_id, .@count;
+								dispbottom "[ 掛機 ] : 自動購買 "+getitemname(.@item_id)+" * "+.@count+" , 花費 "+.@all_price+" Zeny!!", 0x8DEEEE;
+							}else{
+								dispbottom "[ 掛機 ] : Zeny不足"+.@all_price+", 自動購買失敗!!", 0x8DEEEE;
+								@quick_buy_no_zeny = 1;
+							}
+						}
+					}
+				}
+			}	
+		
+		}
+
+		if( bot_auto_buy_enable[2] ){
+			// 箭矢
+			.@item_id = bot_arrow_item_id;
+			if(.@item_id){
+				.@item_type = getiteminfo(.@item_id,ITEMINFO_TYPE);
+				if(.@item_type != -1){
+					.@below = bot_auto_buy_2[0];
+					.@count = bot_auto_buy_2[1];
+					.@item_idx = inarray($@bot_auto_arrow,.@item_id);
+					if(countitem(.@item_id) < .@below && .@item_idx != -1){
+						.@price = getiteminfo(.@item_id, ITEMINFO_BUY);
+						if(!.@price) .@price = 10;
+						.@all_price = .@price * .@count;
+						if(.@all_price >= .@count){
+							if(Zeny >= .@all_price){
+								Zeny -= .@all_price;
+								getitem .@item_id, .@count;
+								dispbottom "[ 掛機 ] : 自動購買 "+getitemname(.@item_id)+" * "+.@count+" , 花費 "+.@all_price+" Zeny!!", 0x8DEEEE;
+							}else{
+								dispbottom "[ 掛機 ] : Zeny不足"+.@all_price+", 自動購買失敗!!", 0x8DEEEE;
+								@quick_buy_no_zeny = 1;
+							}
+						}
+					}
+				}
+			}	
+		
+		}
+		if( bot_auto_buy_enable[3] ){
+			// 箭矢
+			.@item_id = 601;
+			if(.@item_id){
+				.@below = bot_auto_buy_3[0];
+				.@count = bot_auto_buy_3[1];
+				if(countitem(.@item_id) < .@below){
+					.@price = getiteminfo(.@item_id, ITEMINFO_BUY);
+					if(!.@price) .@price = 10;
+					.@all_price = .@price * .@count;
+					if(.@all_price >= .@count){
+						if(Zeny >= .@all_price){
+							Zeny -= .@all_price;
+							getitem .@item_id, .@count;
+							dispbottom "[ 掛機 ] : 自動購買 "+getitemname(.@item_id)+" * "+.@count+" , 花費 "+.@all_price+" Zeny!!", 0x8DEEEE;
+						}else{
+							dispbottom "[ 掛機 ] : Zeny不足"+.@all_price+", 自動購買失敗!!", 0x8DEEEE;
+							@quick_buy_no_zeny = 1;
+						}
+					}
+				}
+			}	
+		
+		}			
+		// 重量太大時結束掛機
+		if( Weight > (MaxWeight * 70) / 100 ){
+			dispbottom "[ 掛機 ] : 負重超過70%, 結束掛機!!";
+			callsub OnBotStop;
+			sleep2 10;
+			warp "SavePoint",0,0;
+			end;
+		}
+
+		// 自動道具使用
+		callsub L_bot_autoitems;
+		
+		// 檢測BUFF
+		callsub L_check_stat, getcharid(3);
+	}
+	end;
+
+
+// 自動使用道具
+L_bot_autoitems:
+	if(@bot_run && Oro_Bot_Use_Item && !@bot_heal && !@bot_killed){
+
+		.@size = getarraysize(bot_auto_use_item_list);
+		for(.@i = 0; .@i < .@size; .@i++){
+			.@item_id = bot_auto_use_item_list[.@i];
+			.@use_time = bot_auto_use_time_list[.@i];
+			
+			if(.@item_id && !@bot_autouse_time[.@i]){
+				.@item_type = getiteminfo(.@item_id,ITEMINFO_TYPE);
+				.@item_idx = inarray($@bot_auto_use_item_list, .@item_id);
+				if(.@item_type != -1 && .@item_idx != -1 && countitem(.@item_id)){
+					if($@bot_auto_use_item_delete) delitem .@item_id, 1;
+					consumeitem .@item_id;
+					dispbottom "[自動道具] : 自動使用道具"+getitemname(.@item_id)+"!!";
+					@bot_autouse_time[.@i] += .@use_time;
+				}
+			}
+			if(@bot_autouse_time[.@i] > 0) @bot_autouse_time[.@i] -= 1;
+		}
+	}
+	return;
+
+L_check_stat:
+	if(@bot_run && !@bot_heal && !@bot_killed && !@bot_use_attack_sk){
+		.@aid = getarg(0,getcharid(3));
+		.@count = getarraysize(bot_buff_sc_list);
+		for( .@i = 0; .@i < .@count; .@i++ ) {
+			.@sc_id = bot_buff_sc_list[.@i];
+			if(.@sc_id){
+				.@result = getstatus(.@sc_id);
+				if(!.@result){
+					.@idx = inarray(bot_buff_sc_list,.@sc_id);
+					.@sk_id = bot_buff_sk_list[.@idx];
+					if(.@sk_id){
+						.@sk_lv = getskilllv(.@sk_id);
+						.@sk_sp = getskillinfo(SKI_REQUIRES_SPCOST, .@sk_id, .@sk_lv);
+						if(Sp > .@sk_sp){
+							detachrid;
+							unitskilluseid(.@aid, .@sk_id, .@sk_lv, .@aid);
+							attachrid(.@aid);
+						}
+					}
+				}
+			}
+		}
+	}
+	return;
+
+L_attack_targe:
+	.@result_gid = getarg(0);
+	.@aid = getcharid(3);
+	.@range = distance_mob(strcharinfo(0), .@result_gid);
+	
+	.@search_range = $@bot_search_range;
+	if(.@search_range < 1)
+		.@search_range = 1;
+	else if(.@search_range > $@bot_search_range_max)
+		.@search_range = $@bot_search_range_max;
+		
+	if(.@range == -1){
+		dispbottom "[ 掛機 ] : 目標不存在或死亡.",0xCD8162;
+		bot_change_target();
+	}else if(.@range > .@search_range){
+		if(@bot_change_mob < 3 && .@result_gid == @mob_target_gid){
+			dispbottom "[ 掛機 ] : 目標距離太遠, 更換攻擊目標."+.@range,0xCD8162;
+			bot_change_target();
+		}else{
+			dispbottom "[ 掛機 ] : 找不到合適的攻擊目標,瞬移.",0xCD8162;
+			@bot_change_mob = 0;
+			callsub OnBotDoWarp;
+		}
+	}else{
+		@mob_target_gid = .@result_gid;
+		.@mobname$ = getunitname(@mob_target_gid);
+		if(@bot_is_moving) {
+			dispbottom "[ 掛機 ] : 等待移動完成...",0xCD8162;
+		}else{
+			//dispbottom "[ 掛機 ] : 確認攻擊目標("+.@mobname$+"), 距離("+.@range+").",0x8DEEEE;
+			if(!@bot_use_attack_sk){
+				bot_attack_target(.@aid, @mob_target_gid, Oro_Bot_Atk_Mode);
+			}else{
+				dispbottom "[ 掛機 ] : 再次發起攻擊";
+				addtimer 100, "E_Oro_Bot::OnBotCheckAttack";
+			}
+		}
+	}
+	return;
+
+	
+// 瞬移
+OnBotDoWarp:
+	if(@bot_run) {
+		if(!isdead()){
+			if($@bot_fly_wing_enable){
+				if(!countitem(601)){
+					dispbottom "[ 掛機 ] : 蒼蠅翅膀不足, 結束掛機!!";
+					callsub OnBotStop;
+					warp "SavePoint",0,0;
+					end;
+				}else{
+					delitem 601, 1;
+				}
+			}
+			warp @bot_Map$,0,0;
+			dispbottom "[ 掛機 ] : 瞬移完成!!",0xCD8162;
+			callsub OnBotStart;
+		}
+	}
+	end;
+
+// 移動完成
+OnBotDoneMove:
+	// 如果已結束掛機,則結束程序
+	if(@bot_run){
+		@bot_is_moving = 0;
+		@check_move_break = 0;
+		@bot_check_stay = 0;
+		//dispbottom "[ 掛機 ] : 移動完成!!",0xCD8162;
+		addtimer 100, "E_Oro_Bot::OnBotCheckAttack";
+	}
+	end;
+
+
+	// 檢測魔物距離
+	function	distance_mob	{
+	
+		.@char_name$ = getarg(0);
+		.@mob_gid = getarg(1);
+		.@result = -1;
+		if(unitexists(.@mob_gid, 1)){
+			getunitdata(.@mob_gid, .@mob_db);
+			.@mob_x = .@mob_db[UMOB_X];
+			.@mob_y = .@mob_db[UMOB_Y];	
+			.@mob_hp = .@mob_db[UMOB_HP];
+			
+			if(.@mob_hp){
+				getmapxy(.@m$, .@x, .@y, BL_PC, .@char_name$);
+				.@result = distance(.@x, .@y, .@mob_x, .@mob_y);
+			}
+		}
+		
+		return .@result;
+	}
+	
+	
+	// 尋找目標
+	function	bot_find_target	{
+		.@aid = getarg(0);
+		.@target_size = getarg(1,0);
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		.@search_range = $@bot_search_range;
+		if(.@search_range < 1)
+			.@search_range = 1;
+		else if(.@search_range > $@bot_search_range_max)
+			.@search_range = $@bot_search_range_max;
+		.@result = getareagid(.@gids, 1, BL_MOB, .@m$, .@x, .@y, .@search_range);
+		if(.@result){
+			for( .@i = 0; .@i < .@result; .@i++ ){
+				.@gid = .@gids[.@i];
+				if(unitexists(.@gid,1)){
+					getunitdata(.@gid, .@db);
+					.@gid_mob_id[.@i] = .@db[UMOB_CLASS];
+					.@gid_mob_name$[.@i] = getunitname(.@gid);
+				}
+			}
+			// 躲避列表
+			.@run_size = getarraysize(bot_run_id_list);
+			if(.@run_size){
+				for( .@i = 0; .@i < .@run_size; .@i++ ){
+					.@run_mob_id = bot_run_id_list[.@i];
+					.@idx = inarray(.@gid_mob_id, .@run_mob_id);
+					if(.@idx != -1){
+						dispbottom "[ 掛機 ] : 發現躲避名單魔物."+strmobinfo(2, .@run_mob_id),0xCD8162;
+						return -2;
+					}
+				}
+			}
+			
+			// 查找指定怪物
+			if(.@target_size){				
+				for( .@i = 0; .@i < getarraysize( bot_attack_id_list); .@i++ ){
+					.@mob_name$ = strmobinfo(2, bot_attack_id_list[.@i]);
+					
+					.@idx = inarray(.@gid_mob_name$, .@mob_name$);
+					
+					if(.@idx != -1){
+						.@cell = bot_check_cell(.@gids[.@idx]);
+						if(.@cell == 1){
+							.@result_gid = .@gids[.@idx];
+							break;
+						}
+					}
+				}
+				if(.@idx == -1) .@result = -1;
+			}else{
+				// 未指定則根據距離來指定
+				// 循環判斷魔物與BOT間的距離
+				.@min_range = 100;
+				for( .@i = 0; .@i < .@result; .@i++ ){
+					.@mob_gid = .@gids[.@i];
+					.@cell = bot_check_cell(.@mob_gid);
+					if(.@cell == 1 && unitexists(.@mob_gid, 1)){
+						getunitdata(.@mob_gid, .@mob_db);
+						.@mob_x = .@mob_db[UMOB_X];
+						.@mob_y = .@mob_db[UMOB_Y];
+						.@range = distance(.@x, .@y, .@mob_x, .@mob_y);
+
+						// 比較現存的距離值,小則替換
+						if(.@range < .@min_range) {
+							.@min_range = .@range;
+							.@min_idx = .@i;
+						}
+					}
+				}	
+				.@result_gid = .@gids[.@min_idx];
+			}
+		}else{
+			.@result_gid = -1;
+		}
+		return .@result_gid;
+	}
+
+	// 取絕對值
+	function	to_abs	{
+		.@var = getarg(0);
+		if(.@var < 0){
+			.@var = .@var * -1;
+		}else .@var = .@var;
+		return .@var;
+	}
+
+	// 獲取技能使用ID
+	function	bot_attack_sk_id	{
+		if(bot_atk2_sk_id){
+			.@enemy = bot_check_enemy_size();
+			//判斷敵人數量決定是否使用範圍技能
+			if(.@enemy > 1 && .@enemy < Oro_Bot_Enemy_Size){
+				//dispbottom "[ 掛機 ] : 敵人數量("+.@enemy+"), 優先使用範圍技能攻擊.",0xCD8162;
+				@atk_type = 3;
+			}
+		}
+		if(@atk_type){
+			switch(@atk_type){
+			case 1:
+				.@skill_id = bot_atk1_sk_id;
+				break;
+			case 2:
+				if(@new_target){
+					@bot_sk_idx = 0;
+				}else{
+					.@size = getarraysize(bot_atk_sk_list);
+					if(@bot_sk_idx >= .@size) @bot_sk_idx = 0;
+				}
+				.@skill_id = bot_atk_sk_list[@bot_sk_idx];
+				break;
+			case 3:
+				.@skill_id = bot_atk2_sk_id;
+				break;
+			}
+		}
+		
+		return .@skill_id;
+	}
+	
+	// 檢測攻擊距離
+	function	bot_attack_range	{
+	
+		if(getskilllv(44)) .@atk_range += getskilllv(44);
+		if(@atk_type){
+			.@skill_id = bot_attack_sk_id();
+			if(.@skill_id){
+				.@skill_lv = getskilllv(.@skill_id);
+				//.@name$ = getskillinfo(SKI_DESCRIPTION, .@skill_id);
+				.@sk_range = getskillinfo(SKI_RANGE, .@skill_id, .@skill_lv);
+				.@sk_range = to_abs(.@sk_range);
+				.@atk_range += .@sk_range;
+				.@sk_sp = getskillinfo(SKI_REQUIRES_SPCOST, .@skill_id, .@skill_lv);
+				if(Sp < .@sk_sp) @atk_type = 0;
+			}else{
+				@atk_type = 0;
+			}
+		}
+		if(!@atk_type){
+			.@weapon_id = getequipid(EQI_HAND_R);
+			.@weapon_range = getiteminfo(.@weapon_id, ITEMINFO_RANGE);
+			.@atk_range += .@weapon_range;
+		}
+		if(!.@atk_range) .@atk_range = 1;
+				
+		return .@atk_range;
+	}
+
+
+	// 移動到目標可攻擊距離
+	function	bot_move_to_target	{
+		
+		.@mob_gid = getarg(0,0);
+		.@atk_range = getarg(1,1);
+		.@aid = getcharid(3);
+		getunitdata(.@mob_gid, .@mob_db);
+		.@mob_x = .@mob_db[UMOB_X];
+		.@mob_y = .@mob_db[UMOB_Y];
+		
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		getfreecell(.@m$,.@new_x,.@new_y,.@mob_x,.@mob_y, .@atk_range, .@atk_range);
+		
+		if(checkcell(.@m$,.@new_x,.@new_y,cell_chkpass)){
+			.@result = 1;
+			@bot_is_moving = 1;
+			@next_x = .@new_x;
+			@next_y = .@new_y;
+			//dispbottom "[ 掛機 ] : C向坐標X: "+.@new_x+", Y: "+.@new_y+"移動!!",0xFFC125;
+			detachrid;
+			unitstopwalk .@aid, USW_FORCE_STOP;
+			unitwalk .@aid, .@new_x, .@new_y, "E_Oro_Bot::OnBotDoneMove";
+			attachrid(.@aid);
+		}else{
+			.@result = 0;
+			bot_change_target();
+		}
+		
+		return .@result;
+	}
+	
+	// 攻擊
+	function	bot_attack_target	{
+		@bot_free = 0;
+		.@aid = getarg(0, getcharid(3));
+		.@cid = getcharid(0);
+		.@mob_gid = getarg(1);
+		@atk_type = getarg(2, 0);
+		
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		// 單位存活則獲取相關信息	
+		if(unitexists(.@mob_gid, 1)){
+
+			// 可以攻擊
+			if(!@atk_type){
+				detachrid;
+				unitattack(.@aid, .@mob_gid, 1);
+				attachrid(.@aid);
+			}else{
+				do{
+					@bot_check_stay = 0;
+
+					//attachrid(.@aid, true);
+					.@skill_id = bot_attack_sk_id();
+					.@skill_lv = getskilllv(.@skill_id);
+
+					// 檢測攻擊距離
+					.@atk_range = bot_attack_range();
+					.@range = distance_mob(strcharinfo(0,.@cid), .@mob_gid);
+					
+					.@sk_sp = getskillinfo(SKI_REQUIRES_SPCOST, .@skill_id, .@skill_lv);
+					if(.@skill_id && Sp > .@sk_sp){
+						.@range = distance_mob(strcharinfo(0,.@cid), .@mob_gid);
+						if(.@atk_range < .@range){
+							if(.@atk_range > 1){
+								bot_move_to_target(.@mob_gid, .@atk_range - 1);
+							}else{
+								bot_move_to_target(.@mob_gid, 1);
+							}
+							break;
+						}else{
+							if(!@bot_use_attack_sk){
+
+								getunitdata(.@mob_gid, .@mob_db);
+								.@mob_hp = .@mob_db[UMOB_HP];
+								if(!.@mob_hp) break;
+					
+								//彈指神通
+								if(.@skill_id == 267 && getskilllv(401)){
+									detachrid;
+									unitskilluseid(.@aid,401,5,.@aid,-100);
+									attachrid(.@aid);
+									sleep2 300;
+								}
+								
+								.@sk_casttype = getskillinfo(SKI_CASTTYPE, .@skill_id);	
+								// 可變詠唱
+
+								@bot_use_attack_sk = 1;
+
+								detachrid;
+								if(.@sk_casttype == CAST_GROUND){
+									unitskillusepos(.@aid, .@skill_id, .@skill_lv, .@mob_x, .@mob_y);
+								}else{
+									unitskilluseid(.@aid, .@skill_id, .@skill_lv, .@mob_gid);
+								}
+								attachrid(.@aid);
+
+								.@delay = bot_skill_delay(.@cid,.@skill_id);
+								if(.@delay < 100) .@delay = 100;
+								sleep2 .@delay;
+
+								@bot_use_attack_sk = 0;
+							}else{
+								detachrid;
+								sleep 100;
+								attachrid(.@aid);
+							}
+						}
+					}else{
+						dispbottom "[ 掛機 ] : SP不足, 切換成普攻!!";
+						@atk_type = 0;
+						break;
+					}
+					if(!.@delay) sleep2 300;
+				}while(unitexists(.@mob_gid,1) && @bot_run);
+			}
+		}else{
+			dispbottom "已OVER";
+		}
+		return;
+	}
+
+	// 移動
+	function	bot_skill_delay	{
+		.@cid = getarg(0);
+		.@skill_id = getarg(1,0);
+		.@skill_lv = getskilllv(.@skill_id);
+		if(.@cid < 150000){
+			.@delay = 300;
+		}else if(.@skill_id){
+			// 動作延遲
+			.@sk_delay1 = getskillinfo(SKI_AFTERCASTACTDELAY, .@skill_id, .@skill_lv);
+			// 移動僵直
+			.@sk_delay2 = getskillinfo(SKI_AFTERCASTWALKDELAY, .@skill_id, .@skill_lv);
+			
+			// 技能延遲
+			//.@sk_cd = getskillinfo(SKI_COOLDOWN, .@skill_id, .@skill_lv);
+			.@sk_delay3 = (.@sk_delay1*(100-readparam(bDelayrate,.@cid)))/100;
+			// 角色攻速
+			.@sk_delay4 = (251600-(1200*(readparam(bAspd,.@cid))))/100;
+			if(!.@sk_delay1){
+				.@delay = .@sk_delay4;
+			}else{
+				.@delay = .@sk_delay3;
+			}
+			
+			//.@delay = .@sk_delay1 + .@sk_delay2;
+			if(.@delay < 50) .@delay = 50;
+		
+		}else{
+			.@delay = 300;
+		}
+
+		return .@delay;	
+	}
+
+	// 移動
+	function	bot_move_rand	{
+	
+		.@aid = getarg(0);
+		.@range = getarg(1);
+
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		setarray .@dir_1[0],1,0;
+		setarray .@dir_2[0],1,1;
+		setarray .@dir_3[0],0,1;
+		setarray .@dir_4[0],-1,1;
+		setarray .@dir_5[0],-1,0;
+		setarray .@dir_6[0],-1,-1;
+		setarray .@dir_7[0],0,-1;
+		setarray .@dir_8[0],1,-1;
+
+		
+		.@round = 0;
+		do{
+			
+			for(.@i = 0; .@i < 8; .@i++){
+				.@k = .@i+1;
+
+				.@temp_x = getd(".@dir_"+.@k+"[0]");
+				.@temp_y = getd(".@dir_"+.@k+"[1]");
+				if(.@round){
+					if(.@temp_x > 0) .@temp_x += .@round;
+					if(.@temp_x < 0) .@temp_x -= .@round;
+					if(.@temp_y > 0) .@temp_y += .@round;
+					if(.@temp_y < 0) .@temp_y -= .@round;
+				}
+				
+				.@new_x = .@x + .@temp_x;
+				.@new_y = .@y + .@temp_y;
+				
+				.@pass = checkcell(.@m$,.@new_x,.@new_y,cell_chkpass);
+				.@reach = checkcell(.@m$,.@new_x,.@new_y,cell_chkreach);
+				
+				if(.@pass && .@reach){
+					setd ".@move_"+.@k+"[0]", .@new_x;
+					setd ".@move_"+.@k+"[1]", .@new_y;
+				}else{
+					setd ".@move_"+.@k+"[0]", 0;
+					setd ".@move_"+.@k+"[1]", 0;
+					if(@bot_dir && @bot_dir == .@k){
+						if(@bot_dir < 8){
+							.@dir_name$ = $@dir_name$[@bot_dir];
+							@bot_dir ++;
+							//dispbottom "[ 掛機 ] : 上次("+.@dir_name$+")尋路失敗, 更換方向為("+$@dir_name$[@bot_dir]+")!!",0xFFCCEE;
+						}else{
+							@bot_dir = 1;
+						}
+					}
+				}
+
+			}
+			.@round ++;
+			
+		}while(.@round < 8);
+
+		if(@bot_dir){
+			.@walk_x = getd(".@move_"+@bot_dir+"[0]");
+			.@walk_y = getd(".@move_"+@bot_dir+"[1]");
+			if(!.@walk_x || !.@walk_y){
+				for(.@i = 1; .@i < 9; .@i++){
+					.@walk_x = getd(".@move_"+.@i+"[0]");
+					.@walk_y = getd(".@move_"+.@i+"[1]");
+					if(.@walk_x && .@walk_y){
+						@bot_dir = .@i;
+						break;
+					}
+				}
+			}
+		}else{
+			if(!.@walk_x || !.@walk_y){
+				for(.@i = 1; .@i < 9; .@i++){
+					.@walk_x = getd(".@move_"+.@i+"[0]");
+					.@walk_y = getd(".@move_"+.@i+"[1]");
+					if(.@walk_x && .@walk_y){
+						@bot_dir = .@i;
+						break;
+					}
+				}
+			}
+		}
+
+		if(@bot_dir){
+			.@new_x = getd(".@move_"+@bot_dir+"[0]");
+			.@new_y = getd(".@move_"+@bot_dir+"[1]");
+			.@dir_name$ = $@dir_name$[@bot_dir];
+			@bot_is_moving = 1;
+			.@dispoint = distance(.@x, .@y, .@new_x, .@new_y);
+			//dispbottom "[ 掛機 ] : 向坐標X"+.@new_x+", Y"+.@new_y+"移動, 方向"+.@dir_name$+", 距離("+.@dispoint+")!!",0xFFCCEE;
+			detachrid;
+			unitstopwalk .@aid, USW_FORCE_STOP;
+			unitwalk .@aid, .@new_x, .@new_y, "E_Oro_Bot::OnBotDoneMove";
+			attachrid(.@aid);
+		}
+		
+		return @bot_dir;
+	}
+
+	// 檢測bot坐標方向
+	function	bot_check_dir	{
+	
+		.@new_x = getarg(0);
+		.@new_y = getarg(1);
+		.@x = getarg(2);
+		.@y = getarg(3);
+		
+		if(.@new_x > .@x && .@new_y == .@y){
+			.@dir$ = $@dir_name$[1];
+			.@dir = $@dir_idx[1];
+		}else if(.@new_x > .@x && .@new_y > .@y){
+			.@dir$ = $@dir_name$[2];
+			.@dir = $@dir_idx[2];
+		}else if(.@new_x == .@x && .@new_y > .@y){
+			.@dir$ = $@dir_name$[3];
+			.@dir = $@dir_idx[3];
+		}else if(.@new_x < .@x && .@new_y > .@y){
+			.@dir$ = $@dir_name$[4];
+			.@dir = $@dir_idx[4];
+		}else if(.@new_x < .@x && .@new_y == .@y){
+			.@dir$ = $@dir_name$[5];
+			.@dir = $@dir_idx[5];
+		}else if(.@new_x < .@x && .@new_y < .@y){
+			.@dir$ = $@dir_name$[6];
+			.@dir = $@dir_idx[6];
+		}else if(.@new_x == .@x && .@new_y < .@y){
+			.@dir$ = $@dir_name$[7];
+			.@dir = $@dir_idx[7];
+		}else if(.@new_x > .@x && .@new_y < .@y){
+			.@dir$ = $@dir_name$[8];
+			.@dir = $@dir_idx[8];
+		}else{
+			.@dir$ = $@dir_name$[0];
+			.@dir = $@dir_idx[0];
+		}
+		return .@dir;
+	}
+
+	// 檢測格子屬性
+	function	bot_check_cell	{
+		
+		.@mob_gid = getarg(0,0);
+		
+		if(.@mob_gid){
+			
+			setarray .@dir_1[0],1,0;
+			setarray .@dir_2[0],1,1;
+			setarray .@dir_3[0],0,1;
+			setarray .@dir_4[0],-1,1;
+			setarray .@dir_5[0],-1,0;
+			setarray .@dir_6[0],-1,-1;
+			setarray .@dir_7[0],0,-1;
+			setarray .@dir_8[0],1,-1;
+			freeloop(1);
+			.@result = 1;
+			do{
+				getmapxy(.@m$, .@x, .@y, BL_PC);
+				if(!.@bot_x) .@bot_x = .@x;
+				if(!.@bot_y) .@bot_y = .@y;
+
+				getunitdata(.@mob_gid, .@mob_db);
+				.@mob_x = .@mob_db[UMOB_X];
+				.@mob_y = .@mob_db[UMOB_Y];
+				
+				.@dir = bot_check_dir(.@mob_x, .@mob_y, .@bot_x, .@bot_y);
+
+				.@temp_x = getd(".@dir_"+.@dir+"[0]");
+				.@temp_y = getd(".@dir_"+.@dir+"[1]");
+			
+				if(.@bot_x > 0) .@bot_x += .@temp_x;
+				if(.@bot_x < 0) .@bot_x -= .@temp_x;
+				if(.@bot_y > 0) .@bot_y += .@temp_y;
+				if(.@bot_y < 0) .@bot_y -= .@temp_y;
+				
+				if(checkcell(.@m$,.@bot_x,.@bot_y,cell_chkwall) || checkcell(.@m$,.@bot_x,.@bot_y,cell_chkwater) || checkcell(.@m$,.@bot_x,.@bot_y,cell_chkcliff)){
+					.@result = -1;
+					break;
+				}
+				// 計算當前坐標與魔物的距離
+				.@dispoint = distance(.@bot_x, .@bot_y, .@mob_x, .@mob_y);
+
+			}while(.@dispoint > 1);
+			freeloop(0);
+		}
+		return .@result;
+	}
+
+	// 更換目標
+	function	bot_change_target	{
+		//dispbottom "[ 掛機 ] : 更換攻擊目標!!",0x8DEEEE;
+		callsub OnBotStart;
+		return;
+	}
+	
+	
+	// 清除事件
+	function	bot_clear_timer	{
+		deltimer "E_Oro_Bot::OnBotCheckStatus";
+		deltimer "E_Oro_Bot::OnBotCheckAttack";
+		return;
+	}
+
+	
+	// 每輪開始時候的初始值
+	function	bot_init_var	{
+		// 測試
+		
+		@check_move_break = 0;
+		@bot_attack_count = 0;
+				
+		@bot_killed = 0;
+		@bot_check_stay = 0;
+		@bot_is_moving = 0;
+
+		@bot_free = 0;
+		@check_attack_break = 0;
+		@check_skill_break = 0;
+		@mob_target_gid = 0;
+		@bot_change_mob = 0;
+		@bot_use_attack_sk = 0;
+		@bot_use_buff_sk = 0;
+		// 清除圍攻數量
+		deletearray @bot_attacked_list;
+		return;
+	}
+
+	// 自動吃藥
+	function	bot_auto_heal	{
+		.@result = -1;
+		if(Oro_Bot_HP){
+			.@hp = MaxHp * Oro_Bot_HP_Per / 100;
+			while( Hp < .@hp) {
+				.@item_id = bot_hp_item_id;
+				if(.@item_id){
+					if(countitem(.@item_id) > 0){
+						unitspecialeffect getcharid(3),204;
+						delitem .@item_id, 1;
+						consumeitem .@item_id;
+						.@result = 1;
+					}else break;
+				}
+			}
+		}
+		if(Oro_Bot_SP){
+			.@sp = MaxSp * Oro_Bot_SP_Per / 100;
+			while( Sp < .@sp) {
+				.@item_id = bot_sp_item_id;
+				if(.@item_id){
+					if(countitem(.@item_id) > 0){
+						unitspecialeffect getcharid(3),208;
+						delitem .@item_id, 1;
+						consumeitem .@item_id;
+						.@result = 1;
+					}else break;
+				}
+			}
+		}
+		return .@result;
+	}
+
+
+	// 檢測圍攻敵人數量
+	function	bot_check_enemy_size	{
+		.@size = getarraysize(@bot_attacked_list);
+		for( .@i = 0; .@i < .@size; .@i++ ){
+			.@mob_gid = @bot_attacked_list[.@i];
+			.@idx = inarray(@bot_attacked_list, .@mob_gid);
+			if(.@idx != -1){
+				if(!unitexists(.@mob_gid,1)){
+					deletearray @bot_attacked_list[.@idx],1;
+				}else{
+					getunitdata(.@mob_gid, .@mob_db);
+					.@mob_x = .@mob_db[UMOB_X];
+					.@mob_y = .@mob_db[UMOB_Y];
+					.@mob_hp = .@mob_db[UMOB_HP];
+					if(!.@mob_hp){
+						deletearray @bot_attacked_list[.@idx],1;
+					}else{
+						getmapxy(.@m$, .@x, .@y, BL_PC);
+						.@range = distance(.@x, .@y, .@mob_x, .@mob_y);
+						if(.@range >= 13){
+							deletearray @bot_attacked_list[.@idx],1;
+						}
+					}
+				}
+			}
+		}
+		getmapxy(.@m$, .@x, .@y, BL_PC);
+		.@result = getareagid(.@gids, 1, BL_MOB, .@m$, .@x, .@y, 13);
+		// 循環判斷這些GID是否正在攻擊BOT
+		if(.@result){
+			.@bot_gid = getcharid(3);
+			for( .@i = 0; .@i < .@result; .@i++ ){
+				.@mob_gid = .@gids[.@i];
+				.@target_gid = getunittarget(.@gids[.@i]);
+				if(.@target_gid == .@bot_gid){
+					.@idx = inarray(@bot_attacked_list, .@mob_gid);
+					if(.@idx == -1) {
+						.@size = getarraysize(@bot_attacked_list);
+						@bot_attacked_list[.@size] = .@mob_gid;
+					}
+				}
+			}
+			.@var = getarraysize(@bot_attacked_list);
+		}
+		return .@var;
+	}
+
+	function	bot_end_loot	{
+		// 關閉自動拾取
+		if(getarraysize(bot_loot_types)){
+			for(.@i = 0; .@i < getarraysize(bot_loot_types); .@i++) {
+				.@type = bot_loot_types[.@i];
+				if(.@type == 1) .@type = 0;
+				atcommand "@autoloottype -" + .@type;
+			}
+			atcommand "@autoloot";
+		}
+		return;
+	}
+// -------------------------------------------------------- 事件 --------------------------------------------------------
+	
+OnPCUseSkillFilter:
+	if(@bot_run){
+		.@sk_id = @useskill_id;
+		if(.@sk_id){
+			.@sk_casttype = getskillinfo(SKI_CASTTYPE, .@sk_id);
+			.@sk_name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+
+			if(!@useskill_target_gid){
+				if(!@bot_use_buff_sk && !@bot_use_attack_sk){
+					//dispbottom "[ 掛機 ] : 準備使用地面技能("+.@sk_name$+")!!";
+				}
+			}else{
+				if(unitexists(@useskill_target_gid,1)){
+					getunitdata @useskill_target_gid, .@mob_db;
+					.@mob_hp = .@mob_db[UMOB_HP];
+					if(!.@mob_hp){
+						//bot_change_target();
+						dispbottom "魔物已死亡!!";
+						processhalt;
+						end;
+					}
+					if(@useskill_target_gid == @mob_target_gid){
+						if(!@bot_use_attack_sk){
+							//dispbottom "[ 掛機 ] : 準備使用技能("+.@sk_name$+")攻擊魔物("+getunitname(@mob_target_gid)+")!!";
+						}
+					}
+				}else{
+					//dispbottom "[ 掛機 ] : 魔物已經死亡!!";
+					processhalt;
+				}
+				if(@useskill_target_gid == getcharid(3)){
+					if(!@bot_use_buff_sk){
+						.@sk_idx = inarray(bot_buff_sk_list, .@sk_id);
+						if(.@sk_idx != -1){
+							@bot_use_buff_sk = 1;	
+							//dispbottom "[ 掛機 ] : 準備使用BUFF技能("+.@sk_name$+")!!";
+						}
+					}
+				}
+
+			}
+		}
+	}
+	end;
+
+
+OnPCUseSkillEvent:
+	if(@bot_run){
+		.@sk_id = @useskill_id;
+		.@sk_lv = @useskill_lv;
+		.@cid = getcharid(0);
+		
+		if(.@sk_id){
+			.@sk_name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+			if(@bot_use_attack_sk){
+				if(!@useskill_target_gid){
+					//dispbottom "[ 掛機 ] : 成功使用地面技能("+.@sk_name$+")!!";
+				}else{
+					if(@useskill_target_gid == @mob_target_gid){
+						//dispbottom "[ 掛機 ] : 成功使用技能("+.@sk_name$+")攻擊("+getunitname(@mob_target_gid)+")!!";
+					}
+				}
+				@bot_sk_idx ++;
+				@bot_use_attack_sk = 0;					
+			}
+			if(@bot_use_buff_sk){
+				@bot_use_buff_sk = 0;
+				//dispbottom "[ 掛機 ] : 成功使用BUFF技能("+.@sk_name$+")!!";
+			}
+			@bot_free = 0;
+			@check_skill_break = 0;
+			@bot_check_stay = 0;
+		}
+	}
+	end;
+
+			
+// 魔物被殺死後
+OnNPCKillEvent:
+	if (@bot_run){
+		.@mob_gid = killedgid;
+		.@mob_id = killedrid;
+		.@mob_name$ = strmobinfo(2, .@mob_id);
+		getunitdata .@mob_gid, .@mob_db;
+		.@mob_amotion = .@mob_db[UMOB_AMOTION];
+		if(.@mob_gid == @mob_target_gid){
+		
+			dispbottom "[ 掛機 ] : 擊殺魔物("+.@mob_name$+.@mob_id+")!!",0x8DEEEE;
+			Oro_Bot_Kill_Mount ++;
+			if(!.@mob_amotion) .@mob_amotion = 400;
+			bot_init_var();
+			addtimer .@mob_amotion, "E_Oro_Bot::OnBotCheckAttack";
+		}
+	}
+	end;
+
+OnPCAttackExpress:
+	if (@bot_run){
+		if(@attack_src_type == 1 && @attack_target_type == 2){
+			.@mob_gid = @attack_target_gid;
+			@new_target = 0;
+			@bot_check_stay = 0;
+			@bot_attack_count ++;
+		}
+	}
+	end;
+
+// 判斷BOT是否受到傷害
+OnPCHarmedExpress:
+	if (@bot_run){
+		if(@harmed_src_type == 2){
+			.@mob_gid = @harmed_src_gid;
+			.@mob_id = @harmed_src_mobid;
+			.@dmg = @harmed_damage_right + @harmed_damage_left;
+			if(@mob_target_gid == @harmed_src_gid){
+				if(!@bot_use_attack_sk && !@bot_use_buff_sk){
+					dispbottom "[ 掛機 ] : 魔物("+getunitname(.@mob_gid)+")對你造成了傷害("+.@dmg+")!!",0xFFC125;
+				}
+			}
+		}
+		@bot_use_attack_sk = 0;
+		@bot_use_buff_sk = 0;
+		@bot_is_moving = 0;
+		addtimer 100, "E_Oro_Bot::OnBotCheckAttack";
+	}
+	end;
+
+// 角色死亡
+OnPCDieEvent:
+	if(@bot_run){
+		@bot_killed = 1;
+		@bot_heal = 0;
+
+		@bot_is_moving = 0;
+		@bot_use_attack_sk = 0;
+		@bot_use_buff_sk = 0;
+		if(Oro_Bot_Rec == 1){
+			if(countitem(7621)){
+				@bot_killed = 0;
+				delitem 7621,1;
+				recovery 0,getcharid(0),4;
+				dispbottom "[ 掛機 ] : 使用了復活道具,繼續掛機!!";
+				callsub OnBotStart;
+			}
+		}else{
+			@bot_run = 0;
+			dispbottom "[ 掛機 ] : 角色死亡,結束掛機!!";
+			callsub OnBotStop;		
+		}
+	}
+	end;
+	
+
+
+// BUFF獲得
+// bot_buff_sc_list 人物保存BUFF的列表數組變量
+OnPCBuffStartExpress:
+	if(@bot_run && @bot_use_buff_sk){
+		.@sc_id = @started_sc_id;
+		.@sk_id = @buff_sk_id;
+		if(.@sk_id){
+			.@idx = inarray(bot_buff_sk_list, .@sk_id);
+			if(.@idx != -1){
+				.@sc_idx = inarray(bot_buff_sc_list, .@sc_id);
+				if(.@sc_idx == -1){
+					.@sc_idx = getarraysize(bot_buff_sc_list);
+					bot_buff_sc_list[.@sc_idx] = .@sc_id;
+					//dispbottom "[ 掛機 ] : 保存BUFF技能("+getskillinfo(SKI_DESCRIPTION,.@sk_id)+")狀態ID("+.@sc_id+"), 狀態列表數量("+getarraysize(bot_buff_sc_list)+")";
+				}else{
+					//dispbottom "[ 掛機 ] : 獲得BUFF技能("+getskillinfo(SKI_DESCRIPTION,.@sk_id)+")狀態ID("+.@sc_id+"), 狀態列表數量("+getarraysize(bot_buff_sc_list)+")";
+				}
+			}
+		}
+		//@bot_use_buff_sk = 0;
+	}
+	end;
+
+	
+}
+
+
+function	script	F_bot_buffs	{
+
+	.@size = getarraysize($@bot_buff_list);
+	//先結束狀態
+	for (.@i = 0; .@i < .@size; .@i++) {
+		sc_end $@bot_buff_list[.@i];
+	}
+	// 再增加狀態
+	for (.@i = 0; .@i < .@size; .@i++) {
+		.@id = $@bot_buff_list[.@i];
+		.@var = $@bot_buff_level[.@i];
+		sc_start .@id, $@bot_buff_time * 1000, .@var;
+	}
+	dispbottom "[ 掛機 ] : 獲取BUFF!!",0x678912;
+	warp @bot_Map$,0,0;
+	callfunc "bot_find_target";
+	return;
+}
+
+	// 使用BUFF技能
+function	script	F_bot_skill_buff	{
+	.@aid = getcharid(3);
+	.@count = getarraysize(bot_buff_sk_list);
+	for( .@i = 0; .@i < .@count; .@i++ ) {
+		.@buff_sk_id = bot_buff_sk_list[.@i];
+		if(.@buff_sk_id){
+			.@buff_sk_lv = getskilllv(.@buff_sk_id);
+			//.@sc_id = getskillinfo(SKI_STATUS, .@buff_sk_id);
+			//if(.@sc_id != SC_NONE){
+				.@sk_sp = getskillinfo(SKI_REQUIRES_SPCOST, .@buff_sk_id, .@buff_sk_lv);
+				if(Sp > .@sk_sp){
+					if(!@bot_use_buff_sk){
+						@buff_sk_id = .@buff_sk_id;
+						detachrid;
+						unitskilluseid(.@aid, .@buff_sk_id, .@buff_sk_lv, .@aid);
+						attachrid(.@aid);
+					}
+				}else{
+					break;
+				}
+			//}
+		}
+	}
+	return;
+}
+
+
+	// 自動拾取
+function	script	F_bot_auto_loot	{
+
+	if(bot_loot_mode == 1){
+		if(bot_loot_mode_on_type && !bot_loot_mode_on_rate){
+			if(getarraysize(bot_loot_types)){
+				
+				for(.@i = 0; .@i < getarraysize(bot_loot_types); .@i++) {
+					.@type = bot_loot_types[.@i];
+					if(.@type == 1) .@type = 0;
+					atcommand "@autoloottype +" + .@type;
+				}
+				atcommand "@autoloot 100";
+				dispbottom "[自動拾取]: 根據道具類型拾取, 拾取掉落率低於(包含) 100% 道具!!",0xFFFFFF;
+			}
+		}
+		if(bot_loot_mode_on_type && bot_loot_mode_on_rate){
+			if(getarraysize(bot_loot_types)){
+				
+				for(.@i = 0; .@i < getarraysize(bot_loot_types); .@i++) {
+					.@type = bot_loot_types[.@i];
+					if(.@type == 1) .@type = 0;
+					atcommand "@autoloottype +" + .@type;
+				}
+				atcommand "@autoloot  +"+bot_loot_per$;
+				dispbottom "[自動拾取]: 根據道具類型, 拾取掉落率低於(包含) "+bot_loot_per$+"% 道具!!",0xFFFFFF;
+			}			
+		}
+		if(!bot_loot_mode_on_type && bot_loot_mode_on_rate){
+				atcommand "@autoloot  +"+bot_loot_per$;
+				dispbottom "[自動拾取]: 拾取掉落率低於(包含) "+bot_loot_per$+"% 道具!!",0xFFFFFF;		
+		}
+	}
+	return;
+}

@@ -1,0 +1,111 @@
+trinity,86,113,6	script	任務委托管理員#thts	10166,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 180)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000180以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","所有任務回報","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("9樓的怪物","10樓的怪物","11樓的怪物","12樓的怪物")){
+
+		case 1:
+			if(checkquest(17416,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17422,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17422,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17416;
+			if(checkquest(17422,PLAYTIME)==2){erasequest 17422;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(17417,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17423,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17423,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17417;
+			if(checkquest(17423,PLAYTIME)==2){erasequest 17423;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(17418,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17424,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17424,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17418;
+			if(checkquest(17424,PLAYTIME)==2){erasequest 17424;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(17420,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17425,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17425,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17420;
+			if(checkquest(17425,PLAYTIME)==2){erasequest 17425;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+		}
+	case 2:
+		if(checkquest(17416,HUNTING)==2 ) { 
+		dispbottom "9樓的怪物任務回報完成!!";
+		erasequest 17416;
+		setquest 17422;
+		getitem 1000257,1;
+		getitem 1000263,1;
+		getexp 62302440,43611708;
+		}
+
+		if(checkquest(17417,HUNTING)==2 ) { 
+		dispbottom "10樓的怪物任務回報完成!!";
+		erasequest 17417;
+		setquest 17423;
+		getitem 1000257,1;
+		getitem 1000263,1;
+		getexp 69540840,48678588;
+		}
+
+		if(checkquest(17418,HUNTING)==2 ) { 
+		dispbottom "11樓的怪物任務回報完成!!";
+		erasequest 17418;
+		setquest 17424;
+		getitem 1000257,1;
+		getitem 1000263,1;
+		getexp 91622336,64135640;
+		}
+
+		if(checkquest(17420,HUNTING)==2 ) { 
+		dispbottom "12樓的怪物任務回報完成!!";
+		erasequest 17420;
+		setquest 17425;
+		getitem 1000257,1;
+		getitem 1000263,1;
+		getexp 61473180,43031224;
+
+		}
+		mes "[任務委托管理員]";
+		mes "已完成的任務處理完畢";
+		close;
+
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "死亡之塔每日任務",0;
+	end;
+}
+

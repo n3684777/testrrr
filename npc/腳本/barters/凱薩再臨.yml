@@ -1,0 +1,37 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#凱薩再臨
+   - Name: 凱薩再臨
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: Unknown_Item_490389
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: RTC_Coin_TW
+             Amount: 150
+       - Index: 2
+         Item: SR_Heart_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: RTC_Coin_TW
+             Amount: 300
+
+
+
+
+
+
+

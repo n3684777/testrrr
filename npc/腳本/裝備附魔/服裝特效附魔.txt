@@ -1,0 +1,535 @@
+
+vdistrict1,86,39,6	script	古爾吉奧_古爾曼尼	10080,{
+	mes "[古爾吉奧 古爾曼尼]";
+	mes "這裡有提供在服飾頭盔上加效果的服務，";
+	mes "^FF0000只要有服飾頭盔和服飾附魔石，^000000就能取得獨特的效果喔!";
+	mes "^FF0000附魔費用50萬RO幣^000000";
+	mes "^FF0000100%的機率成功^000000";
+	next;
+	switch(select("附魔服裝(頭上):附魔服裝(頭中):附魔服裝(頭下):附魔服裝(披肩):刪除效果(99.800Z):取消")){
+
+case 1:
+
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你確定要附魔嗎?";
+	next;
+	//if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+
+	if (getequipisequiped(10) == 0) {
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "該位置沒有裝備!";
+	close;
+	}
+
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+
+	if (getequipisequiped(10) == 0){
+	mes "[古爾吉奧_古爾曼尼]";
+	close;
+	}
+
+	if(countitem(@itemid)>1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(25058)>=1?"閃耀特效石(頭上)":"",Mag25058,
+
+	countitem(60144)>=1?"冰晶雪花特效石(頭上)":"",Mag60144,
+	countitem(1000365)>=1?"魔幻羽毛特效石(頭上)":"",Mag1000365,
+	countitem(1001069)>=1?"山茶花煙霧效果石(頭上)":"",Mag1001069,
+	countitem(1001175)>=1?"浪漫玫瑰效果石(頭上)":"",Mag1001175,
+	countitem(1001252)>=1?"轟鳴效果石(頭上)":"",Mag1001252,
+	countitem(1001736)>=1?"旋律音符效果石(頭上)":"",Mag1001736,
+
+
+	countitem(60160)>=1?"天使光圈特效石(頭上)":"",Mag60160,
+	countitem(60169)>=1?"飄落羽毛特效石(頭上)":"",Mag60169,
+	countitem(60178)>=1?"超級明星特效石(頭上)":"",Mag60178,
+	countitem(60179)>=1?"幽暗蝴蝶特效石(頭上)":"",Mag60179,
+	countitem(60181)>=1?"音樂裝飾特效石(頭上)":"",Mag60181,
+	countitem(60180)>=1?"人魚思念特效石(頭上)":"",Mag60180,
+	countitem(93025)>=1?"祥龍獻瑞特效石(頭上)":"",Mag93025,
+
+	countitem(70121)>=1?"冰雪粉末特效石(頭上)":"",Mag70121,
+	countitem(93009)>=1?"太陽神榮耀特效石(頭上)":"",Mag93009,
+	countitem(93011)>=1?"贊助特效石(頭上)":"",Mag93011,
+
+
+	"取消",no;
+	Mag25058: callfunc "fumoEffectA1",25058,29041,500000,rand(1,100); end;
+	Mag60144: callfunc "fumoEffectA1",60144,60719,500000,rand(1,100); end;
+	Mag1000365: callfunc "fumoEffectA1",1000365,310322,500000,rand(1,100); end;
+	Mag1001069: callfunc "fumoEffectA1",1001069,300419,500000,rand(1,100); end;
+	Mag1001175: callfunc "fumoEffectA1",1001175,311926,500000,rand(1,100); end;
+	Mag1001252: callfunc "fumoEffectA1",1001252,29727,500000,rand(1,100); end;
+	Mag1001736: callfunc "fumoEffectA1",1001736,300548,500000,rand(1,100); end;
+
+	Mag60160: callfunc "fumoEffectA1",60160,60735,500000,rand(1,100); end;
+	Mag60169: callfunc "fumoEffectA1",60169,60745,500000,rand(1,100); end;
+	Mag60178: callfunc "fumoEffectA1",60178,60754,500000,rand(1,100); end;
+	Mag60179: callfunc "fumoEffectA1",60179,60755,500000,rand(1,100); end;
+	Mag60180: callfunc "fumoEffectA1",60180,60756,500000,rand(1,100); end;
+	Mag60181: callfunc "fumoEffectA1",60181,60757,500000,rand(1,100); end;
+	Mag93025: callfunc "fumoEffectA1",93025,83025,500000,rand(1,100); end;
+
+	Mag70121: callfunc "fumoEffectA1",70121,70122,500000,rand(1,100); end;
+	Mag93009: callfunc "fumoEffectA1",93009,83009,500000,rand(1,100); end;
+	Mag93011: callfunc "fumoEffectA1",93011,83007,500000,rand(1,100); end;
+
+
+
+case 2:
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(25059)>=1?"幽靈特效石(頭中)":"",Mag25059,
+	countitem(25136)>=1?"雷電特效石(頭中)":"",Mag25136,
+	countitem(25138)>=1?"收縮特效石(頭中)":"",Mag25138,
+	countitem(25176)>=1?"藍光圈特效石(頭中)":"",Mag25176,
+	countitem(25177)>=1?"影子特效石(頭中)":"",Mag25177,
+	countitem(25178)>=1?"粉紅夜光特效石(頭中)":"",Mag25178,
+	countitem(25224)>=1?"白體特效石(頭中)":"",Mag25224,
+	countitem(25225)>=1?"緋紅波動特效石(頭中)":"",Mag25225,
+	countitem(1000319)>=1?"天使祝福特效石(頭中)":"",Mag1000319,
+	countitem(1000345)>=1?"時間配件特效石(頭中)":"",Mag1000345,
+	countitem(1000875)>=1?"巴哈拉天恩效果石(頭中)":"",Mag1000875,
+	countitem(1001038)>=1?"20週年紀念特效(頭中)":"",Mag1001038,
+
+	countitem(70123)>=1?"奇蹟仙境特效石(頭中)":"",Mag70123,
+	countitem(93001)>=1?"雷霆特效石(頭中)":"",Mag93001,
+	countitem(93007)>=1?"贊助特效石(頭中)":"",Mag93007,
+
+
+	//countitem(25140)>=1?"巨大特效石(頭中)":"",Mag25140,
+	//countitem(60152)>=1?"真紅爆裂波動特效石(頭中)":"",Mag60152,
+	//countitem(60157)>=1?"紅體特效石(頭中)":"",Mag60157,
+	//countitem(60170)>=1?"守護之星特效石(頭中)":"",Mag60170,
+	//countitem(60156)>=1?"幻影特效石(頭中)":"",Mag60156,
+
+	"取消",no;
+
+	Mag25059: callfunc "fumoEffectA2",25059,29040,500000,rand(1,100); end;
+	Mag25136: callfunc "fumoEffectA2",25136,29142,500000,rand(1,100); end;
+	Mag25138: callfunc "fumoEffectA2",25138,29144,500000,rand(1,100); end;
+	Mag25176: callfunc "fumoEffectA2",25176,29160,500000,rand(1,100); end;
+	Mag25177: callfunc "fumoEffectA2",25177,29162,500000,rand(1,100); end;
+	Mag25178: callfunc "fumoEffectA2",25178,29161,500000,rand(1,100); end;
+	Mag25224: callfunc "fumoEffectA2",25224,29224,500000,rand(1,100); end;
+	Mag25225: callfunc "fumoEffectA2",25225,29226,500000,rand(1,100); end;
+	Mag1000319: callfunc "fumoEffectA2",1000319,300152,500000,rand(1,100); end;
+	Mag1000345: callfunc "fumoEffectA2",1000345,300157,500000,rand(1,100); end;
+	Mag1000875: callfunc "fumoEffectA2",1000875,300385,500000,rand(1,100); end;
+	Mag1001038: callfunc "fumoEffectA2",1001038,311459,500000,rand(1,100); end;
+	Mag70123: callfunc "fumoEffectA2",70123,70124,500000,rand(1,100); end;
+	Mag93001: callfunc "fumoEffectA2",93001,83001,500000,rand(1,100); end;
+	Mag93007: callfunc "fumoEffectA2",93007,83007,500000,rand(1,100); end;
+
+
+	//Mag25140: callfunc "fumoEffectA2",25140,29163,500000,rand(1,100); end;
+	//Mag60152: callfunc "fumoEffectA2",60152,60727,500000,rand(1,100); end;
+	//Mag60157: callfunc "fumoEffectA2",60157,60732,500000,rand(1,100); end;
+	//Mag60170: callfunc "fumoEffectA2",60170,60746,500000,rand(1,100); end;
+	//Mag60156: callfunc "fumoEffectA2",60156,60731,500000,rand(1,100); end;
+
+case 3:
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(25137)>=1?"綠能特效石(頭下)":"",Mag25137,
+	countitem(25205)>=1?"收縮特效石(頭下)":"",Mag25205,
+	countitem(25226)>=1?"水霧特效石(頭下)":"",Mag25226,
+
+	countitem(93002)>=1?"混沌氣息(頭下)":"",Mag93002,
+	countitem(93003)>=1?"符紋光圈特效石(紅)(頭下)":"",Mag93003,
+	countitem(93004)>=1?"符紋光圈特效石(紫)(頭下)":"",Mag93004,
+	countitem(93005)>=1?"符紋光圈特效石(綠)(頭下)":"",Mag93005,
+	countitem(93006)>=1?"符紋光圈特效石(青)(頭下)":"",Mag93006,
+	countitem(93012)>=1?"巨星光芒特效石(頭下)":"",Mag93012,
+	countitem(93010)>=1?"贊助特效石(頭下)":"",Mag93010,
+	countitem(93019)>=1?"金色魔法陣特效石(頭下)":"",Mag93019,
+
+
+	"取消",no;
+	Mag25137: callfunc "fumoEffectA3",25137,29143,500000,rand(1,100); end;
+	Mag25205: callfunc "fumoEffectA3",25205,29144,500000,rand(1,100); end;
+	Mag25226: callfunc "fumoEffectA3",25226,29225,500000,rand(1,100); end;
+
+	Mag93002: callfunc "fumoEffectA3",93002,83002,500000,rand(1,100); end;
+	Mag93003: callfunc "fumoEffectA3",93003,83003,500000,rand(1,100); end;
+	Mag93004: callfunc "fumoEffectA3",93004,83004,500000,rand(1,100); end;
+	Mag93005: callfunc "fumoEffectA3",93005,83005,500000,rand(1,100); end;
+	Mag93006: callfunc "fumoEffectA3",93006,83006,500000,rand(1,100); end;
+	Mag93012: callfunc "fumoEffectA3",93012,83012,500000,rand(1,100); end;
+	Mag93010: callfunc "fumoEffectA3",93010,83007,500000,rand(1,100); end;
+	Mag93019: callfunc "fumoEffectA3",93019,83019,500000,rand(1,100); end;
+
+
+case 4:
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(13) == 0) set .@strRetPart14$,"披肩(服裝)-[無法裝置]";
+	else set .@strRetPart14$,getequipname(13);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$,.@strRetPart14$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(93014)>=1?"贊助特效石(披肩)":"",Mag93014,
+	countitem(93015)>=1?"愛情加速特效石(披肩)":"",Mag93015,
+	countitem(93016)>=1?"粉紅貓咪肉球特效石(披肩)":"",Mag93016,
+	countitem(93017)>=1?"藍色貓咪肉球特效石(披肩)":"",Mag93017,
+	countitem(93018)>=1?"擊倒宇宙特效石(披肩)":"",Mag93018,
+
+	countitem(93020)>=1?"命運的羈絆石(披肩)":"",Mag93020,
+	countitem(93021)>=1?"螢火蟲之舞石(披肩)":"",Mag93021,
+	countitem(93022)>=1?"鯨魚座石(披肩)":"",Mag93022,
+	countitem(93023)>=1?"傾盆大雨石(披肩)":"",Mag93023,
+	countitem(93024)>=1?"松樹鈴鐺石(披肩)":"",Mag93024,
+
+	countitem(93026)>=1?"永恆的時間石(披肩)":"",Mag93026,
+	countitem(93027)>=1?"玩具鑰匙圈石(披肩)":"",Mag93027,
+	countitem(93028)>=1?"艾莉絲珍珠石(披肩)":"",Mag93028,
+	countitem(93029)>=1?"霓虹皮卡啾石(披肩)":"",Mag93029,
+	countitem(93030)>=1?"復古僕人石(披肩)":"",Mag93030,
+
+
+	"取消",no;
+	Mag93014: callfunc "fumoEffectA4",93014,83007,500000,rand(1,100); end;
+	Mag93015: callfunc "fumoEffectA4",93015,83015,500000,rand(1,100); end;
+	Mag93016: callfunc "fumoEffectA4",93016,83016,500000,rand(1,100); end;
+	Mag93017: callfunc "fumoEffectA4",93017,83017,500000,rand(1,100); end;
+	Mag93018: callfunc "fumoEffectA4",93018,83018,500000,rand(1,100); end;
+
+	Mag93020: callfunc "fumoEffectA4",93020,83020,500000,rand(1,100); end;
+	Mag93021: callfunc "fumoEffectA4",93021,83021,500000,rand(1,100); end;
+	Mag93022: callfunc "fumoEffectA4",93022,83022,500000,rand(1,100); end;
+	Mag93023: callfunc "fumoEffectA4",93023,83023,500000,rand(1,100); end;
+	Mag93024: callfunc "fumoEffectA4",93024,83024,500000,rand(1,100); end;
+
+	Mag93026: callfunc "fumoEffectA4",93026,83026,500000,rand(1,100); end;
+	Mag93027: callfunc "fumoEffectA4",93027,83027,500000,rand(1,100); end;
+	Mag93028: callfunc "fumoEffectA4",93028,83028,500000,rand(1,100); end;
+	Mag93029: callfunc "fumoEffectA4",93029,83029,500000,rand(1,100); end;
+	Mag93030: callfunc "fumoEffectA4",93030,83030,500000,rand(1,100); end;
+
+
+
+case 5:
+	mes "[古爾吉奧 古爾曼尼]";
+	mes "你確定要洗滌效果嗎?";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+	else set .@strRetPart11$,getequipname(10);
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+
+	if(countitem(@itemid)>1){
+	mes "[古爾吉奧 古爾曼尼]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(@card3 > 0) goto Effect_net1;
+
+	mes "[古爾吉奧 古爾曼尼]";
+	mes "你的服飾上沒有效果哦";
+	close;
+
+Effect_net1:
+	switch(select("確定洗滌這個服飾")){
+	case 1:
+	callfunc "fumoEffectB1",0,99800,rand(1,100);
+
+	}
+
+case 6:
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+	}
+
+no:
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+
+OnInit:
+	waitingroom "服裝特效附魔",0;
+	end;
+}
+
+
+//--------------------------洗滌
+function	script	fumoEffectB1	{
+
+	if(zeny<getarg(2)){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "古爾吉奧_古爾曼尼:成功的為這個裝備賦予了新的能力!";
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+//--------------------------附魔(頭上)
+function	script	fumoEffectA1	{
+	if(countitem(getarg(0))<1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "古爾吉奧_古爾曼尼:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, getarg(1),@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------附魔(頭中)
+function	script	fumoEffectA2	{
+	if(countitem(getarg(0))<1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "古爾吉奧_古爾曼尼:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, getarg(1),@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------附魔(頭下)
+function	script	fumoEffectA3	{
+	if(countitem(getarg(0))<1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "古爾吉奧_古爾曼尼:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, getarg(1),@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------附魔(披肩)
+function	script	fumoEffectA4	{
+	if(countitem(getarg(0))<1){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[古爾吉奧_古爾曼尼]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "古爾吉奧_古爾曼尼:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, getarg(1), @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+

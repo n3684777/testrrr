@@ -1,0 +1,86 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#飛行船墜落地裝備
+   - Name: 飛行船墜落地裝備製作員
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_RUSBALD
+     Items:
+       - Index: 0
+         Item: MD_Airboat_Tokken
+         Stock: 0
+         Zeny: 250000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Ore
+             Amount: 25
+       - Index: 1
+         Item: MD_Airboat_Random
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 17
+       - Index: 2
+         Item: MD_Airboat_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 3
+         Item: MD_Airboat_Boots2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 4
+         Item: MD_Airboat_Boots3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 5
+         Item: MD_Airboat_Boots4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 6
+         Item: MD_Airboat_Boots5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 7
+         Item: MD_Airboat_Boots6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 185
+       - Index: 8
+         Item: md_airboat_reward
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Airboat_Tokken
+             Amount: 2500

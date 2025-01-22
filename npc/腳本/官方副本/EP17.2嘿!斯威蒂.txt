@@ -1,0 +1,423 @@
+
+vdistrict1,19,27,4	script	嘿!斯威蒂管理者	10347,{
+
+	//副本任務獎勵
+	if(checkquest(32054,HUNTING)==2 ) { 
+	dispbottom "嘿!斯威蒂任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點金幣
+	erasequest 32054; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_37 < gettime(8) ){
+	set Instance_Bout_37,10;
+	set day_Instance_Bout_37,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_37 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[阿蒙德]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "嘿!斯威蒂";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[阿蒙德]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_37+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x2";
+	mes "商城1點金幣x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[阿蒙德]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[阿蒙德]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[阿蒙德]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 130) {
+			mes "[阿蒙德]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_37,Instance_Bout_37-1;
+
+			//副本積分任務
+			if(checkquest(32054,HUNTING)<0 ){setquest 32054;}
+			//副本任務
+			if(checkquest(18022,HUNTING)<0 ){setquest 18022;}
+			if(checkquest(18025,PLAYTIME)==0){dispbottom "收集核心任務還在冷卻中";}
+			if(checkquest(18025,PLAYTIME)==1){dispbottom "收集核心任務還在冷卻中";}
+			if(checkquest(18025,PLAYTIME)==2){if(checkquest(18024,HUNTING)<0 ){setquest 18024;}}
+			if(checkquest(18025,PLAYTIME)==-1){if(checkquest(18024,HUNTING)<0 ){setquest 18024;}}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "嘿!斯威蒂",0;
+	end;
+}
+
+
+//------------------------------嘿!斯威蒂事件
+1@bamq,0,0,0	script	嘿!斯威蒂事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@bamq");
+	'map_name$[1] = instance_mapname("1@bamn");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("阿蒙德#bam02");
+	disablenpc instance_npcname("暈倒的斯威蒂#bam01");
+	//副本標籤
+	set 'CD_bam_01,0;
+	set 'CD_bam_02,0;
+	set 'CD_bam_03,0;
+	set 'CD_bam_04,0;
+	set 'CD_bam_05,0;
+	set 'CD_bam_06,0;
+	set 'CD_bam_07,0;
+	set 'CD_bam_08,0;
+	set 'CD_bam_09,0;
+	set 'CD_bam_10,0;
+	end;
+
+	OnEnd01:
+	'win = 1;
+	disablenpc instance_npcname("阿蒙德#bam01");
+	enablenpc instance_npcname("暈倒的斯威蒂#bam01");
+	enablenpc instance_npcname("阿蒙德#bam02");
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【嘿!斯威蒂】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	instance_announce 0, "阿蒙德：斯威蒂~不要太過分了...",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@bamq,37,58,4	script	阿蒙德#bam01	10345,{
+	mes "[阿蒙德]";
+	mes "去庭院從破損的玩偶身上把他們的核心回收10個來給我吧!";
+	next;
+	switch (select("我現在就去:繳交取得的核心")) {
+
+	case 1:
+	close;
+
+	case 2:
+	if(checkquest(18024,PLAYTIME)==-1){mes "[阿蒙德]"; mes "你還未接取收集核心任務~"; close;}
+	if ( countitem(1000226) < 10 ) {
+	mes "[阿蒙德]";
+	mes "破損的玩偶核心數量不足";
+	close; }
+	erasequest 18024;
+	setquest 18025;
+	delitem 1000226,10;	//破損的玩偶核心
+	getitem 1000103,2*$EP1702;	//霸肋門德餐券
+	close;
+	}
+}
+
+
+1@bamq,34,49,4	script	斯威蒂#bam01	10349,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "[阿蒙德]";
+	mes "嘿，你準備好了嗎?";
+	mes "我想~如果你打敗我的話你隨時都能叫我笨蛋~";
+	mes "我已經看到打到你後的畫面了";
+	next;
+	switch (select("請等一下:讓我們開始吧")) {
+
+	case 1:
+	close;
+
+	case 2:
+	instance_announce 0, "這次不會輸給你們!",bc_map,"0x00cc66";
+	areamonster 'map_name$[0],34,49,34,49,"--ja--",20642,1,instance_npcname("嘿!斯威蒂事件1")+"::OnEnd01";
+	disablenpc instance_npcname("斯威蒂#bam01");
+	close;
+	}
+}
+1@bamq,34,49,4	script	暈倒的斯威蒂#bam01	10349,{
+	mes "因為受打擊失去意識， 好像暈過去了";
+	close;
+}
+
+
+1@bamn,85,262,4	script	壞掉的大廈守衛#bam01	10358,{
+	if ('CD_bam_01>0) end;
+	setd "$@CD_bam_01"+instance_id(1),1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,85,262,1,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam01");
+	end;
+}
+
+1@bamn,65,188,4	script	壞掉的大廈守衛#bam02	10358,{
+	if ('CD_bam_02>0) end;
+	set 'CD_bam_02,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,65,188,2,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam02");
+	end;
+}
+
+1@bamn,103,222,4	script	壞掉的大廈守衛#bam03	10358,{
+	if ('CD_bam_03>0) end;
+	set 'CD_bam_03,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,103,222,3,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam03");
+	end;
+}
+
+1@bamn,196,264,4	script	壞掉的大廈守衛#bam04	10358,{
+	if ('CD_bam_04>0) end;
+	set 'CD_bam_04,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,196,264,4,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam04");
+	end;
+}
+
+1@bamn,287,308,4	script	壞掉的大廈守衛#bam05	10358,{
+	if ('CD_bam_05>0) end;
+	set 'CD_bam_05,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,287,308,5,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam05");
+	end;
+}
+
+1@bamn,326,261,4	script	壞掉的大廈守衛#bam06	10358,{
+	if ('CD_bam_06>0) end;
+	set 'CD_bam_06,1;
+	getitem 1000226,1;
+	viewpoint 0,326,261,6,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam06");
+	end;
+}
+
+1@bamn,321,139,4	script	壞掉的大廈守衛#bam07	10358,{
+	if ('CD_bam_07>0) end;
+	set 'CD_bam_07,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,321,139,7,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam07");
+	end;
+}
+
+1@bamn,200,84,4	script	壞掉的大廈守衛#bam08	10358,{
+	if ('CD_bam_08>0) end;
+	set 'CD_bam_08,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,200,84,8,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam08");
+	end;
+}
+
+1@bamn,117,66,4	script	壞掉的大廈守衛#bam09	10358,{
+	if ('CD_bam_09>0) end;
+	set 'CD_bam_09,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,117,66,9,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam09");
+	end;
+}
+
+1@bamn,116,205,4	script	壞掉的大廈守衛#bam10	10358,{
+	if ('CD_bam_10>0) end;
+	set 'CD_bam_10,1;
+	getitem 1000226,1;
+	specialeffect 16;
+	viewpoint 0,116,205,10,0xffffff;
+	disablenpc instance_npcname("壞掉的大廈守衛#bam10");
+	end;
+}
+
+
+//------------------------------觸發點
+1@bamn,33,219,0	script	觸發點#bam01	139,7,7,{end;
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+OnTouch:
+	viewpoint 1,85,262,1,0xffffff;
+	viewpoint 1,65,188,2,0xffffff;
+	viewpoint 1,103,222,3,0xffffff;
+	viewpoint 1,196,264,4,0xffffff;
+	viewpoint 1,287,308,5,0xffffff;
+	viewpoint 1,326,261,6,0xffffff;
+	viewpoint 1,321,139,7,0xffffff;
+	viewpoint 1,200,84,8,0xffffff;
+	viewpoint 1,117,66,9,0xffffff;
+	viewpoint 1,116,205,10,0xffffff;
+	specialeffect 16;
+	disablenpc instance_npcname("觸發點#bam01");
+	end;
+}
+
+1@bamq,14,39,0	script	觸發點#bam02	139,3,3,{end;
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+OnTouch:
+	monster instance_mapname("1@bamn"),0,0,"--ja--",20688,50;
+	monster instance_mapname("1@bamn"),0,0,"--ja--",20680,25;
+	specialeffect 16;
+	disablenpc instance_npcname("觸發點#bam02");
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@bamq,9,39,0	warp	傳送門#bam01	2,2,1@bamn,33,219
+1@bamn,33,224,0	warp	傳送門#bam02	2,2,1@bamq,14,39
+
+
+//------------------------------領取獎勵
+1@bamq,35,58,4	script	阿蒙德#bam02	10345,{
+
+	//副本積分任務獎勵
+	if(checkquest(32054,HUNTING)==2 ) { 
+	dispbottom "嘿!斯威蒂(普通)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點金幣
+	erasequest 32054; }
+
+	mes "[阿蒙德]";
+	mes "阿蒙德會照顧暈倒的斯威蒂， 現在來整理一下吧?";
+	next;
+	switch (select("動手整理:我搜尋庭院後再來:繳交取得的核心")) {
+	case 1:
+	//官方副本獎勵
+	if(checkquest(18022,HUNTING)==2 ) { 
+	dispbottom "嘿!斯威蒂任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,4*$EP1702;	//霸肋門德餐券
+	erasequest 18022; }
+	if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+	callfunc "offical_instance_finish",49;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+
+	case 3:
+	if(checkquest(18024,PLAYTIME)==-1){
+	mes "[阿蒙德]";
+	mes "你還未接取收集核心任務~";
+	close; }
+	if ( countitem(1000226) < 10 ) {
+	mes "[阿蒙德]";
+	mes "破損的玩偶核心數量不足";
+	close; }
+	erasequest 18024;
+	setquest 18025;
+	delitem 1000226,10;
+	getitem 1000103,2*$EP1702;	//霸肋門德餐券
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@bamq	mapflag	partylock
+1@bamq	mapflag	noteleport
+1@bamq	mapflag	nosave	SavePoint
+1@bamq	mapflag	nomemo
+1@bamq	mapflag	nobranch
+1@bamq	mapflag	noicewall
+1@bamq	mapflag	restricted	6
+
+1@bamn	mapflag	partylock
+1@bamn	mapflag	noteleport
+1@bamn	mapflag	nosave	SavePoint
+1@bamn	mapflag	nomemo
+1@bamn	mapflag	nobranch
+1@bamn	mapflag	noicewall
+1@bamn	mapflag	restricted	6
+
+
+

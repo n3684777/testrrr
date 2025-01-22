@@ -1,0 +1,3638 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions.
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions.
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+
+
+
+  - Id: 102629
+    AegisName: 21_Anni_Stone3_TW
+    Name: 聖潔石
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100713
+    AegisName: Mjo_UP_TW
+    Name: 高妙勒尼的神話遺志
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100714
+    AegisName: Brysing_UP_TW
+    Name: 菲依雅女神的恩惠
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100715
+    AegisName: Sleip_Up_TW
+    Name: 奧丁神的祝福
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100716
+    AegisName: Magin_Up_TW
+    Name: 托爾的雷神之力
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 9500
+    AegisName: Candy_Pouch_Blessing_Scroll_Range
+    Name: 高級糖果袋背包屬性箱(遠距離)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 9501
+    AegisName: Candy_Pouch_Blessing_Scroll_Melee
+    Name: 高級糖果袋背包屬性箱(物理)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 9502
+    AegisName: Candy_Pouch_Blessing_Scroll_Magic
+    Name: 高級糖果袋背包屬性箱(魔法)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 9538
+    AegisName: BF_Att_Box_TW
+    Name: 爭戰披肩屬性箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23100
+    AegisName: Drooping_Scroll
+    Name: 神槍手人偶帽強化捲軸
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23151
+    AegisName: EnchantStone_Recipe
+    Name: 服飾附魔石精靈合成箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23152
+    AegisName: Collectibles_Box
+    Name: Collectibles SynthesisBox
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23153
+    AegisName: Pet_Egg_Box
+    Name: Pet Egg SynthesisBox
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23154
+    AegisName: Costume_Exchange_Box
+    Name: Costume Exchange SynthesisBox
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23175
+    AegisName: Uniform_Repair_Kit
+    Name: 制服修理箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23229
+    AegisName: Scroll_of_Fallen_Angel_Wings
+    Name: Scroll of Fallen Angel Wings
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23236
+    AegisName: Class_Shadow_Box_Weapon
+    Name: Class Shadow Box (Weapon)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23237
+    AegisName: Class_Shadow_Box_Armor
+    Name: Class Shadow Box (Armor)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23238
+    AegisName: Class_Shadow_Box_Shoes
+    Name: Class Shadow Box (Shoes)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23239
+    AegisName: Class_Shadow_Box_Shield
+    Name: Class Shadow Box (Shield)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23240
+    AegisName: Class_Shadow_Box_Pendant
+    Name: Class Shadow Box (Pendant)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23241
+    AegisName: Class_Shadow_Box_Earring
+    Name: Class Shadow Box (Earring)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23247
+    AegisName: StatusShadow_Mix
+    Name: 影子全能精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23248
+    AegisName: GemstoneShadow_Mix
+    Name: 影子魔力礦石精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23249
+    AegisName: BearersShadow_Mix
+    Name: 影子送信者精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23250
+    AegisName: ComposeShadow_Mix
+    Name: 影子魔法精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23281
+    AegisName: RaceShadow_Mix
+    Name: 影子種族精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+  - Id: 23308
+    AegisName: BOOSTER_AMPLIFIER
+    Name: 推進提升器
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23311
+    AegisName: Magic_Cat_hand_Scroll
+    Name: Magic Cat Hand Scroll
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23324
+    AegisName: StabilityShadow_Mix
+    Name: 影子抗性精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23474
+    AegisName: InfinityShadow_Mix
+    Name: 影子無極精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23538
+    AegisName: BloodyKnight_Shield_Box
+    Name: 詛咒騎士盾牌寶箱
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 28942,1;
+      getitem 23545,1;
+  - Id: 23545
+    AegisName: Silver_Statue
+    Name: 白銀天使像
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23546
+    AegisName: Cursed_Blood
+    Name: 血腥之血
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23547
+    AegisName: Gold_Statue
+    Name: 黃金天使像
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23170
+    AegisName: Fan_Modification_Kit
+    Name: Fan Modification Kit
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23665
+    AegisName: PhysicalMagical_Mix
+    Name: 影子天然魔力精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23666
+    AegisName: ImmunedAthena_Mix
+    Name: 影子戰神精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23667
+    AegisName: HardChamption_Mix
+    Name: 影子剛強精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23668
+    AegisName: KingbirdAncient_Mix
+    Name: 影子國王精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23669
+    AegisName: CriticalHit_Mix
+    Name: 影子潛能精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23798
+    AegisName: Hair_Ddbox_TW
+    Name: 髮型精靈合成箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23818
+    AegisName: Bs_Item_M_S_2
+    Name: 大型獸人英雄頭盔秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23819
+    AegisName: Bs_Item_M_S_8
+    Name: 鮮紅玫瑰秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23820
+    AegisName: Bs_Item_M_S_10
+    Name: 七彩大嘴鳥髮飾秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23821
+    AegisName: Bs_Item_M_S_11
+    Name: 月夜貓帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23822
+    AegisName: Bs_Item_M_S_34
+    Name: 煉獄羽翼秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23823
+    AegisName: Bs_Item_M_S_41
+    Name: 長長貓耳朵帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23824
+    AegisName: Bs_Item_M_S_42
+    Name: 榮耀足球帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23825
+    AegisName: Bs_Item_M_S_43
+    Name: 邪惡神聖遊行者帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23826
+    AegisName: Bs_Item_M_S_44
+    Name: 流浪之王頭盔秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23827
+    AegisName: Bs_Sha_M_S_1
+    Name: 影子全能秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23828
+    AegisName: Bs_Sha_M_S_17
+    Name: 影子高尚秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23829
+    AegisName: Bs_Sha_M_S_18
+    Name: 影子張力秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23830
+    AegisName: Bs_Sha_M_S_19
+    Name: 影子恢復秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23831
+    AegisName: Bs_Sha_M_S_20
+    Name: 影子治癒量秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23832
+    AegisName: Bs_Item_M_S_4
+    Name: 艾咪斯可魯帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23833
+    AegisName: Bs_Item_M_S_6
+    Name: 虎王娃娃帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23834
+    AegisName: Bs_Item_M_S_7
+    Name: 素貞娃娃頭飾秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23835
+    AegisName: Bs_Item_M_S_12
+    Name: 糖果袋背包秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23836
+    AegisName: Bs_Item_M_S_13
+    Name: 金色鮭魚帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23837
+    AegisName: Bs_Item_M_S_15
+    Name: 生存套裝秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23838
+    AegisName: Bs_Item_M_S_28
+    Name: 玩具針筒秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23839
+    AegisName: Bs_Item_M_S_29
+    Name: 蔚藍蝴蝶結秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23840
+    AegisName: Bs_Item_M_S_31
+    Name: 魔法推進器秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23841
+    AegisName: Bs_Item_M_S_32
+    Name: 念珠十字架項鍊秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23842
+    AegisName: Bs_Item_M_S_33
+    Name: 精靈王冠秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23843
+    AegisName: Bs_Item_M_S_36
+    Name: 近衛兵帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23844
+    AegisName: Bs_Item_M_S_37
+    Name: 盜賊頭巾秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23845
+    AegisName: Bs_Item_M_S_38
+    Name: 墮落天使祝福秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23846
+    AegisName: Bs_Item_M_S_39
+    Name: 兔子魔法帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23847
+    AegisName: Bs_Item_M_S_40
+    Name: 胡狼頭神頭盔秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23848
+    AegisName: Bs_Item_M_S_45
+    Name: 炙燄魔帽子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23849
+    AegisName: Bs_Item_M_S_46
+    Name: 紅色指揮帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23850
+    AegisName: Bs_Item_M_S_47
+    Name: 伊夫利特面具秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23851
+    AegisName: Bs_Item_M_S_48
+    Name: 懶洋洋的夢羅克門徒秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23852
+    AegisName: Bs_Item_M_S_49
+    Name: 莎蔓芭亞秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23853
+    AegisName: Bs_Item_M_S_50
+    Name: 跳躍的小雞秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23854
+    AegisName: Bs_Sha_M_S_2
+    Name: 影子職業秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23855
+    AegisName: Bs_Sha_M_S_5
+    Name: 影子念咒秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23856
+    AegisName: Bs_Sha_M_S_6
+    Name: 影子體型秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23857
+    AegisName: Bs_Sha_M_S_7
+    Name: 影子種族秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23858
+    AegisName: Bs_Sha_M_S_8
+    Name: 影子抗性秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23859
+    AegisName: Bs_Sha_M_S_13
+    Name: 影子特殊秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23860
+    AegisName: Bs_Sha_M_S_15
+    Name: 影子天然秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23861
+    AegisName: Bs_Sha_M_S_16
+    Name: 影子魔力秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23862
+    AegisName: Bs_Sha_M_S_23
+    Name: 影子經驗值秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23863
+    AegisName: Bs_Item_M_S_5
+    Name: 瘋狂兔寶寶秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23864
+    AegisName: Bs_Item_M_S_9
+    Name: 永恆之翼秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23865
+    AegisName: Bs_Item_M_S_14
+    Name: 狸貓的變身葉子秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23866
+    AegisName: Bs_Item_M_S_16
+    Name: 伊夫利特之耳秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23867
+    AegisName: Bs_Item_M_S_17
+    Name: 心型羽翼髮夾秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23868
+    AegisName: Bs_Item_M_S_19
+    Name: 辛格朗之翼秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23869
+    AegisName: Bs_Item_M_S_27
+    Name: 俏皮蕾絲花邊貓髮帶秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23870
+    AegisName: Bs_Item_M_S_35
+    Name: 貴族面具秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23871
+    AegisName: Bs_Sha_M_S_9
+    Name: 影子魔力礦石秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23872
+    AegisName: Bs_Sha_M_S_10
+    Name: 影子送信者秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23873
+    AegisName: Bs_Sha_M_S_11
+    Name: 影子急速秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23874
+    AegisName: Bs_Sha_M_S_21
+    Name: 影子潛能秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23875
+    AegisName: Bs_Sha_M_S_22
+    Name: 影子致命攻擊秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23876
+    AegisName: Bs_Item_M_S_1
+    Name: 墮天使之翼秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23877
+    AegisName: Bs_Item_M_S_3
+    Name: 冒險家揹包秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23879
+    AegisName: Bs_Item_M_S_18
+    Name: 魔術電路秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23880
+    AegisName: Bs_Item_M_S_20
+    Name: 新浪潮墨鏡秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23881
+    AegisName: Bs_Item_M_S_21
+    Name: 巨神蟒的氣息秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23882
+    AegisName: Bs_Item_M_S_22
+    Name: 判官帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23883
+    AegisName: Bs_Item_M_S_23
+    Name: 汪福將軍帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23884
+    AegisName: Bs_Item_M_S_24
+    Name: 經典羽毛帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23885
+    AegisName: Bs_Item_M_S_25
+    Name: 艾咪斯可魯貝雷帽秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23886
+    AegisName: Bs_Item_M_S_26
+    Name: 常勝將軍的頭盔秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23887
+    AegisName: Bs_Item_M_S_30
+    Name: 詛咒騎士盾牌秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23888
+    AegisName: Bs_Sha_M_S_3
+    Name: 影子貫穿秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23889
+    AegisName: Bs_Sha_M_S_4
+    Name: 影子風暴秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23890
+    AegisName: Bs_Sha_M_S_12
+    Name: 影子突擊秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23891
+    AegisName: Bs_Sha_M_S_14
+    Name: 影子改良秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23892
+    AegisName: Bs_Sha_M_S_24
+    Name: 影子強力&心靈捕手秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23893
+    AegisName: Bs_Sha_M_S_25
+    Name: 影子無極秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23894
+    AegisName: Bs_Item_M_S_51
+    Name: 修咖巴殷的黑貓耳朵秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+#KRO新增秘笈
+  - Id: 101340
+    AegisName: Bs_Item_M_S_52
+    Name: 鐵匠的祝福秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101341
+    AegisName: Bs_Item_M_S_53
+    Name: 忽克連影子精煉鎚秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101342
+    AegisName: Bs_Item_M_S_54
+    Name: 強烈靈魂精髓秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101343
+    AegisName: Bs_Item_M_S_55
+    Name: 強力精華球秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101344
+    AegisName: Bs_Item_M_S_56
+    Name: 附魔票券秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101345
+    AegisName: Bs_Item_M_S_57
+    Name: 月夜貓野獸皮靴秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101346
+    AegisName: Bs_Item_M_S_58
+    Name: 海盜之王外套秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101347
+    AegisName: Bs_Item_M_S_59
+    Name: 皮里恩翅膀秘笈
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 102295
+    AegisName: Bs_Item_M_S_60
+    Name: 波伊塔塔帽子秘笈
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102308
+    AegisName: Bs_Item_M_S_61
+    Name: 貝雷傑的王冠秘笈
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102310
+    AegisName: Bs_Item_M_S_62
+    Name: 貝思波齒輪頭盔秘笈
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102311
+    AegisName: Bs_Item_M_S_63
+    Name: 墮落的呻吟秘笈
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 240
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 23967
+    AegisName: EnchantStone_Recipe_9m
+    Name: Enchant Stone Recipe 9m
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+
+  - Id: 100000
+    AegisName: IDTest_Special
+    Name: IDTest Special
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100010
+    AegisName: PerfectSize_Mix
+    Name: 影子全然體型轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100011
+    AegisName: MagicPiercing_Mix
+    Name: 影子風暴種族轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100053
+    AegisName: Piercing_Mix
+    Name: 影子貫穿種族轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100058
+    AegisName: Hasty_Mix
+    Name: 影子急速精靈轉換箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100060
+    AegisName: EnchantStone_Recipe_4m
+    Name: 4m Enchant Stone Recipe SynthesisBox
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100151
+    AegisName: Skill_Sha_M_S_Weapon
+    Name: Skill Shadow Weapon Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100209
+    AegisName: Skill_Sha_M_S_Shield
+    Name: Skill Shadow Shield Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100210
+    AegisName: Skill_Sha_M_S_Pendant
+    Name: Skill Shadow Pendant Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100211
+    AegisName: Skill_Sha_M_S_Earing
+    Name: Skill Shadow Earring Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100212
+    AegisName: Skill_Sha_M_S_Shoes
+    Name: Skill Shadow Shoes Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100213
+    AegisName: Skill_Sha_M_S_Armor
+    Name: Skill Shadow Armor Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100273
+    AegisName: Remodel_Hero_Boots
+    Name: 古代英雄戰靴改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100274
+    AegisName: Oriental_Sword_Cube
+    Name: 斬魔劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100275
+    AegisName: Dragonic_Slayer_Cube
+    Name: 古代龍紋巨劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100276
+    AegisName: Shiver_Katar_K_Cube
+    Name: 古代戰慄拳刃改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100277
+    AegisName: Blade_Katar_Cube
+    Name: 刀鋒卡塔拳刃改良
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100327
+    AegisName: Sword_Of_Bluefire_Cube
+    Name: 紅蓮劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100328
+    AegisName: Slate_Sword_Cube
+    Name: 石板靈劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100329
+    AegisName: Narcis_Bow_Cube
+    Name: 納西斯弓改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100330
+    AegisName: Trumpet_Shell_K_Cube
+    Name: 古代貝殼壺笛改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100331
+    AegisName: Barb_Wire_K_Cube
+    Name: 倒鉤尖銳鞭改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100360
+    AegisName: Avenger_Cube
+    Name: 復仇者戰斧改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100361
+    AegisName: Meteor_Striker_Cube
+    Name: 流星前鋒錘改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100362
+    AegisName: Magic_Sword_Cube
+    Name: 古代棘刺劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100363
+    AegisName: Fatalist_Cube
+    Name: 魔導劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100376
+    AegisName: Royal_Bow_K_Cube
+    Name: 王室名弓改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100377
+    AegisName: Scalet_Dragon_L_Cube
+    Name: 火龍穿心神弓改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100378
+    AegisName: Shadow_Staff_K_Cube
+    Name: 古代英雄魔杖改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100379
+    AegisName: Freezing_Rod_Cube
+    Name: 寒氣晶鑽之杖改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100381
+    AegisName: 3Lv_9Refine_Weapon_7Gu
+    Name: +9 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100382
+    AegisName: 3Lv_10Refine_Weapon_8Gu
+    Name: +10 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100383
+    AegisName: 3Lv_11Refine_Weapon_9Gu
+    Name: +11 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100384
+    AegisName: 3Lv_12Refine_Weapon_10G
+    Name: +12 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100385
+    AegisName: 4Lv_9Refine_Weapon_8Gu
+    Name: +9 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100386
+    AegisName: 4Lv_10Refine_Weapon_9Gu
+    Name: +10 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100387
+    AegisName: 4Lv_11Refine_Weapon_10G
+    Name: +11 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100388
+    AegisName: Iron_Nail_K_Cube
+    Name: 古代英雄拳套改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100390
+    AegisName: Ray_Knuckle_Cube
+    Name: 雷虎拳套改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100393
+    AegisName: Undine_Spear_K_Cube
+    Name: 水精靈保庇長矛改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100394
+    AegisName: Light_Blade_Cube
+    Name: 聖光劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100395
+    AegisName: Iron_Staff_Cube
+    Name: 鋼鐵魔杖改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100396
+    AegisName: Blue_Crystal_Staff_Cube
+    Name: 古代水晶之淚\魔杖改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100397
+    AegisName: Demon_Hunt_Bible_Cube
+    Name: 驅魔錄改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100398
+    AegisName: Saint_Hall_Cube
+    Name: 古代聖殿審判錘改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100399
+    AegisName: MeawFoxtail_Cube
+    Name: 喵喵狐尾草改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100400
+    AegisName: Fog_Dew_Sword_Cube
+    Name: 霧露劍改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100401
+    AegisName: Humma_Clear_Cube
+    Name: 風魔飛鏢之清明改良箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100402
+    AegisName: Thousand_Sun_Cube
+    Name: 日月神錄改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100403
+    AegisName: Spirit_Pendulum_Cube
+    Name: 量子靈魂石改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100404
+    AegisName: Crimson_Rose_Cube
+    Name: 紅玫瑰左輪手槍改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100405
+    AegisName: Master_Soul_Rifle_Cube
+    Name: 槍王靈魂來福槍改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100406
+    AegisName: Golden_Lord_Launcher_Cube
+    Name: 黃金榴彈發射器改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100407
+    AegisName: The_Black_Cube
+    Name: 地獄黑光格林機槍改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100408
+    AegisName: Demon_Slayer_Shot_Cube
+    Name: 魔鬼交易霰彈槍改良箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100433
+    AegisName: EnchantStone_Recipe_3m
+    Name: March Costume Enchant Stone Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100468
+    AegisName: Egirnion_Box
+    Name: Aegirnian Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100572
+    AegisName: FullPeneShadow_Mix
+    Name: 影子天衣無縫貫穿轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100579
+    AegisName: PendantStoneForWork
+    Name: 吊墜精工用原石
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 100596
+    AegisName: FullTempShadow_Mix
+    Name: 影子天衣無縫風暴轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100600
+    AegisName: Shadow_Mix_Recipe2
+    Name: New Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100601
+    AegisName: Illusion_Module_Mix
+    Name: 幻象改造模組精靈合成箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100602
+    AegisName: Automatic_Module_Mix
+    Name: 自動修改模組精靈合成箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 100620
+    AegisName: True_GemShadow_Mix
+    Name: 影子真魔力礦石轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100621
+    AegisName: Mammoth_Mix
+    Name: 影子神力猛瑪之力轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100623
+    AegisName: Shadow_Mix_Recipe_TH
+    Name: Lapine Box (Shadow)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* laphine_synthesis(); */
+  - Id: 100661
+    AegisName: EXPShadow_Mix
+    Name: Experience Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100691
+    AegisName: AbsorbShadow_Mix
+    Name: Absolve Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100783
+    AegisName: MajorAutoSpell_Mix
+    Name: Auto Spell Shadow Pick-Up Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100887
+    AegisName: MagicalShadow_Mix
+    Name: Clever Shadow Pick-Up Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 100888
+    AegisName: PhysicalShadow_Mix
+    Name: Durable Shadow Pick-Up Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101075
+    AegisName: SLD_Card_Recipe
+    Name: Sealed Boss Card Pick-Up Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101181
+    AegisName: ReloadShadow_Mix
+    Name: 影子重新裝改良精靈轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101182
+    AegisName: SpellCasterShadow_Mix
+    Name: Spell Caster Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 101257
+    AegisName: R_BearersShadow_Mix
+    Name: 影子君主送信者精靈轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101258
+    AegisName: M_BlitzShadow_Mix
+    Name: 影子進階突擊轉換箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 9514
+    AegisName: Ein_Ddbox
+    Name: 物理改造許\可執照
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 9523
+    AegisName: Metal_Smelting_Ticket
+    Name: Metal Refining Ticket
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 9529
+    AegisName: Ein_Ddbox2
+    Name: 魔法改造許\可執照
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 9550
+    AegisName: Gemstone_Of_Time
+    Name: 時光礦石
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 9551
+    AegisName: Time_Unseal_Key
+    Name: 時光封印鑰匙
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 9785
+    AegisName: Frozen_Box_IL
+    Name: Frozen Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 9933
+    AegisName: True_Hunting_9Refine
+    Name: 王室狩獵精煉+9箱子
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 9934
+    AegisName: True_Hunting_Opt_A
+    Name: 王室狩獵物理加工套件
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 9935
+    AegisName: True_Hunting_Opt_B
+    Name: 王室狩獵魔法加工套件子
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23436
+    AegisName: Shadow_Refine_Hammer
+    Name: 忽克連影子精煉鎚
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23675
+    AegisName: Geffen_Magic_Scroll
+    Name: 魔法防具卷軸
+    Type: Delayconsume
+    Weight: 100
+    Script: |
+      laphine_upgrade();
+  - Id: 23676
+    AegisName: Gray_Charcoal_Melee
+    Name: 木炭研磨劑(物理)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23677
+    AegisName: Gray_Charcoal_Magic
+    Name: 木炭研磨劑(魔法)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23678
+    AegisName: Gray_Charcoal_Range
+    Name: 木炭研磨劑(遠距離)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23679
+    AegisName: Geffen_Magic_Scroll2
+    Name: 魔法飾品卷軸
+    Type: Delayconsume
+    Weight: 100
+    Script: |
+      laphine_upgrade();
+  - Id: 23706
+    AegisName: Charleston_Parts_W
+    Name: 查理斯頓升級版零件(近距離)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23707
+    AegisName: Charleston_Parts_R
+    Name: 查理斯頓升級版零件(遠距離)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23720
+    AegisName: Shadow_Random_Mix
+    Name: 影子裝備升級屬性箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 23776
+    AegisName: EP17_1_SPC05
+    Name: 武器改造裝置(物理)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23777
+    AegisName: EP17_1_SPC06
+    Name: 高階武器改造裝置(物理)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23778
+    AegisName: EP17_1_SPC07
+    Name: 頂級武器改造裝置(物理)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23779
+    AegisName: EP17_1_SPC08
+    Name: 武器改造裝置(魔法)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23780
+    AegisName: EP17_1_SPC09
+    Name: 高階武器改造裝置(魔法)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23781
+    AegisName: EP17_1_SPC10
+    Name: 頂級武器改造裝置(魔法)
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23815
+    AegisName: Magma_Essence
+    Name: 熔岩精華
+    Type: Delayconsume
+    Weight: 50
+    Script: |
+      laphine_upgrade();
+  - Id: 23926
+    AegisName: Shadow_9_Refine_Hammer
+    Name: 忽克連高級影子精煉鎚
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100003
+    AegisName: ILL_Piece_A
+    Name: 霞光幻影共鳴石
+    Type: Delayconsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100004
+    AegisName: ILL_Piece_B
+    Name: 晨曦幻影共鳴石
+    Type: Delayconsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100009
+    AegisName: Joy_Of_Victory
+    Name: 勝利喜悅
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100023
+    AegisName: Ancient_Hero_Bravery
+    Name: 古代英雄的英勇
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100025
+    AegisName: Ancient_Hero_Wisdom
+    Name: 古代英雄的恩惠
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100043
+    AegisName: Boost_Up_1
+    Name: Booster Armor UpgradeBox
+    Type: Delayconsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100044
+    AegisName: Boost_Up_2
+    Name: Booster Weapon UpgradeBox
+    Type: Delayconsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100125
+    AegisName: Metal_7_Ticket
+    Name: Metal Weapon +7 Refinement Ticket
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100128
+    AegisName: Noblesses_Refine_Ticket
+    Name: 貴族精煉券
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100129
+    AegisName: Imperial_Refine_Ticket
+    Name: 帝國精煉券
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100130
+    AegisName: Grace_Refine_Ticket
+    Name: 恩典精煉券
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100131
+    AegisName: Imperial_P_Mo_Garment
+    Name: 帝國物理改造許\可執照(斗篷)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100132
+    AegisName: Imperial_M_Mo_Garment
+    Name: 帝國魔法改造許\可執照(斗篷)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100133
+    AegisName: Grace_P_Mo_Garment
+    Name: 恩典物理改造許\可執照(斗篷)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100134
+    AegisName: Grace_M_Mo_Garment
+    Name: 恩典魔法改造許\可執照(斗篷)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100135
+    AegisName: Imperial_P_Mo_Armor
+    Name: 帝國物理改造許\可執照(鎧甲)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100136
+    AegisName: Imperial_M_Mo_Armor
+    Name: 帝國魔法改造許\可執照(鎧甲)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100137
+    AegisName: Grace_P_Mo_Armor
+    Name: 恩典物理改造許\可執照(鎧甲)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100138
+    AegisName: Grace_M_Mo_Armor
+    Name: 恩典魔法改造許\可執照(鎧甲)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 23981
+    AegisName: Abyss_Ddbox
+    Name: 漩渦的天龍神力
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100142
+    AegisName: Abyss_Ddbox2
+    Name: 穩定的天龍神力
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100144
+    AegisName: Abyss_Ddbox3
+    Name: 燃燒的天龍神力
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100145
+    AegisName: Abyss_Ddbox4
+    Name: 炙熱的天龍神力
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100164
+    AegisName: Auto_Imp_Melee_1
+    Name: 中級全自動改良裝置(物理)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100165
+    AegisName: Auto_Imp_Melee_2
+    Name: 高級全自動改良裝置(物理)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100166
+    AegisName: Auto_Imp_Melee_3
+    Name: 頂級全自動改良裝置(物理)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100167
+    AegisName: Auto_Imp_Magic_1
+    Name: 中級全自動改良裝置(魔法)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100168
+    AegisName: Auto_Imp_Magic_2
+    Name: 高級全自動改良裝置(魔法)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+  - Id: 100169
+    AegisName: Auto_Imp_Magic_3
+    Name: 頂級全自動改良裝置(魔法)
+    Type: DelayConsume
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100205
+    AegisName: Class_Sha_R_M_Melee
+    Name: 影子職業屬性咒語(物理)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100206
+    AegisName: Class_Sha_R_M_Magic
+    Name: 影子職業屬性咒語(魔法)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100207
+    AegisName: Skill_Sha_R_M_Melee
+    Name: 影子技能屬性咒語(物理)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100208
+    AegisName: Skill_Sha_R_M_Magic
+    Name: 影子技能屬性咒語(魔法)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100228
+    AegisName: ClassShadow_ATTR_N
+    Name: 影子職業屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100229
+    AegisName: ClassShadow_ATTR_S
+    Name: 影子職業高級屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100410
+    AegisName: SkillShadowRanBox_TW
+    Name: 影子技能屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100411
+    AegisName: CSkillShadowRanBox_TW
+    Name: 影子技能高級屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100549
+    AegisName: Shadow2_Op_Box_TW
+    Name: 影子二期精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 23801
+    AegisName: Shadow_Att_Ddbox_TW
+    Name: 影子屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 23802
+    AegisName: Shadow_Att_Ddbox2_TW
+    Name: 影子屬性箱II
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100251
+    AegisName: Illu_Enhance_Cube
+    Name: 幻象強化箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100252
+    AegisName: Auto_Enhance_Cube
+    Name: 全自動強化箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100268
+    AegisName: Temporal_Refine_Cube
+    Name: 時光防具精煉11寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100269
+    AegisName: Geffen_Refine_Cube
+    Name: Geffen Magic Tournament 12 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100270
+    AegisName: Old_Refine_Cube
+    Name: 戰死者頭盔精煉寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100271
+    AegisName: Refine_Hero_Weapon
+    Name: 古代英雄武器+9券
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100272
+    AegisName: Refine_Hero_Boots
+    Name: Ancient Hero Boots 9 Refine Permission
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100321
+    AegisName: OS_Weapon_Refine_Cube
+    Name: 幻象武器+11寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100322
+    AegisName: Racecap_Refine_Cube
+    Name: 戰魂頭盔+11精煉箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100338
+    AegisName: Booster_W_Up_1
+    Name: 仙境遊玩進階武器精練+9箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100339
+    AegisName: Booster_W_Up_2
+    Name: 仙境遊玩進階武器精練+11箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100340
+    AegisName: Booster_W_Up_3
+    Name: 仙境遊玩進階武器精練+13箱
+    Type: DelayConsume
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100341
+    AegisName: E_ILL_Up
+    Name: 幻象裝備精煉箱
+    Type: DelayConsume
+    EquipLevelMin: 130
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100354
+    AegisName: Auto_Armor_Refine_Cube
+    Name: 全自動防具精煉11寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100355
+    AegisName: Bio_Weapon_Refine_Cube
+    Name: 活體研究所武器精煉12寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100365
+    AegisName: MD_Geffen_Rarmor
+    Name: 熾熱的魔法配件
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100366
+    AegisName: MD_Geffen_Rhood
+    Name: 沉浸的魔法配件
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100367
+    AegisName: MD_Geffen_Racc
+    Name: 成長的魔法配件
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100368
+    AegisName: MD_Geffen_Rsheild
+    Name: 閃亮的魔法配件
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100391
+    AegisName: Moonlight_Box_IL
+    Name: Moonlight Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100392
+    AegisName: S_Moonlight_Box_IL
+    Name: Special Moonlight Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100412
+    AegisName: Great_Hero_Bravery
+    Name: 神話英雄的英勇
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100413
+    AegisName: Great_Hero_Wisdom
+    Name: 神話英雄的恩惠
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100414
+    AegisName: Vampire_Box_IL
+    Name: Vampire Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100415
+    AegisName: S_Vampire_Box_IL
+    Name: Special Vampire Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100416
+    AegisName: S_Frozen_Box_IL
+    Name: Special Frozen Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100417
+    AegisName: Turtle_Is_Box_IL
+    Name: Turtle Island Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100418
+    AegisName: S_Turtle_Is_Box_IL
+    Name: Special Turtle Island Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100419
+    AegisName: Teddy_Bear_Box_IL
+    Name: Teddy Bear Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100420
+    AegisName: S_Teddy_Bear_Box_IL
+    Name: Special Teddy Bear Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100421
+    AegisName: Luanda_Box_IL
+    Name: Luanda Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100422
+    AegisName: S_Luanda_Box_IL
+    Name: Special Luanda Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100423
+    AegisName: Labyrinth_Box_IL
+    Name: Labyrinth Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100424
+    AegisName: S_Labyrinth_Box_IL
+    Name: Special Labyrinth Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100425
+    AegisName: Underwater_Box_IL
+    Name: Underwater Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100426
+    AegisName: S_Underwater_Box_IL
+    Name: Special Underwater Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100436
+    AegisName: Circlet_Refine_Cube
+    Name: 超時空頭冠精煉11寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100466
+    AegisName: Egir_Power_Box
+    Name: Aegir's Power Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100467
+    AegisName: Egir_Magic_Box
+    Name: Aegir's Magical Power Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100476
+    AegisName: MD_Airboat_Random
+    Name: 魔力珠子
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100479
+    AegisName: Sakray_Fury
+    Name: 薩克萊的憤怒
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100480
+    AegisName: Sakray_Fury2
+    Name: 濃縮的薩克萊的憤怒
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100485
+    AegisName: Sakray_Regret
+    Name: 薩克萊的後悔
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100486
+    AegisName: Sakray_Regret2
+    Name: 濃縮的薩克萊的後悔
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100580
+    AegisName: Dark_Stone
+    Name: 神奇黑石
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100650
+    AegisName: Pontifex_Courage
+    Name: 祭司的勇氣
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100651
+    AegisName: Pontifex_Wisdom
+    Name: 祭司的智慧
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100652
+    AegisName: Pontifex_Tenacity
+    Name: 祭司的堅韌
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100653
+    AegisName: Pontifex_Belief
+    Name: 祭司的信仰
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100684
+    AegisName: Bio_Helm_Refine_Cube
+    Name: 活體研究頭冠精煉11寶箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100699
+    AegisName: Twins_Box_IL
+    Name: Twins Refinement Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100700
+    AegisName: S_Twins_Box_IL
+    Name: Special Twins Refinement Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100710
+    AegisName: EXP_Overclocker
+    Name: EXP 顧問改造裝置
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100722
+    AegisName: Booster_RandomOpt_P
+    Name: 強化改良石(物理)
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100723
+    AegisName: Booster_RandomOpt_M
+    Name: 強化改良石(魔法)
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100744
+    AegisName: Hero_LT_Refine_Melee
+    Name: 英雄武器改造裝置(物理)
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100745
+    AegisName: Hero_LT_Refine_Magic
+    Name: 英雄武器改造裝置(魔法)
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100823
+    AegisName: Lens_Craft_Stone
+    Name: 鏡片寶石
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 101177
+    AegisName: FullPenest_Shadow_Up
+    Name: 影子天衣無縫屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101178
+    AegisName: Reload_Shadow_Up
+    Name: 影子重新裝改良屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101179
+    AegisName: SpellCaster_Shadow_Up
+    Name: 影子詠唱精工屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101180
+    AegisName: Ex_Status_Shadow_Up
+    Name: 影子特性屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+
+
+
+  - Id: 101187
+    AegisName: Snow_F_Refine
+    Name: Snowflower Armor 9 Refine Cube    # !todo check english name
+    Type: Delayconsume
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101188
+    AegisName: Glacier_W_Refine
+    Name: Glacier Weapon 9 Refine Cube    # !todo check english name
+    Type: Delayconsume
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 101260
+    AegisName: R_Bearers_Shadow_Up
+    Name: 影子君主送信者屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101261
+    AegisName: M_Blitz_Shadow_Up
+    Name: 影子進階突擊屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101262
+    AegisName: Absorb_Shadow_Up
+    Name: 影子吸收屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101264
+    AegisName: Mammoth_Shadow_Up
+    Name: 影子神力猛瑪之力屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100915
+    AegisName: Twisted_Time_Key_TW
+    Name: 扭曲時光鑰匙
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+
+  - Id: 101202
+    AegisName: Sprout_Pot_TW
+    Name: 天地樹苗希冀罐
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 70010
+    AegisName: Temporal_Manteau_Box_TW
+    Name: 時光斗篷合成箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 70011
+    AegisName: Temporal_Armor_Box_TW
+    Name: 時光湧現鎧甲合成箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+
+  - Id: 70013
+    AegisName: Adulter_F_Box_TW
+    Name: 虛假信徒武器合成箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 70014
+    AegisName: Vivatus_F_Box_TW
+    Name: 活力信念武器合成箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+  - Id: 101259
+    AegisName: Special_Hat_Hammer
+    Name: 特殊帽子精煉鎚
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+
+  - Id: 101262
+    AegisName: Absorb_Shadow_Up
+    Name: 影子吸收屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101264
+    AegisName: Mammoth_Shadow_Up
+    Name: 影子神力猛瑪之力屬性咒語
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 1000609
+    AegisName: Mad_Bunny_Ticket
+    Name: 瘋狂兔寶寶-LT附魔票券
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 15;
+  - Id: 1000678
+    AegisName: Poring_Enchant_Ticket
+    Name: 波利氣球附魔票券
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 22;
+  - Id: 1000698
+    AegisName: Tree_Of_Sprout_Ticket
+    Name: 時光天地樹苗附魔票券
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 23;
+  - Id: 1000850
+    AegisName: VivaAdul_Enchant_Ticket
+    Name: 信念意志頭盔附魔票券
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 25;
+  - Id: 1000874
+    AegisName: Enchant_Ticket
+    Name: 附魔票券
+    Type: Etc
+    Flags:
+      BuyingStore: true
+
+  - Id: 22529
+    AegisName: Shadow_Exchange_Box
+    Name: 影子精靈合成箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+#能開到24660影子邪靈爆炸詛咒戰靴
+
+  - Id: 101183
+    AegisName: Ice_F_Stone_Box1
+    Name: 冰花魔法合成箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101184
+    AegisName: Ice_F_Stone_Box2
+    Name: 冰花魔法合成箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 101072
+    AegisName: FullTemp_S_Rand_Box_TW
+    Name: 影子天衣無縫風暴精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101094
+    AegisName: FullPene_S_Rand_Box_TW
+    Name: 影子天衣無縫貫穿精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 101397
+    AegisName: S_EXP_S_Box_TW
+    Name: 影子經驗值倍增精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 101595
+    AegisName: S_M_Mam_Ran_Box_TW
+    Name: 影子神力猛瑪之力精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101622
+    AegisName: True_G_S_Rand_Box_TW
+    Name: 影子真魔力礦石精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101702
+    AegisName: Absorb_S_Box_TW
+    Name: 影子全力吸收精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102118
+    AegisName: R_B_S_Op_Box
+    Name: 影子君主送信者精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 102231
+    AegisName: Du_S_RanOpt_Box_TW
+    Name: 影子力量天然精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102232
+    AegisName: Cl_S_RanOpt_Box_TW
+    Name: 影子智慧魔力精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 102233
+    AegisName: S_Mega_Blitz_Box_TW
+    Name: 影子進階突擊精靈屬性箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 70008
+    AegisName: Equip_14_Refine
+    Name: 二級防具+14精煉錘
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 70009
+    AegisName: Weapon_14_Refine
+    Name: 五級武器+14精煉錘
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 70016
+    AegisName: Viva_Adul_Hat_15_Refine
+    Name: 信仰頭盔精煉15鎚
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 70017
+    AegisName: Star_Suit_15_Refine
+    Name: 星雲盔甲精煉15鎚
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+  - Id: 101099
+    AegisName: ClockTower_Regulator
+    Name: 發條調整器
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 24;
+  - Id: 1000645
+    AegisName: Hero_Enchant_Ticket
+    Name: 英雄附魔券
+    Type: Delayconsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_enchant 21;
+  - Id: 100250
+    AegisName: Bs_Item_M_S_05_TW
+    Name: 獸人族的傳承象徵秘笈
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+  - Id: 23535
+    AegisName: S_Race_ElementMix
+    Name: 影子種族精靈屬性箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 23462
+    AegisName: S_MixBox_ATT_ALLM_S
+    Name: 影子全能精靈屬性箱
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+#EP19.2 黯淡冰川武器
+  - Id: 101639
+    AegisName: D_Gw_Extractor
+    Name: 黯淡冰川武器合成箱
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 101309
+    AegisName: EXPShadow_Up
+    Name: 影子經驗值倍增屬性咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101310
+    AegisName: MagicalShadow_Up
+    Name: 影子智慧魔力屬性咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101311
+    AegisName: InfinityShadow_Up
+    Name: 影子無極屬性咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101359
+    AegisName: MajorAutoSpell_Up
+    Name: 影子主要自動詠唱咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101360
+    AegisName: Hasty_Up
+    Name: 影子急速咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101361
+    AegisName: PhysicalShadow_Up
+    Name: 影子耐久屬性咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101362
+    AegisName: PerfectSize_Up
+    Name: 影子全然體型屬性咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101308
+    AegisName: True_GemShadow_Up
+    Name: 影子真魔力礦石咒語
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100341
+    AegisName: E_ILL_Up
+    Name: (活動專用)幻象裝備精煉箱
+    Type: DelayConsume
+    EquipLevelMin: 130
+    Script: |
+      laphine_upgrade();
+  - Id: 100354
+    AegisName: Auto_Armor_Refine_Cube
+    Name: (活動專用)全自動裝備精煉箱
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+#魔力扭曲平原、妙勒尼地下洞穴
+  - Id: 102040
+    AegisName: Mocadas_Slabs1
+    Name: 穆卡達斯石板(聖劍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102041
+    AegisName: Mocadas_Slabs2
+    Name: 穆卡達斯石板(聖槍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102042
+    AegisName: Mocadas_Slabs3
+    Name: 穆卡達斯石板(桔梗魔杖)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102043
+    AegisName: Mocadas_Slabs4
+    Name: 穆卡達斯石板(魔書)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102044
+    AegisName: Mocadas_Slabs5
+    Name: 穆卡達斯石板(魔導劍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102045
+    AegisName: Mocadas_Slabs6
+    Name: 穆卡達斯石板(死亡拳刃)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102046
+    AegisName: Mocadas_Slabs7
+    Name: 穆卡達斯石板(戰斧)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102047
+    AegisName: Mocadas_Slabs8
+    Name: 穆卡達斯石板(審判錘)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102048
+    AegisName: Mocadas_Slabs9
+    Name: 穆卡達斯石板(拳套)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102049
+    AegisName: Mocadas_Slabs10
+    Name: 穆卡達斯石板(權杖)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102050
+    AegisName: Mocadas_Slabs11
+    Name: 穆卡達斯石板(神弓)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102051
+    AegisName: Mocadas_Slabs12
+    Name: 穆卡達斯石板(提琴)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102052
+    AegisName: Mocadas_Slabs13
+    Name: 穆卡達斯石板(鞭子)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102053
+    AegisName: Mocadas_Slabs14
+    Name: 穆卡達斯石板(狐尾草)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102054
+    AegisName: Mocadas_Slabs15
+    Name: 穆卡達斯石板(魔杖)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102055
+    AegisName: Mocadas_Slabs16
+    Name: 穆卡達斯石板(古書)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102056
+    AegisName: Mocadas_Slabs17
+    Name: 穆卡達斯石板(短刀)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102057
+    AegisName: Mocadas_Slabs18
+    Name: 穆卡達斯石板(匕首)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102058
+    AegisName: Mocadas_Slabs19
+    Name: 穆卡達斯石板(十字錘)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102059
+    AegisName: Mocadas_Slabs20
+    Name: 穆卡達斯石板(榴彈槍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102060
+    AegisName: Mocadas_Slabs21
+    Name: 穆卡達斯石板(來福槍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102061
+    AegisName: Mocadas_Slabs22
+    Name: 穆卡達斯石板(霰彈槍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 102062
+    AegisName: Mocadas_Slabs23
+    Name: 穆卡達斯石板(機關槍)
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+
+
+
+
+
+#-------------台版轉蛋附魔道具
+  - Id: 101151
+    AegisName: Mysterious_F_TW
+    Name: 聖之羽翼的神秘
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 101277
+    AegisName: AS_F_TW
+    Name: 阿斯特莉亞的不屈奧妙
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 101201
+    AegisName: Astrea_Endurance_TW
+    Name: 阿斯特莉亞的堅忍奧妙
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 101211
+    AegisName: AA_Melee_TW
+    Name: 阿斯特莉亞魂心(物理)
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 101212
+    AegisName: AA_Magic_TW
+    Name: 阿斯特莉亞魂心(魔法)
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 101304
+    AegisName: Dead_Soul_Record_TW
+    Name: 亡魂的思念記錄
+    Type: Delayconsume
+    Weight: 1
+    Script: |
+      laphine_upgrade();
+  - Id: 102038
+    AegisName: Dead_Soul_Aura
+    Name: 亡者邪惡氣息
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100481
+    AegisName: Overclocker
+    Name: 戰鬥器超頻
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 101484
+    AegisName: God_Favor_TW
+    Name: 神聖天恩
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 101614
+    AegisName: Hell_fire_D_Box
+    Name: 煉獄之火
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 101592
+    AegisName: Force_of_Fullmoon
+    Name: 圓月之力
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 101952
+    AegisName: SunShine_Sand
+    Name: 豔陽粉沙
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 101953
+    AegisName: Psy_Wind_Orb
+    Name: 念動風神珠
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 102103
+    AegisName: C_Time_Crys
+    Name: 淨化超時空晶石
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 102354
+    AegisName: Battle_Aura_TW
+    Name: 鬥魂
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+
+  - Id: 102277
+    AegisName: Loki_Advice
+    Name: 洛奇的忠告(近距離物理)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102278
+    AegisName: Loki_Coin
+    Name: 洛奇的硬幣
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 100487
+    AegisName: Loki_Coin_2
+    Name: 洛奇的白硬幣
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 100488
+    AegisName: Loki_Advice_2
+    Name: 洛奇的忠告(魔法)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 102342
+    AegisName: Loki_Advice_3
+    Name: 洛奇的忠告(遠程物理)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102343
+    AegisName: Loki_Coin_3
+    Name: 洛奇的黑硬幣
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+
+  - Id: 102384
+    AegisName: UseItem_Mix_Box_TW
+    Name: 消耗品合成箱
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+  - Id: 80090
+    AegisName: Instance_S_Box
+    Name: 自創副本合成箱
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+#時序象限
+  - Id: 102668
+    AegisName: Dimen_W_Refin
+    Name: 時序象限武器精煉箱
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+
+
+  - Id: 100626
+    AegisName: GrayWolf_7_Ticket
+    Name: 灰狼防具精煉7寶箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+  - Id: 100627
+    AegisName: GrayWolf_9_Ticket
+    Name: 灰狼防具精煉9寶箱
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_upgrade();
+
+
+
+

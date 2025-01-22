@@ -1,0 +1,2658 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Monster Settings
+#
+###########################################################################
+# - Id                      Monster ID.
+#   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   JapaneseName            Name in Japanese. (Default: 'Name' value)
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   BaseExp                 Base experience gained. (Default: 0)
+#   JobExp                  Job experience gained. (Default: 0)
+#   MvpExp                  MVP experience gained. (Default: 0)
+#   Attack                  Minimum attack in pre-renewal and base attack in renewal. (Default: 0)
+#   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
+#   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   RaceGroups:             List of secondary groups the monster may be part of. (Optional)
+#     <group>: <value>      Group to toggle.
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 0)
+#   AttackMotion            Attack animation speed. (Default: 0)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   Ai                      Aegis monster type AI behavior. (Default: 06)
+#   Class                   Aegis monster class. (Default: Normal)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
+#     <mode>: <value>       Mode to toggle.
+#   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+#   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 3
+
+Body:
+
+
+#大逃殺
+  - Id: 7115
+    AegisName: IMMORTAL_7115
+    Name: 屠殺者
+    JapaneseName: 屠殺者
+    Level: 250
+    Hp: 210000000
+    Attack: 99999
+    Attack2: 99999
+    Defense: 888
+    MagicDefense: 888
+    Str: 9999
+    Agi: 9999
+    Vit: 9999
+    Int: 9999
+    Dex: 9999
+    Luk: 9999
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Modes:
+      Aggressive: true
+      CastSensorChase: true
+      Angry: true
+      ChangeChase: true
+      ChangeTargetMelee: true
+
+#自創王人形小兵
+  - Id: 7001
+    AegisName: V_G_MAGALETA_
+    Name: High Priest Margaretha
+    JapaneseName: 大主教 瑪嘉雷特
+    Level: 260
+    Hp: 500000000
+    Attack: 2500
+    Attack2: 18000
+    Defense: 320
+    MagicDefense: 800
+    Resistance: 1500
+    MagicResistance : 1500
+    Str: 260
+    Agi: 160
+    Vit: 240
+    Int: 320
+    Dex: 300
+    Luk: 140
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7002
+    AegisName: V_G_KATRINN_
+    Name: High Wizard Kathryne
+    JapaneseName: 咒術士 凱特莉娜
+    Level: 260
+    Hp: 500000000
+    Attack: 12000
+    Attack2: 20000
+    Defense: 220
+    MagicDefense: 800
+    Resistance: 1500
+    MagicResistance : 1500
+    Str: 220
+    Agi: 160
+    Vit: 120
+    Int: 400
+    Dex: 420
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7003
+    AegisName: V_G_SHECIL_
+    Name: Sniper Cecil
+    JapaneseName: 遊俠 迪文
+    Level: 260
+    Hp: 500000000
+    Attack: 24000
+    Attack2: 14000
+    Defense: 200
+    MagicDefense: 200
+    Resistance: 1500
+    MagicResistance : 1500
+    Str: 260
+    Agi: 260
+    Vit: 140
+    Int: 160
+    Dex: 600
+    Luk: 100
+    AttackRange: 14
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7004
+    AegisName: V_G_HARWORD_
+    Name: Whitesmith Howard
+    JapaneseName: 機械工匠 哈沃得
+    Level: 260
+    Hp: 500000000
+    Attack: 15000
+    Attack2: 16000
+    Defense: 400
+    MagicDefense: 200
+    Resistance: 1500
+    MagicResistance : 1500
+    Str: 320
+    Agi: 160
+    Vit: 400
+    Int: 120
+    Dex: 260
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7005
+    AegisName: V_G_SEYREN_
+    Name: Lord Knight Seyren
+    JapaneseName: 盧恩騎士 賽依連
+    Level: 260
+    Hp: 500000000
+    Attack: 28000
+    Attack2: 18000
+    Defense: 800
+    MagicDefense: 400
+    Resistance: 1500
+    MagicResistance : 1500
+    Str: 340
+    Agi: 200
+    Vit: 400
+    Int: 100
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    
+#道館王人形小兵
+  - Id: 7006
+    AegisName: V_G_MAGALETA__
+    Name: High Priest Margaretha
+    JapaneseName: 大主教
+    Level: 260
+    Hp: 500000000
+    Attack: 2500
+    Attack2: 18000
+    Defense: 320
+    MagicDefense: 800
+    Resistance: 500
+    MagicResistance : 500
+    Str: 260
+    Agi: 160
+    Vit: 240
+    Int: 320
+    Dex: 300
+    Luk: 140
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7007
+    AegisName: V_G_KATRINN__
+    Name: High Wizard Kathryne
+    JapaneseName: 咒術士
+    Level: 260
+    Hp: 500000000
+    Attack: 12000
+    Attack2: 20000
+    Defense: 220
+    MagicDefense: 800
+    Resistance: 500
+    MagicResistance : 500
+    Str: 220
+    Agi: 160
+    Vit: 120
+    Int: 400
+    Dex: 420
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7008
+    AegisName: V_G_SHECIL__
+    Name: Sniper Cecil
+    JapaneseName: 遊俠
+    Level: 260
+    Hp: 500000000
+    Attack: 24000
+    Attack2: 14000
+    Defense: 200
+    MagicDefense: 200
+    Resistance: 500
+    MagicResistance : 500
+    Str: 260
+    Agi: 260
+    Vit: 140
+    Int: 160
+    Dex: 600
+    Luk: 100
+    AttackRange: 14
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7009
+    AegisName: V_G_HARWORD__
+    Name: Whitesmith Howard
+    JapaneseName: 機械工匠
+    Level: 260
+    Hp: 500000000
+    Attack: 15000
+    Attack2: 16000
+    Defense: 400
+    MagicDefense: 200
+    Resistance: 500
+    MagicResistance : 500
+    Str: 320
+    Agi: 160
+    Vit: 400
+    Int: 120
+    Dex: 260
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+  - Id: 7010
+    AegisName: V_G_SEYREN__
+    Name: Lord Knight Seyren
+    JapaneseName: 盧恩騎士
+    Level: 260
+    Hp: 500000000
+    Attack: 28000
+    Attack2: 18000
+    Defense: 800
+    MagicDefense: 400
+    Resistance: 500
+    MagicResistance : 500
+    Str: 340
+    Agi: 200
+    Vit: 400
+    Int: 100
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    
+#守護女神
+  - Id: 23010
+    AegisName: RANDGRIS_
+    Name: 女神
+    JapaneseName: 女神
+    Level: 1
+    Hp: 100
+    Attack: 10000
+    Attack2: 10000
+    Defense: 160
+    MagicDefense: 99
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 7
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 1
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+
+#虛像奧克尼勒
+  - Id: 27061
+    AegisName: PIAMETTE_
+    Name: Piamette
+    JapaneseName: 皮亞密特(困難)
+    Level: 260
+    Hp: 800000000
+    Attack: 20000
+    Attack2: 18000
+    Defense: 450
+    MagicDefense: 300
+    Resistance: 800
+    MagicResistance : 800
+    Str: 350
+    Agi: 350
+    Vit: 150
+    Int: 300
+    Dex: 350
+    Luk: 200
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 432
+    AttackMotion: 432
+    DamageMotion: 432
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 10000
+      - Item: Unknown_Item_82001
+        Rate: 2000
+  - Id: 27062
+    AegisName: WISH_MAIDEN_
+    Name: Wish Maiden
+    JapaneseName: 祈願女神(困難)
+    Level: 260
+    Hp: 1500000000
+    Attack: 30000
+    Attack2: 15000
+    Defense: 450
+    MagicDefense: 450
+    Resistance: 900
+    MagicResistance : 900
+    Str: 450
+    Agi: 400
+    Vit: 150
+    Int: 450
+    Dex: 350
+    Luk: 300
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Angel
+    Element: Ghost
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 432
+    AttackMotion: 432
+    DamageMotion: 432
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 10000
+      - Item: Unknown_Item_82001
+        Rate: 3000
+
+  - Id: 27063
+    AegisName: WOOMAWANG__
+    Name: Woomawang_
+    JapaneseName: 牛魔王(困難)
+    Level: 260
+    Hp: 300000000
+    MvpExp: 1000
+    Attack: 15000
+    Attack2: 9000
+    Defense: 450
+    MagicDefense: 120
+    Resistance: 800
+    MagicResistance : 800
+    Str: 400
+    Agi: 300
+    Vit: 150
+    Int: 350
+    Dex: 280
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 3000
+      - Item: Unknown_Item_82001
+        Rate: 500
+
+  - Id: 27064
+    AegisName: FIER_WOLF_
+    Name: FIER_WOLF_
+    JapaneseName: 火狐
+    Level: 260
+    Hp: 300000000
+    MvpExp: 1000
+    Attack: 18000
+    Attack2: 15000
+    Defense: 300
+    MagicDefense: 250
+    Resistance: 800
+    MagicResistance : 800
+    Str: 255
+    Agi: 375
+    Vit: 140
+    Int: 350
+    Dex: 340
+    Luk: 150
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 155
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 288
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 3000
+      - Item: Unknown_Item_82001
+        Rate: 500
+
+  - Id: 27065
+    AegisName: BAPHOMET_Mon_
+    Name: BAPHOMET_Mon_
+    JapaneseName: 邪惡的巴風特
+    Level: 260
+    Hp: 300000000
+    MvpExp: 1000
+    Attack: 22000
+    Attack2: 8000
+    Defense: 888
+    MagicDefense: 111
+    Resistance: 800
+    MagicResistance : 800
+    Str: 355
+    Agi: 350
+    Vit: 99
+    Int: 310
+    Dex: 360
+    Luk: 180
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 576
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      IgnoreMagic: true
+    Drops:
+      - Item: Blacksmith_Blessing
+        Rate: 3000
+      - Item: Unknown_Item_82001
+        Rate: 500
+
+  - Id: 27066
+    AegisName: MM_MOROCC_ADT__
+    Name: Despair God Morroc__
+    JapaneseName: 絕望之神夢羅克(困難)
+    Level: 260
+    Hp: 1500000000
+    MvpExp: 1000
+    Attack: 28000
+    Attack2: 18000
+    Defense: 666
+    MagicDefense: 222
+    Resistance: 600
+    MagicResistance : 600
+    Str: 540
+    Agi: 285
+    Vit: 270
+    Int: 345
+    Dex: 280
+    Luk: 99
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 432
+    AttackMotion: 432
+    DamageMotion: 432
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      IgnoreMagic: true
+    Drops:
+      - Item: M_Morocc_Card
+        Rate: 1
+        StealProtected: true
+
+
+#自創寵物
+  - Id: 30001
+    AegisName: MM_MOROCC_KID_
+    Name: MOROCC_KID_
+    JapaneseName: 重生的半魔神
+    Level: 200
+    Hp: 350000
+    Attack: 6249
+    Attack2: 2241
+    Defense: 175
+    MagicDefense: 158
+    Str: 90
+    Agi: 122
+    Vit: 7
+    Int: 87
+    Dex: 287
+    Luk: 36
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 21
+
+  - Id: 30002
+    AegisName: MM_MOROCC_ADT_
+    Name: Despair God Morroc_
+    JapaneseName: 絕望之神夢羅克
+    Level: 250
+    Hp: 350000
+    Attack: 5523
+    Attack2: 175
+    Defense: 203
+    MagicDefense: 155
+    Str: 122
+    Agi: 103
+    Vit: 12
+    Int: 106
+    Dex: 269
+    Luk: 51
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 750
+    AttackMotion: 510
+    DamageMotion: 500
+    Ai: 21
+
+#黃道十二宮
+  - Id: 27071
+    AegisName: Mu
+    Name: Mu
+    JapaneseName: 白羊座●穆
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 600
+    MagicDefense: 400
+    Str: 400
+    Agi: 160
+    Vit: 400
+    Int: 100
+    Dex: 380
+    Luk: 140
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 864
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27072
+    AegisName: Aldebaran
+    Name: Aldebaran
+    JapaneseName: 金牛座●阿爾德巴朗
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 260
+    MagicDefense: 200
+    Str: 280
+    Agi: 160
+    Vit: 140
+    Int: 300
+    Dex: 400
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+
+  - Id: 27073
+    AegisName: Saga1
+    Name: Saga1
+    JapaneseName: 雙子座●撒加
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 240
+    MagicDefense: 200
+    Str: 240
+    Agi: 300
+    Vit: 140
+    Int: 400
+    Dex: 300
+    Luk: 180
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27074
+    AegisName: Saga2
+    Name: Saga2
+    JapaneseName: 雙子座●撒卡
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 200
+    MagicDefense: 200
+    Str: 220
+    Agi: 300
+    Vit: 140
+    Int: 400
+    Dex: 300
+    Luk: 160
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27075
+    AegisName: Death_Mask
+    Name: Death Mask
+    JapaneseName: 巨蟹座●迪斯馬斯克
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 400
+    MagicDefense: 200
+    Str: 320
+    Agi: 160
+    Vit: 400
+    Int: 120
+    Dex: 260
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27076
+    AegisName: Aiolia
+    Name: Aiolia
+    JapaneseName: 獅子座●艾奧里亞
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 360
+    MagicDefense: 200
+    Str: 300
+    Agi: 160
+    Vit: 180
+    Int: 260
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 125
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27077
+    AegisName: Shaka
+    Name: Shaka
+    JapaneseName: 處女座●沙加
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 320
+    MagicDefense: 800
+    Str: 260
+    Agi: 240
+    Vit: 160
+    Int: 320
+    Dex: 300
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 125
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27078
+    AegisName: Dohko
+    Name: Dohko
+    JapaneseName: 天秤座●童虎
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 800
+    MagicDefense: 400
+    Str: 340
+    Agi: 200
+    Vit: 400
+    Int: 100
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27079
+    AegisName: Milo
+    Name: Milo
+    JapaneseName: 天蠍座●米羅
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 360
+    MagicDefense: 200
+    Str: 300
+    Agi: 380
+    Vit: 120
+    Int: 140
+    Dex: 400
+    Luk: 160
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+  - Id: 27080
+    AegisName: Aiolos
+    Name: Aiolos
+    JapaneseName: 射手座●艾奧洛斯
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 200
+    MagicDefense: 200
+    Str: 260
+    Agi: 260
+    Vit: 120
+    Int: 160
+    Dex: 600
+    Luk: 100
+    AttackRange: 14
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27081
+    AegisName: Shura
+    Name: Shura
+    JapaneseName: 摩羯座●修羅
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 320
+    MagicDefense: 200
+    Str: 360
+    Agi: 260
+    Vit: 120
+    Int: 100
+    Dex: 420
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27082
+    AegisName: Camus
+    Name: Camus
+    JapaneseName: 水瓶座●卡妙
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 220
+    MagicDefense: 800
+    Str: 220
+    Agi: 160
+    Vit: 120
+    Int: 400
+    Dex: 420
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27083
+    AegisName: Aphrodite
+    Name: Aphrodite
+    JapaneseName: 雙魚座●阿弗洛狄忒
+    Level: 300
+    Hp: 500000000
+    MvpExp: 100
+    Attack: 12000
+    Attack2: 20000
+    Defense: 220
+    MagicDefense: 800
+    Str: 280
+    Agi: 200
+    Vit: 120
+    Int: 300
+    Dex: 240
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+
+#龍族來襲
+  - Id: 27091
+    AegisName: GREEN_IGUANA_S
+    Name: Grove_S
+    JapaneseName: 小型龍族
+    Level: 250
+    Hp: 1500000
+    Attack: 2000
+    Attack2: 3500
+    Defense: 200
+    MagicDefense: 99
+    Resistance: 300
+    MagicResistance : 300
+    Str: 120
+    Agi: 120
+    Vit: 60
+    Int: 120
+    Dex: 120
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 720
+    AttackMotion: 528
+    DamageMotion: 432
+    DamageTaken: 10
+    Ai: 21
+  - Id: 27092
+    AegisName: DRACO_S
+    Name: Draco_S
+    JapaneseName: 小型龍族
+    Level: 250
+    Hp: 1500000
+    Attack: 2000
+    Attack2: 3500
+    Defense: 200
+    MagicDefense: 99
+    Resistance: 300
+    MagicResistance : 300
+    Str: 120
+    Agi: 120
+    Vit: 60
+    Int: 120
+    Dex: 120
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 432
+    DamageTaken: 10
+    Ai: 21
+  - Id: 27093
+    AegisName: COMODO_S
+    Name: Comodo_S
+    JapaneseName: 小型龍族
+    Level: 250
+    Hp: 1500000
+    Attack: 2000
+    Attack2: 3500
+    Defense: 200
+    MagicDefense: 99
+    Resistance: 300
+    MagicResistance : 300
+    Str: 120
+    Agi: 120
+    Vit: 60
+    Int: 120
+    Dex: 120
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 432
+    AttackMotion: 432
+    DamageMotion: 360
+    DamageTaken: 10
+    Ai: 21
+
+  - Id: 27094
+    AegisName: E1_G_S_NYDHOGK_S
+    Name: NYDHOGK_S
+    JapaneseName: 巨型龍族
+    Level: 260
+    Hp: 50000000
+    Attack: 8000
+    Attack2: 13000
+    Defense: 450
+    MagicDefense: 200
+    Resistance: 600
+    MagicResistance : 600
+    Str: 250
+    Agi: 200
+    Vit: 120
+    Int: 200
+    Dex: 220
+    Luk: 130
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1596
+    AttackMotion: 1620
+    DamageMotion: 864
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27095
+    AegisName: LOST_DRAGON_S
+    Name: Lost Dragon_S
+    JapaneseName: 巨型龍族
+    Level: 260
+    Hp: 50000000
+    Attack: 8000
+    Attack2: 13000
+    Defense: 450
+    MagicDefense: 200
+    Resistance: 600
+    MagicResistance : 600
+    Str: 250
+    Agi: 200
+    Vit: 120
+    Int: 200
+    Dex: 220
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27096
+    AegisName: GOPINICH_S
+    Name: Gopinich_S
+    JapaneseName: 巨型龍族
+    Level: 260
+    Hp: 50000000
+    Attack: 8000
+    Attack2: 13000
+    Defense: 450
+    MagicDefense: 200
+    Resistance: 600
+    MagicResistance : 600
+    Str: 250
+    Agi: 200
+    Vit: 120
+    Int: 200
+    Dex: 220
+    Luk: 130
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1536
+    AttackMotion: 864
+    DamageMotion: 432
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 27097
+    AegisName: KTULLANUX_S
+    Name: Ktullanux_S
+    JapaneseName: 巨型龍族
+    Level: 260
+    Hp: 50000000
+    Attack: 8000
+    Attack2: 13000
+    Defense: 450
+    MagicDefense: 200
+    Resistance: 600
+    MagicResistance : 600
+    Str: 250
+    Agi: 200
+    Vit: 120
+    Int: 200
+    Dex: 220
+    Luk: 130
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 432
+    AttackMotion: 840
+    DamageMotion: 216
+    DamageTaken: 10
+    Modes:
+      Mvp: true
+    Ai: 21
+    Class: Boss
+
+#RO大盜
+  - Id: 27098
+    AegisName: SAILOR_SKELETON_S
+    Name: Sailor Skeleton_S
+    JapaneseName: RO大盜
+    Level: 1
+    Hp: 1
+    Attack: 27
+    Attack2: 8
+    Defense: 12
+    MagicDefense: 2
+    Str: 15
+    Agi: 5
+    Vit: 10
+    Dex: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 528
+    AttackMotion: 576
+    DamageMotion: 528
+    Ai: 02
+
+#螞蟻洞穴
+  - Id: 27100
+    AegisName: MM_BRINARANEA_
+    Name: MM_BRINARANEA_
+    JapaneseName: 蜘蛛女王
+    Level: 260
+    Hp: 200000000
+    Attack: 12000
+    Attack2: 25000
+    Defense: 500
+    MagicDefense: 150
+    Str: 350
+    Agi: 270
+    Vit: 120
+    Int: 270
+    Dex: 310
+    Luk: 150
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 151
+    AttackMotion: 288
+    DamageMotion: 360
+    Resistance: 600
+    MagicResistance : 600
+    DamageTaken: 1
+    Ai: 21
+  - Id: 27101
+    AegisName: BRINARANEA_H_
+    Name: BRINARANEA_H_
+    JapaneseName: 蜘蛛女王
+    Level: 260
+    Hp: 200000000
+    Attack: 12000
+    Attack2: 25000
+    Defense: 500
+    MagicDefense: 150
+    Str: 350
+    Agi: 270
+    Vit: 120
+    Int: 270
+    Dex: 310
+    Luk: 150
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 151
+    AttackMotion: 288
+    DamageMotion: 360
+    Resistance: 600
+    MagicResistance : 600
+    DamageTaken: 1
+    Ai: 21
+
+#ROZ下水道
+  - Id: 3972
+    AegisName: MD_THIEF_BUG__
+    Name: MD_THIEF_BUG__
+    JapaneseName: 下水道巨型盜蟲
+    Level: 60
+    Hp: 3330
+    Attack: 140
+    Attack2: 40
+    Defense: 40
+    MagicDefense: 20
+    Str: 34
+    Agi: 74
+    Vit: 44
+    Int: 10
+    Dex: 62
+    Luk: 26
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 988
+    AttackMotion: 288
+    DamageMotion: 768
+    Ai: 21
+    Drops:
+      - Item: Emveretarcon
+        Rate: 20
+      - Item: Insect_Feeler
+        Rate: 2750
+      - Item: Worm_Peelings
+        Rate: 750
+      - Item: Slayer_
+        Rate: 5
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Bluish_Green_Jewel
+        Rate: 3
+      - Item: Katana
+        Rate: 25
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 3973
+    AegisName: MD_THIEF_BUG
+    Name: MD_THIEF_BUG
+    JapaneseName: 下水道盜蟲
+    Level: 60
+    Hp: 200
+    Attack: 30
+    Attack2: 20
+    Defense: 24
+    MagicDefense: 3
+    Str: 38
+    Agi: 14
+    Vit: 20
+    Dex: 24
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 768
+    Ai: 21
+  - Id: 3974
+    AegisName: MD_THIEF_BUG_EGG
+    Name: MD_THIEF_BUG_EGG
+    JapaneseName: 下水道盜蟲卵
+    Level: 60
+    Hp: 10
+    Attack: 10
+    Attack2: 10
+    Defense: 64
+    MagicDefense: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 701
+    AttackMotion: 1
+    DamageMotion: 1
+  - Id: 3975
+    AegisName: MD_GOLDEN_BUG
+    Name: MD_GOLDEN_BUG
+    JapaneseName: 下水道黃金蟲
+    Level: 60
+    Hp: 1200000
+    BaseExp: 75000
+    JobExp: 63000
+    Attack: 800
+    Attack2: 650
+    Defense: 159
+    MagicDefense: 81
+    Str: 71
+    Agi: 77
+    Vit: 80
+    Int: 62
+    Dex: 140
+    Luk: 76
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 768
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 07
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Ora_Ora
+        Rate: 200
+      - Item: Elunium
+        Rate: 1000
+      - Item: Oridecon
+        Rate: 1000
+      - Item: Mithril_Ore_Z
+        Rate: 10
+      - Item: Golden_Seal_Card
+        Rate: 1
+        StealProtected: true
+
+#螞蟻洞穴
+  - Id: 20076
+    AegisName: MD_MAYA
+    Name: MD_MAYA
+    JapaneseName: 變種蟻后
+    Level: 70
+    Hp: 2200000
+    BaseExp: 165000
+    JobExp: 120000
+    Attack: 3000
+    Attack2: 1900
+    Defense: 183
+    MagicDefense: 50
+    Str: 95
+    Agi: 72
+    Vit: 76
+    Int: 102
+    Dex: 92
+    Luk: 76
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 864
+    AttackMotion: 1000
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Shimmering_Crystal
+        Rate: 1750
+      - Item: Safety_Ring
+        Rate: 100
+      - Item: Queen's_Hair_Ornament
+        Rate: 250
+      - Item: Mithril_Ore_Z
+        Rate: 10
+  - Id: 20077
+    AegisName: MD_DENIRO
+    Name: MD_DENIRO
+    JapaneseName: 變種兵蟻
+    Level: 70
+    Hp: 5000
+    BaseExp: 834
+    JobExp: 740
+    Attack: 400
+    Attack2: 70
+    Defense: 52
+    MagicDefense: 16
+    Str: 15
+    Agi: 16
+    Vit: 30
+    Int: 10
+    Dex: 23
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 21
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 1500
+      - Item: Sticky_Mucus
+        Rate: 600
+      - Item: Boody_Red
+        Rate: 25
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 225
+      - Item: Elunium_Stone
+        Rate: 17
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20078
+    AegisName: MD_VITATA
+    Name: MD_VITATA
+    JapaneseName: 變種黑蟻
+    Level: 71
+    Hp: 5000
+    Sp: 400
+    BaseExp: 829
+    JobExp: 756
+    Attack: 400
+    Attack2: 70
+    Defense: 44
+    MagicDefense: 12
+    Str: 20
+    Agi: 11
+    Vit: 24
+    Int: 20
+    Dex: 21
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1768
+    AttackMotion: 768
+    DamageMotion: 384
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 2500
+      - Item: Scell
+        Rate: 100
+      - Item: Honey
+        Rate: 175
+      - Item: Royal_Jelly
+        Rate: 100
+      - Item: Oridecon_Stone
+        Rate: 13
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Yellow_Live
+        Rate: 45
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20079
+    AegisName: MD_ANDRE
+    Name: MD_ANDRE
+    JapaneseName: 變種白蟻
+    Level: 70
+    Hp: 5000
+    BaseExp: 843
+    JobExp: 779
+    Attack: 400
+    Attack2: 70
+    Defense: 55
+    MagicDefense: 16
+    Agi: 17
+    Vit: 24
+    Int: 20
+    Dex: 26
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 500
+      - Item: Sticky_Mucus
+        Rate: 250
+      - Item: Yellow_Live
+        Rate: 25
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 175
+      - Item: Elunium_Stone
+        Rate: 14
+      - Item: Mithril_Ore_Z
+        Rate: 2
+
+  - Id: 20080
+    AegisName: MD_PIERE
+    Name: MD_PIERE
+    JapaneseName: 變種工蟻
+    Level: 70
+    Hp: 500
+    BaseExp: 843
+    JobExp: 779
+    Attack: 400
+    Attack2: 70
+    Defense: 57
+    MagicDefense: 16
+    Str: 19
+    Agi: 19
+    Vit: 36
+    Int: 8
+    Dex: 27
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 76
+    AttackMotion: 288
+    DamageMotion: 288
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 550
+      - Item: Sticky_Mucus
+        Rate: 300
+      - Item: Wind_Of_Verdure
+        Rate: 15
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 200
+      - Item: Elunium_Stone
+        Rate: 16
+      - Item: Mithril_Ore_Z
+        Rate: 2
+
+#海底洞穴2層
+  - Id: 20081
+    AegisName: MD_IZ_COELACANTH
+    Name: MD_IZ_COELACANTH
+    JapaneseName: 深海腔棘魚
+    Level: 80
+    Hp: 2200000
+    BaseExp: 168000
+    JobExp: 114000
+    Attack: 3707
+    Attack2: 1500
+    Defense: 280
+    MagicDefense: 280
+    Str: 160
+    Agi: 160
+    Vit: 160
+    Int: 160
+    Dex: 160
+    Luk: 160
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 864
+    AttackMotion: 864
+    DamageMotion: 432
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Shining_Scales
+        Rate: 1750
+      - Item: Mistic_Frozen
+        Rate: 250
+      - Item: Shimmering_Crystal
+        Rate: 1750
+      - Item: Mithril_Ore_Z
+        Rate: 10
+  - Id: 20082
+    AegisName: MD_IZ_MARSE
+    Name: MD_IZ_MARSE
+    JapaneseName: 深海烏賊
+    Level: 80
+    Hp: 5000
+    BaseExp: 802
+    JobExp: 711
+    Attack: 400
+    Attack2: 70
+    Defense: 38
+    MagicDefense: 18
+    Agi: 17
+    Vit: 25
+    Int: 10
+    Dex: 33
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 1956
+    AttackMotion: 756
+    DamageMotion: 528
+    Ai: 17
+    Drops:
+      - Item: Chinese_Ink
+        Rate: 4500
+      - Item: Tentacle
+        Rate: 1500
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Skyblue_Jewel
+        Rate: 5
+      - Item: Mistic_Frozen
+        Rate: 6
+      - Item: Penetration
+        Rate: 3
+      - Item: Grape
+        Rate: 150
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20083
+    AegisName: MD_IZ_MERMAN
+    Name: MD_IZ_MERMAN
+    JapaneseName: 深海人魚士兵
+    Level: 80
+    Hp: 5000
+    BaseExp: 799
+    JobExp: 774
+    Attack: 400
+    Attack2: 70
+    Defense: 62
+    MagicDefense: 8
+    Str: 72
+    Agi: 29
+    Vit: 30
+    Int: 19
+    Dex: 50
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 916
+    AttackMotion: 816
+    DamageMotion: 336
+    Ai: 21
+    Drops:
+      - Item: Lip_Of_Ancient_Fish
+        Rate: 650
+      - Item: Plate_Armor_
+        Rate: 1
+      - Item: Lemon
+        Rate: 200
+      - Item: Skyblue_Jewel
+        Rate: 20
+      - Item: Mistic_Frozen
+        Rate: 18
+      - Item: Oridecon_Stone
+        Rate: 102
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20084
+    AegisName: MD_IZ_OBEAUNE
+    Name: MD_IZ_OBEAUNE
+    JapaneseName: 深海人魚
+    Level: 80
+    Hp: 5000
+    BaseExp: 799
+    JobExp: 774
+    Attack: 400
+    Attack2: 70
+    Defense: 48
+    MagicDefense: 26
+    Agi: 47
+    Vit: 21
+    Int: 40
+    Dex: 36
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 288
+    Ai: 09
+    Drops:
+      - Item: Mistic_Frozen
+        Rate: 7
+      - Item: Heart_Of_Mermaid
+        Rate: 4500
+      - Item: Fin_Helm
+        Rate: 1
+      - Item: Saint_Robe_
+        Rate: 5
+      - Item: Skyblue_Jewel
+        Rate: 5
+      - Item: Fin
+        Rate: 250
+      - Item: Witherless_Rose
+        Rate: 15
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20085
+    AegisName: MD_IZ_CORNUTUS
+    Name: MD_IZ_CORNUTUS
+    JapaneseName: 深海卡那多斯
+    Level: 80
+    Hp: 5000
+    BaseExp: 799
+    JobExp: 774
+    Attack: 400
+    Attack2: 70
+    Defense: 42
+    MagicDefense: 28
+    Agi: 27
+    Vit: 45
+    Int: 26
+    Dex: 27
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 48
+    DamageMotion: 480
+    Ai: 17
+    Drops:
+      - Item: Crystal_Blue
+        Rate: 23
+      - Item: Conch
+        Rate: 2750
+      - Item: Scell
+        Rate: 400
+      - Item: Elunium_Stone
+        Rate: 27
+      - Item: Shield_
+        Rate: 3
+      - Item: Solid_Shell
+        Rate: 500
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Mithril_Ore_Z
+        Rate: 2
+#沉默之船
+  - Id: 20111
+    AegisName: MD_TRE_DRAKE
+    Name: MD_TRE_DRAKE
+    JapaneseName: 風暴的海盜之王
+    Level: 99
+    Hp: 7200000
+    BaseExp: 670000
+    JobExp: 510000
+    Attack: 2500
+    Attack2: 1500
+    Defense: 279
+    MagicDefense: 135
+    Str: 85
+    Agi: 103
+    Vit: 114
+    Int: 107
+    Dex: 135
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 620
+    AttackMotion: 420
+    DamageMotion: 360
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Saber_
+        Rate: 300
+      - Item: Ring_Pommel_Saber_
+        Rate: 475
+      - Item: Cutlas
+        Rate: 75
+      - Item: Hae_Dong_Gum_
+        Rate: 200
+      - Item: Corsair
+        Rate: 175
+      - Item: Elunium
+        Rate: 1600
+      - Item: Krasnaya
+        Rate: 50
+      - Item: Mithril_Ore_Z
+        Rate: 20
+  - Id: 20112
+    AegisName: MD_MANHOLE
+    Name: MD_MANHOLE
+    JapaneseName: 風暴的詛咒火焰
+    Level: 260
+    Hp: 10000
+    Attack: 3000
+    Attack2: 2000
+    Defense: 44
+    MagicDefense: 66
+    Agi: 35
+    Vit: 33
+    Int: 180
+    Dex: 125
+    Luk: 30
+    AttackRange: 12
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    AttackDelay: 1024
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 10
+    Modes:
+      NoRandomWalk: true
+  - Id: 20113
+    AegisName: MD_TRE_MIMIC
+    Name: MD_TRE_MIMIC
+    JapaneseName: 風暴的邪惡箱
+    Level: 99
+    Hp: 100
+    BaseExp: 10
+    JobExp: 10
+    Attack: 1
+    Attack2: 1
+    Defense: 63
+    MagicDefense: 15
+    Str: 44
+    Agi: 120
+    Vit: 20
+    Int: 15
+    Dex: 99
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 972
+    AttackMotion: 500
+    DamageMotion: 288
+    Ai: 09
+    Drops:
+      - Item: Elunium_Stone
+        Rate: 1000
+      - Item: Oridecon_Stone
+        Rate: 1000
+      - Item: Boody_Red
+        Rate: 1500
+      - Item: Yellow_Live
+        Rate: 1500
+      - Item: Crystal_Blue
+        Rate: 1500
+      - Item: Wind_Of_Verdure
+        Rate: 1500
+      - Item: Cookbook10
+        Rate: 10
+      - Item: Mithril_Ore_Z
+        Rate: 20
+  - Id: 20114
+    AegisName: MD_TRE_WRAITH
+    Name: MD_TRE_WRAITH
+    JapaneseName: 風暴的惡靈
+    Level: 99
+    Hp: 19000
+    Attack: 800
+    Attack2: 141
+    Defense: 80
+    MagicDefense: 40
+    Str: 16
+    Agi: 26
+    Vit: 30
+    Int: 115
+    Dex: 79
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 300
+    AttackDelay: 1816
+    AttackMotion: 576
+    DamageMotion: 240
+    Ai: 21
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 2910
+      - Item: Wedding_Veil
+        Rate: 5
+      - Item: Manteau_
+        Rate: 1
+      - Item: Red_Gemstone
+        Rate: 325
+      - Item: Manteau
+        Rate: 5
+      - Item: Crystal_Jewel_
+        Rate: 3
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20115
+    AegisName: MD_TRE_PIRATE_SKEL
+    Name: MD_TRE_PIRATE_SKEL
+    JapaneseName: 風暴的邪骸海盜
+    Level: 99
+    Hp: 19000
+    BaseExp: 2100
+    JobExp: 1900
+    Attack: 750
+    Attack2: 200
+    Defense: 53
+    MagicDefense: 20
+    Str: 25
+    Agi: 25
+    Vit: 25
+    Int: 15
+    Dex: 30
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1754
+    AttackMotion: 554
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Skel_Bone
+        Rate: 1500
+      - Item: Pirate_Bandana
+        Rate: 8
+      - Item: Cookbook06
+        Rate: 3
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Falchion
+        Rate: 125
+      - Item: Oridecon_Stone
+        Rate: 22
+      - Item: Well_Dried_Bone
+        Rate: 10
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20116
+    AegisName: MD_TRE_WHISPER
+    Name: MD_TRE_WHISPER
+    JapaneseName: 風暴的白幽靈
+    Level: 99
+    Hp: 19000
+    BaseExp: 2100
+    JobExp: 1900
+    Attack: 750
+    Attack2: 200
+    Defense: 20
+    MagicDefense: 40
+    Agi: 51
+    Vit: 14
+    Dex: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 960
+    DamageMotion: 504
+    Ai: 09
+    Drops:
+      - Item: Sparkling_Dust
+        Rate: 75
+      - Item: Transparent_Cloth
+        Rate: 2668
+      - Item: Spirit_Chain
+        Rate: 1
+      - Item: Silver_Robe_
+        Rate: 5
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Prickly_Fruit
+        Rate: 500
+      - Item: Mithril_Ore_Z
+        Rate: 2
+  - Id: 20117
+    AegisName: MD_TRE_HYDRA
+    Name: MD_TRE_HYDRA
+    JapaneseName: 風暴的海葵
+    Level: 1
+    Hp: 20
+    Attack: 1
+    Attack2: 1
+    Defense: 20
+    MagicDefense: 32
+    Str: 10
+    Agi: 9
+    Vit: 14
+    Dex: 35
+    Luk: 2
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 800
+    AttackMotion: 432
+    DamageMotion: 600
+    Ai: 10
+    Class: Boss
+    Drops:
+      - Item: Emveretarcon
+        Rate: 13
+      - Item: Tentacle
+        Rate: 2750
+      - Item: Sticky_Mucus
+        Rate: 750
+      - Item: Detrimindexta
+        Rate: 10
+      - Item: Panacea
+        Rate: 3
+      - Item: Meat
+        Rate: 350
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Mithril_Ore_Z
+        Rate: 2
+#魔物攻城活動
+  - Id: 28102
+    AegisName: LUCKY_BOX_Activity__
+    Name: 魔物攻城活動寶箱
+    Level: 99
+    Dex: 999
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 100
+    AttackMotion: 100
+    DamageMotion: 100
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Zeny_1000
+        Rate: 500
+      - Item: Cash_Points_10
+        Rate: 500
+      - Item: Game_Points_10
+        Rate: 500
+      - Item: Dividend_Points_10
+        Rate: 50
+
+#自創寵物
+  - Id: 28103
+    AegisName: MD_RIGEL_PET
+    Name: 參宿七
+    Level: 250
+    Hp: 100000
+    Attack: 1500
+    Attack2: 1800
+    Defense: 300
+    MagicDefense: 180
+    Str: 350
+    Agi: 280
+    Vit: 180
+    Int: 320
+    Dex: 310
+    Luk: 280
+    AttackRange: 3
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 300
+    AttackMotion: 280
+    DamageMotion: 380
+    Ai: 21
+
+  - Id: 28104
+    AegisName: MD_BETELGEUSE_PET
+    Name: 參宿四
+    Level: 250
+    Hp: 100000
+    Attack: 1500
+    Attack2: 1800
+    Defense: 300
+    MagicDefense: 180
+    Str: 350
+    Agi: 280
+    Vit: 180
+    Int: 320
+    Dex: 310
+    Luk: 280
+    AttackRange: 3
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 300
+    AttackMotion: 280
+    DamageMotion: 380
+    DamageTaken: 10
+    Ai: 05
+
+  - Id: 28105
+    AegisName: MD_PRI_DRAGON_1_
+    Name: MD_PRI_DRAGON_1
+    JapaneseName: 花之飛馬
+    Level: 275
+    Hp: 1000000000
+    BaseExp: 13000000
+    JobExp: 12100000
+    MvpExp: 6500000
+    Attack: 67733
+    Attack2: 45409
+    Defense: 347
+    MagicDefense: 134
+    Str: 486
+    Agi: 390
+    Vit: 386
+    Int: 311
+    Dex: 552
+    Luk: 520
+    AttackRange: 12
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Angel
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 1
+    Ai: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+    Modes:
+      NoRandomWalk: true
+
+  - Id: 28106
+    AegisName: MD_PRI_DRAGON_2_
+    Name: MD_PRI_DRAGON_2
+    JapaneseName: 珊瑚海洋
+    Level: 275
+    Hp: 500000000
+    BaseExp: 13000000
+    JobExp: 12100000
+    MvpExp: 6500000
+    Attack: 67733
+    Attack2: 45409
+    Defense: 213
+    MagicDefense: 241
+    Str: 324
+    Agi: 303
+    Vit: 330
+    Int: 445
+    Dex: 521
+    Luk: 520
+    AttackRange: 12
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 1
+    Ai: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+    Modes:
+      NoRandomWalk: true
+
+  - Id: 28107
+    AegisName: MD_PRI_DRAGON_3_
+    Name: MD_PRI_DRAGON_3
+    JapaneseName: 楓葉之樹
+    Level: 275
+    Hp: 500000000
+    BaseExp: 13000000
+    JobExp: 12100000
+    MvpExp: 6500000
+    Attack: 67733
+    Attack2: 45409
+    Defense: 213
+    MagicDefense: 241
+    Str: 415
+    Agi: 428
+    Vit: 467
+    Int: 485
+    Dex: 532
+    Luk: 525
+    AttackRange: 12
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Plant
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 1
+    Ai: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+    Modes:
+      NoRandomWalk: true
+
+  - Id: 28108
+    AegisName: MD_PRI_DRAGON_4_
+    Name: MD_PRI_DRAGON_4
+    JapaneseName: 君主企鵝
+    Level: 275
+    Hp: 500000000
+    BaseExp: 13000000
+    JobExp: 12100000
+    MvpExp: 6500000
+    Attack: 67733
+    Attack2: 45409
+    Defense: 347
+    MagicDefense: 134
+    Str: 486
+    Agi: 390
+    Vit: 386
+    Int: 311
+    Dex: 552
+    Luk: 515
+    AttackRange: 12
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 1
+    Ai: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+    Modes:
+      NoRandomWalk: true
+
+
+
+
+
+
+
+

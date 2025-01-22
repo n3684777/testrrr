@@ -1,0 +1,2464 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   Gradable                If the item can be graded. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 4610
+    Script: |
+      bonus2 bAbsorbDmgMaxHP,100,40;
+
+  - Id: 9585
+    AegisName: Small_Spray_Of_Flowers
+    Name: Small Spray Of Flowers
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    Script: |
+      bonus_script "{ bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",600,0,0,EFST_FLOWER_LEAF3;
+
+  - Id: 100784
+    Name: Shadow Changer (Weapon -> Shield)
+  - Id: 100890
+    Name: Shadow Changer (Armor -> Weapon)
+
+  - Id: 1100009
+    AegisName: South_Pork_Ricebowl
+    Name: South_Pork_Ricebowl
+    Type: Usable
+
+  - Id: 1100010
+    AegisName: Poring_Kombucha
+    Name: Poring_Kombucha
+    Type: Usable
+
+  - Id: 1100011
+    AegisName: Monster_Bread
+    Name: Monster_Bread
+    Type: Usable
+
+  - Id: 1100012
+    AegisName: Monster_Bread_
+    Name: Monster_Bread_
+    Type: Usable
+
+  # Item Decom
+  - Id: 31024
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31025
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31016
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31017
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31018
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31019
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31020
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31021
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 31022
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27012
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27013
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27014
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27015
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27016
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27017
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27018
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27019
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 4698
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 4699
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27082
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27083
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27084
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27085
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27086
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27087
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27088
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27101
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27102
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27103
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27105
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27107
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27108
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27109
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27110
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27111
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27112
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27114
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27115
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27116
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27117
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27118
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27120
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27121
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27122
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27123
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27124
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27125
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27147
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27148
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27149
+    DecomposeInfo: [ 1, 2 ]
+#  Unknown
+#  - Id: 27266
+#    DecomposeInfo: [ 1, 2 ]
+  - Id: 27157
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27158
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27159
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27160
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27161
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27163
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27165
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27166
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27167
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27168
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27169
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27183
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27184
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27170
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27171
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27172
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27173
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27174
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27175
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27176
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27177
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27178
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27179
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27264
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27289
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27291
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27292
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27293
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27295
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27296
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27297
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27304
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27306
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27307
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27308
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27309
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27310
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27311
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27312
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27313
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27314
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27315
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27316
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27317
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27325
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27328
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27322
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27323
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27324
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27338
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27339
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27340
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27341
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27335
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27342
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27336
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27343
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27337
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27347
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27348
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27349
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27350
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27351
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27352
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27353
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27354
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27355
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27358
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27361
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27382
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27384
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27385
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27388
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300001
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300002
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300003
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300005
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300006
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300008
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300009
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300010
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300011
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300012
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300015
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300016
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300017
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300018
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300019
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300020
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300076
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300077
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300081
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300082
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300083
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300084
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300085
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300086
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300087
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300088
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300089
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300090
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300091
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300092
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300093
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300094
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300095
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300096
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300097
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300098
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300101
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300102
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300103
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300104
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300105
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300106
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300108
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300109
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300110
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300111
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300112
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300113
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300114
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300115
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300116
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300117
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300118
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300119
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300120
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300121
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300122
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300123
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300124
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300125
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300140
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300141
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300142
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300143
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300144
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300146
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300147
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300148
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300149
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300150
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300170
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300171
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300172
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300173
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300174
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27249
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27250
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27253
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27252
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27251
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27254
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27255
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27256
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27257
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27258
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27259
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27260
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27261
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27262
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27263
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27394
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 27396
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300177
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300178
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300179
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300180
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300181
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300182
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300183
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300184
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300185
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300186
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300187
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300188
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300189
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300190
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300191
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300211
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300212
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300213
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300214
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300215
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300216
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300218
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300219
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300220
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300221
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300222
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300223
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300240
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300241
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300242
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300243
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300244
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300245
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300246
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300247
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300249
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300250
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300251
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300252
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300253
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300254
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300255
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300256
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300257
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300258
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300259
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300260
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300261
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300263
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300264
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300265
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300267
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300268
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300269
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300270
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300271
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300272
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300273
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300274
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300275
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300276
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300277
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300278
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300279
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300230
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300231
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300232
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300233
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300234
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300235
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300236
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300237
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300238
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300292
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300293
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300294
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300295
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300296
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300308
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300310
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300359
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300360
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300361
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300362
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300363
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300364
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300365
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300366
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300367
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300368
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300369
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300370
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300371
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300372
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300373
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300374
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300375
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300376
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300379
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300380
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300381
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300422
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300424
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300426
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300441
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300442
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300443
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300444
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300446
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300447
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300448
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 300449
+    DecomposeInfo: [ 1, 2 ]
+  - Id: 4236
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4263
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4276
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4302
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4305
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4318
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4324
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4342
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4352
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4357
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4359
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4361
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4363
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4365
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4367
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4372
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4374
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4376
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4386
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4399
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4403
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4407
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4408
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4419
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4425
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4430
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4441
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4451
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4456
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4457
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4507
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4509
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4520
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4525
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4526
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4527
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4528
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4529
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4534
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4556
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4559
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4560
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4561
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4562
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4563
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4564
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4565
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4566
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4574
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4576
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4578
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4580
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4590
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4591
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4592
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4601
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4602
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4603
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4604
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4625
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4636
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4652
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4662
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4647
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4648
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4649
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4650
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4651
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4671
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4672
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4673
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4674
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4675
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4676
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4677
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4678
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4679
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4680
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4681
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4682
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4683
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 31026
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 31023
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27020
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4697
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27081
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27104
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27106
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27113
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27119
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27126
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27150
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27151
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27152
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27162
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27164
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27182
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27180
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27265
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27287
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27294
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27298
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27305
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27318
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27319
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27326
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27327
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27321
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27329
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27334
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27346
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27362
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27363
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27381
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 27383
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300007
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300013
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300014
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300021
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300078
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300079
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300080
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300099
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300100
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300107
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300145
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300151
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300175
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300176
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300192
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300193
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300217
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300227
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300228
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300248
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300262
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300281
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300266
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300280
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300239
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300297
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300377
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300378
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300382
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300445
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300450
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4610
+    DecomposeInfo: [ 3, 4 ]
+#  Unknown
+#  - Id: 300483
+#    DecomposeInfo: [ 3, 4 ]
+  - Id: 4121
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4123
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4128
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4132
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4134
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4135
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4137
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4142
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4143
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4144
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4145
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4146
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4147
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4148
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4168
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4131
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4330
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300471
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300472
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300473
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 300474
+    DecomposeInfo: [ 3, 4 ]
+  - Id: 4001
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4002
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4003
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4004
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4005
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4006
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4007
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4008
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4009
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4010
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4011
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4012
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4013
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4014
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4015
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4016
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4017
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4018
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4019
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4020
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4021
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4022
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4023
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4024
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4025
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4026
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4027
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4028
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4029
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4030
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4031
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4032
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4033
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4034
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4035
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4036
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4037
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4038
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4039
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4040
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4041
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4042
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4043
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4044
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4045
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4046
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4047
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4048
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4049
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4050
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4051
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4052
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4053
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4054
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4055
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4056
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4057
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4058
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4059
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4060
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4061
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4062
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4063
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4064
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4065
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4066
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4067
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4068
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4069
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4070
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4071
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4072
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4073
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4074
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4075
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4076
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4077
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4078
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4079
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4080
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4081
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4082
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4083
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4084
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4085
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4086
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4087
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4088
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4089
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4090
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4091
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4092
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4093
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4094
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4095
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4096
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4097
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4098
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4099
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4100
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4101
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4102
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4103
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4104
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4105
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4106
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4107
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4108
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4109
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4110
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4111
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4112
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4113
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4114
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4115
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4116
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4117
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4118
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4119
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4120
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4453
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4122
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4124
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4125
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4126
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4127
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4129
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4130
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4133
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4136
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4138
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4139
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4140
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4141
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4149
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4150
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4151
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4152
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4153
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4154
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4155
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4156
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4157
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4158
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4159
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4160
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4161
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4162
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4163
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4164
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4165
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4166
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4167
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4169
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4170
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4171
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4172
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4173
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4174
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4175
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4176
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4177
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4178
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4179
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4180
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4181
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4182
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4183
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4184
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4185
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4186
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4187
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4188
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4189
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4190
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4191
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4192
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4193
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4194
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4195
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4196
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4197
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4198
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4199
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4200
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4201
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4202
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4203
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4204
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4205
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4206
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4207
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4208
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4209
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4210
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4211
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4212
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4213
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4214
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4215
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4216
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4217
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4218
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4219
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4220
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4221
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4222
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4223
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4224
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4225
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4226
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4227
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4228
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4229
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4230
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4231
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4232
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4233
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4234
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4235
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4237
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4238
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4239
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4240
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4241
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4242
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4243
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4244
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4245
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4246
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4247
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4248
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4249
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4250
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4251
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4252
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4253
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4254
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4255
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4256
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4257
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4258
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4259
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4260
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4261
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4262
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4264
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4265
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4266
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4267
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4268
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4269
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4270
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4271
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4272
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4273
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4274
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4275
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4277
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4278
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4279
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4280
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4281
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4282
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4283
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4284
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4285
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4286
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4287
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4288
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4289
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4290
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4291
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4292
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4293
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4294
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4295
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4296
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4297
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4298
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4299
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4300
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4301
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4303
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4304
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4306
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4307
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4308
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4309
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4310
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4311
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4312
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4313
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4314
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4315
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4316
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4317
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4319
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4320
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4321
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4322
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4323
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4325
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4326
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4327
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4328
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4329
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4331
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4332
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4333
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4334
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4335
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4336
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4337
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4338
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4339
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4340
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4341
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4343
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4344
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4345
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4346
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4347
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4348
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4349
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4350
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4351
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4353
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4354
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4355
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4356
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4358
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4360
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4362
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4364
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4366
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4368
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4369
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4370
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4371
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4373
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4375
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4377
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4378
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4379
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4380
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4381
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4382
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4383
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4384
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4385
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4387
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4388
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4389
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4390
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4391
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4392
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4393
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4394
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4395
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4396
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4397
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4398
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4400
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4401
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4402
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4404
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4405
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4406
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4409
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4410
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4411
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4412
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4413
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4414
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4415
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4416
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4417
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4418
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4420
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4421
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4422
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4423
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4424
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4426
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4427
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4428
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4429
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4431
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4432
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4433
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4434
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4435
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4436
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4437
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4438
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4439
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4440
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4442
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4443
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4444
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4445
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4447
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4448
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4449
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4450
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4452
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4458
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4459
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4460
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4461
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4462
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4463
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4464
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4465
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4466
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4467
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4468
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4469
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4470
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4471
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4472
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4473
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4474
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4475
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4476
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4477
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4505
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4506
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4508
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4510
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4511
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4512
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4513
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4514
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4515
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4516
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4517
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4518
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4519
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4521
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4522
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4523
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4524
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4530
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4531
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4532
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4533
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4545
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4557
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4567
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4568
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4569
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4570
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4571
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4572
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4573
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4575
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4577
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4579
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4581
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4582
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4583
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4584
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4585
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4586
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4587
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4588
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4589
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4593
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4594
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4595
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4596
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4597
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4598
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4599
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4600
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4605
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4606
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4607
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4608
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4609
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4551
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4626
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4627
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4628
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4629
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4630
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4631
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4632
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4446
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4633
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4634
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4635
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4637
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4638
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4639
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4640
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4641
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4653
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4654
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4655
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4656
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4657
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4658
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4659
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4660
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4661
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4642
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4643
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4644
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4645
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4646
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4663
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4664
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4665
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4666
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4667
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4668
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4669
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4670
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4684
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4685
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4686
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4687
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4688
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4689
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4690
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4691
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4692
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4693
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4694
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4695
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 4696
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27181
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27196
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27197
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27198
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27199
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27331
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27333
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300128
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300130
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27286
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27288
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27290
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27320
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27356
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27357
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27359
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27360
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27386
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 27387
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300004
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300455
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300456
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300457
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300458
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300459
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300460
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300461
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300462
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300463
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300464
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300465
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300466
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300467
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300468
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300469
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300470
+    DecomposeInfo: [ 5, 6 ]
+  - Id: 300482
+    DecomposeInfo: [ 5, 6 ]
+
+  - Id: 103335
+    AegisName: aegis_103335
+    Name: aegis_103335
+  - Id: 103339
+    AegisName: aegis_103339
+    Name: aegis_103339
+  - Id: 103340
+    AegisName: aegis_103340
+    Name: aegis_103340
+  - Id: 103347
+    AegisName: aegis_103347
+    Name: aegis_103347
+  - Id: 103348
+    AegisName: aegis_103348
+    Name: aegis_103348
+  - Id: 103349
+    AegisName: aegis_103349
+    Name: aegis_103349
+  - Id: 103350
+    AegisName: aegis_103350
+    Name: aegis_103350
+  - Id: 103351
+    AegisName: aegis_103351
+    Name: aegis_103351
+  - Id: 103352
+    AegisName: aegis_103352
+    Name: aegis_103352
+  - Id: 103353
+    AegisName: aegis_103353
+    Name: aegis_103353
+  - Id: 103354
+    AegisName: aegis_103354
+    Name: aegis_103354
+  - Id: 103355
+    AegisName: aegis_103355
+    Name: aegis_103355
+  - Id: 103356
+    AegisName: aegis_103356
+    Name: aegis_103356
+  - Id: 103357
+    AegisName: aegis_103357
+    Name: aegis_103357
+  - Id: 103358
+    AegisName: aegis_103358
+    Name: aegis_103358
+  - Id: 103359
+    AegisName: aegis_103359
+    Name: aegis_103359
+  - Id: 103360
+    AegisName: aegis_103360
+    Name: aegis_103360
+  - Id: 103361
+    AegisName: aegis_103361
+    Name: aegis_103361
+  - Id: 103362
+    AegisName: aegis_103362
+    Name: aegis_103362
+  - Id: 103364
+    AegisName: aegis_103364
+    Name: aegis_103364
+  - Id: 103365
+    AegisName: aegis_103365
+    Name: aegis_103365
+  - Id: 103366
+    AegisName: aegis_103366
+    Name: aegis_103366
+  - Id: 103367
+    AegisName: aegis_103367
+    Name: aegis_103367
+  - Id: 103368
+    AegisName: aegis_103368
+    Name: aegis_103368
+  - Id: 103369
+    AegisName: aegis_103369
+    Name: aegis_103369
+  - Id: 103370
+    AegisName: aegis_103370
+    Name: aegis_103370
+  - Id: 103371
+    AegisName: aegis_103371
+    Name: aegis_103371
+  - Id: 103372
+    AegisName: aegis_103372
+    Name: aegis_103372
+  - Id: 103373
+    AegisName: aegis_103373
+    Name: aegis_103373
+  - Id: 103374
+    AegisName: aegis_103374
+    Name: aegis_103374
+  - Id: 103375
+    AegisName: aegis_103375
+    Name: aegis_103375
+  - Id: 103376
+    AegisName: aegis_103376
+    Name: aegis_103376
+  - Id: 103377
+    AegisName: aegis_103377
+    Name: aegis_103377
+  - Id: 103378
+    AegisName: aegis_103378
+    Name: aegis_103378
+  - Id: 103379
+    AegisName: aegis_103379
+    Name: aegis_103379
+  - Id: 103381
+    AegisName: aegis_103381
+    Name: aegis_103381
+  - Id: 103383
+    AegisName: aegis_103383
+    Name: aegis_103383
+  - Id: 103385
+    AegisName: aegis_103385
+    Name: aegis_103385
+  - Id: 103386
+    AegisName: aegis_103386
+    Name: aegis_103386
+  - Id: 103387
+    AegisName: aegis_103387
+    Name: aegis_103387
+  - Id: 103437
+    AegisName: aegis_103437
+    Name: aegis_103437
+  - Id: 103438
+    AegisName: aegis_103438
+    Name: aegis_103438
+  - Id: 103439
+    AegisName: aegis_103439
+    Name: aegis_103439
+  - Id: 103440
+    AegisName: aegis_103440
+    Name: aegis_103440
+  - Id: 103441
+    AegisName: aegis_103441
+    Name: aegis_103441
+  - Id: 103442
+    AegisName: aegis_103442
+    Name: aegis_103442
+  - Id: 103443
+    AegisName: aegis_103443
+    Name: aegis_103443
+  - Id: 103444
+    AegisName: aegis_103444
+    Name: aegis_103444
+  - Id: 103445
+    AegisName: aegis_103445
+    Name: aegis_103445
+  - Id: 103446
+    AegisName: aegis_103446
+    Name: aegis_103446
+  - Id: 103447
+    AegisName: aegis_103447
+    Name: aegis_103447
+  - Id: 103449
+    AegisName: aegis_103449
+    Name: aegis_103449
+  - Id: 103450
+    AegisName: aegis_103450
+    Name: aegis_103450
+  - Id: 103451
+    AegisName: aegis_103451
+    Name: aegis_103451
+  - Id: 103452
+    AegisName: aegis_103452
+    Name: aegis_103452
+  - Id: 103453
+    AegisName: aegis_103453
+    Name: aegis_103453
+  - Id: 103454
+    AegisName: aegis_103454
+    Name: aegis_103454
+  - Id: 103455
+    AegisName: aegis_103455
+    Name: aegis_103455
+  - Id: 103456
+    AegisName: aegis_103456
+    Name: aegis_103456
+  - Id: 103457
+    AegisName: aegis_103457
+    Name: aegis_103457
+  - Id: 103458
+    AegisName: aegis_103458
+    Name: aegis_103458
+  - Id: 103459
+    AegisName: aegis_103459
+    Name: aegis_103459
+  - Id: 103460
+    AegisName: aegis_103460
+    Name: aegis_103460

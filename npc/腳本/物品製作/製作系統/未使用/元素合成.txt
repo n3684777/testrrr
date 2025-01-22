@@ -1,0 +1,37 @@
+
+function	script	Quests_01	{
+
+	mes "[製作系統]";
+	mes "只要拿火水風地精元各一個給我";
+	mes "我就可以幫你合成為合成元素";
+	next;
+	menu "請幫我合成",KEYY01,"我不要合成",KEYY00;
+
+KEYY01:
+	if((countitem(20431) < 1) || (countitem(20432) < 1) || (countitem(20433) < 1) || (countitem(20434) < 1)) goto Noitem;
+	 mes "[製作大叔]";
+	mes "我現在馬上幫你合成，請稍後";
+	mes "這是^0088FF"+strcharinfo(0)+"^000000你的^FF1493合成元素^000000";
+	delitem 20431,1;
+	delitem 20432,1;
+	delitem 20433,1;
+	delitem 20434,1;
+	getitem 31561,1;
+	close;
+
+KEYY00:
+   mes "[製作大叔]";
+   mes "你的材料不夠或是你沒有足夠的Zeny!";
+   close;
+
+Noitem:
+   mes "[製作大叔]";
+   mes "你的材料不夠或是你沒有足夠的Zeny!";
+   close;
+
+
+}
+
+
+
+

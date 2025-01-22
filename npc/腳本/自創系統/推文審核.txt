@@ -1,0 +1,217 @@
+﻿trinity,120,85,4	script	推文審核	4_M_SNOWMAN_B,{
+
+		if(BaseLevel < 100) {
+		mes "Lv.100 後再來吧…"; 
+		close;
+		}
+
+		query_sql("SELECT last_ip FROM `login` WHERE account_id = "+getcharid(3)+"", .@LastIp$);
+		setarray .@array$[1],"北歐論壇第一次","北歐論壇第二次","棒棒糖論壇","巴哈母湯","結束對話";
+		setarray .@www$[1],"https://www.nemyth.com/","https://www.nemyth.com/","http://www.lollipop168.com/","https://bhmtsff.com/";
+
+		mes "^666666玩家名稱^000000 : ^888800"+strcharinfo(0)+"^000000";
+		mes "^666666填寫者IP^000000 : ^008800"+.@LastIp$+"^000000";
+		mes "^666666推廣次數^000000 : ^666666"+Month_Promote+"^000000";
+		mes "^666666推廣獎勵^000000 : 推廣獎勵箱x1";
+		mes "^0000FFGM每天23:30會進行審核^000000";
+		mes "北歐論壇每天可以推廣二次請間格最少一小時，其他論壇一天僅限一次推廣";
+		if($@forum ==1){
+		next;
+		mes "^FF0000目前ＧＭ正在審核中 無法執行操作 !!^000000";
+		if(getgmlevel() > 90){
+			mes "目前身份: ^FF0000GM^000000";
+			mes "是否清除 審核中的變數呢?";
+			if(select("確定消除","結束服務")==2) end;
+			set $@forum,0;
+			set $@mail_aid,0;
+			mes "消除";
+					}
+				close;
+			end;
+		}
+
+		switch(select(getgmlevel()>=90?"^008800 - [GM審核]^000000":"",gp_mail_pcs?"^FF0000 - 領取獎勵^000000":"","^0000FF - 登記資料^000000","^0000FF - 推廣商店^000000","^0000FF - 推廣次數獎勵^000000")){
+	case 1:
+		query_sql("SELECT last_ip FROM `login` WHERE account_id = "+getcharid(3)+"", .@LastIp$);
+
+		set $@forum,1;
+		set .@all,query_sql ("Select aid From forum_stand ORDER BY `aid`",.@aid);
+		if(!.@all){ next; mes " "; mes " "; mes " "; mes "       ^FF0000當前沒有資料 無須審核^000000"; set $@forum,0; close; }
+		mes "總共資料: ^FF0000"+.@all+"^000000 筆";
+		set $@mail_aid,getcharid(3);
+		do{
+		set .@all2,query_sql ("Select cid,aid,name,site_name,floor,yes From forum_stand Where `aid` = '"+.@aid[.@i]+"' ORDER BY `cid`", .@cid2, .@aid2, .@name2$, .@site_name2$, .@floor2, .@yes2);
+		next;
+		mes "玩家名稱: ^0000FF"+.@name2$+"^000000";
+
+		for(.@b=0; .@b<.@all2; .@b++)
+			{
+				if(.@floor2[.@b] !=2) 
+					set .@hiqq$[.@b],"<URL>"+.@site_name2$[.@b]+" "+.@floor2[.@b]+"樓<INFO>"+(.@www$[.@yes2[.@b]]+.@floor2)+",1920,1080</INFO></URL>";
+				else 
+					set .@hiqq$[.@b],"<URL>"+.@site_name2$[.@b]+" "+.@floor2[.@b]+"樓<INFO>"+(.@www$[2]+.@floor2)+",1920,1080</INFO></URL>";
+		}
+
+		mes .@hiqq$[0]?""+.@hiqq$[0]+"":"";
+		mes .@hiqq$[1]?""+.@hiqq$[1]+"":"";
+		mes .@hiqq$[2]?""+.@hiqq$[2]+"":"";
+		set .@hiqq$[0],"";
+		set .@hiqq$[1],"";
+		set .@hiqq$[2],"";
+		if(select("審核通過:審核失敗")==2){
+		callsub forum_failure,.@name2$,.@site_name2$,.@floor2,.@cid2,.@aid2;
+		set .@i,.@i+1;
+		set .@all,query_sql ("Select aid From forum_stand ORDER BY `aid`",.@aid);
+		if(!.@all) break; else continue;
+						}
+
+		for(.@c=0; .@c<.@all2; .@c++){
+		set .@test,attachrid(.@aid2);
+
+			if(.@test){
+			set gp_mail_pcs,gp_mail_pcs+1;
+
+			} else { 
+				
+				set .@ooxx,query_sql ("SELECT value FROM `char_reg_num` WHERE `char_id` = "+.@cid[.@c]+" AND `key` = 'gp_mail_pcs'",.@svalue);
+				set .@allpcs,.@ooxx?(.@svalue+.@allpcs):.@all2;
+				if(!.@ooxx) query_sql "INSERT INTO char_reg_num ( `char_id`, `key`, `index`, `value` ) VALUES ( "+.@cid2[.@c]+", 'gp_mail_pcs', '0', "+.@allpcs+" )";
+				else query_sql "UPDATE char_reg_num SET value = "+.@allpcs+" WHERE `key` = 'gp_mail_pcs' AND `char_id` = "+.@cid2[.@c]+"";
+				break; 
+			}
+		}
+	
+		query_sql "Delete From `forum_stand` Where `aid` = '"+.@aid2+"'";
+		set .@i,.@i+1;
+		set .@abcyy,attachrid($@mail_aid);
+		set .@all,query_sql ("Select aid From forum_stand ORDER BY `aid`",.@aid);
+		if(!.@all) break;
+		else continue;
+		
+
+	} while(.@i>0);
+		set .@abcyy,attachrid($@mail_aid);
+		mes "^0000FF審核完畢^000000";
+		set $@forum,0;
+		break;
+
+	case 2:
+	if(gp_mail_pcs){
+		for(.@i=0; .@i<gp_mail_pcs; .@i++){
+		set .@okyy,.@okyy+1;
+			if($@mail_ipcs>5){ set $@mail_item1,80101; set $@mail_ipcs,1;}
+		getitem $@mail_item1,$@mail_ipcs1;
+						}
+
+			if(.@okyy){
+			set gp_mail_pcs,0;
+			dispbottom "[審核通過]: 獲得 "+getitemname($@mail_item1)+" x "+$@mail_ipcs1*.@okyy+"";
+		}
+	}
+
+		break;
+
+	case 3:
+
+		reloop2:
+			set .@addip$,getcharip( getcharid(0) );
+			.@select=select(.@array$[1],.@array$[2],.@array$[3],.@array$[4],.@array$[5],.@array$[6],.@array$[7]);
+			if(.@select==7) close;
+		next;
+		mes "選擇: ^0000FF"+.@array$[.@select]+"^000000";
+		mes "輸入樓層 ^FF0000預設0 為關閉^000000";
+		input .@input,0,9999999;
+		mes "輸入: ^0000FF"+.@input+"^000000";
+		if(!.@input) close;
+
+		if(select("確定登記","結束服務")==2) close;
+		set .@open,query_sql ("Select ip,cid,aid,name,site_name,floor From forum_stand Where ip = '"+.@addip$+"' AND `yes` = "+.@select+"", .@ip$, .@cid, .@aid, .@name$, .@site_name$, .@floor);
+		
+		if(!.@open) {
+		set Month_Promote,Month_Promote+1;	//當月推廣次數記錄
+
+		query_sql "INSERT INTO forum_stand (ip, cid, aid, name, site_name, floor, ok_site, yes) VALUES ( '"+.@addip$+"', "+getcharid(0)+" ,'"+getcharid(3)+"', '"+strcharinfo(0)+"', '"+.@array$[.@select]+"', "+.@input+", '"+Month_Promote+"', "+.@select+"  )";
+		mes "^0000FF登記完成^000000";
+		close;
+		}//(!.@open)
+		next;
+		mes "^FF0000此IP登記過了 同論壇無法重複^000000";
+		mes "如未登記請寄信給GM01，填寫你推廣論壇樓層，GM01會人工審核寄信給你獎勵";
+		break;
+
+	case 4:
+	close2;
+	callshop "推廣商店";
+	end;
+
+	case 5:
+		next;
+		mes "^666666推廣次數^000000 : ^666666"+Month_Promote+"^000000";
+		mes "我可以幫你把推廣次數換成下面物品";
+		next;
+		switch(select("黃金王卡卡冊 (60)","超粘掉寶率倍增糖 (2)")){
+
+	case 1:
+		mes "[慶典服務人員]";
+		mes "推廣次數(60)兌換1個黃金王卡卡冊";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "您輸入的數量不正確！";
+		close;	}
+		if (Month_Promote < @input*60) {
+		mes "數量不足";
+		close;	}
+
+		set Month_Promote,Month_Promote-@input*60;
+		getitem 22654,@input;
+		close;
+
+	case 2:
+		mes "[慶典服務人員]";
+		mes "推廣次數(60)兌換1個黃金王卡卡冊";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "您輸入的數量不正確！";
+		close;	}
+		if (Month_Promote < @input*2) {
+		mes "數量不足";
+		close;	}
+
+		set Month_Promote,Month_Promote-@input*2;
+		getitem 12412,@input;
+		close;
+
+		}
+
+
+	}
+close;
+
+forum_failure:
+
+		.@test=attachrid(getarg(4));
+		if(.@test){
+			dispbottom "[審核失敗]: 登記的資料填寫錯誤";
+			detachrid;
+		}else { query_sql "INSERT INTO char_reg_num ( `char_id`, `key`, `index`, `value` ) VALUES ( "+getarg(3)+", 'gg_mail_pcs', '0', '1' )"; }
+
+			query_sql "DELETE FROM forum_stand Where aid = '"+getarg(4)+"'";
+			set .@abcyy,attachrid($@mail_aid);
+			return;
+Oninit:
+	set $@mail_item1,80101;	//獎勵物品
+	set $@mail_ipcs1,1;	//給予數量
+	set $@mail_item2,61028;	//10點紅利硬幣
+	set $@mail_ipcs2,1;	//給予數量
+	waitingroom "論壇推廣活動",0;
+	end;
+}
+

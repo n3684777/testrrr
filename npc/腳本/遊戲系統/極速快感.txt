@@ -1,0 +1,286 @@
+
+trinity,60,117,4	script	極速快感管理員	868,{
+
+	if ( class != 0 ) {
+	mes "[極速快感管理員]";
+	mes "為了防止作弊,";
+	mes "你的職業非^0000FF初學者^000000";
+	close;
+	}
+
+	if($@handfast == 1)
+	{
+		warp "quiz_02",363,345;
+		end;
+	}
+	if ( getgmlevel() != 0 )goto L1;
+	else
+	{
+	mes "[極速快感管理員]";
+	mes "現在不是開放時間喔";
+	mes "活動獎品：商城10點金幣x3、小遊戲積分30點";
+	close;
+	}
+L1:
+	mes "[極速快感管理員]";
+	mes "歡迎進入GM控制選單";
+	mes "在這裡你可以隨時啟動遊戲";	
+	mes "最好不要在遊戲原本固定的時間開啟";	
+	mes "以免發生錯誤!";	
+	next;
+        menu "離開",-,"開啟遊戲.",startgame;
+	close;
+
+startgame:
+	if($@handok != 0) close;
+	mes "[極速快感管理員]";
+	mes "啟動遊戲!";
+	close2;
+	set $@handfast,1;
+	announce "[極速快感] : 極速快感遊戲開始-請開始入場",bc_all;
+	sleep 2000;
+	announce "[極速快感] : 極速快感遊戲開始-在三分鐘關閉入口",bc_all;
+	sleep 120000;
+	announce "[極速快感] : 極速快感遊戲開始-在一分鐘關閉入口",bc_all;
+	sleep 60000;
+	set $@handfast,0;
+	announce "[極速快感] : 極速快感遊戲已經開始-關閉入場!",bc_all;
+	sleep 3000;
+	donpcevent "handgame::OnStart";
+	end;
+OnInit:
+//---------------------得獎名額
+	set $fcanpass,5;
+	waitingroom "極速快感",0;
+	end;
+}
+
+
+-	script	開啟時間	-1,{
+
+OnClock0417:
+OnClock1637:
+	set $@handfast,1;
+	announce "【極速快感】開始報名，請找小遊戲區的極速快感活動管理員報名!!",bc_all,0x00FF00;
+	sleep 2000;
+	announce "【極速快感】在三分鐘關閉入口，請找小遊戲區的極速快感活動管理員報名!!",bc_all,0x00FF00;
+	sleep 120000;
+	announce "【極速快感】在一分鐘關閉入口，請找小遊戲區的極速快感活動管理員報名!!",bc_all,0x00FF00;
+	sleep 60000;
+	set $@handfast,0;
+	announce "【極速快感】活動開始關閉入場，請找小遊戲區的極速快感活動管理員報名!!",bc_all,0x00FF00;
+	sleep 3000;
+	donpcevent "handgame::OnStart";
+	end;
+}
+
+
+
+
+-	script	handgame	-1,{
+
+OnStart:
+	mapannounce "quiz_02", "[極速快感] : 遊戲開始後請點選Npc傳送到下個區域",bc_map;	
+	sleep 3000;
+
+	mapannounce "quiz_02", "[極速快感] : NPC會以高速移動來混淆你",bc_map;	
+	sleep 3000;
+	
+	mapannounce "quiz_02", "[極速快感] : 如果你一直點不到的話將會被傳送出去",bc_map;	
+	sleep 3000;
+
+	mapannounce "quiz_02", "[極速快感] : 請注意要在NPC身旁點他才會傳送",bc_map;	
+	sleep 3000;
+	
+	mapannounce "quiz_02", "[極速快感] : 每過10秒就會封鎖一塊區域",bc_map;	
+	sleep 3000;
+	
+	mapannounce "quiz_02", "[極速快感] : 請注意不要裝備武器與騎乘寵物哦!",bc_map;
+
+	donpcevent "mynameissolong::OnStart2";	
+	donpcevent "mynameisso::OnStart2";
+	donpcevent "mynameis::OnStart2";
+	donpcevent "myname::OnStart2";
+	donpcevent "my::OnStart2";
+
+	set $canpass,$fcanpass;
+	set $passguy,0;
+	sleep 500;
+	
+	set $@handok,1;	
+	sleep 10000;
+	
+	mapannounce "quiz_02", "[極速快感] : 第一區域-清除",bc_map;
+	areawarp "quiz_02",352,334,375,357,"trinity",50,120;	
+	sleep 10000;
+	
+	mapannounce "quiz_02", "[極速快感] : 第二區域-清除",bc_map;
+	areawarp "quiz_02",252,334,275,357,"trinity",50,120;
+	sleep 10000;
+	
+	mapannounce "quiz_02", "[極速快感] : 第三區域-清除",bc_map;
+	areawarp "quiz_02",150,336,173,359,"trinity",50,120;
+	sleep 10000;
+
+	mapannounce "quiz_02", "[極速快感] : 第四區域-清除",bc_map;
+	areawarp "quiz_02",48,334,71,357,"trinity",50,120;
+	sleep 10000;
+
+
+	mapannounce "quiz_02", "[極速快感] : 第五區域-清除",bc_map;
+	areawarp "quiz_02",359,59,311,87,"trinity",50,120;
+	set $@handok,0;	
+	donpcevent "mynameissolong::OnStart3";	
+	donpcevent "mynameisso::OnStart3";
+	donpcevent "mynameis::OnStart3";	
+	donpcevent "myname::OnStart3";		
+	donpcevent "my::OnStart3";	
+	sleep 1000;
+	end;
+
+}
+
+
+
+quiz_02.gat,352,334,5	script	mynameissolong	1002,{
+	if( checkriding() ){ mes"禁止騎乘寵物"; close; }
+	if( getequipid(4) != -1 ){ mes"禁止武器裝備"; close; }
+	if( $@handok == 1 ){ warp "quiz_02" ,275,356; end; }
+	end;
+OnStart3:
+	stopnpctimer;
+	end;
+OnStart2:
+	initnpctimer;
+
+OnTimer300:
+	npcwalkto 352+rand(30),334+rand(30);
+	initnpctimer;
+
+
+	end;
+
+OnInit:
+	npcspeed 30;
+	waitingroom "快點我阿哈",0;
+	end;
+}
+
+
+quiz_02.gat,252,334,5	script	mynameisso	1008,{
+	if( checkriding() ){ mes"禁止騎乘寵物"; close; }
+	if( getequipid(4) != -1 ){ mes"禁止武器裝備"; close;}
+	if( $@handok == 1 ){ warp "quiz_02" ,173,359;  end; }
+	end;
+OnStart3:
+	stopnpctimer;
+	end;
+OnStart2:
+	initnpctimer;
+
+OnTimer300:
+	npcwalkto 252+rand(30),334+rand(30);
+	initnpctimer;
+
+	end;
+
+OnInit:
+	npcspeed 1;
+	waitingroom "點不到就去睡覺啦",0;
+	end;
+}
+
+quiz_02.gat,150,336,5	script	mynameis	1083,{
+	if( checkriding() ){ mes"禁止騎乘寵物"; close; }
+	if( getequipid(4) != -1 ){ mes"禁止武器裝備"; close; }
+	if( $@handok == 1 ){ warp "quiz_02" ,71,357;  end; }
+	end;
+OnStart3:
+	stopnpctimer;
+	end;
+OnStart2:
+	initnpctimer;
+
+OnTimer200:
+	npcwalkto 150+rand(30),336+rand(30);
+	initnpctimer;
+
+	end;
+
+OnInit:
+	npcspeed 1;
+	waitingroom "我才是最終Boss!",0;
+	end;
+}
+
+
+quiz_02.gat,48,334,5	script	myname	1085,{
+	if( checkriding() ){ mes"禁止騎乘寵物"; close; }
+	if( getequipid(4) != -1 ){ mes"禁止武器裝備"; close; }
+	if( $@handok == 1 ){ warp "quiz_02" ,335,71;  end; }
+	end;
+
+OnStart3:
+	stopnpctimer;
+	end;
+OnStart2:
+	initnpctimer;
+
+OnTimer100:
+	npcwalkto 48+rand(30),334+rand(30);
+	initnpctimer;
+	end;
+
+OnInit:
+	npcspeed 1;
+
+	end;
+}
+
+quiz_02.gat,324,59,5	script	my	1627,{
+	if( checkriding() ){ mes"禁止騎乘寵物"; close; }
+	if( getequipid(4) != -1 ){ mes"禁止武器裝備"; close; }
+	if( $@handok == 1 ){ callfunc "Giveitem"; end; }
+
+	end;
+OnStart3:
+	stopnpctimer;
+	end;
+OnStart2:
+	initnpctimer;
+
+OnTimer50:
+	npcwalkto 324+rand(30),59+rand(20);
+	initnpctimer;
+	end;
+
+OnInit:
+	npcspeed 1;
+	end;
+}
+
+
+
+function	script	Giveitem	{
+ 	if($canpass == 0){warp "trinity",50,120;}
+	set $canpass,$canpass -1;
+	set $passguy,$passguy +1;
+	announce "[極速快感] : 玩家 "+strcharinfo(0)+" 以 第 "+$passguy+" 名 通過了遊戲!",bc_all;
+	if($canpass == 0) 
+	announce "【極速快感】活動結束了",bc_all,0x00FF00;
+        set @gi,rand(0,2);
+        if (@gi ==0)getitem 61007,4; set #Game_Points,#Game_Points+30; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+        if (@gi ==1)getitem 61007,8; set #Game_Points,#Game_Points+30; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+        if (@gi ==2)getitem 61007,10; set #Game_Points,#Game_Points+30; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+        warp "trinity",50,120;
+	end;
+}
+
+
+quiz_02.gat	mapflag	nomemo	dummy
+quiz_02.gat	mapflag	noteleport	dummy
+quiz_02.gat	mapflag	nosave
+quiz_02.gat	mapflag	nopenalty	dummy
+quiz_02.gat	mapflag	noskill	dummy
+quiz_02.gat	mapflag	nobranch	dummy
+quiz_02.gat	mapflag	noskill	dummy

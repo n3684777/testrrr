@@ -1,0 +1,264 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#戰死者頭盔
+   - Name: 戰死者頭盔
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_VENDING_MACHINE1
+     Items:
+       - Index: 0
+         Item: Fragmentation_Energy
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Silent_Energy_Particle
+             Amount: 2000
+       - Index: 1
+         Item: Fragmentation_Energy
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Weak_Energy_Particle
+             Amount: 1000
+       - Index: 2
+         Item: Fragmentation_Energy
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unstable_Energy_Particle
+             Amount: 500
+       - Index: 3
+         Item: Fragmentation_Energy
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sinister_Energy_Particle
+             Amount: 500
+       - Index: 4
+         Item: Fragmentation_Energy
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fallen_Energy_Particle
+             Amount: 50
+       - Index: 5
+         Item: Old_Rune_Circlet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Rune_Circlet
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Swordman
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 6
+         Item: Old_Mitra
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Mitra
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Acolyte
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 7
+         Item: Old_Driver_Band_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Driver_Band_R
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Merchant
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 8
+         Item: Old_Driver_Band_Y
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Driver_Band_Y
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Merchant
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 9
+         Item: Old_Shadow_Handicraft
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Shadow_Handicraft
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Thief
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 10
+         Item: Old_Minstrel_Song_Hat
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Minstrel_Song_Hat
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Archer
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 11
+         Item: Old_Midas_Whisper
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Midas_Whisper
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Merchant
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 12
+         Item: Old_Magic_Stone_Hat
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Magic_Stone_Hat
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Magicion
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 13
+         Item: Old_Blazing_Soul
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Blazing_Soul
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Acolyte
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 14
+         Item: Old_Wind_Whisper
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Wind_Whisper
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Magicion
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 15
+         Item: Old_Dying_Swan
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Dying_Swan
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Archer
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 16
+         Item: Old_Circlet_Of_Bone
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Silent_Executer
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Thief
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 17
+         Item: Old_Protect_Of_Crown
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Schmidt_Helm
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Swordman
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 18
+         Item: Old_Camo_RabbitHood
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: C_Sniper_Goggle
+             Amount: 1
+           - Index: 1
+             Item: Soul_Of_Swordman
+             Amount: 1
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 20
+       - Index: 19
+         Item: Killed_Manteau_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Killed_Manteau
+             Amount: 1
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 20
+           - Index: 2
+             Item: Fragmentation_Energy
+             Amount: 100

@@ -1,0 +1,69 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 客服專員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+function	script	GS_Other	{
+
+	switch(getarg(0)) {
+	case 1:
+		mes $@GameService_Str$;
+		mes "請輸入您要變換的髮型編號。";
+		mes "[ Min 1 ] & [ Max 27 ]";
+		next;
+		input @Style;
+		if ( @Style == 0 || @Style > 27 ) {
+			close;
+		}
+		if ( Sex ) {
+			if ( @Style < 10 ) {
+				cutin "hair_m_0"+@Style,4;
+			} else {
+				cutin "hair_m_"+@Style,4;
+			}
+		} else {
+			if ( @Style < 10 ) {
+				cutin "hair_f_0"+@Style,4;
+			} else {
+				cutin "hair_f_"+@Style,4;
+			}
+		}
+		setlook 1,@Style;
+		set .@OtherStr$,"髮型";
+		break;
+	case 2:
+		setarray .@color,0,8,1,2,3,4,5,6,7;
+		mes $@GameService_Str$;
+		mes "請選擇您要變換的顏色。";
+		next;
+		set @Style,select("恢復原色:染成紅色:染成黃色:染成紫色:染成赤色:染成綠色:染成藍色:染成白色:染成黑色")-1;
+		setlook 6,.@color[@Style];
+		set .@OtherStr$,"髮色";
+		break;
+	case 3:
+		setarray .@color,0,1,2;
+		mes $@GameService_Str$;
+		mes "請選擇您要變換的樣式。";
+		next;
+		set @Style,select("恢復原樣式:樣式 No1:樣式 No2")-1;
+		setlook 7,.@color[@Style];
+		set .@OtherStr$,"樣式";
+		break;
+	}
+	mes $@GameService_Str$;
+	mes "您確定這是您要的"+.@OtherStr$+"嗎？";
+	next;
+	if (select("是的！","不是！")==2) {
+		callfunc "GS_Other",getarg(0);
+	}
+	mes $@GameService_Str$;
+	mes "非常感謝您的使用！";
+	close;
+}
+
+//================================================// 

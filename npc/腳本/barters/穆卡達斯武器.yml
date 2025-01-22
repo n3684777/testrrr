@@ -1,0 +1,44 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#穆卡達斯武器
+   - Name: 穆卡達斯武器
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 0
+         Item: Crystal_Of_Pollution
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Fragments_Of_Pollution
+             Amount: 10
+       - Index: 1
+         Item: Mocadas_Gold
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Crystal_Of_Pollution
+             Amount: 3
+           - Index: 1
+             Item: Sources_Of_Pollution
+             Amount: 10
+       - Index: 2
+         Item: Mocadas_Water
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Crystal_Of_Pollution
+             Amount: 1
+           - Index: 1
+             Item: Sources_Of_Pollution
+             Amount: 30

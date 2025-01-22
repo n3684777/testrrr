@@ -1,0 +1,1046 @@
+map03,143,121,4	script	競技研究師	868,{
+
+	//附魔狀態
+	set $@Rac1,rand(0,17);
+	set $@Rac2,rand(0,23);
+	set $@Rac3,rand(0,29);
+	setarray $@Rac_ing1[0],4700,4701,4702,4710,4711,4712,4720,4721,4722,4730,4731,4732,4740,4741,4742,4750,4751,4752;
+	setarray $@Rac_ing2[0],4700,4701,4702,4703,4710,4711,4712,4713,4720,4721,4722,4723,4730,4731,4732,4733,4740,4741,4742,4743,4750,4751,4752,4753;
+	setarray $@Rac_ing3[0],4811,4810,4832,4833,4815,4814,4818,4817,4863,4864,4948,4949,29310,29313,29316,29319,29322,29325,29328,29331,29334,29337,29340,29343,29346,29349,29352,29355,300070,300073;
+
+	mes "[競技研究師]";
+	mes "只要給我革命勳章跟Zeny";
+	mes "我就能幫你附魔各種戰魂頭盔";
+	next;
+	switch(select("製作裝備:進行附魔:重置附魔:取消")){
+
+case 1:
+	close2;
+	callshop "戰魂頭盔製作";
+	end;
+
+
+case 2:
+	mes "[競技研究師]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Rac_lots,getequipcardid(.@is,0);
+	set @Rac_lots2,getequipcardid(.@is,1);
+	set @Rac_lots3,getequipcardid(.@is,2);
+	set @Rac_lots4,getequipcardid(.@is,3);
+	set @Rac_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[競技研究師]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[競技研究師]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 19189) goto Rac_net;	//機械工匠戰魂頭盔
+	if(@abd == 19190) goto Rac_net;	//基因學者戰魂頭盔
+	if(@abd == 19191) goto Rac_net;	//十字斬首者戰魂頭盔
+	if(@abd == 19192) goto Rac_net;	//魅影追縱者戰魂頭盔
+	if(@abd == 19193) goto Rac_net;	//咒術師戰魂頭盔
+	if(@abd == 19194) goto Rac_net;	//妖術師戰魂頭盔
+	if(@abd == 19195) goto Rac_net;	//盧恩騎士戰魂頭盔
+	if(@abd == 19196) goto Rac_net;	//皇家禁衛軍戰魂頭盔
+	if(@abd == 19197) goto Rac_net;	//大主教戰魂頭盔
+	if(@abd == 19198) goto Rac_net;	//修羅戰魂頭盔
+	if(@abd == 19199) goto Rac_net;	//遊俠戰魂頭盔
+	if(@abd == 19200) goto Rac_net;	//宮廷樂師戰魂頭盔
+	if(@abd == 19201) goto Rac_net;	//浪跡舞者戰魂頭盔
+	if(@abd == 19202) goto Rac_net;	//神槍手戰魂頭盔
+	if(@abd == 19203) goto Rac_net;	//忍者戰魂頭盔
+	if(@abd == 19204) goto Rac_net;	//超級初學者戰魂頭盔
+	if(@abd == 19205) goto Rac_net;	//朵蘭族戰魂頭盔
+	if(@abd == 19206) goto Rac_net;	//拳皇戰魂頭盔
+	if(@abd == 19207) goto Rac_net;	//獵靈士戰魂頭盔
+
+	mes "[競技研究師]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Rac_net:
+	//附魔
+	if(@Rac_lots4 == 0) goto Rac_net1;
+	if(@Rac_lots3 == 0) goto Rac_net2;
+	if(@Rac_lots2 == 0) goto Rac_net3;
+	//附魔升級
+	if(@Rac_lots2 == 29310) goto Rac_net1_2;
+	if(@Rac_lots2 == 29311) goto Rac_net1_3;
+	if(@Rac_lots2 == 29313) goto Rac_net2_2;
+	if(@Rac_lots2 == 29314) goto Rac_net2_3;
+	if(@Rac_lots2 == 29316) goto Rac_net3_2;
+	if(@Rac_lots2 == 29317) goto Rac_net3_3;
+	if(@Rac_lots2 == 29319) goto Rac_net4_2;
+	if(@Rac_lots2 == 29320) goto Rac_net4_3;
+	if(@Rac_lots2 == 29322) goto Rac_net5_2;
+	if(@Rac_lots2 == 29323) goto Rac_net5_3;
+	if(@Rac_lots2 == 29325) goto Rac_net6_2;
+	if(@Rac_lots2 == 29326) goto Rac_net6_3;
+	if(@Rac_lots2 == 29328) goto Rac_net7_2;
+	if(@Rac_lots2 == 29329) goto Rac_net7_3;
+	if(@Rac_lots2 == 29331) goto Rac_net8_2;
+	if(@Rac_lots2 == 29332) goto Rac_net8_3;
+	if(@Rac_lots2 == 29334) goto Rac_net9_2;
+	if(@Rac_lots2 == 29335) goto Rac_net9_3;
+	if(@Rac_lots2 == 29337) goto Rac_net10_2;
+	if(@Rac_lots2 == 29338) goto Rac_net10_3;
+	if(@Rac_lots2 == 29340) goto Rac_net11_2;
+	if(@Rac_lots2 == 29341) goto Rac_net11_3;
+	if(@Rac_lots2 == 29343) goto Rac_net12_2;
+	if(@Rac_lots2 == 29344) goto Rac_net12_3;
+	if(@Rac_lots2 == 29346) goto Rac_net13_2;
+	if(@Rac_lots2 == 29347) goto Rac_net13_3;
+	if(@Rac_lots2 == 29349) goto Rac_net14_2;
+	if(@Rac_lots2 == 29350) goto Rac_net14_3;
+	if(@Rac_lots2 == 29352) goto Rac_net15_2;
+	if(@Rac_lots2 == 29353) goto Rac_net15_3;
+	if(@Rac_lots2 == 29355) goto Rac_net16_2;
+	if(@Rac_lots2 == 29356) goto Rac_net16_3;
+	if(@Rac_lots2 == 300070) goto Rac_net17_2;
+	if(@Rac_lots2 == 300071) goto Rac_net17_3;
+	if(@Rac_lots2 == 300073) goto Rac_net18_2;
+	if(@Rac_lots2 == 300074) goto Rac_net18_3;
+
+	mes "[競技研究師]";
+	mes "其他階段尚未開放付魔!!";
+	close;
+
+Rac_net1:
+	mes "[競技研究師]";
+	mes "你想要進行第一階段附魔?";
+	mes "附魔材料：10個革命勳章、100,000Zeny";
+	next;
+	switch(select("取消:第一階段附魔：第四洞")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA1",1000228,100000,rand(1,100);
+	}
+
+Rac_net2:
+	mes "[競技研究師]";
+	mes "你想要進行第二階段附魔?";
+	mes "附魔材料：15個革命勳章、150,000Zeny";
+	next;
+	switch(select("取消:第二階段附魔：第三洞")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA2",1000228,150000,rand(1,100);
+	}
+
+Rac_net3:
+	mes "[競技研究師]";
+	mes "你想要進行第三階段附魔?";
+	mes "隨機附魔";
+	mes "附魔材料：20個革命勳章、200,000Zeny";
+	mes " ";
+	mes "指定附魔";
+	mes "附魔材料：100個革命勳章、2,000,000Zeny";
+	next;
+	switch(select("取消:第二洞隨機附魔:第二洞指定附魔")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA3",1000228,200000,rand(1,100);
+	case 3:
+		mes "[競技研究師]";
+		mes "指定附魔";
+		mes "附魔材料：100個革命勳章、2,000,000Zeny";
+		mes "你想要指定哪個附魔?";
+		next;
+		switch(select("取消:戰魂(盧恩騎士)1Lv:戰魂(皇家禁衛軍)1Lv:戰魂(機械工匠)1Lv:戰魂(基因學者)1Lv:戰魂(十字斬首者)1Lv:戰魂(魅影追縱者)1Lv:戰魂(咒術師)1Lv:戰魂(妖術師)1Lv:戰魂(大主教)1Lv:戰魂(修羅)1Lv:戰魂(遊俠)1Lv:戰魂(宮廷樂師&浪跡舞者)1Lv:戰魂(神槍手)1Lv:戰魂(忍者)1Lv:戰魂(超級初學者)1Lv:戰魂(朵蘭族)1Lv:戰魂(拳皇)1Lv:戰魂(獵靈士)1Lv")){
+
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoRacB3",1000228,100,2000000,29310;
+		case 3:
+		callfunc "fumoRacB3",1000228,100,2000000,29313;
+		case 4:
+		callfunc "fumoRacB3",1000228,100,2000000,29316;
+		case 5:
+		callfunc "fumoRacB3",1000228,100,2000000,29319;
+		case 6:
+		callfunc "fumoRacB3",1000228,100,2000000,29322;
+		case 7:
+		callfunc "fumoRacB3",1000228,100,2000000,29325;
+		case 8:
+		callfunc "fumoRacB3",1000228,100,2000000,29328;
+		case 9:
+		callfunc "fumoRacB3",1000228,100,2000000,29331;
+		case 10:
+		callfunc "fumoRacB3",1000228,100,2000000,29334;
+		case 11:
+		callfunc "fumoRacB3",1000228,100,2000000,29337;
+		case 12:
+		callfunc "fumoRacB3",1000228,100,2000000,29340;
+		case 13:
+		callfunc "fumoRacB3",1000228,100,2000000,29343;
+		case 14:
+		callfunc "fumoRacB3",1000228,100,2000000,29346;
+		case 15:
+		callfunc "fumoRacB3",1000228,100,2000000,29349;
+		case 16:
+		callfunc "fumoRacB3",1000228,100,2000000,29352;
+		case 17:
+		callfunc "fumoRacB3",1000228,100,2000000,300070;
+		case 18:
+		callfunc "fumoRacB3",1000228,100,2000000,300073;
+
+		}
+	}
+
+
+Rac_net1_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29311,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net1_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29312,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net2_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29314,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net2_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29315,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net3_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29317,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net3_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29318,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net4_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29320,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net4_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29321,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net5_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29323,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net5_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29324,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net6_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29326,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net6_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29327,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net7_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29329,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net7_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29330,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net8_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29332,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net8_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29333,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net9_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29335,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net9_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29336,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net10_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29338,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net10_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29339,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net11_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29341,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net11_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29342,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net12_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29344,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net12_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29345,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net13_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29347,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net13_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29348,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+Rac_net14_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29350,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net14_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29351,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net15_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29353,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net15_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29354,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net16_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29356,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net16_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,29357,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net17_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,300071,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net17_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,300072,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net18_2:
+	if(countitem(1000228)<50){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,300074,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+Rac_net18_3:
+	if(countitem(1000228)<100){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 1000228,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,300075,@Rac_lots3,@Rac_lots4;
+	specialeffect 154;
+	close;
+
+
+//----------------------洗滌附魔
+case 3:
+	mes "[競技研究師]";
+	mes "你想要要洗滌哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Rac_lots,getequipcardid(.@is,0);
+	set @Rac_lots2,getequipcardid(.@is,1);
+	set @Rac_lots3,getequipcardid(.@is,2);
+	set @Rac_lots4,getequipcardid(.@is,3);
+	set @Rac_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[競技研究師]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[競技研究師]";
+	mes "你沒物品怎麼洗滌";
+	close;
+	}
+	if(@abd == 19189) goto Rac_netx;	//機械工匠戰魂頭盔
+	if(@abd == 19190) goto Rac_netx;	//基因學者戰魂頭盔
+	if(@abd == 19191) goto Rac_netx;	//十字斬首者戰魂頭盔
+	if(@abd == 19192) goto Rac_netx;	//魅影追縱者戰魂頭盔
+	if(@abd == 19193) goto Rac_netx;	//咒術師戰魂頭盔
+	if(@abd == 19194) goto Rac_netx;	//妖術師戰魂頭盔
+	if(@abd == 19195) goto Rac_netx;	//盧恩騎士戰魂頭盔
+	if(@abd == 19196) goto Rac_netx;	//皇家禁衛軍戰魂頭盔
+	if(@abd == 19197) goto Rac_netx;	//大主教戰魂頭盔
+	if(@abd == 19198) goto Rac_netx;	//修羅戰魂頭盔
+	if(@abd == 19199) goto Rac_netx;	//遊俠戰魂頭盔
+	if(@abd == 19200) goto Rac_netx;	//宮廷樂師戰魂頭盔
+	if(@abd == 19201) goto Rac_netx;	//浪跡舞者戰魂頭盔
+	if(@abd == 19202) goto Rac_netx;	//神槍手戰魂頭盔
+	if(@abd == 19203) goto Rac_netx;	//忍者戰魂頭盔
+	if(@abd == 19204) goto Rac_netx;	//超級初學者戰魂頭盔
+	if(@abd == 19205) goto Rac_netx;	//朵蘭族戰魂頭盔
+	if(@abd == 19206) goto Rac_netx;	//拳皇戰魂頭盔
+	if(@abd == 19207) goto Rac_netx;	//獵靈士戰魂頭盔
+
+	mes "[競技研究師]";
+	mes "你這個裝備無法洗滌哦!";
+	close;
+
+Rac_netx:
+	mes "[競技研究師]";
+	mes "你想要洗滌這頭盔上的附魔?";
+	mes "洗滌材料：10個革命勳章";
+	next;
+	switch(select("取消:洗滌頭盔的附魔^009933(消耗革命勳章x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA4",1000228,500000,rand(1,100);
+	}
+
+case 4:
+	close;
+	}
+
+OnInit:
+	waitingroom "戰魂頭盔附魔",0;
+	end;
+}
+
+
+//-------------------------- 第一階段附魔
+function	script	fumoRacA1	{
+
+	if(countitem(getarg(0))<10){
+	mes "[競技研究師]";
+	mes "你身上沒有革命勳章";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第一階段附魔成功!";
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,@Rac_lots2,@Rac_lots3,$@Rac_ing1[$@Rac1];
+	close;
+}
+
+//-------------------------- 第二階段附魔
+function	script	fumoRacA2	{
+
+	if(countitem(getarg(0))<15){
+	mes "[競技研究師]";
+	mes"你身上沒有革命勳章";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第二階段附魔成功!";
+	delitem getarg(0),15;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,@Rac_lots2,$@Rac_ing2[$@Rac2],@Rac_lots4;
+	close;
+}
+
+//-------------------------- 第三階段附魔
+function	script	fumoRacA3	{
+
+	if(countitem(getarg(0))<20){
+	mes "[競技研究師]";
+	mes "你身上沒有革命勳章";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,$@Rac_ing3[$@Rac3],@Rac_lots3,@Rac_lots4;
+	close;
+}
+
+
+//-------------------------- 第三階段指定附魔
+function	script	fumoRacB3	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上革命勳章不足";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[競技研究師]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,getarg(3),@Rac_lots3,@Rac_lots4;
+	close;
+}
+
+
+//-------------------------- 洗滌附魔
+function	script	fumoRacA4	{
+
+	if(@Rac_lots4 == 0){
+	mes "[競技研究師]";
+	mes "這個頭盔上並無附魔!";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[競技研究師]";
+	mes "你身上沒有革命勳章";
+	close;
+	}
+	mes "[競技研究師]";
+	mes "成功洗滌了這個頭盔上的附魔!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_lots,0,0,0;
+	close;
+}
+
+
+

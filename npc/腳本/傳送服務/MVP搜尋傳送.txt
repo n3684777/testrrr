@@ -1,0 +1,118 @@
+/* ===============================
+ *
+ * By.cc 2022/07/16
+ *
+ * - 僅支援 Pandas
+ * - 使用 OnUnitKillExpress 標籤避免事件阻塞
+ * -
+ * -----------------------------*/
+
+amatsu,109,149,4	script	MvpWarp	100,{
+
+Start:
+	if ( .@look ) clear;
+	.@look++;
+	
+	mes "^000000[編號]^000000      ^000000[ M V P ]^000000    [重生時間]";
+	for(set .@i,0; .@i<getarraysize($@MvpList); .@i++ ) {
+		if ((getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))<=0) { setd ("$@MvpDieTime_"+.@i+"$"),""; setd ("$@MvpDieTime_"+.@i+""),0; }		
+		mes sprintf(" %2d. %30s %26s",(.@i+1),"^0000FF"+getmonsterinfo($@MvpList[.@i],0)+"^000000",getd("$@MvpDieTime_"+.@i+"$")?((getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))/3600)?"^FF0000 "+(getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))/3600+" 時 "+(getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))/60%60+" 分^000000":"^FF0000 "+(getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))/60%60+" 分 "+(getd("$@MvpDieTime_"+.@i+"")-gettimetick(2))%60+" 秒^000000":"^00AA00  已復活^000000");
+	}
+	input .@num;
+	if ( .@num == 0 ) end;
+	if ( .@num < 1 || .@num > getarraysize($@MvpList) ) {
+		dispbottom "輸入編號錯誤.";
+		end;
+	}
+	clear;
+	mes "^4400CC[ Mvp傳送 ]^000000";
+	mes "　";
+	mes "M V P      : "+getmonsterinfo($@MvpList[(.@num)-1],0)+"";
+	mes "地  圖     : "+$@MvpMap$[(.@num)-1]+ "";
+	mes getd("$@MvpDieTime_"+((.@num)-1)+"")?"重生時間   : ^FF3333"+(getd("$@MvpDieTime_"+((.@num)-1)+"")-gettimetick(2))/3600+" 時"+" "+(getd("$@MvpDieTime_"+((.@num)-1)+"")-gettimetick(2))/60%60+" 分"+" "+(getd("$@MvpDieTime_"+((.@num)-1)+"")-gettimetick(2))%60+" 秒^000000"+" ^000000":"重生時間   : ^FF3333已重生^000000";
+	mes getd("$@MvpDiePc_"+((.@num)-1)+"$")?"上次擊殺者 : ^00BBFF"+getd("$@MvpDiePc_"+((.@num)-1)+"$")+"^000000":"上次擊殺者 : ^888888無人擊殺^000000";
+	switch(select("立即傳送","重新查詢")){
+
+		case 1:
+				warp $@MvpMap$[(.@num)-1],0,0;
+				end;
+		case 2:
+				goto Start;
+				end;
+	}
+	end;
+
+OnUnitKillExpress:
+	// 玩家 & 不是副本地圖
+	if ( $@killer_type == BL_PC && !compare($@killed_mapname$,"#") ){
+		for( .@i=0; .@i<getarraysize($@MvpList); .@i++ ){
+			if ( $@killed_classid == $@MvpList[.@i] && $@killer_mapname$ == $@MvpMap$[.@i] ){
+				setd ("$@MvpDieTime_"+.@i+"$"),gettimetick(2)+($@MvpTime[.@i]*60);
+				setd ("$@MvpDieTime_"+.@i+""),gettimetick(2)+($@MvpTime[.@i]*60);
+				setd ("$@MvpDieMap_"+.@i+"$"),$@MvpMap$[.@i];
+				setd ("$@MvpDiePc_"+.@i+"$"),convertpcinfo($@killer_gid,CPC_NAME);
+				// 獲得MVP點數 不需要請自行註解
+				//set #KillMvpPoint,getvar(#KillMvpPoint,convertpcinfo($@killer_gid,CPC_CHAR))+1,convertpcinfo($@killer_gid,CPC_CHAR);
+				//announce "[ M V P ] - "+strcharinfo(0,convertpcinfo($@killer_gid,CPC_CHAR))+" 在 "+$@killer_mapname$+" 擊殺了 "+getmonsterinfo($@killed_classid,MOB_NAME)+"",15;
+
+				set .@monster,rand(5,10);
+				set @mvppay,rand(1,10);
+				if(@mvppay<=5){
+				set .@monster,rand(4,5);
+				}
+				getitem 61006,.@monster;
+				announce "【MVP】"+strcharinfo(0,convertpcinfo($@killer_gid,CPC_CHAR))+" 在 "+$@killer_mapname$+" 擊殺了 "+getmonsterinfo($@killed_classid,MOB_NAME)+"，獲得商城點數 "+.@monster+"P",bc_all,0x00cc33;
+
+			}
+		}
+		end; 
+	}
+	end;
+
+/* ===============================
+ * 當沒有 OnUnitKillExpress 標籤時
+ * 請使用以下 OnNPCKillEvent 標籤
+ * -----------------------------*/
+//OnNPCKillEvent:
+//
+//	for(set .@i,0; .@i<getarraysize($@MvpList); .@i++ )
+//	{
+//		if ( Killedrid == $@MvpList[.@i] && strcharinfo(3) == $@MvpMap$[.@i] )
+//		{
+//			setd ("$@MvpDieTime_"+.@i+"$"),gettimetick(2)+($@MvpTime[.@i]*60);
+//			setd ("$@MvpDieTime_"+.@i+""),gettimetick(2)+($@MvpTime[.@i]*60);
+//			setd ("$@MvpDieMap_"+.@i+"$"),$@MvpMap$[.@i];
+//			setd ("$@MvpDiePc_"+.@i+"$"),strcharinfo(0);
+//		}
+//	}
+//	end;
+
+OnInit:
+	// Mvp清單
+	setarray $@MvpList,1038,1039,1046,1046,1059,1086,1087,1087,1112,1115,
+		1115,1147,1147,1150,1157,1159,1190,1251,1252,1272,
+		1272,1312,1373,1389,1418,1492,1511,1583,1623,1630,
+		1658,1685,1688,1719,1734,1751,1768,1785,1785,1785,
+		1785,1785,1832,1871,1874,1885,1917,1779,1990;
+
+	// Mvp重生時間[分鐘]
+	setarray $@MvpTime,60,60,60,60,60,60,60,60,60,60,
+		60,60,60,60,60,60,60,60,60,60,
+		60,60,60,60,60,60,60,60,60,60,
+		60,60,60,60,60,60,60,60,60,60,
+		60,60,60,60,60,60,60,60,60;
+
+	// Mvp地圖
+	setarray $@MvpMap$,"moc_pryd04","prt_maze03","gld_dun02","gef_dun02","mjolnir_04","prt_sewb4","gef_fild02","gef_fild14","treasure02","gld_dun01",
+		"pay_fild11","gld_dun03","anthell02","pay_dun04","in_sphinx5","moc_fild17","gef_fild10","xmas_dun02","xmas_fild01","gld_dun04",
+		"gl_chyard","tur_dun04","niflheim","gef_dun01","gon_dun03","ama_dun03","moc_pryd06","beach_dun","ein_dun02","lou_dun03",
+		"lhz_dun02","jupe_core","ayo_dun02","abyss_03","kh_dun02","odin_tem03","ra_san05","ra_fild02","ra_fild03","ra_fild04",
+		"ve_fild01","ve_fild02","thor_v03","abbey02","abbey03","mosk_dun03","moc_fild22","ice_dun03","man_fild03";
+	end;
+}
+
+
+
+
+
+

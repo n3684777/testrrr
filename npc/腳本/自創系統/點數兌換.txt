@@ -1,0 +1,164 @@
+trinity,130,65,4	script	翴计传╰参	405,{
+
+	mes "[翴计传╰参]";
+	mes "叫匡拒璶传狝叭";
+	next;
+	switch(select("传 Zeny"," 坝刽","")){
+
+	case 1:
+		mes "[翴计传╰参]";
+		mes "ヘ玡Zeny "+Zeny+"";
+		mes "叫匡拒璶传肂";
+		next;
+		switch(select("传 100窾RO刽","传 1000窾RO刽","传 货RO刽")){
+
+		case 1:
+		mes "[翴计传╰参]";
+		mes "传100窾RO刽x1";
+		mes "惠璶1,000,000Zeny";
+		mes "叫块眤稱传计秖";
+		mes "计秖Min 1 Max 100 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;		}
+		if ( Zeny<@input*1000000){
+		mes "[翴计传╰参]";
+		mes "╆簆眤ō窥ぃì";
+		close;		}
+		set Zeny,Zeny - @input*1000000;
+		getitem 61002,@input;
+		close;
+
+		case 2:
+		mes "[翴计传╰参]";
+		mes "传1000窾RO刽x1";
+		mes "惠璶10,000,000Zeny";
+		mes "叫块眤稱传计秖";
+		mes "计秖Min 1 Max 100 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;		}
+		if ( Zeny<@input*10000000){
+		mes "[翴计传╰参]";
+		mes "╆簆眤ō窥ぃì";
+		close;		}
+		set Zeny,Zeny - @input*10000000;
+		getitem 61004,@input;
+		close;
+
+		case 3:
+		mes "[翴计传╰参]";
+		mes "传货RO刽x1";
+		mes "惠璶100,000,000Zeny";
+		mes "叫块眤稱传计秖";
+		mes "计秖Min 1 Max 100 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;		}
+		if ( Zeny<@input*100000000){
+		mes "[翴计传╰参]";
+		mes "╆簆眤ō窥ぃì";
+		close;		}
+		set Zeny,Zeny - @input*100000000;
+		getitem 61005,@input;
+		close;
+		}
+
+	case 2:
+		mes "[翴计传╰参]";
+		mes "ヘ玡坝翴计 "+#CASHPOINTS+" 翴";
+		mes "匡拒璶у秖坝";
+		next;
+		switch(select("坝1翴刽","坝10翴刽","坝100翴刽")){
+
+		case 1:
+		mes "[翴计传╰参]";
+		mes "ヘ玡坝翴计 "+#CASHPOINTS+" 翴";
+		mes "坝1翴刽";
+		mes "叫块眤稱计秖";
+		mes "计秖Min 1 Max 10000 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 10000 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;	}
+		if ( countitem(61006) < @input ) {
+		mes "[翴计传╰参]";
+		mes "坝1翴刽计秖ぃì";
+		close; }
+		delitem 61006,@input;
+		set #CASHPOINTS,#CASHPOINTS + @input*1;
+		dispbottom "坝翴计糤 "+@input*1+" 翴"; 
+		dispbottom "ヘ玡坝翴计 "+#CASHPOINTS+" 翴"; 
+		close;
+
+		case 2:
+		mes "[翴计传╰参]";
+		mes "ヘ玡坝翴计 "+#CASHPOINTS+" 翴";
+		mes "坝10翴刽";
+		mes "叫块眤稱计秖";
+		mes "计秖Min 1 Max 10000 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 10000 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;	}
+		if ( countitem(61007) < @input ) {
+		mes "[翴计传╰参]";
+		mes "坝10翴刽计秖ぃì";
+		close; }
+		delitem 61007,@input;
+		set #CASHPOINTS,#CASHPOINTS + @input*10;
+		dispbottom "坝翴计糤 "+@input*10+" 翴"; 
+		dispbottom "ヘ玡坝翴计 "+#CASHPOINTS+" 翴"; 
+		close;
+
+		case 3:
+		mes "[翴计传╰参]";
+		mes "ヘ玡坝翴计 "+#CASHPOINTS+" 翴";
+		mes "坝100翴刽";
+		mes "叫块眤稱计秖";
+		mes "计秖Min 1 Max 10000 ";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 10000 ) {
+		mes "[翴计传╰参]";
+		mes "眤块计秖ぃタ絋";
+		close;	}
+		if ( countitem(61009) < @input ) {
+		mes "[翴计传╰参]";
+		mes "坝100翴刽计秖ぃì";
+		close; }
+		delitem 61009,@input;
+		set #CASHPOINTS,#CASHPOINTS + @input*100;
+		dispbottom "坝翴计糤 "+@input*100+" 翴"; 
+		dispbottom "ヘ玡坝翴计 "+#CASHPOINTS+" 翴"; 
+		close;
+		}
+
+	case 3:
+	close;
+	}
+
+OnInit:
+		waitingroom "翴计传╰参",0;
+		end;
+}
+

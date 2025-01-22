@@ -1,0 +1,1022 @@
+﻿#時間裂隙武器
+  - Id: 530060
+    AegisName: Time_Gap_Spear_IG
+    Name: 時隙守護長矛
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 2700
+    Attack: 240
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"IG_RADIANT_SPEAR",15+5*(.@r/3);
+      bonus bAtkRate,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCRate,5;
+            bonus bCritical,15;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"IG_RADIANT_SPEAR",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"IG_RADIANT_SPEAR",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 640054
+    AegisName: Time_Gap_Staff_AG
+    Name: 時隙弧形雙手法杖
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2000
+    Attack: 120
+    Range: 1
+    Slots: 2
+    Jobs:
+      Wizard: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,330+25*(.@r/2);
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",15+5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Ghost,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_Ghost,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 800042
+    AegisName: Time_Gap_Revolver_NW
+    Name: 時隙騎士手槍
+    Type: Weapon
+    SubType: Revolver
+    Weight: 2300
+    Attack: 260
+    Range: 7
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"NW_WILD_SHOT",15+5*(.@r/3);
+      bonus bAtkRate,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCRate,5;
+            bonus bCritical,15;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"NW_WILD_SHOT",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"NW_WILD_SHOT",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 620043
+    AegisName: Time_Gap_MT_Axe
+    Name: 時隙機械斧
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 4500
+    Attack: 380
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSkillAtk,"MT_POWERFUL_SWING",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,3+(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bShortAtkRate,25;
+         if (.@r>=9) {
+            bonus bDelayrate,-10;
+            bonus bPAtk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"MT_POWERFUL_SWING",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"MT_POWERFUL_SWING",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 580075
+    AegisName: Time_Gap_TR_Ribbon
+    Name: 時隙音樂絲帶
+    Type: Weapon
+    SubType: Whip
+    Weight: 1800
+    Attack: 100
+    MagicAttack: 240
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15+5*(.@r/3);
+      bonus bMatk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 570075
+    AegisName: Time_Gap_TR_Vilolin
+    Name: 時隙小提琴
+    Type: Weapon
+    SubType: Musical
+    Weight: 1800
+    Attack: 100
+    MagicAttack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15+5*(.@r/3);
+      bonus bMatk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 550152
+    AegisName: Time_Gap_HN_Staff
+    Name: 時隙超級法杖
+    Type: Weapon
+    SubType: Staff
+    Weight: 1800
+    Attack: 100
+    Range: 1
+    Slots: 2
+    Jobs:
+      SuperNovice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,230+25*(.@r/2);
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",15+5*(.@r/3);
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",15+5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Wind,25;
+         bonus2 bMagicAtkEle,Ele_Water,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",15;
+               bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",15;
+            bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_Wind,20;
+               bonus2 bMagicAtkEle,Ele_Water,20;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 510165
+    AegisName: Time_Gap_SHC_Dagger1
+    Name: 時隙暗影匕首(A)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SHC_CROSS_SLASH",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 510166
+    AegisName: Time_Gap_SHC_Dagger2
+    Name: 時隙暗影匕首(B)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1000
+    Attack: 160
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bCritical,5;
+         if (.@r>=9) {
+            bonus2 bSkillAtk,"SHC_CROSS_SLASH",10;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"SHC_CROSS_SLASH",15;
+               bonus bCritical,10;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddClass,Class_All,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SHC_CROSS_SLASH",5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,3;
+               bonus bCritical,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritical,10;
+                  bonus2 bSkillAtk,"SHC_CROSS_SLASH",10;
+               }
+            }
+         }
+      }
+  - Id: 500107
+    AegisName: Time_Gap_BO_Blade
+    Name: 時隙生物刀
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1700
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bShortAtkRate,25;
+         if (.@r>=9) {
+            bonus bDelayrate,-10;
+            bonus bPAtk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"BO_DUST_EXPLOSION",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"BO_DUST_EXPLOSION",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 550155
+    AegisName: Time_Gap_SOA_Rod
+    Name: 時隙靈魂手杖
+    Type: Weapon
+    SubType: Staff
+    Weight: 1800
+    Attack: 100
+    MagicAttack: 250
+    Range: 1
+    Slots: 2
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,240+25*(.@r/2);
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",15+5*(.@r/3);
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLUE_DRAGON",15+5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,15;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",15;
+               bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLUE_DRAGON",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",15;
+            bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLUE_DRAGON",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 540094
+    AegisName: Time_Gap_SKE_Book
+    Name: 時隙帝皇運行書
+    Type: Weapon
+    SubType: Book
+    Weight: 1800
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bShortAtkRate,25;
+         if (.@r>=9) {
+            bonus bDelayrate,-10;
+            bonus bPAtk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 550156
+    AegisName: Time_Gap_CD_Staff
+    Name: 時隙神聖手杖
+    Type: Weapon
+    SubType: Staff
+    Weight: 2000
+    Attack: 160
+    Range: 1
+    Slots: 2
+    Jobs:
+      Priest: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,240+25*(.@r/2);
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",15+5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,25;
+         bonus2 bMagicAtkEle,Ele_Holy,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"CD_DIVINUS_FLOS",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"CD_DIVINUS_FLOS",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_Neutral,10;
+               bonus2 bMagicAtkEle,Ele_Holy,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 630049
+    AegisName: Time_Gap_DK_Spear
+    Name: 時隙龍之槍
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 6500
+    Attack: 350
+    Range: 3
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 28785
+    AegisName: Time_Gap_ABC_Dagger
+    Name: 時隙深淵匕首
+    Type: Weapon
+    SubType: Dagger
+    Weight: 2000
+    Attack: 150
+    Range: 1
+    Slots: 2
+    Jobs:
+      Abyss_Chaser: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bMatk,230+25*(.@r/2);
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",15;
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,25;
+         bonus2 bMagicAtkEle,Ele_Fire,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+                bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_Neutral,20;
+               bonus2 bMagicAtkEle,Ele_Fire,20;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 550159
+    AegisName: Time_Gap_SH_Foxtail
+    Name: 時隙魂靈狐尾草
+    Type: Weapon
+    SubType: Staff
+    Weight: 2100
+    Attack: 430
+    Range: 1
+    Slots: 2
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 560072
+    AegisName: Time_Gap_IQ_Knuckle
+    Name: 時隙審判拳套
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 2500
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 700108
+    AegisName: Time_Gap_WH_Bow
+    Name: 時隙風之弓
+    Type: Weapon
+    SubType: Bow
+    Weight: 2100
+    Attack: 320
+    Range: 5
+    Slots: 2
+    Jobs:
+      Windhawk: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"WH_GALESTORM",15+5*(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bBaseAtk,25*(.@r/2);
+      if (.@r>=7) {
+         bonus bCritAtkRate,20;
+         if (.@r>=9) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"WH_GALESTORM",20;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"WH_GALESTORM",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 28789
+    AegisName: Time_Gap_SS_Dagger1
+    Name: 時隙黑神匕首(A)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 150
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Slots: 2
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SS_KUNAIKAITEN",15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SS_KUNAIKAITEN",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 510172
+    AegisName: Time_Gap_SS_Dagger2
+    Name: 時隙黑神匕首(B)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 50
+    Range: 1
+    Slots: 2
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",10;
+         if (.@r>=9) {
+            bonus2 bSkillAtk,"SS_KUNAIKAITEN",10;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",15;
+               bonus bPAtk,7;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddClass,Class_All,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"SS_KUNAIKAITEN",10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritical,5;
+                  bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",10;
+               }
+            }
+         }
+      }
+
+  - Id: 540096
+    AegisName: Time_Gap_EM_S_Book
+    Name: 時隙元素法術書
+    Type: Weapon
+    SubType: Book
+    Weight: 1800
+    Attack: 100
+    Range: 1
+    Slots: 2
+    Jobs:
+      Elemental_Master: true
+    Classes:
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 250
+    Refineable: true
+    Gradable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,240+25*(.@r/2);
+      bonus bMatkRate,3+(.@r/2);
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",15+5*(.@r/3);
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",15+5*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,25;
+         bonus2 bMagicAtkEle,Ele_Wind,25;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            bonus bSMatk,7;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"EM_CONFLAGRATION",15;
+               bonus2 bSkillAtk,"EM_LIGHTNING_LAND",15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bSkillAtk,"EM_CONFLAGRATION",15;
+            bonus2 bSkillAtk,"EM_LIGHTNING_LAND",15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_Fire,10;
+               bonus2 bMagicAtkEle,Ele_Wind,10;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,3*(.@r/2);
+               }
+            }
+         }
+      }
+
+
+
+
+

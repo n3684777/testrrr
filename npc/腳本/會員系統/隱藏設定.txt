@@ -1,0 +1,179 @@
+﻿function	script	HIDE_MOD	{
+
+	mes "[會員服務]";
+	mes "你想要隱藏甚麼?";
+	next;
+	switch(select("隱藏玩家","隱藏魔物","隱藏寵物","隱藏元素精靈","隱藏服飾","隱藏服飾特效")) {
+
+	case 1:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("隱藏全部玩家","隱藏陌生玩家(非好友隊友公會成員)","顯示全部玩家")) {
+
+		case 1:
+		sethiddenfromsight HIDE_PC_ALL,true;
+		close;
+		end;
+
+		case 2:
+		sethiddenfromsight HIDE_PC_STRANGER,true;
+		close;
+		end;
+
+		case 3:
+		sethiddenfromsight HIDE_PC_ALL,false;
+		}
+
+	case 2:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("隱藏全部魔物","隱藏普通魔物","顯示全部魔物")) {
+
+		case 1:
+		sethiddenfromsight HIDE_MOB_ALL,true;
+		close;
+		end;
+
+		case 2:
+		sethiddenfromsight HIDE_MOB_NORMAL,true;
+		close;
+		end;
+
+		case 3:
+		sethiddenfromsight HIDE_MOB_ALL,false;
+		close;
+		end;
+		}
+
+	case 3:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("隱藏自己的寵物","隱藏其他玩家的寵物","隱藏全部寵物","顯示全部寵物")) {
+
+		case 1:
+		sethiddenfromsight HIDE_PET_MIND,true;
+		close;
+		end;
+
+		case 2:
+		sethiddenfromsight HIDE_PET_OTHER,true;
+		close;
+		end;
+
+		case 3:
+		sethiddenfromsight HIDE_PET_ALL,true;
+		close;
+		end;
+
+		case 4:
+		sethiddenfromsight HIDE_PET_ALL,false;
+		close;
+		end;
+		}
+
+	case 4:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("自己的元素精靈","其他玩家的元素精靈","顯示全部元素精靈")) {
+
+		case 1:
+		sethiddenfromsight HIDE_ELEM_MIND,true;
+		close;
+		end;
+
+		case 2:
+		sethiddenfromsight HIDE_ELEM_OTHER,true;
+		close;
+		end;
+
+		case 3:
+		sethiddenfromsight HIDE_ELEM_ALL,false;
+		close;
+		end;
+		}
+
+
+	case 5:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("隱藏自己服飾(頭上)","隱藏自己服飾(頭中)","隱藏自己服飾(頭下)","隱藏自己服飾(披肩)","隱藏自己服飾(全部)","隱藏其它玩家服飾(頭上)","隱藏其它玩家服飾(頭中)","隱藏其它玩家服飾(頭下)","隱藏其它玩家服飾(披肩)","隱藏其它玩家服飾(全部)","顯示全部服飾")) {
+
+		case 1:
+		sethiddenfromsight HIDE_LOOK_TOP_MIND,true;
+		close;
+		end;
+		case 2:
+		sethiddenfromsight HIDE_LOOK_MID_MIND,true;
+		close;
+		end;
+		case 3:
+		sethiddenfromsight HIDE_LOOK_BOTTOM_MIND,true;
+		close;
+		end;
+		case 4:
+		sethiddenfromsight HIDE_LOOK_ROBE_MIND,true;
+		close;
+		end;
+		case 5:
+		sethiddenfromsight HIDE_LOOK_ALL_MIND,true;
+		close;
+		end;
+
+		case 6:
+		sethiddenfromsight HIDE_LOOK_TOP_OTHER,true;
+		close;
+		end;
+		case 7:
+		sethiddenfromsight HIDE_LOOK_MID_OTHER,true;
+		close;
+		end;
+		case 8:
+		sethiddenfromsight HIDE_LOOK_BOTTOM_OTHER,true;
+		close;
+		end;
+		case 9:
+		sethiddenfromsight HIDE_LOOK_ROBE_OTHER,true;
+		close;
+		end;
+		case 10:
+		sethiddenfromsight HIDE_LOOK_ALL_OTHER,true;
+		close;
+		end;
+
+		case 11:
+		sethiddenfromsight HIDE_LOOK_ALL_MIND,false;
+		sethiddenfromsight HIDE_LOOK_ALL_OTHER,false;
+		close;
+		end;
+		}
+
+	case 6:
+		mes "[會員服務]";
+		mes "你想要隱藏甚麼?";
+		next;
+		switch(select("隱藏自己服飾特效","隱藏其他玩家服飾特效","顯示全部服飾特效")) {
+
+		case 1:
+		sethiddenfromsight HIDE_HAT_EFFECT_MIND,true;
+		close;
+		end;
+
+		case 2:
+		sethiddenfromsight HIDE_HAT_EFFECT_OTHER,true;
+		close;
+		end;
+
+		case 3:
+		sethiddenfromsight HIDE_HAT_EFFECT_ALL,false;
+		close;
+		end;
+		}
+
+	}
+end;
+}

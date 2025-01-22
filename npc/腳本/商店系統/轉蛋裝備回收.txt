@@ -1,0 +1,372 @@
+﻿trinity,92,65,4	script	轉蛋裝備回收	562,{
+
+	mes "[轉蛋裝備回收]";
+	mes "轉蛋開到的部分裝備我可以用對應的轉蛋保底卷跟你收購哦";
+	mes "^ff0000請注意重要裝備請存到倉庫，不然就算穿在身上也會被我收走!!^000000";
+	next;
+	switch(select("兌換 轉蛋裝備","回收 轉蛋裝備")){
+
+	case 1:
+
+		mes "[轉蛋保底商店]";
+		mes "請選擇你要購買的內容";
+		next;
+		switch(select("特殊物品:光輝天翼轉蛋:天佑祈福轉蛋:熾天之花轉蛋:強殖裝甲轉蛋:神之追隨者轉蛋:寶石轉蛋:風神轉蛋:啟海伊洛轉蛋:幻之魔法轉蛋:超新星轉蛋:伊斯加爾特轉蛋:星雲轉蛋")){
+
+		case 1:
+		close2;
+		callshop "特殊物品";
+		end;
+
+		case 2:
+		close2;
+		callshop "光輝天翼轉蛋";
+		end;
+
+		case 3:
+		close2;
+		callshop "天佑祈福轉蛋";
+		end;
+
+		case 4:
+		close2;
+		callshop "熾天之花轉蛋";
+		end;
+
+		case 5:
+		close2;
+		callshop "強殖裝甲轉蛋";
+		end;
+
+		case 6:
+		close2;
+		callshop "神之追隨者轉蛋";
+		end;
+
+		case 7:
+		close2;
+		callshop "寶石轉蛋";
+		end;
+
+		case 8:
+		close2;
+		callshop "風神轉蛋";
+		end;
+
+		case 9:
+		close2;
+		callshop "啟海伊洛轉蛋";
+		end;
+
+		case 10:
+		close2;
+		callshop "幻之魔法轉蛋";
+		end;
+
+		case 11:
+		close2;
+		callshop "超新星轉蛋";
+		end;
+
+		case 12:
+		close2;
+		callshop "伊斯加爾特轉蛋";
+		end;
+
+		case 13:
+		close2;
+		callshop "星雲轉蛋";
+		end;
+
+
+		}
+
+
+	case 2:
+	menu 
+	//SSS
+	countitem(22202)>=1?"時光超越者之靴 ^ff0000[100張]^000000":"",son22202,
+	countitem(450175)>=1?"時光超越湧現鎧甲 ^ff0000[100張]^000000":"",son450175,
+	countitem(420106)>=1?"時光超越天地樹苗 ^ff0000[100張]^000000":"",son420106,
+	countitem(480076)>=1?"時光超越者斗篷 ^ff0000[100張]^000000":"",son480076,
+	countitem(490030)>=1?"時光超越者之戒 ^ff0000[100張]^000000":"",son490030,
+	countitem(490097)>=1?"時光超越者手鐲 ^ff0000[100張]^000000":"",son490097,
+	countitem(400401)>=1?"天地樹的信仰 ^ff0000[100張]^000000":"",son400401,
+	countitem(480136)>=1?"魔劍士塔納托斯之劍 ^ff0000[100張]^000000":"",son480136,
+	countitem(480291)>=1?"英雄恩惠斗篷 ^ff0000[100張]^000000":"",son480291,
+	countitem(480292)>=1?"英雄英勇斗篷 ^ff0000[100張]^000000":"",son480292,
+	countitem(410235)>=1?"輕便望遠鏡 ^ff0000[100張]^000000":"",son410235,
+	countitem(420194)>=1?"求生哨 ^ff0000[100張]^000000":"",son420194,
+	countitem(22191)>=1?"火雷大神靴 ^ff0000[100張]^000000":"",son22191,
+	countitem(470127)>=1?"深紅魔術之靴 ^ff0000[100張]^000000":"",son470127,
+	countitem(22071)>=1?"尼羅河貴族高跟鞋 ^ff0000[100張]^000000":"",son22071,
+	countitem(460030)>=1?"仿生鋁合金花盆 ^ff0000[100張]^000000":"",son460030,
+	countitem(470120)>=1?"機械鋁合金改造靴 ^ff0000[100張]^000000":"",son470120,
+	countitem(460027)>=1?"泰坦神盾 ^ff0000[100張]^000000":"",son460027,
+	countitem(490089)>=1?"愛麗絲女僕抱枕 ^ff0000[100張]^000000":"",son490089,
+	countitem(28429)>=1?"艾昆妮華麗項鍊 ^ff0000[100張]^000000":"",son28429,
+	countitem(420199)>=1?"幽魅火球 ^ff0000[100張]^000000":"",son420199,
+	countitem(470129)>=1?"墮落的神吟魔靴 ^ff0000[100張]^000000":"",son470129,
+	countitem(470114)>=1?"無名旅者重靴 ^ff0000[100張]^000000":"",son470114,
+	countitem(22222)>=1?"審判決議長靴-LT ^ff0000[100張]^000000":"",son22222,
+	countitem(490245)>=1?"神諭號角 ^ff0000[100張]^000000":"",son490245,
+
+	countitem(490472)>=1?"惡火煉獄戒 ^ff0000[100張]^000000":"",son490472,
+	countitem(400511)>=1?"女王甲蟲頭盔 ^ff0000[100張]^000000":"",son400511,
+	countitem(480149)>=1?"鬥氣纏身 ^ff0000[100張]^000000":"",son480149,
+	countitem(490491)>=1?"狄克推多指環 ^ff0000[100張]^000000":"",son490491,
+	countitem(470187)>=1?"猛獸領地戰靴 ^ff0000[100張]^000000":"",son470187,
+	countitem(480192)>=1?"2022RTC紀念勝利大衣 ^ff0000[100張]^000000":"",son480192,
+	countitem(480341)>=1?"啟海伊洛的毀滅科技 ^ff0000[100張]^000000":"",son480341,
+	countitem(450357)>=1?"粗暴者龍影鎧甲-LT ^ff0000[100張]^000000":"",son450357,
+	countitem(450358)>=1?"深淵湖水咆嘯鎧甲-LT ^ff0000[100張]^000000":"",son450358,
+
+	countitem(19095)>=1?"漂浮快樂氣球 ^ff0000[100張]^000000":"",son19095,
+	countitem(480372)>=1?"瘋狂兔寶寶後背包 ^ff0000[100張]^000000":"",son480372,
+	countitem(490482)>=1?"席琳基米造型吊飾 ^ff0000[100張]^000000":"",son490482,
+	countitem(490466)>=1?"墮落熾天使之戒 ^ff0000[100張]^000000":"",son490466,
+	countitem(490535)>=1?"秘術-連環尖冰陣 ^ff0000[100張]^000000":"",son490535,
+	countitem(490536)>=1?"秘術-萬千鳥飛鳴 ^ff0000[100張]^000000":"",son490536,
+	countitem(400547)>=1?"萬物與靈魂的真諦-LT ^ff0000[100張]^000000":"",son400547,
+	countitem(400548)>=1?"元靈繼承者-LT ^ff0000[100張]^000000":"",son400548,
+	countitem(400549)>=1?"精銳部隊帽-LT ^ff0000[100張]^000000":"",son400549,
+	countitem(400550)>=1?"喵族的薪火相傳-LT ^ff0000[100張]^000000":"",son400550,
+	countitem(400551)>=1?"潛能激發冒險帽-LT ^ff0000[100張]^000000":"",son400551,
+
+	countitem(400105)>=1?"伊斯加爾特近戰王冠 ^ff0000[100張]^000000":"",son400105,
+	countitem(400106)>=1?"伊斯加爾特魔法王冠 ^ff0000[100張]^000000":"",son400106,
+	countitem(400107)>=1?"伊斯加爾特遠程王冠 ^ff0000[100張]^000000":"",son400107,
+	countitem(410211)>=1?"深淵湖水龍寶寶 ^ff0000[100張]^000000":"",son410211,
+
+	countitem(490552)>=1?"星雲吊墜 ^ff0000[100張]^000000":"",son490552,
+	countitem(420328)>=1?"冰封強運玫瑰 ^ff0000[100張]^000000":"",son420328,
+	countitem(420330)>=1?"炙熱強運玫瑰 ^ff0000[100張]^000000":"",son420330,
+	countitem(420331)>=1?"沉睡強運玫瑰 ^ff0000[100張]^000000":"",son420331,
+	countitem(420332)>=1?"大地強運玫瑰 ^ff0000[100張]^000000":"",son420332,
+
+	//SS
+	countitem(28430)>=1?"大祭司聖戒 ^ff0000[30張]^000000":"",son28430,
+	countitem(28434)>=1?"拳王手套 ^ff0000[30張]^000000":"",son28434,
+	countitem(28437)>=1?"大神官手套 ^ff0000[30張]^000000":"",son28437,
+	countitem(28438)>=1?"苗娃佩瑞絲粉末墜飾 ^ff0000[30張]^000000":"",son28438,
+	countitem(20859)>=1?"皮里恩飛行翼 ^ff0000[30張]^000000":"",son20859,
+	countitem(490100)>=1?"紅色陽剛吊墜 ^ff0000[30張]^000000":"",son490100,
+	countitem(490101)>=1?"藍色心靈吊墜 ^ff0000[30張]^000000":"",son490101,
+	countitem(480088)>=1?"烏爾蒂奧聖魔法斗篷 ^ff0000[30張]^000000":"",son480088,
+	countitem(28436)>=1?"埃維亞的吊飾 ^ff0000[30張]^000000":"",son28436,
+	countitem(28573)>=1?"翡翠戒指 ^ff0000[30張]^000000":"",son28573,
+	countitem(28536)>=1?"翡翠耳環 ^ff0000[30張]^000000":"",son28536,
+	countitem(490218)>=1?"純愛之心 ^ff0000[30張]^000000":"",son490218,
+	countitem(32259)>=1?"加農改造器 ^ff0000[30張]^000000":"",son32259,
+	countitem(420032)>=1?"雙管加農炮 ^ff0000[30張]^000000":"",son420032,
+	countitem(490208)>=1?"王城魔戒 ^ff0000[30張]^000000":"",son490208,
+	countitem(480242)>=1?"念動風神斗篷 ^ff0000[30張]^000000":"",son480242,
+	countitem(480153)>=1?"豔陽沙礫斗篷 ^ff0000[30張]^000000":"",son480153,
+	countitem(480154)>=1?"魔鬼惡火斗篷 ^ff0000[30張]^000000":"",son480154,
+	countitem(32270)>=1?"蒼藍光明珠 ^ff0000[30張]^000000":"",son32270,
+
+	countitem(480087)>=1?"雙十守護者之盾 ^ff0000[30張]^000000":"",son480087,
+	countitem(490405)>=1?"百獸指環 ^ff0000[30張]^000000":"",son490405,
+	countitem(470033)>=1?"四大元素魔靴 ^ff0000[30張]^000000":"",son470033,
+	countitem(470095)>=1?"滅世魔靴 ^ff0000[30張]^000000":"",son470095,
+	countitem(410213)>=1?"血腥之耳 ^ff0000[30張]^000000":"",son410213,
+	countitem(410215)>=1?"怨靈之耳 ^ff0000[30張]^000000":"",son410215,
+	countitem(410216)>=1?"深淵之耳 ^ff0000[30張]^000000":"",son410216,
+	countitem(480276)>=1?"曼妙自然之力斗篷 ^ff0000[30張]^000000":"",son480276,
+	countitem(32278)>=1?"冰封環戒 ^ff0000[30張]^000000":"",son32278,
+	countitem(28595)>=1?"蒼龍之環 ^ff0000[30張]^000000":"",son28595,
+	countitem(28517)>=1?"深淵斬裂戒 ^ff0000[30張]^000000":"",son28517,
+	countitem(32245)>=1?"思念之戒 ^ff0000[30張]^000000":"",son32245,
+
+	countitem(490450)>=1?"不穩定的時光胸針 ^ff0000[30張]^000000":"",son490450,
+	countitem(460038)>=1?"貴族天秤之盾 ^ff0000[30張]^000000":"",son460038,
+	countitem(420064)>=1?"貴族手帕 ^ff0000[30張]^000000":"",son420064,
+	countitem(420173)>=1?"克勞斯羽翼護甲 ^ff0000[30張]^000000":"",son420173,
+	countitem(400328)>=1?"羽翼貝雷帽 ^ff0000[30張]^000000":"",son400328,
+	countitem(400291)>=1?"護身羽翼 ^ff0000[30張]^000000":"",son400291,
+	countitem(420186)>=1?"20週年慶生氣球 ^ff0000[30張]^000000":"",son420186,
+	countitem(400368)>=1?"RO二十週年限定帽 ^ff0000[30張]^000000":"",son400368,
+	countitem(490389)>=1?"障壁指環 ^ff0000[30張]^000000":"",son490389,
+	countitem(480024)>=1?"思念者斗篷 ^ff0000[30張]^000000":"",son480024,
+
+	countitem(28505)>=1?"魔神之戒 ^ff0000[30張]^000000":"",son28505,
+	countitem(28515)>=1?"帝國魔戒 ^ff0000[30張]^000000":"",son28515,
+	countitem(470177)>=1?"虛空陰暗長靴 ^ff0000[30張]^000000":"",son470177,
+	countitem(20866)>=1?"黃金天使羽翼 ^ff0000[30張]^000000":"",son20866,
+
+	countitem(480245)>=1?"王冠大耳狗喜拿背包 ^ff0000[30張]^000000":"",son480245,
+
+
+	"取消",no;
+	//SSS
+	son22202:	set @Scroll,22202;goto Scroll_100;
+	son450175:	set @Scroll,450175;goto Scroll_100;
+	son420106:	set @Scroll,420106;goto Scroll_100;
+	son480076:	set @Scroll,480076;goto Scroll_100;
+	son490030:	set @Scroll,490030;goto Scroll_100;
+	son490097:	set @Scroll,490097;goto Scroll_100;
+	son400401:	set @Scroll,400401;goto Scroll_100;
+	son480136:	set @Scroll,480136;goto Scroll_100;
+	son480291:	set @Scroll,480291;goto Scroll_100;
+	son480292:	set @Scroll,480292;goto Scroll_100;
+	son410235:	set @Scroll,410235;goto Scroll_100;
+	son420194:	set @Scroll,420194;goto Scroll_100;
+	son22191:	set @Scroll,22191;goto Scroll_100;
+	son470127:	set @Scroll,470127;goto Scroll_100;
+	son22071:	set @Scroll,22071;goto Scroll_100;
+	son460030:	set @Scroll,460030;goto Scroll_100;
+	son470120:	set @Scroll,470120;goto Scroll_100;
+	son460027:	set @Scroll,460027;goto Scroll_100;
+	son490089:	set @Scroll,490089;goto Scroll_100;
+	son28429:	set @Scroll,28429;goto Scroll_100;
+	son420199:	set @Scroll,420199;goto Scroll_100;
+	son470129:	set @Scroll,470129;goto Scroll_100;
+	son470114:	set @Scroll,470114;goto Scroll_100;
+	son22222:	set @Scroll,22222;goto Scroll_100;
+	son490245:	set @Scroll,490245;goto Scroll_100;
+
+	son490472:	set @Scroll,490472;goto Scroll_100;
+	son400511:	set @Scroll,400511;goto Scroll_100;
+	son480149:	set @Scroll,480149;goto Scroll_100;
+	son490491:	set @Scroll,490491;goto Scroll_100;
+	son470187:	set @Scroll,470187;goto Scroll_100;
+	son480192:	set @Scroll,480192;goto Scroll_100;
+
+	son480341:	set @Scroll,480341;goto Scroll_100;
+	son450357:	set @Scroll,450357;goto Scroll_100;
+	son450358:	set @Scroll,450358;goto Scroll_100;
+
+	son19095:	set @Scroll,19095;goto Scroll_100;
+	son480372:	set @Scroll,480372;goto Scroll_100;
+	son490482:	set @Scroll,490482;goto Scroll_100;
+	son490466:	set @Scroll,490466;goto Scroll_100;
+	son490535:	set @Scroll,490535;goto Scroll_100;
+	son490536:	set @Scroll,490536;goto Scroll_100;
+	son400547:	set @Scroll,400547;goto Scroll_100;
+	son400548:	set @Scroll,400548;goto Scroll_100;
+	son400549:	set @Scroll,400549;goto Scroll_100;
+	son400550:	set @Scroll,400550;goto Scroll_100;
+	son400551:	set @Scroll,400551;goto Scroll_100;
+
+	son400105:	set @Scroll,400105;goto Scroll_100;
+	son400106:	set @Scroll,400106;goto Scroll_100;
+	son400107:	set @Scroll,400107;goto Scroll_100;
+	son410211:	set @Scroll,410211;goto Scroll_100;
+
+	son490552:	set @Scroll,490552;goto Scroll_100;
+	son420328:	set @Scroll,420328;goto Scroll_100;
+	son420330:	set @Scroll,420330;goto Scroll_100;
+	son420331:	set @Scroll,420331;goto Scroll_100;
+	son420332:	set @Scroll,420332;goto Scroll_100;
+
+
+	//SS
+	son28430:	set @Scroll,28430;goto Scroll_30;
+	son28434:	set @Scroll,28434;goto Scroll_30;
+	son28437:	set @Scroll,28437;goto Scroll_30;
+	son28438:	set @Scroll,28438;goto Scroll_30;
+	son20859:	set @Scroll,20859;goto Scroll_30;
+	son490100:	set @Scroll,490100;goto Scroll_30;
+	son490101:	set @Scroll,490101;goto Scroll_30;
+	son480088:	set @Scroll,480088;goto Scroll_30;
+	son28436:	set @Scroll,28436;goto Scroll_30;
+	son28573:	set @Scroll,28573;goto Scroll_30;
+	son28536:	set @Scroll,28536;goto Scroll_30;
+	son490218:	set @Scroll,490218;goto Scroll_30;
+	son32259:	set @Scroll,32259;goto Scroll_30;
+	son420032:	set @Scroll,420032;goto Scroll_30;
+	son490208:	set @Scroll,490208;goto Scroll_30;
+	son480242:	set @Scroll,480242;goto Scroll_30;
+	son480153:	set @Scroll,480153;goto Scroll_30;
+	son480154:	set @Scroll,480154;goto Scroll_30;
+	son32270:	set @Scroll,32270;goto Scroll_30;
+
+	son480087:	set @Scroll,480087;goto Scroll_30;
+	son490405:	set @Scroll,490405;goto Scroll_30;
+	son470033:	set @Scroll,470033;goto Scroll_30;
+	son470095:	set @Scroll,470095;goto Scroll_30;
+	son410213:	set @Scroll,410213;goto Scroll_30;
+	son410215:	set @Scroll,410215;goto Scroll_30;
+	son410216:	set @Scroll,410216;goto Scroll_30;
+	son480276:	set @Scroll,480276;goto Scroll_30;
+
+	son32278:	set @Scroll,32278;goto Scroll_30;
+	son28595:	set @Scroll,28595;goto Scroll_30;
+	son28517:	set @Scroll,28517;goto Scroll_30;
+	son32245:	set @Scroll,32245;goto Scroll_30;
+
+	son490450:	set @Scroll,490450;goto Scroll_30;
+	son460038:	set @Scroll,460038;goto Scroll_30;
+	son420064:	set @Scroll,420064;goto Scroll_30;
+	son420173:	set @Scroll,420173;goto Scroll_30;
+	son400328:	set @Scroll,400328;goto Scroll_30;
+	son400291:	set @Scroll,400291;goto Scroll_30;
+	son420186:	set @Scroll,420186;goto Scroll_30;
+	son400368:	set @Scroll,400368;goto Scroll_30;
+	son490389:	set @Scroll,490389;goto Scroll_30;
+	son480024:	set @Scroll,480024;goto Scroll_30;
+
+	son28505:	set @Scroll,28505;goto Scroll_30;
+	son28515:	set @Scroll,28515;goto Scroll_30;
+	son470177:	set @Scroll,470177;goto Scroll_30;
+	son20866:	set @Scroll,20866;goto Scroll_30;
+
+	son480245:	set @Scroll,480245;goto Scroll_30;
+
+
+no:
+	close;
+
+
+//------------------------------70026商城轉蛋保底卷
+Scroll_100:
+	if(countitem(@Scroll)<1){
+	mes"[轉蛋裝備回收]";
+	mes"你少於1個不能兌換";
+	close;
+	}
+	mes"[轉蛋裝備回收]";
+	mes "你現在可以兌換"+(countitem(@Scroll)*100)+"張商城轉蛋保底卷";
+	mes"^ff0000取消請數量輸入0^000000";
+	next;
+	set @Cnum,0;
+	input @Cnum,0,100;
+	if(@Cnum == 0){ close; }
+	if(countitem(@Scroll) <@Cnum){
+	mes"[轉蛋裝備回收]";
+	mes"你少於輸入的物品不能兌換";
+	close;
+	}
+	getitem 70026,@Cnum*100;
+	delitem @Scroll,(@Cnum*1);
+	close;
+	end;
+
+Scroll_30:
+	if(countitem(@Scroll)<1){
+	mes"[轉蛋裝備回收]";
+	mes"你少於1個不能兌換";
+	close;
+	}
+	mes"[轉蛋裝備回收]";
+	mes "你現在可以兌換"+(countitem(@Scroll)*30)+"張商城轉蛋保底卷";
+	mes"^ff0000取消請數量輸入0^000000";
+	next;
+	set @Cnum,0;
+	input @Cnum,0,100;
+	if(@Cnum == 0){ close; }
+	if(countitem(@Scroll) <@Cnum){
+	mes"[轉蛋裝備回收]";
+	mes"你少於輸入的物品不能兌換";
+	close;
+	}
+	getitem 70026,@Cnum*30;
+	delitem @Scroll,(@Cnum*1);
+	close;
+	end;
+
+	}
+OnInit:
+	waitingroom "轉蛋裝備回收",0;
+	end;
+}

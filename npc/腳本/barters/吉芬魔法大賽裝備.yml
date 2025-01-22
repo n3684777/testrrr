@@ -1,0 +1,78 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#吉芬魔法大賽裝備
+   - Name: 硬幣兌換員
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_HUWOMAN
+     Items:
+       - Index: 0
+         Item: Gray_Charcoal_Melee
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 100
+       - Index: 1
+         Item: Geffen_Magic_Scroll2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 100
+       - Index: 2
+         Item: Magic_Reflector
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900
+       - Index: 3
+         Item: Encyclopedia_Revision
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900
+       - Index: 4
+         Item: Body_Power_Up_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900
+       - Index: 5
+         Item: Ring_Of_Spell_Explosion
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900
+       - Index: 6
+         Item: Anti_Magic_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900
+       - Index: 7
+         Item: Geffen_Mage_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin_Magic_Tournament
+             Amount: 900

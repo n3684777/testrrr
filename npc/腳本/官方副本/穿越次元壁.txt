@@ -1,0 +1,214 @@
+﻿
+vdistrict1,13,54,4	script	次元裂縫#20th	23001,{
+
+	.@playtime = checkquest(12581,PLAYTIME);
+	if(.@playtime == 2) erasequest 12581;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[次元裂縫]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂縫]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "穿越次元壁";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂縫]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[次元裂縫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂縫]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂縫]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[次元裂縫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			setquest 12581;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "穿越次元壁",0;
+	end;
+}
+
+
+//------------------------------穿越次元壁事件
+1@dime,0,0,0	script	穿越次元壁事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@dime");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("希梅爾茲#20th01");
+	disablenpc instance_npcname("參宿七#20th00");
+	//副本標籤
+	set 'CD_20th_01,0;
+	set 'CD_20th_02,0;
+	end;
+
+	OnCcdd1:
+	sleep 1000;
+	switch(rand(1,2)){
+	case 1:
+	areamonster 'map_name$[0],88,79,88,79,"--ja--",23007,1,instance_npcname("穿越次元壁事件1")+"::OnCcdd1";
+	end;
+
+	case 2:
+	areamonster 'map_name$[0],72,79,72,79,"--ja--",23008,1,instance_npcname("穿越次元壁事件1")+"::OnCcdd1";
+	end;
+	}
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【穿越次元壁】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	killmonster 'map_name$[0], instance_npcname("穿越次元壁事件1")+"::OnCcdd1";
+	killmonsterall 'map_name$[0];
+	enablenpc instance_npcname("參宿七#20th00");
+	instance_announce 0, "參宿七：結束了來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@dime,80,72,4	script	參宿七#20th01	23001,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_20th_01>0) end;
+
+	mes "[參宿七]";
+	mes "準備就緒了，我要開始封印這附近的所有空間後，把它恢復原狀";
+	npctalk "準備就緒了，我要開始封印這附近的所有空間後，把它恢復原狀";
+	next;
+	close2;
+	set 'CD_20th_01,1;
+	sleep 1000;
+	specialeffect 16;
+	disablenpc instance_npcname("參宿七#20th01");
+	enablenpc instance_npcname("希梅爾茲#20th01");
+	end;
+}
+
+
+1@dime,80,72,4	script	希梅爾茲#20th01	23002,5,5,{end;
+
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_20th_02>0) end;
+	set 'CD_20th_02,1;
+
+	sleep 3000;
+	npctalk "分明是沒有任何干涉的通道，到底是誰妨礙我呢";
+	sleep 3000;
+	npctalk "沒關係通通收拾就行了，我會把你送上西天";
+	sleep 3000;
+	npctalk "我的孩子們阿!快來協助我吧!";
+	specialeffect 16;
+	disablenpc instance_npcname("希梅爾茲#20th01");
+	areamonster 'map_name$[0],80,72,80,72,"--ja--",23002,1,instance_npcname("穿越次元壁事件1")+"::OnEnd01";
+	sleep 2000;
+	areamonster 'map_name$[0],88,79,88,79,"--ja--",23007,1,instance_npcname("穿越次元壁事件1")+"::OnCcdd1";
+}
+
+
+//------------------------------ 傳點資訊 162,316
+//------------------------------ 領獎
+1@dime,80,72,4	script	參宿七#20th00	23001,{
+
+	mes "[參宿七]";
+	mes "讓我把你們送出穿越次元壁吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+
+	case 1:
+	callfunc "offical_instance_finish",3;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------地圖屬性
+1@dime	mapflag	partylock
+1@dime	mapflag	noteleport
+1@dime	mapflag	nosave	SavePoint
+1@dime	mapflag	nomemo
+1@dime	mapflag	nobranch
+1@dime	mapflag	noicewall
+1@dime	mapflag	restricted	6
+

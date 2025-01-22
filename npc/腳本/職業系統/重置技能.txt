@@ -1,0 +1,12 @@
+bago_01,36,58,6	script	重置技能	811,{
+
+	callfunc "Job_Reset_Quick";
+	close;
+	end;
+
+OnInit:
+	waitingroom "重置技能",0;
+	end;
+} 
+
+

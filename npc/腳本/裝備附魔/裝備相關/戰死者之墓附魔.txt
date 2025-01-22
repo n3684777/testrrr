@@ -1,0 +1,1884 @@
+-	shop	能量碎片回收	-1,no,501:-1
+
+vdistrict1,53,24,6	script	迷惘的思念	10172,{
+
+	//附魔狀態
+	set $@Killed1,rand(0,29);
+	set $@Killed2,rand(0,6);
+	setarray $@Killed_ing1[0],4700,4701,4702,4703,4704,4710,4711,4712,4713,4714,4720,4721,4722,4723,4724,4730,4731,4732,4733,4734,4740,4741,4742,4743,4744,4750,4751,4752,4753,4754;
+	setarray $@Killed_ing2[0],29061,29071,29081,29091,29101,29111,29706;
+
+	mes "[迷惘的思念]";
+	mes "在戰死者之墓取得的頭飾";
+	mes "只要給我對應的報酬";
+	mes "我就能幫你進行強化";
+	next;
+	switch(select("裝備製作:分解武器:進行附魔:重置附魔:取消")){
+
+case 1:
+	close2;
+	callshop "戰死者頭盔";
+	end;
+
+case 2:
+
+	close2;
+	callshop "能量碎片回收",2;
+	npcshopattach "能量碎片回收";
+	end;
+
+case 3:
+	mes "[迷惘的思念]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Killed_Slots,getequipcardid(.@is,0);
+	set @Killed_Slots2,getequipcardid(.@is,1);
+	set @Killed_Slots3,getequipcardid(.@is,2);
+	set @Killed_Slots4,getequipcardid(.@is,3);
+	set @Killed_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[迷惘的思念]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[迷惘的思念]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 18971) goto Killed_net;
+	if(@abd == 18972) goto Killed_net;
+	if(@abd == 18973) goto Killed_net;
+	if(@abd == 18974) goto Killed_net;
+	if(@abd == 18975) goto Killed_net;
+	if(@abd == 18976) goto Killed_net;
+	if(@abd == 18977) goto Killed_net;
+	if(@abd == 18978) goto Killed_net;
+	if(@abd == 18979) goto Killed_net;
+	if(@abd == 18980) goto Killed_net;
+	if(@abd == 18981) goto Killed_net;
+	if(@abd == 18982) goto Killed_net;
+	if(@abd == 18983) goto Killed_net;
+	if(@abd == 18984) goto Killed_net;
+	mes "[迷惘的思念]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Killed_net:
+	if(@Killed_Slots4 == 0) goto Killed_net1;
+	if(@Killed_Slots3 == 0) goto Killed_net2;
+	if(@Killed_Slots2 == 0) goto Killed_net3;
+	//附魔Lv2
+	if(@Killed_Slots2 == 29061) goto Killed_net1_2;
+	if(@Killed_Slots2 == 29071) goto Killed_net2_2;
+	if(@Killed_Slots2 == 29081) goto Killed_net3_2;
+	if(@Killed_Slots2 == 29091) goto Killed_net4_2;
+	if(@Killed_Slots2 == 29101) goto Killed_net5_2;
+	if(@Killed_Slots2 == 29111) goto Killed_net6_2;
+	if(@Killed_Slots2 == 29706) goto Killed_net7_2;
+	//附魔Lv3
+	if(@Killed_Slots2 == 29062) goto Killed_net1_3;
+	if(@Killed_Slots2 == 29072) goto Killed_net2_3;
+	if(@Killed_Slots2 == 29082) goto Killed_net3_3;
+	if(@Killed_Slots2 == 29092) goto Killed_net4_3;
+	if(@Killed_Slots2 == 29102) goto Killed_net5_3;
+	if(@Killed_Slots2 == 29112) goto Killed_net6_3;
+	if(@Killed_Slots2 == 29707) goto Killed_net7_3;
+	//附魔Lv4
+	if(@Killed_Slots2 == 29063) goto Killed_net1_4;
+	if(@Killed_Slots2 == 29073) goto Killed_net2_4;
+	if(@Killed_Slots2 == 29083) goto Killed_net3_4;
+	if(@Killed_Slots2 == 29093) goto Killed_net4_4;
+	if(@Killed_Slots2 == 29103) goto Killed_net5_4;
+	if(@Killed_Slots2 == 29113) goto Killed_net6_4;
+	if(@Killed_Slots2 == 29708) goto Killed_net7_4;
+	//附魔Lv5
+	if(@Killed_Slots2 == 29064) goto Killed_net1_5;
+	if(@Killed_Slots2 == 29074) goto Killed_net2_5;
+	if(@Killed_Slots2 == 29084) goto Killed_net3_5;
+	if(@Killed_Slots2 == 29094) goto Killed_net4_5;
+	if(@Killed_Slots2 == 29104) goto Killed_net5_5;
+	if(@Killed_Slots2 == 29114) goto Killed_net6_5;
+	if(@Killed_Slots2 == 29709) goto Killed_net7_5;
+	//附魔Lv6
+	if(@Killed_Slots2 == 29065) goto Killed_net1_6;
+	if(@Killed_Slots2 == 29075) goto Killed_net2_6;
+	if(@Killed_Slots2 == 29085) goto Killed_net3_6;
+	if(@Killed_Slots2 == 29095) goto Killed_net4_6;
+	if(@Killed_Slots2 == 29105) goto Killed_net5_6;
+	if(@Killed_Slots2 == 29115) goto Killed_net6_6;
+	if(@Killed_Slots2 == 29710) goto Killed_net7_6;
+	//附魔Lv7
+	if(@Killed_Slots2 == 29066) goto Killed_net1_7;
+	if(@Killed_Slots2 == 29076) goto Killed_net2_7;
+	if(@Killed_Slots2 == 29086) goto Killed_net3_7;
+	if(@Killed_Slots2 == 29096) goto Killed_net4_7;
+	if(@Killed_Slots2 == 29106) goto Killed_net5_7;
+	if(@Killed_Slots2 == 29116) goto Killed_net6_7;
+	if(@Killed_Slots2 == 29711) goto Killed_net7_7;
+	//附魔Lv8
+	if(@Killed_Slots2 == 29067) goto Killed_net1_8;
+	if(@Killed_Slots2 == 29077) goto Killed_net2_8;
+	if(@Killed_Slots2 == 29087) goto Killed_net3_8;
+	if(@Killed_Slots2 == 29097) goto Killed_net4_8;
+	if(@Killed_Slots2 == 29107) goto Killed_net5_8;
+	if(@Killed_Slots2 == 29117) goto Killed_net6_8;
+	if(@Killed_Slots2 == 29712) goto Killed_net7_8;
+	//附魔Lv9
+	if(@Killed_Slots2 == 29068) goto Killed_net1_9;
+	if(@Killed_Slots2 == 29078) goto Killed_net2_9;
+	if(@Killed_Slots2 == 29088) goto Killed_net3_9;
+	if(@Killed_Slots2 == 29098) goto Killed_net4_9;
+	if(@Killed_Slots2 == 29108) goto Killed_net5_9;
+	if(@Killed_Slots2 == 29118) goto Killed_net6_9;
+	if(@Killed_Slots2 == 29713) goto Killed_net7_9;
+	//附魔Lv10
+	if(@Killed_Slots2 == 29069) goto Killed_net1_10;
+	if(@Killed_Slots2 == 29079) goto Killed_net2_10;
+	if(@Killed_Slots2 == 29089) goto Killed_net3_10;
+	if(@Killed_Slots2 == 29099) goto Killed_net4_10;
+	if(@Killed_Slots2 == 29109) goto Killed_net5_10;
+	if(@Killed_Slots2 == 29119) goto Killed_net6_10;
+	if(@Killed_Slots2 == 29714) goto Killed_net7_10;
+
+	mes "[迷惘的思念]";
+	mes "其他階段尚未開放付魔!!";
+	close;
+
+Killed_net1:
+	mes "[迷惘的思念]";
+	mes "你想要進行第一階段附魔?";
+	mes "附魔材料：10個咒怨碎片";
+	next;
+	switch(select("取消:第一階段附魔^009933(消耗咒怨碎片x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoKilledA1",23016,0,rand(1,100);
+	}
+
+Killed_net2:
+	mes "[迷惘的思念]";
+	mes "你想要進行第二階段附魔?";
+	mes "附魔材料：10個咒怨碎片";
+	next;
+	switch(select("取消:第二階段附魔^009933(消耗咒怨碎片x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoKilledA2",23016,0,rand(1,100);
+	}
+
+Killed_net3:
+	mes "[迷惘的思念]";
+	mes "你想要進行第三階段附魔?";
+	mes "附魔材料：10個咒怨碎片";
+	next;
+	switch(select("取消:第三階段附魔^009933(消耗咒怨碎片x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoKilledA3",23016,0,rand(1,100);
+	}
+
+
+Killed_net1_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29062,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29061,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29072,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29071,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29082,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29081,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29092,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29091,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29102,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29101,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29112,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29111,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_2:
+	if(countitem(23016)<20){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29707,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29706,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29063,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29061,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29073,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29071,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29083,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29081,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29093,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29091,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29103,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29101,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29113,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29111,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_3:
+	if(countitem(23016)<40){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29708,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29706,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29064,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29062,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29074,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29072,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29084,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29082,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29094,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29092,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29104,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29102,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29114,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29112,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_4:
+	if(countitem(23016)<60){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29709,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,60;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29707,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29065,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29063,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29075,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29073,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29085,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29083,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29095,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29093,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29105,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29103,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29115,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29113,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_5:
+	if(countitem(23016)<70){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29710,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,70;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29708,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29066,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29064,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29076,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29074,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29086,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29084,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29096,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29094,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29106,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29104,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29116,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29114,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_6:
+	if(countitem(23016)<100){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29711,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,100;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29709,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29067,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29065,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29077,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29075,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29087,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29085,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29097,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29095,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29107,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29105,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29117,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29115,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_7:
+	if(countitem(23016)<150){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29712,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,150;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29710,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29068,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29066,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29078,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29076,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29088,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29086,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29098,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29096,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29108,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29106,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29118,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29116,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_8:
+	if(countitem(23016)<250){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29713,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,250;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29711,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29069,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29067,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29079,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29077,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29089,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29087,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29099,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29097,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29109,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29107,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29119,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29117,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_9:
+	if(countitem(23016)<500){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29714,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,500;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29712,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+
+Killed_net1_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29070,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29068,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net2_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29080,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29078,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net3_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29090,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29088,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net4_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29100,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29098,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net5_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29110,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29108,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net6_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29120,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29118,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+Killed_net7_10:
+	if(countitem(23016)<1000){
+	mes "[迷惘的思念]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[迷惘的思念]";
+	mes "第四階段附魔成功!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29715,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[迷惘的思念]";
+	mes "第四階段附魔失敗!";
+	delitem 23016,1000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,29713,@Killed_Slots3,@Killed_Slots4;
+	specialeffect 155;
+	close;
+
+//----------------------重置附魔
+case 4:
+	mes "[迷惘的思念]";
+	mes "你想要要重置哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Killed_Slots,getequipcardid(.@is,0);
+	set @Killed_Slots2,getequipcardid(.@is,1);
+	set @Killed_Slots3,getequipcardid(.@is,2);
+	set @Killed_Slots4,getequipcardid(.@is,3);
+	set @Killed_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[迷惘的思念]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[迷惘的思念]";
+	mes "你沒物品怎麼重置";
+	close;
+	}
+	if(@abd == 18971) goto Killed_netx;
+	if(@abd == 18972) goto Killed_netx;
+	if(@abd == 18973) goto Killed_netx;
+	if(@abd == 18974) goto Killed_netx;
+	if(@abd == 18975) goto Killed_netx;
+	if(@abd == 18976) goto Killed_netx;
+	if(@abd == 18977) goto Killed_netx;
+	if(@abd == 18978) goto Killed_netx;
+	if(@abd == 18979) goto Killed_netx;
+	if(@abd == 18980) goto Killed_netx;
+	if(@abd == 18981) goto Killed_netx;
+	if(@abd == 18982) goto Killed_netx;
+	if(@abd == 18983) goto Killed_netx;
+	if(@abd == 18984) goto Killed_netx;
+	mes "[迷惘的思念]";
+	mes "你這個裝備無法重置哦!";
+	close;
+
+Killed_netx:
+	mes "[迷惘的思念]";
+	mes "你想要重置這頭盔上的附魔?";
+	mes "重置材料：10個邪念碎片";
+	next;
+	switch(select("取消:重置頭盔的附魔^009933(消耗邪念碎片x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoKilledA4",22687,0,rand(1,100);
+	}
+
+case 5:
+	close;
+	}
+end;
+
+
+OnSellItem:
+	disable_items;
+	for ( .@i = 0; .@i < getarraysize(@sold_idx); .@i++ ){
+	.@item_id = getinventoryinfo(@sold_idx[.@i],0);
+	.@item_type = getiteminfo(.@item_id,ITEMINFO_TYPE);
+	
+	
+	
+		if ( inarray(.lhz_w_1,.@item_id) > -1 && .@item_type == 5)
+		{
+				.@Recycleidx_1[getarraysize(.@Recycleidx_1)] = @sold_idx[.@i];
+				.@Recyclequantity_1[getarraysize(.@Recyclequantity_1)] = @sold_quantity[.@i];
+
+		}		
+		else if ( inarray(.lhz_w_2,.@item_id) > -1 && .@item_type == 5)
+		{
+
+				.@Recycleidx_2[getarraysize(.@Recycleidx_2)] = @sold_idx[.@i];
+				.@Recyclequantity_2[getarraysize(.@Recyclequantity_2)] = @sold_quantity[.@i];
+
+		}
+		else if ( inarray(.lhz_w_3,.@item_id) > -1 && .@item_type == 5)
+		{
+
+				.@Recycleidx_3[getarraysize(.@Recycleidx_3)] = @sold_idx[.@i];
+				.@Recyclequantity_3[getarraysize(.@Recyclequantity_3)] = @sold_quantity[.@i];
+
+		}		
+		
+	}
+
+	if ( !getarraysize(.@Recycleidx_1) && !getarraysize(.@Recycleidx_2) &&  !getarraysize(.@Recycleidx_3)  )
+	{
+		mes "尚未找到可以被回收的能量碎片.";
+		end;
+	}
+
+	for ( .@i = 0; .@i < getarraysize(.@Recycleidx_1); .@i++ ){
+
+		delinventory .@Recycleidx_1[.@i],.@Recyclequantity_1[.@i];
+
+		getitem .item_1_coin,rand(1,3);
+		}
+
+	for ( .@i = 0; .@i < getarraysize(.@Recycleidx_2); .@i++ ){
+	
+		delinventory .@Recycleidx_2[.@i],.@Recyclequantity_2[.@i];
+		
+		getitem .item_2_coin,.@Recyclequantity_2[.@i];	
+		}
+
+	for ( .@i = 0; .@i < getarraysize(.@Recycleidx_3); .@i++ ){
+	
+		delinventory .@Recycleidx_3[.@i],.@Recyclequantity_3[.@i];		
+		
+		getitem .item_3_coin,.@Recyclequantity_3[.@i];
+		
+		}
+
+	specialeffect2 98;
+	end;
+
+OnInit:
+	waitingroom "戰死者之墓頭具",0;
+	.item_1_coin = 6820;	//能量碎片ID
+	.item_1_coin_co = 3;	//能量碎片數量
+
+	//普通卡
+	setarray .lhz_w_1,1830,13421,13431,13046,13047,13061,13069,13070,16000,16001,16010,16017,1189,1196,2004,2005,1490,1311,1392,1393,1930,1984,1985,1584,1284,1285,1290,1291,1646,1647,1654,1659,1433,1435,1745,18103,18109,18110,18111;
+	end;
+}
+
+
+//-------------------------- 第一階段附魔
+
+function	script	fumoKilledA1	{
+
+	if(countitem(getarg(0))<10){
+	mes "[迷惘的思念]";
+	mes "你身上沒有咒怨碎片";
+	close;
+	}
+	mes "[迷惘的思念]";
+	mes "第一階段附魔成功!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,@Killed_Slots2,@Killed_Slots3,$@Killed_ing1[$@Killed1];
+	close;
+}
+
+//-------------------------- 第二階段附魔
+
+function	script	fumoKilledA2	{
+
+	if(countitem(getarg(0))<10){
+	mes "[迷惘的思念]";
+	mes"你身上沒有咒怨碎片";
+	close;
+	}
+	mes "[迷惘的思念]";
+	mes "第二階段附魔成功!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,@Killed_Slots2,$@Killed_ing1[$@Killed1],@Killed_Slots4;
+	close;
+}
+
+
+//-------------------------- 第三階段附魔
+
+function	script	fumoKilledA3	{
+
+	if(countitem(getarg(0))<10){
+	mes "[迷惘的思念]";
+	mes "你身上沒有咒怨碎片";
+	close;
+	}
+	mes "[迷惘的思念]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,$@Killed_ing2[$@Killed2],@Killed_Slots3,@Killed_Slots4;
+
+	if($@Killed_ing2[$@Killed2] == 29061) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「霸氣Lv1」",15;
+	close;
+	}
+	else if($@Killed_ing2[$@Killed2] == 29071) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「魔精Lv1」",15;
+	close;
+	}
+	else if($@Killed_ing2[$@Killed2] == 29081) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「預見Lv1」",15;
+	close;
+	}
+	else if($@Killed_ing2[$@Killed2] == 29091) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「仙弓Lv1」",15;
+	close;
+	}
+	else if($@Killed_ing2[$@Killed2] == 29101) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「金剛Lv1」",15;
+	close;
+	}
+	else if($@Killed_ing2[$@Killed2] == 29111) {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「博愛Lv1」",15;
+	close;
+	}
+	else {
+	mapannounce "map03","[迷惘的思念] 恭喜玩家 "+strcharinfo(0)+" 成功附魔到「不屈Lv1」",15;
+	close;
+	}
+
+
+	close;
+}
+
+
+//-------------------------- 重置附魔
+
+function	script	fumoKilledA4	{
+
+	if(countitem(getarg(0))<10){
+	mes "[迷惘的思念]";
+	mes "你身上沒有咒怨碎片";
+	close;
+	}
+	mes "[迷惘的思念]";
+	mes "成功重置了這個頭盔上的附魔!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Killed_Refine,0,@Killed_Slots,0,0,0;
+	close;
+}
+
+

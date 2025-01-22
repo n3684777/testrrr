@@ -1,0 +1,1395 @@
+﻿vdistrict1,10,42,4	script	夢饜副本管理者	755,{
+
+	//副本任務獎勵
+	if(checkquest(32055,HUNTING)==2 ) { 
+	dispbottom "夢饜副本任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+30;	//副本積分+30
+	dispbottom "副本積分+30";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點兌換券
+	erasequest 32055; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_22 < gettime(8) ){
+	set Instance_Bout_22,10;
+	set day_Instance_Bout_22,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_22 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[另一個福金]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "夢饜副本";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[另一個福金]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_22+"^000000 ]";
+	mes "副本獎勵：";
+	mes "汙染的魔力x5";
+	mes "時光結晶x1";
+	mes "商城1點兌換券x10";
+	mes "官方副本積分x30";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 160) {
+			mes "[另一個福金]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[另一個福金]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[另一個福金]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 160) {
+			mes "[另一個福金]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_22,Instance_Bout_22-1;
+
+			if(checkquest(12336,HUNTING)<0 ){setquest 12336;}
+			if(checkquest(12337,HUNTING)<0 ){setquest 12337;}
+			//副本任務
+			if(checkquest(32055,HUNTING)<0 ){setquest 32055;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "夢饜副本",0;
+	end;
+}
+
+
+
+//------------------------------夢饜副本副本事件
+1@gl_kh,0,0,0	script	夢饜副本事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@gl_kh");
+	'map_name$[1] = instance_mapname("2@gl_kh");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("霸肋門德#h01");
+	disablenpc instance_npcname("霸肋門德#h02");
+	disablenpc instance_npcname("霸肋門德#h03");
+	disablenpc instance_npcname("霸肋門德#h04");
+	disablenpc instance_npcname("霸肋門德#h05");
+	disablenpc instance_npcname("霸肋門德#h06");
+	disablenpc instance_npcname("哈因理希#h01");
+	disablenpc instance_npcname("哈因理希#h02");
+	disablenpc instance_npcname("哈因理希#h03");
+	disablenpc instance_npcname("哈因理希#h04");
+	disablenpc instance_npcname("希梅爾茲#h01");
+	disablenpc instance_npcname("希梅爾茲#h02");
+	disablenpc instance_npcname("希梅爾茲#h03");
+	disablenpc instance_npcname("凱勒哈特#h01");
+	disablenpc instance_npcname("卡利斯格騎士團#h01");
+	disablenpc instance_npcname("卡利斯格騎士團#h02");
+	disablenpc instance_npcname("卡利斯格騎士團#h03");
+	disablenpc instance_npcname("卡利斯格騎士團#h04");
+	disablenpc instance_npcname("卡利斯格騎士團#h05");
+	disablenpc instance_npcname("卡利斯格騎士團#h06");
+	disablenpc instance_npcname("卡利斯格騎士團#h07");
+	disablenpc instance_npcname("卡利斯格騎士團#h08");
+	disablenpc instance_npcname("卡利斯格騎士團#h09");
+	disablenpc instance_npcname("卡利斯格騎士團#h10");
+	disablenpc instance_npcname("卡利斯格騎士團#h11");
+	disablenpc instance_npcname("卡利斯格騎士團#h12");
+	disablenpc instance_npcname("卡利斯格騎士團#h13");
+	disablenpc instance_npcname("卡利斯格騎士團#h14");
+	disablenpc instance_npcname("白衣騎士團#h01");
+	disablenpc instance_npcname("白衣騎士團#h02");
+	disablenpc instance_npcname("白衣騎士團#h03");
+	disablenpc instance_npcname("白衣騎士團#h04");
+	disablenpc instance_npcname("白衣騎士團#h05");
+	disablenpc instance_npcname("白衣騎士團#h06");
+	disablenpc instance_npcname("白衣騎士團#h07");
+	disablenpc instance_npcname("白衣騎士團#h08");
+	disablenpc instance_npcname("白衣騎士團#h09");
+	disablenpc instance_npcname("白衣騎士團#h10");
+	disablenpc instance_npcname("白衣騎士團#h11");
+	disablenpc instance_npcname("白衣騎士團#h12");
+	disablenpc instance_npcname("候補服事道文#h01");
+	disablenpc instance_npcname("忽克連毀滅者#h01");
+	disablenpc instance_npcname("受傷的人#h01");
+	disablenpc instance_npcname("受傷的人#h02");
+	disablenpc instance_npcname("受傷的人#h03");
+	disablenpc instance_npcname("受傷的人#h04");
+	disablenpc instance_npcname("受傷的人#h05");
+	disablenpc instance_npcname("受傷的人#h06");
+	disablenpc instance_npcname("受傷的人#h07");
+	disablenpc instance_npcname("受傷的人#h08");
+	disablenpc instance_npcname("受傷的人#h09");
+	disablenpc instance_npcname("受傷的人#h10");
+	disablenpc instance_npcname("受傷的人#h11");
+	disablenpc instance_npcname("受傷的人#h12");
+	disablenpc instance_npcname("受傷的人#h13");
+	disablenpc instance_npcname("受傷的人#h14");
+	disablenpc instance_npcname("受傷的人#h15");
+	disablenpc instance_npcname("受傷的人#h16");
+	disablenpc instance_npcname("受傷的人#h17");
+	disablenpc instance_npcname("受傷的人#h18");
+	disablenpc instance_npcname("受傷的人#h19");
+	disablenpc instance_npcname("受傷的人#h20");
+	disablenpc instance_npcname("受傷的人#h21");
+	disablenpc instance_npcname("受傷的人#h22");
+	disablenpc instance_npcname("受傷的人#h23");
+	disablenpc instance_npcname("古城傳送門h1_1");
+	disablenpc instance_npcname("古城傳送門h1_2");
+	disablenpc instance_npcname("古城傳送門h1_3");
+	disablenpc instance_npcname("古城傳送門h1_4");
+	disablenpc instance_npcname("古城傳送門h1_5");
+	disablenpc instance_npcname("古城傳送門h1_6");
+	disablenpc instance_npcname("古城傳送門h1_7");
+	disablenpc instance_npcname("古城傳送門h2_1");
+	disablenpc instance_npcname("古城傳送門h2_2");
+	disablenpc instance_npcname("古城傳送門h2_3");
+	disablenpc instance_npcname("古城傳送門h2_4");
+	disablenpc instance_npcname("古城傳送門h2_5");
+	disablenpc instance_npcname("古城傳送門h2_6");
+	disablenpc instance_npcname("古城傳送門h2_7");
+	disablenpc instance_npcname("古城傳送門h2_8");
+	disablenpc instance_npcname("另一個福金#h02");
+	disablenpc instance_npcname("詭異的裂縫#h00");
+	disablenpc instance_npcname("詭異的裂縫#h01");
+	disablenpc instance_npcname("詭異的裂縫#h02");
+	disablenpc instance_npcname("詭異的裂縫#h03");
+	disablenpc instance_npcname("詭異的裂縫#h04");
+	disablenpc instance_npcname("詭異的裂縫#h05");
+	disablenpc instance_npcname("詭異的裂縫#h06");
+	disablenpc instance_npcname("詭異的裂縫#h07");
+	disablenpc instance_npcname("詭異的裂縫#h08");
+	disablenpc instance_npcname("古城觸發點#h01");
+	disablenpc instance_npcname("特效#h01");
+	disablenpc instance_npcname("特效#h02");
+	disablenpc instance_npcname("特效#h03");
+	disablenpc instance_npcname("特效#h04");
+	disablenpc instance_npcname("特效#h05");
+	disablenpc instance_npcname("特效#h06");
+	disablenpc instance_npcname("特效#h07");
+	disablenpc instance_npcname("特效#h08");
+	disablenpc instance_npcname("特效#h09");
+	disablenpc instance_npcname("特效#h10");
+	//------入場公告
+	enablenpc instance_npcname("霸肋門德#h01");
+	set 'CD_gl_kh_1_1,0;
+	set 'CD_gl_kh_1_2,0;
+	set 'CD_gl_kh_1_3,0;
+	set 'CD_gl_kh_1_4,0;
+	set 'CD_gl_kh_1_5,0;
+	set 'CD_gl_kh_1_6,0;
+	set 'CD_gl_kh_1_7,0;
+	set 'CD_gl_kh_1_8,0;
+	set 'CD_gl_kh_1_9,0;
+	set 'CD_gl_kh_1_10,0;
+	set 'CD_gl_kh_1_11,0;
+	set 'CD_gl_kh_1_12,0;
+	set 'CD_gl_kh_2_1,0;
+	set 'CD_gl_kh_2_2,0;
+	set 'CD_gl_kh_2_3,0;
+	set 'CD_gl_kh_2_4,0;
+	set 'CD_gl_kh_2_5,0;
+	set 'CD_gl_kh_2_6,0;
+	set 'CD_gl_kh_2_7,0;
+	set 'CD_gl_kh_2_8,0;
+	set 'CD_gl_kh_3_1,0;
+	set 'CD_gl_kh_3_2,0;
+	set 'CD_gl_kh_3_3,0;
+	set 'CD_gl_kh_3_4,0;
+	set 'CD_gl_kh_3_5,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'CD_gl_kh_1_7,'CD_gl_kh_1_7+1;
+	instance_announce 0, " "+'CD_gl_kh_1_7+" ",bc_map,"0xffffff";
+	if ('CD_gl_kh_3_1==1) {end;}
+	if ('CD_gl_kh_1_7>50) {
+	set 'CD_gl_kh_3_1,1;
+	enablenpc instance_npcname("候補服事道文#h01");
+	instance_announce 0, "就像是從希梅爾茲的魔力中逃脫一樣，死者們灰飛煙滅。",bc_map,"0xffffff";
+	}
+	end;
+
+	OnCcdd2:
+	set 'CD_gl_kh_1_9,'CD_gl_kh_1_9+1;
+	if ('CD_gl_kh_3_5==1) {end;}
+	if ('CD_gl_kh_1_9>50) {
+	set 'CD_gl_kh_3_5,1;
+	enablenpc instance_npcname("希梅爾茲#h02");
+	enablenpc instance_npcname("哈因理希#h02");
+	enablenpc instance_npcname("霸肋門德#h03");
+	instance_announce 0, "希梅爾茲：還滿有兩下子的嘛，我還以為你們會死在亡者的圍繞下呢!",bc_map,"0xffffff";
+	sleep 3000;
+	instance_announce 0, "希梅爾茲：要想抓我的話, 就到通往2樓的入口來吧。我到要看看你們的運氣能有多少。",bc_map,"0xffffff";
+	sleep 18000;
+	donpcevent instance_npcname("希梅爾茲#h02")+"::OnCcdd";
+	donpcevent instance_npcname("哈因理希#h02")+"::OnCcdd";
+	donpcevent instance_npcname("霸肋門德#h03")+"::OnCcdd";
+	sleep 22000;
+	disablenpc instance_npcname("希梅爾茲#h02");
+	sleep 1000;
+	disablenpc instance_npcname("哈因理希#h02");
+	sleep 1000;
+	monster 'map_name$[0],148,267,"--ja--",3151,1,instance_npcname("夢饜副本事件1")+"::OnCcdd3";
+	}
+	end;
+
+	OnCcdd3:
+	instance_announce instance_id(1),"12點鐘方向，通往騎士團2樓的出口已經開啟。",bc_all,0xD7BA98;
+	enablenpc instance_npcname("古城傳送門h1_7");
+	enablenpc instance_npcname("哈因理希#h03");
+	enablenpc instance_npcname("霸肋門德#h04");
+	disablenpc instance_npcname("霸肋門德#h03");
+	enablenpc instance_npcname("霸肋門德#h06");
+	areamonster 'map_name$[1],124,161,38,22,"--ja--",3143,35,instance_npcname("夢饜副本事件1")+"::OnCcdd8";
+	areamonster 'map_name$[1],124,161,38,22,"--ja--",3144,35,instance_npcname("夢饜副本事件1")+"::OnCcdd8";
+	areamonster 'map_name$[1],124,161,38,22,"--ja--",3147,15,instance_npcname("夢饜副本事件1")+"::OnCcdd8";
+	areamonster 'map_name$[1],124,161,38,22,"--ja--",3145,15,instance_npcname("夢饜副本事件1")+"::OnCcdd8";
+	areamonster 'map_name$[1],124,161,38,22,"--ja--",7152,25,instance_npcname("夢饜副本事件1")+"::OnCcdd8";
+	end;
+
+	OnCcdd8:
+	set 'CD_gl_kh_1_10,'CD_gl_kh_1_10+1;
+	if ('CD_gl_kh_3_2==1) {end;}
+	if ('CD_gl_kh_1_10>50) {
+	set 'CD_gl_kh_3_2,1;
+	instance_announce instance_id(1),"似乎有某個帶有邪惡氣息的生物出現在這個地區內...",bc_all,0xD7BA98;
+	monster 'map_name$[1],26,144,"--ja--",3148,1,instance_npcname("夢饜副本事件1")+"::OnCcdd4";
+	}
+	end;
+
+
+	OnCcdd4:
+	instance_announce instance_id(1),"3點鐘方向，通往2區的出口已經開啟了。現在可以前往中央道路。",bc_all,0xD7BA98;
+	enablenpc instance_npcname("古城傳送門h2_3");
+	enablenpc instance_npcname("古城傳送門h2_4");
+	areamonster 'map_name$[1],176,21,259,157,"--ja--",3143,35,instance_npcname("夢饜副本事件1")+"::OnCcdd9";
+	areamonster 'map_name$[1],176,21,259,157,"--ja--",3144,35,instance_npcname("夢饜副本事件1")+"::OnCcdd9";
+	areamonster 'map_name$[1],176,21,259,157,"--ja--",3147,15,instance_npcname("夢饜副本事件1")+"::OnCcdd9";
+	areamonster 'map_name$[1],176,21,259,157,"--ja--",3145,15,instance_npcname("夢饜副本事件1")+"::OnCcdd9";
+	areamonster 'map_name$[1],176,21,259,157,"--ja--",7152,25,instance_npcname("夢饜副本事件1")+"::OnCcdd9";
+	end;
+
+	OnCcdd9:
+	set 'CD_gl_kh_1_11,'CD_gl_kh_1_11+1;
+	if ('CD_gl_kh_3_3==1) {end;}
+	if ('CD_gl_kh_1_11>50) {
+	set 'CD_gl_kh_3_3,1;
+	instance_announce instance_id(1),"似乎有某個帶有邪惡氣息的生物出現在這個地區內...",bc_all,0xD7BA98;
+	monster 'map_name$[1],246,57,"被詛咒的盧恩騎士",3149,1,instance_npcname("夢饜副本事件1")+"::OnCcdd5";
+	}
+	end;
+
+
+	OnCcdd5:
+	enablenpc instance_npcname("古城觸發點#h01");
+	enablenpc instance_npcname("霸肋門德#h05");
+	enablenpc instance_npcname("哈因理希#h04");
+	enablenpc instance_npcname("希梅爾茲#h03");
+	enablenpc instance_npcname("凱勒哈特#h01");
+	enablenpc instance_npcname("受傷的人#h19");
+	enablenpc instance_npcname("受傷的人#h20");
+	enablenpc instance_npcname("受傷的人#h21");
+	enablenpc instance_npcname("受傷的人#h22");
+	enablenpc instance_npcname("受傷的人#h23");
+	instance_announce instance_id(1),"12點鐘方向，通往3區的出口已經開啟了。現在可以前往中央道路。",bc_all,0xD7BA98;
+	enablenpc instance_npcname("古城傳送門h2_5");
+	end;
+
+	OnCcdd6:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【夢饜副本】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+
+	enablenpc instance_npcname("另一個福金#h02");
+	enablenpc instance_npcname("古城傳送門h2_6");
+	enablenpc instance_npcname("古城傳送門h2_7");
+	enablenpc instance_npcname("古城傳送門h2_8");
+	enablenpc instance_npcname("詭異的裂縫#h00");
+	enablenpc instance_npcname("詭異的裂縫#h01");
+	enablenpc instance_npcname("詭異的裂縫#h02");
+	enablenpc instance_npcname("詭異的裂縫#h03");
+	enablenpc instance_npcname("詭異的裂縫#h04");
+	enablenpc instance_npcname("詭異的裂縫#h05");
+	enablenpc instance_npcname("詭異的裂縫#h06");
+	enablenpc instance_npcname("詭異的裂縫#h07");
+	enablenpc instance_npcname("詭異的裂縫#h08");
+	end;
+
+	OnCcdd7:
+	set 'CD_gl_kh_1_8,'CD_gl_kh_1_8+1;
+	if ('CD_gl_kh_3_4==1) {end;}
+	if ('CD_gl_kh_1_8>50) {
+	set 'CD_gl_kh_3_4,1;
+	enablenpc instance_npcname("忽克連毀滅者#h01");
+	instance_announce 0, "就像是從希梅爾茲的魔力中逃脫一樣，死者們灰飛煙滅。",bc_map,"0xffffff";
+	}
+	end;
+}
+
+
+//------------------------------相關NPC
+1@gl_kh,149,42,4	script	霸肋門德#h01	654,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "[霸肋門德]";
+	mes "^ff0000海力克^000000派來幫助我的人就是你嗎?";
+	npctalk "海力克派來幫助我的人就是你嗎?";
+	next;
+	menu "痾..你怎這麼慌張",-;
+	mes "[霸肋門德]";
+	mes "沒時間了。必須要將希梅爾茲侵略的事情告訴哈因理希。";
+	npctalk "沒時間了。必須要將希梅爾茲侵略的事情告訴哈因理希。";
+	next;
+	menu "希梅爾茲是誰?",-;
+	mes "[霸肋門德]";
+	mes "他統治死者，是亡者的巴基力。她現在想要奪取藏在這理的伊美樂的心臟。";
+	next;
+	npctalk "他統治死者，是亡者的巴基力。她現在想要奪取藏在這理的伊美樂的心臟。";
+	mes "[霸肋門德]";
+	mes "快點! 趕快將希梅爾茲的事情告訴哈因理希! 而我會先查看這裡的結界!";
+	npctalk "快點! 趕快將希梅爾茲的事情告訴哈因理希! 而我會先查看這裡的結界!";
+	disablenpc instance_npcname("霸肋門德#h01");
+	enablenpc instance_npcname("霸肋門德#h02");
+	enablenpc instance_npcname("哈因理希#h01");
+	enablenpc instance_npcname("卡利斯格騎士團#h01");
+	enablenpc instance_npcname("卡利斯格騎士團#h02");
+	enablenpc instance_npcname("卡利斯格騎士團#h03");
+	enablenpc instance_npcname("卡利斯格騎士團#h04");
+	enablenpc instance_npcname("卡利斯格騎士團#h05");
+	enablenpc instance_npcname("卡利斯格騎士團#h06");
+	enablenpc instance_npcname("卡利斯格騎士團#h07");
+	enablenpc instance_npcname("卡利斯格騎士團#h08");
+	enablenpc instance_npcname("卡利斯格騎士團#h09");
+	enablenpc instance_npcname("卡利斯格騎士團#h10");
+	enablenpc instance_npcname("卡利斯格騎士團#h11");
+	enablenpc instance_npcname("卡利斯格騎士團#h12");
+	enablenpc instance_npcname("卡利斯格騎士團#h13");
+	enablenpc instance_npcname("卡利斯格騎士團#h14");
+	enablenpc instance_npcname("白衣騎士團#h01");
+	enablenpc instance_npcname("白衣騎士團#h02");
+	enablenpc instance_npcname("白衣騎士團#h03");
+	enablenpc instance_npcname("白衣騎士團#h04");
+	enablenpc instance_npcname("白衣騎士團#h05");
+	enablenpc instance_npcname("白衣騎士團#h06");
+	enablenpc instance_npcname("白衣騎士團#h07");
+	enablenpc instance_npcname("白衣騎士團#h08");
+	enablenpc instance_npcname("白衣騎士團#h09");
+	enablenpc instance_npcname("白衣騎士團#h10");
+	enablenpc instance_npcname("白衣騎士團#h11");
+	enablenpc instance_npcname("白衣騎士團#h12");
+	close;
+
+}
+
+
+1@gl_kh,152,97,4	script	霸肋門德#h02	654,{ end;
+
+OnCcdd0:
+	npctalk "哈因理希,他們已經變成魔物了。快點讓他們安息吧!";
+	end;
+OnCcdd1:
+	npctalk "哈因理希! 你需要快點決定!";
+	end;
+OnCcdd2:
+	npctalk "現在追上去還可以阻擋她!";
+	end;
+}
+
+
+1@gl_kh,156,259,4	script	霸肋門德#h03	654,{
+
+	mes "[霸肋門德]";
+	mes "結果還是走到這個局面了";
+	mes "難道就沒有辦法能阻擋時間超越者的意志嗎?";
+	close;
+
+OnCcdd:
+	sleep 21000;
+	npctalk "哈因理希! 有個未知的強力氣息正再靠近!";
+	end;
+}
+
+
+2@gl_kh,151,71,4	script	霸肋門德#h04	654,{ end;
+OnCcdd:
+	sleep 3000;
+	npctalk "是希梅爾茲的結界，將通路和各區域完全封鎖住了。";
+	sleep 6000;
+	npctalk "先讓開一下我用魔力來試試看..";
+	sleep 3000;
+	npctalk "似乎有一邊的結界已經被破壞了。";
+	sleep 3000;
+	npctalk "我曾經看過這種結界。";
+	sleep 3000;
+	npctalk "希梅爾茲會把結界石放進變成不死之人的身體裡。";
+	sleep 3000;
+	npctalk "我想這個結界應該也是用那種方式來維持的。";
+	sleep 3000;
+	npctalk "要想打破結界，就必須殺死將持有結界石的人。";
+
+	sleep 6000;
+	npctalk "司令官...";
+	sleep 3000;
+	npctalk "司令官你太軟弱了。";
+	sleep 3000;
+	npctalk "我們要對付的已經不是人類了。";
+	sleep 3000;
+	npctalk "就算你不承認,他們也不會再變回人類了。";
+
+	sleep 6000;
+	npctalk "我們還是...走吧。";
+	sleep 3000;
+	npctalk "還有，你們的戰力聚集完以後，就跟者我們吧。";
+	sleep 3000;
+	npctalk "也許會是一場極為艱難的戰鬥，做好覺悟吧。";
+	sleep 3000;
+	npctalk "來吧，出發的時間到了!哈因理希。";
+	end;
+}
+
+
+2@gl_kh,162,250,3	script	霸肋門德#h05	654,{ end;
+OnCcdd1:
+	npctalk "那就, 沒辦法了。必須用我們僅剩的力量來阻擋闇答萊屍!";
+	end;
+}
+
+
+1@gl_kh,149,100,6	script	哈因理希#h01	652,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_gl_kh_1_1==1) {end;}
+
+	mes "[哈因理希]";
+	mes "";
+	next;
+	menu "^228B22希梅爾茲現在在城裡面 ...^000000",-;
+
+	close2;
+	set 'CD_gl_kh_1_1,1;
+	sleep 1000;
+	npctalk "你不是和霸肋門德一起來的冒險家嗎?";
+	sleep 1000;
+	enablenpc instance_npcname("希梅爾茲#h01");
+	sleep 1000;
+	donpcevent instance_npcname("希梅爾茲#h01")+"::OnCcdd";
+	sleep 1000;
+	npctalk "你說你統治死者? 你看起來還真是優雅阿。不過很可惜，我們這裡其實不太懂得迎接淑女呢...";
+	sleep 1000;
+	npctalk "你說什麼?";
+	sleep 1000;
+	npctalk "我們的國王只是應邀前去盧恩 米德加茲王國，現在還沒回到國內而已。";
+	sleep 1000;
+	npctalk "不過，你剛剛說的話又是什麼意思?國王發生什麼事情了嗎!";
+	sleep 1000;
+	npctalk "怎麼會! 她已經看穿藏有伊美樂心臟碎片位置了!";
+	sleep 1000;
+	npctalk "卡利斯格騎士團跟白衣奇團現在跟我一起....";
+	sleep 1000;
+	disablenpc instance_npcname("希梅爾茲#h01");
+	instance_announce instance_id(1),"哈因理希：可惡!!希梅爾茲使用了黑暗魔法將所有人都魔物化了",bc_all,0xD7BA98;
+	disablenpc instance_npcname("卡利斯格騎士團#h01");
+	disablenpc instance_npcname("卡利斯格騎士團#h02");
+	disablenpc instance_npcname("卡利斯格騎士團#h03");
+	disablenpc instance_npcname("卡利斯格騎士團#h04");
+	disablenpc instance_npcname("卡利斯格騎士團#h05");
+	disablenpc instance_npcname("卡利斯格騎士團#h06");
+	disablenpc instance_npcname("卡利斯格騎士團#h07");
+	disablenpc instance_npcname("卡利斯格騎士團#h08");
+	disablenpc instance_npcname("卡利斯格騎士團#h09");
+	disablenpc instance_npcname("卡利斯格騎士團#h10");
+	disablenpc instance_npcname("卡利斯格騎士團#h11");
+	disablenpc instance_npcname("卡利斯格騎士團#h12");
+	disablenpc instance_npcname("卡利斯格騎士團#h13");
+	disablenpc instance_npcname("卡利斯格騎士團#h14");
+	disablenpc instance_npcname("白衣騎士團#h01");
+	disablenpc instance_npcname("白衣騎士團#h02");
+	disablenpc instance_npcname("白衣騎士團#h03");
+	disablenpc instance_npcname("白衣騎士團#h04");
+	disablenpc instance_npcname("白衣騎士團#h05");
+	disablenpc instance_npcname("白衣騎士團#h06");
+	disablenpc instance_npcname("白衣騎士團#h07");
+	disablenpc instance_npcname("白衣騎士團#h08");
+	disablenpc instance_npcname("白衣騎士團#h09");
+	disablenpc instance_npcname("白衣騎士團#h10");
+	disablenpc instance_npcname("白衣騎士團#h11");
+	disablenpc instance_npcname("白衣騎士團#h12");
+	sleep 100;
+	monster 'map_name$[0],145,66,"--ja--",3146,1;
+	monster 'map_name$[0],145,72,"--ja--",3146,1;
+	monster 'map_name$[0],145,78,"--ja--",3146,1;
+	monster 'map_name$[0],145,84,"--ja--",3146,1;
+	monster 'map_name$[0],145,90,"--ja--",3146,1;
+	monster 'map_name$[0],145,96,"--ja--",3146,1;
+	monster 'map_name$[0],145,102,"--ja--",3146,1;
+	monster 'map_name$[0],154,66,"--ja--",3146,1;
+	monster 'map_name$[0],154,72,"--ja--",3146,1;
+	monster 'map_name$[0],154,78,"--ja--",3146,1;
+	monster 'map_name$[0],154,84,"--ja--",3146,1;
+	monster 'map_name$[0],154,90,"--ja--",3146,1;
+	monster 'map_name$[0],154,96,"--ja--",3146,1;
+	monster 'map_name$[0],154,102,"--ja--",3146,1;
+	monster 'map_name$[0],145,69,"--ja--",3145,1;
+	monster 'map_name$[0],145,75,"--ja--",3145,1;
+	monster 'map_name$[0],145,81,"--ja--",3145,1;
+	monster 'map_name$[0],145,87,"--ja--",3145,1;
+	monster 'map_name$[0],145,93,"--ja--",3145,1;
+	monster 'map_name$[0],145,99,"--ja--",3145,1;
+	monster 'map_name$[0],154,69,"--ja--",3145,1;
+	monster 'map_name$[0],154,75,"--ja--",3145,1;
+	monster 'map_name$[0],154,81,"--ja--",3145,1;
+	monster 'map_name$[0],154,87,"--ja--",3145,1;
+	monster 'map_name$[0],154,93,"--ja--",3145,1;
+	monster 'map_name$[0],154,99,"--ja--",3145,1;
+	instance_announce 0, "呃阿... 我的身體",bc_map,"0xffffff";
+	sleep 1000;
+	instance_announce 0, "我的喉嚨在燃燒!",bc_map,"0xffffff";
+	sleep 1000;
+	instance_announce 0, "肚子好不舒服阿阿阿",bc_map,"0xffffff";
+	sleep 1000;
+	instance_announce 0, "拜託誰來...",bc_map,"0xffffff";
+	sleep 1000;
+	instance_announce 0, "我好渴阿",bc_map,"0xffffff";
+	sleep 1000;
+	instance_announce 0, "喔...不行...我還不能死",bc_map,"0xffffff";
+	sleep 1000;
+	npctalk "怎麼會...我的部下們...怎麼可能有這種事!";
+	sleep 1000;
+	donpcevent instance_npcname("霸肋門德#h02")+"::OnCcdd0";
+	sleep 1000;
+	npctalk "對不起";
+	sleep 1000;
+	npctalk "對不起...我的部下們! 你們永遠不要原諒我。";
+	sleep 1000;
+	enablenpc instance_npcname("特效#h01");
+	enablenpc instance_npcname("特效#h02");
+	donpcevent instance_npcname("特效#h01")+"::OnEffect1";
+	donpcevent instance_npcname("特效#h02")+"::OnEffect1";
+	sleep 1000;
+	enablenpc instance_npcname("特效#h03");
+	enablenpc instance_npcname("特效#h04");
+	donpcevent instance_npcname("特效#h03")+"::OnEffect1";
+	donpcevent instance_npcname("特效#h04")+"::OnEffect1";
+	sleep 1000;
+	enablenpc instance_npcname("特效#h05");
+	enablenpc instance_npcname("特效#h06");
+	donpcevent instance_npcname("特效#h05")+"::OnEffect1";
+	donpcevent instance_npcname("特效#h06")+"::OnEffect1";
+	sleep 1000;
+	enablenpc instance_npcname("特效#h07");
+	enablenpc instance_npcname("特效#h08");
+	donpcevent instance_npcname("特效#h07")+"::OnEffect1";
+	donpcevent instance_npcname("特效#h08")+"::OnEffect1";
+	sleep 1000;
+	enablenpc instance_npcname("特效#h09");
+	enablenpc instance_npcname("特效#h10");
+	donpcevent instance_npcname("特效#h09")+"::OnEffect1";
+	donpcevent instance_npcname("特效#h10")+"::OnEffect1";
+	sleep 1000;
+	disablenpc instance_npcname("特效#h01");
+	disablenpc instance_npcname("特效#h02");
+	disablenpc instance_npcname("特效#h03");
+	disablenpc instance_npcname("特效#h04");
+	disablenpc instance_npcname("特效#h05");
+	disablenpc instance_npcname("特效#h06");
+	disablenpc instance_npcname("特效#h07");
+	disablenpc instance_npcname("特效#h08");
+	disablenpc instance_npcname("特效#h09");
+	disablenpc instance_npcname("特效#h10");
+	killmonsterall instance_mapname("1@gl_kh");
+	instance_announce instance_id(1),"哈因理希的嘶吼：死去的人必須要前往死者該去的地方!",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"哈因理希的嘶吼：全部都回去吧!",bc_all,0xD7BA98;
+	sleep 1000;
+	npctalk "竟然是我親手送我的部下走上絕路...";
+	sleep 1000;
+	donpcevent instance_npcname("霸肋門德#h02")+"::OnCcdd1";
+	sleep 1000;
+	donpcevent instance_npcname("霸肋門德#h02")+"::OnCcdd2";
+	sleep 1000;
+	npctalk "霸肋門德說的話是對的，現在不是傷心的時候!";
+	sleep 1000;
+	npctalk "我有話要拜託一下那些跟隨我的人。";
+	sleep 1000;
+	npctalk "希梅爾茲擁有將活人變為魔物的力量。";
+	sleep 1000;
+	npctalk "但是說不定現在附近還有生還者。";
+	sleep 1000;
+	npctalk "請大家在消滅魔物的同時，若發現生還者，請救它們一命。";
+	sleep 1000;
+	npctalk "而我跟霸肋門德會一起去追希梅爾茲。";
+	sleep 1000;
+	npctalk "現在非常需要你們的幫助，拜託妳們盡力幫忙!";
+	sleep 1000;
+	npctalk "那麼霸肋門德，我們快點跟上希梅爾茲吧。";
+	sleep 300;
+	disablenpc instance_npcname("哈因理希#h01");
+	disablenpc instance_npcname("霸肋門德#h02");
+	sleep 1000;
+	instance_announce instance_id(1),"9點鐘方向，通往2區的出口已經開啟了",bc_all,0xD7BA98;
+	enablenpc instance_npcname("古城傳送門h1_1");
+	enablenpc instance_npcname("古城傳送門h1_2");
+	areamonster 'map_name$[0],88,121,78,7,"--ja--",3141,20,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],34,73,47,54,"--ja--",3139,15,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],23,136,43,87,"--ja--",3139,15,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],32,176,50,149,"--ja--",3141,15,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],11,36,66,11,"--ja--",3141,15,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],23,136,43,87,"--ja--",3139,15,instance_npcname("夢饜副本事件1")+"::OnCcdd1";
+	end;
+}
+
+
+1@gl_kh,154,94,6	script	特效#h01	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+1@gl_kh,145,94,6	script	特效#h02	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+
+1@gl_kh,154,84,6	script	特效#h03	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+1@gl_kh,145,84,6	script	特效#h04	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+
+1@gl_kh,154,74,6	script	特效#h05	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+1@gl_kh,145,74,6	script	特效#h06	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+
+1@gl_kh,154,64,6	script	特效#h07	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+1@gl_kh,145,64,6	script	特效#h08	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+
+1@gl_kh,154,54,6	script	特效#h09	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+1@gl_kh,145,54,6	script	特效#h10	2471,{end;
+OnEffect1:
+	specialeffect EF_GRANDCROSS;
+	specialeffect EF_LEXAETERNA;
+	end; }
+
+
+1@gl_kh,144,258,6	script	哈因理希#h02	652,{ end;
+OnCcdd:
+	sleep 1000;
+	npctalk "希梅爾茲! 我會讓你在這理動彈不得!";
+	sleep 1000;
+	npctalk "這... 這是!";
+	sleep 1000;
+	npctalk "霸肋門德! 去幫助冒險家們吧! 我去追希梅爾茲!";
+	end;
+}
+
+2@gl_kh,148,67,6	script	哈因理希#h03	652,{
+
+	if (getpartyleader(getcharid(1),2)==getcharid(0)) {
+	if ('CD_gl_kh_1_5==1) {end;}
+	set 'CD_gl_kh_1_5,1;
+	sleep 1000;
+	npctalk "這是城裡面沒有過的東西!";
+	sleep 3000;
+	donpcevent instance_npcname("霸肋門德#h04")+"::OnCcdd";
+	sleep 6000;
+	npctalk "雖然試者用力破壞，但是刀對他完全無效。";
+	sleep 21000;
+	npctalk "已經殺掉了很多以前的部下...以後還要再殺死多少...";
+	sleep 15000;
+	npctalk "...";
+	sleep 14000;
+	disablenpc instance_npcname("哈因理希#h03");
+	disablenpc instance_npcname("霸肋門德#h04");
+	enablenpc instance_npcname("古城傳送門h2_1");
+	enablenpc instance_npcname("古城傳送門h2_2");
+	instance_announce instance_id(1),"9點鐘方向，通往1區的出口已經開啟了。現在可以前往中央道路。",bc_all,0xD7BA98;
+	end;
+	}
+end;
+}
+
+
+2@gl_kh,155,250,5	script	哈因理希#h04	652,20,20,{ end;
+
+OnCcdd1:
+	npctalk "凱勒哈特!";
+	end;
+OnCcdd2:
+	npctalk "凱勒哈特!";
+	end;
+OnCcdd3:
+	npctalk "我永遠不會原諒你的!";
+	end;
+OnCcdd4:
+	npctalk "你覺得我會讓你逃走嗎?希梅爾茲!!";
+	end;
+}
+
+
+1@gl_kh,149,94,1	script	希梅爾茲#h01	656,{ end;
+
+OnCcdd:
+	instance_announce 0, "????的嘶吼：阿哈哈哈哈哈哈~!",bc_map,"0xff0000";
+	sleep 3000;
+	npctalk "我的名字是莉莎坎希梅爾茲。無顱武士的主人，亡者的巴基力，噢!大家都是這麼叫我的。";
+	sleep 4000;
+	npctalk "你可以不用裝的這麼若無其事。我可以保證要是你知道你們國王現在在哪裡。你肯定無法再虛張聲勢了。";
+	sleep 5000;
+	npctalk "呵呵呵，看來你終於要開始警張啦? 你還真是個奇妙的男人阿。";
+	sleep 2000;
+	npctalk "雖說你是個不貪圖空下的王位，只一心等待國王歸還的愚蠢男人，但我倒是挺欣賞你的這份純真";
+	sleep 2000;
+	npctalk "如果我們不是在這種情況下見面的話該有多好阿。真可惜~";
+	sleep 9000;
+	npctalk "這個麻! 雖然我很想要仔細的說給你聽，但我今天不是為了這件事而來的耶!";
+	sleep 2000;
+	npctalk "我主要是來拿取在你們這裡的伊美樂心臟碎片";
+	sleep 4000;
+	npctalk "我看我還是要先去做我該做的事。這段時間我看你就先跟你的新部下好好相處吧? 呵呵呵";
+	end;
+}
+
+
+1@gl_kh,150,257,4	script	希梅爾茲#h02	656,{ end;
+
+OnCcdd:
+	sleep 9000;
+	npctalk "不過這都沒差。";
+	sleep 3000;
+	npctalk "因為現在你們全都會死在這裡。";
+	sleep 6000;
+	npctalk "哈哈哈, 我看是你們會動彈不得吧~你們以為我只有自己一個人嗎?";
+	sleep 9000;
+	npctalk "讓我的新玩具絆住你們的腳,讓我可以盡情的玩耍。";
+	end;
+}
+
+
+2@gl_kh,158,252,4	script	希梅爾茲#h03	650,{ end;
+
+OnCcdd1:
+	npctalk "真是厲害~ 我還以為連這附近都到不了呢...";
+	end;
+OnCcdd2:
+	npctalk "呵呵, 哈因理希,伊美樂的心臟碎片我已經拿到了。";
+	end;
+OnCcdd3:
+	npctalk "如果沒有那小子的妨礙，事情還能進行的更快呢。";
+	end;
+OnCcdd4:
+	npctalk "是這樣嗎? 就算你說了大話也是一樣的,不管是國王還是士兵,全部都會變成這裡的人阿..";
+	end;
+OnCcdd5:
+	npctalk "反正這傢伙是你哈因理希僅剩的部下了...";
+	end;
+OnCcdd6:
+	npctalk "他用來阻止我的那股力量還真不簡單阿";
+	end;
+OnCcdd7:
+	npctalk "拿來作為我的新闇答萊屍在適合不過的了...";
+	end;
+OnCcdd8:
+	npctalk "天阿~ 我好怕怕喔!";
+	end;
+OnCcdd9:
+	npctalk "反正我們之間的情也還沒結束,下次還會有機會見面的。";
+	end;
+OnCcdd10:
+	npctalk "那麼，現在就和你的新部下聊聊天吧。";
+	end;
+}
+
+
+2@gl_kh,158,255,4	script	凱勒哈特#h01	651,{ end;
+
+OnCcdd1:
+	npctalk "司令官...大人... 您必須快點逃出... 這裡才行..呃..";
+	end;
+OnCcdd2:
+	npctalk "呃阿阿! 請快逃走吧! 我再也撐不下去了!";
+	end;
+OnCcdd3:
+	npctalk "就算你可以折磨我的身體，但是你是帶不走我的靈魂的!希梅爾茲!";
+	end;
+OnCcdd4:
+	instance_announce 0, "凱勒哈特的身體變異了。",bc_map,"0xffffff";
+	sleep 3000;
+	instance_announce 0, "逃跑... 從我身邊逃跑...",bc_map,"0xffffff";
+	sleep 3000;
+	instance_announce 0, "呃...呃...阿... 殺... 了我吧...",bc_map,"0xffffff";
+	sleep 3000;
+	specialeffect 63;
+	sleep 2000;
+	specialeffect 71;
+	sleep 2000;
+	specialeffect 247;
+	instance_announce 0, "破壞... 死亡!...",bc_map,"0xffffff";
+	sleep 3000;
+	specialeffect 90;
+	end;
+}
+
+
+1@gl_kh,16,52,4	script	候補服事道文#h01	706,{
+
+	if (getpartyleader(getcharid(1),2)==getcharid(0)) {
+	mes "[候補服事道文]";
+	mes "救命阿! 救救我阿!!!";
+	npctalk "救命阿! 救救我阿!!!";
+	next;
+	menu "喂!你醒醒阿!只有你一個生還者嗎?",-;
+	mes "["+strcharinfo(0)+"]";
+	mes "喂!你醒醒阿!只有你一個生還者嗎?";
+	unittalk getcharid(3),"喂!你醒醒阿!只有你一個生還者嗎?";
+	next;
+	mes "[候補服事道文]";
+	mes "侍衛只還有... 修道士...";
+	mes "全都變成怪物了，而我什麼都沒有辦法做...";
+	npctalk "侍衛只還有... 修道士... 全都變成怪物了，而我什麼都沒有辦法做...";
+	next;
+	menu "快打起精神!",-;
+	mes "["+strcharinfo(0)+"]";
+	mes "快打起精神來呀你這傢伙!從東邊出去,再走中央道路到外面!那條路是安全的!!";
+	unittalk getcharid(3),"快打起精神來呀你這傢伙!從東邊出去,再走中央道路到外面!那條路是安全的!!";
+	next;
+	mes "[候補服事道文]";
+	mes "從東邊那條路? 我自己? 自己嗎?";
+	npctalk "從東邊那條路? 我自己? 自己嗎?";
+	next;
+	menu "我會把我多出來的頓器給你",-;
+	unittalk getcharid(3),"我會把我多出來的頓器給你,應該會有幫助的，如果真的不行的話，就把眼睛一閉心一橫，殺出去就對了。";
+	mes "["+strcharinfo(0)+"]";
+	mes "[我會把我多出來的頓器給你,應該會有幫助的，如果真的不行的話，就把眼睛一閉心一橫，殺出去就對了。]";
+	next;
+	mes "[候補服事道文]";
+	mes "我知道了... 我會試試看的。";
+	instance_announce instance_id(1),"3點鐘方向，通往3區的出口已經開啟了",bc_all,0xD7BA98;
+	enablenpc instance_npcname("古城傳送門h1_3");
+	enablenpc instance_npcname("古城傳送門h1_4");
+	enablenpc instance_npcname("受傷的人#h01");
+	enablenpc instance_npcname("受傷的人#h02");
+	enablenpc instance_npcname("受傷的人#h03");
+	enablenpc instance_npcname("受傷的人#h04");
+	enablenpc instance_npcname("受傷的人#h05");
+	enablenpc instance_npcname("受傷的人#h06");
+	enablenpc instance_npcname("受傷的人#h07");
+	enablenpc instance_npcname("受傷的人#h08");
+	enablenpc instance_npcname("受傷的人#h09");
+	enablenpc instance_npcname("受傷的人#h10");
+	enablenpc instance_npcname("受傷的人#h11");
+	enablenpc instance_npcname("受傷的人#h12");
+	enablenpc instance_npcname("受傷的人#h13");
+	enablenpc instance_npcname("受傷的人#h14");
+	enablenpc instance_npcname("受傷的人#h15");
+	enablenpc instance_npcname("受傷的人#h16");
+	enablenpc instance_npcname("受傷的人#h17");
+	enablenpc instance_npcname("受傷的人#h18");
+	areamonster 'map_name$[0],241,111,257,86,"--ja--",3141,12,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],245,84,276,72,"--ja--",3139,12,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],252,130,262,175,"--ja--",3139,12,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],252,130,262,175,"--ja--",3141,12,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],265,143,292,78,"--ja--",3139,12,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],238,59,291,8,"--ja--",3141,35,instance_npcname("夢饜副本事件1")+"::OnCcdd7";
+	disablenpc instance_npcname("候補服事道文#h01");
+	close;
+	}
+end;
+}
+
+
+1@gl_kh,292,145,4	script	忽克連毀滅者#h01	726,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "[忽克連毀滅者]";
+	mes "呀ㄚㄚ!! 殺阿阿!!!";
+	npctalk "呀ㄚㄚ!! 殺阿阿!!!";
+	next;
+	menu "你好阿!",-;
+	mes "["+strcharinfo(0)+"]";
+	mes "你好阿! 我是人類。妳自己一個人嗎? 沒有別的生還者嗎?";
+	unittalk getcharid(3),"你好阿! 我是人類。妳自己一個人嗎? 沒有別的生還者嗎?";
+	next;
+	mes "[忽克連毀滅者]";
+	mes "只有我一個人活下來";
+	menu "這裡很危險",-;
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "這裡很危險。妳應該知道通往中央道路的吧?妳好像懷有身孕耶...你能走嗎?";
+	unittalk getcharid(3),"這裡很危險。妳應該知道通往中央道路的吧?妳好像懷有身孕耶...你能走嗎?";
+	next;
+	mes "[忽克連毀滅者]";
+	mes "恩,我可以走的。我必須要走才行。為了我的孩子。";
+	npctalk "恩,我可以走的。我必須要走才行。為了我的孩子。";
+	menu "希望你一定要活下來...",-;
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "我會幫你祈禱的，希望妳跟腹中的胎兒都可以平安無事。沒能陪妳一起離開，我很抱歉。";
+	unittalk getcharid(3),"我會幫你祈禱的，希望妳跟腹中的胎兒都可以平安無事。沒能陪妳一起離開，我很抱歉。";
+	next;
+	mes "[忽克連毀滅者]";
+	mes "不會的,非常感激你救了我，我可以自己過去的。我也會幫你祈禱的。";
+
+	instance_announce instance_id(1),"12點鐘方向，通往4區的出口已經開啟。",bc_all,0xD7BA98;
+	disablenpc instance_npcname("忽克連毀滅者#h01");
+	enablenpc instance_npcname("古城傳送門h1_5");
+	enablenpc instance_npcname("古城傳送門h1_6");
+	areamonster 'map_name$[0],161,233,184,211,"--ja--",3143,5,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],229,235,193,248,"--ja--",3143,6,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],201,269,180,259,"--ja--",3144,4,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],162,265,136,241,"--ja--",3144,6,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],162,265,136,241,"--ja--",3143,5,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],110,279,129,260,"--ja--",3143,3,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],107,248,63,231,"--ja--",3144,10,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],107,248,63,231,"--ja--",3143,10,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],87,221,61,193,"--ja--",3144,6,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],87,221,61,193,"--ja--",3143,6,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],87,221,61,193,"--ja--",3143,5,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],16,281,52,183,"--ja--",3144,12,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],16,281,52,183,"--ja--",3143,12,instance_npcname("夢饜副本事件1")+"::OnCcdd2";
+	close;
+}
+
+
+1@gl_kh,269,267,4	script	詭異的裂縫#h00	111,{
+
+	mes "[詭異的裂縫]";
+	mes "一個神秘的裂縫";
+	mes "太過靠近感覺好像會被吸進去";
+	next;
+	menu "^228B22調查看看^000000",-,"^FFA500不要靠近^000000",Ccdd1;
+	warp 'map_name$[0],150,190;
+	close;
+
+	Ccdd1:
+	close;
+}
+
+
+1@gl_kh,156,259,4	script	霸肋門德#h06	654,{
+	if(checkquest(12336,HUNTING)==2 ){
+	mes "[霸肋門德]";
+	mes "這個東西帶有一種非比尋常的氣息…若有一天遇到能夠使用它的人，也許它會發揮重要的作用也說不定。";
+	getitem 6755,1*$EP1501; //汙染的魔力
+	getitem 6607,1*$EP1501; //時光結晶
+	erasequest 12336;
+	close;
+	}
+	mes "[霸肋門德]";
+	mes "結果還是走到這局面了，難道就沒有辦法阻擋時間超越者的意志嗎？";
+	close;
+}
+
+
+//-----------------------------隱藏關卡
+
+1@gl_kh,129,136,3	script	詭異的裂縫#h01	111,{
+	if ('CD_gl_kh_2_1==1){end;}
+	set 'CD_gl_kh_2_1,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h01");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,135,136,3	script	詭異的裂縫#h02	111,{
+	if ('CD_gl_kh_2_2==1){end;}
+	set 'CD_gl_kh_2_2,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h02");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,141,136,3	script	詭異的裂縫#h03	111,{
+	if ('CD_gl_kh_2_3==1){end;}
+	set 'CD_gl_kh_2_3,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h03");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,147,136,3	script	詭異的裂縫#h04	111,{
+	if ('CD_gl_kh_2_4==1){end;}
+	set 'CD_gl_kh_2_4,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h04");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,153,136,3	script	詭異的裂縫#h05	111,{
+	if ('CD_gl_kh_2_5==1){end;}
+	set 'CD_gl_kh_2_5,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h05");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,159,136,3	script	詭異的裂縫#h06	111,{
+	if ('CD_gl_kh_2_6==1){end;}
+	set 'CD_gl_kh_2_6,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h06");
+	callfunc "glh_Box01";
+}
+
+1@gl_kh,165,136,3	script	詭異的裂縫#h07	111,{
+	if ('CD_gl_kh_2_7==1){end;}
+	set 'CD_gl_kh_2_7,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h07");
+	callfunc "glh_Box01";
+}
+
+
+1@gl_kh,170,136,3	script	詭異的裂縫#h08	111,{
+	if ('CD_gl_kh_2_8==1){end;}
+	set 'CD_gl_kh_2_8,1;
+	specialeffect 16;
+	disablenpc instance_npcname("詭異的裂縫#h08");
+	callfunc "glh_Box01";
+}
+
+	function	script	glh_Box01	{
+	switch(rand(1,15)){
+  	case 1:
+  		getitem 6607,1;
+  		close;
+  	case 2:
+  		getitem 6755,1;
+  		close;
+  	case 3:
+  		getitem 2022,1;
+  		close;
+  	case 4:
+  		getitem 2949,1;
+  		close;
+  	case 5:
+  		getitem 13086,1;
+  		close;
+  	case 6:
+  		getitem 13440,1;
+  		close;
+  	case 7:
+  		getitem 15066,1;
+  		close;
+  	case 8:
+  		getitem 7228,1;
+  		close;
+  	case 9:
+  		getitem 7229,1;
+  		close;
+  	case 10:
+  		getitem 7230,1;
+  		close;
+  	case 11:
+  		getitem 6612,1;
+  		close;
+  	case 12:
+  		getitem 7228,1;
+  		close;
+  	case 13:
+  		getitem 7229,1;
+  		close;
+  	case 14:
+  		getitem 7230,1;
+  		close;
+  	case 15:
+  		getitem 6612,1;
+  		close;
+	}
+}
+
+
+//------------------------------裝飾NPC
+
+1@gl_kh,145,66,6	script	卡利斯格騎士團#h01	655,{}
+1@gl_kh,145,72,6	script	卡利斯格騎士團#h02	655,{}
+1@gl_kh,145,78,6	script	卡利斯格騎士團#h03	655,{}
+1@gl_kh,145,84,6	script	卡利斯格騎士團#h04	655,{}
+1@gl_kh,145,90,6	script	卡利斯格騎士團#h05	655,{}
+1@gl_kh,145,96,6	script	卡利斯格騎士團#h06	655,{}
+1@gl_kh,145,102,6	script	卡利斯格騎士團#h07	655,{}
+1@gl_kh,154,66,4	script	卡利斯格騎士團#h08	655,{}
+1@gl_kh,154,72,4	script	卡利斯格騎士團#h09	655,{}
+1@gl_kh,154,78,4	script	卡利斯格騎士團#h10	655,{}
+1@gl_kh,154,84,4	script	卡利斯格騎士團#h11	655,{}
+1@gl_kh,154,90,4	script	卡利斯格騎士團#h12	655,{}
+1@gl_kh,154,96,4	script	卡利斯格騎士團#h13	655,{}
+1@gl_kh,154,102,4	script	卡利斯格騎士團#h14	655,{}
+
+1@gl_kh,145,69,6	script	白衣騎士團#h01	657,{}
+1@gl_kh,145,75,6	script	白衣騎士團#h02	657,{}
+1@gl_kh,145,81,6	script	白衣騎士團#h03	657,{}
+1@gl_kh,145,87,6	script	白衣騎士團#h04	657,{}
+1@gl_kh,145,93,6	script	白衣騎士團#h05	657,{}
+1@gl_kh,145,99,6	script	白衣騎士團#h06	657,{}
+1@gl_kh,154,69,4	script	白衣騎士團#h07	657,{}
+1@gl_kh,154,75,4	script	白衣騎士團#h08	657,{}
+1@gl_kh,154,81,4	script	白衣騎士團#h09	657,{}
+1@gl_kh,154,87,4	script	白衣騎士團#h10	657,{}
+1@gl_kh,154,93,4	script	白衣騎士團#h11	657,{}
+1@gl_kh,154,99,4	script	白衣騎士團#h12	657,{}
+
+
+1@gl_kh,223,82,4	script	受傷的人#h01	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h01");monster 'map_name$[0],223,82,"--ja--",3142,3;end;}
+1@gl_kh,226,98,4	script	受傷的人#h02	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h02"); monster 'map_name$[0],226,98,"--ja--",3142,3;end;}
+1@gl_kh,222,119,8	script	受傷的人#h03	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h03"); monster 'map_name$[0],222,119,"--ja--",3142,3;end;}
+1@gl_kh,235,122,4	script	受傷的人#h04	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h04"); monster 'map_name$[0],235,122,"--ja--",3142,3;end;}
+1@gl_kh,241,86,6	script	受傷的人#h05	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h05"); monster 'map_name$[0],241,86,"--ja--",3142,3;end;}
+1@gl_kh,276,106,6	script	受傷的人#h06	511,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h06"); monster 'map_name$[0],276,106,"--ja--",3142,3;end;}
+1@gl_kh,255,153,6	script	受傷的人#h07	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h07"); monster 'map_name$[0],255,153,"--ja--",3142,3;end;}
+1@gl_kh,257,146,1	script	受傷的人#h08	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h08"); monster 'map_name$[0],257,146,"--ja--",3142,3;end;}
+1@gl_kh,260,165,6	script	受傷的人#h09	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h09"); monster 'map_name$[0],260,165,"--ja--",3142,3;end;}
+1@gl_kh,267,173,2	script	受傷的人#h10	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h10"); monster 'map_name$[0],267,173,"--ja--",3142,3;end;}
+1@gl_kh,282,166,5	script	受傷的人#h11	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h11"); monster 'map_name$[0],282,166,"--ja--",3142,3;end;}
+1@gl_kh,293,160,7	script	受傷的人#h12	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h12"); monster 'map_name$[0],293,160,"--ja--",3142,3;end;}
+1@gl_kh,293,160,7	script	受傷的人#h13	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h13"); monster 'map_name$[0],293,160,"--ja--",3142,3;end;}
+1@gl_kh,224,34,4	script	受傷的人#h14	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h14"); monster 'map_name$[0],224,34,"--ja--",3142,3;end;}
+1@gl_kh,236,18,8	script	受傷的人#h15	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h15"); monster 'map_name$[0],236,18,"--ja--",3142,3;end;}
+1@gl_kh,260,23,8	script	受傷的人#h16	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h16"); monster 'map_name$[0],260,23,"--ja--",3142,3;end;}
+1@gl_kh,276,49,2	script	受傷的人#h17	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h17"); monster 'map_name$[0],276,49,"--ja--",3142,3;end;}
+1@gl_kh,261,51,6	script	受傷的人#h18	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h18"); monster 'map_name$[0],261,51,"--ja--",3142,3;end;}
+
+2@gl_kh,154,185,8	script	受傷的人#h19	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h19"); monster 'map_name$[1],154,185,"--ja--",3142,3;end;}
+2@gl_kh,148,187,7	script	受傷的人#h20	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h20"); monster 'map_name$[1],148,187,"--ja--",3142,3;end;}
+2@gl_kh,152,193,2	script	受傷的人#h21	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h21"); monster 'map_name$[1],152,193,"--ja--",3142,3;end;}
+2@gl_kh,146,197,6	script	受傷的人#h22	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h22"); monster 'map_name$[1],146,197,"--ja--",3142,3;end;}
+2@gl_kh,152,204,6	script	受傷的人#h23	849,3,3,{specialeffect 124;disablenpc instance_npcname("受傷的人#h23"); monster 'map_name$[1],152,204,"--ja--",3142,3;end;}
+
+
+2@gl_kh,158,250,0	script	古城觸發點#h01	-1,15,15,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if ('CD_gl_kh_1_12==1) {end;}
+	set 'CD_gl_kh_1_12,1;
+	sleep 3000;
+	donpcevent instance_npcname("哈因理希#h04")+"::OnCcdd1";
+	sleep 3000;
+	donpcevent instance_npcname("凱勒哈特#h01")+"::OnCcdd1";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd1";
+	sleep 3000;
+	donpcevent instance_npcname("凱勒哈特#h01")+"::OnCcdd2";
+	sleep 3000;
+	donpcevent instance_npcname("哈因理希#h04")+"::OnCcdd2";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd2";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd3";
+	sleep 3000;
+	donpcevent instance_npcname("凱勒哈特#h01")+"::OnCcdd3";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd4";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd5";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd6";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd7";
+	sleep 3000;
+	donpcevent instance_npcname("哈因理希#h04")+"::OnCcdd3";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd8";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd9";
+	sleep 3000;
+	donpcevent instance_npcname("希梅爾茲#h03")+"::OnCcdd10";
+	sleep 3000;
+	donpcevent instance_npcname("哈因理希#h04")+"::OnCcdd4";
+	sleep 3000;
+	donpcevent instance_npcname("霸肋門德#h05")+"::OnCcdd1";
+	disablenpc instance_npcname("希梅爾茲#h03");
+	disablenpc instance_npcname("哈因理希#h04");
+	disablenpc instance_npcname("霸肋門德#h05");
+	sleep 3000;
+	donpcevent instance_npcname("凱勒哈特#h01")+"::OnCcdd4";
+	sleep 15000;
+	disablenpc instance_npcname("凱勒哈特#h01");
+	monster 'map_name$[1],158,252,"--ja--",3150,1,instance_npcname("夢饜副本事件1")+"::OnCcdd6";
+	end;
+	}
+end;
+}
+
+//------------------------------獎勵npc
+2@gl_kh,158,241,3	script	另一個福金#h02	755,{
+
+	if(checkquest(12337,HUNTING)==2 ){
+	mes "[另一個福金]";
+	mes "哼，這個初學者還滿會的嘛。首先先從闇答萊屍身上取得戰利品吧。";
+	getitem 6755,5*$EP1501; //汙染的魔力
+	getitem 6607,1*$EP1501; //時光結晶
+	erasequest 12336;
+	erasequest 12337;
+	close;
+	}
+	//副本任務獎勵
+	if(checkquest(32055,HUNTING)==2 ) { 
+	dispbottom "夢魘副本任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+30;	//副本積分+30
+	dispbottom "副本積分+30";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點兌換券
+	erasequest 32055; 
+	callfunc "offical_instance_finish",34;
+	}
+
+	mes "[另一個福金]";
+	mes "時間的縫隙差一點就要扭曲。過來這裡，必須快點出去！";
+	next;
+	switch(select("我還要再逛逛這裡","請送我出去吧")) {
+
+	case 1:
+	mes "[另一個福金]";
+	mes "你想回去的時候在來找我吧";
+	close;
+
+	case 2:
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+	}
+}
+
+
+//------------------------------傳點資料
+1@gl_kh,96,80,0	warp	古城傳送門h1_1	2,2,1@gl_kh,82,80
+1@gl_kh,90,80,0	warp	古城傳送門h1_2	2,2,1@gl_kh,102,80
+1@gl_kh,202,80,0	warp	古城傳送門h1_3	2,2,1@gl_kh,217,80
+1@gl_kh,207,80,0	warp	古城傳送門h1_4	2,2,1@gl_kh,194,80
+1@gl_kh,228,216,0	warp	古城傳送門h1_5	2,2,1@gl_kh,214,216
+1@gl_kh,222,216,0	warp	古城傳送門h1_6	2,2,1@gl_kh,234,215
+1@gl_kh,150,286,0	warp	古城傳送門h1_7	2,2,2@gl_kh,150,45
+2@gl_kh,145,124,0	warp	古城傳送門h2_1	2,2,2@gl_kh,127,124
+2@gl_kh,134,124,0	warp	古城傳送門h2_2	2,2,2@gl_kh,151,124
+2@gl_kh,154,101,0	warp	古城傳送門h2_3	2,2,2@gl_kh,173,101
+2@gl_kh,165,101,0	warp	古城傳送門h2_4	2,2,2@gl_kh,149,101
+
+2@gl_kh,150,163,0	script	古城傳送門h2_5	45,1,1,{ 
+	warp 'map_name$[1],150,175;
+	if (getpartyleader(getcharid(1),2)==getcharid(0)) {
+	if ('CD_gl_kh_1_4==1) {end;}
+	set 'CD_gl_kh_1_4,1;
+	instance_announce 0, "???：請不要過來! 這裡四處充滿了陷阱... 呃阿阿阿阿!!!!",bc_map,"0xff6699";
+	}
+	end;
+}
+2@gl_kh,150,170,0	warp	古城傳送門h2_6	2,2,2@gl_kh,150,155
+2@gl_kh,150,25,0	warp	古城傳送門h2_7	2,2,1@gl_kh,150,280
+1@gl_kh,104,203,0	warp	古城傳送門h2_8	2,2,2@gl_kh,150,177
+
+
+//----------------------------------------地圖屬性
+1@gl_kh	mapflag	partylock
+1@gl_kh	mapflag	noteleport
+1@gl_kh	mapflag	nosave	SavePoint
+1@gl_kh	mapflag	nomemo
+1@gl_kh	mapflag	nobranch
+1@gl_kh	mapflag	noicewall
+1@gl_kh	mapflag	restricted	6
+
+2@gl_kh	mapflag	partylock
+2@gl_kh	mapflag	noteleport
+2@gl_kh	mapflag	nosave	SavePoint
+2@gl_kh	mapflag	nomemo
+2@gl_kh	mapflag	nobranch
+2@gl_kh	mapflag	noicewall
+2@gl_kh	mapflag	restricted	6
+
+
+
+
+

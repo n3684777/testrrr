@@ -1,0 +1,77 @@
+prontera,59,341,5	script	§¤ÃM¯²­É­û	105,{
+
+	mes "[§¤ÃM¯²­É­û]";
+	mes "§A·Q­n¯²­É§¤ÃM¶Ü?";
+	next;
+	switch(select("¯²­É§¤ÃM","§Þ¯à&ÄÝ©Ê­«¸mªA°È","¨ú®ø")) {
+
+	case 1:
+	callfunc "Job_003";
+	close;
+
+	case 2:
+	callfunc "Job_Reset_Quick";
+	close;
+
+	case 3:
+	setdragon 3;
+	close;
+	}
+}
+
+
+function	script	Job_003	{
+
+	if (ismounting()) {
+		message strcharinfo(0),"¥²¶·¥ý¸Ñ°£§Aªº§¤ÃM";
+		end;
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+			if(select(" ~ ¦ÑÆN: ~ ¯T")==1) setfalcon;
+			else getitem 6124,1; //¯T²Ã
+		} else getitem 6124,1; //¯T²Ã
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+		if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+			if(select(" ~ ¤â±À¨®: ~ Å]¾É¾Ô¥Ò")==1) setcart;
+			else setmadogear;
+		} else setcart;
+	} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+	else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+		if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+		else setriding;
+	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+	else {
+		message strcharinfo(0),"¨S¦³¾A¦X§Aªº¹D¨ã";
+		end;
+	}
+	specialeffect2 EF_TEIHIT3;
+	end;
+}
+
+prontera,153,330,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#01	105	//¥_ªù
+prontera,283,209,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#02	105	//ªFªù
+prontera,28,208,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#03	105	//¦èªù
+
+//amatsu,106,165,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#12	105
+izlude,133,130,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#13	105
+xmas,155,109,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#14	105
+payon,153,246,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#15	105
+gonryun,167,107,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#16	105
+jawaii,109,186,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#17	105
+aldebaran,147,110,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#18	105
+morocc,173,101,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#19	105
+morocc,166,254,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#20	105
+malaya,202,201,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#21	105
+hugel,109,154,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#22	105
+ayothaya,196,184,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#23	105
+
+//pay_arche,61,149,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#25	105
+louyang,206,98,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#27	105
+comodo,191,141,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#28	105
+alberta,128,54,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#29	105
+moscovia,237,192,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#30	105
+lighthalzen,145,93,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#31	105
+mora,34,116,4	duplicate(§¤ÃM¯²­É­û)	§¤ÃM¯²­É­û#32	105
+
+

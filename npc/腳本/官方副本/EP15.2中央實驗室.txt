@@ -1,0 +1,1383 @@
+
+vdistrict1,15,68,4	script	中央實驗室管理者	4_LGTSCIENCE,{
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_23 < gettime(8) ){
+	set Instance_Bout_23,10;
+	set day_Instance_Bout_23,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_23 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裝置]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "中央實驗室";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裝置]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_23+"^000000 ]";
+	mes "副本獎勵：";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[次元裝置]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裝置]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裝置]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[次元裝置]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_23,Instance_Bout_23-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "中央實驗室",0;
+	end;
+}
+
+
+//------------------------------------------------
+// Entrance
+1@lab,104,34,4	script	見習研究員	4_LGTSCIENCE,{
+	if ('switch_enabled == 1) {
+		mes "[見習研究員]";
+		mes "大門已經打開。";
+		close;
+	}
+	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		mes "[見習研究員]";
+		mes "請等候。 我正在與隊長談論你是否被授權。";
+		close;
+	}
+	mes "[見習研究員]";
+	mes "你是要來當研究編號32001號的實驗助手嗎？";
+	next;
+	if (select( "沒錯", "不是" ) == 2) {
+		mes "[見習研究員]";
+		mes "看起來你是在錯誤的實驗室裡。請退出並尋求幫助。";
+		close;
+	}
+	mes "[見習研究員]";
+	mes "請稍等，正在確認你是否獲得出入許可。";
+	close2;
+	npctalk "出入密碼一致，馬上替你開門。";
+	npctalk "可以進去囉！但請注意，一旦進去就不能出來囉！";
+	if ('switch_enabled == 0) {
+		'switch_enabled = 1;
+		enablenpc instance_npcname("#central_warp_1");
+		enablenpc instance_npcname("#central_warp_2");
+		enablenpc instance_npcname("#central_warp_3");
+		enablenpc instance_npcname("主開關#");
+		enablenpc instance_npcname("高級研究員#pa082");
+		enablenpc instance_npcname("effect_switch");
+		'code = 1234;
+	}
+	end;
+
+OnInstanceInit:
+	'map_name$ = instance_mapname("1@lab");
+	'code_found = 'code = 0;
+	for ( .@i = 1; .@i <= 8; .@i++ )
+		'switch_position[.@i] = 0;
+
+	// Entrance
+	disablenpc instance_npcname("#central_warp_1");
+	disablenpc instance_npcname("#central_warp_2");
+	disablenpc instance_npcname("#central_warp_3");
+
+	// Switchs
+	disablenpc instance_npcname("主開關#");
+	disablenpc instance_npcname("高級研究員#pa082");
+	disablenpc instance_npcname("effect_switch");
+	for ( .@i = 1; .@i <= 8; ++.@i )
+		disablenpc instance_npcname( "開關" + .@i + "#" );
+
+	// Experiments
+	disablenpc instance_npcname("#central_warp_4");
+	disablenpc instance_npcname("#central_warp_5");
+	disablenpc instance_npcname("希維亞#pa0829");
+	disablenpc instance_npcname("費德里科#pa0829");
+	disablenpc instance_npcname("爾特米額#pa0829");
+	disablenpc instance_npcname("賓珊特#pa0829");
+	disablenpc instance_npcname("#wp01");
+	disablenpc instance_npcname("#wp02");
+	for ( .@i = 1; .@i <= 14; ++.@i )
+		hideonnpc instance_npcname("#gen_" + (.@i < 10 ? "0" : "") + .@i);
+	disablenpc instance_npcname("#central_warp_6");
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+}
+
+// Switchs
+1@lab,37,37,3	script	開關1#	CLEAR_NPC,{
+	.@num = charat( strnpcinfo(1),6 );
+	setarray .@position$[0], "OFF", "ON";
+	mes "[開關 " + .@num + "]";
+	mes "目前開關在 " + .@position$[ 'switch_position[.@num] ] + " 位置。你要怎麼做?";
+	next;
+	'switch_position[.@num] = !( select( "ON","OFF" ) - 1 );
+	close;
+}
+1@lab,39,37,3	duplicate(開關1#)	開關2#	CLEAR_NPC
+1@lab,41,37,3	duplicate(開關1#)	開關3#	CLEAR_NPC
+1@lab,43,37,3	duplicate(開關1#)	開關4#	CLEAR_NPC
+1@lab,46,37,3	duplicate(開關1#)	開關5#	CLEAR_NPC
+1@lab,48,37,3	duplicate(開關1#)	開關6#	CLEAR_NPC
+1@lab,50,37,3	duplicate(開關1#)	開關7#	CLEAR_NPC
+1@lab,52,37,3	duplicate(開關1#)	開關8#	CLEAR_NPC
+
+
+
+1@lab,34,37,3	script	主開關#	CLEAR_NPC,{
+//	.@string$ = 'switch_position[1] + "" + 'switch_position[2] + "" + 'switch_position[3] + "" + 'switch_position[4] + "" +
+//		'switch_position[5] + "" + 'switch_position[6] + "" + 'switch_position[7] + "" + 'switch_position[8];
+//	.@current_code = strtol( .@string$,2 );
+//	npctalk "今天的訪問代碼 " + 'code + ",目前輸入的代碼 " + .@current_code + ".";
+//	sleep 6000;
+//	if ('code_found > 0)
+//	npctalk "門已經打開了";
+//	else if (.@current_code != 'code)
+//		npctalk "代碼不正確，請再試一次。";
+//	else {
+		'code_found = 1;
+		disablenpc instance_npcname("主開關#");
+		npctalk "代碼正確，開門。";
+		enablenpc instance_npcname("#central_warp_4");
+		enablenpc instance_npcname("#central_warp_5");
+		enablenpc instance_npcname("希維亞#pa0829");
+		enablenpc instance_npcname("費德里科#pa0829");
+		enablenpc instance_npcname("爾特米額#pa0829");
+		enablenpc instance_npcname("賓珊特#pa0829");
+		enablenpc instance_npcname("#wp01");
+		enablenpc instance_npcname("#wp02");
+		donpcevent instance_npcname("effect_switch") + "::OnStop";
+//	}
+	end;
+}
+
+
+
+1@lab,45,32,3	script	高級研究員#pa082	4_LGTSCIENCE,{
+	if ('code_found > 0) {
+		mes "[高級研究員]";
+		mes "門開著，你現在可以進入。 請注意，您無法從另一側打開門。";
+		close;
+	}
+	mes "[高級研究員]";
+	mes "看來你在這裡參與粒子加速實驗。";
+	next;
+	mes "[高級研究員]";
+	mes "今天的訪問代碼是^0000ff" + 'code + "^000000.";
+	mes "該代碼需要輸入為二進制數字。 使用我身後的開關輸入它。";
+	next;
+	mes "[高級研究員]";
+	mes "輸入密碼後，按下入口附近的主按鈕。";
+	for ( .@i = 1; .@i <= 8; ++.@i )
+	specialeffect EF_STEAL, AREA, instance_npcname("開關" + .@i + "#");
+	close2;
+	donpcevent instance_npcname("effect_switch") + "::OnStart";
+	end;
+}
+
+1@lab,1,1,0	script	effect_switch	-1,{
+OnStart:
+OnTimer2000:
+	specialeffect 203,AREA, instance_npcname("主開關#");
+	for ( .@i = 1; .@i <= 8; ++.@i )
+		specialeffect (203+.@i),AREA, instance_npcname("開關" + .@i + "#");
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@lab,81,84,7	script	希維亞#pa0829	4_F_SCIENCE,{
+	mes "[希維亞]";
+	mes "實驗結束後，我想回家享用冰鎮啤酒和一些炸雞。";
+	next;
+	mes "[希維亞]";
+	mes "我近兩年沒回家了。";
+	next;
+	mes "^0000ff希維亞正在用非常疲憊的目光看著粒子加速器裝置。^000000";
+	close;
+}
+
+1@lab,80,87,7	script	費德里科#pa0829	4_LGTSCIENCE,{
+	mes "[費德里科]";
+	mes "這個裝置看起來越多就越驚人。 從未有過這種規模的粒子加速器。";
+	next;
+	mes "[費德里科]";
+	mes "有了這個尺寸，我想知道是否有可能創造一個小規模的黑洞......";
+	next;
+	mes "[費德里科]";
+	mes "啊，我只是在說話。 這樣的事件比實驗哈哈更接近一場災難。";
+	close;
+}
+
+1@lab,80,90,6	script	爾特米額#pa0829	4_F_SCIENCE,{
+	mes "[爾特米額]";
+	mes "看，現實不喜歡它，當你抓住一條繩子，並給它一個拖船。";
+	next;
+	mes "[爾特米額]";
+	mes "在如此強大的粒子加速度下，可能會發生尺寸失真。";
+	next;
+	mes "[爾特米額]";
+	mes "我對此感覺不好，因為......大自然找到了一種方法。";
+	close;
+}
+
+1@lab,81,93,6	script	賓珊特#pa0829	4_LGTSCIENCE,{
+	mes "[賓珊特]";
+	mes "該機器是完美的。 沒有什麼會出錯！";
+	next;
+	mes "[賓珊特]";
+	mes "爾特米額擔心太多。 無論如何，我會在實驗後繼續旅行。";
+	close;
+}
+
+1@lab,80,89,0	script	#wp01	HIDDEN_WARP_NPC,9,9,{
+	end;
+OnTouch:
+	donpcevent instance_npcname("#wp02") + "::OnStart";
+	disablenpc instance_npcname("#wp01");
+	end;
+}
+
+1@lab,80,89,0	script	#wp02	HIDDEN_WARP_NPC,{
+	end;
+
+function effect_gen {
+	.@effect = getarg(0);
+	.@count = getargcount();
+	for ( .@i = 1; .@i < .@count; .@i++ )
+		specialeffect .@effect, AREA, getd( "'gen_" + ( getarg(.@i) < 10 ? "0" : "" ) + getarg(.@i) + "$" );
+	return;
+}
+
+function effect_1_10_gen { effect_gen( getarg(0), 1,2,3,4,5,6,7,8,10 ); }
+
+OnStart:
+	'Vincent$ = instance_npcname("賓珊特#pa0829");
+	'federico$ = instance_npcname("費德里科#pa0829");
+	'silvia$ = instance_npcname("希維亞#pa0829");
+	'Artemia$ = instance_npcname("爾特米額#pa0829");
+	'gen_01$ = instance_npcname("#gen_01");
+	'gen_02$ = instance_npcname("#gen_02");
+	'gen_03$ = instance_npcname("#gen_03");
+	'gen_04$ = instance_npcname("#gen_04");
+	'gen_05$ = instance_npcname("#gen_05");
+	'gen_06$ = instance_npcname("#gen_06");
+	'gen_07$ = instance_npcname("#gen_07");
+	'gen_08$ = instance_npcname("#gen_08");
+	'gen_09$ = instance_npcname("#gen_09");
+	'gen_10$ = instance_npcname("#gen_10");
+	'gen_11$ = instance_npcname("#gen_11");
+	'gen_12$ = instance_npcname("#gen_12");
+	'gen_13$ = instance_npcname("#gen_13");
+	'gen_14$ = instance_npcname("#gen_14");
+
+	npctalk "讓我們開始吧。 嗯...你準備好了嗎？Dr. 普蕾莎?", 'federico$;
+	sleep 300;
+	npctalk "可能做出最終確認檢查。 這個範圍的實驗需要這樣的謹慎。", 'Artemia$;
+	sleep 300;
+	npctalk "操作第一個實驗的成品需要小心。", 'silvia$;
+	sleep 200;
+	npctalk "啊，我希望我們能很快完成，所以我可以去吃炸雞。", 'Vincent$;
+	sleep 200;
+	npctalk "啊! 我喜歡炸雞! 你要去時打電話給我。", 'silvia$;
+	sleep 300;
+	mapannounce 'map_name$, "?????: 啊，1234，麥克風測試。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 100;
+	npctalk "她在這裡。", 'federico$;
+	sleep 200;
+	mapannounce 'map_name$, "?????: 項目粒子加速器總監羅那 普蕾莎。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 300;
+	mapannounce 'map_name$, "羅那 普蕾莎 : 當前時間 " + gettime(6) + " 月 " + gettime(5) + " 日。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 300;
+	mapannounce 'map_name$, "羅那 普蕾莎 :在開放空間測試粒子加速度對周圍環境的影響。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 300;
+	npctalk "啊...我真的不喜歡這個實驗。", 'Artemia$;
+	sleep 200;
+	mapannounce 'map_name$, "羅那 普蕾莎 : 開始實驗。 首席研究員費德里科博士，爾特米額，希維亞，賓珊特和助理研究員。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 300;
+	npctalk "讓我們開始～", 'Artemia$;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 70;
+	npctalk "開始發電機的旋轉。", 'Vincent$;
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	npctalk "發電機旋轉固定在10000 RPM。", 'federico$;
+	sleep 120;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 100;
+	npctalk "電壓仍在公差帶內。", 'silvia$;
+	sleep 40;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 80;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 80;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 這個實驗是為了創造以前不存在的新材料。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 80;
+	effect_gen( EF_MAGICALATTHIT, 1,2,3,4,5,6,7,8,9 );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 記錄儀在安裝到加速器時確保詳細記錄催化劑床的反應。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	npctalk "接觸1號催化劑床。", 'Artemia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 70;
+	npctalk "發電電壓不穩定。 仍在公差帶內。", 'silvia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	npctalk "檢測接近催化劑床和加速器之間公差帶的熱量！", 'silvia$;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	npctalk "加速器正在加熱。", 'Vincent$;
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	npctalk "賓珊特: 320c.", 'Vincent$;
+	sleep 30;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 70;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "賓珊特 : 670度c它升溫太快了！", 'Vincent$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 330;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "打破1000度c !!!!Dr. 普蕾莎! 我們必須暫時停止設備!", 'Vincent$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 沒事。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 73;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "這不是一個簡單的問題。 溫度已經遠遠超過預測的數字!", 'silvia$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 30;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 這個問題被預測到了。 保持當前狀態。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 50;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "但至少......我以後會吃炸雞。", 'Artemia$;
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 通過主服務器接收改變的情況。 檢測粒子加速器和催化劑之間的尺寸失真。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 70;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 30;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Dr. 普蕾莎! 這是電腦的危險情況。 關閉主電源！", 'Artemia$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 30;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885:警報。 新的未認出的生物接近。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "到底是怎麼回事。 有人關掉那台電腦！", 'Vincent$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 30;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 一個新的有機體將很快從半空中傳播。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 70;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 70;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘5秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘4秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘3秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘2秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘1秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885:身份不明的生物被發現。 暫時關閉主電源。", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,1;
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 75;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "什麼......那是什麼?!", 'Artemia$;	// text can stack if OnMyMobDead already called
+	sleep 200;
+	npctalk "這不是對我們的反應。 也許它不能看到我們?", 'silvia$;
+	sleep 300;
+	npctalk "但它對項目助理是敵對的！ 那個生物是什麼！？", 'Vincent$;
+	sleep 300;
+	npctalk "我無法移動我的身體！ 我認為空間被凍結！", 'Vincent$;
+	end;
+
+OnMyMobDead1:
+	mapannounce 'map_name$, "MA-4885:身份不明的生物被淘汰。 重新啟動設備。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	npctalk "MA-4885!!誰在命令你重新啟動！ 停止！！", 'Artemia$;
+	sleep 200;
+	mapannounce 'map_name$, "MA-4885: 無法識別的命令。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 300;
+	npctalk "Dr. 普蕾莎!!我們必須停止！ 這太危險了！", 'Artemia$;
+	sleep 200;
+	mapannounce 'map_name$, "羅那 普蕾莎 : ......", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 200;
+	npctalk "普蕾莎! 我們沒有時間！ 關掉電腦！", 'Vincent$;
+	sleep 200;
+	mapannounce 'map_name$, "MA-4885:重新啟動粒子加速程序。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 200;
+	npctalk "普蕾莎!做決定!", 'silvia$;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 120;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	mapannounce 'map_name$, "羅那 普蕾莎 : ......", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 170;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 150;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 140;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 130;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 當前時間過去20分鐘。暫時推遲實驗。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 120;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 110;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 93;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885:拒絕訪問。 無法理解命令。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 81;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 : MA-4885。我是你的總監 Dr. 普蕾莎。 停止目前的進展。", bc_map,0xFF77,FW_NORMAL,12;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 75;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 70;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885:拒絕訪問。 無法理解命令。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 38;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	sleep 41;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 45;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	npctalk "該死！ 別的東西來了！", 'federico$;
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885:警報。 新的未認出的生物接近。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 43;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 73;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 43;
+	npctalk "哦...該死的。 這就是為什麼你不應該安裝最新的CPU。", 'Vincent$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 93;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 40;
+	npctalk "啊......我的身體......不能動彈。 該死的", 'federico$;
+	sleep 43;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 43;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885:一個新的有機體將很快從半空中傳播。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 43;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 53;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 70;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘5秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘4秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘3秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘2秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 剩餘1秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 60;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885:身份不明的生物被發現。 暫時關閉主電源。", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,2;
+	sleep 50;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 35;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 60;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 35;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	npctalk "和上次一樣。 它似乎對我們沒有興趣。", 'silvia$;
+	sleep 400;
+	npctalk "當主電源暫時關閉時，讓我們徹底關閉主機！", 'Vincent$;
+	sleep 200;
+	mapannounce 'map_name$, "MA-4885:回答問題。 這個空間目前停留在扭曲的階段。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 300;
+	mapannounce 'map_name$, "MA-4885:在平衡階段之後，半平面生物和這個世界生物之間的直接相互作用將成為可能。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 300;
+	mapannounce 'map_name$, "MA-4885:半面生物和這個世界生物之間的直接相互作用將進行計算以恢復平衡到失真階段。 請稍候。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 300;
+	npctalk "那個瘋狂的金屬塊是什麼意思？ 它是說我們不像那些怪物那樣處於同一個階段？", 'Artemia$;
+	sleep 300;
+	npctalk "啊，我想我們應該希望電腦不能做出正確的計算。", 'federico$;
+	end;
+
+OnMyMobDead2:
+	mapannounce 'map_name$, "MA-4885:身份不明的生物被淘汰。 相位調整失敗。 重新啟動相關程序。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 20;
+	mapannounce 'map_name$, "羅那 普蕾莎 :MA-4885。看起來你正在嘗試同步其他維度和這個世界。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 30;
+	mapannounce 'map_name$, "MA-4885: 是的", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 30;
+	npctalk "Dr. 普蕾莎!!這個荒謬的事件與我們原來的實驗完全無關!", 'Artemia$;
+	sleep 30;
+	mapannounce 'map_name$, "羅那 普蕾莎 :我完全意識到這一點。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 30;
+	npctalk "我們能否完全關閉主電源？", 'silvia$;
+	sleep 30;
+	mapannounce 'map_name$, "MA-4885:重新啟動粒子加速程序。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 30;
+	mapannounce 'map_name$, "羅那 普蕾莎 : " + gettime(6) + " Month " + gettime(5) + " Day.當前時間38分鐘過去11暫時終止粒子加速器項目。", bc_map,0xFF77,FW_NORMAL,12;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 1834;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 1734;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 155;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	mapannounce 'map_name$, "羅那 普蕾莎 :由於電腦故障和加速器過熱的原因結束記錄。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 14;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 13;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 12;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 7;
+	npctalk "好的! 現在 Dr. 普蕾莎 只需關閉電源。", 'silvia$;
+	sleep 4;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 10;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 : 切斷母機的電源 MA-4885.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 3;
+	effect_gen( EF_MAGICALATTHIT, 2,3,4,5,6,7,8,9,10 );
+	sleep 7;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885:根據管理員請求暫停所有設備的操作。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: .....命令... ----!!!  Zizip... ---!! -- 命令 ----- !! Zizip.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 75;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 75;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 75;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 8;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "哪裡...結束了？", 'Artemia$;
+	sleep 30;
+	mapannounce 'map_name$, "羅那 普蕾莎 : 電腦MA-4885完成關閉。 確認設備暫停", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 20;
+	npctalk "看起來已經結束了。", 'silvia$;
+	sleep 20;
+	npctalk "工廠回復原樣是最好的。", 'federico$;
+	sleep 20;
+	mapannounce 'map_name$, "羅那 普蕾莎 :記錄所有實驗進度並終止當前點。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 30;
+	mapannounce 'map_name$, "羅那 普蕾莎 :最後的實驗失敗是不幸的。 但我會承諾下一次更完美的實驗。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 30;
+	mapannounce 'map_name$, "羅那 普蕾莎 :祝大家工作順利。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 30;
+	npctalk "它似乎結束了。", 'Artemia$;
+	sleep 30;
+	npctalk "我認為這是一個小規模的實驗。但是這對於主機是一個問題。", 'federico$;
+	sleep 30;
+	npctalk "讓我們冷靜下來。 離開這個可怕的實驗室。", 'silvia$;
+	sleep 30;
+	npctalk "順便說一下......我仍然無法移動，因此發生了什麼？", 'Vincent$;
+	sleep 30;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	mapannounce 'map_name$, "MA-4885:代碼名稱 - 下降", bc_map,0xFF0000,FW_NORMAL,16;
+	sleep 10;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 17;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 15;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 4;
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 10;
+	npctalk "什麼？ 這不是初始化階段嗎？", 'federico$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 63;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 8;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	mapannounce 'map_name$, "MA-4885 :開始最終階段轉型。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 12;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 12;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 43;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 48;
+	npctalk "一切都結束了。", 'silvia$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 7;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 93;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 78;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 9;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 一個新的有機體將很快從半空中傳播。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 4;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 6;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 63;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 113;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 7;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘5秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘4秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘3秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘2秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 剩餘1秒", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885:暫時關閉用於轉換相位進行諧振的主電源。", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,3;
+	mapannounce 'map_name$, "MA-4885:最後的階段轉換過程。", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 63;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 10;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 63;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 10;
+	mapannounce 'map_name$, "MA-4885:相位干涉現象與生物消失後，這個世界將被召喚到半空中。", bc_map,"0xFFFF00";
+	end;
+
+
+OnMyMobDead3:
+	set $@Instance_Miao,gettimetick(2)-getd("$@Instance_Annal"+instance_id(1));
+	mapannounce 'map_name$, "MA-4885:在生物消除之前完成相位同步。 開始三維旅行。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 150;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 180;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 150;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 140;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 130;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 120;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	mapannounce 'map_name$, "MA-4885:進行計算以恢復平衡到失真階段。 請稍候。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 100;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 81;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "主機正在進行超出我們想像的巨大實驗。", 'federico$;
+	sleep 71;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 55;
+	npctalk "賓珊特 :看起來似乎超出我們預期。 普蕾莎!!!  你在聽麼？ 發出警報！", 'Vincent$;
+	sleep 31;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	npctalk "我們至少應該撤離其他實驗室的人員。", 'Vincent$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 96;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 91;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 73;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "羅那 普蕾莎 :但是......你。", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 111;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 88;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 43;
+	npctalk "哎，我不知道會發生什麼，但我對改變尺寸感到好奇。 別介意我！", 'silvia$;
+	sleep 36;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 88;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 51;
+	npctalk "尺寸在試驗新材料生產時移動。 遇到了不同級別的實驗。", 'Artemia$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 883;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 110;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Alarm System :警報！ 警報！ 粒子實驗室發出1級警報。 所有研究人員撤離到沙坑。", bc_map,0xFF0000,FW_NORMAL,13;
+	sleep 85;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 95;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Alarm System :我重複。 粒子實驗室發出1級警報。 所有研究人員撤離到沙坑。", bc_map,0xFF0000,FW_NORMAL,13;
+	sleep 60;
+	npctalk "Federico :這是移動尺寸的感覺嗎？ 多麼奇怪...", 'federico$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 103;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 38;
+	specialeffect EF_SUI_EXPLOSION,AREA,'federico$;
+	disablenpc 'federico$;
+	mapannounce 'map_name$, "MA-4885: 維度以20%的進度移動。 可能會對某些生物造成尺寸干擾。 請注意。", bc_map,0xFFFF00,FW_NORMAL,13;
+	npctalk "我想知道其他人是否撤離？", 'Vincent$;
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 50;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 90;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 38;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 55;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 35;
+	specialeffect EF_SUI_EXPLOSION,AREA,'Vincent$;
+	disablenpc 'Vincent$;
+	npctalk "啊......我應該在看到炸雞和啤酒時看到這個......", 'silvia$;
+	sleep 38;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	sleep 70;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 73;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 86;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 35;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	sleep 36;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	specialeffect EF_SUI_EXPLOSION,AREA,'silvia$;
+	disablenpc 'silvia$;
+	mapannounce 'map_name$, "MA-4885:維度進展78％。 大部分被侵占的尺寸。", bc_map,0xFFFF00,FW_NORMAL,13;
+	npctalk "爾特米額 :哈...誰現在要吃炸雞？", 'Artemia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	sleep 83;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	sleep 35;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 63;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 93;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 40;
+	specialeffect EF_SUI_EXPLOSION,AREA,'Artemia$;
+	disablenpc 'Artemia$;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 40;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 934;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 50;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 63;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 43;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 36;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 46;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 43;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 40;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 80;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 尺寸移動100%完成。 歡迎來到半平面維度。", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 60;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 90;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 100;
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	mapannounce 'map_name$, "MA-4885: 可能與實驗室3點開放的半平面接觸的網關。", bc_map,0xFFFF00,FW_NORMAL,13;
+	enablenpc instance_npcname("#central_warp_6");
+	sleep 300;
+	mapannounce 'map_name$, "MA-4885: 由於網關的不穩定性，無法保證會達到什麼樣的維度...", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 300;
+	mapannounce 'map_name$, "MA-4885: 如果有倖存的生物，我希望你好運。 我希望能再次見到你。", bc_map,0xFFFF00,FW_NORMAL,13;
+	end;
+
+S_Spawn:
+	.@round = getarg(0);
+	switch( .@round ) {
+	case 1:
+		setarray .@mob_id[0],
+			1087,	//獸人英雄
+			1147,	//蟻后
+			1190,	//獸人酋長
+			1115,	//虎王
+			1086,	//黃金蟲
+			1038,	//俄塞裡斯
+			1159,	//皮裡恩
+			1389,	//古拉男爵
+			1046,	//死靈
+			1059,	//蜂后
+			1150,	//月夜貓
+			1688,	//嗒妮小姐
+			1039,	//巴風特
+			2251,	//喬伊亞
+			3074,	//時間支配者
+			3741,	//蜘蛛戰車
+			20422,	//汙染黑暗之王
+			20421,	//汙染蜘蛛女王
+			20618,	//骷髏迪塔勒泰晤勒斯
+			20611;	//巴基利 英格麗
+		break;
+	case 2:
+		setarray .@mob_id[0],
+			1980,	//榔錘酷布靈
+			1157,	//法老王
+			1112,	//海盜之王
+			1251,	//冰暴騎士
+			2068,	//波伊塔塔
+			1373,	//死靈騎士
+			2156,	//讓特
+			1272,	//黑暗之王
+			1630,	//白素貞
+			1252,	//卡侖
+			1779,	//水晶龍
+			1708;	//魔劍士 達納托斯的記憶
+		break;
+	case 3:
+		setarray .@mob_id[0],
+			1623,	//RSX 0806
+			1418,	//墨蛇君
+			1312,	//烏龜將軍
+			1785,	//阿特羅斯
+			1734,	//齊爾-D-01
+			1719,	//迪塔勒泰晤勒斯
+			1768,	//幽暗夢魘
+			2087,	//女王甲蟲
+			1751,	//蘭特克力斯
+			2253,	//將軍大賢
+			2255,	//亡靈的守護者卡德斯
+			1832,	//伊夫利特
+			1873;	//詛咒蠅
+		break;
+	}
+	.@r = rand( getarraysize(.@mob_id) );
+	monster 'map_name$,90,88, "不明生物體",.@mob_id[.@r],1, instance_npcname("#wp02") + "::OnMyMobDead" + .@round;
+	return;
+}
+
+1@lab,91,80,5	script	#gen_01	CLEAR_NPC,{ end; }
+1@lab,96,81,5	duplicate(#gen_01)	#gen_02	CLEAR_NPC
+1@lab,99,85,5	duplicate(#gen_01)	#gen_03	CLEAR_NPC
+1@lab,99,91,5	duplicate(#gen_01)	#gen_04	CLEAR_NPC
+1@lab,96,95,5	duplicate(#gen_01)	#gen_05	CLEAR_NPC
+1@lab,91,97,5	duplicate(#gen_01)	#gen_06	CLEAR_NPC
+1@lab,85,96,5	duplicate(#gen_01)	#gen_07	CLEAR_NPC
+1@lab,82,91,5	duplicate(#gen_01)	#gen_08	CLEAR_NPC
+1@lab,82,86,5	duplicate(#gen_01)	#gen_09	CLEAR_NPC
+1@lab,85,81,5	duplicate(#gen_01)	#gen_10	CLEAR_NPC
+1@lab,90,97,5	duplicate(#gen_01)	#gen_11	CLEAR_NPC
+1@lab,82,89,5	duplicate(#gen_01)	#gen_12	CLEAR_NPC
+1@lab,91,80,5	duplicate(#gen_01)	#gen_13	CLEAR_NPC
+1@lab,99,88,5	duplicate(#gen_01)	#gen_14	CLEAR_NPC
+
+1@lab,102,28,0	warp2	#central_warp_1	2,2,1@lab,97,28
+1@lab,80,28,0	warp2	#central_warp_2	2,2,1@lab,75,28
+1@lab,58,28,0	warp2	#central_warp_3	2,2,1@lab,53,28
+1@lab,29,38,0	warp2	#central_warp_4	2,2,1@lab,29,43
+1@lab,48,82,0	warp2	#central_warp_5	2,2,1@lab,58,82
+
+1@lab,123,88,0	script	#central_warp_6	45,2,2,{
+	end;
+OnTouch:
+	dispbottom "以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	callfunc "offical_instance_finish",35;
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+
+//地圖屬性
+1@lab	mapflag	nomemo
+1@lab	mapflag	nosave	SavePoint
+1@lab	mapflag	monster_noteleport
+1@lab	mapflag	noteleport
+1@lab	mapflag	restricted	6
+
+

@@ -1,0 +1,1322 @@
+//===================================
+// =機械工匠套裝附魔
+// =================================
+vdistrict1,50,56,6	script	音格麗塔D#verus3	10053,{
+	//第四插槽
+	//+0~+8強化手套
+	set $@VerusEnc41,rand(0,7);
+	setarray $@Verusing41[0],4730,4731,4732,4750,4751,4752,4807,4842;
+	//+9強化手套 加速功能強化
+	set $@VerusEnc42,rand(0,4);
+	setarray $@Verusing42[0],4731,4732,4763,4807,4842;
+	//+9強化手套 攻擊功能強化
+	set $@VerusEnc421,rand(0,8);
+	setarray $@Verusing421[0],4701,4702,4721,4722,4811,4810,4832,4833,4834;
+	//第三插槽
+	//+0~+8強化手套
+	set $@VerusEnc31,rand(0,8);
+	setarray $@Verusing31[0],4730,4731,4732,4750,4751,4752,4860,4807,4842;
+	//+9強化手套 加速功能強化
+	set $@VerusEnc32,rand(0,4);
+	setarray $@Verusing32[0],4731,4732,4763,4807,4842;
+	//+9強化手套 攻擊功能強化
+	set $@VerusEnc321,rand(0,8);
+	setarray $@Verusing321[0],4701,4702,4721,4722,4811,4810,4832,4833,4834;
+	//第二插槽
+	//+0~+8強化手套
+	set $@VerusEnc21,rand(0,7);
+	setarray $@Verusing21[0],4730,4731,4732,4750,4751,4752,4807,4842;
+	//+9強化手套 加速功能強化
+	set $@VerusEnc22,rand(0,8);
+	setarray $@Verusing22[0],4762,4833,4721,4732,4722,4763,4834,4733,4723;
+	//+9強化手套 攻擊功能強化
+	set $@VerusEnc221,rand(0,8);
+	setarray $@Verusing221[0],4701,4702,4721,4722,4811,4810,4832,4833,4834;
+
+	//第四插槽
+	//+0~+8肌力補充裝置
+	set $@VerusEnc411,rand(0,9);
+	setarray $@Verusing411[0],4730,4731,4732,4750,4751,4752,4860,4762,4807,4842;
+	//+9肌力補充裝置(加速功能強化)
+	set $@VerusEnc1,rand(0,8);
+	setarray $@Verusing1[0],4731,4732,4751,4752,4792,4793,4794,4807,4842;
+	//+9肌力補充裝置(防禦功能強化)
+	set $@VerusEnc4,rand(0,6);
+	setarray $@Verusing4[0],4741,4742,4862,4791,4792,4933,4934;
+	//第三插槽
+	//+0~+8肌力補充裝置
+	set $@VerusEnc311,rand(0,12);
+	setarray $@Verusing311[0],4730,4731,4732,4740,4741,4750,4751,4752,4860,4762,4763,4807,4842;
+	//+9肌力補充裝置(加速功能強化)
+	set $@VerusEnc2,rand(0,8);
+	setarray $@Verusing2[0],4731,4732,4751,4752,4792,4793,4794,4807,4842;
+	//+9肌力補充裝置(防禦功能強化)
+	set $@VerusEnc5,rand(0,6);
+	setarray $@Verusing5[0],4741,4742,4862,4791,4792,4933,4934;
+	//第二插槽
+	//+0~+8肌力補充裝置
+	set $@VerusEnc211,rand(0,9);
+	setarray $@Verusing211[0],4730,4731,4732,4750,4751,4752,4860,4762,4807,4842;
+	//+9肌力補充裝置(加速功能強化)
+	set $@VerusEnc3,rand(0,8);
+	setarray $@Verusing3[0],4731,4732,4751,4752,4792,4793,4794,4807,4842;
+	//+9肌力補充裝置(防禦功能強化)
+	set $@VerusEnc6,rand(0,8);
+	setarray $@Verusing6[0],4741,4742,4862,4791,4792,4793,4933,4934,4935;
+
+	//第四插槽 +0~+8 (披肩類強化)
+	set $@VerusEnc7,rand(0,12);
+	setarray $@Verusing7[0],4700,4701,4730,4731,4740,4741,4720,4721,4710,4711,4750,4751,4832;
+	//第三插槽
+	set $@VerusEnc8,rand(0,12);
+	setarray $@Verusing8[0],4700,4701,4730,4731,4740,4741,4720,4721,4710,4711,4750,4751,4832;
+	//第二插槽
+	set $@VerusEnc9,rand(0,12);
+	setarray $@Verusing9[0],4700,4701,4730,4731,4740,4741,4720,4721,4710,4711,4750,4751,4832;
+	//第四插槽 +9 (高級披肩類強化)
+	set $@VerusEnc10,rand(0,13);
+	setarray $@Verusing10[0],4702,4701,4730,4732,4740,4742,4720,4722,4710,4712,4750,4752,4832,4833;
+	//第三插槽
+	set $@VerusEnc11,rand(0,14);
+	setarray $@Verusing11[0],4702,4701,4730,4732,4740,4742,4720,4722,4710,4712,4750,4752,4832,4833,4834;
+	//第二插槽
+	set $@VerusEnc12,rand(0,14);
+	setarray $@Verusing12[0],4702,4701,4730,4732,4740,4742,4720,4722,4710,4712,4750,4752,4832,4833,4834;
+
+	//第四插槽 +0~+8 (靴類強化)
+	set $@VerusEnc13,rand(0,9);
+	setarray $@Verusing13[0],4700,4701,4730,4731,4720,4721,4740,4741,4815,4807;
+	//第三插槽
+	set $@VerusEnc14,rand(0,9);
+	setarray $@Verusing14[0],4700,4701,4730,4731,4720,4721,4740,4741,4815,4807;
+	//第二插槽
+	set $@VerusEnc15,rand(0,9);
+	setarray $@Verusing15[0],4700,4701,4730,4731,4720,4721,4740,4741,4815,4807;
+	//第四插槽 +9 (高級靴類強化)
+	set $@VerusEnc16,rand(0,11);
+	setarray $@Verusing16[0],4702,4701,4732,4731,4722,4721,4742,4741,4815,4814,4807,4842;
+	//第三插槽
+	set $@VerusEnc17,rand(0,11);
+	setarray $@Verusing17[0],4702,4701,4732,4731,4722,4721,4742,4741,4815,4814,4807,4842;
+	//第二插槽
+	set $@VerusEnc18,rand(0,11);
+	setarray $@Verusing18[0],4702,4701,4732,4731,4722,4721,4742,4741,4815,4814,4807,4842;
+
+	//第四三二插槽 (裝飾品)
+	set $@VerusEnc19,rand(0,13);
+	setarray $@Verusing19[0],4700,4701,4730,4731,4740,4741,4720,4721,4710,4711,4750,4751,4815,4807;
+
+	mes "[音格麗塔D]";
+	mes "我主要負責付魔各種查爾斯頓取得的裝備";
+	next;
+	switch(select("我想了解更多","開始進行付魔","取消")){
+
+case 1:
+	mes "[音格麗塔D]";
+	mes "付魔裝備需要查理斯頓零件x1跟10~30萬的RO幣作為代價";
+	next;
+	mes "[音格麗塔D]";
+	mes "需要注意的是^ff0000精煉度+9以上^000000可以獲得更加強大的付魔狀態!!";
+	next;
+	mes "[音格麗塔D]";
+	mes "還有如果你裝備上插有卡片，我們在付魔的過程不會損壞你裝備上的卡片，這點請你放心!!";
+	close;
+
+case 2:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc1,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @Refining_Verus,getequiprefinerycnt(.@is);
+	if(countitem(@abd)>1){
+	mes "[音格麗塔D]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[音格麗塔D]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 15111) goto Verus_net0;	//強化手套
+	if(@abd == 15344) goto Verus_net0;	//強化手套 [1]
+	if(@abd == 15110) goto Verus_net1;	//肌力補充裝置
+	if(@abd == 15343) goto Verus_net1;	//肌力補充裝置 [1]
+	if(@abd == 20733) goto Verus_net2;	//強化引擎 [1]
+	if(@abd == 20732) goto Verus_net2;	//體力補充裝置 [1]
+	if(@abd == 15344) goto Verus_net3;	//強化助推器
+	if(@abd == 22044) goto Verus_net3;	//強化助推器 [1]
+	if(@abd == 22043) goto Verus_net3;	//敏捷補充裝置 [1]
+	if(@abd == 2995) goto Verus_net4;	//巧手補充裝置 [1]
+	if(@abd == 2996) goto Verus_net4;	//強化砲身 [1]
+
+	mes "[音格麗塔D]";
+	mes "你要附魔的裝備非機械工匠套裝，不能幫你附魔";
+	close;
+
+Verus_net0:
+	if(@Refining_Verus > 8) goto Verus_net01;
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus0A",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus0C",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus0E",6752,300000,rand(1,100);
+	}
+
+Verus_net01:
+	mes "[音格麗塔D]";
+	mes "你這是+9以上裝備";
+	mes "可以進行加速功能強化或是攻擊功能強化";
+	switch(select("加速功能強化:攻擊功能強化")){
+
+	case 1:
+		switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+		case 1:
+		callfunc "Verus1G",6752,100000,rand(1,100);
+		case 2:
+		callfunc "Verus1H",6752,200000,rand(1,100);
+		case 3:
+		callfunc "Verus1I",6752,300000,rand(1,100);
+		}
+
+	case 2:
+		switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+		case 1:
+		callfunc "Verus1G1",6752,100000,rand(1,100);
+		case 2:
+		callfunc "Verus1H1",6752,200000,rand(1,100);
+		case 3:
+		callfunc "Verus1I1",6752,300000,rand(1,100);
+		}
+	}
+
+Verus_net1:
+	if(@Refining_Verus > 8) goto Verus_net11;
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus1A",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus1C",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus1E",6752,300000,rand(1,100);
+	}
+Verus_net11:
+	mes "[音格麗塔D]";
+	mes "你這是+9以上裝備";
+	mes "可以進行加速功能強化或是防禦功能強化";
+	switch(select("加速功能強化:防禦功能強化")){
+
+	case 1:
+		switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+		case 1:
+		callfunc "Verus1B",6752,100000,rand(1,100);
+		case 2:
+		callfunc "Verus1D",6752,200000,rand(1,100);
+		case 3:
+		callfunc "Verus1F",6752,300000,rand(1,100);
+		}
+
+	case 2:
+		switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+		case 1:
+		callfunc "Verus1B1",6752,100000,rand(1,100);
+		case 2:
+		callfunc "Verus1D1",6752,200000,rand(1,100);
+		case 3:
+		callfunc "Verus1F1",6752,300000,rand(1,100);
+		}
+	}
+
+Verus_net2:
+	if(@Refining_Verus > 8) goto Verus_net21;
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus2A",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus2B",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus2C",6752,300000,rand(1,100);
+	}
+Verus_net21:
+	mes "[音格麗塔D]";
+	mes "你這是+9以上裝備";
+	mes "可以進行高級披肩類強化";
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus2A1",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus2B1",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus2C1",6752,300000,rand(1,100);
+	}
+
+
+Verus_net3:
+	if(@Refining_Verus > 8) goto Verus_net21;
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus3A",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus3B",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus3C",6752,300000,rand(1,100);
+	}
+Verus_net31:
+	mes "[音格麗塔D]";
+	mes "你這是+9以上裝備";
+	mes "可以進行高級披肩類強化";
+	switch(select("附魔第四插槽:附魔第三插槽:附魔第二插槽")){
+	case 1:
+	callfunc "Verus3A1",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus3B1",6752,200000,rand(1,100);
+	case 3:
+	callfunc "Verus3C1",6752,300000,rand(1,100);
+	}
+
+Verus_net4:
+	switch(select("附魔第四插槽:附魔第三插槽")){
+	case 1:
+	callfunc "Verus4A",6752,100000,rand(1,100);
+	case 2:
+	callfunc "Verus4B",6752,200000,rand(1,100);
+	}
+
+
+case 3:
+	close;
+
+}
+
+OnInit:
+	waitingroom "機械工匠套裝附魔",0;
+	end;
+}
+
+
+//------------------------------- +0~8強化手套4S~2S
+function	script	Verus0A	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing41[$@VerusEnc41];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus0C	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing31[$@VerusEnc31],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+function	script	Verus0E	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing21[$@VerusEnc21],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,0,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+//------------------------------- +9強化手套 加速功能強化
+function	script	Verus1G	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing42[$@VerusEnc42];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1H	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing32[$@VerusEnc32],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1I	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing22[$@VerusEnc22],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+
+//------------------------------- +9強化手套 攻擊功能強化
+function	script	Verus1G1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing421[$@VerusEnc421];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1H1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing321[$@VerusEnc321],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1I1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing221[$@VerusEnc221],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+//------------------------------- +0~+8肌力補充裝置
+function	script	Verus1A	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing411[$@VerusEnc411];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1C	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing311[$@VerusEnc311],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+function	script	Verus1E	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing211[$@VerusEnc211],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,0,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+//------------------------------- +9肌力補充裝置(加速功能強化)
+function	script	Verus1B	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing1[$@VerusEnc1];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1D	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing2[$@VerusEnc2],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+function	script	Verus1F	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing3[$@VerusEnc3],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,0,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+//------------------------------- +9肌力補充裝置(防禦功能強化)
+function	script	Verus1B1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing4[$@VerusEnc4];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus1D1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing5[$@VerusEnc5],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+function	script	Verus1F1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing6[$@VerusEnc6],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,0,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+
+//------------------------------- 強化引擎[1](披肩類強化)
+function	script	Verus2A	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing7[$@VerusEnc7];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus2B	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing8[$@VerusEnc8],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus2C	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing9[$@VerusEnc9],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+
+//------------------------------- +9強化引擎[1](高級披肩類強化)
+function	script	Verus2A1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing10[$@VerusEnc10];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus2B1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing11[$@VerusEnc11],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+
+function	script	Verus2C1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing12[$@VerusEnc12],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+//------------------------------- +0~+8 (靴類強化)
+function	script	Verus3A	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing13[$@VerusEnc13];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus3B	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing14[$@VerusEnc14],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+
+function	script	Verus3C	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing15[$@VerusEnc15],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+//------------------------------- +9 (高級靴類強化)
+function	script	Verus3A1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing16[$@VerusEnc16];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus3B1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing17[$@VerusEnc17],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+
+function	script	Verus3C1	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,$@Verusing18[$@VerusEnc18],@fakeyouc3,@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+
+
+function	script	Verus4A	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,$@Verusing19[$@VerusEnc19];
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+
+function	script	Verus4B	{
+	if(zeny<getarg(1)){
+	mes "[音格麗塔D]";
+	mes "你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[音格麗塔D]";
+	mes "你身上有沒有查理斯頓零件。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=70){
+	mes "[音格麗塔D]";
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,$@Verusing19[$@VerusEnc19],@fakeyouc4;
+	close;
+	} else {
+	mes "[音格麗塔D]";
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Refining_Verus,0,@fakeyouc1,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+
+

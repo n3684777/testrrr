@@ -1,0 +1,666 @@
+﻿//===== 熊貓模擬器 (PandasWS/Pandas) 文件 ====================
+//= 地圖示記 (Mapflag) 說明文件
+//===== 維護人員 =============================================
+//= 熊貓模擬器開發團隊 / 熱心使用者
+//===== 最後更新 =============================================
+//= 20220514 (不一定準)
+//===== 文件描述 =============================================
+//= 本文中列出了模擬器所支援的全部 rAthena 官方地圖示記.
+//= 透過給地圖設定不同的地圖示記, 可以改變玩家或魔物單位在
+//= 地圖上的行為和限制.
+//===== 修訂記錄 =============================================
+//= 20220512 繁化&解析 [SSboyz]
+//============================================================
+//= 謝絕任何其他模擬器抄襲、借鑑, 部分複製此檔案的譯文,
+//= 未經許可進行以上操作的, 保留在官網、各大社群無限期公告鄙視的權利.
+//============================================================
+
+This file describes the functions of mapflags, which determine the behavior of a
+map in various situations. For instructions on setting a mapflag, refer to the
+documentation in '/doc/script_commands.txt'.
+
+To search for a mapflag, write "*" before its name.
+The format of this file is as follows:
+	1. Restrictions
+	2. Battle-related
+	3. Map Effects
+	4. Miscellaneous
+
+===================
+| 1. Restrictions |
+===================
+---------------------------------------
+
+*noreturn
+禁止回傳地圖 (warpparty/warpguild 語法仍然無法傳送至該標籤地圖)
+
+Disables usage of map-warping items on a map:
+ - Butterfly Wing (ID 602)
+ - Yellow/Green/Red/Blue Butterfly Wing (IDs 14582-14585)
+ - Siege Teleport Scroll (ID 14591)
+ - Dungeon Teleport Scroll 1/2/3 (IDs 14527, 14581, 12352)
+
+The 'warpparty' and 'warpguild' script commands are also blocked for destinations outside the
+player's current map.
+
+---------------------------------------
+
+*noteleport
+禁止地圖內所有傳送/瞬移
+
+- 物品類：蒼蠅翅膀(因使用下方技能相關)
+- 技能類：瞬間移動/跳高/異次元之門/脅持/驅逐/命運的塔羅牌
+- 語法類：Random/warpwaitingpc/unitwarp
+- 指令類：@jump
+
+'warpwaitingpc'
+- 該標籤下使用地圖將預設為玩家 SavePoint/Save
+
+Disables all means of teleportation within a map:
+ - Items Fly Wing (ID 601) and Giant Fly Wing (ID 12212) are disabled.
+ - Skills AL_TELEPORT, TK_HIGHJUMP, and SC_DIMENSIONDOOR are disabled.
+ - Skills RG_INTIMIDATE, NPC_EXPULSION, and CG_TAROTCARD will not teleport their intended targets.
+ - Script commands using "Random" as the destination will fail.
+ - Script command 'warpwaitingpc' will fail with "SavePoint" as the destination.
+ - Script command 'unitwarp' will fail for players.
+ - Atcommand @jump is disabled.
+
+---------------------------------------
+
+*nowarp
+禁止玩家傳送
+
+- 指令碼類：warpparty/warpguild
+- 技能類：緊急召喚
+- 指令類：@warp/@go/@load/@jump/@partyrecall/@guildrecall/@recallall
+
+Disables warping from a map:
+ - Script commands 'warpparty' and 'warpguild' will not warp players on 'nowarp' maps.
+ - Atcommands @warp, @go, @load, and @jump are disabled.
+ - Atcommands @partyrecall, @guildrecall, and @recallall will not warp players on 'nowarp' maps.
+ - Skill GD_EMERGENCYCALL will not warp players on 'nowarp' maps.
+ - Unit UNT_CALLFAMILY will not warp players on 'nowarp' maps.
+
+---------------------------------------
+
+*nowarpto
+禁止傳送到持有該標籤地圖
+
+- 技能類：緊急召喚(參考conf/battle/skill.conf - emergency_call) / Flag: gvg_castle
+- 指令類：@warp/@go/@load/@jump/@partyrecall/@guildrecall/@recallall
+- 命令類：/memo
+
+Disables warping to a map:
+ - Atcommands @warp, @go, @load, and @jump are disabled to the 'nowarpto' map.
+ - Atcommands @partyrecall, @guildrecall, and @recallall are disabled.
+ - Command /memo is disabled.
+ - Skill GD_EMERGENCYCALL is disabled if flag 16 of 'emergency_call' is set in
+   '/conf/battle/skill.conf'. This will not work for 'gvg_castle' maps.
+
+---------------------------------------
+
+*nogo
+禁止使用 @go 指令
+
+Disables usage of command @go on a map.
+
+---------------------------------------
+
+*nosave	<map name>
+禁止紀錄地圖
+
+Disables auto-saving on a map. Players who log off on the map will be warped to <map name> when
+they next log in. "SavePoint", without quotes, is also valid for this field.
+
+---------------------------------------
+
+*nomemo
+禁止記憶 /memo 地圖
+
+Disables the /memo command to save a warp point on a map, and also disables usage of marriage
+skills WE_CALLPARTNER, WE_CALLPARENT, and WE_CALLBABY.
+
+---------------------------------------
+
+*noitemconsumption
+禁止使用物品(物品禁用型別 Type：Usable/Delayconsume)
+
+Disables usage of items on a map.
+
+---------------------------------------
+
+*notrade
+禁止交易
+
+Disables trading on a map.
+
+---------------------------------------
+
+*nodrop
+禁止丟棄物品 , 如果玩家揹包已滿仍會掉落(參考：conf/battle/items.conf - item_flooritem_check)
+item_flooritem_check - 通常預設 yes 即揹包滿格後掉落於地面 , no 則強制銷燬
+
+Disables dropping items on a map.
+
+Note that items may still be dropped if a player's inventory is full and 'item_flooritem_check'
+is disabled in '/conf/battle/items.conf'.
+
+---------------------------------------
+
+*noloot
+禁止掉落物品(無論是什麼型別的魔物)
+
+*nomobloot
+僅禁止普通魔物掉落
+
+*nomvploot
+僅禁止MVP魔物掉落(參考 Mob_db.yml - Modes 存在 MVP 標籤者適用)
+
+Disables normal monsters and MVPs from dropping items on a map. Looted items will always drop.
+'noloot' is the same as 'nomobloot' and 'nomvploot' combined.
+		
+---------------------------------------
+
+*noexp
+禁止從魔物獲取任何經驗值(包含MVP獎勵經驗 , 參考 mob_db.yml - MVPExp)
+
+*nobaseexp
+禁止從魔物獲取基本經驗值(參考 mob_db.yml - BaseExp)
+
+*nojobexp
+禁止從魔物獲取職業經驗值(參考 mob_db.yml - JobExp)
+
+此事件標籤仍然對 level_penalty.yml 生效，若要禁用可使用 norenewalexppenalty 標籤
+
+Disables gaining base and job experience from monsters, including MVP bonuses, on a map.
+'noexp' is the same as 'nobaseexp' and 'nojobexp' combined.
+
+---------------------------------------
+
+*nopenalty
+禁用任何懲罰事件
+
+*noexppenalty
+禁用經驗懲罰事件(適用：寵物、捨身取義/靈感...等技能消耗經驗值)
+
+*nozenypenalty
+禁用Zeny懲罰事件(參考 conf/battle/exp.conf - zeny_penalty)
+
+Disables the loss of experience and Zeny upon death on a map.
+'nopenalty' is the same as 'noexppenalty' and 'nozenypenalty' combined.
+
+Notes:
+'noexppenalty' also affects pets, and skills PR_REDEMPTIO and LG_INSPIRATION will not deduct EXP.
+'nozenypenalty' only applies if 'zeny_penalty' is enabled in '/conf/battle/exp.conf'.
+
+---------------------------------------
+
+*nochat
+禁止建立聊天室窗
+
+Disables chatroom creation on a map.
+
+---------------------------------------
+
+*novending
+禁止建立露天商店
+
+Disables shop creation on a map from the MC_VENDING skill.
+
+---------------------------------------
+
+*nobuyingstore
+禁止建立收購商店
+
+Disables shop creation on a map from the ALL_BUYING_STORE skill.
+
+---------------------------------------
+
+*nousecart
+禁止使用手推車
+
+Disables cart usage on a map.
+[Not fully implemented.]
+
+---------------------------------------
+
+*noskill
+禁止使用技能
+
+Disables skill usage on a map.
+
+---------------------------------------
+
+*restricted	<zone>
+將當前地圖加入到某一個限制區域的成員
+
+參考檔案：db/(pre-)re/item_noequip.txt / db/(pre-)re/skill_nocast_db.txt
+建議依照參考檔案判讀禁用專案結果
+依照專案設定結果使用 restricted	<zone> 即可在地圖上禁用該裝備/技能專案組
+
+技能範例：
+	於 skill_nocast_db.txt 新增 '2325,1	// 靈感#LG_INSPIRATION'
+	地圖設定 prontera	mapflag	restricted 1
+	即不可再地圖 prontera 底下施放'靈感'技能
+
+物品範例：
+	於 item_noequip.txt 新增 '2301,1	// 棉襯衫#Cotton_Shirt'
+	地圖設定 prontera	mapflag	restricted 1
+	即不可再地圖 prontera 底下穿戴裝備'棉襯衫#2301'
+
+Disables certain items and skills on a map through a specified zone number. The zone databases are
+located in 'db/(pre-)re/item_noequip.txt' and 'db/(pre-)re/skill_nocast_db.txt', both of which
+contain explanations and examples of how this mapflag is used.
+
+Restricted Zones:
+1 - Aldebaran Turbo Track
+2 - Jail
+3 - Izlude Battle Arena
+4 - WoE:SE Maps
+5 - Sealed Shrine
+6 - Instances: Endless Tower, Orc's Memory, Nidhoggr's Instance
+7 - Towns
+8 - WOE:TE Dungeons
+
+---------------------------------------
+
+*monster_noteleport
+禁止魔物傳送/瞬移 , 包含'脅持'技能
+
+Prevents monsters from teleporting on a map, including through the skill RG_INTIMIDATE.
+
+---------------------------------------
+
+*nobranch
+禁止使用樹枝召喚魔物
+
+- 物品類：枯樹枝/血跡樹枝/波利箱子/紅色炸彈
+
+rAthena原文資訊備註：
+	(X) 下方說明 db/(pre-)re/item_flag.txt 以不存在於現行版服務端來進行標籤組
+	(O) 現行版使用方式為 item_db.yml - Flags 專案新增 'DeadBranch: true' 為適用該地圖示籤組
+
+若要預設 DeadBranch 物品下召喚的魔物禁止傳送/瞬移，可利用 conf/battle/monster.conf - mob_warp 設定為 '4'
+4: 如果目標地圖擁有 'nobranch' 地圖示記, 則不會被髮送.
+
+Disables usage of monster-spawning items on a map:
+ - Dead Branch (ID 604)
+ - Bloody Branch (ID 12103)
+ - Poring Box (ID 12109)
+ - Red Pouch (ID 12024)
+
+Items listed above can be modified under db/(pre-)re/item_flag.txt
+
+Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
+also prevent mobs from being warped onto the map (except slave mobs).
+
+---------------------------------------
+
+*noicewall
+禁用'冰刃之牆'技能
+
+Disables skill WZ_ICEWALL on a map.
+
+---------------------------------------
+
+*nosunmoonstarmiracle
+禁用'奇蹟'技能
+該技能控制來源：conf\battle\skill.conf
+- sg_miracle_skill_ratio
+- sg_miracle_skill_duration
+
+Disables Star Gladiator's "Solar, Lunar, and Stellar Miracle" from occurring on a map.
+
+---------------------------------------
+
+*forcemineffect
+強制使用最小化的技能動畫效果, 類似客戶端的 /mineffect 指令
+
+Forces simpler skill effects, just like the command /mineffect.
+
+---------------------------------------
+
+*nolockon
+強制必須按住 Shift鍵 或 命令/ns 情況下攻擊玩家
+
+Disables attacking another player without holding shift or using /ns on a map.
+
+---------------------------------------
+
+*nocommand	<group level>
+禁用@/#指令 , 使用 <group level> 僅限制低於數值GM等級
+
+Disables everyone to use command on a map. If group level is specified, only disables
+player who has group level below it.
+
+---------------------------------------
+
+
+*nomapchannelautojoin
+阻止玩家加入地圖上 #map 頻道
+僅可在 conf/channels.conf - map_local_channel_autojoin 設定為 true 頻道中適用
+
+Stops players from automatically joining the #map channel on a map.
+
+This only applies if map channels are enabled and 'map_local_channel_autojoin' is true
+in '/conf/channels.conf'.
+
+---------------------------------------
+
+*notomb
+禁止MVP死亡後生成墓碑
+
+Disables MVP tombs from appearing on a map.
+
+---------------------------------------
+
+*nocostume
+禁止顯示第二服裝/特殊服裝頁簽下賦予 view 值的裝備
+
+Disables costume sprites on a map.
+
+This only disables the sprites and not the effect of the items.
+If a player logs out on a nocostume map the costume sprites will also not be shown in the
+character server.
+
+---------------------------------------
+
+*norenewaldroppenalty
+禁用 Renewal 掉落懲罰 (Renewal復興後版本限定)
+參考 db\re\level_penalty.yml - Type: Drop
+
+Disable renewal drop rate penalty due to level difference on a map.
+
+---------------------------------------
+
+*norenewalexppenalty
+禁用 Renewal 經驗懲罰 (Renewal復興後版本限定)
+參考 db\re\level_penalty.yml - Type: Exp
+
+Disable renewal experience penalty due to level difference on a map.
+
+---------------------------------------
+
+*nopetcapture
+禁止捕捉寵物
+
+Disable the ability to capture pets on a map.
+
+---------------------------------------
+
+=====================
+| 2. Battle-related |
+=====================
+---------------------------------------
+
+*pvp
+決鬥地圖
+
+*pvp_noparty
+決鬥地圖(無視同隊伍)
+
+*pvp_noguild
+決鬥地圖(無視同公會)
+
+*pvp_nocalcrank
+決鬥地圖(地圖無排名、分鍾)
+
+Pandas Only 資訊說明：
+該標籤底下地圖適用 conf\battle\pandas.conf - pk_damage_rate_effective_type: 1 調整傷害
+傷害設定比例 conf\battle\misc.conf (上方標籤必須為 1 , 設定該檔案才會生效)
+
+Enables Player vs. Player mode on a map and applies the corresponding damage adjustments.
+'pvp_noparty' will ignore party alliances.
+'pvp_noguild' will ignore guild alliances.
+'pvp_nocalcrank' will disable calculation of PvP rankings.
+
+---------------------------------------
+
+*pvp_nightmaredrop	<id>,<type>,<rate>
+玩家於該標籤底下死亡時機率掉落隨機裝備
+
+備註資訊：
+	該事件底下不需要前置 pvp/pvp_noparty/pvp_noguild/pvp_nocalcrank 標籤
+	可單獨使用且生效
+
+Causes players to drop items upon death. This is not grouped with the other PvP mapflags
+because it does not necessarily require PvP mode to be set.
+
+<id> determines what will drop. It can be either a specific item ID or "random".
+<type> specifies where items are dropped from. It can be "inventory", "equip", or "all".
+<rate> is the chance that an item will drop (10000 = 100%).
+
+---------------------------------------
+
+*gvg
+攻城戰
+
+*gvg_noparty
+攻城戰無視同盟
+
+*gvg_castle
+僅於地圖啟動城戰 OnAgitStart 時生效
+
+*gvg_dungeon
+城戰地圖死亡 2 次自動回傳重生點
+
+*gvg_te
+標記為TE城戰
+
+*gvg_te_castle
+標記為TE城戰城堡
+
+Enables Guild vs. Guild mode on a map and applies the corresponding damage adjustments.
+'gvg_noparty' will ignore party alliances.
+'gvg_castle' marks a guild castle. GvG mode will be active only during the War of Emperium.
+'gvg_dungeon' marks a guild dungeon. Players will be warped out after two deaths.
+'gvg_te' and 'gvg_te_castle' marks a WOE:TE area and special restrictions are applied.
+
+---------------------------------------
+
+*battleground	{<type>}
+戰場地圖
+
+資訊備註：
+	該標籤底下地圖適用 conf\battle\battleground.conf 調整傷害
+	
+Type:
+	1 : 無(預設)
+	2 : 顯示計分牌
+
+Enables Battlegrounds on a map and applies the corresponding damage adjustments.
+If <type> is 2, a scoreboard will be shown. The default is 1 (nothing).
+
+---------------------------------------
+
+*partylock
+鎖定隊伍
+
+*guildlock
+鎖定公會
+
+資訊備註：
+	該事件底下地圖無法異動或新增隊伍、公會現有成員
+	一般用於副本、活動相關
+
+Prevents alteration of parties and guilds on a map. This includes creating, leaving,
+inviting, expelling, breaking, and changing leaders.
+
+Notes:
+'partylock' will still allow party options to be changed.
+'guildlock' will also block changes to guild alliances.
+
+---------------------------------------
+
+*skill_damage	{<skill_name>,<caster>,<SKILLDMG_PC>,{<SKILLDMG_MOB>,{<SKILLDMG_BOSS>,{<SKILLDMG_OTHER>}}}}
+
+資訊備註：
+	於地圖上針對單一技能進行調整
+	skill_name	參考 db/(pre-)re/skill_db.yml - Name
+	caster		使用該技能(skill_name)的生效目標
+		- BL_PC		玩家
+		- BL_MOB	魔物
+		- BL_PET	寵物
+		- BL_HOM	生命體
+		- BL_MER	傭兵
+		- BL_ELEM	元素精靈
+	SKILLDMG_PC/SKILLDMG_MOB/SKILLDMG_BOSS/SKILLDMG_OTHER	技能傷害調整百分比(-100 ~ 100000)
+
+範例：
+	prontera	mapflag	skill_damage	SM_BASH,BL_PC,100000;
+
+結果：
+	玩家(BL_PC)於 prontera 地圖使用'狂擊'技能傷害+(100000/100)%
+
+rAthena原文資訊：
+
+Enables skill damage adjustment on a map. All adjustments in 'db/skill_damage_db.txt'
+for 'Map' type 16 will be applied.
+
+This mapflag can also be used to adjust the damage of one skill by a percentage:
+ - skill_name:
+	Name of the skill in 'db/(pre-)re/skill_db.yml' (ex. SM_BASH).
+	To adjust all skill damage, write "all" (without quotes).
+ - caster: the groups for which the adjustment takes effect. (bitmask)
+	BL_PC = Player
+	BL_MOB = Monster
+	BL_PET = Pet
+	BL_HOM = Homunculus
+	BL_MER = Mercenary
+	BL_ELEM = Elemental
+ - damage: percent adjustment rate (between -100 and 100000).
+	SKILLDMG_PC = against player
+	SKILLDMG_MOB = against normal monster
+	SKILLDMG_BOSS = against boss monster
+	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
+
+---------------------------------------
+
+*skill_duration	skill_name,percentage
+
+資訊備註：
+	變更單一設定技能 duration 持續時間
+
+範例：
+	prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
+結果：
+	於 prtg_cas01 地圖將'定位陷井'技能 持續時間增加 400%
+	假設使用Lv.5為持續 50 秒放置時間，因位於 prtg_cas01 地圖 +400% 持續時間，即延長至 200 秒
+
+rAthena原文資訊：
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE's lifetime in the castle 4x longer than other maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
+
+---------------------------------------
+
+===========================
+| 3. 地圖特效 Map Effects |
+===========================
+---------------------------------------
+
+地圖常駐特效
+
+*clouds
+*clouds2
+*fireworks
+*fog
+*leaves
+*sakura
+*snow
+
+Displays a weather effect on a map.
+
+---------------------------------------
+
+*nightenabled
+啟動晝夜功能
+
+Displays night mode effects on a map. This is used on most outdoor maps.
+
+---------------------------------------
+
+====================
+| 4. Miscellaneous |
+====================
+---------------------------------------
+
+*town
+地圖示記為城鎮( 可使用 mail , 禁止殺戮 例如：conf\battle\misc.conf - pk_mode )
+
+Marks a map as a town. This allows players to access their mail and disables kill stealing.
+
+---------------------------------------
+
+*reset
+允許使用物品'技能重置棒#12213'
+
+Allows usage of item Neuralizer (ID 12213).
+
+---------------------------------------
+
+*bexp	<rate>
+變更地圖基本經驗值(支援負值)
+
+*jexp	<rate>
+變更地圖職業經驗值(支援負值)
+
+資訊備註：
+	使指定地圖下經驗倍率獲得單獨設定
+	計算結果為 mob_db.yml - BaseExp/JobExp 承以(x) conf/battle/exp.conf - base_exp_rate/job_exp_rate 最後才計算bexp/jexp該標籤倍率<rate>
+
+Rate:
+	100 = 1 倍 Exp
+
+範例：(此處不考慮其他加倍/懲罰)
+	波利#1002 - BaseExp: 27
+	conf/battle/exp.conf - base_exp_rate: 300
+	prontera	mapflag	bexp 500
+	即可獲得 27 x (300/100) x (500/100) = 405 BaseExp
+
+Changes the base and job experience rates on a map. Supports negative values to reduce EXP
+rates as well.
+<rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
+'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
+
+---------------------------------------
+
+*loadevent
+賦予該標籤地圖可觸發 OnPCLoadMapEvent 事件標籤
+
+Triggers the label "OnPCLoadMapEvent" when players enter a map (this also includes
+teleporting within the map). More details can be found in '/doc/script_commands.txt'.
+
+---------------------------------------
+
+*allowks
+允許地圖中使用偷竊(使 @noks 防搶怪指令無效)
+
+Allows kill stealing on a map (rendering the @noks command useless).
+
+---------------------------------------
+
+*autotrade
+允許地圖中使用 @autotrade / @at 離線掛賣
+
+資訊備註：
+	僅適用於 conf/battle/misc.conf - at_mapflag 啟用的情況下
+	離線掛賣指令預設為所有地圖皆可使用
+
+Allows the @autotrade command on a map.
+
+This only applies if 'at_mapflag' is enabled in '/conf/battle/misc.conf'. Otherwise, the
+atcommand is enabled on all maps by default.
+
+---------------------------------------
+
+*hidemobhpbar
+隱藏魔物Hp生命條
+
+Hides monster's HP bar on a map.
+Ignores config value of 'monster_hp_bars_info'.
+
+---------------------------------------

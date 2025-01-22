@@ -1,0 +1,206 @@
+function	script	offical_instance_finish	{
+    if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+    
+    set instance_name,getarg(0);
+
+    if(instance_name == 0){ // [EP17.1]淨化克雷斯特漢姆古城
+
+    }
+    else if(instance_name == 1){ // 平行次元新危機
+
+    } 
+    else if(instance_name == 2){ // 挑戰波利村
+
+    } 
+    else if(instance_name == 3){ // 穿越次元壁
+
+    } 
+    else if(instance_name == 4){ // 恐怖玩具工廠
+
+    } 
+    else if(instance_name == 5){ // 週五副本 (未套用)
+
+    } 
+    else if(instance_name == 6){ // 週末副本 (未套用)
+
+    } 
+    else if(instance_name == 7){ // EDDA正午的弦月
+
+    } 
+    else if(instance_name == 8){ // EDDA克雷斯特漢姆的殞落
+
+    } 
+    else if(instance_name == 9){ // EDDA遠征的旅途
+
+    } 
+    else if(instance_name == 10){ // EP12.2沉沒之塔 (未套用)
+
+    } 
+    else if(instance_name == 11){ // EP12.2封印的神殿
+
+    } 
+    else if(instance_name == 12){ // EP13.1獸人的記憶
+
+    } 
+    else if(instance_name == 13){ // EP13.2尼德霍格的巢穴
+
+    } 
+    else if(instance_name == 14){ // EP13.2排水溝
+
+    } 
+    else if(instance_name == 15){ // EP13.2章魚洞穴
+
+    } 
+    else if(instance_name == 16){ // EP14.1保羅協夫的實驗室
+
+    } 
+    else if(instance_name == 17){ // EP14.1食月暴龍湖
+
+    } 
+    else if(instance_name == 18){ // EP14.1噩夢死神
+
+    } 
+    else if(instance_name == 19){ // EP14.1霧林迷宮
+
+    } 
+    else if(instance_name == 20){ // EP14.1寶箱巨鱷
+
+    } 
+    else if(instance_name == 21){ // EP14.2舊克雷斯特漢姆古城
+
+    } 
+    else if(instance_name == 22){ // EP14.3吉芬魔法大賽
+
+    } 
+    else if(instance_name == 23){ // EP14.3幽靈皇宮
+
+    } 
+    else if(instance_name == 24){ // EP14.3拜歐斯島
+
+    } 
+    else if(instance_name == 25){ // EP14.3飛空艇襲擊
+
+    } 
+    else if(instance_name == 26){ // EP14.3莎拉的記憶
+
+    } 
+    else if(instance_name == 27){ // EP14.3摩洛斯洞穴
+
+    } 
+    else if(instance_name == 28){ // EP14.3潘利爾與莎拉
+
+    } 
+    else if(instance_name == 29){ // EP14.3噩夢吉特巴
+
+    } 
+    else if(instance_name == 30){ // EP14.3魔神之塔
+
+    } 
+    else if(instance_name == 31){ // EP14.3魔神殿
+
+    } 
+    else if(instance_name == 32){ // EP14.3驚駭森靈巢穴
+
+    } 
+    else if(instance_name == 33){ // EP15.1國王鞋跟
+
+    } 
+    else if(instance_name == 34){ // EP15.1夢饜副本
+
+    } 
+    else if(instance_name == 35){ // EP15.2中央實驗室
+
+    } 
+    else if(instance_name == 36){ // EP15.2最後的房間
+
+    } 
+    else if(instance_name == 37){ // EP15.2無限空間
+
+    } 
+    else if(instance_name == 38){ // EP16.1空中要塞侵入
+
+    } 
+    else if(instance_name == 39){ // EP16.1儀式之間
+
+    } 
+    else if(instance_name == 40){ // EP16.2邪心獵人軍事基地
+
+    } 
+    else if(instance_name == 41){ // EP16.2維爾納研究所中樞室
+
+    } 
+    else if(instance_name == 42){ // EP17.1柯爾記憶迷宮
+
+    } 
+    else if(instance_name == 43){ // EP17.1第二次搜查歐斯
+
+    } 
+    else if(instance_name == 44){ // EP17.2水上花園
+
+    } 
+    else if(instance_name == 45){ // EP17.2死亡之塔
+
+    } 
+    else if(instance_name == 46){ // EP17.2克雷斯特漢姆挑戰模式
+
+    } 
+    else if(instance_name == 47){ // EP17.2祕密花園
+
+    } 
+    else if(instance_name == 48){ // EP17.2被遺忘的飼育場
+
+    } 
+    else if(instance_name == 49){ // EP17.2嘿!斯威蒂
+
+    } 
+    else if(instance_name == 50){ // EP18.1吉芬夜間鬥技場
+
+    } 
+    else if(instance_name == 51){ // EP18.1星座之塔2.0
+
+    } 
+    else if(instance_name == 52){ // EP18.1飛空艇墜落
+
+    } 
+    else if(instance_name == 53){ // EP18.1欺詐別墅
+
+    } 
+    else if(instance_name == 54){ // EP18.1聖域淨化
+
+    } 
+    else if(instance_name == 55){ // EP18.1懺悔之墓
+
+    } 
+    else if(instance_name == 56){ // EP19.1朱希婭模擬作戰
+
+    } 
+    else if(instance_name == 57){ // EP19.1飛空艇破壞行動
+
+    } 
+    else if(instance_name == 58){ // EP19.1亂蛇巢穴
+
+    } 
+    else if(instance_name == 59){ // EP20不死之人
+
+    } 
+    else if(instance_name == 60){ // EP20火之湖
+
+    } 
+    else if(instance_name == 61){ // EP20生命殿堂
+
+    } 
+    else if(instance_name == 62){ // EP20冰凍之海
+
+    } 
+    else if(instance_name == 63){ // EP21幽靈船船長
+
+    } 
+    else if(instance_name == 64){ // EP21最終之戰
+
+    } 
+
+
+
+
+    return;
+}

@@ -1,0 +1,748 @@
+trinity,69,33,4	script	凜風峽谷管理者	971,{
+
+	//挑戰次數
+	if ( day_Instance_S_Bout_04 < gettime(8) ){
+	set Instance_S_Bout_04,3;
+	set day_Instance_S_Bout_04,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_04 < 1) {
+		mes "[凜風峽谷管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[凜風峽谷管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "凜風峽谷";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[凜風峽谷管理者]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP_S+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_04+"^000000 ]";
+	mes "等級限制：200";
+	mes "副本難度：★";
+	mes "副本獎勵：^i[61007]x1";
+	mes "自創副本積分x10";
+	mes "自選一種官方材料秘寶";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[凜風峽谷管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[凜風峽谷管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】副本，請在90秒內入場！",15,0x33ea91;
+		mes "[凜風峽谷管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[凜風峽谷管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";	
+			//扣除挑戰次數
+			set Instance_S_Bout_04,Instance_S_Bout_04-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 1){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "凜風峽谷",0;
+	end;
+}
+
+
+
+
+//	取得道具
+//	getitem $@Wind_item1[1],1,getpartyleader(getcharid(1),1);
+//----------------------------------- 副本事件
+1@rob,0,0,0	script	凜風峽谷事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@rob");
+
+	//副本MOD資訊
+	setarray $@Wind_mobid1[1],28071,28072,28073,28074,28075,28076,28077,1518,1373,1492,1688,1087,1190,1511,1157,1885,28069;
+	//副本道具代碼		邪魔馬的角,惡魔骸骨
+	setarray $@Wind_item1[1],61127,61128;
+
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("凜風峽谷傳送門#Wind01");
+	disablenpc instance_npcname("凜風峽谷傳送門#Wind02");
+	disablenpc instance_npcname("凜風峽谷傳送門#Wind03");
+	disablenpc instance_npcname("凜風峽谷傳送門#Wind04");
+	disablenpc instance_npcname("神秘柱子#Wind01");
+	disablenpc instance_npcname("神秘柱子#Wind02");
+
+	//副本任務
+	set 'Wind_quest_01,0;
+	set 'Wind_quest_02,0;
+	set 'Wind_quest_03,0;
+
+	//副本公告
+	sleep 1000;
+	instance_announce instance_id(1),"凜風峽谷：副本開始後打倒100個魔物就能喚醒",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"凜風峽谷：打倒守護此地的魔物後就能讓隱藏此地BOSS現形",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"凜風峽谷：打倒隱藏的BOSS後就能開啟通往下一層的傳點了",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"凜風峽谷：凜風峽谷挑戰開始!!",bc_all,0xD7BA98;
+	set 'Water_mob_01,50;
+	set 'Water_mob_02,50;
+	set 'Wind_boss_01,2;
+	areamonster 'map_name$[0],62,145,69,63,"--ja--",28071,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd01";
+	areamonster 'map_name$[0],55,50,158,50,"--ja--",28071,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd01";
+	areamonster 'map_name$[0],300,53,150,57,"--ja--",28071,10,instance_npcname("凜風峽谷事件1")+"::OnCcdd01";
+
+	areamonster 'map_name$[0],62,145,69,63,"--ja--",28072,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd02";
+	areamonster 'map_name$[0],55,50,158,50,"--ja--",28072,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd02";
+	areamonster 'map_name$[0],300,53,150,57,"--ja--",28072,10,instance_npcname("凜風峽谷事件1")+"::OnCcdd02";
+	//副本開始關閉入場
+	sleep 90000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+
+OnCcdd01:
+	set 'Water_mob_01,'Water_mob_01-1;
+	instance_announce instance_id(1),"凜風峽谷："+'Water_mob_01+"個魔物 <- 還需要打倒 -> "+'Water_mob_02+"個魔物 ",bc_all,0xD7BA98;
+	if ('Water_mob_01==0) {
+	set 'Water_mob_01,0;
+	instance_announce instance_id(1),"凜風峽谷：獸人英雄隱藏在某個角落請大家尋找並將其擊敗!",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],62,52,62,52,"--ja--",1087,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd03";
+	}
+	end;
+
+OnCcdd02:
+	set 'Water_mob_02,'Water_mob_02-1;
+	instance_announce instance_id(1),"凜風峽谷："+'Water_mob_01+"個魔物 <- 還需要打倒 -> "+'Water_mob_02+"個魔物 ",bc_all,0xD7BA98;
+	if ('Water_mob_02==0) {
+	set 'Water_mob_02,0;
+	instance_announce instance_id(1),"凜風峽谷：獸人酋長隱藏在某個角落請大家尋找並將其擊敗!",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],250,50,250,50,"--ja--",1190,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd03";
+	}
+	end;
+
+OnCcdd03:
+	set 'Wind_boss_01,'Wind_boss_01-1;
+	instance_announce instance_id(1),"凜風峽谷：還剩下"+'Wind_boss_01+"個守衛BOSS",bc_all,0xD7BA98;
+	if ('Wind_boss_01==0) {
+	enablenpc instance_npcname("凜風峽谷傳送門#Wind01");
+	instance_announce instance_id(1),"凜風峽谷：右邊出現了通往下個區域的傳送點!",bc_all,0xD7BA98;
+	set 'Water_mob_01,100;
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",28073,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd04";
+	areamonster 'map_name$[0],315,125,107,85,"--ja--",28073,30,instance_npcname("凜風峽谷事件1")+"::OnCcdd04";
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",28074,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd04";
+	areamonster 'map_name$[0],315,125,107,85,"--ja--",28074,30,instance_npcname("凜風峽谷事件1")+"::OnCcdd04";
+	}
+	end;
+
+OnCcdd04:
+	set 'Water_mob_01,'Water_mob_01-1;
+	instance_announce instance_id(1),"凜風峽谷：還需要打倒 "+'Water_mob_01+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_01==0) {
+	instance_announce instance_id(1),"凜風峽谷：喚醒了沉睡在地底的遠古生物了....",bc_all,0xD7BA98;
+	set 'Wind_boss_01,8;
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",1518,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd05";
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",1373,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd05";
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",1492,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd05";
+	areamonster 'map_name$[0],291,211,291,85,"--ja--",1688,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd05";
+	}
+	end;
+
+OnCcdd05:
+	set 'Wind_boss_01,'Wind_boss_01-1;
+	instance_announce instance_id(1),"凜風峽谷：還剩下"+'Wind_boss_01+"個遠古生物",bc_all,0xD7BA98;
+	if ('Wind_boss_01==0) {
+	enablenpc instance_npcname("凜風峽谷傳送門#Wind02");
+	enablenpc instance_npcname("神秘柱子#Wind01");
+	instance_announce instance_id(1),"凜風峽谷：左上出現了通往下個區域的傳送點!",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],110,225,47,346,"--ja--",28075,30,instance_npcname("凜風峽谷事件1")+"::OnCcdd06";
+	areamonster 'map_name$[0],105,337,198,307,"--ja--",28075,30,instance_npcname("凜風峽谷事件1")+"::OnCcdd07";
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：收集邪魔馬的身上的角100個!!",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：拿到地圖右上的神秘柱子就能喚醒沉眠在此的古埃及神祇!!",bc_all,0xD7BA98;
+	}
+	end;
+
+OnCcdd06:
+	getitem $@Wind_item1[1],1,getpartyleader(getcharid(1),1);
+	areamonster 'map_name$[0],110,225,47,346,"--ja--",28075,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd06";
+	end;
+
+OnCcdd07:
+	getitem $@Wind_item1[1],1,getpartyleader(getcharid(1),1);
+	areamonster 'map_name$[0],105,337,198,307,"--ja--",28075,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd07";
+	end;
+
+OnCcdd08:
+	set 'Wind_boss_01,'Wind_boss_01-1;
+	instance_announce instance_id(1),"凜風峽谷：還剩下"+'Wind_boss_01+"個守衛BOSS",bc_all,0xD7BA98;
+	if ('Wind_boss_01==0) {
+	enablenpc instance_npcname("凜風峽谷傳送門#Wind03");
+	set 'Wind_boss_01,3;
+	areamonster 'map_name$[0],307,338,307,338,"--ja--",1885,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd09";
+	areamonster 'map_name$[0],322,267,322,267,"--ja--",1885,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd09";
+	areamonster 'map_name$[0],340,155,340,155,"--ja--",1885,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd09";
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：右上出現了通往下個區域的傳送點!",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：打倒盤據在這個區域的3只青冠龍!!",bc_all,0xD7BA98;
+	}
+	end;
+
+
+OnCcdd09:
+	set 'Wind_boss_01,'Wind_boss_01-1;
+	instance_announce instance_id(1),"凜風峽谷：還剩下"+'Wind_boss_01+"個守衛BOSS",bc_all,0xD7BA98;
+	if ('Wind_boss_01==0) {
+	enablenpc instance_npcname("凜風峽谷傳送門#Wind04");
+	enablenpc instance_npcname("神秘柱子#Wind02");
+	instance_announce instance_id(1),"凜風峽谷：左邊出現了通往下個區域的傳送點!",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],126,157,250,280,"--ja--",28076,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],126,157,250,280,"--ja--",28077,20,instance_npcname("凜風峽谷事件1")+"::OnCcdd11";
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：打倒守護魔物收集他們身上的惡魔骸骨!!",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"凜風峽谷：由隊長將100個惡魔骸骨放到湖中的神秘柱子即可召喚出風之精靈!!",bc_all,0xD7BA98;
+	}
+	end;
+
+OnCcdd10:
+	getitem $@Wind_item1[2],1,getpartyleader(getcharid(1),1);
+	areamonster 'map_name$[0],126,157,251,157,"--ja--",28076,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd10";
+	end;
+
+OnCcdd11:
+	getitem $@Wind_item1[2],1,getpartyleader(getcharid(1),1);
+	areamonster 'map_name$[0],126,157,251,157,"--ja--",28077,1,instance_npcname("凜風峽谷事件1")+"::OnCcdd11";
+	end;
+
+OnEnd1:
+//-----------------------------------------------------------
+	viewpoint 1,200,215,20,0xffffff;
+	killmonsterall 'map_name$[0];
+	instance_announce 0, "凜風峽谷：來地圖中間(200,215)領取獎勵吧!!",bc_map,"0x00cc66";
+	enablenpc instance_npcname("飛空艇祕寶#Wind_Box_02");
+	enablenpc instance_npcname("星座祕寶#Wind_Box_02");
+	enablenpc instance_npcname("灰狼祕寶#Wind_Box_02");
+	enablenpc instance_npcname("淨化祕寶#Wind_Box_02");
+	enablenpc instance_npcname("幽靈祕寶#Wind_Box_02");
+	enablenpc instance_npcname("生物祕寶#Wind_Box_02");
+	enablenpc instance_npcname("悔恨祕寶#Wind_Box_02");
+	enablenpc instance_npcname("雪花祕寶#Wind_Box_02");
+	enablenpc instance_npcname("自動祕寶#Wind_Box_02");
+	enablenpc instance_npcname("死亡祕寶#Wind_Box_02");
+	enablenpc instance_npcname("超時空祕寶#Wind_Box_02");
+	enablenpc instance_npcname("施密特祕寶#Wind_Box_02");
+	enablenpc instance_npcname("EDDA祕寶#Wind_Box_02");
+	enablenpc instance_npcname("古城祕寶#Wind_Box_02");
+
+	//出場公告時間
+	//set $@Wind_count,getmapusers('map_name$[0]);
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	announce "【凜風峽谷】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------副本NPC
+1@rob,209,329,0	script	神秘柱子#Wind01	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	menu "放入邪魔馬的角 [^FF0000"+countitem($@Wind_item1[1])+"/100^000000]",-;
+	if (countitem($@Wind_item1[1])<100) {
+	mes "邪魔馬的角似乎不夠，並沒有發生什麼事情。";
+	close; }
+	delitem $@Wind_item1[1],100;
+	set 'Wind_boss_01,4;
+	disablenpc instance_npcname("神秘柱子#Wind01");
+	instance_announce instance_id(1),"【凜風峽谷】：隊長["+strcharinfo(0)+"]放入邪魔馬的角，喚醒了沉眠在此的古埃及神祇",bc_all,0xD7BA98;
+	killmonsterall 'map_name$[0];
+	sleep2 300;
+	areamonster 'map_name$[0],110,225,47,346,"--ja--",1511,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd08";
+	areamonster 'map_name$[0],105,337,198,307,"--ja--",1157,2,instance_npcname("凜風峽谷事件1")+"::OnCcdd08";
+	close;
+}
+
+
+1@rob,187,215,0	script	神秘柱子#Wind02	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	menu "放入惡魔骸骨 [^FF0000"+countitem($@Wind_item1[2])+"/100^000000]",-;
+	if (countitem($@Wind_item1[2])<100) {
+	mes "惡魔骸骨似乎不夠，並沒有發生什麼事情。";
+	close; }
+	delitem $@Wind_item1[2],100;
+	disablenpc instance_npcname("神秘柱子#Wind02");
+	instance_announce instance_id(1),"【凜風峽谷】：隊長["+strcharinfo(0)+"]放入惡魔骸骨，喚醒了沉眠在此的風之精靈",bc_all,0xD7BA98;
+	killmonsterall 'map_name$[0];
+	sleep2 300;
+	areamonster 'map_name$[0],160,245,230,190,"--ja--",28069,1,instance_npcname("凜風峽谷事件1")+"::OnEnd1";
+	close;
+}
+
+
+//------------------------------ 傳點資訊
+1@rob,267,60,0	script	凜風峽谷傳送門#Wind01	45,1,1,{ warp 'map_name$[0],267,67; end; }
+1@rob,106,195,0	script	凜風峽谷傳送門#Wind02	45,1,1,{ warp 'map_name$[0],106,207; end; }
+1@rob,220,323,0	script	凜風峽谷傳送門#Wind03	45,1,1,{ warp 'map_name$[0],235,327; end; }
+1@rob,286,241,0	script	凜風峽谷傳送門#Wind04	45,1,1,{ warp 'map_name$[0],271,241; end; }
+
+
+//------------------------------ 副本寶箱
+1@rob,192,220,3	script	飛空艇祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000363,10*$EP_S;	//伊米爾碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem rand(470071,470077),1;	//不明之靴
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 飛空艇祕寶",bc_all,0xD7BA98;	
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,196,220,3	script	星座祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem rand(1000442,1000447),10*$EP_S;	//隨機一種隕石碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000372,300;	//隕石浮塵
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 星座祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,200,220,3	script	灰狼祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000405,30*$EP_S;	//紫水晶碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000405,500;	//紫水晶碎片
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 灰狼祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,204,216,3	script	淨化祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000501,2*$EP_S;	//淨化聖油
+	getitem 1000502,2*$EP_S;	//化聖水
+	getitem 1000503,2*$EP_S;	//安息手帕
+	getitem 100655,1*$EP_S;	//淨化藍圖包
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//活力信念武器
+	getitem callfunc("F_Rand",50021,650022,800012,820006,810008,830011,840007,540045,540046,550064,550026,550065,550066,500027,500028,510033,520009,530014,540024,540025,540026,550029,560020,560021,570019,570020,580019,580020,590023,590024,600018,610022,610023,630013,640021,640022,700033,700034,700035),1;
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 淨化祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,200,216,3	script	幽靈祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 6672,250*$EP_S;	//黃土的碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",400134,400141,400146,400150),1;
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 幽靈祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,196,216,3	script	生物祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000636,50*$EP_S;	//草原盧恩碎片
+	getitem 1000637,50*$EP_S;	//火焰盧恩碎片
+	getitem 1000638,50*$EP_S;	//寒冰盧恩碎片
+	getitem 1000639,50*$EP_S;	//死亡盧恩碎片
+	getitem 1001177,50*$EP_S;	//聖殿盧恩碎片
+	getitem 1001179,50*$EP_S;	//猛毒盧恩碎片
+	getitem 1001181,50*$EP_S;	//靈魂盧恩碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",1000640,1000641,1000642,1000643,1001178,1001180,1001182),200;
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 生物祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,192,216,3	script	悔恨祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000367,35*$EP_S;	//悔恨寶石
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",100480,100486),10;
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 悔恨祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,192,212,3	script	雪花祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000608,50*$EP_S;	//雪花花瓣
+	getitem 1000812,100*$EP_S;	//雪花魔石
+	getitem 1001034,1*$EP_S;	//雪花魔石萃取精華
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//閃亮的雪花魔石萃取精華 燦爛雪花魔石萃取精華
+	getitem callfunc("F_Rand",1001035,1001036),2;
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 雪花祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,196,212,3	script	自動祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000103,150*$EP_S;	//霸肋門德餐券
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000104,600;	//魔凍石
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 自動祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,200,212,3	script	死亡祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 1000257,30*$EP_S;	//惡行雕塑
+	getitem 1000263,30*$EP_S;	//善行雕塑
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000257,300;	//惡行雕塑
+	getitem 1000263,300;	//善行雕塑
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 死亡祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,204,212,3	script	超時空祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 25865,50*$EP_S;	//超時空寶石原石
+	getitem 25867,15*$EP_S;	//超時空魔力碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 100295,1;	//時光斗篷寶箱
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 超時空祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,192,209,3	script	施密特祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//凜風峽谷寶箱
+	getitem 25740,50*$EP_S;	//血腥詛咒原石
+	getitem 25739,50*$EP_S;	//血腥詛咒水晶
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 101199,1;	//時光天地樹苗寶箱
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 施密特祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@rob,196,209,3	script	EDDA祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+	getitem 25786,50*$EP_S;	//生物研究卷宗
+	getitem 25787,50*$EP_S;	//生物研究零件
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 100742,1;	//神話英雄武器盒
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 EDDA祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@rob,200,209,3	script	古城祕寶#Wind_Box_02	4_STAR_BOX_SCORE,{
+
+	callfunc "Custom_instance_reward";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+	getitem 6607,20*$EP_S;	//時光結晶
+	getitem 6755,20*$EP_S;	//受汙染的魔力
+	getitem 6608,40*$EP_S;	//凝結的魔力
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 6607,400;	//時光結晶
+	getitem 6755,400;	//受汙染的魔力
+	getitem 6608,800;	//凝結的魔力
+	announce "【凜風峽谷】："+strcharinfo(0)+"獲得了稀有的 古城祕寶 獲得大量材料",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+
+//-------------------------------- 地圖屬性
+1@rob	mapflag	restricted	6
+1@rob	mapflag	nomemo
+1@rob	mapflag	nosave	SavePoint
+1@rob	mapflag	monster_noteleport
+1@rob	mapflag	noteleport
+1@rob	mapflag	noreturn
+

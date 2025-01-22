@@ -1,0 +1,1378 @@
+vdistrict1,87,45,6	script	服飾附魔轉移員	10079,{
+
+	if(countitem(440003)>0){mes"你身上有(服飾)粉紅兔連帽衫，請先將他儲存到倉庫中";close;}
+	if(countitem(440006)>0){mes"你身上有(服飾)黑貓連帽衫，請先將他儲存到倉庫中";close;}
+	if(countitem(440007)>0){mes"你身上有(服飾)松鼠連帽衫，請先將他儲存到倉庫中";close;}
+	if(countitem(440009)>0){mes"你身上有(服飾)滿月貓連帽衫，請先將他儲存到倉庫中";close;}
+
+	if(countitem(20615)>0){mes"你身上有(服飾)學生書包，請先將他儲存到倉庫中";close;}
+	if(countitem(20616)>0){mes"你身上有(服飾)學生書包，請先將他儲存到倉庫中";close;}
+	if(countitem(20595)>0){mes"你身上有(服飾)學生書包，請先將他儲存到倉庫中";close;}
+	if(countitem(20575)>0){mes"你身上有(服飾)學生書包，請先將他儲存到倉庫中";close;}
+
+	mes "[服飾附魔轉移員]";
+	mes "只要給我一張服飾轉移卷";
+	mes "我就能幫你把服飾上的附魔效果";
+	mes "儲存在我這邊，當你需要時可以在存入到新的服飾上面!";
+	next;
+	switch(select("服飾效果設定:服飾特效設定:結束對話。")){
+
+case 1:
+	mes "[服飾附魔轉移員]";
+	mes "每次只能儲存一種服飾效果";
+	mes "必須提取出來以後才能在儲存";
+	mes "請選擇你要的服務";
+	mes "頭上服飾儲存效果：^00FF00"+getitemname(COSTUME_TOP)+"^000000";
+	mes "頭中服飾儲存效果：^00FF00"+getitemname(COSTUME_MID)+"^000000";
+	mes "頭下服飾儲存效果：^00FF00"+getitemname(COSTUME_LOW)+"^000000";
+	mes "披肩服飾[1S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT)+"^000000";
+	mes "披肩服飾[2S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT2)+"^000000";
+	mes "披肩服飾[3S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT3)+"^000000";
+	mes "披肩服飾[4S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT4)+"^000000";
+	next;
+	switch(select("提取 服飾效果:存入 服飾效果:結束對話。")){
+
+	case 1:
+		mes "[服飾附魔轉移員]";
+		mes "請選擇你要提取的服飾部位";
+		next;
+		switch(select("頭上服飾:頭中服飾:頭下服飾:披肩服飾:結束對話。")){
+
+		case 1:
+ 			if (COSTUME_TOP > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取效果的服飾";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card0 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔效果提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSA1",61036,1,rand(1,100);
+			}
+
+		case 2:
+ 			if (COSTUME_MID > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取效果的服飾";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card1 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔效果提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSA2",61036,1,rand(1,100);
+			}
+
+		case 3:
+ 			if (COSTUME_LOW > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取效果的服飾";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card2 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔效果提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSA3",61036,1,rand(1,100);
+			}
+
+		case 4:
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取效果的服飾";
+			if (getequipisequiped(13) == 0) set .@strRetPart13$,"披肩(服裝)-[無法裝置]";
+			else set .@strRetPart13$,getequipname(13);
+			set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$);
+
+			next;
+			@itemid = getequipid(.@is);
+			@refine_cnt = getequiprefinerycnt(.@is);
+			@card0 = getequipcardid(.@is, 0);
+			@card1 = getequipcardid(.@is, 1);
+			@card2 = getequipcardid(.@is, 2);
+			@card3 = getequipcardid(.@is, 3);
+			@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+			@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+			@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+			@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+			@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+			@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+			@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+			@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+			@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+			@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+			setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+			setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+			setarray @Param[0],0;	
+			@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "你想要提取哪個插槽上的附魔效果?";
+			mes "披肩服飾[1S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT)+"^000000";
+			mes "披肩服飾[2S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT2)+"^000000";
+			mes "披肩服飾[3S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT3)+"^000000";
+			mes "披肩服飾[4S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT4)+"^000000";
+			next;
+			switch(select("取消:第一插槽:第二插槽:第三插槽:第四插槽")){
+
+			case 1:
+			close;
+
+			case 2:
+ 				if (COSTUME_GARMENT > 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+				close; }
+ 				if (@card0 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "這件服飾上沒有附魔過的痕跡";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "要把這件服飾上附魔效果提取出來嗎?";
+				mes "需求材料：服裝附魔轉移卷x1";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSA4",61036,1,rand(1,100);
+				}
+
+			case 3:
+ 				if (COSTUME_GARMENT2 > 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+				close; }
+ 				if (@card1 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "這件服飾上沒有附魔過的痕跡";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "要把這件服飾上附魔效果提取出來嗎?";
+				mes "需求材料：服裝附魔轉移卷x1";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSA5",61036,1,rand(1,100);
+				}
+
+			case 4:
+ 				if (COSTUME_GARMENT3 > 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+				close; }
+ 				if (@card2 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "這件服飾上沒有附魔過的痕跡";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "要把這件服飾上附魔效果提取出來嗎?";
+				mes "需求材料：服裝附魔轉移卷x1";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSA6",61036,1,rand(1,100);
+				}
+
+			case 5:
+ 				if (COSTUME_GARMENT4 > 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "頭上服飾已經有效果儲存了，無法在儲存進去";
+				close; }
+ 				if (@card3 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "這件服飾上沒有附魔過的痕跡";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "要把這件服飾上附魔效果提取出來嗎?";
+				mes "需求材料：服裝附魔轉移卷x1";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSA7",61036,1,rand(1,100);
+				}
+
+			}
+
+		case 5:
+			mes "[服飾附魔轉移員]";
+			mes "我們還有很多其他服務，請多多利用";
+			close;
+		}
+
+
+	case 2:
+		mes "[服飾附魔轉移員]";
+		mes "請選擇你要存入效果的服飾部位";
+		mes "頭上服飾儲存效果：^00FF00"+getitemname(COSTUME_TOP)+"^000000";
+		mes "頭中服飾儲存效果：^00FF00"+getitemname(COSTUME_MID)+"^000000^000000";
+		mes "頭下服飾儲存效果：^00FF00"+getitemname(COSTUME_LOW)+"^000000";
+		mes "披肩服飾[1S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT)+"^000000";
+		mes "披肩服飾[2S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT2)+"^000000";
+		mes "披肩服飾[3S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT3)+"^000000";
+		mes "披肩服飾[4S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT4)+"^000000";
+		next;
+		switch(select("頭上服飾:頭中服飾:頭下服飾:披肩服飾:結束對話。")){
+
+		case 1:
+ 			if (COSTUME_TOP == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔效果可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入效果的服飾";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔效果存入頭上服飾嗎?";
+			mes "頭上服飾儲存效果：^00FF00"+getitemname(COSTUME_TOP)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSB1",1000000,1,rand(1,100);
+			}
+
+		case 2:
+ 			if (COSTUME_MID == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔效果可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入效果的服飾";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔效果存入頭中服飾嗎?";
+			mes "頭中服飾儲存效果：^00FF00"+getitemname(COSTUME_MID)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSB2",1000000,1,rand(1,100);
+			}
+
+		case 3:
+ 			if (COSTUME_LOW == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔效果可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入效果的服飾";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔效果存入頭下服飾嗎?";
+			mes "頭下服飾儲存效果：^00FF00"+getitemname(COSTUME_LOW)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSB3",1000000,1,rand(1,100);
+			}
+
+		case 4:
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入效果的服飾";
+	if (getequipisequiped(13) == 0) set .@strRetPart14$,"披肩(服裝)-[無法裝置]";
+	else set .@strRetPart14$,getequipname(13);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$,.@strRetPart14$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "你想要存入哪個插槽上的附魔效果?";
+			mes "披肩服飾[1S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT)+"^000000";
+			mes "披肩服飾[2S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT2)+"^000000";
+			mes "披肩服飾[3S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT3)+"^000000";
+			mes "披肩服飾[4S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT4)+"^000000";
+			next;
+			switch(select("取消:第一插槽:第二插槽:第三插槽:第四插槽(特效)")){
+
+			case 1:
+			close;
+
+			case 2:
+ 				if (COSTUME_GARMENT == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "沒有相關附魔效果可以存入!";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "確定要把這個附魔效果存入披肩服飾嗎?";
+				mes "披肩服飾[1S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT)+"^000000";
+				mes "需求材料：100萬Zeny";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSB4",1000000,1,rand(1,100);
+				}
+
+			case 3:
+ 				if (COSTUME_GARMENT2 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "沒有相關附魔效果可以存入!";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "確定要把這個附魔效果存入披肩服飾嗎?";
+				mes "披肩服飾[2S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT2)+"^000000";
+				mes "需求材料：1000萬Zeny";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSB5",10000000,1,rand(1,100);
+				}
+
+			case 4:
+ 				if (COSTUME_GARMENT3 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "沒有相關附魔效果可以存入!";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "確定要把這個附魔效果存入披肩服飾嗎?";
+				mes "披肩服飾[3S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT3)+"^000000";
+				mes "需求材料：1000萬Zeny";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSB6",10000000,1,rand(1,100);
+				}
+
+			case 5:
+ 				if (COSTUME_GARMENT4 == 0) {
+				mes "[服飾附魔轉移員]";	
+				mes "沒有相關附魔效果可以存入!";
+				close; }
+				mes "[服飾附魔轉移員]";
+				mes "確定要把這個附魔效果存入披肩服飾嗎?";
+				mes "披肩服飾[4S]儲存效果：^00FF00"+getitemname(COSTUME_GARMENT4)+"^000000";
+				mes "需求材料：1000萬Zeny";
+				next;
+				switch(select("取消:我確定")){
+				case 1:
+				close;
+				case 2:
+				callfunc "fumoCOSB7",10000000,1,rand(1,100);
+				}
+			}
+
+		case 5:
+			mes "[服飾附魔轉移員]";
+			mes "我們還有很多其他服務，請多多利用";
+			close;
+		}
+
+	case 3:
+		mes "[服飾附魔轉移員]";
+		mes "我們還有很多其他服務，請多多利用";
+		close;
+	}
+
+
+case 2:
+	mes "[服飾附魔轉移員]";
+	mes "每次只能儲存一種服飾特效";
+	mes "必須提取出來以後才能在儲存";
+	mes "請選擇你要的服務";
+	mes "頭上服飾儲存特效：^00FF00"+getitemname(EFFECT_TOP)+"^000000";
+	mes "頭中服飾儲存特效：^00FF00"+getitemname(EFFECT_MID)+"^000000";
+	mes "頭下服飾儲存特效：^00FF00"+getitemname(EFFECT_LOW)+"^000000";
+	next;
+	switch(select("提取 服飾特效:存入 服飾特效:結束對話。")){
+
+	case 1:
+		mes "[服飾附魔轉移員]";
+		mes "請選擇你要提取的服飾部位";
+		next;
+		switch(select("頭上服飾:頭中服飾:頭下服飾:結束對話。")){
+
+		case 1:
+ 			if (EFFECT_TOP > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有特效儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取特效的服飾";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card3 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔特效提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSC1",61036,1,rand(1,100);
+			}
+
+		case 2:
+ 			if (EFFECT_MID > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有特效儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取特效的服飾";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card3 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔特效提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSC2",61036,1,rand(1,100);
+			}
+
+		case 3:
+ 			if (EFFECT_LOW > 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "頭上服飾已經有特效儲存了，無法在儲存進去";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要提取特效的服飾";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+ 			if (@card3 == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "這件服飾上沒有附魔過的痕跡";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "要把這件服飾上附魔特效提取出來嗎?";
+			mes "需求材料：服裝附魔轉移卷x1";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSC3",61036,1,rand(1,100);
+			}
+
+		case 4:
+			mes "[服飾附魔轉移員]";
+			mes "我們還有很多其他服務，請多多利用";
+			close;
+		}
+
+
+	case 2:
+		mes "[服飾附魔轉移員]";
+		mes "請選擇你要存入特效的服飾部位";
+		mes "頭上服飾儲存特效：^00FF00"+getitemname(EFFECT_TOP)+"^000000";
+		mes "頭中服飾儲存特效：^00FF00"+getitemname(EFFECT_MID)+"^000000^000000";
+		mes "頭下服飾儲存特效：^00FF00"+getitemname(EFFECT_LOW)+"^000000";
+		next;
+		switch(select("頭上服飾:頭中服飾:頭下服飾:結束對話。")){
+
+		case 1:
+ 			if (EFFECT_TOP == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔特效可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入特效的服飾";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"頭上服裝頭飾-[無法裝置]";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔特效存入頭上服飾嗎?";
+			mes "頭上服飾儲存特效：^00FF00"+getitemname(EFFECT_TOP)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSD1",1000000,1,rand(1,100);
+			}
+
+		case 2:
+ 			if (EFFECT_MID == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔特效可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入特效的服飾";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"頭中服裝頭飾-[無法裝置]";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔特效存入頭中服飾嗎?";
+			mes "頭中服飾儲存特效：^00FF00"+getitemname(EFFECT_MID)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSD2",1000000,1,rand(1,100);
+			}
+
+		case 3:
+ 			if (EFFECT_LOW == 0) {
+			mes "[服飾附魔轉移員]";	
+			mes "沒有相關附魔特效可以存入!";
+			close; }
+			mes "[服飾附魔轉移員]";
+			mes "選擇你要存入特效的服飾";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"頭下服裝頭飾-[無法裝置]";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+			if(countitem(@itemid)>1){
+			mes "[服飾附魔轉移員]";
+			mes "你身上有同樣的物品，為了防止發生不必要的錯誤，請只留一件在身上。";
+			close; }
+			if(getequipisequiped(.@is) == 0){
+			mes "[服飾附魔轉移員]";
+			mes "你沒物品怎麼提取";
+			close; }
+
+			mes "[服飾附魔轉移員]";
+			mes "確定要把這個附魔特效存入頭下服飾嗎?";
+			mes "頭下服飾儲存特效：^00FF00"+getitemname(EFFECT_LOW)+"^000000";
+			mes "需求材料：100萬Zeny";
+			next;
+			switch(select("取消:我確定")){
+			case 1:
+			close;
+			case 2:
+			callfunc "fumoCOSD3",1000000,1,rand(1,100);
+			}
+
+		case 4:
+			mes "[服飾附魔轉移員]";
+			mes "我們還有很多其他服務，請多多利用";
+			close;
+		}
+
+
+	case 3:
+		mes "[服飾附魔轉移員]";
+		mes "我們還有很多其他服務，請多多利用";
+		close;
+	}
+
+
+case 3:
+	mes "[服飾附魔轉移員]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+}
+
+OnInit:
+	waitingroom "服飾附魔轉移服務",0;
+	end;
+}
+
+
+//--------------------------提取附魔(頭上)
+function	script	fumoCOSA1	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔轉移員]";
+	mes "你身上沒有服飾附魔轉移卷!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),1;
+	set COSTUME_TOP,@card0;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, 0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------提取附魔(頭中)
+function	script	fumoCOSA2	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔轉移員]";
+	mes "你身上沒有服飾附魔轉移卷!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),1;
+	set COSTUME_MID,@card1;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, 0, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------提取附魔(頭下)
+function	script	fumoCOSA3	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔轉移員]";
+	mes "你身上沒有服飾附魔轉移卷!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),1;
+	set COSTUME_LOW,@card2;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, 0, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------提取附魔(披肩) 1S
+function	script	fumoCOSA4	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔轉移員]";
+	mes "你身上沒有服飾附魔轉移卷!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),1;
+	set COSTUME_GARMENT,@card0;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, 0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------提取附魔(披肩) 2S
+function	script	fumoCOSA5	{
+	if(countitem(getarg(0))<2){
+	mes "[服飾附魔轉移員]";
+	mes "你身上服飾附魔轉移卷不足2張!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),2;
+	set COSTUME_GARMENT2,@card1;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, 0, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------提取附魔(披肩) 3S
+function	script	fumoCOSA6	{
+	if(countitem(getarg(0))<2){
+	mes "[服飾附魔轉移員]";
+	mes "你身上服飾附魔轉移卷不足2張!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),2;
+	set COSTUME_GARMENT3,@card2;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, 0, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------提取附魔(披肩) 4S
+function	script	fumoCOSA7	{
+	if(countitem(getarg(0))<2){
+	mes "[服飾附魔轉移員]";
+	mes "你身上服飾附魔轉移卷不足2張!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將這個服飾上的附魔效果提取出來了!";
+	delitem getarg(0),2;
+	set COSTUME_GARMENT4,@card3;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+//--------------------------存入附魔(頭上)
+function	script	fumoCOSB1	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, COSTUME_TOP, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_TOP,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(頭中)
+function	script	fumoCOSB2	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, COSTUME_MID, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_MID,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(頭下)
+function	script	fumoCOSB3	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, COSTUME_LOW, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_LOW,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(披肩) 1S
+function	script	fumoCOSB4	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, COSTUME_GARMENT, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_GARMENT,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(披肩) 2S
+function	script	fumoCOSB5	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, COSTUME_GARMENT2, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_GARMENT2,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(披肩) 3S
+function	script	fumoCOSB6	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, COSTUME_GARMENT3, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_GARMENT3,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔(披肩) 4S
+function	script	fumoCOSB7	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔轉移員]";
+	mes "已經將附魔效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, COSTUME_GARMENT4,@enclvl, @RDMOPT, @VALUE, @Param;
+	set COSTUME_GARMENT4,0;
+	specialeffect 154;
+	close;
+}
+
+
+
+//--------------------------提取附魔特效(頭上)
+function	script	fumoCOSC1	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上沒有服飾附魔特效轉移卷!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將這個服飾上的附魔特效效果提取出來了!";
+	delitem getarg(0),1;
+	set EFFECT_TOP,@card3;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------提取附魔特效(頭中)
+function	script	fumoCOSC2	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上沒有服飾附魔特效轉移卷!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將這個服飾上的附魔特效效果提取出來了!";
+	delitem getarg(0),1;
+	set EFFECT_MID,@card3;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------提取附魔特效(頭下)
+function	script	fumoCOSC3	{
+	if(countitem(getarg(0))<1){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上沒有服飾附魔特效轉移卷!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將這個服飾上的附魔特效效果提取出來了!";
+	delitem getarg(0),1;
+	set EFFECT_LOW,@card3;
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔特效(頭上)
+function	script	fumoCOSD1	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將附魔特效效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, EFFECT_TOP,@enclvl, @RDMOPT, @VALUE, @Param;
+	set EFFECT_TOP,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔特效(頭中)
+function	script	fumoCOSD2	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將附魔特效效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, EFFECT_MID,@enclvl, @RDMOPT, @VALUE, @Param;
+	set EFFECT_MID,0;
+	specialeffect 154;
+	close;
+}
+//--------------------------存入附魔特效(頭下)
+function	script	fumoCOSD3	{
+	if(zeny<getarg(0)){
+	mes "[服飾附魔特效轉移員]";
+	mes "你身上的RO幣不夠!";
+	close; }
+
+	mes "[服飾附魔特效轉移員]";
+	mes "已經將附魔特效效果存入到這個服飾了!";
+	set Zeny,Zeny-getarg(0);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, EFFECT_LOW,@enclvl, @RDMOPT, @VALUE, @Param;
+	set EFFECT_LOW,0;
+	specialeffect 154;
+	close;
+}
+

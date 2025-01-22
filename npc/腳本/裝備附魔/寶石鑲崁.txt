@@ -1,0 +1,1024 @@
+//------------------------------------------------
+trinity,84,65,4	script	寶石鑲崁服務員	4_F_SHALOSH,{
+
+	mes "[寶石鑲崁]";
+	mes "若想把服裝頭具設計的更酷炫，交給我店長寶石鑲崁準沒錯";
+	mes "^FF0000服裝頭具和服裝石要親自準備^000000，請別忘了喔~";
+	mes "^FF0000鑲崁費用100萬RO幣^000000";
+	mes "^FF0000拆除費用3000萬RO幣^000000";
+	mes "^FF0000100%機率成功^000000";
+	next;
+	switch(select("寶石合成:寶石分解:寶石拆除:寶石鑲崁:結束對話。")){
+
+case 1:
+	close2;
+	callshop "寶石鑲崁";
+	end;
+
+case 2:
+	mes "[寶石鑲崁]";
+	mes "請選擇你要分解的寶石種類";
+	next;
+	switch(select("時間寶石:取消")){
+
+	case 1:
+		mes "[寶石鑲崁]";
+		mes "請選擇你要分解的時間寶石等級";
+		mes "^009933綠色數字為可以獲得巔峰碎片數量^000000";
+		next;
+		switch(select("時間寶石Lv1  ^009933(20)^000000:時間寶石Lv2  ^009933(50)^000000:時間寶石Lv3  ^009933(80)^000000:時間寶石Lv4  ^009933(100)^000000:時間寶石Lv5  ^009933(200)^000000:時間寶石Lv6  ^009933(350)^000000:時間寶石Lv7  ^009933(500)^000000:時間寶石Lv8  ^009933(700)^000000:時間寶石Lv9  ^009933(800)^000000:時間寶石Lv10 ^009933(1000)^000000:取消")){
+
+		case 1:
+		if(countitem(92011) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92011,1;
+		getitem 82001,20;
+		close;
+
+		case 2:
+		if(countitem(92012) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92012,1;
+		getitem 82001,50;
+		close;
+
+		case 3:
+		if(countitem(92013) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92013,1;
+		getitem 82001,80;
+		close;
+
+		case 4:
+		if(countitem(92014) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92014,1;
+		getitem 82001,100;
+		close;
+
+		case 5:
+		if(countitem(92015) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92015,1;
+		getitem 82001,200;
+		close;
+
+		case 6:
+		if(countitem(92016) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92016,1;
+		getitem 82001,350;
+		close;
+
+		case 7:
+		if(countitem(92017) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92017,1;
+		getitem 82001,500;
+		close;
+
+		case 8:
+		if(countitem(92018) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92018,1;
+		getitem 82001,700;
+		close;
+
+		case 9:
+		if(countitem(92019) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92019,1;
+		getitem 82001,800;
+		close;
+
+		case 10:
+		if(countitem(92020) < 1){ mes "寶石少於1不能兌換"; close;}
+		delitem 92020,1;
+		getitem 82001,1000;
+		close;
+		}
+
+	case 2:
+	close;
+	}
+
+case 3:
+	mes "[寶石鑲崁]";
+	mes "請選擇要拆除的部位";
+	next;
+	switch(select("拆除服裝(頭上):拆除服裝(頭中):拆除服裝(頭下:拆除服裝(披肩))")){
+
+	case 1:
+	mes "[寶石鑲崁]";
+	mes "你確定要拆除嗎?";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+	if(@card1 == 0){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+
+	mes "[寶石鑲崁2]";
+	mes "該服飾上時間寶石為 ^00cc33"+getitemname(@card1+10000)+"^000000";
+	mes "你確定要拆除這件裝備上的時間寶石?";
+	mes "^FF0000拆除費用3000萬RO幣^000000";
+	next;
+	switch(select("確定拆除:取消")){
+
+	case 1:
+	callfunc "fumoPeakB2",(@card1+10000),30000000; end;
+
+	case 2:
+	close;
+	}
+
+
+	case 2:
+	mes "[寶石鑲崁]";
+	mes "你確定要拆除嗎?";
+
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+	if(@card0 == 0){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+
+	mes "[寶石鑲崁1]";
+	mes "該服飾上時間寶石為 ^00cc33"+getitemname(@card0+10000)+"^000000";
+	mes "你確定要拆除這件裝備上的時間寶石?";
+	mes "^FF0000拆除費用3000萬RO幣^000000";
+	next;
+	switch(select("確定拆除:取消")){
+
+	case 1:
+	callfunc "fumoPeakB1",(@card0+10000),30000000; end;
+
+	case 2:
+	close;
+	}
+
+
+	case 3:
+	mes "[寶石鑲崁]";
+	mes "你確定要拆除嗎?";
+
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+	if(@card0 == 0){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+
+	mes "[寶石鑲崁1]";
+	mes "該服飾上時間寶石為 ^00cc33"+getitemname(@card0+10000)+"^000000";
+	mes "你確定要拆除這件裝備上的時間寶石?";
+	mes "^FF0000拆除費用3000萬RO幣^000000";
+	next;
+	switch(select("確定拆除:取消")){
+
+	case 1:
+	callfunc "fumoPeakB1",(@card0+10000),30000000; end;
+
+	case 2:
+	close;
+	}
+
+	case 4:
+	mes "[寶石鑲崁]";
+	mes "你確定要拆除嗎?";
+	if (getequipisequiped(13) == 0) set .@strRetPart14$,"";
+	else set .@strRetPart14$,getequipname(13);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$,.@strRetPart14$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+	if(@card3 == 0){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+
+	mes "[寶石鑲崁]";
+	mes "該服飾上時間寶石為 ^00cc33"+getitemname(@card3+10000)+"^000000";
+	mes "你確定要拆除這件裝備上的時間寶石?";
+	mes "^FF0000拆除費用3000萬RO幣^000000";
+	next;
+	switch(select("確定拆除:取消")){
+
+	case 1:
+	callfunc "fumoPeakB4",(@card3+10000),30000000; end;
+
+	case 2:
+	close;
+	}
+
+  }
+
+
+
+case 4:
+	mes "[寶石鑲崁]";
+	mes "請選擇要鑲崁的部位";
+	next;
+	switch(select("鑲崁服裝(頭上):鑲崁服裝(頭中):鑲崁服裝(頭下):鑲崁服裝(披肩)")){
+
+	case 1:
+	mes "[寶石鑲崁]";
+	mes "你確定要鑲崁嗎?";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+
+	mes "[寶石鑲崁]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(92011)>=1?"時間寶石Lv1":"",TOP92011,
+	countitem(92012)>=1?"時間寶石Lv2":"",TOP92012,
+	countitem(92013)>=1?"時間寶石Lv3":"",TOP92013,
+	countitem(92014)>=1?"時間寶石Lv4":"",TOP92014,
+	countitem(92015)>=1?"時間寶石Lv5":"",TOP92015,
+	countitem(92016)>=1?"時間寶石Lv6":"",TOP92016,
+	countitem(92017)>=1?"時間寶石Lv7":"",TOP92017,
+	countitem(92018)>=1?"時間寶石Lv8":"",TOP92018,
+	countitem(92019)>=1?"時間寶石Lv9":"",TOP92019,
+	countitem(92020)>=1?"時間寶石Lv10":"",TOP92020,
+
+	countitem(92021)>=1?"時間寶石(技能傷害)Lv1":"",TOP92021,
+	countitem(92022)>=1?"時間寶石(技能傷害)Lv2":"",TOP92022,
+	countitem(92023)>=1?"時間寶石(技能傷害)Lv3":"",TOP92023,
+	countitem(92024)>=1?"時間寶石(技能傷害)Lv4":"",TOP92024,
+	countitem(92025)>=1?"時間寶石(技能傷害)Lv5":"",TOP92025,
+	countitem(92026)>=1?"時間寶石(技能傷害)Lv6":"",TOP92026,
+	countitem(92027)>=1?"時間寶石(技能傷害)Lv7":"",TOP92027,
+	countitem(92028)>=1?"時間寶石(技能傷害)Lv8":"",TOP92028,
+	countitem(92029)>=1?"時間寶石(技能傷害)Lv9":"",TOP92029,
+	countitem(92030)>=1?"時間寶石(技能傷害)Lv10":"",TOP92030,
+
+	countitem(92031)>=1?"時間寶石(AP恢復)Lv1":"",TOP92031,
+	countitem(92032)>=1?"時間寶石(AP恢復)Lv2":"",TOP92032,
+	countitem(92033)>=1?"時間寶石(AP恢復)Lv3":"",TOP92033,
+	countitem(92034)>=1?"時間寶石(AP恢復)Lv4":"",TOP92034,
+	countitem(92035)>=1?"時間寶石(AP恢復)Lv5":"",TOP92035,
+	countitem(92036)>=1?"時間寶石(AP恢復)Lv6":"",TOP92036,
+	countitem(92037)>=1?"時間寶石(AP恢復)Lv7":"",TOP92037,
+	countitem(92038)>=1?"時間寶石(AP恢復)Lv8":"",TOP92038,
+	countitem(92039)>=1?"時間寶石(AP恢復)Lv9":"",TOP92039,
+	countitem(92040)>=1?"時間寶石(AP恢復)Lv10":"",TOP92040,
+	countitem(92041)>=1?"時間寶石(魔法穿透)":"",TOP92041,
+
+
+	"取消",no;
+
+	TOP92011: callfunc "fumoPeakA2",92011,82011,1000000,rand(1,100); end;
+	TOP92012: callfunc "fumoPeakA2",92012,82012,1000000,rand(1,100); end;
+	TOP92013: callfunc "fumoPeakA2",92013,82013,1000000,rand(1,100); end;
+	TOP92014: callfunc "fumoPeakA2",92014,82014,1000000,rand(1,100); end;
+	TOP92015: callfunc "fumoPeakA2",92015,82015,1000000,rand(1,100); end;
+	TOP92016: callfunc "fumoPeakA2",92016,82016,1000000,rand(1,100); end;
+	TOP92017: callfunc "fumoPeakA2",92017,82017,1000000,rand(1,100); end;
+	TOP92018: callfunc "fumoPeakA2",92018,82018,1000000,rand(1,100); end;
+	TOP92019: callfunc "fumoPeakA2",92019,82019,1000000,rand(1,100); end;
+	TOP92020: callfunc "fumoPeakA2",92020,82020,1000000,rand(1,100); end;
+
+	TOP92021: callfunc "fumoPeakA2",92021,82021,1000000,rand(1,100); end;
+	TOP92022: callfunc "fumoPeakA2",92022,82022,1000000,rand(1,100); end;
+	TOP92023: callfunc "fumoPeakA2",92023,82023,1000000,rand(1,100); end;
+	TOP92024: callfunc "fumoPeakA2",92024,82024,1000000,rand(1,100); end;
+	TOP92025: callfunc "fumoPeakA2",92025,82025,1000000,rand(1,100); end;
+	TOP92026: callfunc "fumoPeakA2",92026,82026,1000000,rand(1,100); end;
+	TOP92027: callfunc "fumoPeakA2",92027,82027,1000000,rand(1,100); end;
+	TOP92028: callfunc "fumoPeakA2",92028,82028,1000000,rand(1,100); end;
+	TOP92029: callfunc "fumoPeakA2",92029,82029,1000000,rand(1,100); end;
+	TOP92030: callfunc "fumoPeakA2",92030,82030,1000000,rand(1,100); end;
+
+	TOP92031: callfunc "fumoPeakA2",92031,82031,1000000,rand(1,100); end;
+	TOP92032: callfunc "fumoPeakA2",92032,82032,1000000,rand(1,100); end;
+	TOP92033: callfunc "fumoPeakA2",92033,82033,1000000,rand(1,100); end;
+	TOP92034: callfunc "fumoPeakA2",92034,82034,1000000,rand(1,100); end;
+	TOP92035: callfunc "fumoPeakA2",92035,82035,1000000,rand(1,100); end;
+	TOP92036: callfunc "fumoPeakA2",92036,82036,1000000,rand(1,100); end;
+	TOP92037: callfunc "fumoPeakA2",92037,82037,1000000,rand(1,100); end;
+	TOP92038: callfunc "fumoPeakA2",92038,82038,1000000,rand(1,100); end;
+	TOP92039: callfunc "fumoPeakA2",92039,82039,1000000,rand(1,100); end;
+	TOP92040: callfunc "fumoPeakA2",92040,82040,1000000,rand(1,100); end;
+	TOP92041: callfunc "fumoPeakA2",92040,82041,1000000,rand(1,100); end;
+
+	case 2:
+	mes "[寶石鑲崁]";
+	mes "你確定要鑲崁嗎?";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+
+	mes "[寶石鑲崁]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(92011)>=1?"時間寶石Lv1":"",MID92011,
+	countitem(92012)>=1?"時間寶石Lv2":"",MID92012,
+	countitem(92013)>=1?"時間寶石Lv3":"",MID92013,
+	countitem(92014)>=1?"時間寶石Lv4":"",MID92014,
+	countitem(92015)>=1?"時間寶石Lv5":"",MID92015,
+	countitem(92016)>=1?"時間寶石Lv6":"",MID92016,
+	countitem(92017)>=1?"時間寶石Lv7":"",MID92017,
+	countitem(92018)>=1?"時間寶石Lv8":"",MID92018,
+	countitem(92019)>=1?"時間寶石Lv9":"",MID92019,
+	countitem(92020)>=1?"時間寶石Lv10":"",MID92020,
+
+	countitem(92021)>=1?"時間寶石(技能傷害)Lv1":"",MID92021,
+	countitem(92022)>=1?"時間寶石(技能傷害)Lv2":"",MID92022,
+	countitem(92023)>=1?"時間寶石(技能傷害)Lv3":"",MID92023,
+	countitem(92024)>=1?"時間寶石(技能傷害)Lv4":"",MID92024,
+	countitem(92025)>=1?"時間寶石(技能傷害)Lv5":"",MID92025,
+	countitem(92026)>=1?"時間寶石(技能傷害)Lv6":"",MID92026,
+	countitem(92027)>=1?"時間寶石(技能傷害)Lv7":"",MID92027,
+	countitem(92028)>=1?"時間寶石(技能傷害)Lv8":"",MID92028,
+	countitem(92029)>=1?"時間寶石(技能傷害)Lv9":"",MID92029,
+	countitem(92030)>=1?"時間寶石(技能傷害)Lv10":"",MID92030,
+
+	countitem(92031)>=1?"時間寶石(AP恢復)Lv1":"",MID92031,
+	countitem(92032)>=1?"時間寶石(AP恢復)Lv2":"",MID92032,
+	countitem(92033)>=1?"時間寶石(AP恢復)Lv3":"",MID92033,
+	countitem(92034)>=1?"時間寶石(AP恢復)Lv4":"",MID92034,
+	countitem(92035)>=1?"時間寶石(AP恢復)Lv5":"",MID92035,
+	countitem(92036)>=1?"時間寶石(AP恢復)Lv6":"",MID92036,
+	countitem(92037)>=1?"時間寶石(AP恢復)Lv7":"",MID92037,
+	countitem(92038)>=1?"時間寶石(AP恢復)Lv8":"",MID92038,
+	countitem(92039)>=1?"時間寶石(AP恢復)Lv9":"",MID92039,
+	countitem(92040)>=1?"時間寶石(AP恢復)Lv10":"",MID92040,
+	countitem(92041)>=1?"時間寶石(魔法穿透)":"",MID92041,
+
+	"取消",no;
+
+	MID92011: callfunc "fumoPeakA1",92011,82011,1000000,rand(1,100); end;
+	MID92012: callfunc "fumoPeakA1",92012,82012,1000000,rand(1,100); end;
+	MID92013: callfunc "fumoPeakA1",92013,82013,1000000,rand(1,100); end;
+	MID92014: callfunc "fumoPeakA1",92014,82014,1000000,rand(1,100); end;
+	MID92015: callfunc "fumoPeakA1",92015,82015,1000000,rand(1,100); end;
+	MID92016: callfunc "fumoPeakA1",92016,82016,1000000,rand(1,100); end;
+	MID92017: callfunc "fumoPeakA1",92017,82017,1000000,rand(1,100); end;
+	MID92018: callfunc "fumoPeakA1",92018,82018,1000000,rand(1,100); end;
+	MID92019: callfunc "fumoPeakA1",92019,82019,1000000,rand(1,100); end;
+	MID92020: callfunc "fumoPeakA1",92020,82020,1000000,rand(1,100); end;
+
+	MID92021: callfunc "fumoPeakA1",92021,82021,1000000,rand(1,100); end;
+	MID92022: callfunc "fumoPeakA1",92022,82022,1000000,rand(1,100); end;
+	MID92023: callfunc "fumoPeakA1",92023,82023,1000000,rand(1,100); end;
+	MID92024: callfunc "fumoPeakA1",92024,82024,1000000,rand(1,100); end;
+	MID92025: callfunc "fumoPeakA1",92025,82025,1000000,rand(1,100); end;
+	MID92026: callfunc "fumoPeakA1",92026,82026,1000000,rand(1,100); end;
+	MID92027: callfunc "fumoPeakA1",92027,82027,1000000,rand(1,100); end;
+	MID92028: callfunc "fumoPeakA1",92028,82028,1000000,rand(1,100); end;
+	MID92029: callfunc "fumoPeakA1",92029,82029,1000000,rand(1,100); end;
+	MID92030: callfunc "fumoPeakA1",92030,82030,1000000,rand(1,100); end;
+
+	MID92031: callfunc "fumoPeakA1",92031,82031,1000000,rand(1,100); end;
+	MID92032: callfunc "fumoPeakA1",92032,82032,1000000,rand(1,100); end;
+	MID92033: callfunc "fumoPeakA1",92033,82033,1000000,rand(1,100); end;
+	MID92034: callfunc "fumoPeakA1",92034,82034,1000000,rand(1,100); end;
+	MID92035: callfunc "fumoPeakA1",92035,82035,1000000,rand(1,100); end;
+	MID92036: callfunc "fumoPeakA1",92036,82036,1000000,rand(1,100); end;
+	MID92037: callfunc "fumoPeakA1",92037,82037,1000000,rand(1,100); end;
+	MID92038: callfunc "fumoPeakA1",92038,82038,1000000,rand(1,100); end;
+	MID92039: callfunc "fumoPeakA1",92039,82039,1000000,rand(1,100); end;
+	MID92040: callfunc "fumoPeakA1",92040,82040,1000000,rand(1,100); end;
+	MID92041: callfunc "fumoPeakA1",92041,82041,1000000,rand(1,100); end;
+
+	case 3:
+	mes "[寶石鑲崁]";
+	mes "你確定要鑲崁嗎?";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+
+	mes "[寶石鑲崁]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(92011)>=1?"時間寶石Lv1":"",LOW92011,
+	countitem(92012)>=1?"時間寶石Lv2":"",LOW92012,
+	countitem(92013)>=1?"時間寶石Lv3":"",LOW92013,
+	countitem(92014)>=1?"時間寶石Lv4":"",LOW92014,
+	countitem(92015)>=1?"時間寶石Lv5":"",LOW92015,
+	countitem(92016)>=1?"時間寶石Lv6":"",LOW92016,
+	countitem(92017)>=1?"時間寶石Lv7":"",LOW92017,
+	countitem(92018)>=1?"時間寶石Lv8":"",LOW92018,
+	countitem(92019)>=1?"時間寶石Lv9":"",LOW92019,
+	countitem(92020)>=1?"時間寶石Lv10":"",LOW92020,
+
+	countitem(92021)>=1?"時間寶石(技能傷害)Lv1":"",LOW92021,
+	countitem(92022)>=1?"時間寶石(技能傷害)Lv2":"",LOW92022,
+	countitem(92023)>=1?"時間寶石(技能傷害)Lv3":"",LOW92023,
+	countitem(92024)>=1?"時間寶石(技能傷害)Lv4":"",LOW92024,
+	countitem(92025)>=1?"時間寶石(技能傷害)Lv5":"",LOW92025,
+	countitem(92026)>=1?"時間寶石(技能傷害)Lv6":"",LOW92026,
+	countitem(92027)>=1?"時間寶石(技能傷害)Lv7":"",LOW92027,
+	countitem(92028)>=1?"時間寶石(技能傷害)Lv8":"",LOW92028,
+	countitem(92029)>=1?"時間寶石(技能傷害)Lv9":"",LOW92029,
+	countitem(92030)>=1?"時間寶石(技能傷害)Lv10":"",LOW92030,
+
+	countitem(92031)>=1?"時間寶石(AP恢復)Lv1":"",LOW92031,
+	countitem(92032)>=1?"時間寶石(AP恢復)Lv2":"",LOW92032,
+	countitem(92033)>=1?"時間寶石(AP恢復)Lv3":"",LOW92033,
+	countitem(92034)>=1?"時間寶石(AP恢復)Lv4":"",LOW92034,
+	countitem(92035)>=1?"時間寶石(AP恢復)Lv5":"",LOW92035,
+	countitem(92036)>=1?"時間寶石(AP恢復)Lv6":"",LOW92036,
+	countitem(92037)>=1?"時間寶石(AP恢復)Lv7":"",LOW92037,
+	countitem(92038)>=1?"時間寶石(AP恢復)Lv8":"",LOW92038,
+	countitem(92039)>=1?"時間寶石(AP恢復)Lv9":"",LOW92039,
+	countitem(92040)>=1?"時間寶石(AP恢復)Lv10":"",LOW92040,
+	countitem(92041)>=1?"時間寶石(魔法穿透)":"",LOW92041,
+
+
+	"取消",no;
+
+	LOW92011: callfunc "fumoPeakA1",92011,82011,1000000,rand(1,100); end;
+	LOW92012: callfunc "fumoPeakA1",92012,82012,1000000,rand(1,100); end;
+	LOW92013: callfunc "fumoPeakA1",92013,82013,1000000,rand(1,100); end;
+	LOW92014: callfunc "fumoPeakA1",92014,82014,1000000,rand(1,100); end;
+	LOW92015: callfunc "fumoPeakA1",92015,82015,1000000,rand(1,100); end;
+	LOW92016: callfunc "fumoPeakA1",92016,82016,1000000,rand(1,100); end;
+	LOW92017: callfunc "fumoPeakA1",92017,82017,1000000,rand(1,100); end;
+	LOW92018: callfunc "fumoPeakA1",92018,82018,1000000,rand(1,100); end;
+	LOW92019: callfunc "fumoPeakA1",92019,82019,1000000,rand(1,100); end;
+	LOW92020: callfunc "fumoPeakA1",92020,82020,1000000,rand(1,100); end;
+
+	LOW92021: callfunc "fumoPeakA1",92021,82021,1000000,rand(1,100); end;
+	LOW92022: callfunc "fumoPeakA1",92022,82022,1000000,rand(1,100); end;
+	LOW92023: callfunc "fumoPeakA1",92023,82023,1000000,rand(1,100); end;
+	LOW92024: callfunc "fumoPeakA1",92024,82024,1000000,rand(1,100); end;
+	LOW92025: callfunc "fumoPeakA1",92025,82025,1000000,rand(1,100); end;
+	LOW92026: callfunc "fumoPeakA1",92026,82026,1000000,rand(1,100); end;
+	LOW92027: callfunc "fumoPeakA1",92027,82027,1000000,rand(1,100); end;
+	LOW92028: callfunc "fumoPeakA1",92028,82028,1000000,rand(1,100); end;
+	LOW92029: callfunc "fumoPeakA1",92029,82029,1000000,rand(1,100); end;
+	LOW92030: callfunc "fumoPeakA1",92030,82030,1000000,rand(1,100); end;
+
+	LOW92031: callfunc "fumoPeakA1",92031,82031,1000000,rand(1,100); end;
+	LOW92032: callfunc "fumoPeakA1",92032,82032,1000000,rand(1,100); end;
+	LOW92033: callfunc "fumoPeakA1",92033,82033,1000000,rand(1,100); end;
+	LOW92034: callfunc "fumoPeakA1",92034,82034,1000000,rand(1,100); end;
+	LOW92035: callfunc "fumoPeakA1",92035,82035,1000000,rand(1,100); end;
+	LOW92036: callfunc "fumoPeakA1",92036,82036,1000000,rand(1,100); end;
+	LOW92037: callfunc "fumoPeakA1",92037,82037,1000000,rand(1,100); end;
+	LOW92038: callfunc "fumoPeakA1",92038,82038,1000000,rand(1,100); end;
+	LOW92039: callfunc "fumoPeakA1",92039,82039,1000000,rand(1,100); end;
+	LOW92040: callfunc "fumoPeakA1",92040,82040,1000000,rand(1,100); end;
+	LOW92041: callfunc "fumoPeakA1",92041,82041,1000000,rand(1,100); end;
+
+	case 4:
+	mes "[寶石鑲崁]";
+	mes "你確定要鑲崁嗎?";
+	if (getequipisequiped(13) == 0) set .@strRetPart14$,"";
+	else set .@strRetPart14$,getequipname(13);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$,.@strRetPart14$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[寶石鑲崁]";
+	mes "你身上有同樣的物品，為了防止鑲崁發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[寶石鑲崁]";
+	mes "你沒物品怎麼鑲崁";
+	close;
+	}
+
+	mes "[寶石鑲崁]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(92011)>=1?"時間寶石Lv1":"",GARMENT92011,
+	countitem(92012)>=1?"時間寶石Lv2":"",GARMENT92012,
+	countitem(92013)>=1?"時間寶石Lv3":"",GARMENT92013,
+	countitem(92014)>=1?"時間寶石Lv4":"",GARMENT92014,
+	countitem(92015)>=1?"時間寶石Lv5":"",GARMENT92015,
+	countitem(92016)>=1?"時間寶石Lv6":"",GARMENT92016,
+	countitem(92017)>=1?"時間寶石Lv7":"",GARMENT92017,
+	countitem(92018)>=1?"時間寶石Lv8":"",GARMENT92018,
+	countitem(92019)>=1?"時間寶石Lv9":"",GARMENT92019,
+	countitem(92020)>=1?"時間寶石Lv10":"",GARMENT92020,
+		countitem(2010000)>=1?"時間寶石LvMax":"",GARMENTMAX,
+
+
+	countitem(92021)>=1?"時間寶石(技能傷害)Lv1":"",GARMENT92021,
+	countitem(92022)>=1?"時間寶石(技能傷害)Lv2":"",GARMENT92022,
+	countitem(92023)>=1?"時間寶石(技能傷害)Lv3":"",GARMENT92023,
+	countitem(92024)>=1?"時間寶石(技能傷害)Lv4":"",GARMENT92024,
+	countitem(92025)>=1?"時間寶石(技能傷害)Lv5":"",GARMENT92025,
+	countitem(92026)>=1?"時間寶石(技能傷害)Lv6":"",GARMENT92026,
+	countitem(92027)>=1?"時間寶石(技能傷害)Lv7":"",GARMENT92027,
+	countitem(92028)>=1?"時間寶石(技能傷害)Lv8":"",GARMENT92028,
+	countitem(92029)>=1?"時間寶石(技能傷害)Lv9":"",GARMENT92029,
+	countitem(92030)>=1?"時間寶石(技能傷害)Lv10":"",GARMENT92030,
+
+	countitem(92031)>=1?"時間寶石(AP恢復)Lv1":"",GARMENT92031,
+	countitem(92032)>=1?"時間寶石(AP恢復)Lv2":"",GARMENT92032,
+	countitem(92033)>=1?"時間寶石(AP恢復)Lv3":"",GARMENT92033,
+	countitem(92034)>=1?"時間寶石(AP恢復)Lv4":"",GARMENT92034,
+	countitem(92035)>=1?"時間寶石(AP恢復)Lv5":"",GARMENT92035,
+	countitem(92036)>=1?"時間寶石(AP恢復)Lv6":"",GARMENT92036,
+	countitem(92037)>=1?"時間寶石(AP恢復)Lv7":"",GARMENT92037,
+	countitem(92038)>=1?"時間寶石(AP恢復)Lv8":"",GARMENT92038,
+	countitem(92039)>=1?"時間寶石(AP恢復)Lv9":"",GARMENT92039,
+	countitem(92040)>=1?"時間寶石(AP恢復)Lv10":"",GARMENT92040,
+	countitem(92041)>=1?"時間寶石(魔法穿透)":"",GARMENT92041,
+
+
+	"取消",no;
+
+	GARMENT92011: callfunc "fumoPeakA4",92011,82011,1000000,rand(1,100); end;
+	GARMENT92012: callfunc "fumoPeakA4",92012,82012,1000000,rand(1,100); end;
+	GARMENT92013: callfunc "fumoPeakA4",92013,82013,1000000,rand(1,100); end;
+	GARMENT92014: callfunc "fumoPeakA4",92014,82014,1000000,rand(1,100); end;
+	GARMENT92015: callfunc "fumoPeakA4",92015,82015,1000000,rand(1,100); end;
+	GARMENT92016: callfunc "fumoPeakA4",92016,82016,1000000,rand(1,100); end;
+	GARMENT92017: callfunc "fumoPeakA4",92017,82017,1000000,rand(1,100); end;
+	GARMENT92018: callfunc "fumoPeakA4",92018,82018,1000000,rand(1,100); end;
+	GARMENT92019: callfunc "fumoPeakA4",92019,82019,1000000,rand(1,100); end;
+	GARMENT92020: callfunc "fumoPeakA4",92020,82020,1000000,rand(1,100); end;
+	GARMENTMAX: callfunc "fumoPeakA4",2010000,2010100,1000000,rand(1,100); end;
+
+	GARMENT92021: callfunc "fumoPeakA4",92021,82021,1000000,rand(1,100); end;
+	GARMENT92022: callfunc "fumoPeakA4",92022,82022,1000000,rand(1,100); end;
+	GARMENT92023: callfunc "fumoPeakA4",92023,82023,1000000,rand(1,100); end;
+	GARMENT92024: callfunc "fumoPeakA4",92024,82024,1000000,rand(1,100); end;
+	GARMENT92025: callfunc "fumoPeakA4",92025,82025,1000000,rand(1,100); end;
+	GARMENT92026: callfunc "fumoPeakA4",92026,82026,1000000,rand(1,100); end;
+	GARMENT92027: callfunc "fumoPeakA4",92027,82027,1000000,rand(1,100); end;
+	GARMENT92028: callfunc "fumoPeakA4",92028,82028,1000000,rand(1,100); end;
+	GARMENT92029: callfunc "fumoPeakA4",92029,82029,1000000,rand(1,100); end;
+	GARMENT92030: callfunc "fumoPeakA4",92030,82030,1000000,rand(1,100); end;
+
+	GARMENT92031: callfunc "fumoPeakA4",92031,82031,1000000,rand(1,100); end;
+	GARMENT92032: callfunc "fumoPeakA4",92032,82032,1000000,rand(1,100); end;
+	GARMENT92033: callfunc "fumoPeakA4",92033,82033,1000000,rand(1,100); end;
+	GARMENT92034: callfunc "fumoPeakA4",92034,82034,1000000,rand(1,100); end;
+	GARMENT92035: callfunc "fumoPeakA4",92035,82035,1000000,rand(1,100); end;
+	GARMENT92036: callfunc "fumoPeakA4",92036,82036,1000000,rand(1,100); end;
+	GARMENT92037: callfunc "fumoPeakA4",92037,82037,1000000,rand(1,100); end;
+	GARMENT92038: callfunc "fumoPeakA4",92038,82038,1000000,rand(1,100); end;
+	GARMENT92039: callfunc "fumoPeakA4",92039,82039,1000000,rand(1,100); end;
+	GARMENT92040: callfunc "fumoPeakA4",92040,82040,1000000,rand(1,100); end;
+	GARMENT92041: callfunc "fumoPeakA4",92041,82041,1000000,rand(1,100); end;
+
+
+  }
+
+case 5:
+	mes "[寶石鑲崁]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+	}
+
+no:
+	mes "[寶石鑲崁]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+
+OnInit:
+	waitingroom "寶石鑲崁",0;
+	end;
+}
+
+
+//--------------------------鑲崁(頭中下)
+function	script	fumoPeakA1	{
+	if(countitem(getarg(0))<1){
+	mes "[寶石鑲崁]";
+	mes "你身上沒有對應的鑲崁石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	if(@card0>0){
+	mes "[寶石鑲崁]";
+	mes "該插槽已經鑲崁了!";
+	close;
+	}
+
+	dispbottom "寶石鑲崁:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, getarg(1), @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------鑲崁(頭上)
+function	script	fumoPeakA2	{
+	if(countitem(getarg(0))<1){
+	mes "[寶石鑲崁]";
+	mes "你身上沒有對應的鑲崁石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	if(@card1>0){
+	mes "[寶石鑲崁]";
+	mes "該插槽已經鑲崁了!";
+	close;
+	}
+
+	dispbottom "寶石鑲崁:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(1), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//--------------------------鑲崁3s
+function	script	fumoPeakA3	{
+	if(countitem(getarg(0))<1){
+	mes "[寶石鑲崁]";
+	mes "你身上沒有對應的鑲崁石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	if(@card1>0){
+	mes "[寶石鑲崁]";
+	mes "該插槽已經鑲崁了!";
+	close;
+	}
+
+	dispbottom "寶石鑲崁:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, getarg(1), @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+//--------------------------鑲崁(披肩)
+function	script	fumoPeakA4	{
+	if(countitem(getarg(0))<1){
+	mes "[寶石鑲崁]";
+	mes "你身上沒有對應的鑲崁石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	if(@card3>0){
+	mes "[寶石鑲崁]";
+	mes "該插槽已經鑲崁了!";
+	close;
+	}
+
+	dispbottom "寶石鑲崁:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, getarg(1),@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+
+//------------------------ 拆除 2S
+function	script	fumoPeakB2	{
+	if(getarg(0)<1){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	
+	dispbottom "時間寶石卸除成功!";
+	delitem @itemid,1;
+	getitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, 0, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+//------------------------ 拆除 1S
+function	script	fumoPeakB1	{
+	if(getarg(0)<1){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	
+	dispbottom "時間寶石卸除成功!";
+	delitem @itemid,1;
+	getitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, 0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+//------------------------ 拆除 4S
+function	script	fumoPeakB4	{
+	if(getarg(0)<1){
+	mes "[寶石鑲崁]";
+	mes "裝備上沒有時間寶石!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[寶石鑲崁]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	
+	dispbottom "時間寶石卸除成功!";
+	delitem @itemid,1;
+	getitem getarg(0),1;
+	set zeny,zeny-getarg(1);
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, 0,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+}
+
+
+
+//額外寶石碎片獎勵
+function	script	Gem_item_Lv1	{
+//
+if(rand(1000)<10) getitem 82001,1;
+return;
+}
+
+
+function	script	Gem_item_Lv2	{
+//
+if(rand(100)<10) getitem 82001,1;
+return;
+}

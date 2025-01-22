@@ -1,0 +1,116 @@
+//=====================================================
+// 最後房間 相關任務
+//======================================================
+//------------------------ 地圖屬性
+un_myst	mapflag	noteleport
+
+verus01,231,66,5	script	迪利安#verus	4_M_REDMAN,{//628
+	mes "[迪利安]";
+	mes "大家都迷路了啊，";
+	mes "這個地方有些奇怪……。";
+	mes "還是找找回去的路吧。";
+	cutin "bu_du5.bmp", 2;
+	close2;
+	cutin "bu_du5.bmp", 255;
+	end;
+}
+
+
+verus01,151,173,3	script	布魯托#verus	4_F_FRUIT,{//10079
+	mes "[布魯托]";
+	mes "太厲害了!!";
+	mes "這個，看見了嗎？";
+	mes "這裡，就在這裡!!";
+	cutin "EP15_2_fru_2.bmp", 2;
+	next;
+	select("聽說實驗大樓還有地下設施。");
+	cutin "EP15_2_fru_1.bmp", 2;
+	mes "[布魯托]";
+	mes "嗯？實驗大樓的地下設施？";
+	mes "庇護所麼？";
+	mes "從這裡^0000FF往左走^000000就能找到入口哦。";
+	next;
+	cutin "EP15_2_fru_2.bmp", 2;
+	mes "[布魯托]";
+	mes "我就先不過去了，這裡更有意思……";
+	mes "晚點再見吧……。";
+	close2;
+	cutin "EP15_2_fru_2.bmp", 255;
+	end;
+}
+
+
+verus01,123,181,3	script	貝莉蒂#Warper	4_F_BERRYTEA,{//10078
+
+	mes "[貝莉蒂]";
+	mes "啊啦，歡迎。";
+	mes "是來調查地下庇護所的麼？";
+	cutin "EP15_2_brt_2.bmp", 2;
+	next;
+	if(select("是的","只是偶爾路過") == 2) {
+		mes "[貝莉蒂]";
+		mes "哦，這樣啊。";
+		cutin "EP15_2_brt_1.bmp", 2;
+		close2;
+		cutin "EP15_2_brt_1.bmp", 255;
+		end;
+	}
+	mes "[貝莉蒂]";
+	mes "地下非常危險哦。";
+	mes "做好準備再下去吧。";
+	cutin "EP15_2_brt_1.bmp", 2;
+	next;
+	mes "[貝莉蒂]";
+	mes "下面有著其它地方見不到的怪物。";
+	mes "　";
+	mes "……而且，奇怪的怪物可能還算小事……。";
+	cutin "EP15_2_brt_3.bmp", 2;
+	close2;
+	cutin "EP15_2_brt_3.bmp", 255;
+	warp "un_bunker",98,91;
+	end;
+}
+
+
+un_bunker,100,96,3	script	馬可伊瑟#verus	4_M_BLUEMAN,{//616
+	mes "[馬可伊瑟]";
+	mes "太好了，終於找到了這裡……";
+	mes "不過怎麼回事……";
+	mes "這種噁心的味道……。";
+	cutin "bu_mark4.bmp", 0;
+	next;
+	mes "[馬可伊瑟]";
+	mes "看來還要對這個地方進行全面的調查。";
+	mes "人手再充足一些就好了……。";
+	close2;
+	cutin "bu_mark4.bmp", 255;
+	end;
+}
+
+
+un_bunker,363,171,3	script	阿魯普奧守衛#entrance	4_M_BLACKMAN,{//615
+	mes "[阿魯普奧守衛]";
+	mes "……。";
+	mes "我想，不能在這裡再浪費時間了……。";
+	cutin "bu_alp3.bmp", 2;
+	close2;
+	cutin "bu_alp3.bmp", 255;
+	end;
+}
+
+
+un_myst,27,208,5	script	貝莉蒂#unmyst	4_F_BERRYTEA,{
+
+}
+
+
+un_myst,56,206,0	script	#unmystgate	WARPNPC,1,1,{
+	end;
+	OnTouch:
+		//dialog
+		warp "un_myst",81,190;
+		end;
+}
+
+
+

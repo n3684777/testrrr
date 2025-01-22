@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= Rock Ridge Monsters Spawn Script
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+// Kiwawa Desert
+rockrdg1,0,0	monster	¯ó±F(´²¼uºj¯ó±F)	3736,55,5000,0,0
+rockrdg1,0,0	monster	¯ó±F(¥ª½ü¤âºj¯ó±F)	3737,40,5000,0,0
+rockrdg1,0,0	monster	­¥¯T	3739,60,5000,0,0
+rockrdg1,0,0	monster	µsÂÎ	1051,10,5000,0,0
+rockrdg1,0,0	monster	ºñ¯ó	1080,8,5000,0,0
+rockrdg1,0,0	monster	¶À¯ó	1081,4,5000,0,0
+rockrdg1,0,0	monster	¶ÂÛ£	1084,8,5000,0,0
+
+// Kiwawa Desert
+rockrdg2,0,0	monster	¯ó±F(¥ª½ü¤âºj¯ó±F)	3737,17,5000,0,0
+rockrdg2,0,0	monster	¯ó±F(Ås¤M¯ó±F)t	3738,52,5000,0,0
+rockrdg2,0,0	monster	­¥¯T	3739,8,5000,0,0
+rockrdg2,0,0	monster	ºñ¯ó	1080,5,5000,0,0
+rockrdg2,0,0	monster	¶À¯ó	1081,4,5000,0,0
+rockrdg2,0,0	monster	¶ÂÛ£	1084,5,5000,0,0
+rockrdg2,0,0	monster	¥ú¨~¯ó	1083,4,5000,0,0
+rockrdg2,0,0	monster	µsÂÎ	1051,8,5000,0,0
+
+//===== rAthena Script =======================================
+//= Rock Ridge Monsters Spawn Script
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+// Rock Ridge Mine
+rockmi1,0,0	monster	µsÂÎ	1051,3,5000,0,0
+rockmi1,0,0	monster	¥Ë´µ¯S	3740,25,5000,0,0
+rockmi1,0,0	monster	ºë­^¯ó±F(ºë­^´²¼uºj¯ó±F)	3747,5,5000,0,0
+rockmi1,0,0	monster	ºë­^¯ó±F(ºë­^¥ª½ü¤âºj¯ó±F)	3748,15,5000,0,0
+rockmi1,0,0	monster	ºë­^¯ó±F(ºë­^Ås¤M¯ó±F)	3749,10,5000,0,0
+rockmi1,0,0	boss_monster	»jµï¾Ô¨®	3741,1,600000,0,MVP_Points::on01
+
+// Rock Ridge Mine
+rockmi2,100,36,20,20	monster	µµ¦âÄq¥Û	3742,31,5000,0,0
+
+// Culvert
+harboro2,0,0	monster	ªh¿A±²¥ÒÂÎ	3787,35,5000,0,0
+harboro2,0,0	monster	·¾¹«	3788,35,5000,0,0
+harboro2,0,0	monster	ºÄ°A	1627,10,5000,0,0
+harboro2,0,0	monster	¶ÂÛ£	1084,20,5000,0,0
+harboro2,50,259,10,6	monster	®ü¸ª	3743,20,5000,0,0
+

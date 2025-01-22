@@ -1,0 +1,116 @@
+﻿vdistrict1,56,29,6	script	阿基奈特	660,{
+
+	mes "[阿基奈特]";
+	mes "請選擇你要附魔的裝備";
+	next;
+	switch(select("頭盔類(上):頭盔類(下):盾牌類:鞋子類:飾品類")){
+
+	case 1:
+		mes "[阿基奈特]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("塔諾斯頭盔-LT:信念意志頭盔:伊斯加爾特王冠:將領軍帽-LT:懶洋洋達納托斯苦惱-LT")){
+
+		case 1:
+		close2;
+		item_enchant 31;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 25;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 98;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 103;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 104;
+		end;
+
+
+		}
+
+
+	case 2:
+		mes "[阿基奈特]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("波利強運氣球:時光天地樹苗")){
+
+		case 1:
+		close2;
+		item_enchant 22;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 23;
+		end;
+
+		}
+
+	case 3:
+		mes "[阿基奈特]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("瘋狂兔寶寶-LT")){
+
+		case 1:
+		close2;
+		item_enchant 15;
+		end;
+
+		}
+
+	case 4:
+		mes "[阿基奈特]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("英雄戰鞋-LT")){
+
+		case 1:
+		close2;
+		item_enchant 21;
+		end;
+
+		}
+
+	case 5:
+		mes "[阿基奈特]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("英雄徽章:紅色&藍色吊墜-LT")){
+
+		case 1:
+		close2;
+		item_enchant 20;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 105;
+		end;
+
+		}
+
+	}
+
+OnInit:
+	waitingroom "KRO裝備附魔",0;
+	end;
+}
+
+
+
+
+
+

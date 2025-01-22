@@ -1,0 +1,239 @@
+trinity,99,85,6	script	歡慶開服活動服務人員	12001,{
+
+	mes "[歡慶開服活動服務人員]";
+	mes "避免再歡慶開服時間魔物跑來搗亂";
+	mes "你先替我去清除一些魔物吧!";
+	mes "任務冷卻20分鐘每次可以獲得^i[6674]";
+	next;
+	switch(select("接取任務","回報任務","兌換獎勵","進行附魔")){
+
+	case 1:
+		if(checkquest(293211,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293212,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293212,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293213,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293214,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293214,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293215,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293216,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293216,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293217,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293218,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293218,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293219,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293220,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293220,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293221,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293222,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293222,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293223,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293224,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293224,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293225,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293226,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293226,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293227,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293228,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293228,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293229,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293230,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293230,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293231,HUNTING)>=0){mes "[歡慶開服活動服務人員]"; mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(293232,PLAYTIME)==0){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(293232,PLAYTIME)==1){mes "[歡慶開服活動服務人員]"; mes "你今天已經接取過這個任務了"; close;}
+
+		if(checkquest(293212,PLAYTIME)==2){erasequest 293212;}
+		if(checkquest(293214,PLAYTIME)==2){erasequest 293214;}
+		if(checkquest(293216,PLAYTIME)==2){erasequest 293216;}
+		if(checkquest(293218,PLAYTIME)==2){erasequest 293218;}
+		if(checkquest(293220,PLAYTIME)==2){erasequest 293220;}
+		if(checkquest(293222,PLAYTIME)==2){erasequest 293222;}
+		if(checkquest(293224,PLAYTIME)==2){erasequest 293224;}
+		if(checkquest(293226,PLAYTIME)==2){erasequest 293226;}
+		if(checkquest(293228,PLAYTIME)==2){erasequest 293228;}
+		if(checkquest(293230,PLAYTIME)==2){erasequest 293230;}
+		if(checkquest(293232,PLAYTIME)==2){erasequest 293232;}
+
+		switch(rand(1,11)){
+			case 1:
+			setquest 293211;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 2:
+			setquest 293213;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 3:
+			setquest 293215;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 4:
+			setquest 293217;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 5:
+			setquest 293219;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 6:
+			setquest 293221;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 7:
+			setquest 293223;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 8:
+			setquest 293225;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 9:
+			setquest 293227;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 10:
+			setquest 293229;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+
+			case 11:
+			setquest 293231;
+			mes "[歡慶開服活動服務人員]";
+			mes "任務接取完成";
+			close;
+			}
+
+	case 2:
+		if(checkquest(293211,HUNTING)==2 ) { 
+		erasequest 293211;
+		setquest 293212;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293213,HUNTING)==2 ) { 
+		erasequest 293213;
+		setquest 293214;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293215,HUNTING)==2 ) { 
+		erasequest 293215;
+		setquest 293216;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293217,HUNTING)==2 ) { 
+		erasequest 293217;
+		setquest 293218;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293219,HUNTING)==2 ) { 
+		erasequest 293219;
+		setquest 293220;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293221,HUNTING)==2 ) { 
+		erasequest 293221;
+		setquest 293222;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293223,HUNTING)==2 ) { 
+		erasequest 293223;
+		setquest 293224;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293225,HUNTING)==2 ) { 
+		erasequest 293225;
+		setquest 293226;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293227,HUNTING)==2 ) { 
+		erasequest 293227;
+		setquest 293228;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293229,HUNTING)==2 ) { 
+		erasequest 293229;
+		setquest 293230;
+		getitem 6674,1;
+		close;
+		}
+		if(checkquest(293231,HUNTING)==2 ) { 
+		erasequest 293231;
+		setquest 293232;
+		getitem 6674,1;
+		close;
+		}
+		mes "[歡慶開服活動服務人員]";
+		mes "沒有完成的任務!";
+		close;
+
+	case 3:
+		close2;
+		callshop "歡慶開服活動";
+		end;
+
+	case 4:
+		mes "[歡慶開服活動服務人員]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("波利強運氣球:活動服飾:活動服飾披肩")){
+
+		case 1:
+		close2;
+		item_enchant 22;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 37;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 38;
+		end;
+
+		}
+	}
+
+OnInit:
+	waitingroom "歡慶開服活動",0;
+	end;
+}
+

@@ -1,0 +1,25 @@
+﻿vdistrict1,79,30,6	script	鐘塔武器	4_EP18_GW_WOMAN02,{
+
+	mes "[鐘塔武器]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("製作 鐘塔武器:附魔 鐘塔武器:取消")){
+
+	case 1:
+	close2;
+	callshop "堅硬武器";
+	end;
+
+	case 2:
+	item_enchant 24;
+	end;
+
+	case 3:
+	close;
+	}
+
+OnInit:
+	waitingroom "鐘塔武器",0;
+	end;
+}
+

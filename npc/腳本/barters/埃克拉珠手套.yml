@@ -1,0 +1,65 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#埃克拉珠手套
+   - Name: 埃克拉珠手套兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_NOVICE2
+     Items:
+       - Index: 1
+         Item: Str_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+       - Index: 2
+         Item: Int_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+       - Index: 3
+         Item: Agi_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+       - Index: 4
+         Item: Vit_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+       - Index: 5
+         Item: Dex_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+       - Index: 6
+         Item: Luk_Glove_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Splendide_Coin
+             Amount: 25
+
+
+

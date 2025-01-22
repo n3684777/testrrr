@@ -1,0 +1,951 @@
+vdistrict1,73,63,6	script	豪哥	880,{
+	//附魔狀態
+	set $@Spark_1,rand(0,4);
+	set $@Spark_2,rand(0,4);
+	set $@Spark_3,rand(0,4);
+	set $@Spark_4,rand(0,4);
+	set $@Spark_5,rand(0,4);
+	set $@Spark_6,rand(0,4);
+
+	setarray $@Spark_ing1[0],4994,4994,4995,4995,4996;
+	setarray $@Spark_ing2[0],4997,4997,4998,4998,4999;
+	setarray $@Spark_ing3[0],29000,29000,29001,29001,29002;
+	setarray $@Spark_ing4[0],29003,29003,29004,29004,29005;
+	setarray $@Spark_ing5[0],29006,29006,29007,29007,29008;
+	setarray $@Spark_ing6[0],29009,29009,29010,29010,29011;
+
+	mes "[豪哥]";
+	mes "只要有秀發茲榮譽之證給我當報酬";
+	mes "我就能替你強化以下裝備：";
+	mes "^i[15163]^i[15164]^i[28425]^i[28426]";
+	mes "^FF0000附魔費用100萬RO幣^000000";
+	next;
+	switch(select("製作裝備:進行附魔:重置附魔:取消")){
+
+case 1:
+	close2;
+	callshop "星火同盟裝備";
+	end;
+
+case 2:
+	mes "[豪哥]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyour_Spark_1,getequipcardid(.@is,0);
+	set @fakeyour_Spark_2,getequipcardid(.@is,1);
+	set @fakeyour_Spark_3,getequipcardid(.@is,2);
+	set @fakeyour_Spark_4,getequipcardid(.@is,3);
+	set @Refine_Spark,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[豪哥]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes "[豪哥]";
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 15163) goto Spark_net1; //議程外袍
+	if(@abd == 15164) goto Spark_net1; //喬事外袍
+	if(@abd == 28425) goto Spark_net2; //傭兵之戒A式
+	if(@abd == 28426) goto Spark_net2; //傭兵之戒B式
+
+	mes "[豪哥]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Spark_net1:
+	mes "[豪哥]";
+	mes "你想要在哪個插槽上進行附魔?";
+	mes "附魔材料：秀發茲榮譽之證20個、Zeny100萬";
+
+	next;
+	switch(select("取消:第三插槽:第四插槽")){
+
+	case 1:
+	close;
+
+	case 2:
+		mes "[豪哥]";
+		mes "你想要在第三插槽上附魔上哪種能力?";
+		next;
+		switch(select("取消:力量尼夫:敏捷尼夫:魔力尼夫:靈巧尼夫:幸運尼夫:體力尼夫")){
+
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoSpark_A1",25155,1000000,rand(1,100);
+		case 3:
+		callfunc "fumoSpark_A2",25155,1000000,rand(1,100);
+		case 4:
+		callfunc "fumoSpark_A3",25155,1000000,rand(1,100);
+		case 5:
+		callfunc "fumoSpark_A4",25155,1000000,rand(1,100);
+		case 6:
+		callfunc "fumoSpark_A5",25155,1000000,rand(1,100);
+		case 7:
+		callfunc "fumoSpark_A6",25155,1000000,rand(1,100);
+		}
+
+	case 3:
+		mes "[豪哥]";
+		mes "你想要在第四插槽上附魔上哪種能力?";
+		next;
+		switch(select("取消:力量尼夫:敏捷尼夫:魔力尼夫:靈巧尼夫:幸運尼夫:體力尼夫")){
+
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoSpark_B1",25155,1000000,rand(1,100);
+		case 3:
+		callfunc "fumoSpark_B2",25155,1000000,rand(1,100);
+		case 4:
+		callfunc "fumoSpark_B3",25155,1000000,rand(1,100);
+		case 5:
+		callfunc "fumoSpark_B4",25155,1000000,rand(1,100);
+		case 6:
+		callfunc "fumoSpark_B5",25155,1000000,rand(1,100);
+		case 7:
+		callfunc "fumoSpark_B6",25155,1000000,rand(1,100);
+		}
+	}
+
+Spark_net2:
+	mes "[豪哥]";
+	mes "你想要在哪個插槽上進行附魔?";
+	mes "附魔材料：秀發茲榮譽之證5個、Zeny100萬";
+
+	next;
+	switch(select("取消:第三插槽:第四插槽")){
+
+	case 1:
+	close;
+
+	case 2:
+		mes "[豪哥]";
+		mes "你想要在第三插槽上附魔上哪種能力?";
+		next;
+		switch(select("取消:力量:敏捷:魔力:靈巧:幸運:體力")){
+
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoSpark_C1",25155,1000000,rand(1,100);
+		case 3:
+		callfunc "fumoSpark_C2",25155,1000000,rand(1,100);
+		case 4:
+		callfunc "fumoSpark_C3",25155,1000000,rand(1,100);
+		case 5:
+		callfunc "fumoSpark_C4",25155,1000000,rand(1,100);
+		case 6:
+		callfunc "fumoSpark_C5",25155,1000000,rand(1,100);
+		case 7:
+		callfunc "fumoSpark_C6",25155,1000000,rand(1,100);
+		}
+
+	case 3:
+		mes "[豪哥]";
+		mes "你想要在第四插槽上附魔上哪種能力?";
+		next;
+		switch(select("取消:力量:敏捷:魔力:靈巧:幸運:體力")){
+
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoSpark_D1",25155,1000000,rand(1,100);
+		case 3:
+		callfunc "fumoSpark_D2",25155,1000000,rand(1,100);
+		case 4:
+		callfunc "fumoSpark_D3",25155,1000000,rand(1,100);
+		case 5:
+		callfunc "fumoSpark_D4",25155,1000000,rand(1,100);
+		case 6:
+		callfunc "fumoSpark_D5",25155,1000000,rand(1,100);
+		case 7:
+		callfunc "fumoSpark_D6",25155,1000000,rand(1,100);
+		}
+	}
+
+case 3:
+	mes "[豪哥]";
+	mes "你確定要重置附魔嗎?";
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyour_Spark_1,getequipcardid(.@is,0);
+	set @fakeyour_Spark_2,getequipcardid(.@is,1);
+	set @fakeyour_Spark_3,getequipcardid(.@is,2);
+	set @fakeyour_Spark_4,getequipcardid(.@is,3);
+	set @Refine_Spark,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[豪哥]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes "[豪哥]";
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 15163) goto Spark_net2_1; //議程外袍
+	if(@abd == 15164) goto Spark_net2_1; //喬事外袍
+	if(@abd == 28425) goto Spark_net2_2; //傭兵之戒A式
+	if(@abd == 28426) goto Spark_net2_2; //傭兵之戒B式
+
+	mes "[豪哥]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Spark_net2_1:
+	mes "[豪哥]";
+	mes "你確定要蟲置這個裝備上的附魔?";
+	mes "附魔材料：秀發茲榮譽之證200個、Zeny1000萬";
+
+	next;
+	switch(select("取消:我確定要重置附魔")){
+
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoSpark_Del_1",25155,10000000,rand(1,100);
+	}
+
+Spark_net2_2:
+	mes "[豪哥]";
+	mes "你確定要蟲置這個裝備上的附魔?";
+	mes "附魔材料：秀發茲榮譽之證50個、Zeny5000萬";
+	next;
+	switch(select("取消:我確定要重置附魔")){
+
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoSpark_Del_2",25155,5000000,rand(1,100);
+	}
+
+case 4:
+	close;
+
+	}
+OnInit:
+	waitingroom "星火同盟裝備",0;
+	end;
+}
+
+
+//--------------------------重置附魔
+function	script	fumoSpark_Del_1	{
+	if(@fakeyour_Spark_3 == 0){
+	mes "[豪哥]";
+	mes "第三插槽沒有附魔痕跡!!";
+	close;
+	}
+	if(@fakeyour_Spark_4 == 0){
+	mes "[豪哥]";
+	mes "第四插槽沒有附魔痕跡!!";
+	close;
+	}
+	if(countitem(getarg(0))<200){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備重置了能力值!";
+	delitem getarg(0),200;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,0,0;
+	close;
+}
+
+
+function	script	fumoSpark_Del_2	{
+	if(@fakeyour_Spark_3 == 0){
+	mes "[豪哥]";
+	mes "第三插槽沒有附魔痕跡!!";
+	close;
+	}
+	if(@fakeyour_Spark_4 == 0){
+	mes "[豪哥]";
+	mes "第四插槽沒有附魔痕跡!!";
+	close;
+	}
+	if(countitem(getarg(0))<50){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備重置了能力值!";
+	delitem getarg(0),50;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,0,0;
+	close;
+}
+
+
+
+
+//--------------------------附魔狀態1
+
+function	script	fumoSpark_A1	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing1[$@Spark_1],@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_A2	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing2[$@Spark_2],@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_A3	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing3[$@Spark_3],@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_A4	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing4[$@Spark_4],@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_A5	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing5[$@Spark_5],@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_A6	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,$@Spark_ing6[$@Spark_6],@fakeyour_Spark_4;
+	close;
+}
+
+
+
+
+
+function	script	fumoSpark_B1	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing1[$@Spark_1];
+	close;
+}
+
+
+function	script	fumoSpark_B2	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing2[$@Spark_2];
+	close;
+}
+
+function	script	fumoSpark_B3	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing3[$@Spark_3];
+	close;
+}
+
+
+function	script	fumoSpark_B4	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing4[$@Spark_4];
+	close;
+}
+
+
+function	script	fumoSpark_B5	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing5[$@Spark_5];
+	close;
+}
+
+
+function	script	fumoSpark_B6	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第四插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),20;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,$@Spark_ing6[$@Spark_6];
+	close;
+}
+
+
+
+
+
+//-------------------------- 普隆德拉徽章 附魔狀態
+function	script	fumoSpark_C1	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4700,4702),@fakeyour_Spark_4;
+	close;
+}
+
+function	script	fumoSpark_C2	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4730,4732),@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_C3	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4710,4712),@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_C4	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4720,4722),@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_C5	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4750,4752),@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_C6	{
+	if(@fakeyour_Spark_3 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,rand(4740,4742),@fakeyour_Spark_4;
+	close;
+}
+
+
+function	script	fumoSpark_D1	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4700,4702);
+	close;
+}
+
+
+function	script	fumoSpark_D2	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4730,4732);
+	close;
+}
+
+
+function	script	fumoSpark_D3	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4710,4712);
+	close;
+}
+
+
+function	script	fumoSpark_D4	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4720,4722);
+	close;
+}
+
+
+function	script	fumoSpark_D5	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4750,4752);
+	close;
+}
+
+
+function	script	fumoSpark_D6	{
+	if(@fakeyour_Spark_4 > 0){
+	mes "[豪哥]";
+	mes "第三插槽已經強化過了!!";
+	close;
+	}
+	if(countitem(getarg(0))<5){
+	mes "[豪哥]";
+	mes "你身上秀發茲榮譽之證數量不夠!";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[豪哥]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[豪哥]";
+	mes "成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),5;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_Spark,0,@fakeyour_Spark_1,@fakeyour_Spark_2,@fakeyour_Spark_3,rand(4740,4742);
+	close;
+}
+

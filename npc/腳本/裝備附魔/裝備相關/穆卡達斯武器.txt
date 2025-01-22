@@ -1,0 +1,78 @@
+﻿
+vdistrict1,85,24,6	script	穆卡達斯武器附魔	920,{
+
+	mes "[穆卡達斯武器附魔]";
+	mes "聖域神力扭曲平原的怪物^ff00001%^000000機率隨機取得穆卡達斯石板";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("前往聖域神力扭曲平原:進行附魔:兌換材料:回收 穆卡達斯石板箱子:穆卡達斯武器情報:取消")) {
+
+	case 1:
+	warp "ra_pol01",0,0;
+	close;
+	close;
+
+	case 2:
+	close2;
+	item_enchant 64;
+	end;
+
+	case 3:
+	close2;
+	callshop "穆卡達斯武器";
+	end;
+
+	case 4:
+	mes"[穆卡達斯武器附魔]";
+	mes "你現在持有 ^009933"+(countitem(70033))+"^000000 個穆卡達斯石板箱子";
+	mes "回收1個箱子可以獲得:";
+	mes "主教聖物x1";
+	mes "主教聖水x1";
+	mes "汙染結晶體x1";
+	mes "請輸入您想回收的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	mes "^ff0000取消請數量輸入0^000000";
+	next;
+	set @input,0;
+	input @input,0,100;
+	if(@input == 0){ close; }
+	if(@input > 100 ) {
+	mes"[穆卡達斯武器附魔]";
+	mes "您輸入的數量不正確！";
+	close;
+	end;
+	}
+	if(countitem(70033) <@input){
+	mes"[維爾岡德]";
+	mes"你少於輸入的箱子不能兌換";
+	close;
+	}
+	delitem 70033,(@input);
+	getitem 1001201,(@input);
+	getitem 1001202,(@input);
+	getitem 1001200,(@input);
+	close;
+	end;
+
+	case 5:
+	close2;
+	callfunc "qshop",25;
+	end;
+
+	case 6:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "穆卡達斯武器",0;
+	end;
+}
+
+
+
+
+
+
+
+

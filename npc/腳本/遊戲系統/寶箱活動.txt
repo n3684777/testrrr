@@ -1,0 +1,313 @@
+prontera,0,0,0	script	box_event	-1,{
+
+OnClock1457:
+OnClock1957:
+OnClock2117:
+	announce "【寶箱活動】將在3分鐘後開始請找小遊戲區的寶箱活動管理員報名，參加活動時負重必須是0請注意！",bc_all,0x00FF00;
+	set $@UZ_BOX_SWITCH,1;
+	cleararray $@UZ_BOX_USERS[0],0,128;
+	end;
+
+OnClock1459:
+OnClock1959:
+OnClock2259:
+	set $@UZ_BOX_SWITCH,1;
+	announce "【寶箱活動】將在1分鐘後開始請找小遊戲區的寶箱活動管理員報名，參加活動時負重必須是0請注意！",bc_all,0x00FF00;
+	end;
+
+OnClock1440:
+OnClock2000:
+OnClock2300:
+	set $@UZ_BOX_SWITCH,1;
+	announce "寶箱活動開始咯~!",bc_all,0xFFFF00;
+	donpcevent "寶箱活動管理員::OnWarp";
+}
+
+trinity,37,120,6	script	寶箱活動管理員	860,{
+	if(gethominfo(1)  >0){
+	mes "[報名人員]";
+	mes "攜帶生命體無法參加活動!!";
+	close;
+	}
+	if(getmercinfo(1)  >0){
+	mes "[報名人員]";
+	mes "攜帶傭兵無法參加活動!!";
+	close;
+	}
+        mes "[報名人員]";
+        mes "活動獎品：商城10點兌換券x1、祝福的武器礦石、祝福的防具礦石、小遊戲積分10點";
+        next;
+        menu "- 報名進入"+(" ["+getmapusers("bat_c01")+"/100]"),L_enter,"- 信息查看",L_info,"- 沒事離開",bye;
+        close;
+        end;
+
+L_enter:
+	if ( class != 0 ) {
+	mes "[報名人員]";
+	mes "為了防止作弊,";
+	mes "你的職業非^0000FF初學者^000000";
+	close;
+	}
+		if(!$@UZ_BOX_SWITCH)
+		{
+		for(set .@i,0;.@i<getarraysize($@UZ_BOX_USERS);set .@i,.@i+1)
+		{
+		if(getcharid(0)==$@UZ_BOX_USERS[.@i])
+		{
+		sc_end SC_All;	//消除狀態
+		warp "bat_c01",0,0;
+		end;
+		}
+		}
+					
+		mes "[報名人員]";
+	        mes "活動報名人數已達上限,或是未開始";
+	        mes "請下次活動提前報名參加!";
+	        close;
+		}
+		else
+		{
+	        mes "[報名人員]";
+//	        if(getarraysize($@UZ_BOX_USERS)<1)
+//	        {
+//	        	mes "Sorry,活動暫未開始!";
+//	        	close;
+//	        }
+//	        else 
+	        if(getarraysize($@UZ_BOX_USERS)>100)
+	        {
+	        	mes "本次活動報名人數已達上限,請下次活動提前報名參加!";
+	        	set $@UZ_BOX_SWITCH,0;
+	        	close;
+	        }
+	        else
+	        {
+	        	set .@j,0;
+	        	set .@k,0;
+	        	
+	        	while(.@j<getarraysize($@UZ_BOX_USERS))
+	        	{
+	        		if($@UZ_BOX_USERS[.@j] == getcharid(0))
+	        		{
+	        			set .@k,1;
+	        			break;
+	        		}
+	        		set .@j,.@j+1;
+	        	}
+	        	
+	        	if(!.@k)
+	        		setarray $@UZ_BOX_USERS[getarraysize($@UZ_BOX_USERS)],getcharid(0);
+	        	
+	        	mes "現在將傳送您至活動地圖!";
+	        	next;
+	        	warp "bat_c01",0,0;
+	        }
+      	}
+      	
+	      end;
+
+L_info:
+        mes "[報名人員]";
+        mes "每次活動放出160個寶箱。";
+        mes "其中有10個有寶物,其餘均為魔物。";
+        mes "如果10個寶箱全被找出並擊敗,或者超過30分未找出並擊敗,遊戲將結束.";
+        mes "那麼祝你好運，趕緊報名進入吧！";
+        close;
+        end;
+bye:
+        mes "[報名人員]";
+        mes "- 再見！";
+        close;        
+				end;
+OnWarp:
+        initnpctimer;
+        donpcevent "Mob_Box::OnSummon";
+        end;
+
+OnEnd:
+        stopnpctimer;
+        set $@UZ_BOX_SWITCH,0;
+		  	set $@UZ_BOX_COUNT,0;
+		  	cleararray $@UZ_BOX_USERS[0],0,128;
+				announce "【寶箱活動】本次寶箱活動結束",bc_all,0x00FF00;
+				killmonster "bat_c01.gat","All";
+				areawarp "bat_c01",0,0,400,400,"trinity",50,120;
+        end;
+
+OnTimer1800000:
+        stopnpctimer;
+        set $@UZ_BOX_SWITCH,0;
+		  	set $@UZ_BOX_COUNT,0;
+		  	cleararray $@UZ_BOX_USERS[0],0,128;
+				announce "【寶箱活動】本次寶箱活動結束",bc_all,0x00FF00;
+				killmonster "bat_c01.gat","All";
+				areawarp "bat_c01",0,0,400,400,"trinity",50,120;
+        end;
+
+OnInit:
+	waitingroom "寶箱活動",0;
+	end;
+
+}
+
+
+//-------------------------------------------- 獎勵判別
+-	script	Mob_Box	-1,{
+	end;
+OnSummon:
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,1,"boxwin::OnMobKilled";
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        monster "bat_c01",0,0,"寶箱",28101,15;
+        end;
+}
+
+-	script	boxwin	-1,{
+	end;
+OnMobKilled:
+	set $@UZ_BOX_COUNT,$@UZ_BOX_COUNT+1;
+	//announce "恭喜 "+strcharinfo(0)+" 找出並擊敗了第" + $@UZ_BOX_COUNT + "個寶箱~~!",bc_all,0xFFFF00;
+  dispbottom "恭喜你擊倒寶箱";
+  set .@UZ_BOX_ITEM_ID,0;
+  set .@UZ_BOX_ITEM_CNT,0;
+  switch(rand(1,9))
+  {
+  	case 1:
+  		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,2;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 2:
+  		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,2;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 3:
+  		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,2;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 4:
+  		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,2;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 5:
+  		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,2;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 6:
+  		set .@UZ_BOX_ITEM_ID,6439;
+  		set .@UZ_BOX_ITEM_CNT,1;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 7:
+  		set .@UZ_BOX_ITEM_ID,6438;
+  		set .@UZ_BOX_ITEM_CNT,1;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 8:
+  		set .@UZ_BOX_ITEM_ID,6439;
+  		set .@UZ_BOX_ITEM_CNT,1;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	case 9:
+  		set .@UZ_BOX_ITEM_ID,6438;
+  		set .@UZ_BOX_ITEM_CNT,1;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  	default:
+		set .@UZ_BOX_ITEM_ID,61007;
+  		set .@UZ_BOX_ITEM_CNT,1;
+		set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 "+#Game_Points+" 點";
+  		break;
+  }
+
+	getitem .@UZ_BOX_ITEM_ID,.@UZ_BOX_ITEM_CNT;
+	mapannounce "bat_c01",""+strcharinfo(0)+" 找出並擊敗了第" + $@UZ_BOX_COUNT + "個寶箱~~!得到了"+.@UZ_BOX_ITEM_CNT+"個"+getitemname(.@UZ_BOX_ITEM_ID)+"!",15;
+	//announce " "+strcharinfo(0)+" 找出並擊敗了第" + $@UZ_BOX_COUNT + "個寶箱~~!得到了"+.@UZ_BOX_ITEM_CNT+"個"+getitemname(.@UZ_BOX_ITEM_ID)+"!",bc_all,0xFFFF00;
+//  if(.@UZ_BOX_ITEM_ID&&.@UZ_BOX_ITEM_CNT)
+//  {
+//  	getitem .@UZ_BOX_ITEM_ID,.@UZ_BOX_ITEM_CNT;
+//  }
+//  else
+//  {
+//  	set sjlr_exp,sjlr_exp+10;
+//  	dispbottom "您獲得了10點威望.";
+//  } 	
+  
+  if($@UZ_BOX_COUNT>=10)
+  {
+  	sleep2(10000);
+		donpcevent "寶箱活動::OnEnd";
+	}
+	end;
+}
+-	script	boxlose	-1,{
+	end;
+OnMobKilled:
+        //dispbottom "- 呵呵，你還不夠仔細，看走眼啦。";
+        //percentheal -100,-100;
+        //warp "Welgaia",157,175;
+        end;
+}
+
+
+bat_c01.gat,146,56,2	script	回城傳送員#2	952,{
+        menu "我要離開",-,"我要繼續",cancel;
+        warp "trinity",50,120;
+        end;
+
+cancel:
+	end;
+OnInit:
+	waitingroom "回城傳送員",0;  
+	end;
+}
+
+
+bat_c01.gat,53,128,6	script	回城傳送員#1	952,{
+        menu "我要離開",-,"我要繼續",cancel;
+        warp "trinity",50,120;
+        end;
+
+cancel:
+	end;
+OnInit:
+	waitingroom "回城傳送員",0;  
+	end;
+}
+
+
+
+//-------------------地圖屬性
+bat_c01	mapflag	nowarp
+bat_c01	mapflag	nomemo
+bat_c01	mapflag	nosave
+bat_c01	mapflag	nobranch
+bat_c01	mapflag	monster_noteleport
+bat_c01	mapflag	noteleport
+bat_c01	mapflag	noloot
+bat_c01	mapflag	nodrop
+bat_c01	mapflag	notrade
+bat_c01	mapflag	noskill
+

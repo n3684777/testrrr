@@ -1,0 +1,102 @@
+//自定義變量商城腳本版
+//腳本編寫：靈巧兒
+//腳本版本：V1.0 Bate
+//腳本版權：靈巧兒
+//技術支持QQ：429704119
+-	shop	MVP_Points_Shop	-1,512:-1 //生成商店，腳本名字需要和下面腳本中名字叫對應
+//腳本開始
+trinity,100,101,4	script	MVP點數商店	564,{
+
+On001:
+	message strcharinfo(0),"此商店只能使用[MVP點數]進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在還有MVP點數 [ "+#MVP_Points+" ] 點"; //有多少點數
+	callshop "MVP_Points_Shop",1; //開啟商店
+	npcshopattach "MVP_Points_Shop"; //關聯腳本
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; //初始化購買個數為0
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > #MVP_Points) dispbottom "你沒用足夠的[ MVP點數 ]點.";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買[ "+@bought_quantity[.@i]+" ]個[ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除點數
+		set #MVP_Points,#MVP_Points - @totalcost; 
+		dispbottom "您消費了[ "+@totalcost+" ]點.還剩[ "+#MVP_Points+" ]點";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+//---------------------------------------------------
+	waitingroom "MVP點數商店",0;
+	//設置商品的ID
+	setarray .Commodity[0],61009,101869,
+	//B,A級 100
+	23856,23829,23831,23830,23827,23862,23863,23855,23818,23819,23820,
+	23821,23823,23824,23825,23826,23882,23832,23834,23853,23836,
+	23838,23843,23844,23870,23847,23848,23849,23850,23866,23851,
+	23865,23828,23857,23858,23859,23860,23861,23864,23876,23877,
+	23840,23839,23822,23845,23846,23880,101340,101341,101342,101343,
+	101344,
+	//S,SS級 200
+	23854,23871,23872,23873,23874,23875,23833,23894,23852,23881,
+	23841,23867,23868,23869,23888,23889,23890,23891,23892,23893,
+	23835,23887,23879,23883,23884,23885,23886,23837,23842,
+	//SSS級 500
+	100250,101345,101346,101347,102295,102308,102310,102311;
+
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],100,10,
+	//B,A級 100
+	100,100,100,100,100,100,100,100,100,100,100,
+	100,100,100,100,100,100,100,100,100,100,
+	100,100,100,100,100,100,100,100,100,100,
+	100,100,100,100,100,100,100,100,100,100,
+	100,100,100,100,100,100,100,100,100,100,
+	100,
+	//S,SS級 200
+	200,200,200,200,200,200,200,200,200,200,
+	200,200,200,200,200,200,200,200,200,200,
+	200,200,200,200,200,200,200,200,200,
+	//SSS級 500
+	500,500,500,500,500,500,500,500;
+
+// --------------------------------------------------
+//初始化商店中物品
+	debugmes "MVP點數商城加載中...";
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "MVP_Points_Shop",512;
+		npcshopadditem "MVP_Points_Shop",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	debugmes "【MVP點數商城】商品"+getarraysize(.Commodity)+"個";
+	end;
+}
+

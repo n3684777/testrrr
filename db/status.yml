@@ -1,0 +1,90 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Status Change Database
+###########################################################################
+#
+# Status Change Settings
+#
+###########################################################################
+# - Status                    Status change name.
+#   Icon                      Status change icon. (Default: EFST_BLANK)
+#   DurationLookup            Default status change duration. (Default: 0)
+#   States:                   Status change state to determine player states. (Default: None)
+#   CalcFlags:                Status change calculation to indicate which stat is adjusted. (Default: None)
+#   Opt1                      Special effect when a status change is active. Non-stackable. (Default: None)
+#   Opt2:                     Special options/client effects when a status change is active. (Default: None)
+#   Opt3:                     Special options/client effects when a status change is active. (Default: Normal)
+#   Options:                  Special options/client effects when a status change is active. (Default: Nothing)
+#   Flags:                    Special flags which trigger during certain events.  (Default: None)
+#   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
+#   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
+#   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
+#   EndOnStart:               List of Status Changes that will end when the status activates. (Optional)
+#   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
+#   EndOnEnd:                 List of Status Changes that will end when the status becomes inactive. (Optional)
+###########################################################################
+
+Header:
+  Type: STATUS_DB
+  Version: 3
+
+Footer:
+  Imports:
+  - Path: db/pre-re/status.yml
+    Mode: Prerenewal
+  - Path: db/re/status.yml
+    Mode: Renewal
+
+  # -----------------------------------------------------------------------
+  # 熊貓模擬器社群版的資料補丁
+  # -----------------------------------------------------------------------
+  - Path: db/pandas/pre-re/status.yml
+    Mode: Prerenewal
+
+  # -----------------------------------------------------------------------
+  # 熊貓模擬器專業版的資料補丁
+  # -----------------------------------------------------------------------
+  - Path: db/pandas/re/status.yml
+    Mode: Renewal
+
+  # -----------------------------------------------------------------------
+  # 熊貓模擬器專業版的隱藏資料補丁
+  # 你看不到 secret 目錄, 但程式依然可以正常讀取...
+  # 這些資料我們認為優先順序比 rAthena 和熊貓社群版的優先順序更高
+  # -----------------------------------------------------------------------
+  - Path: secret/feature-1001/status.yml
+    Mode: Renewal
+  - Path: secret/feature-1003/status.yml
+    Mode: Renewal
+  - Path: secret/feature-1011/status.yml
+    Mode: Renewal
+  - Path: secret/feature-1015/status.yml
+    Mode: Renewal
+  - Path: secret/feature-1017/status.yml
+    Mode: Renewal
+  - Path: secret/feature-1018/status.yml
+    Mode: Renewal
+  - Path: secret/pandas/status.yml
+    Mode: Renewal
+
+  # -----------------------------------------------------------------------
+  # 請確保你對狀態資料庫的改動都在上面那些補丁之後被載入,
+  # 這將使得你的資料擁有最高優先順序.
+  # -----------------------------------------------------------------------
+  - Path: db/import/status.yml

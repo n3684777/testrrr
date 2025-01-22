@@ -1,0 +1,802 @@
+headq,39,29,5	script	EDDA�j�����f��	841,{
+	set $@MaxWimdows,3;
+{
+           query_sql("SELECT last_ip FROM `login` WHERE account_id = "+getcharid(3)+"", .@LastIp$);
+              //�ˬd�PIP�b��
+              query_sql("SELECT account_id FROM `login` WHERE last_ip = '"+.@LastIp$+"'", .@AccountId);
+                 set .@aidtemp,getcharid(3,strcharinfo(0));
+               //�ˬd�PIP�b�u�H��
+                  for(set .@i ,0;.@i<getarraysize(.@AccountId);set .@i,.@i+1)
+                   {
+                             if(attachrid(.@AccountId[.@i]))
+                                  {
+if ( compare(strcharinfo(3),"@")  && !checkvending()) set .@j,.@j+1;//�]�w����a��
+                                      }
+                                 detachrid;
+                         }
+                        attachrid .@aidtemp;
+                        if(.@j >= $@MaxWimdows)
+                          {           
+                             dispbottom "�ۦPIP���i�W�L3�Ө���i�J�ƥ����C";
+                             end;
+                          }
+
+        }
+if( checkquest(66902,PLAYTIME) == 0 ) {mes"�ƥ��B��N�o��";close;}
+if( checkquest(66902,PLAYTIME) == 2 ) {erasequest 66902;}
+if (getcharid(1) == 0){
+mes "^FF0000�A�S���������W��.^000000";
+close;
+}
+set .@md_name$,"EDDA�j�����f��";
+mes "-----------[�ƥ��T��]-----------";
+mes "�ƥ��W��: "+.@md_name$+" ";
+mes "����H��: ������ ";
+mes "�����:^9966FF 170���H�W ^000000";
+mes "�ƥ��N�o�ɶ�:^F75000 2�p�� ^000000";
+mes "�n�ӬD�Ԭݬݶ�?";
+if (!instance_check_party(getcharid(1),1,100,260)) { mes "�ܤֻݭn100���H�W�A�ӬD��"; close;}
+if (getpartyleader(getcharid(1),2) != getcharid(0)){goto xx;}switch(select("���W"+.@md_name$+"�ƥ�:�i�J"+.@md_name$+"�ƥ�:�������")){
+case 1:
+if (instance_create(.@md_name$) < 0) {
+next;
+mes "����W��: "+getpartyname(getcharid(1));
+mes "�����: "+strcharinfo(0);
+mes "^0000ff"+.@md_name$+" ^000000- �Ыإ���!";
+close;
+}
+xx: switch(select("�i�J"+.@md_name$+"�ƥ�:����")){
+case 1:
+switch(instance_enter(.@md_name$)) {
+case 3:
+mes "�X�{�������~�C!";
+close;
+case 2:
+next;mes "���G�O�z�������èS���ЫظӰƥ�";
+close;
+case 1:
+mes "�u���έ��~��i�J�C";
+close;
+case 0:
+setquest 66902;
+if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+announce "(�t�ΰT��) ���� �u"+getpartyname(getcharid(1))+"�v �}�l�D�� ["+.@md_name$+"]",15,0x00FFFF;  
+}
+end;
+
+}
+case 2:
+close;
+}case 2:
+goto xx;
+close;
+case 3:
+close;
+}
+close;
+//OnInit:waitingroom ""+strnpcinfo(1)+"",0;end;
+}
+
+
+function	script	EDDA�j�����f��(ı��)	{
+if( checkquest(66902,PLAYTIME) == 0 ) {mes"�ƥ��B��N�o��";close;}
+if( checkquest(66902,PLAYTIME) == 2 ) {erasequest 66902;}
+set .@md_name$,"EDDA�j�����f��(ı��)";
+mes "-----------[�ƥ��T��]-----------";
+mes "�ƥ��W��: "+.@md_name$+" ";
+mes "����H��: ������ ";
+mes "�����:^9966FF 170���H�W ^000000";
+mes "�ƥ��N�o�ɶ�:^F75000 6�p�� ^000000";
+
+mes "�n�ӬD�Ԭݬݶ�?";
+if (!instance_check_party(getcharid(1),1,170,260)) { mes "�ܤֻݭn170���H�W�A�ӬD��"; close;}
+switch(select("�إ߰ƥ�:�i�J�ƥ�:����i�J�ǰe")){
+case 1:
+if (instance_create(.@md_name$) < 0) {
+next;
+mes "����W��: "+getpartyname(getcharid(1));
+mes "�����: "+strcharinfo(0);
+mes "^0000ff"+.@md_name$+" ^000000- �Ыإ���!";
+close;
+}
+mes ""+.md_name$+"�w�g�ХߤF, �п��^0066CC�i�J"+.@md_name$+"^000000.";
+close;
+case 2:
+switch(instance_enter(.@md_name$)) {
+case 3:
+mes "�D�}�����~(3)!";
+close;
+case 2:
+mes "�D�}�����~(2)!";
+close;
+case 1:
+mes "�D�}�����~(1)!";
+close;
+case 0:
+set 'ins_name$,"EDDA�j�����f��(ı��)";
+set giftedda,0;
+setquest 66902;
+if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+announce "(�t�ΰT��) ���� �u"+getpartyname(getcharid(1))+"�v �}�l�D�� ["+.@md_name$+"]",15,0x33FFFF;  
+}
+end;
+}
+
+}
+close;
+}
+
+/******************************
+ - �Ĥ@�϶����d
+******************************/
+1@gl_prq,80,21,0	script	�����d#Session1	139,5,5,{
+	end;
+
+OnTouch:
+	if('Session == 0 && is_party_leader())
+	{
+if (compare(instance_live_info(ILI_NAME),"ı��"))
+			'mode = 1;
+		'Session = 1;
+		hideonnpc instance_npcname(strnpcinfo(0));
+		areamonster 'map$,10,83,80,29,"--ja--",20392,20,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+		areamonster 'map$,10,83,80,29,"--ja--",20250,10;
+		instance_announce 0,"�����d : �o�̬O�H�e�ΰ��i��������.",bc_map,0x0fff8C;
+		sleep 3000;
+		instance_announce 0,"�����d : �ҥH�o�̪����`�̳��O�@�ǥ��b�ǳƶ��檺�k��.",bc_map,0x0fff8C;
+		sleep 3000;
+		instance_announce 0,"�����d : �A�ߤ@�వ���N�O���o�̧K����h���h�W.",bc_map,0x0fff8C;
+		sleep 3000;
+		instance_announce 0,"�����d : ����{�b, �ѩ�o�̪��ɶ����_���ƪ��ʽ�, �ҥH�D�`�����H�e�i.",bc_map,0x0fff8C;
+		sleep 3000;
+		instance_announce 0,"�����d : ��F, �p�G�ݨ���K��ƪ��ܽФ@�w�n�׶}.���O�o�ӪŶ��̷̳ФH���F��, �|�ϧA�x�b�o�̵L�k�e�i.",bc_map,0x0fff8C;
+		
+	}
+	end;
+	
+OnMyMobDead:
+	if(mobcount('map$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1)
+	{
+		instance_announce 0,"�����d : �Ĥ@�ϰ쪺�ɶ��y�I�t�פw�g����í�w�U�ӤF, �����ಾ��U�@�ϰ�a.",bc_map,0x0fff8C;
+		sleep 3000;
+		mapwarp 'map$, 'map$, 123,62;
+		donpcevent instance_npcname("�����d#Session2")+"::OnEnable";
+	}
+	end;
+	
+OnInstanceInit:
+	'map$ = instance_mapname("1@gl_prq");
+	end;
+}
+
+/******************************
+ - �ĤG�϶����d
+******************************/
+1@gl_prq,127,63,3	script	�����d#Session2	4_ED_OSCAR,3,3,{
+	end;
+	
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnTouch:
+	if('Session == 1 && is_party_leader())
+	{
+		'Session = 2;
+		if('mode)
+		{
+			areamonster 'map$,126,75,187,12,"--ja--",20389,15,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,126,75,187,12,"--ja--",20389,5,instance_npcname(strnpcinfo(0))+"::OnLoop";
+			areamonster 'map$,126,75,187,12,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+		}
+		else
+		{
+			areamonster 'map$,126,75,187,12,"--ja--",20388,15,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,126,75,187,12,"--ja--",20388,5,instance_npcname(strnpcinfo(0))+"::OnLoop";
+			areamonster 'map$,126,75,187,12,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+		}
+		areamonster 'map$,126,75,187,12,"--ja--",20250,10;
+		npctalk "�����d : �o�̬O�M�h�Υ汵�u�@������.";
+		sleep 3000;
+		npctalk "�����d : ���ɥ�Z��ȧ@�𮧪��H�٨S�Ӫ��κM��.";
+		sleep 3000;
+		npctalk "�����d : �M�������k���O�@�˪�.";
+		sleep 3000;
+		npctalk "�����d : �·не����o�̦w���a.";
+		sleep 3000;
+		hideonnpc instance_npcname(strnpcinfo(0));
+	}
+	end;
+	
+OnMyMobDead:
+	if(mobcount('map$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1)
+	{
+		killmonster 'map$,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		instance_announce 0,"�����d : �ĤG�ϰ쪺�ɶ��y�I�t�פw�g����í�w�U�ӤF, �����ಾ��U�@�ϰ�a.",bc_map,0x0fff8C;
+		sleep 3000;
+		mapwarp 'map$, 'map$, 150,116;
+		donpcevent instance_npcname("�����d#Session3")+"::OnEnable";
+	}
+	end;
+	
+OnLoop:
+	if('mode)
+		areamonster 'map$,126,75,187,12,"--ja--",20389,1,instance_npcname(strnpcinfo(0))+"::OnLoop";
+	else
+		areamonster 'map$,126,75,187,12,"--ja--",20388,1,instance_npcname(strnpcinfo(0))+"::OnLoop";
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+/******************************
+ - �ĤT�϶����d
+******************************/
+1@gl_prq,148,121,3	script	�����d#Session3	4_ED_OSCAR,3,3,{
+	end;
+	
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnTouch:
+	if('Session == 2 && is_party_leader())
+	{
+		'Session = 3;
+		if('mode)
+		{
+			areamonster 'map$,122,189,187,106,"--ja--",20391,15,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,122,189,187,106,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,122,189,187,106,"--ja--",20391,5,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		}
+		else
+		{
+			areamonster 'map$,122,189,187,106,"--ja--",20390,15,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,122,189,187,106,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,122,189,187,106,"--ja--",20390,5,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		}
+		areamonster 'map$,122,189,187,106,"--ja--",20250,10;
+		npctalk "�����d : �o�̬O�G���J�٭ݭ���M�𮧫Ǫ�����.";
+		sleep 3000;
+		npctalk "�����d : ���W�t���������q�i�����B�e��o��, �A�G�N���r�Ĥ@�˴����b������.";
+		sleep 3000;
+		npctalk "�����d : �������Ӧ��⮳�������H��, �̲פ]�L�k�k��.";
+		sleep 3000;
+		npctalk "�����d : ���Χڧڿ˦ۥX��O�̦n��, ��·ЧA�]��o�̤]�M�z�@�U�ܡH";
+		sleep 3000;
+		hideonnpc instance_npcname(strnpcinfo(0));
+	}
+	end;
+	
+OnMyMobDead:
+	if(mobcount('map$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1)
+	{
+		killmonster 'map$,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		instance_announce 0,"�����d : �ĤT�ϰ쪺�ɶ��y�I�t�פw�g����í�w�U�ӤF, �����ಾ��U�@�ϰ�a.",bc_map,0x0fff8C;
+		sleep 3000;
+		mapwarp 'map$, 'map$, 77,177;
+		donpcevent instance_npcname("�����d#Session4")+"::OnEnable";
+	}
+	end;
+
+OnLoop:
+	if('mode)
+		areamonster 'map$,122,189,187,106,"--ja--",20391,1,instance_npcname(strnpcinfo(0))+"::OnLoop";
+	else
+		areamonster 'map$,122,189,187,106,"--ja--",20390,1,instance_npcname(strnpcinfo(0))+"::OnLoop";
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+/******************************
+ - �ĥ|�϶����d
+******************************/
+1@gl_prq,31,128,0	warp	#EDDA_Warp	2,2,1@gl_prq,53,244
+1@gl_prq,67,176,5	script	�����d#Session4	4_ED_OSCAR,3,3,{
+	end;
+	
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnTouch:
+	if('Session == 3 && is_party_leader())
+	{
+		'Session = 4;
+		if('mode)
+		{
+			areamonster 'map$,16,187,69,112,"--ja--",20391,5,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,16,187,69,112,"--ja--",20394,10,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,16,187,69,112,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		}
+		else
+		{
+			areamonster 'map$,16,187,69,112,"--ja--",20390,3,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,16,187,69,112,"--ja--",20394,10,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+			areamonster 'map$,16,187,69,112,"--ja--",20394,3,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		}
+		areamonster 'map$,16,187,69,112,"--ja--",20250,10;
+		npctalk "�����d : �o�Ӱϰ�O�H�e�s��x�Ƹ˳ƪ��a��.";
+		sleep 3000;
+		npctalk "�����d : �j�������O�@�ǰ��������x�b�ϥΪ�.";
+		sleep 3000;
+		npctalk "�����d : �ҥH�x�b�o�̪��F��̬O�۷��j�j��, �Фj�a�@�w�n�p��.";
+		sleep 3000;
+		hideonnpc instance_npcname(strnpcinfo(0));
+	}
+	end;
+	
+OnMyMobDead:
+	if(mobcount('map$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1)
+	{
+		enablenpc instance_npcname("#EDDA_Warp");
+		killmonster 'map$,instance_npcname(strnpcinfo(0))+"::OnLoop";
+		instance_announce 0,"�����d : �ĥ|�ϰ쪺�ɶ��y�I�t�פw�g����í�w�U�ӤF, �����ಾ��U�@�ϰ�a.",bc_map,0x0fff8C;
+		sleep 3000;
+		mapwarp 'map$, 'map$, 53,244;
+		donpcevent instance_npcname("�����d#Session5")+"::OnEnable";
+		donpcevent instance_npcname("�ɧg �I�K�S���#Session5")+"::OnEnable";
+	}
+	end;
+
+OnLoop:
+	areamonster 'map$,16,187,69,112,"--ja--",20394,1,instance_npcname(strnpcinfo(0))+"::OnLoop";
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc instance_npcname("#EDDA_Warp");
+	end;
+}
+
+/******************************
+ - �Ĥ��϶����d
+******************************/
+1@gl_prq,52,270,5	script	�����d#Session5	4_ED_OSCAR,3,3,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnTouch:
+	if('Session == 4 && is_party_leader())
+	{
+		'Session = 5;
+		npctalk "�����d : Umm...�٦��@���F��r�ަb�o��...";
+		sleep 3000;
+		npctalk "�����d : ���Ӧ��ӻP�ɧg �I�K�S����ݦ��ۦP�~�[���H.";
+		sleep 3000;
+		npctalk "�����d : ���o�w�g���O��Ӫ��L�F.";
+		sleep 3000;
+		npctalk "�����d : �ҥH�A�̩Ҧ���L�����ɱN���������ʤW������.";
+		sleep 3000;
+		npctalk "�����d : �ڷ|�յ�í�w���o�Ӱϰ쪺�ɶ�, �԰��Y�N�}�l�F, �зǳƦn.";
+		sleep 3000;
+		donpcevent instance_npcname("�I�K�S������#SchmditsRage")+"::OnFinal";
+		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc instance_npcname("�ɧg �I�K�S���#Session5");
+		mapwarp 'map$, 'map$, 52,271;
+	}
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq,52,281,5	script	�ɧg �I�K�S���#Session5	4_ED_SCHMIDT,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+/******************************
+ - �����d���U������K
+******************************/
+1@gl_prq,44,283,5	script	�����d#OscarsHelp	4_ED_OSCAR,{
+	progressbar "0xffffff",3;
+	hideonnpc instance_npcname(strnpcinfo(0));
+	disablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer instance_npcname("#StopFraming");
+	end;
+	
+OnTimer30000:
+	if(unitexists('SCHMIDT)) 
+	{
+		'Frame_Line = rand(1,4);
+		switch('Frame_Line)
+		{
+			case 1:	movenpc instance_npcname(strnpcinfo(0)),45,282,5;	break;
+			case 2:	movenpc instance_npcname(strnpcinfo(0)),58,282,3;	break;
+			case 3:	movenpc instance_npcname(strnpcinfo(0)),58,269,9;	break;
+			case 4:	movenpc instance_npcname(strnpcinfo(0)),45,269,7;	break;
+		}
+		hideoffnpc instance_npcname(strnpcinfo(0));
+		enablenpc instance_npcname(strnpcinfo(0));
+		npctalk strnpcinfo(1)+" : �p�G�A�Ʊ���K���U�ӴN�������ڪ���.";
+	}
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnDisable:
+	stopnpctimer;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+1@gl_prq,0,0,0	script	#StopFraming	139,{
+	end;
+	
+OnTimer1000:
+	if(unitexists('SCHMIDT)) 
+	{
+		'StopFraming = 'Frame_Line;
+		instance_announce 0,"�����d : �ڤw�g���@�����K�Ȯɰ���F, ���o�������F�h�[��, �кɧֲb�ƳQ�A�G������F��.",bc_map,0x0fff8C;
+	}
+	end;
+	
+OnTimer9000:
+	if(unitexists('SCHMIDT)) 
+	{
+		'StopFraming = 0;
+		donpcevent instance_npcname("�����d#OscarsHelp")+"::OnEnable";
+		initnpctimer instance_npcname("�����d#OscarsHelp");
+	}
+	end;
+}
+
+/******************************
+ - ����I�K�S������
+******************************/
+1@gl_prq,0,0,0	script	�I�K�S������#SchmditsRage	-1,{
+OnFinal:
+	if('mode)
+		monster 'map$,52,282,"�A�G�I�K�S���",20387,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	else
+		monster 'map$,52,282,"�A�G�I�K�S���",20386,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'SCHMIDT = $@mobid[0];
+	donpcevent instance_npcname("�I�K�S���K#�W")+"::OnEnable";
+	donpcevent instance_npcname("�I�K�S���K#�U")+"::OnEnable";
+	donpcevent instance_npcname("�I�K�S���K#��")+"::OnEnable";
+	donpcevent instance_npcname("�I�K�S���K#�k")+"::OnEnable";
+	initnpctimer instance_npcname("�����d#OscarsHelp");
+	initnpctimer instance_npcname("�I�K�S������#SchmditsRage");
+	end;
+	
+// �I�K�S���`�ƥ�
+OnMyMobDead:
+addrid(2,0,getcharid(1));
+if (strcharinfo(3)==instance_mapname("1@gl_prq")){
+set #hunter,#hunter+10;
+callfunc "offical_instance_finish",0;
+if ('mode==1){
+getitem 25739,10;
+getitem 10502413,rand(1,3);
+}
+if ('mode!=1){
+getitem 25740,6;
+getitem 10502413,rand(1,3);
+}
+if (getequipid(EQI_COSTUME_HEAD_MID) == 31900||getequipid(EQI_HEAD_TOP) == 31600){set #hunter,#hunter+2;}
+dispbottom "[�t�ΰT��] �ƥ��I�ƼW�[";
+}
+	instance_announce 0,"�����d : �ש�K �N����I�K�S���F��b��, �ϥL�Ѳ�F�K",bc_map,0x0fff8C;
+	donpcevent instance_npcname("#RageSpirit1")+"::OnDisable";
+	donpcevent instance_npcname("#RageSpirit2")+"::OnDisable";
+	donpcevent instance_npcname("#RageSpirit3")+"::OnDisable";
+	donpcevent instance_npcname("#RageSpirit4")+"::OnDisable";
+	donpcevent instance_npcname("�����d#OscarsHelp")+"::OnDisable";
+	stopnpctimer instance_npcname("�I�K�S������#SchmditsRage");
+	donpcevent instance_npcname("�����d#Reward")+"::OnEnable";
+	end;
+
+OnTimer18000:
+	if(unitexists('SCHMIDT)) 
+	{
+		'Rage = 4;
+		getunitdata 'SCHMIDT, .@mob_data;
+		setunitdata 'SCHMIDT, UMOB_ATKMIN, .@mob_data[UMOB_ATKMIN]*2;
+		setunitdata 'SCHMIDT, UMOB_ATKMAX, .@mob_data[UMOB_ATKMAX]*2;
+		instance_announce 0,"�Q�A�G����� �I�K�S : �h�W���_��i�ۧڡK���U�������ڸѲ�a�K",bc_map,0xFF5151;
+		sleep 1800;
+		instance_announce 0,"����I�K�S���F��w�g�i�J�g�ɪ��A, �оa���¶�b���䪺���c�𮧲b�ƥ�, �w�Ѱ��g�ɪ��A.",bc_map,0x9F35FF;
+		donpcevent instance_npcname("#RageSpirit1")+"::OnEnable";
+		donpcevent instance_npcname("#RageSpirit2")+"::OnEnable";
+		donpcevent instance_npcname("#RageSpirit3")+"::OnEnable";
+		donpcevent instance_npcname("#RageSpirit4")+"::OnEnable";
+	}
+	end;
+}
+
+1@gl_prq,0,0,0	script	#RageSpirit	-1,{
+	end;
+	
+OnTouch:
+	if(unitexists('SCHMIDT))
+	{
+		'Rage --;
+		disablenpc instance_npcname(strnpcinfo(0));
+		if('Rage <= 0)
+		{
+			instance_announce 0,"�����d : �L������w�g�Ȯɥ����F, �X�{�b���֧����L.",bc_map,0x0fff8C;
+			sc_end SC_MA_DamageReduced,'SCHMIDT;
+			initnpctimer instance_npcname("�I�K�S������#SchmditsRage");
+		}
+	}
+	end;
+	
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnDisable:
+OnInstanceInit:
+	if(strnpcinfo(2) != "") 
+		disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq,52,286,0	duplicate(#RageSpirit)	#RageSpirit1	4_ENERGY_WHITE,3,3
+1@gl_prq,39,275,0	duplicate(#RageSpirit)	#RageSpirit2	4_ENERGY_RED,3,3
+1@gl_prq,52,263,0	duplicate(#RageSpirit)	#RageSpirit3	4_ENERGY_WHITE,3,3
+1@gl_prq,64,275,0	duplicate(#RageSpirit)	#RageSpirit4	4_ENERGY_BLUE,3,3
+
+/******************************
+ - ���y
+******************************/
+1@gl_prq,52,278,5	script	�����d#Reward	4_ED_OSCAR,{
+if (giftedda == 1){goto bx;}
+	//cutin "OSCAR01.bmp",0;
+	mes "["+strnpcinfo(1)+"]";
+	mes "�u�O�@���W�Թ�a.";
+	mes "���L�����٬O��쥻���n�h�F";
+	mes "�p�G�گ���ۤv�Ӳb�ƪ���...";
+	mes "�N�ثe�ݨӧ��ٻݭn�@�I�ɶ�";
+	mes "�`�Ө���, �j�a���o����.";
+	next;
+	mes "["+strnpcinfo(1)+"]";
+	mes "�b�o�Ӯɶ��y�Y�򤧫e, ���ڭ̻������}�o�̧a.";
+	next;
+	if(select("�ڷQ�A�}�}.:�X�h.") == 1)
+	{
+		mes "["+strnpcinfo(1)+"]";
+		mes "�O��? �ک��դF. ���o�ɧ֧��ɶ��F.";
+		close2;
+		cutin "OSCAR01.bmp",255;
+		end;
+	}
+	cutin "OSCAR01.bmp",255;
+	warp "Save",0,0;
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+/******************************
+ - �Ĥ��ϰ���K�]�m
+******************************/
+1@gl_prq,23,273,5	script	�I�K�S���K#��	139,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnTimer100:
+	deletearray 'Frame_Left;
+	switch(rand(1,3))
+	{
+		case 1:	setarray .@Pass,291,290,289,288,287,286,285,284,283,282;	break;
+		case 2:	setarray .@Pass,280,279,278,277,276,275,274,273,272,271;	break;
+		case 3:	setarray .@Pass,269,268,267,266,265,264,263,262,261,260;	break;
+	}
+	for(.@y = 310; .@y >= 247; .@y -= 3)
+	{
+		if(inarray(.@Pass, .@y) > -1) continue;
+		monster 'map$,10,.@y,"",20426,1;
+		'Frame_Left[getarraysize('Frame_Left)] = $@mobid[0];
+		setunitdata $@mobid[0], UMOB_DMGIMMUNE, 1;
+	}
+	for(.@x = 10; .@x <= 92; .@x += 1)
+	{
+		if(unitexists('SCHMIDT))
+		{
+			sleep 280;
+			for(.@i = 0; .@i<getarraysize('Frame_Left); .@i++)
+			{
+				if(unitexists('Frame_Left[.@i]))
+				{
+					getunitdata 'Frame_Left[.@i], .@mob_data;
+					if ( checkcell('map$, .@x, .@mob_data[UMOB_Y], cell_chkpass) && 'StopFraming != 1)
+						unitwarp 'Frame_Left[.@i], 'map$, .@x, .@mob_data[UMOB_Y];
+				}
+			}
+		}
+	}
+	for(.@i = 0; .@i<getarraysize('Frame_Left); .@i++)
+		if(unitexists('Frame_Left[.@i])) mobRemove 'Frame_Left[.@i];
+	if(unitexists('SCHMIDT)) initnpctimer;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq,87,297,5	script	�I�K�S���K#�k	139,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnTimer100:
+	deletearray 'Frame_Right;
+	switch(rand(1,3))
+	{
+		case 1:	setarray .@Pass,291,290,289,288,287,286,285,284,283,282;	break;
+		case 2:	setarray .@Pass,280,279,278,277,276,275,274,273,272,271;	break;
+		case 3:	setarray .@Pass,269,268,267,266,265,264,263,262,261,260;	break;
+	}
+	for(.@y = 310; .@y >= 247; .@y -= 3)
+	{
+		if(inarray(.@Pass, .@y) > -1) continue;
+		monster 'map$,94,.@y,"",20426,1;
+		'Frame_Right[getarraysize('Frame_Right)] = $@mobid[0];
+		setunitdata $@mobid[0], UMOB_DMGIMMUNE, 1;
+	}
+	for(.@x = 94; .@x >= 15; .@x -= 1)
+	{
+		if(unitexists('SCHMIDT))
+		{
+			sleep 280;
+			for(.@i = 0; .@i<getarraysize('Frame_Right); .@i++)
+			{
+				if(unitexists('Frame_Right[.@i]))
+				{
+					getunitdata 'Frame_Right[.@i], .@mob_data;
+					if ( checkcell('map$, .@x, .@mob_data[UMOB_Y], cell_chkpass) && 'StopFraming != 2)
+						unitwarp 'Frame_Right[.@i], 'map$, .@x, .@mob_data[UMOB_Y];
+				}
+			}
+		}
+	}
+	for(.@i = 0; .@i<getarraysize('Frame_Right); .@i++)
+		if(unitexists('Frame_Right[.@i])) mobRemove 'Frame_Right[.@i];
+	if(unitexists('SCHMIDT)) initnpctimer;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq,51,304,5	script	�I�K�S���K#�W	139,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnTimer100:
+	deletearray 'Frame_Top;
+	switch(rand(1,3))
+	{
+		case 1:	setarray .@Pass,36,37,38,39,40,41,42,43,44,45;	break;
+		case 2:	setarray .@Pass,46,47,48,49,50,51,52,53,54,55;	break;
+		case 3:	setarray .@Pass,56,57,58,59,60,61,62,63,64,65;	break;
+	}
+	for(.@x = 9; .@x <= 93; .@x += 3)
+	{
+		if(inarray(.@Pass, .@x) > -1) continue;
+		monster 'map$,.@x,310,"",20426,1;
+		'Frame_Top[getarraysize('Frame_Top)] = $@mobid[0];
+		setunitdata $@mobid[0], UMOB_DMGIMMUNE, 1;
+	}
+	for(.@y = 310; .@y >= 253; .@y -= 1)
+	{
+		if(unitexists('SCHMIDT))
+		{
+			sleep 280;
+			for(.@i = 0; .@i<getarraysize('Frame_Top); .@i++)
+			{
+				if(unitexists('Frame_Top[.@i]))
+				{
+					getunitdata 'Frame_Top[.@i], .@mob_data;
+					if ( checkcell('map$, .@mob_data[UMOB_X], .@y, cell_chkpass) && 'StopFraming != 3)
+						unitwarp 'Frame_Top[.@i], 'map$, .@mob_data[UMOB_X], .@y;
+				}
+			}
+		}
+	}
+	for(.@i = 0; .@i<getarraysize('Frame_Top); .@i++)
+		if(unitexists('Frame_Top[.@i])) mobRemove 'Frame_Top[.@i];
+	if(unitexists('SCHMIDT)) initnpctimer;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq,51,247,5	script	�I�K�S���K#�U	139,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnTimer100:
+	deletearray 'Frame_Bottom;
+	switch(rand(1,3))
+	{
+		case 1:	setarray .@Pass,36,37,38,39,40,41,42,43,44,45;	break;
+		case 2:	setarray .@Pass,46,47,48,49,50,51,52,53,54,55;	break;
+		case 3:	setarray .@Pass,56,57,58,59,60,61,62,63,64,65;	break;
+	}
+	for(.@x = 9; .@x <= 93; .@x += 3)
+	{
+		if(inarray(.@Pass, .@x) > -1) continue;
+		monster 'map$,.@x,248,"",20426,1;
+		'Frame_Bottom[getarraysize('Frame_Bottom)] = $@mobid[0];
+		setunitdata $@mobid[0], UMOB_DMGIMMUNE, 1;
+	}
+	for(.@y = 248; .@y <= 309; .@y += 1)
+	{
+		if(unitexists('SCHMIDT))
+		{
+			sleep 280;
+			for(.@i = 0; .@i<getarraysize('Frame_Bottom); .@i++)
+			{
+				if(unitexists('Frame_Bottom[.@i]))
+				{
+					getunitdata 'Frame_Bottom[.@i], .@mob_data;
+					if ( checkcell('map$, .@mob_data[UMOB_X], .@y, cell_chkpass) && 'StopFraming != 4)
+						unitwarp 'Frame_Bottom[.@i], 'map$, .@mob_data[UMOB_X], .@y;
+				}
+			}
+		}
+	}
+	for(.@i = 0; .@i<getarraysize('Frame_Bottom); .@i++)
+		if(unitexists('Frame_Bottom[.@i])) mobRemove 'Frame_Bottom[.@i];
+	if(unitexists('SCHMIDT)) initnpctimer;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gl_prq	mapflag	hidemobhpbar
+//1@gl_prq	mapflag	noteleport
+1@gl_prq	mapflag	nowarp
+1@gl_prq	mapflag	partylock
+1@gl_prq	mapflag	nosave
+1@gl_prq	mapflag	nomemo
+1@gl_prq	mapflag	nobranch
+1@gl_prq	mapflag	noicewall
+1@gl_prq	mapflag	restricted	6

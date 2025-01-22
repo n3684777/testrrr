@@ -1,0 +1,113 @@
+map02,138,108,4	script	任務委托管理員#EDDA	982,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("討伐無名的劍士","討伐無名的服侍","討伐無名的商人","取消")){
+
+		case 1:
+			if(checkquest(32118,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32119,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32119,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32118;
+			if(checkquest(32119,PLAYTIME)==2){erasequest 32119;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(32120,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32121,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32121,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32120;
+			if(checkquest(32121,PLAYTIME)==2){erasequest 32121;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(32122,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32123,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32123,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32122;
+			if(checkquest(32123,PLAYTIME)==2){erasequest 32123;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			close;
+		}
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("討伐無名的劍士","討伐無名的服侍","討伐無名的商人","取消")){
+
+		case 1:
+			if(checkquest(32118,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 32118;
+			setquest 32119;
+			getitem 25787,2;	//生體試驗晶片殘骸
+			getitem 25786,1;	//生體試驗報告
+			getexp 600000,600000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(32120,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 32120;
+			setquest 32121;
+			getitem 25787,2;	//生體試驗晶片殘骸
+			getitem 25786,1;	//生體試驗報告
+			getexp 600000,600000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if(checkquest(32122,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 32122;
+			setquest 32123;
+			getitem 25787,2;	//生體試驗晶片殘骸
+			getitem 25786,1;	//生體試驗報告
+			getexp 600000,600000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			close;
+		}
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "EDDA:生體試驗研究所每日任務",0;
+	end;
+}
+

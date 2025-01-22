@@ -1,0 +1,80 @@
+prontera,1,1,6	script	區域傳送	-1,{
+
+	mes "[區域傳送]";
+	mes "選擇你要到達的區域吧";
+	next;
+	switch (select("王國首都:露天商店:煉金工房:裝備製作:官方副本:自創副本:遊戲區域:測試傷害")) {
+
+	case 1:
+		warp "trinity",110,85;
+		close;
+	case 2:
+		warp "vdistrict",35,50;
+		close;
+	case 3:
+		warp "rgsr_in",125,164;
+		close;
+	case 4:
+		warp "vdistrict1",60,50;
+		close;
+	case 5:
+		warp "vdistrict1",35,50;
+		close;
+	case 6:
+		warp "trinity",95,25;
+		close;
+	case 7:
+		warp "trinity",50,120;
+		close;
+	case 8:
+		warp "bago_01",46,62;
+		close;
+
+
+
+//	case 9:
+//		warp "paramk",97,17;
+//		close;
+	}
+
+OnInit:
+	waitingroom "區域傳送",0;
+	end;
+}
+
+
+//---------------------------------------
+vdistrict,45,50,4	duplicate(區域傳送)	區域傳送#vd1	955	//露天商店
+vdistrict1,45,50,4	duplicate(區域傳送)	區域傳送#vd2	955	//官方副本&裝備製作
+bago_01,36,62,6	duplicate(區域傳送)	區域傳送#vd3	955	//測試傷害
+rgsr_in,130,161,4	duplicate(區域傳送)	區域傳送#rgsr1	955	//精煉工房
+
+trinity,112,96,6	duplicate(區域傳送)	區域傳送#tr01	955	//重生點
+trinity,47,129,4	duplicate(區域傳送)	區域傳送#tr02	955	//小遊戲
+trinity,97,33,4	duplicate(區域傳送)	區域傳送#tr03	955	//自創副本
+
+trinity,1,1,6	duplicate(區域傳送)	區域傳送#tr04	955	//
+trinity,1,1,6	duplicate(區域傳送)	區域傳送#tr05	955	//
+
+
+
+prontera,267,212,4	duplicate(區域傳送)	區域傳送#pro7	955	//東門
+prontera,39,211,6	duplicate(區域傳送)	區域傳送#pro8	955	//西門
+prontera,164,42,4	duplicate(區域傳送)	區域傳送#pro9	955	//南門
+prontera,161,318,4	duplicate(區域傳送)	區域傳送#pro10	955	//北門
+//------------------------------------------- 區域地圖屬性
+vdistrict	mapflag	town
+vdistrict	mapflag	nobranch
+vdistrict	mapflag	noicewall
+vdistrict	mapflag	nodrop
+vdistrict	mapflag	autotrade	//可離線掛店
+
+//----------------
+vdistrict	mapflag	town
+vdistrict1	mapflag	town
+vdistrict2	mapflag	town
+trinity	mapflag	town
+//----------------
+bago_01	mapflag	town
+
+

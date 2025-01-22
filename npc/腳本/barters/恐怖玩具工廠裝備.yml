@@ -1,0 +1,93 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#恐怖玩具工廠裝備
+   - Name: 黃金手 比利
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_05
+     Items:
+       - Index: 0
+         Item: Bloody_Coin
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 500
+       - Index: 1
+         Item: C_Head_Item_23228
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 1000
+       - Index: 2
+         Item: C_Head_Item_23229
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 500
+       - Index: 3
+         Item: C_Red_Bonnet_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 500
+       - Index: 4
+         Item: Old_Parasol
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 1000
+       - Index: 5
+         Item: Head_Item_23227
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 1000
+           - Index: 1
+             Item: Lush_Rose
+             Amount: 1
+       - Index: 6
+         Item: Noble_Cross
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 2000
+           - Index: 1
+             Item: Grand_Cross_
+             Amount: 1
+       - Index: 7
+         Item: Evilspirit_Gloves
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Coin
+             Amount: 1000
+           - Index: 1
+             Item: Red_Lantern
+             Amount: 1
+           - Index: 2
+             Item: Hurt_Mind
+             Amount: 1
+           - Index: 3
+             Item: KindHeart
+             Amount: 1

@@ -1,0 +1,264 @@
+vdistrict1,6,85,4	script	噩夢死神管理者	569,{
+
+	//副本任務獎勵
+	if(checkquest(32021,HUNTING)==2 ) { 
+	dispbottom "噩夢死神任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	getitem 6497,3;	//平安符(小)
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32021; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_06 < gettime(8) ){
+	set Instance_Bout_06,10;
+	set day_Instance_Bout_06,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_06 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[護士亮亮]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "噩夢死神";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[護士亮亮]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_06+"^000000 ]";
+	mes "副本獎勵：";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[護士亮亮]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[護士亮亮]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[護士亮亮]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[護士亮亮]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_06,Instance_Bout_06-1;
+
+			//副本任務
+			if(checkquest(32021,HUNTING)<0 ){setquest 32021;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "噩夢死神",0;
+	end;
+}
+
+
+//------------------------------噩夢死神副本事件
+1@ma_h,0,0,0	script	噩夢死神事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@ma_h");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("噩夢死神傳送門1_1");
+	disablenpc instance_npcname("噩夢死神傳送門1_2");
+	disablenpc instance_npcname("護士亮亮#01");
+	//副本標籤
+	set 'CD_Bangungot_1,40;
+	set 'CD_Bangungot_2,0;
+	//區塊放怪
+	areamonster 'map_name$[0],51,175,51,175,"--ja--",2339,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],52,142,52,142,"--ja--",2339,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],98,157,104,156,"--ja--",2339,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],78,157,86,157,"--ja--",2339,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],69,177,77,173,"--ja--",2338,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],73,145,80,137,"--ja--",2338,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],97,181,100,173,"--ja--",2340,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],92,146,101,139,"--ja--",2340,5,instance_npcname("噩夢死神事件1")+"::OnCcdd1";
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'CD_Bangungot_1,'CD_Bangungot_1-1;
+	if ('CD_Bangungot_1>0) end;
+	instance_announce 0, "噩夢死神：雖然你可以任意進入我的地盤，但卻無法平安地離開阿...!",bc_map,"0xcc00ff";
+	enablenpc instance_npcname("噩夢死神傳送門1_1");
+	enablenpc instance_npcname("噩夢死神傳送門1_2");
+	areamonster 'map_name$[0],142,64,142,64,"--ja--",2318,1,instance_npcname("噩夢死神事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],114,78,142,50,"--ja--",2338,15;
+	sleep2 3000;
+	instance_announce 0, "噩夢死神：可憐的小傢伙...把你帶入傳染病之中...",bc_map,"0xcc00ff";
+	end;
+
+	OnCcdd2:
+	areamonster 'map_name$[0],137,63,137,63,"--ja--",2327,1,instance_npcname("噩夢死神事件1")+"::OnCcdd3";
+	instance_announce 0, "噩夢死神：不...不能就這樣地結束..",bc_map,"0xcc00ff";
+	sleep2 2000;
+	instance_announce 0, "噩夢死神死神的靈魂跑進樑柱內正在恢復體力，不趕快消滅牠的話，牠會再次復活的!!",bc_map,"0xff3300";
+	sleep2 3000;
+	instance_announce 0, "噩夢死神：我是不死之神!!!",bc_map,"0xcc00ff";
+	sleep2 3000;
+	instance_announce 0, "噩夢死神：你想殺我的話就殺吧!!反正我馬上又會復活的!!!.",bc_map,"0xcc00ff";
+	sleep2 55000;
+	if ('CD_Bangungot_2>0) end;
+	killmonsterall instance_mapname("1@ma_h");
+	sleep2 1000;
+	instance_announce 0, "噩夢死神：哈哈哈哈哈哈!!我在梁柱內恢復體力後又回來了!!!",bc_map,"0xff3300";
+	areamonster 'map_name$[0],142,64,142,64,"--ja--",2318,1,instance_npcname("噩夢死神事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd3:
+	set 'CD_Bangungot_2,2;
+	sleep2 2000;
+	instance_announce 0, "噩夢死神：想不到你們有辦法破壞我的重生!!",bc_map,"0xff3300";
+	sleep2 2000;
+	instance_announce 0, "噩夢死神：我就現出真身來對付你們吧!!",bc_map,"0xff3300";
+	sleep2 2000;
+	areamonster 'map_name$[0],142,64,142,64,"--ja--",2317,1,instance_npcname("噩夢死神事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],114,78,142,50,"--ja--",2338,12;
+	instance_announce 0, "噩夢死神：這喜悅的痛苦對我而言可是莫大的營養呢...!",bc_map,"0xff3300";
+	sleep2 2000;
+	instance_announce 0, "噩夢死神：噩夢死神：越滾越大吧! 那受到詛咒的疾病喔...",bc_map,"0xff3300";
+	sleep2 2000;
+	instance_announce 0, "噩夢死神：現在我們再來玩玩看吧...?",bc_map,"0xff3300";
+	end;
+
+	OnCcdd4:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【噩夢死神】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	instance_announce 0, "噩夢死神：可惡..想不到你們有能力打倒我",bc_map,"0xff3300";
+	sleep2 3000;
+	instance_announce 0, "噩夢死神：不過只要這世上還有疾病，我就會再次降臨的!!",bc_map,"0xff3300";
+	sleep2 3000;
+	instance_announce 0, "護士亮亮：辛苦你們了，請來找我會送你們離開這裡",bc_map,"0x6699ff";
+	enablenpc instance_npcname("護士亮亮#01");
+	end;
+}
+
+
+//------------------------------噩夢死神NPC
+1@ma_h,139,68,4	script	護士亮亮#01	569,{
+
+	mes "[護士亮亮]";
+	mes "感謝你的幫忙";
+	mes "你現在想要離開了嗎?";
+	next;
+	menu "^228B22是的^000000",-;
+
+	//副本任務獎勵
+	if(checkquest(32021,HUNTING)==2 ) { 
+	dispbottom "噩夢死神任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",18;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	getitem 6497,3;	//平安符(小)
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32021; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+}
+
+
+//------------------任務傳點
+1@ma_h,106,158,0	warp	噩夢死神傳送門1_1	2,2,1@ma_h,115,65
+1@ma_h,110,65,0	warp	噩夢死神傳送門1_2	2,2,1@ma_h,100,158
+
+
+//------------------病人npc
+1@ma_h,43,180,4	script	不舒服的病人#01	585,{}
+1@ma_h,87,180,6	script	不舒服的病人#02	585,{}
+1@ma_h,60,181,3	script	做噩夢的病人#01	584,{}
+1@ma_h,104,180,6	script	做噩夢的病人#02	584,{}
+1@ma_h,69,181,4	script	憂傷的病人#01	585,{}
+1@ma_h,87,146,6	script	憂傷的病人#02	585,{}
+1@ma_h,77,181,6	script	呻吟的病人#01	584,{}
+1@ma_h,87,133,4	script	呻吟的病人#02	584,{}
+1@ma_h,43,146,4	script	搖晃的病人#01	585,{}
+1@ma_h,65,145,3	script	搖晃的病人#02	585,{}
+1@ma_h,99,134,2	script	搖晃的病人#03	585,{}
+
+//地圖屬性
+1@ma_h	mapflag	partylock
+1@ma_h	mapflag	noteleport
+1@ma_h	mapflag	nosave	SavePoint
+1@ma_h	mapflag	nomemo
+1@ma_h	mapflag	nobranch
+1@ma_h	mapflag	noicewall
+1@ma_h	mapflag	restricted	6
+
+

@@ -1,0 +1,42 @@
+function	script	Noks	{
+
+	mes "[會員服務]";
+	mes "請選擇你要開啟的搶怪保護模式";
+	mes "開啟後你有10秒的保護時間";
+	mes "要切換防搶模式之前必須先關閉搶怪保護";
+	next;
+	switch(select("開啟搶怪保護 (僅自己可以攻擊)","開啟搶怪保護 (僅組隊成員可以攻擊)","開啟搶怪保護 (僅公會成員可以攻擊)","關閉搶怪保護")) {
+
+	case 1:
+		set Noks1,1;
+		atcommand "@noks Self";
+		close;
+
+	case 2:
+		set Noks2,1;
+		atcommand "@noks Party";
+		close;
+
+	case 3:
+		set Noks3,1;
+		atcommand "@noks Guild";
+		close;
+
+	case 4:
+		set Noks1,0;
+		set Noks2,0;
+		set Noks3,0;
+		atcommand "@noks 0";
+		close;
+	}
+}
+
+//---------------------------------------------
+-	script	搶怪保護	-1,{
+OnPCLoginEvent:
+	if ( Noks1 > 0 ) { atcommand "@noks self"; }
+	if ( Noks2 > 0 ) { atcommand "@noks party"; }
+	if ( Noks3 > 0 ) { atcommand "@noks guild"; }
+	end;
+}
+

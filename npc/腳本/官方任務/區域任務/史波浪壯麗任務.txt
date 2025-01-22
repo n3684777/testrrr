@@ -1,0 +1,142 @@
+trinity,96,123,6	script	任務委托管理員#spl	621,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","所有任務回報","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("狩獵獨角飛馬","狩獵那迦","狩獵魯修拉黃蜂","狩獵黑暗捕蟲堇妖","狩獵捕蟲堇妖","狩獵鈽鐳巨人","取消")){
+
+		case 1:
+			if(checkquest(32082,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32083,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32083,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32082;
+			if(checkquest(32083,PLAYTIME)==2){erasequest 32083;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(32084,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32085,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32085,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32084;
+			if(checkquest(32085,PLAYTIME)==2){erasequest 32085;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(32086,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32087,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32087,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32086;
+			if(checkquest(32087,PLAYTIME)==2){erasequest 32087;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(32088,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32089,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32089,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32088;
+			if(checkquest(32089,PLAYTIME)==2){erasequest 32089;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(32090,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32091,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32091,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32090;
+			if(checkquest(32091,PLAYTIME)==2){erasequest 32091;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(32092,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32093,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32093,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32092;
+			if(checkquest(32093,PLAYTIME)==2){erasequest 32093;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			close;
+		}
+
+
+	case 2:
+		if(checkquest(32082,HUNTING)==2 ) { 
+		dispbottom "狩獵獨角飛馬任務回報完成!!";
+		erasequest 32082;
+		setquest 32083;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		if(checkquest(32084,HUNTING)==2 ) { 
+		dispbottom "狩獵那迦任務回報完成!!";
+		erasequest 32084;
+		setquest 32085;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		if(checkquest(32086,HUNTING)==2 ) { 
+		dispbottom "狩獵魯修拉黃蜂任務回報完成!!";
+		erasequest 32086;
+		setquest 32087;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		if(checkquest(32088,HUNTING)==2 ) { 
+		dispbottom "狩獵黑暗捕蟲堇妖任務回報完成!!";
+		erasequest 32088;
+		setquest 32089;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		if(checkquest(32090,HUNTING)==2 ) { 
+		dispbottom "狩獵捕蟲堇妖任務回報完成!!";
+		erasequest 32090;
+		setquest 32091;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		if(checkquest(32092,HUNTING)==2 ) { 
+		dispbottom "狩獵鈽鐳巨人任務回報完成!!";
+		erasequest 32092;
+		setquest 32093;
+		getitem 6081,5;	//史波浪壯麗銀幣x5
+		getexp 300000,300000;
+		}
+		mes "[任務委托管理員]";
+		mes "你沒有完成的任務";
+		close;
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "史波浪壯麗每日任務",0;
+	end;
+}
+
+

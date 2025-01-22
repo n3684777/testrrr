@@ -1,0 +1,105 @@
+﻿vdistrict1,62,31,6	script	星座之塔裝備#Con12	2_slot_machine,{
+
+	mes "[星座之塔裝備附魔]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("製作裝備:物品合成:分解 隕石碎片:附魔 星雲威力鎧甲:附魔 星雲耐力鎧甲:附魔 星雲專注外套:附魔 星雲創造外套:附魔 星雲咒術長袍:附魔 星雲智慧長袍:附魔 星際徽章:取消")){
+
+	case 1:
+	close2;
+	callshop "星座之塔裝備";
+	end;
+
+	case 2:
+	close2;
+	callshop "星座之塔物品";
+	end;
+
+	case 3:
+		mes "[星座之塔裝備附魔]";
+		mes "你持有 ^0000ff"+(countitem(1000373))+"個^000000 隕石的碎片";
+		mes "可以兌換 ^0000ff"+(countitem(1000372))/40+"個^000000 隕石的浮塵";
+		mes "隕石的碎片1個可以兌換：";
+		mes "隕石的浮塵40個";
+		mes "費用:Zeny100000";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[星座之塔裝備附魔]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( Zeny<@input*100000 ){
+		mes "[星座之塔裝備附魔]";
+		mes "抱歉您身上的金錢不足！";
+		close;	}
+		if ( countitem(1000373) < @input) {
+		mes "[星座之塔裝備附魔]";
+		mes "隕石的碎片數量不足";
+		close; }
+		set Zeny,Zeny - @input*100000;
+		delitem 1000373,@input;
+		getitem 1000372,@input*40;
+		close;
+
+	case 4:
+	Star01:
+	set Star_Memo,01;
+	close2;
+	item_enchant 7;
+	end;
+
+	case 5:
+	Star02:
+	set Star_Memo,02;
+	close2;
+	item_enchant 8;
+	end;
+
+	case 6:
+	Star03:
+	set Star_Memo,03;
+	close2;
+	item_enchant 9;
+	end;
+
+	case 7:
+	Star04:
+	set Star_Memo,04;
+	close2;
+	item_enchant 10;
+	end;
+
+	case 8:
+	Star05:
+	set Star_Memo,05;
+	close2;
+	item_enchant 11;
+	end;
+
+	case 9:
+	Star06:
+	set Star_Memo,06;
+	close2;
+	item_enchant 12;
+	end;
+
+	case 10:
+	Star07:
+	set Star_Memo,07;
+	close2;
+	item_enchant 13;
+	end;
+
+	case 11:
+	close;
+	}
+
+OnInit:
+	waitingroom "星座之塔裝備",0;
+	end;
+}
+
+

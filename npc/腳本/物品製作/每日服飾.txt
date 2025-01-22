@@ -1,0 +1,154 @@
+﻿function	script	每日頭飾設定	{
+
+	mes "[每日服飾]";
+	mes "這是每日服飾控制台";
+	next;
+	switch(select("取消","每日服飾")){
+
+	case 1:
+	close;
+
+	case 2:
+		doevent "每日服飾#Server::On1";
+
+	}
+}
+
+
+//prontera,0,0,6	script	每日服飾#Server	-1,{
+-	script	每日服飾#Server	-1,{
+
+OnClock0400:
+	announce "每日服飾已經更新了，趕快來找我吧!",15,0xFF33FF;
+On1:
+	disablenpc "每日服飾#01";
+	disablenpc "每日服飾#02";
+	disablenpc "每日服飾#03";
+	disablenpc "每日服飾#04";
+	disablenpc "每日服飾#05";
+	disablenpc "每日服飾#06";
+	disablenpc "每日服飾#07";
+	disablenpc "每日服飾#08";
+	disablenpc "每日服飾#09";
+	disablenpc "每日服飾#10";
+	disablenpc "每日服飾#11";
+	disablenpc "每日服飾#12";
+	disablenpc "每日服飾#13";
+	disablenpc "每日服飾#14";
+	disablenpc "每日服飾#15";
+	disablenpc "每日服飾#16";
+	disablenpc "每日服飾#17";
+	disablenpc "每日服飾#18";
+	disablenpc "每日服飾#19";
+	disablenpc "每日服飾#20";
+	disablenpc "每日服飾#21";
+	disablenpc "每日服飾#22";
+	disablenpc "每日服飾#23";
+	disablenpc "每日服飾#24";
+	disablenpc "每日服飾#25";
+	disablenpc "每日服飾#26";
+	disablenpc "每日服飾#27";
+	disablenpc "每日服飾#28";
+	disablenpc "每日服飾#29";
+	disablenpc "每日服飾#30";
+	disablenpc "每日服飾#31";
+	if (gettime(5) == 1) enablenpc "每日服飾#01";
+	if (gettime(5) == 2) enablenpc "每日服飾#02";
+	if (gettime(5) == 3) enablenpc "每日服飾#03";
+	if (gettime(5) == 4) enablenpc "每日服飾#04";
+	if (gettime(5) == 5) enablenpc "每日服飾#05";
+	if (gettime(5) == 6) enablenpc "每日服飾#06";
+	if (gettime(5) == 7) enablenpc "每日服飾#07";
+	if (gettime(5) == 8) enablenpc "每日服飾#08";
+	if (gettime(5) == 9) enablenpc "每日服飾#09";
+	if (gettime(5) == 10) enablenpc "每日服飾#10";
+	if (gettime(5) == 11) enablenpc "每日服飾#11";
+	if (gettime(5) == 12) enablenpc "每日服飾#12";
+	if (gettime(5) == 13) enablenpc "每日服飾#13";
+	if (gettime(5) == 14) enablenpc "每日服飾#14";
+	if (gettime(5) == 15) enablenpc "每日服飾#15";
+	if (gettime(5) == 16) enablenpc "每日服飾#16";
+	if (gettime(5) == 17) enablenpc "每日服飾#17";
+	if (gettime(5) == 18) enablenpc "每日服飾#18";
+	if (gettime(5) == 19) enablenpc "每日服飾#19";
+	if (gettime(5) == 20) enablenpc "每日服飾#20";
+	if (gettime(5) == 21) enablenpc "每日服飾#21";
+	if (gettime(5) == 22) enablenpc "每日服飾#22";
+	if (gettime(5) == 23) enablenpc "每日服飾#23";
+	if (gettime(5) == 24) enablenpc "每日服飾#24";
+	if (gettime(5) == 25) enablenpc "每日服飾#25";
+	if (gettime(5) == 26) enablenpc "每日服飾#26";
+	if (gettime(5) == 27) enablenpc "每日服飾#27";
+	if (gettime(5) == 28) enablenpc "每日服飾#28";
+	if (gettime(5) == 29) enablenpc "每日服飾#29";
+	if (gettime(5) == 30) enablenpc "每日服飾#30";
+	if (gettime(5) == 31) enablenpc "每日服飾#31";
+	end;
+
+OnInit:
+	disablenpc "每日服飾#01";
+	disablenpc "每日服飾#02";
+	disablenpc "每日服飾#03";
+	disablenpc "每日服飾#04";
+	disablenpc "每日服飾#05";
+	disablenpc "每日服飾#06";
+	disablenpc "每日服飾#07";
+	disablenpc "每日服飾#08";
+	disablenpc "每日服飾#09";
+	disablenpc "每日服飾#10";
+	disablenpc "每日服飾#11";
+	disablenpc "每日服飾#12";
+	disablenpc "每日服飾#13";
+	disablenpc "每日服飾#14";
+	disablenpc "每日服飾#15";
+	disablenpc "每日服飾#16";
+	disablenpc "每日服飾#17";
+	disablenpc "每日服飾#18";
+	disablenpc "每日服飾#19";
+	disablenpc "每日服飾#20";
+	disablenpc "每日服飾#21";
+	disablenpc "每日服飾#22";
+	disablenpc "每日服飾#23";
+	disablenpc "每日服飾#24";
+	disablenpc "每日服飾#25";
+	disablenpc "每日服飾#26";
+	disablenpc "每日服飾#27";
+	disablenpc "每日服飾#28";
+	disablenpc "每日服飾#29";
+	disablenpc "每日服飾#30";
+	disablenpc "每日服飾#31";
+	if (gettime(5) == 1) enablenpc "每日服飾#01";
+	if (gettime(5) == 2) enablenpc "每日服飾#02";
+	if (gettime(5) == 3) enablenpc "每日服飾#03";
+	if (gettime(5) == 4) enablenpc "每日服飾#04";
+	if (gettime(5) == 5) enablenpc "每日服飾#05";
+	if (gettime(5) == 6) enablenpc "每日服飾#06";
+	if (gettime(5) == 7) enablenpc "每日服飾#07";
+	if (gettime(5) == 8) enablenpc "每日服飾#08";
+	if (gettime(5) == 9) enablenpc "每日服飾#09";
+	if (gettime(5) == 10) enablenpc "每日服飾#10";
+	if (gettime(5) == 11) enablenpc "每日服飾#11";
+	if (gettime(5) == 12) enablenpc "每日服飾#12";
+	if (gettime(5) == 13) enablenpc "每日服飾#13";
+	if (gettime(5) == 14) enablenpc "每日服飾#14";
+	if (gettime(5) == 15) enablenpc "每日服飾#15";
+	if (gettime(5) == 16) enablenpc "每日服飾#16";
+	if (gettime(5) == 17) enablenpc "每日服飾#17";
+	if (gettime(5) == 18) enablenpc "每日服飾#18";
+	if (gettime(5) == 19) enablenpc "每日服飾#19";
+	if (gettime(5) == 20) enablenpc "每日服飾#20";
+	if (gettime(5) == 21) enablenpc "每日服飾#21";
+	if (gettime(5) == 22) enablenpc "每日服飾#22";
+	if (gettime(5) == 23) enablenpc "每日服飾#23";
+	if (gettime(5) == 24) enablenpc "每日服飾#24";
+	if (gettime(5) == 25) enablenpc "每日服飾#25";
+	if (gettime(5) == 26) enablenpc "每日服飾#26";
+	if (gettime(5) == 27) enablenpc "每日服飾#27";
+	if (gettime(5) == 28) enablenpc "每日服飾#28";
+	if (gettime(5) == 29) enablenpc "每日服飾#29";
+	if (gettime(5) == 30) enablenpc "每日服飾#30";
+	if (gettime(5) == 31) enablenpc "每日服飾#31";
+	end;
+}
+
+

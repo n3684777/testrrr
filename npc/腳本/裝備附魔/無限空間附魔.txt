@@ -1,0 +1,731 @@
+//===================================
+// =遺跡裝備附魔
+// =================================
+map03,111,96,6	script	遺跡強化師#Infi	726,{
+
+	//附魔狀態
+	set $@InfEnc1,rand(0,9);
+	set $@InfEnc2,rand(0,9);
+	set $@InfEnc3,rand(0,9);
+	set $@InfEnc4,rand(0,6);
+	set $@InfEnc5,rand(0,6);
+	set $@InfEnc6,rand(0,6);
+	set $@InfEnc7,rand(0,8);
+	set $@InfEnc8,rand(0,8);
+	set $@InfEnc9,rand(0,8);
+
+	setarray $@InfEncing1[0],4700,4701,4811,4810,4809,4808,4820,4821,4822,4823;
+	setarray $@InfEncing2[0],4710,4711,4815,4814,4813,4812,4826,4827,4828,4829;
+	setarray $@InfEncing3[0],4720,4721,4832,4833,4834,4835,4836,4837,4838,4839;
+	setarray $@InfEncing4[0],4795,4796,4797,4700,4701,4702,4703;
+	setarray $@InfEncing5[0],4870,4800,4871,4710,4711,4712,4713;
+	setarray $@InfEncing6[0],4870,4800,4871,4720,4721,4722,4723;
+	setarray $@InfEncing7[0],4861,4862,4867,4868,4900,4700,4701,4702,4703;
+	setarray $@InfEncing8[0],4861,4862,4867,4868,4900,4710,4711,4712,4713;
+	setarray $@InfEncing9[0],4861,4862,4867,4868,4900,4720,4721,4722,4723;
+
+	mes "[遺跡強化師]";
+	mes "嗯?";
+	mes "你找我有事嗎?";
+	next;
+	switch(select("你是誰?:強化遺跡裝備:洗滌遺跡裝備")){
+
+case 1:
+	mes "[遺跡強化師]";
+	mes "我是專門強化遺跡裝備的專家。";
+	next;
+	mes "[遺跡強化師]";
+	mes "包括你在內!就算你拿再多錢來拜託我，我也不會幫你進行任何強化的!!";
+	next;
+	mes "[遺跡強化師]";
+	mes "要是沒有在指定的交易處，我們是不會進行交易的!如果你想跟我交易的話，就必須帶^0000ff損壞的魔法石x20^000000來找我!";
+	next;
+	mes "[遺跡強化師]";
+	mes "沒有的話，無論你要付多少代價我也絕不會替你進行強化的!因為我還不信任你…";
+	next;
+	mes "[遺跡強化師]";
+	mes "只要有^0000ff損壞的魔法石x20^000000我就能你在遺跡裝的第三插槽跟第四插槽上附上新的能力";
+	next;
+	mes "[遺跡強化師]";
+	mes "我可以附上的新能力";
+	close;
+
+
+case 2:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[遺跡強化師]";
+	mes"你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 1938) goto Inf_net1;
+	if(@abd == 1994) goto Inf_net1;
+	if(@abd == 2024) goto Inf_net1;
+	if(@abd == 13126) goto Inf_net1;
+	if(@abd == 13323) goto Inf_net1;
+	if(@abd == 16038) goto Inf_net1;
+	if(@abd == 18128) goto Inf_net1;
+	if(@abd == 21014) goto Inf_net1;
+	if(@abd == 28105) goto Inf_net1;
+	if(@abd == 28703) goto Inf_net1;
+
+	if(@abd == 15141) goto Inf_net2;
+	if(@abd == 32075) goto Inf_net2;
+
+	if(@abd == 23789) goto Inf_net3;
+	if(@abd == 20779) goto Inf_net3;
+
+	mes "[遺跡強化師]";
+	mes"你要附魔的裝備非遺跡裝備，不能幫你附魔";
+	close;
+
+Inf_net1:
+	switch(select("物理攻擊系:魔法攻擊系:遠距離系")){
+
+
+	case 1:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf1A",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf1B",6905,0,rand(1,100);
+	}
+
+	case 2:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf1C",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf1D",6905,0,rand(1,100);
+	}
+
+	case 3:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf1E",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf1F",6905,0,rand(1,100);
+	}
+}
+
+
+Inf_net2:
+	switch(select("物理攻擊系:魔法攻擊系:遠距離系")){
+
+
+	case 1:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf2A",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf2B",6905,0,rand(1,100);
+	}
+
+	case 2:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf2C",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf2D",6905,0,rand(1,100);
+	}
+
+	case 3:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf2E",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf2F",6905,0,rand(1,100);
+	}
+}
+
+Inf_net3:
+	switch(select("物理攻擊系:魔法攻擊系:遠距離系")){
+
+
+	case 1:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf3A",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf3B",6905,0,rand(1,100);
+	}
+
+	case 2:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf3C",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf3D",6905,0,rand(1,100);
+	}
+
+	case 3:
+		switch(select("第三插槽:第四插槽")){
+		case 1:
+		callfunc "fumoInf3E",6905,0,rand(1,100);
+		case 2:
+		callfunc "fumoInf3F",6905,0,rand(1,100);
+	}
+}
+
+
+case 3:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[遺跡強化師]";
+	mes"你身上有同樣的物品，為了防止洗滌時發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼洗滌";
+	close;
+	}
+	if(@abd == 1938) goto Inf_net4;
+	if(@abd == 1994) goto Inf_net4;
+	if(@abd == 2024) goto Inf_net4;
+	if(@abd == 13126) goto Inf_net4;
+	if(@abd == 13323) goto Inf_net4;
+	if(@abd == 16038) goto Inf_net4;
+	if(@abd == 18128) goto Inf_net4;
+	if(@abd == 21014) goto Inf_net4;
+	if(@abd == 28105) goto Inf_net4;
+	if(@abd == 28703) goto Inf_net4;
+	if(@abd == 15141) goto Inf_net4;
+	if(@abd == 23789) goto Inf_net4;
+	if(@abd == 20779) goto Inf_net4;
+	if(@abd == 32075) goto Inf_net4;
+
+	mes "[遺跡強化師]";
+	mes"你要洗滌的裝備非遺跡裝備，不能幫你洗滌";
+	close;
+
+Inf_net4:
+	switch(select("洗滌第三插槽:洗滌第四插槽")){
+	case 1:
+	callfunc "fumoInf4A",6905,0,rand(1,100);
+	case 2:
+	callfunc "fumoInf4B",6905,0,rand(1,100);
+	}
+}
+
+OnInit:
+	waitingroom "無限空間附魔",0;
+	end;
+}
+
+
+
+//---------------------------------------- 武器附魔效果
+
+function	script	fumoInf1A	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing1[$@InfEnc1],@fakeyouc4;
+	close;
+}
+
+function	script	fumoInf1B	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing1[$@InfEnc1];
+	close;
+}
+
+
+function	script	fumoInf1C	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing2[$@InfEnc2],@fakeyouc4;
+	close;
+}
+
+function	script	fumoInf1D	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing2[$@InfEnc2];
+	close;
+}
+
+
+function	script	fumoInf1E	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing3[$@InfEnc3],@fakeyouc4;
+	close;
+}
+
+function	script	fumoInf1F	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing3[$@InfEnc3];
+	close;
+}
+
+
+
+//---------------------------------------- 盔甲、鞋子附魔效果
+
+function	script	fumoInf2A	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing4[$@InfEnc4],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf2B	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing4[$@InfEnc4];
+	close;
+}
+
+
+function	script	fumoInf2C	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing5[$@InfEnc5],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf2D	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing5[$@InfEnc5];
+	close;
+}
+
+
+function	script	fumoInf2E	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing6[$@InfEnc6],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf2F	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing6[$@InfEnc6];
+	close;
+}
+
+
+//---------------------------------------- 披肩、頭飾附魔效果
+
+function	script	fumoInf3A	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing7[$@InfEnc7],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf3B	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing7[$@InfEnc7];
+	close;
+}
+
+
+function	script	fumoInf3C	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing8[$@InfEnc8],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf3D	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes"你身上有沒有附魔物品。";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing8[$@InfEnc8];
+	close;
+}
+
+function	script	fumoInf3E	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@InfEncing9[$@InfEnc9],@fakeyouc4;
+	close;
+}
+
+
+function	script	fumoInf3F	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[遺跡強化師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<20){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠20個";
+	close;
+	}
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),20;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@InfEncing9[$@InfEnc9];
+	close;
+}
+
+
+//---------------------------------------- 洗滌附魔效果
+
+function	script	fumoInf4A	{
+
+	if (@fakeyouc3 == 0) {
+	mes "[遺跡強化師]";	
+	mes "你裝備上的第三插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<30){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠30個";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=30){
+	mes"洗滌失敗";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem getarg(0),30;
+	close;
+	} else {
+	mes "[遺跡強化師]";
+	mes "洗滌成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),30;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,0,@fakeyouc4;
+	close;
+	}
+}
+
+
+function	script	fumoInf4B	{
+
+	if (@fakeyouc4 == 0) {
+	mes "[遺跡強化師]";	
+	mes "你裝備上的第四插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<30){
+	mes "[遺跡強化師]";
+	mes "你身上的損壞的魔法石不夠30個";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=30){
+	mes"洗滌失敗";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem getarg(0),30;
+	close;
+	} else {
+	mes "[遺跡強化師]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),30;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,0;
+	close;
+	}
+}
+

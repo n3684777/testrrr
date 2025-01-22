@@ -1,0 +1,126 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 客服專員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+function	script	GS_Bank	{
+
+	switch(select("存款服務","提款服務")) {
+	case 1:
+		mes "[客服專員][手續費^FF0000"+$@GSB_Zeny+"^000000%]";
+		mes "每次最多只能存入^0000FF1億^000000z，";
+		mes "請輸入您要存入的金額！";
+		mes " ";
+		mes "( 0 為取消)";
+		next;
+		input @zeny;
+		if ( @zeny < 1 ){
+			mes $@GameService_Str$;
+			mes "您已經取消存款服務！";
+			close;
+		}
+		if ( @zeny > 100000000 ){
+			mes $@GameService_Str$;
+			mes "您輸入的金額不符合規定！";
+			close;
+		}
+		if ( Zeny < @zeny ){
+			mes $@GameService_Str$;
+			mes "您輸入：^FF0000"+@zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		mes "[客服專員][手續費^FF0000"+$@GSB_Zeny+"^000000%]";
+		mes "您輸入：^FF0000"+@zeny+"^000000z";
+		mes "手續費：^FF0000"+($@GSB_Zeny*(@zeny/100))+"^000000z";
+		mes "實際存入：^0000FF"+(@zeny-($@GSB_Zeny*(@zeny/100)))+"^000000z";
+		mes "您確定要將這筆金錢存入嗎？";
+		next;
+		switch(select("確定存款","放棄存款")){
+			case 1:
+				break;
+			case 2:
+				mes $@GameService_Str$;
+				mes "您已經取消存款服務！";
+				close;
+		}
+		set Zeny,Zeny - @zeny;
+		set #GsDeposit,#GsDeposit + (@zeny-($@GSB_Zeny*(@zeny/100)));
+		if ( #GsDeposit > 100000000 ) {
+			set #GsDeposit,#GsDeposit - 100000000;
+			set #GsDeposit_E,#GsDeposit_E + 1;
+		}
+		mes $@GameService_Str$;
+		mes "您的金錢已成功存入，";
+		mes "您目前的銀行存款為：";
+		break;
+	case 2:
+		if ( @Pass_Num ) {
+			callfunc "GS_PassCheck",0;
+		}
+		mes $@GameService_Str$;
+		mes "每次最多只能提領^0000FF1億^000000z，";
+		mes "您目前的銀行存款為：";
+		if ( #GsDeposit_E ) {
+			mes "[^FF0000"+#GsDeposit_E+"億"+#GsDeposit+"^000000]z";
+		} else {
+			mes "[^FF0000"+#GsDeposit+"^000000]z";
+		}
+		mes "請輸入您要提出的金額！";
+		mes " ";
+		mes "( 0 為取消)";
+		next;
+		input @zeny;
+		if ( @zeny < 1 ){
+			mes $@GameService_Str$;
+			mes "您已經取消提款服務！";
+			close;
+		}
+		if ( @zeny > 100000000 ){
+			mes $@GameService_Str$;
+			mes "您輸入的金額不符合規定！";
+			close;
+		}
+		if ( #GsDeposit < @zeny && #GsDeposit_E < 1 ){
+			mes $@GameService_Str$;
+			mes "您輸入：^FF0000"+@zeny+"^000000z";
+			mes "您存款擁有的金錢不足！";
+			close;
+		}
+		mes $@GameService_Str$;
+		mes "您輸入：^FF0000"+@zeny+"^000000z";
+		mes "您確定要將這筆金錢提出嗎？";
+		next;
+		switch(select("確定提款","放棄提款")){
+			case 1:
+				break;
+			case 2:
+				mes $@GameService_Str$;
+				mes "您已經取消提款服務！";
+				close;
+		}
+		if ( #GsDeposit < @zeny ) {
+			set #GsDeposit,#GsDeposit + 100000000;
+			set #GsDeposit_E,#GsDeposit_E - 1;
+		}
+		set #GsDeposit,#GsDeposit - @zeny;
+		set Zeny,Zeny + @zeny;
+		mes $@GameService_Str$;
+		mes "您的金錢已成功提出，";
+		mes "您目前的銀行存款為：";
+		break;
+	}
+	if ( #GsDeposit_E ) {
+		mes "[^FF0000"+#GsDeposit_E+"億"+#GsDeposit+"^000000]z";
+	} else {
+		mes "[^FF0000"+#GsDeposit+"^000000]z";
+	}
+	close;
+}
+
+//================================================//

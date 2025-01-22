@@ -1,0 +1,41 @@
+﻿
+vdistrict1,65,36,6	script	吉芬魔法大賽裝備	4_F_HUWOMAN,{
+
+	mes "[吉芬魔法大賽裝備]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("吉芬魔法大賽裝備製作:暗夜吉芬鬥技場裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "硬幣兌換員";
+	end;
+
+	case 2:
+	close2;
+	callshop "吉芬夜間鬥技場裝備製作員";
+	end;
+
+	case 3:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "吉芬魔法大賽裝備",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

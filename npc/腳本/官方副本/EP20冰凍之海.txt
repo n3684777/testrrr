@@ -1,0 +1,578 @@
+1@slug	mapflag	noteleport			//無法瞬移
+1@slug	mapflag	monster_noteleport	//魔物無法瞬移
+1@slug	mapflag	nomemo				//無法記憶地圖
+1@slug	mapflag	nosave				//無法儲存位置
+1@slug	mapflag	nobranch			//無法使用樹枝
+1@slug	mapflag	nochat				//無法開聊天室
+1@slug	mapflag	novending			//無法開露天商店
+1@slug	mapflag	partylock			//防止切換隊長
+1@slug	mapflag	restricted	9
+
+
+vdistrict1,29,30,4	script	冰凍之海管理者	10458,{
+
+	.@playtime = checkquest(71019,PLAYTIME);
+	if(.@playtime == 2) erasequest 71019;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[冰凍之海管理者]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[冰凍之海管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "冰凍之海";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[冰凍之海管理者]";
+	mes "副本獎勵：";
+	mes "神聖的貓鬍鬚x10";
+	mes "純粹魔力根源石、純粹魔力結晶體、純粹魔力萃取液";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 220) {
+			mes "[冰凍之海管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.220 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[冰凍之海管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[冰凍之海管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 220) {
+			mes "[冰凍之海管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.220 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//副本任務
+			setquest 71019;
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "冰凍之海",0;
+	end;
+}
+
+
+
+1@slug,53,61,3	script	可波#Con2	21995,{
+
+
+	if( is_party_leader() == false ){
+		mes "請隊長 過來找我";
+		end;
+	}
+	
+	if( 'play == 1 ) {
+		mes "已經開啟了";
+		end;
+	}
+
+	set .@glv,getgmlevel();
+	set .@pid,getcharid(1);
+	set .@map$,instance_mapname("1@slug");
+	
+	if(.@glv > 90){
+		set .@select,select("玩家模式","^FF0000[GM]^000000 傳送到 王的房間");
+		if( .@select == 2 ){
+			enablenpc instance_npcname("可波#Con6");	
+			enablenpc instance_npcname("弗瑞德莉可絲#Con6");
+			set .@map$,instance_mapname("1@slug");
+			warp .@map$,72,257;		
+			end;
+		}
+	}
+	
+	
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "你好呀.弗瑞德莉可絲";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes "可波,你怎麼又來了";
+	next;
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "我是因為擔心你才跟來的";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes "如果你不快點回去，我就去找波克林";
+	next;
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "知道了";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes "可波也一直跟過來也有很多小不點來吃我又不能叫你別來，很危險的怪獸們最好整理一下";
+	close2;
+	cutin "",255;
+
+			set 'play,1;
+			donpcevent instance_npcname("魔物控制冰凍的大海")+"::OnStart";
+			showscript "開始攻略 冰凍的大海";
+			set 'party_id,getpartyleader(.@pid,2);
+			script4each "{ viewpoint 1,86,127,1,0xFF0000; }",3,'party_id;
+			hideonnpc instance_npcname("弗瑞德莉可絲#Con2");
+			enablenpc instance_npcname("可波#Con3");			
+			enablenpc instance_npcname("弗瑞德莉可絲#Con3");			
+			hideonnpc instance_npcname(strnpcinfo(0));	
+
+	end;
+	
+
+	set .@glv,getgmlevel();
+	set .@pid,getcharid(1);
+	set .@map$,instance_mapname("1@slug");	
+	
+	if(.@glv > 90)
+		setarray .@a1$[1],"開啟攻略","結束對話","^FF0000[GM]^000000 傳送到 王的房間";
+	else
+		setarray .@a1$[1],"開啟攻略","結束對話";
+		
+	for(.@i=1; .@i<getarraysize(.@a1$); .@i++) set .@m1$,.@m1$+.@a1$[.@i]+":";
+	mes "已經準備好了?";
+	next;
+	set .@s1,select(.@m1$);
+	switch(.@s1){
+		default:
+			break;
+		case 1:
+			if( 'play == 1 ) {
+				mes "已經開啟了";
+				end;
+			}
+			set 'play,1;
+			donpcevent instance_npcname("魔物控制冰凍的大海")+"::OnStart";
+			showscript "開始攻略 冰凍的大海";
+			set 'party_id,getpartyleader(.@pid,2);
+			script4each "{ viewpoint 1,86,127,1,0xFF0000; }",3,'party_id;
+			mapannounce .@map$,"[冰凍的大海] 請前往 系統提示的地方 會有 NPC 可以對話",bc_map,"0x00ff99";			
+			hideonnpc instance_npcname("弗瑞德莉可絲#Con2");
+			enablenpc instance_npcname("可波#Con3");			
+			enablenpc instance_npcname("弗瑞德莉可絲#Con3");			
+			hideonnpc instance_npcname(strnpcinfo(0));
+			break;
+		case 3:
+			if( .@glv < 90 ){
+				mes "無法操作 只有 GM 才能";
+				end;
+			}
+			enablenpc instance_npcname("可波#Con6");	
+			enablenpc instance_npcname("弗瑞德莉可絲#Con6");
+			set .@map$,instance_mapname("1@slug");
+			warp .@map$,72,257;	
+			end;		
+	}//switch .@s1
+	end;
+	
+OnInstanceInit:
+	if('lv) set 'lv,0;
+	if('play) set 'play,0;
+	if('mpcs) set 'mpcs,0;
+	end;
+
+}
+
+
+
+1@slug,0,0,0	script	魔物控制冰凍的大海	139,{
+	end;
+	
+OnStart:
+	set .@map$,instance_mapname("1@slug");
+	mapannounce .@map$,"[冰凍的大海] 請前往 系統提示的地方 請掃蕩 提示地點的魔物",bc_map,"0x00ff99";
+	stopnpctimer;
+	detachnpctimer;
+	initnpctimer;
+	end;
+	
+OnTimer3000:
+	set .@map$,instance_mapname("1@slug");
+	set .@gevent$,instance_npcname("魔物控制冰凍的大海")+"::OnMyMobDead";
+	
+	setarray .@list,21965,21983;
+	
+	mapannounce .@map$,"[冰凍的大海] 魔物已經出現 請前往 掃蕩",bc_map,"0x00ff99";
+	
+	for(.@i=0;.@i<100;.@i++)
+		areamonster .@map$,100,100,280,280,"--ja--",.@list[rand(getarraysize(.@list))],1,.@gevent$,Size_Large;
+	end;
+	
+OnMyMobDead:
+	set 'mpcs,'mpcs+1;
+	set .@mpcs,'mpcs;
+	set .@maxpcs,50;
+	
+	set .@map$,instance_mapname("1@slug");
+	
+	mapannounce .@map$, "[冰凍的大海]: 魔物累計: "+.@mpcs+" / "+.@maxpcs+" 隻",15;
+	
+	if( .@mpcs > 49 ){
+
+		set 'play,2;
+		killmonsterall .@map$;
+		mapannounce .@map$, "[冰凍的大海]: 魔物已被全數擊殺 可以前去 準備打王了",15;
+		enablenpc instance_npcname("可波#Con6");
+		script4each "{ viewpoint 1,63,275,1,0xFF0000; }",3,'party_id;
+
+	}
+	end;
+
+
+}
+
+
+1@slug,51,61,3	script	弗瑞德莉可絲#Con2	10458,{
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes ".....";
+	close2;
+	cutin "",255;
+	end;
+
+}
+1@slug,86,127,3	script	弗瑞德莉可絲#Con3	10458,{
+
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes ".....";
+	close2;
+	cutin "",255;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+1@slug,48,175,3	script	弗瑞德莉可絲#Con4	10458,{
+
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes ".....";
+	close2;
+	cutin "",255;
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+1@slug,159,308,3	script	弗瑞德莉可絲#Con5	10458,{
+
+	cutin "ep19_friederike01.png",2;
+	mes "[弗瑞德莉可絲]";
+	mes ".....";
+	close2;
+	cutin "",255;
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+1@slug,63,275,3	script	弗瑞德莉可絲#Con6	10458,{
+
+	getitem 1001248,5;
+	npctalk "感謝你幫我找回這些可波，我先帶可波離開了...";
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+
+
+1@slug,83,128,3	script	可波#Con3	21995,{
+
+	if( is_party_leader() == false ){
+		mes "請隊長 過來找我";
+		end;
+	}
+	
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "嗶! ! !";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "這裡也是出沒地區，好好確認一下。";
+	close2;
+	cutin "",255;
+	hideonnpc instance_npcname("弗瑞德莉可絲#Con3");
+	enablenpc instance_npcname("可波#Con4");
+	enablenpc instance_npcname("弗瑞德莉可絲#Con4");	
+	script4each "{ viewpoint 1,48,175,1,0xFF0000; }",3,'party_id;
+	set .@map$,strnpcinfo(4);
+	mapannounce .@map$,"[冰凍的大海] 請前往 系統提示的地方 請掃蕩 提示地點的魔物",bc_map,"0x00ff99";			
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+1@slug,45,175,3	script	可波#Con4	21995,{
+
+	if( is_party_leader() == false ){
+		mes "請隊長 過來找我";
+		end;
+	}
+	
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "嗶! ! !";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "這裡也是出沒地區，好好確認一下。";
+	close2;
+	cutin "",255;
+	hideonnpc instance_npcname("弗瑞德莉可絲#Con4");
+	enablenpc instance_npcname("可波#Con5");	
+	enablenpc instance_npcname("弗瑞德莉可絲#Con5");
+	script4each "{ viewpoint 1,159,308,1,0xFF0000; }",3,'party_id;
+	set .@map$,strnpcinfo(4);
+	mapannounce .@map$,"[冰凍的大海] 請前往 系統提示的地方 請掃蕩 提示地點的魔物",bc_map,"0x00ff99";			
+	hideonnpc instance_npcname(strnpcinfo(0));	
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+1@slug,157,308,3	script	可波#Con5	21995,{
+
+	if( is_party_leader() == false ){
+		mes "請隊長 過來找我";
+		end;
+	}
+	
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "嗶! ! !";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "這裡也是出沒地區，好好確認一下。";
+	close2;
+	cutin "",255;
+	//enablenpc instance_npcname("可波#Con6");
+	hideonnpc instance_npcname("弗瑞德莉可絲#Con5");
+	// ren getitem 1001217,5; 到 副本寶箱內
+	enablenpc instance_npcname("弗瑞德莉可絲#Con6");
+	script4each "{ viewpoint 1,63,275,1,0xFF0000; }",3,'party_id;
+	set .@map$,strnpcinfo(4);
+	mapannounce .@map$,"[冰凍的大海] 請前往 系統提示的地方 請掃蕩 提示地點的魔物",bc_map,"0x00ff99";			
+	hideonnpc instance_npcname(strnpcinfo(0));	
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+}
+
+
+
+1@slug,61,275,3	script	可波#Con6	21995,{
+
+	if( is_party_leader() == false ){
+		mes "請隊長 過來找我";
+		end;
+	}
+
+	if('win){
+		mes "副本已經通關過了";
+		end;
+	}
+	
+	if( 'play == 3 ) {
+		mes "首領已經出現過了";
+		end;
+	}	
+	
+	cutin "ep20_cocopo01.png",1;
+	mes "[可波]";
+	mes "嗶! ! !";
+	next;
+	cutin "ep19_friederike01.png",2;
+	mes "危險!那個怪物又出現了!。";
+	//mes "這裡也是出沒地區，好好確認一下。";
+	close2;
+	cutin "",255;
+	set 'play,3;
+	set .@map$,strnpcinfo(4);
+	set .@gid,monster (.@map$,78,260,"墮落天使冰蝸牛",21982,1,instance_npcname(strnpcinfo(0))+"::OnMyBossDead");
+	set 'mvp,.@gid;
+	hideonnpc instance_npcname("弗瑞德莉可絲#Con6");
+	hideonnpc instance_npcname(strnpcinfo(0));			
+	end;
+	
+OnMyBossDead:
+	set 'win,1;
+	set 'mvp,0;
+	set .@pid,getcharid(1);
+	set .@map$,strnpcinfo(4);
+
+	set .@pname$,strcharinfo(1);
+	set .@team$,getpartyname(.@pid);	
+	
+	announce "[冰凍的大海] 由 ["+ .@team$ +"] 帶領的隊伍 ["+ .@pname$ +"] 通過副本",bc_all,"0xDDAA00";
+	
+	stopnpctimer;
+	detachnpctimer;
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	
+	instance_announce 0,"墮落天使冰蝸牛的寶物散落在地上，找冰凍之海領獎員可以離開這邊",bc_map,0x0fff8C;			
+	
+	set .@map$,strnpcinfo(4);
+
+	set .@pcs,3;
+	
+	set .@x,78;
+	set .@y,260;
+	
+
+	for(.@i= 0;.@i<.@pcs;.@i++){
+		next_dropitem_special -1,0,rand(2,6);
+		makeitem 1001248,1,.@map$,.@x+rand(-3,3),.@y+rand(-3,3);
+	}
+	for(.@i= 0;.@i<.@pcs;.@i++){
+		next_dropitem_special -1,0,rand(2,6);
+		makeitem 1001249,1,.@map$,.@x+rand(-3,3),.@y+rand(-3,3);
+	}
+	for(.@i= 0;.@i<.@pcs;.@i++){
+		next_dropitem_special -1,0,rand(2,6);
+		makeitem 1001250,1,.@map$,.@x+rand(-3,3),.@y+rand(-3,3);
+	}
+	
+	end;
+	
+OnTimer10000:
+	donpcevent instance_npcname("冰凍之海領獎員#slug")+"::OnStart";
+	end;	
+
+OnInstanceInit:
+	if('win) set 'win,0;
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+	
+}
+
+
+//------------------------------ 領獎
+1@slug,0,0,4	script	冰凍之海領獎員#slug	10458,{
+
+	mes "[冰凍之海領獎員]";
+	mes "讓我把你們送出冰凍之海吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+
+	case 1:
+	//設定玩家獲得的獎勵
+	setArray .@item_id_r,1001248,1001249,1001250,1001217;
+	//設定一一對應獎勵數量
+	setArray .@item_co,10,2,1,10;
+	//設定一一對應掉落的機率 範圍 :1-100
+	setArray .@item_rate,100,100,100,100;	
+		for(.@i =0;.@i<getarraysize(.@item_id_r) ;.@i++){
+			if(rand(100)<.@item_rate[.@i])
+				getitem .@item_id_r[.@i],.@item_co[.@i];
+		}
+	callfunc "offical_instance_finish",62;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+
+	}
+
+
+OnStart:
+		enablenpc instance_npcname(strnpcinfo(0));
+		movenpc instance_npcname("冰凍之海領獎員#slug"),83,270;
+		end;
+
+OnInstanceInit:
+		disablenpc instance_npcname(strnpcinfo(0));
+		end;
+}
+
+
+
+

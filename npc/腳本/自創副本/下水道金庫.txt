@@ -1,0 +1,789 @@
+﻿trinity,61,33,4	script	下水道金庫管理者	708,{
+
+//	mes "尚未開放";
+//	close;
+
+	//挑戰次數
+	if ( day_Instance_S_Bout_06 < gettime(8) ){
+	set Instance_S_Bout_06,3;
+	set day_Instance_S_Bout_06,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_06 < 1) {
+		mes "[下水道金庫管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[下水道金庫管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "下水道金庫";
+
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[下水道金庫管理者]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_06+"^000000 ]";
+	mes "副本難度：★★";
+	mes "副本獎勵：^i[34118]x1";
+	mes "自創副本積分x20";
+	mes "6人以上：自創副本積分x10";
+	mes "10人以上：^i[34118]x1、自創副本積分x10";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[下水道金庫管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[下水道金庫管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+	
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】副本，請在90秒內入場！",15,0x33ea91;
+		mes "[下水道金庫管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[下水道金庫管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";	
+			//扣除挑戰次數
+			set Instance_S_Bout_06,Instance_S_Bout_06-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 1){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "下水道金庫",0;
+	end;
+
+}
+
+
+//------------------------------ 怪物加成
+1@jew,0,0,0	script	Jewel_Settings	-1,{
+
+Oninit:
+	//每層小怪加成屬性
+	$@Jewel_HP_mob=2000000;
+	$@Jewel_ATKMIN_mob=3000;
+	$@Jewel_ATKMAX_mob=6000;
+	$@Jewel_MATKMIN_mob=2000;
+	$@Jewel_MATKMAX_mob=4000;
+	$@Jewel_DEF_mob=150;
+	$@Jewel_MDEF_mob=100;
+	$@Jewel_HIT_mob=300;
+
+	//每層MVP加成屬性
+	$@Jewel_HP_mvp=50000000;
+	$@Jewel_ATKMIN_mvp=12000;
+	$@Jewel_ATKMAX_mvp=16000;
+	$@Jewel_MATKMIN_mvp =6000;
+	$@Jewel_MATKMAX_mvp =10000;
+	$@Jewel_DEF_mvp=300;
+	$@Jewel_MDEF_mvp=150;
+	$@Jewel_HIT_mvp=400;
+
+	end;
+}
+
+// Core Functions
+//============================================================
+function	script	Jewel_better_Mon1	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Jewel_HP_mob);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Jewel_ATKMIN_mob);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Jewel_ATKMAX_mob);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Jewel_MATKMIN_mob);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Jewel_MATKMAX_mob);
+
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Jewel_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Jewel_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Jewel_HIT_mob);
+
+	//怪物行為
+	//setunitdata .@MOD,UMOB_AI,0x0000004;
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,400;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,400;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	Jewel_better_Mon2	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+80000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+8000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+13000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+6000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+9000;
+
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Jewel_DEF_mob);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Jewel_MDEF_mob);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Jewel_HIT_mob);
+
+	//怪物行為
+	//setunitdata .@MOD,UMOB_AI,4;
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,500;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,500;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+//-------------------------------------------
+function	script	Jewel_better_Mvp1	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@Jewel_HP_mvp);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@Jewel_ATKMIN_mvp);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@Jewel_ATKMAX_mvp);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@Jewel_MATKMIN_mvp);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@Jewel_MATKMAX_mvp);
+
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Jewel_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Jewel_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Jewel_HIT_mvp);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,600;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,600;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+function	script	Jewel_better_Mvp2	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+500000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+15000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+20000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+8000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+12000;
+
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@Jewel_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@Jewel_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@Jewel_HIT_mvp);
+
+	//四轉屬性物理防
+	setunitdata .@MOD,UMOB_RES,600;
+	//四轉屬性魔法防
+	setunitdata .@MOD,UMOB_MRES,600;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2001;
+	//end;
+	return;
+}
+
+
+//------------------------------ 下水道金庫事件1
+1@jew,0,0,0	script	下水道金庫事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@jew");
+
+	//副本怪物資訊
+	setarray 'Jewel_mob1[0],1112,1159,1150,1688,1685,1689,1768,2249,2251,2253,2255,2156,1708;
+	//副本道具代碼 破舊銅鑄鑰匙
+	setarray 'Jewel_item1[0],7329;
+
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("下水道金庫領獎員#Jewel01");
+	disablenpc instance_npcname("神秘寶箱#Jewel01");
+	disablenpc instance_npcname("神秘寶箱#Jewel02");
+
+	//防禦線(無型牆)
+	setcell instance_mapname('map_name$[0]),148,44,143,44,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),148,44,143,44,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),240,93,244,93,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),240,93,244,93,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),243,196,238,196,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),243,196,238,196,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),189,183,193,183,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),189,183,193,183,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),127,180,131,180,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),127,180,131,180,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),100,244,100,240,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),100,244,100,240,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),76,184,80,184,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),76,184,80,184,cell_shootable,0;
+
+	//副本標籤
+	set 'Jewel_quest_01,0;
+	set 'Jewel_quest_02,0;
+	set 'Jewel_quest_03,0;
+
+	//刷出怪物
+	set 'Jewel_mob_01,30;
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],188,85,188,63,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd1";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],190,84,253,84,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd1";
+	for(.@i=0;.@i<15;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],240,85,245,42,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd1";
+
+	for(.@i=0;.@i<40;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],300,300,0,0,3974,1,instance_npcname("下水道金庫事件1")+"::OnCcdd0";
+
+	sleep 5000;
+	instance_announce instance_id(1),"下水道金庫：清除下水道金庫中的盜蟲，可以引出潛伏在此的神秘生物!!",15;
+	sleep 5000;
+	instance_announce instance_id(1),"下水道金庫：下水道金庫中有許多地方隱藏者寶藏，仔細查探可以收穫不少",15;
+	//副本開始關閉入場
+	sleep 90000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始，請消滅在各地區的怪物!!",bc_all,0xD7BA98;
+	end;
+
+OnCcdd0:
+	end;
+
+OnCcdd1:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	callfunc "Jewel_better_Mvp1",'map_name$[0],215,48,228,35,1530,1,instance_npcname("下水道金庫事件1")+"::OnCcdd3";
+	instance_announce 0, "德古拉男爵：是誰把我的手下都打倒了!?",bc_map,"0xFF0000";
+	end;
+
+OnCcdd2:
+	set 'Jewel_quest_01,'Jewel_quest_01+1;
+	instance_announce instance_id(1),"下水道金庫：打倒沉睡的魔物!!",15;
+	end;
+
+OnCcdd3:
+	callfunc "Gem_item_Lv2";
+	setcell instance_mapname('map_name$[0]),240,93,244,93,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),240,93,244,93,cell_shootable,1;
+	disablenpc instance_npcname("路障#Jewel01");
+	disablenpc instance_npcname("路障#Jewel02");
+	disablenpc instance_npcname("路障#Jewel03");
+	disablenpc instance_npcname("路障#Jewel04");
+	disablenpc instance_npcname("路障#Jewel05");
+	set 'Jewel_mob_01,20;
+
+	for(.@i=0;.@i<7;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd4";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd4";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd4";
+	instance_announce 0, "德古拉男爵：看來..入侵者實力不差",bc_map,"0xFF0000";
+	sleep2 2000;
+	instance_announce instance_id(1),"下水道金庫：趁前面房間中的盜蟲還沒發現，率先發動攻擊清除它們!",15;
+	end;
+
+OnCcdd4:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	set 'Jewel_mob_01,20;
+
+	for(.@i=0;.@i<7;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd5";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd5";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd5";
+	instance_announce instance_id(1),"下水道金庫：第一波支援的盜蟲出現了!",15;
+	end;
+
+OnCcdd5:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	set 'Jewel_mob_01,20;
+	for(.@i=0;.@i<7;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd6";
+	for(.@i=0;.@i<8;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd6";
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],238,185,253,125,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd6";
+	instance_announce instance_id(1),"下水道金庫：第二波支援的盜蟲出現了!",15;
+	end;
+
+OnCcdd6:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	setcell instance_mapname('map_name$[0]),243,196,238,196,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),243,196,238,196,cell_shootable,1;
+	disablenpc instance_npcname("路障#Jewel06");
+	disablenpc instance_npcname("路障#Jewel07");
+	disablenpc instance_npcname("路障#Jewel08");
+	disablenpc instance_npcname("路障#Jewel09");
+	disablenpc instance_npcname("路障#Jewel10");
+	set 'Jewel_mob_01,35;
+	for(.@i=0;.@i<5;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],232,222,255,217,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd7";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],255,250,190,250,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd7";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],255,250,190,250,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd7";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],195,220,195,190,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd7";
+	instance_announce instance_id(1),"下水道金庫：盜蟲清除完畢，前方路障消失了...",15;
+	end;
+
+OnCcdd7:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	enablenpc instance_npcname("神秘寶箱#Jewel01");
+	for(.@i=0;.@i<20;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],195,220,195,190,1175,1,instance_npcname("下水道金庫事件1")+"::OnCcdd0";
+	for(.@i=0;.@i<2;.@i++)
+	callfunc "Jewel_better_Mon2",'map_name$[0],195,220,195,190,1209,1,instance_npcname("下水道金庫事件1")+"::OnCcdd8";
+
+	callfunc "Jewel_better_Mvp1",'map_name$[0],255,250,190,250,1046,1,instance_npcname("下水道金庫事件1")+"::OnCcdd2";
+	instance_announce 0, "下水道金庫：好像吵醒了沉睡在此的魔物...",bc_map,"0x00cc66";
+	sleep2 2000;
+	instance_announce instance_id(1),"下水道金庫：那些藍鼠身上好像藏有什麼東西?!",15;
+	sleep2 2000;
+	instance_announce instance_id(1),"下水道金庫：前方出現了神秘寶箱，隊長趕快去打開吧!",15;
+	end;
+
+OnCcdd8:
+	getitem 'Jewel_item1[0],1,getpartyleader(getcharid(1),1);
+	end;
+
+OnCcdd9:
+	callfunc "Gem_item_Lv2";
+	setcell instance_mapname('map_name$[0]),189,183,193,183,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),189,183,193,183,cell_shootable,1;
+	disablenpc instance_npcname("路障#Jewel11");
+	disablenpc instance_npcname("路障#Jewel12");
+	disablenpc instance_npcname("路障#Jewel13");
+	disablenpc instance_npcname("路障#Jewel14");
+	set 'Jewel_mob_01,30;
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],132,140,150,175,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd10";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],132,140,150,175,3973,1,instance_npcname("下水道金庫事件1")+"::OnCcdd10";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],132,140,150,175,3972,1,instance_npcname("下水道金庫事件1")+"::OnCcdd10";
+	instance_announce instance_id(1),"下水道金庫：打倒汙染黑暗之王後，前方路障消失了...",15;
+	end;
+
+OnCcdd10:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	callfunc "Jewel_better_Mvp1",'map_name$[0],159,110,172,97,20421,1,instance_npcname("下水道金庫事件1")+"::OnCcdd11";
+	instance_announce instance_id(1),"下水道金庫：下方魔法陣好像傳來聲音?",15;
+	sleep2 2000;
+	instance_announce 0, "汙染蜘蛛女王：你們也加入盜蟲吧!",bc_map,"0xFF0000";
+	end;
+
+OnCcdd11:
+	callfunc "Gem_item_Lv2";
+	setcell instance_mapname('map_name$[0]),127,180,131,180,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),127,180,131,180,cell_shootable,1;
+	disablenpc instance_npcname("路障#Jewel15");
+	disablenpc instance_npcname("路障#Jewel16");
+	disablenpc instance_npcname("路障#Jewel17");
+	disablenpc instance_npcname("路障#Jewel18");
+	disablenpc instance_npcname("路障#Jewel19");
+	set 'Jewel_mob_01,30;
+
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],123,206,143,206,1051,1,instance_npcname("下水道金庫事件1")+"::OnCcdd12";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],153,215,153,247,1053,1,instance_npcname("下水道金庫事件1")+"::OnCcdd12";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],156,242,106,242,1054,1,instance_npcname("下水道金庫事件1")+"::OnCcdd12";
+	instance_announce instance_id(1),"下水道金庫：打倒汙染蜘蛛女王後，前方路障消失了...",15;
+	sleep2 2000;
+	instance_announce 0, "汙染蜘蛛女王：哥.我很...後悔....",bc_map,"0xFF0000";
+	sleep2 2000;
+	instance_announce 0, "下水道金庫：好像吵醒了沉睡在此的魔物...",bc_map,"0x00cc66";
+	end;
+
+OnCcdd12:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	setcell instance_mapname('map_name$[0]),100,244,100,240,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),100,244,100,240,cell_shootable,1;
+	disablenpc instance_npcname("路障#Jewel20");
+	disablenpc instance_npcname("路障#Jewel21");
+	disablenpc instance_npcname("路障#Jewel22");
+	disablenpc instance_npcname("路障#Jewel23");
+	disablenpc instance_npcname("路障#Jewel24");
+	set 'Jewel_mob_01,30;
+
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],56,254,76,239,20602,1,instance_npcname("下水道金庫事件1")+"::OnCcdd13";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],40,255,40,202,20683,1,instance_npcname("下水道金庫事件1")+"::OnCcdd13";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],60,204,60,204,21302,1,instance_npcname("下水道金庫事件1")+"::OnCcdd13";
+	instance_announce instance_id(1),"下水道金庫：盜蟲清除完畢，前方路障消失了...",15;
+	end;
+
+OnCcdd13:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	callfunc "Jewel_better_Mvp1",'map_name$[0],69,212,82,199,20888,1,instance_npcname("下水道金庫事件1")+"::OnCcdd14";
+	instance_announce 0, "王蟲：吼吼吼!",bc_map,"0xFF0000";
+	end;
+
+OnCcdd14:
+	callfunc "Gem_item_Lv2";
+	setcell instance_mapname('map_name$[0]),148,44,143,44,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),148,44,143,44,cell_shootable,1;
+	setcell instance_mapname('map_name$[0]),76,184,80,184,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),76,184,80,184,cell_shootable,1;
+	enablenpc instance_npcname("神秘寶箱#Jewel02");
+	disablenpc instance_npcname("路障#Jewel25");
+	disablenpc instance_npcname("路障#Jewel26");
+	disablenpc instance_npcname("路障#Jewel27");
+	disablenpc instance_npcname("路障#Jewel28");
+
+	set 'Jewel_mob_01,10;
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],27,57,75,43,3787,1,instance_npcname("下水道金庫事件1")+"::OnCcdd15";
+	instance_announce instance_id(1),"下水道金庫：打倒王蟲後，前方路障消失了...",15;
+	sleep2 2000;
+	instance_announce instance_id(1),"下水道金庫：趁黃金蟲還沒發現，先把他的手下清除掉",15;
+	sleep2 3000;
+	instance_announce 0, "下水道金庫：某處的隱藏通道好像可以通過了，隊長拿者破舊銅鑄鑰匙可能會有意想不到的收穫!",bc_map,"0x00cc66";
+	end;
+
+OnCcdd15:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	set 'Jewel_mob_01,10;
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon1",'map_name$[0],27,57,75,43,20270,1,instance_npcname("下水道金庫事件1")+"::OnCcdd16";
+	instance_announce instance_id(1),"下水道金庫：又有盜蟲援軍出現，趁黃金蟲還沒發現趕快清除",15;
+	end;
+
+OnCcdd16:
+	callfunc "Gem_item_Lv1";
+	set 'Jewel_mob_01,'Jewel_mob_01-1;
+	instance_announce instance_id(1),"下水道金庫還剩下"+'Jewel_mob_01+"個盜蟲",15;
+	if ('Jewel_mob_01>0) end;
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon2",'map_name$[0],27,57,75,43,1005,1,instance_npcname("下水道金庫事件1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon2",'map_name$[0],27,57,75,43,1054,1,instance_npcname("下水道金庫事件1")+"::OnCcdd0";
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "Jewel_better_Mon2",'map_name$[0],27,57,75,43,1209,1,instance_npcname("下水道金庫事件1")+"::OnCcdd0";
+	callfunc "Jewel_better_Mvp2",'map_name$[0],61,58,74,45,3975,1,instance_npcname("下水道金庫事件1")+"::OnCcddEnd";
+	instance_announce instance_id(1),"下水道金庫：又有盜蟲援軍出現，注意了黃金蟲也發覺了!!",15;
+	sleep2 2000;
+	instance_announce 0, "黃金蟲：你們這些不怕死的膽敢來老子的巢穴搗亂!",bc_map,"0xFF0000";
+	end;
+
+
+OnCcddEnd:
+	callfunc "Gem_item_Lv2";
+//-----------------------------------------------------------
+	viewpoint 1,67,51,20,0xffffff;
+	killmonsterall instance_mapname('map_name$[0]);
+	enablenpc instance_npcname("下水道金庫領獎員#Jewel01");
+//-------------------------------- 過關分數判斷
+	instance_announce 0, "下水道金庫領獎員：來地圖(67,51)找我領取報酬吧，依照你們的完成度地圖上的寶箱數量會有差異!!",bc_map,"0x00cc66";
+
+	if ('Jewel_quest_01==1) {
+	monster instance_mapname("1@jew"),70,54,"--ja--",28051,1;
+	instance_announce 0, "【副本任務】成功打倒下水道金庫的沉睡的魔物x1，出現1個獎勵寶箱!!",bc_map,"0x00cc66";
+	}
+	if ('Jewel_quest_01==2) {
+	monster instance_mapname("1@jew"),70,54,"--ja--",28051,1;
+	monster instance_mapname("1@jew"),70,51,"--ja--",28051,1;
+	instance_announce 0, "【副本任務】成功打倒下水道金庫的沉睡的魔物x2，出現2個獎勵寶箱!!",bc_map,"0x00cc66";
+	}
+	if ('Jewel_quest_01==3) {
+	monster instance_mapname("1@jew"),70,54,"--ja--",28051,1;
+	monster instance_mapname("1@jew"),70,51,"--ja--",28051,1;
+	monster instance_mapname("1@jew"),70,47,"--ja--",28051,1;
+	instance_announce 0, "【副本任務】成功打倒下水道金庫的沉睡的魔物x3，出現3個獎勵寶箱!!",bc_map,"0x00cc66";
+	}
+	if ('Jewel_quest_01==0) {
+	instance_announce 0, "【副本任務】未打倒下水道金庫的沉睡的魔物，無額外獎勵寶箱!!",bc_map,"0x00cc66";
+	}
+
+	//判斷過關人數時間
+	set 'Jewel_count,getmapusers('map_name$[0]);
+	//出場公告時間
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	//出場公告時間
+	'win = 1;
+	announce "【下水道金庫】：隊伍 ["+strcharinfo(1)+"] ["+'Jewel_count+"]人 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",15;
+	end;
+}
+
+
+//------------------------------副本NPC
+1@jew,193,200,0	script	神秘寶箱#Jewel01	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	menu "使用破舊銅鑄鑰匙 [^FF0000"+countitem('Jewel_item1[0])+"/1^000000]",-;
+	if (countitem('Jewel_item1[0])<1) {
+	mes "破舊銅鑄鑰匙 似乎不夠，並沒有發生什麼事情。";
+	close; }
+	delitem 'Jewel_item1[0],1;
+	disablenpc instance_npcname("神秘寶箱#Jewel01");
+	callfunc "Jewel_better_Mvp1",'map_name$[0],193,200,193,200,20422,1,instance_npcname("下水道金庫事件1")+"::OnCcdd9";
+	instance_announce instance_id(1),"【副本公告】：隊長["+strcharinfo(0)+"]打開了神秘寶箱，躲藏其中的汙染黑暗之王衝出來了!!",15;
+	close;
+}
+
+
+1@jew,92,97,0	script	神秘寶箱#Jewel02	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	menu "使用破舊銅鑄鑰匙 [^FF0000"+countitem('Jewel_item1[0])+"/1^000000]",-;
+	if (countitem('Jewel_item1[0])<1) {
+	mes "破舊銅鑄鑰匙 似乎不夠，並沒有發生什麼事情。";
+	close; }
+
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Jewel01,rand(1,100);
+	set .@Jewel02,rand(1,100);
+	set .@Jewel03,rand(1,100);
+	set .@Jewel04,rand(1,100);
+	set .@Jewel05,rand(1,100);
+	set .@Jewel06,rand(1,100);
+	if (.@Jewel01 <= 30) {
+	//祝福的武器礦石
+	makeitem 6438,1,.@map$,rand(89,99),rand(96,95);
+	}
+	if (.@Jewel02 <= 30) {
+	//祝福的防具礦石
+	makeitem 6439,1,.@map$,rand(89,99),rand(96,95);
+	}
+	if (.@Jewel03 <= 10) {
+	//鐵匠的祝福
+	makeitem 6635,1,.@map$,rand(89,99),rand(96,95);
+	}
+	if (.@Jewel04 <= 20) {
+	//鐵匠的祝福
+	makeitem 6635,1,.@map$,rand(89,99),rand(96,95);
+	}
+	if (.@Jewel05 <= 30) {
+	//商城10點兌換券
+	makeitem 61016,1,.@map$,rand(89,99),rand(96,95);
+	}
+	makeitem rand(616,617),1,.@map$,rand(89,99),rand(96,95);
+	makeitem rand(616,617),1,.@map$,rand(89,99),rand(96,95);
+	makeitem rand(7290,7297),1,.@map$,rand(89,99),rand(96,95);
+	makeitem 6417,rand(1,3),.@map$,rand(89,99),rand(96,95);
+	makeitem 6417,rand(1,3),.@map$,rand(89,99),rand(96,95);
+	delitem 'Jewel_item1[0],1;
+	disablenpc instance_npcname("神秘寶箱#Jewel02");
+	instance_announce instance_id(1),"【副本公告】：隊長["+strcharinfo(0)+"]打開了神秘寶箱，地上都是稀有寶物!!",15;
+	close;
+}
+
+
+//------------------------------路障
+1@jew,240,93,3	script	路障#Jewel01	1905,{end;}
+1@jew,241,93,3	script	路障#Jewel02	1905,{end;}
+1@jew,242,93,3	script	路障#Jewel03	1905,{end;}
+1@jew,243,93,3	script	路障#Jewel04	1905,{end;}
+1@jew,244,93,3	script	路障#Jewel05	1905,{end;}
+
+1@jew,243,196,3	script	路障#Jewel06	1905,{end;}
+1@jew,244,196,3	script	路障#Jewel07	1905,{end;}
+1@jew,245,196,3	script	路障#Jewel08	1905,{end;}
+1@jew,246,196,3	script	路障#Jewel09	1905,{end;}
+1@jew,247,196,3	script	路障#Jewel10	1905,{end;}
+
+1@jew,189,183,3	script	路障#Jewel11	1905,{end;}
+1@jew,190,183,3	script	路障#Jewel12	1905,{end;}
+1@jew,191,183,3	script	路障#Jewel13	1905,{end;}
+1@jew,192,183,3	script	路障#Jewel14	1905,{end;}
+
+1@jew,127,180,3	script	路障#Jewel15	1905,{end;}
+1@jew,128,180,3	script	路障#Jewel16	1905,{end;}
+1@jew,129,180,3	script	路障#Jewel17	1905,{end;}
+1@jew,130,180,3	script	路障#Jewel18	1905,{end;}
+1@jew,131,180,3	script	路障#Jewel19	1905,{end;}
+
+1@jew,100,244,3	script	路障#Jewel20	1905,{end;}
+1@jew,100,243,3	script	路障#Jewel21	1905,{end;}
+1@jew,100,242,3	script	路障#Jewel22	1905,{end;}
+1@jew,100,241,3	script	路障#Jewel23	1905,{end;}
+1@jew,100,240,3	script	路障#Jewel24	1905,{end;}
+
+1@jew,76,184,3	script	路障#Jewel25	1905,{end;}
+1@jew,77,184,3	script	路障#Jewel26	1905,{end;}
+1@jew,78,184,3	script	路障#Jewel27	1905,{end;}
+1@jew,79,184,3	script	路障#Jewel28	1905,{end;}
+
+
+//------------------------------ 領取獎勵
+1@jew,67,51,4	script	下水道金庫領獎員#Jewel01	465,{
+
+	mes "[下水道金庫領獎員]";
+	mes "你想要回去了嗎";
+	next;
+	menu "請送我回去(領取獎勵)",-,"我還想四處走走",Ccdd1;
+
+	if('Jewel_count>=6){
+	dispbottom "達到6人額外獎勵：";
+	callfunc "Custom_instance_reward";
+	}
+	if('Jewel_count>=10){
+	dispbottom "達到10人額外獎勵：";
+	getitem 34118,1;	//下水道金庫寶箱
+	callfunc "Custom_instance_reward";
+	}
+	getitem 34118,1;	//下水道金庫寶箱
+	callfunc "Custom_instance_reward";
+
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	close;
+
+
+	Ccdd1:
+	mes "[下水道金庫領獎員]";
+	mes "你想回去的時候在來找我吧";
+	close;
+}
+
+
+//-------------------------------- 地圖屬性
+1@jew	mapflag	nomemo
+1@jew	mapflag	nosave	SavePoint
+1@jew	mapflag	monster_noteleport
+1@jew	mapflag	noteleport
+1@jew	mapflag	noreturn
+
+

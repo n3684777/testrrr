@@ -1,0 +1,25 @@
+﻿//裝備等級強化所
+
+rgsr_in,131,185,3	script	裝備等級強化	10079,{
+
+	mes "[裝備等級強化]";
+	mes "持有五級武器都可以拿來給我進行裝備階級評價";
+	mes "成功提升武器五級武器階級可以增加額外功能";
+	next;
+	switch(select("裝備等級強化","取消")) {
+
+	case 1:
+	close2;
+	EnchantGradeui;
+	end;
+
+	case 2:
+	end;
+	}
+
+//OnInit:
+//	waitingroom "裝備等級強化",0;
+//	end;
+}
+
+

@@ -1,0 +1,602 @@
+
+vdistrict1,22,30,4	script	祕密花園管理者	10355,{
+
+	//副本任務獎勵
+	if(checkquest(32046,HUNTING)==2 ) { 
+	dispbottom "祕密花園(普通)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+5;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點金幣
+	erasequest 32046; }
+
+	if(checkquest(32048,HUNTING)==2 ) { 
+	dispbottom "祕密花園(困難)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點金幣
+	erasequest 32048; }
+
+	//模式選擇
+	switch(select("祕密花園(普通):祕密花園(困難)")){
+
+	case 1:
+	//挑戰次數
+	if ( day_Instance_Bout_34 < gettime(8) ){
+	set Instance_Bout_34,10;
+	set day_Instance_Bout_34,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_34 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[安全區域出入負責人]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "祕密花園(普通)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[安全區域出入負責人]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_34+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x4";
+	mes "商城1點金幣x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[安全區域出入負責人]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[安全區域出入負責人]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[安全區域出入負責人]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//副本難度
+		set Herbs_Level,1;
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 130) {
+			mes "[安全區域出入負責人]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_34,Instance_Bout_34-1;
+
+			//副本積分任務
+			if(checkquest(32046,HUNTING)<0 ){setquest 32046;}
+			//副本任務
+			if(checkquest(12499,HUNTING)<0 ){setquest 12499;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end; }
+			close;
+			end;
+		}
+	}
+	close;
+	end;
+
+	case 2:
+	//挑戰次數
+	if ( day_Instance_Bout_35 < gettime(8) ){
+	set Instance_Bout_35,10;
+	set day_Instance_Bout_35,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_35 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[安全區域出入負責人]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "祕密花園(困難)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[安全區域出入負責人]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_35+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x10";
+	mes "商城1點金幣x5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 180) {
+			mes "[安全區域出入負責人]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.180 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[安全區域出入負責人]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[安全區域出入負責人]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//副本難度
+		set Herbs_Level,2;
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 180) {
+			mes "[安全區域出入負責人]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.180 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_35,Instance_Bout_35-1;
+
+			//副本積分任務
+			if(checkquest(32048,HUNTING)<0 ){setquest 32048;}
+			//副本任務
+			if(checkquest(12500,HUNTING)<0 ){setquest 12500;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end; }
+			close;
+			end;
+		}
+	}
+	close;
+	end;
+
+}
+OnInit:
+	waitingroom "祕密花園",0;
+	end;
+}
+
+
+//------------------------------祕密花園事件
+1@herbs,0,0,0	script	祕密花園事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@herbs");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("蘭達#Herbs02");
+	disablenpc instance_npcname("蘭達#Herbs03");
+	disablenpc instance_npcname("卡帕#Herbs01");
+	disablenpc instance_npcname("卡帕#Herbs02");
+	disablenpc instance_npcname("傳送門#Herbs01");
+	disablenpc instance_npcname("傳送門#Herbs02");
+	disablenpc instance_npcname("傳送門#Herbs03");
+	disablenpc instance_npcname("傳送門#Herbs04");
+	//副本標籤
+	set 'CD_Herbs_01,0;
+	set 'CD_Herbs_02,0;
+	set 'CD_Herbs_03,0;
+	set 'CD_Herbs_05,0;
+	set 'CD_Herbs_06,0;
+	set 'CD_Herbs_07,0;
+	set 'CD_Herbs_08,0;
+	set 'CD_Herbs_09,0;
+	set 'CD_Herbs_10,0;
+	set 'CD_Herbs_11,0;
+	set 'CD_Herbs_12,0;
+	end;
+
+	OnCcdd1:
+	callfunc "BarMeal_item";
+	set 'CD_Herbs_Mob_01,'CD_Herbs_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_Herbs_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_Herbs_Mob_01>0) end;
+	set 'CD_Herbs_Mob_01,12;
+	instance_announce instance_id(1),"蘭達：我確實知道我們的保全狀態一點都不好了",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"蘭達："+strcharinfo(0)+"，希望你也可以幫忙[檢測]下一個區域",bc_all,0xD7BA98;
+	enablenpc instance_npcname("傳送門#Herbs01");
+	if('Herbs_Level==1){
+	areamonster 'map_name$[0],103,232,122,213,"--ja--",20624,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],103,232,122,213,"--ja--",20626,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	sleep2 6000;
+	areamonster 'map_name$[0],151,231,170,200,"--ja--",20622,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],151,231,170,200,"--ja--",20626,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	} else if('Herbs_Level==2){
+	areamonster 'map_name$[0],103,232,122,213,"--ja--",20625,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],103,232,122,213,"--ja--",20627,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	sleep2 6000;
+	areamonster 'map_name$[0],151,231,170,200,"--ja--",20623,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],151,231,170,200,"--ja--",20627,3,instance_npcname("祕密花園事件1")+"::OnCcdd2";
+	}
+	end;
+
+	OnCcdd2:
+	callfunc "BarMeal_item";
+	set 'CD_Herbs_Mob_01,'CD_Herbs_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_Herbs_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_Herbs_Mob_01>0) end;
+	set 'CD_Herbs_Mob_01,12;
+	instance_announce instance_id(1),"蘭達：他說說不定["+strcharinfo(0)+"]和同伴真的見過霸肋門德",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"蘭達：他在見到各位之前，我想再測試一次",bc_all,0xD7BA98;
+	enablenpc instance_npcname("傳送門#Herbs02");
+	if('Herbs_Level==1){
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20622,4,instance_npcname("祕密花園事件1")+"::OnCcdd3";
+	sleep2 6000;
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20626,4,instance_npcname("祕密花園事件1")+"::OnCcdd3";
+	sleep2 6000;
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20624,4,instance_npcname("祕密花園事件1")+"::OnCcdd3";
+	} else if('Herbs_Level==2){
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20623,4,instance_npcname("祕密花園事件1")+"::OnCcdd4";
+	sleep2 6000;
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20627,4,instance_npcname("祕密花園事件1")+"::OnCcdd4";
+	sleep2 6000;
+	areamonster 'map_name$[0],290,266,305,210,"--ja--",20625,4,instance_npcname("祕密花園事件1")+"::OnCcdd4";
+	}
+	end;
+
+	OnCcdd3:
+	callfunc "BarMeal_item";
+	set 'CD_Herbs_Mob_01,'CD_Herbs_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_Herbs_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_Herbs_Mob_01>0) end;
+	instance_announce instance_id(1),"卡帕：你就像藍達所說，隨便就這麼厲害啊["+strcharinfo(0)+"]",bc_all,0xFF33FF;
+	sleep2 2000;
+	instance_announce instance_id(1),"卡帕：但你還不到能見蘭達的程度，先去我的房間吧!",bc_all,0xFF33FF;
+	sleep2 2000;
+	instance_announce instance_id(1),"已開啟連結花園與保安區的傳點",bc_all,0xD7BA98;
+	sleep2 1000;
+	enablenpc instance_npcname("傳送門#Herbs03");
+	enablenpc instance_npcname("卡帕#Herbs01");
+	end;
+
+	OnCcdd4:
+	callfunc "BarMeal_item";
+	set 'CD_Herbs_Mob_01,'CD_Herbs_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_Herbs_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_Herbs_Mob_01>0) end;
+	instance_announce instance_id(1),"蘭達：你就如我想像的這麼厲害啊["+strcharinfo(0)+"]",bc_all,0xFF33FF;
+	sleep2 2000;
+	instance_announce instance_id(1),"蘭達：來我的房間吧!",bc_all,0xFF33FF;
+	sleep2 1000;
+	instance_announce instance_id(1),"已開啟連結花園與保安區的傳點",bc_all,0xD7BA98;
+	sleep2 1000;
+	enablenpc instance_npcname("傳送門#Herbs04");
+	enablenpc instance_npcname("蘭達#Herbs02");
+	end;
+
+	OnCcdd5:
+	sleep2 12000;
+	if('CD_Herbs_05==1){end;}
+	areamonster 'map_name$[0],171,94,171,94,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd5";
+	end;
+	OnCcdd6:
+	sleep2 12000;
+	if('CD_Herbs_06==1){end;}
+	areamonster 'map_name$[0],171,65,171,65,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd6";
+	end;
+	OnCcdd7:
+	sleep2 12000;
+	if('CD_Herbs_07==1){end;}
+	areamonster 'map_name$[0],200,65,200,65,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd7";
+	end;
+	OnCcdd8:
+	sleep2 12000;
+	if('CD_Herbs_08==1){end;}
+	areamonster 'map_name$[0],200,94,200,94,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd8";
+	end;
+
+	OnCcdd9:
+	sleep2 12000;
+	if('CD_Herbs_09==1){end;}
+	areamonster 'map_name$[0],272,95,29,29,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd9";
+	end;
+	OnCcdd10:
+	sleep2 12000;
+	if('CD_Herbs_10==1){end;}
+	areamonster 'map_name$[0],272,64,272,64,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd10";
+	end;
+	OnCcdd11:
+	sleep2 12000;
+	if('CD_Herbs_11==1){end;}
+	areamonster 'map_name$[0],299,64,299,64,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd11";
+	end;
+	OnCcdd12:
+	sleep2 12000;
+	if('CD_Herbs_12==1){end;}
+	areamonster 'map_name$[0],299,95,299,95,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd12";
+	end;
+
+
+	OnEnd01:
+	'win = 1;
+	set 'CD_Herbs_03,1;
+	set 'CD_Herbs_04,1;
+	set 'CD_Herbs_05,1;
+	set 'CD_Herbs_06,1;
+	killmonsterall instance_mapname("1@herbs");
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【祕密花園(普通)】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("卡帕#Herbs02");
+	instance_announce 0, "卡帕：我已經開啟通往我這裡的傳點，請過來這邊",bc_map,"0xFFFF33";
+	end;
+
+	OnEnd02:
+	'win = 1;
+	set 'CD_Herbs_03,1;
+	set 'CD_Herbs_04,1;
+	set 'CD_Herbs_05,1;
+	set 'CD_Herbs_06,1;
+	killmonsterall instance_mapname("1@herbs");
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【祕密花園(困難)】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("蘭達#Herbs03");
+	instance_announce 0, "蘭達：我已經開啟通往我這裡的傳點，請過來這邊",bc_map,"0xFFFF33";
+	end;
+}
+
+
+
+//------------------------------相關NPC
+1@herbs,53,210,4	script	蘭達#Herbs01	10276,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_Herbs_01>0) end;
+	set 'CD_Herbs_01,1;
+
+	if(Herbs_Level==1 ) { set 'Herbs_Level,1; }
+	if(Herbs_Level==2 ) { set 'Herbs_Level,2; }
+	npctalk "已經很久沒有外部人士進入保安區域了，我也要重複其他自動機器人說的話";
+	sleep2 2000;
+	npctalk "我要利用你替我們的保全體系進行[評分]";
+	set 'CD_Herbs_Mob_01,5;
+	areamonster 'map_name$[0],46,219,70,192,"--ja--",20622,3,instance_npcname("祕密花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],46,219,70,192,"--ja--",20626,2,instance_npcname("祕密花園事件1")+"::OnCcdd1";
+	specialeffect 16;
+	disablenpc instance_npcname("蘭達#Herbs01");
+	end;
+}
+
+
+1@herbs,168,79,4	script	卡帕#Herbs01	10276,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_Herbs_02>0) end;
+	set 'CD_Herbs_02,1;
+	sleep2 1000;
+	instance_announce instance_id(1),"SYSTEM：召喚守護者零件，將作為管理者的能量神盾材料使用",bc_all,0xD7BA98;
+	disablenpc instance_npcname("卡帕#Herbs01");
+	areamonster 'map_name$[0],168,79,168,79,"--ja--",20620,1,instance_npcname("祕密花園事件1")+"::OnEnd01";
+	areamonster 'map_name$[0],171,94,171,94,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],171,65,171,65,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],200,65,200,65,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],200,94,200,94,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd8";
+	end;
+}
+
+
+1@herbs,258,80,4	script	蘭達#Herbs02	10276,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_Herbs_03>0) end;
+	set 'CD_Herbs_03,1;
+	sleep2 1000;
+	instance_announce instance_id(1),"SYSTEM：召喚守護者零件，將作為管理者的能量神盾材料使用",bc_all,0xD7BA98;
+	disablenpc instance_npcname("蘭達#Herbs02");
+	areamonster 'map_name$[0],258,80,258,80,"--ja--",20621,1,instance_npcname("祕密花園事件1")+"::OnEnd02";
+	areamonster 'map_name$[0],272,95,272,95,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],272,64,272,64,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],299,64,299,64,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],299,95,299,95,"--ja--",20679,1,instance_npcname("祕密花園事件1")+"::OnCcdd12";
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@herbs,59,223,0	warp	傳送門#Herbs01	2,2,1@herbs,98,231
+1@herbs,174,229,0	warp	傳送門#Herbs02	2,2,1@herbs,274,213
+1@herbs,298,264,0	warp	傳送門#Herbs03	2,2,1@herbs,150,80
+1@herbs,298,264,0	warp	傳送門#Herbs04	2,2,1@herbs,244,80
+
+
+//------------------------------ 官方副本獎勵(普通)
+1@herbs,168,79,4	script	卡帕#Herbs02	10276,{
+	if(gettimetick(2) < getd("CD2_Herbs") ){
+	mes "您還必須等待^FF0000"+(getd("CD2_Herbs")-gettimetick(2))+"^000000秒。";
+	mes "時間內無法再次領取獎勵";
+	close;
+	}
+	if(checkquest(32046,HUNTING)==2 ) { 
+	dispbottom "祕密花園(普通)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32046; }
+
+	mes "[卡帕]";
+	mes "讓我把你們送出祕密花園吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+	case 1:
+	if(checkquest(12499,HUNTING)==2 ) { 
+	dispbottom "祕密花園(普通)任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,6*$EP1702;	//霸肋門德餐券
+	getitem 61006,3;	//商城1點兌換券
+	erasequest 12499; }
+
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------官方副本獎勵(困難)
+1@herbs,258,80,4	script	蘭達#Herbs03	10276,{
+	if(gettimetick(2) < getd("CD2_Herbs") ){
+	mes "您還必須等待^FF0000"+(getd("CD2_Herbs")-gettimetick(2))+"^000000秒。";
+	mes "時間內無法再次領取獎勵";
+	close;
+	}
+	//副本任務獎勵
+	if(checkquest(32048,HUNTING)==2 ) { 
+	dispbottom "祕密花園(困難)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點兌換券
+	erasequest 32048; }
+
+	mes "[蘭達]";
+	mes "讓我把你們送出祕密花園吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+	case 1:
+	if(checkquest(12500,HUNTING)==2 ) { 
+	dispbottom "祕密花園(困難)任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,10*$EP1702;	//霸肋門德餐券
+	erasequest 12500; }
+	if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+	callfunc "offical_instance_finish",47;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+//------------------------------抽獎
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8000){
+	getitem 1000104,3*$EP1702;	//魔凍石
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){
+	getitem 1000104,5*$EP1702;	//魔凍石
+	end;
+	}
+	if(@pay>=9001 && @pay<=9950){
+	getitem rand(310127,310177),1;	//自動技能模組
+	end;
+	}
+	if(@pay>=9951 && @pay<=10000){
+	getitem 50021,1;	//史詩自動修改模組盒
+	end;
+	}
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@herbs	mapflag	partylock
+1@herbs	mapflag	noteleport
+1@herbs	mapflag	nosave	SavePoint
+1@herbs	mapflag	nomemo
+1@herbs	mapflag	nobranch
+1@herbs	mapflag	noicewall
+1@herbs	mapflag	restricted	6
+

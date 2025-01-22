@@ -1,0 +1,429 @@
+﻿/*
+
+= 腳本名:<<【世界boss】>>
+============================================================
+= [人魚姬的思念 ] 
+= 作者QQ: 327945477
+= 更多定制創意可以聯繫作者編寫
+
+*/
+//-------------------------------- 地圖屬性
+bago_02	mapflag	restricted	9
+bago_02	mapflag	noreturn
+bago_02	mapflag	nomemo
+bago_02	mapflag	nosave	SavePoint
+bago_02	mapflag	monster_noteleport
+bago_02	mapflag	noteleport
+bago_02	mapflag	hidedamage	//隱藏此地圖上任何攻擊的實際傷害數值
+bago_02	mapflag	noaura	//禁止在當前地圖上呈現角色的光環效果
+bago_02	mapflag	nomerc	//止玩家在地圖上召喚傭兵
+bago_02	mapflag	nocostume	//禁止顯示第二服裝/特殊服裝頁簽下賦予 view 值的裝備
+
+
+bago_02,55,65,4	script	世界BOSS人員	86,{
+	mes "[世界BOSS人員]";
+	next;
+	switch(select("返回首都:取消")) {
+		case 1:
+			mes "[世界BOSS人員]";
+			mes "這就送你出去";
+			close2;
+			warp "trinity",50,99;
+			end;
+		case 2:
+			close;
+	}
+	end;
+}
+
+
+trinity,60,113,4	script	世界BOSS報名	419,{
+	mes "[世界BOSS人員]";
+	mes "世界BOSS積分 [ "+#Worl_Boss_Points01+" ] 點"; 
+	mes "等級"+.need_baselvl+"以上";
+	mes "報名費："+.need_const+"z";	
+	mes "請勿多開入場，違規者遭GM查緝將凍結帳號處分";
+	next;
+	switch(select(.game_statr==1?"我要報名":"","世界BOSS介紹","領取排名獎勵","查看排名",getgmlevel()>=99?"^FF0000GM手動重新開啟^000000":"")) {
+		case 1:
+			if ( BaseLevel < .need_baselvl ) {
+				mes "[世界BOSS人員]";
+				mes "戰場需要等級大於"+.need_baselvl;
+				close;
+			}
+			
+			if ( Zeny < .need_const ) {
+				mes "[世界BOSS人員]";
+				mes "戰場報名費為: "+.need_const+"z";
+				close;
+			}
+
+			mes "[世界BOSS人員]";
+			if(select("我要進入:取消")==2)end;
+			close2;
+			if ( Reg_fee_wb != $Reg_fee_wb) {
+				Zeny = Zeny-.need_const;
+				Reg_fee_wb = $Reg_fee_wb;
+			}
+			//清除領獎紀錄
+			Worl_Boss_Award = 0;
+			warp $@game_map_wb$,50,50;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+		end;
+
+		case 2:
+			mes "[世界BOSS人員]";
+			mes "開啟時間為：週六、週三晚上22：10";
+			mes "需要等級滿200並且持有10萬RO幣才能入場";
+			next;
+			mes "[世界BOSS人員]";
+			mes "只要對世界BOSS累積產生10萬傷害即可獲得1點世界BOSS積分";
+			mes "有對世界BOSS產生傷害的玩家都可以在結束時收到系統寄送的世界BOSS獎勵：商城100點金幣x3、10點紅利硬幣x3";
+			next;
+			mes "[世界BOSS人員]";
+			mes "排名額外加乘：";
+			mes "第1名：掉寶率+30%";
+			mes "第2名：掉寶率+20%";
+			mes "第3名：掉寶率+20%";
+			mes "第4名：掉寶率+15%";
+			mes "第5名：掉寶率+15%";
+			mes "第6名：掉寶率+10%";
+			mes "第7名：掉寶率+10%";
+			mes "第8名：掉寶率+10%";
+			mes "第9名：掉寶率+10%";
+			mes "第10名：掉寶率+10%";
+			next;
+			mes "[世界BOSS人員]";
+			mes "排名獎勵：";
+			mes "第1名：BOSS積分+8000";
+			mes "第2名：BOSS積分+5000";
+			mes "第3名：BOSS積分+4000";
+			mes "第4名：BOSS積分+3000";
+			mes "第5名：BOSS積分+2500";
+			mes "第6名：BOSS積分+2300";
+			mes "第7名：BOSS積分+2000";
+			mes "第8名：BOSS積分+1800";
+			mes "第9名：BOSS積分+1500";
+			mes "第10名：BOSS積分+1000";
+			mes "第11~20名：BOSS積分+800";
+			close;
+
+		case 3:
+			if(Worl_Boss_Award==1){
+			mes "[世界BOSS人員]";
+			mes "你沒有排名獎勵可以領取";
+			close;
+			}
+			if(.game_statr==1){
+			mes "[世界BOSS人員]";
+			mes "活動進行中";
+			close;
+			}
+
+			if(strcharinfo(0)==$boss_name$[0]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+8000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[1]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+5000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[2]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+4000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[3]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+3000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[4]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+2500; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[5]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+2300; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[6]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+2000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[7]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+1800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[8]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+1500; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[9]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+1000; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+
+			if(strcharinfo(0)==$boss_name$[10]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[11]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[12]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[13]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[14]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[15]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[16]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[17]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[18]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+			if(strcharinfo(0)==$boss_name$[19]){ #Worl_Boss_Points01 = #Worl_Boss_Points01+800; dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點"; Worl_Boss_Award = 1; close; }
+
+			mes "[世界BOSS人員]";
+			mes "沒有排名獎勵可以領取";
+			close;
+
+		case 4:
+			if(getarraysize($boss_charid)){
+				for(.@i=0;.@i<getarraysize($boss_charid);.@i++){
+				mes "第"+(1+.@i)+"名: "+$boss_name$[.@i]+ " 傷害為"+$boss_value[.@i];
+				}
+			}
+			else {
+			mes "暫無排名";
+			}
+			close;
+
+		case 5:
+			mes "[世界BOSS人員]";
+			mes "現在手動重新開啟嗎？";
+			next;
+			if ( select("開啟:取消") == 2 ) close;
+			stopnpctimer;
+			mapwarp $@game_map_wb$,"trinity",50,99;
+			
+			close2;
+			.game_statr = 1;
+			donpcevent strnpcinfo(0)+"::OnApply";	
+			end;
+	}
+	end;
+
+
+// 第一次廣播
+OnTue2107:
+OnThu2107:
+OnSat2107:
+	announce "【世界boss】還有"+.delaytime/60000+"分鐘活動就要開始了，現在已經可以入場了!!",bc_all;
+	announce "【世界boss】"+.need_baselvl+"級以上玩家可參與，報名地點為小遊戲區(198,91)",0;
+	.game_statr = 1;
+	end;
+
+// 開始廣播
+//OnSat2210:
+//	end;
+
+OnTue2110:
+OnThu2110:
+OnSat2110:
+	if(.game_statr_game) end;
+	.game_statr_game = 1;
+	$Reg_fee_wb++;
+	//sleep .delaytime;
+	donpcevent strnpcinfo(0)+"::OnApply";
+	end;
+
+
+OnApply:
+	set $@World_Mob01,4;
+	monster "bago_02",37,66,"--ja--",28105,1,strnpcinfo(0)+"::OnCcdd01";
+	areamobuseskill "bago_02",72,66,9,28106,771,10,0,360000,ET_KEK,0;	//減傷狀態
+	monster "bago_02",72,66,"--ja--",28106,1,strnpcinfo(0)+"::OnCcdd01";
+	areamobuseskill "bago_02",72,66,9,28106,771,10,0,360000,ET_KEK,0;	//減傷狀態
+	monster "bago_02",72,31,"--ja--",28107,1,strnpcinfo(0)+"::OnCcdd01";
+	areamobuseskill "bago_02",72,31,9,28107,771,10,0,360000,ET_KEK,0;	//減傷狀態
+	monster "bago_02",37,31,"--ja--",28108,1,strnpcinfo(0)+"::OnCcdd01";
+	areamobuseskill "bago_02",37,31,9,28108,771,10,0,360000,ET_KEK,0;	//減傷狀態
+
+//清除排名
+			deletearray	$boss_charid;	
+			deletearray	$boss_name$;			
+			deletearray	$boss_value;
+	announce "【世界boss】世界BOSS正式開啟。",bc_all;
+	initnpctimer;
+	$boss_turn++;
+	monster $@game_map_wb$,rand(38,71),rand(65,32),"世界BOSS",.word_boss_id,1,strnpcinfo(0)+"::OnBossDead";
+	.world_MobGID = $@mobid[0];
+			//免疫傷害種類538261 2635413 67647125
+			//setunitdata .world_MobGID,UMOB_MODE,67647125;
+			//隨機屬性調整
+			setunitdata .world_MobGID,UMOB_SIZE,rand(3);
+			setunitdata .world_MobGID,UMOB_ELETYPE,rand(0,9);
+			setunitdata .world_MobGID,UMOB_ELELEVEL,1;
+			setunitdata .world_MobGID,UMOB_RACE,rand(0,9);
+			//防禦
+			setunitdata .world_MobGID,UMOB_DEF,rand(350,900);
+			setunitdata .world_MobGID,UMOB_MDEF,rand(100,300);
+
+			//素質
+			setunitdata .world_MobGID,UMOB_STR,rand(450,550);
+			setunitdata .world_MobGID,UMOB_AGI,rand(400,500);
+			setunitdata .world_MobGID,UMOB_VIT,rand(150,300);
+			setunitdata .world_MobGID,UMOB_INT,rand(350,550);
+			setunitdata .world_MobGID,UMOB_DEX,rand(350,450);
+			setunitdata .world_MobGID,UMOB_LUK,rand(300,400);
+
+			//四轉屬性物理防禦
+			setunitdata .world_MobGID,UMOB_RES,4000;
+			//四轉屬性魔法防禦			
+			setunitdata .world_MobGID,UMOB_MRES,2000;
+			//減傷
+			setunitdata .world_MobGID,UMOB_DAMAGETAKEN,1;
+			//技能狀態
+			areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,771,10,0,3600000,ET_KEK,0;	//減傷狀態
+			//areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,205,2,0,3600000,ET_KEK,0;	//光之盾
+			areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,675,5,0,3600000,ET_KEK,0;	//鋼筋鐵骨
+			areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,676,1,0,3600000,ET_KEK,0;	//反魔法
+			areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,361,5,0,3600000,ET_KEK,0;	//聖母祈福
+			areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,685,1,0,0,ET_KEK,0;	//無敵
+
+	initnpctimer;
+	$boss_turn++;
+	end;
+
+
+
+		
+OnPCAttackExpress:
+
+	if ( @attack_target_gid == .world_MobGID  ) {
+
+		if(unitexists(.world_MobGID)){	
+			if(boss_turn !=$boss_turn){
+					PC_dam =0;
+					PC_GET_poit = 0;
+					boss_turn = $boss_turn;
+				}	
+					PC_dam = PC_dam+(@attack_damage_right+@attack_damage_left);
+					
+					PC_GET_poit = PC_GET_poit+(@attack_damage_right+@attack_damage_left);
+
+					if(PC_GET_poit>=.hurt_dam){
+						.@max = 0;
+						.@max = PC_GET_poit/.hurt_dam;
+						PC_GET_poit = 0;
+						//#Worl_Boss_Points01 =  #Worl_Boss_Points01 + .@max;
+						//dispbottom "你的世界BOSS積分增加 "+.@max+" 點";
+						
+					}
+					
+			}
+		end;
+	}
+	end;
+
+//Ontimer15000:
+//	areamobuseskill $@game_map_wb$,50,50,100,.word_boss_id,686,1,0,0,ET_KEK,0;
+//	announce "【世界boss】世界BOSS無敵狀態解除。",bc_all;
+//	end;
+
+//設置BOSS存活時間
+Ontimer1800000:
+	if(unitexists(.world_MobGID))
+	mobremove .world_MobGID;
+	.game_statr = 0;
+OnBossDead:
+		announce "【世界boss】世界BOSS已經被打倒了!!稍後將傳送所有玩家回城。",bc_all;
+		stopnpctimer;
+		$boss_turn++;
+		.game_statr = 0;
+		.game_statr_game = 0;
+
+		query_sql("SELECT `char_id`,`value` FROM `char_reg_num` where `key` = 'PC_dam' ORDER BY `value` DESC LIMIT "+.reward_cont,.@playercid,.@value); 
+		if(getarraysize(.@playercid)){
+			for(.@i=0;.@i<getarraysize(.@playercid);.@i++){
+	
+			query_sql "SELECT `name` FROM `char` where `char_id` = "+.@playercid[.@i],.@names$;	
+			announce "【世界boss】第"+(.@i+1)+"名:[ "+.@names$[0]+" ]傷害為:"+.@value[.@i],bc_all;			
+
+				$boss_charid[.@kk]=.@playercid[.@i];	
+				$boss_name$[.@kk]=.@names$[0];			
+				$boss_value[.@kk]=.@value[.@i];
+				.@kk++;
+
+			}
+
+		}
+
+		
+		query_sql("SELECT `char_id` FROM `char_reg_num` where `key` = 'PC_dam' and `value` >= '0'",.@allaccid); 
+		
+				for(.@i=0;.@i<getarraysize(.@allaccid);.@i++){
+					
+//=======所有參與擊殺人員的獎勵==================
+					callsub popu_reward,
+					/*----------------郵件獎勵設置----------------*/
+					0,	//獎勵ROB
+					61009,3,//獎勵道具ID_1與對應數量 商城100點金幣
+					61028,3,//獎勵道具ID_2與對應數量 10點紅利硬幣
+					0,0,//獎勵道具ID_3與對應數量
+					0,0,//獎勵道具ID_4與對應數量
+					0,0,//獎勵道具ID_5與對應數量
+					.@allaccid[.@i];	
+				
+//=======所有參與擊殺人員的獎勵==================					
+				}
+			query_sql("DELETE FROM `char_reg_num` where `key` = 'PC_dam'");
+			sleep 30000;
+			mapwarp $@game_map_wb$,"trinity",50,99;
+	end;
+popu_reward:
+	.@charid = getarg(11);
+	.@sender$ = "世界boss獎勵";
+	.@title$ = "世界boss獎勵";
+	.@body$ = "世界boss獎勵";
+	.@zeny = getarg(0);
+	setarray .@mailitem[0], getarg(1), getarg(3),getarg(5),getarg(7),getarg(9); // 道具獎勵數組
+	setarray .@mailamount[0], getarg(2), getarg(4), getarg(6), getarg(8), getarg(10); // 道具獎勵數量
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny,.@mailitem,.@mailamount;	
+	return;	
+
+OnPCStatCalcEvent:
+
+//排名能力加成設置區
+	.@index = inarray($boss_charid,getcharid(0))+1;
+	switch(.@index){
+		case 1:  bonus2 bDropAddRace,RC_All,30; break;			
+		case 2:  bonus2 bDropAddRace,RC_All,20; break;
+		case 3:  bonus2 bDropAddRace,RC_All,20; break;
+		case 4:  bonus2 bDropAddRace,RC_All,15; break;
+		case 5:  bonus2 bDropAddRace,RC_All,15; break;
+		case 6:  bonus2 bDropAddRace,RC_All,10; break;
+		case 7:  bonus2 bDropAddRace,RC_All,10; break;
+		case 8:  bonus2 bDropAddRace,RC_All,10; break;
+		case 9:  bonus2 bDropAddRace,RC_All,10; break;
+		case 10: bonus2 bDropAddRace,RC_All,10; break;
+		default: break;
+	}
+
+end;
+
+	//世界boss事件
+OnCcdd01:
+	mapannounce "bago_02","【世界boss】"+strcharinfo(0)+" 打倒了守護Boss獲得BOSS積分+2000、紅利積分10點硬幣x5!!",bc_map,"0xffff00";
+	#Worl_Boss_Points01 =  #Worl_Boss_Points01 + 2000;
+	dispbottom "你的世界BOSS積分 "+#Worl_Boss_Points01+" 點";
+	getitem 61028,5;
+
+	set $@World_Mob01,$@World_Mob01-1;
+	mapannounce "bago_02","【世界boss】還剩下"+$@World_Mob01+"隻守護聖獸!!",bc_map,"0xffff00";
+	if($@World_Mob01==0) {
+	areamobuseskill $@game_map_wb$,50,50,200,.word_boss_id,686,1,0,0,ET_KEK,0;
+	announce "【世界boss】世界BOSS無敵狀態解除。",bc_all;
+	}
+	end;
+
+OnInit:
+//=======BOSS地圖相關設置==================
+	waitingroom "世界BOSS",0;
+	.word_boss_id = 2538;//設置BOSS魔物ID
+	.reward_cont = 20;//設置排名前多少有能力加成
+	$@game_map_wb$ = "bago_02";	//BOSS地圖
+//=======BOSS地圖相關設置==================	
+	
+	.hurt_dam = 500000;//每多少傷害增加1點積分 
+	
+//=======入口相關設置==================
+	//報名時間:單位是毫秒
+	.delaytime=180000;
+	//報名等級設置
+	.need_baselvl=200;	
+	//報名費用
+	.need_const=100000;
+	//報名入場證id
+	.need_ID=602;	
+//=======入口相關設置==================
+
+	mapwarp $@game_map_wb$,"prontera",0,0;
+	$boss_turn++;
+	query_sql("DELETE FROM `char_reg_num` where `key` = 'PC_dam'");
+	bindatcmd("WB",strnpcinfo(0)+"::OnApply",99,99);
+	end;
+}
+
+

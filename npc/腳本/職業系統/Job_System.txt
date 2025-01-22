@@ -1,0 +1,1109 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : Ver 1.7
+//==腳本名稱 : 職業系統 (函式)
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+-	script	Job_System_OnInit	-1,{	OnInit: set $@Job_System,1;
+
+//--- Script 執行時的相關設定 , 請各伺服器依情況斟酌 ---
+
+//----- 最多能夠轉生的次數 ( 預設：1 次 ) -----
+	set $@CJLvMax,1;
+
+//----- 多次轉生後的獎勵素質點 ( 預設：0 點 ) -----
+	set $@CJLStPt,50;
+
+//----- 多次轉生後的獎勵技能點 ( 預設：0 點 ) -----
+	set $@CJLSkPt,0;
+
+//----- 超級初心者的初始技能點 ( 預設：20 點 ) -----
+	set $@J23SkPt,10;
+
+//----- 租借服務的費用 ( 預設：1200 Zeny ) -----
+	set $@FRCZeny,1200;
+
+//----- 重置素質的費用 ( 預設：500000 Zeny ) -----
+	set $@RstZeny,100000;
+
+//----- 重置技能的費用 ( 預設：500000 Zeny ) -----
+	set $@RskZeny,100000;
+
+//----- 轉生後的角色是否能互轉職業 ( 預設：1 )( 0 = Yes , 1 = No ) -----
+	set $@AutoCheckJob,1;
+}
+
+//================================================//
+
+function	script	Job_System	{
+
+	mes "[職業天使]";
+	mes "請選擇您要服務的項目。";
+	next;
+	switch(select("轉職服務","技能服務","租借服務","重置服務")) {
+	case 1:
+		callfunc "Job_Quick";
+	case 2:
+		callfunc "Job_Skill_Quick";
+	case 3:
+		callfunc "Job_FRC_Quick";
+	case 4:
+		callfunc "Job_Reset_Quick";
+	}
+}
+
+//================================================//
+
+function	script	Job_Quick	{
+
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[職業天使]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+	}
+//一轉條件檢查
+	if ( class == 0 || class == 4001 ) {
+		if ( JobLevel < 10 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000010級^000000才能進行轉職!";
+       			close;
+		}
+		if ( $@AutoCheckJob != 0 && Class_Job != 0 ) {
+			callfunc "Job1_Auto_Quick";
+		} else {
+			if ( $@AutoCheckJob ) {
+			mes "[職業天使]";
+			mes "進階二轉無法互轉職業，";
+			mes "請玩家警慎的選擇職業！";
+			next;
+			}
+			callfunc "Job1_Quick";
+		}
+	}
+
+//二轉條件檢查
+	if ( ( class >= 1 && class <= 6 ) || ( class >= 4002 && class <= 4007 ) || ( class == 4046 ) ) {
+		if ( JobLevel < 40 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000040級^000000才能進行轉職!";
+			close;
+		}
+		if ( $@AutoCheckJob != 0 && Class_Job != 0 ) {
+			callfunc "Job2_Auto_Quick";
+		} else {
+			if ( $@AutoCheckJob ) {
+			mes "[職業天使]";
+			mes "進階二轉無法互轉職業，";
+			mes "請玩家警慎的選擇職業！";
+			next;
+			}
+			callfunc "Job2_Quick";
+		}
+	}
+
+
+//三轉條件檢查
+	if ( class >= 4008 && class <= 4021 ) {
+		if ( JobLevel < 70 ) {
+		mes "[職業天使]";
+		mes "職業等級^FF000070級^000000才能進行轉職!";
+		close;
+		}
+
+		callfunc "Job3_Quick";
+	}
+
+
+//四轉條件檢查
+	if ( class >= 4054 && class <= 4079 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+
+		callfunc "Job4_Quick";
+	}
+
+
+//日影/月影忍者條件檢查
+	if ( class == 25 ) {
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為日影/月影忍者";
+		jobchange 4211;
+		ResetStatus;
+		set StatusPoint,1273;
+		close;
+	}
+//蜃氣樓條件檢查
+	if ( class == 4211 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為蜃氣樓";
+		jobchange 4304;
+		close;
+	}
+//不知火條件檢查
+	if ( class == 4212 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為不知火";
+		jobchange 4305;
+		close;
+	}
+
+
+//星皇條件檢查
+	if ( class == 4047 ) {
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 50 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000050級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為星皇";
+		jobchange 4239;
+		ResetStatus;
+		set StatusPoint,1273;
+		close;
+	}
+//天帝條件檢查
+	if ( class == 4239 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為天帝";
+		jobchange 4302;
+		close;
+	}
+
+
+//獵靈士條件檢查
+	if ( class == 4049 ) {
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 50 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000050級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為獵靈士";
+		jobchange 4240;
+		ResetStatus;
+		set StatusPoint,1273;
+		close;
+	}
+//靈導士條件檢查
+	if ( class == 4240 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為靈導士";
+		jobchange 4303;
+		close;
+	}
+
+
+//叛亂者條件檢查
+	if ( class == 24 ) {
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為叛亂者";
+		jobchange 4215;
+		ResetStatus;
+		set StatusPoint,1273;
+		close;
+	}
+//夜衛隊條件檢查
+	if ( class == 4215 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為夜衛隊";
+		jobchange 4306;
+		close;
+	}
+
+
+//進階超級初心者條件檢查
+	if ( class == 23 ) {
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 99 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000099級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為進階超級初心者";
+		jobchange 4190;
+		close;
+	}
+//頂級初學者條件檢查
+	if ( class == 4190 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 70 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000070級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為頂級初學者";
+		jobchange 4307;
+		close;
+	}
+
+
+//魂靈師條件檢查
+	if ( class == 4218 ) {
+	if ( BaseLevel < 200 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF0000200級^000000才能進行轉職!";
+       		close;
+	}
+			if ( JobLevel < 60 ) {
+			mes "[職業天使]";
+			mes "職業等級^FF000060級^000000才能進行轉職!";
+			close;
+			}
+		mes "[職業天使]";
+		mes "恭喜您轉職為魂靈師";
+		jobchange 4308;
+		close;
+	}
+
+	close;
+}
+
+
+//================================================//
+
+function	script	Job_Reincarnation	{
+
+//職業檢查
+		if ( class == 4190 || class == 4218 || class == 4215 || class == 4239 || class == 4240 || class == 4047 || class == 4049 || class == 4211 || class == 4212 || class == 23 || class == 24 || class == 25 ) {
+		mes "[職業天使]";
+		mes "你的職業無法轉生!";
+		close;
+		}
+
+		if (( class >= 4023 && class <= 4045 ) || ( class >= 4096 && class <= 4108 ) || ( class >= 4220 && class <= 4229 )) {
+		mes "[職業天使]";
+		mes "寶寶職業無法進行轉生";
+		close;
+		}
+
+//轉生條件檢查
+	if ( BaseLevel < 99 ) {
+		mes "[職業天使]";
+		mes "基本等級^FF000099級^000000才能進行轉生!";
+       		close;
+	} else {
+
+		if ( ( class >= 7 && class <= 20 ) || ( class >= 4047 && class <= 4049) || ( class >= 4211 && class <= 4212) ) {
+			if ( JobLevel < 50 ) {
+				mes "[職業天使]";
+				mes "職業等級^FF000050級^000000才能進行轉生!";
+				close;
+			}
+		} else {
+			if ( JobLevel < 70 ) {
+				mes "[職業天使]";
+				mes "職業等級^FF000070級^000000才能進行轉生!";
+				close;
+			}
+		}
+		if ( checkfalcon() || checkcart() || checkriding() ) {
+			mes "[職業天使]";
+			mes "有^FF0000租借物品^000000的話無法進行轉生!";
+			close;
+		}
+		if ( CharJobLv >= $@CJLvMax ) {
+			mes "[職業天使]";
+			mes "您的轉生次數已達上限!";
+			mes "已經無法在次進行轉生!";
+			close;
+		} else {
+			callfunc "JobL_Quick";
+		}
+	}
+}
+
+//================================================//
+
+function	script	Job1_Quick	{
+
+	if ( class == 0 ) {
+		mes "[職業天使]";
+		mes "您是非^FF0000進階人物^000000!!";
+		mes "請選擇想要轉職的職業";
+		next;
+		switch(select("劍士","魔法師","弓箭手","服事","商人","盜賊","超級初心者","槍手","忍者","跆拳者")) {
+		case 1:
+			set @jobchange,1;	break;
+		case 2:
+			set @jobchange,2;	break;
+		case 3:
+			set @jobchange,3;	break;
+		case 4:
+			set @jobchange,4;	break;
+		case 5:
+			set @jobchange,5;	break;
+		case 6:
+			set @jobchange,6;	break;
+		case 7:
+			set @jobchange,23;	break;
+		case 8:
+			set @jobchange,24;	break;
+		case 9:
+			set @jobchange,25;	break;
+		case 10:
+			set @jobchange,4046;	break;
+		}
+	} 
+
+	mes "[職業天使]";
+	mes "您確定要轉職成為^FF0000"+jobname(@jobchange)+"^000000嗎?";
+	next;
+	switch(select("否!!","是!!")) {
+	case 1:
+		callfunc "Job1_Quick";
+	case 2:
+		jobchange @jobchange;
+		if ( @jobchange == 23 ) {
+			set SkillPoint,SkillPoint+$@J23SkPt;
+		}
+		break;
+	}
+	mes "[職業天使]";
+	mes "恭喜您轉職服務順利完成!";
+	close;
+}
+
+//================================================//
+
+function	script	Job2_Quick	{
+
+	if ( Upper == 0 ) {
+		mes "[職業天使]";
+		mes "您是非^FF0000進階人物^000000!!";
+		mes "請選擇想要轉職的職業";
+		next;
+		switch(class) {
+		case 1:
+			switch(select("騎士","十字軍")) {
+			case 1:
+				set @jobchange,7;	break;
+			case 2:
+				set @jobchange,14;	break;
+			}
+			break;
+		case 2:
+			switch(select("巫師","賢者")) {
+			case 1:
+				set @jobchange,9;	break;
+			case 2:
+				set @jobchange,16;	break;
+			}
+			break;
+		case 3:
+			switch(select("獵人","詩人/舞孃")) {
+			case 1:
+				set @jobchange,11;	break;
+			case 2:
+				if (Sex) {
+					set @jobchange,19;
+				} else {
+					set @jobchange,20;
+				}
+			}
+			break;
+		case 4:
+			switch(select("祭司","武僧")) {
+			case 1:
+				set @jobchange,8;	break;
+			case 2:
+				set @jobchange,15;	break;
+			}
+			break;
+		case 5:
+			switch(select("鐵匠","煉金術士")) {
+			case 1:
+				set @jobchange,10;	break;
+			case 2:
+				set @jobchange,18;	break;
+			}
+			break;
+		case 6:
+			switch(select("刺客","流氓")) {
+			case 1:
+				set @jobchange,12;	break;
+			case 2:
+				set @jobchange,17;	break;
+			}
+			break;
+		case 4046:
+			switch(select("拳聖","悟靈士")) {
+			case 1:
+				set @jobchange,4047;	break;
+			case 2:
+				set @jobchange,4049;	break;
+			}
+			break;
+		}
+	} 
+	mes "[職業天使]";
+	mes "您確定要轉職成為^FF0000"+jobname(@jobchange)+"^000000嗎?";
+	next;
+	switch(select("否!!","是!!")) {
+	case 1:
+		callfunc "Job2_Quick";
+	case 2:
+		jobchange @jobchange;
+		break;
+	}
+	mes "[職業天使]";
+	mes "恭喜您轉職服務順利完成!";
+	close;
+}
+
+
+
+//=============================== 三轉轉職
+function	script	Job3_Quick	{
+
+	if(class==4018 && BaseLevel==99 && JobLevel >=70) goto Job_4079;
+	if(class==4016 && BaseLevel==99 && JobLevel >=70) goto Job_4077;
+	if(class==4020 && BaseLevel==99 && JobLevel >=70) goto Job_4075;
+	if(class==4021 && BaseLevel==99 && JobLevel >=70) goto Job_4076;
+	if(class==4013 && BaseLevel==99 && JobLevel >=70) goto Job_4065;
+	if(class==4008 && BaseLevel==99 && JobLevel >=70) goto Job_4060;
+	if(class==4010 && BaseLevel==99 && JobLevel >=70) goto Job_4061;
+	if(class==4012 && BaseLevel==99 && JobLevel >=70) goto Job_4062;
+	if(class==4009 && BaseLevel==99 && JobLevel >=70) goto Job_4063;
+	if(class==4011 && BaseLevel==99 && JobLevel >=70) goto Job_4064;
+	if(class==4015 && BaseLevel==99 && JobLevel >=70) goto Job_4073;
+	if(class==4017 && BaseLevel==99 && JobLevel >=70) goto Job_4074;
+	if(class==4019 && BaseLevel==99 && JobLevel >=70) goto Job_4078;
+	mes "[職業天使]";
+	mes "無法轉職 請檢查你的職業是否正確";
+	mes "等級是否到99 JOB到70級.";
+	close;
+
+//-------------------------------------------------------
+Job_4079:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 6121,1; // 化妝刷
+	getitem 6122,1; // 毛刷
+	getitem 5750,1; // 影子 工藝
+	jobchange 4079;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4077:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5754,1; // 燃燒的 靈魂
+	jobchange 4077;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4075:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5751,1; // 宮廷樂師
+	jobchange 4075;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4076:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5758,1; // 瀕死的天鵝
+	jobchange 4076;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4065:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5755,1; // 沉默 執行者
+	jobchange 4065;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4060:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5746,1; // 符文 頭環
+	jobchange 4060;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4061:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5753,1; // 魔力之石帽子
+	jobchange 4061;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4062:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5748,1; // 狙擊手 護目鏡
+	getitem 6124,1; // 狼笛
+	jobchange 4062;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4063:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5747,1; // 聖冠
+	jobchange 4063;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4064:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	jobchange 4064;
+	ResetStatus;
+	set StatusPoint,1325;
+	if(Sex)
+    	getitem 5749,1; // 駕駛員 頭帶
+    	else
+    	getitem 5760,1; // 駕駛員 頭帶
+	close;
+
+Job_4073:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5757,1; // 覆面 施密特 頭盔
+	jobchange 4073;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4074:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5756,1; // 風之 低語
+	jobchange 4074;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+Job_4078:
+	mes "[職業天使]";
+	mes "馬上給您轉職.";
+	getitem 5752,1; // 麥得斯的 低語
+	jobchange 4078;
+	ResetStatus;
+	set StatusPoint,1325;
+	close;
+
+}
+
+
+//=============================== 四轉轉職
+function	script	Job4_Quick	{
+	mes "[職業天使]";
+	mes "你準備好進行四轉了嗎?";
+	next;
+	menu "我想好了",Xready,"租借四轉坐騎",Mountpeco,"我在想想",Xnotready;
+
+Xready:
+	set @reqbaselv,200;// Required base level to change to trait era jobs.
+	set @reqjoblv,1;// Required job level to change to trait era jobs.
+
+	if (checkcart() || checkfalcon() || checkriding() || checkdragon() || checkwug() || checkmadogear())
+		goto Xremove;
+
+	// Only trans versions of 3rd jobs are allowed to change to 4th jobs.
+	// kRO has some special method for allowing regular 3rd jobs to change to 4th but im not sure what it is.
+	// Maybe its a convert from regular 3rd to trans 3rd. Has to be since all 4th jobs get access to trans skills.
+	if (Class >= Job_Rune_Knight_T && Class <= Job_Guillotine_Cross_T || Class >= Job_Royal_Guard_T && Class <= Job_Shadow_Chaser_T)
+		goto Xfourth;
+	else
+		goto Xcantchange;
+
+Xfourth:
+	if (BaseLevel >= @reqbaselv && JobLevel >= @reqjoblv)
+	{
+		if (Class == Job_Rune_Knight_T)
+			jobchange Job_Dragon_Knight;
+		else if (Class == Job_Warlock_T)
+			jobchange Job_Arch_Mage;
+		else if (Class == Job_Ranger_T)
+			jobchange Job_Windhawk;
+		else if (Class == Job_Arch_Bishop_T)
+			jobchange Job_Cardinal;
+		else if (Class == Job_Mechanic_T)
+			jobchange Job_Meister;
+		else if (Class == Job_Guillotine_Cross_T)
+			jobchange Job_Shadow_Cross;
+		else if (Class == Job_Royal_Guard_T)
+			jobchange Job_Imperial_Guard;
+		else if (Class == Job_Sorcerer_T)
+			jobchange Job_Elemental_Master;
+		else if (Class == Job_Minstrel_T)
+			jobchange Job_Troubadour;
+		else if (Class == Job_Wanderer_T)
+			jobchange Job_Trouvere;
+		else if (Class == Job_Sura_T)
+			jobchange Job_Inquisitor;
+		else if (Class == Job_Genetic_T)
+			jobchange Job_Biolo;
+		else if (Class == Job_Shadow_Chaser_T)
+			jobchange Job_Abyss_Chaser;
+
+		goto Xcomplete;
+	}
+	else
+		goto Xlowlevel;
+
+Mountpeco:
+	atcommand "@mountpeco";
+	close;
+
+Xremove:
+	mes "[職業天使]";
+	mes "您必須先移除您的坐騎、獵鷹、座狼和手推車";
+	close;
+
+Xnotready:
+	mes "[職業天使]";
+	mes "等你準備好時再來找我";
+	close;
+
+Xcantchange:
+	mes "[職業天使]";
+	mes "你現在的職業無法四轉";
+	close;
+
+Xcomplete:
+	mes "[職業天使]";
+	mes "恭喜你完成四轉";
+	close;
+
+Xlowlevel:
+	mes "[職業天使]";
+	mes "你的基本等級必須是 "+@reqbaselv+" 並且職業 "+@reqjoblv+".";
+	close;
+}
+
+
+//================================================//
+function	script	Job1_Auto_Quick	{
+
+	mes "[職業天使]";
+	mes "您已是^FF0000進階人物^000000!!";
+	mes "系統將為您配置職業!!";
+	next;
+	switch(Class_Job) {
+	case 7:
+		jobchange 4002;	break;
+	case 8:
+		jobchange 4005;	break;
+	case 9:
+		jobchange 4003;	break;
+	case 10:
+		jobchange 4006;	break;
+	case 11:
+		jobchange 4004;	break;
+	case 12:
+		jobchange 4007;	break;
+	case 14:
+		jobchange 4002;	break;
+	case 15:
+		jobchange 4005;	break;
+	case 16:
+		jobchange 4003;	break;
+	case 17:
+		jobchange 4007;	break;
+	case 18:
+		jobchange 4006;	break;
+	case 19:
+		jobchange 4004;	break;
+	case 20:
+		jobchange 4004;	break;
+	case 23:
+		jobchange 23;
+		set SkillPoint,SkillPoint+$@J23SkPt;
+		break;
+	case 24:
+		jobchange 24;	break;
+	case 25:
+		jobchange 25;	break;
+	case 4047:
+		jobchange 4046;	break;
+	case 4049:
+		jobchange 4046;	break;
+
+	}
+	mes "[職業天使]";
+	mes "恭喜您轉職服務順利完成!";
+	close;
+}
+
+//================================================//
+function	script	Job2_Auto_Quick	{
+
+	mes "[職業天使]";
+	mes "您已是^FF0000進階人物^000000!!";
+	mes "系統將為您配置職業!!";
+	next;
+	switch(Class_Job) {
+	case 7:
+		jobchange 4008;	break;
+	case 8:
+		jobchange 4009;	break;
+	case 9:
+		jobchange 4010;	break;
+	case 10:
+		jobchange 4011;	break;
+	case 11:
+		jobchange 4012;	break;
+	case 12:
+		jobchange 4013;	break;
+	case 14:
+		jobchange 4015;	break;
+	case 15:
+		jobchange 4016;	break;
+	case 16:
+		jobchange 4017;	break;
+	case 17:
+		jobchange 4018;	break;
+	case 18:
+		jobchange 4019;	break;
+	case 19:
+		jobchange 4020;	break;
+	case 20:
+		jobchange 4021;	break;
+	case 4047:
+		jobchange 4047;	break;
+	case 4049:
+		jobchange 4049;	break;
+
+	}
+	mes "[職業天使]";
+	mes "恭喜您轉職服務順利完成!";
+	close;
+}
+
+//================================================//
+
+function	script	Job_FRC_Quick	{
+
+	if ( Zeny < $@FRCZeny ) {
+		announce "職業系統 : 您沒有足夠的金錢唷！",bc_self,0xFF0000;
+		close;
+	}
+	if( checkfalcon() || checkcart() || checkriding() ) {
+		announce "職業系統 : 您已經租借過了唷！",bc_self,0xFF0000;
+		close;
+	}
+//獵鷹
+	if ( class == 11 || class == 4012 ) {
+		if ( getskilllv(127) < 1 ) {
+			announce "職業系統 : 您還沒學會 馴鷹術 唷！",bc_self,0xFF0000;
+			close;
+		}
+		setfalcon;
+		set Zeny,Zeny-$@FRCZeny;
+	}
+//大嘴鳥
+	if ( class == 7 || class == 14 || class == 4008 || class == 4015 ) {
+		if ( getskilllv(63) < 1 ) {
+			announce "職業系統 : 您還沒學會 騎乘術 唷！",bc_self,0xFF0000;
+			close;
+		}
+		setriding;
+		set Zeny,Zeny-$@FRCZeny;
+	}
+
+//手推車
+	if ( class == 5 || class == 10 || class == 18 || class == 23 || class == 4006 || class == 4011 || class == 4019 ) {
+		if ( getskilllv(39) < 1 ) {
+			mes "[職業天使]";
+			announce "職業系統 : 您還沒學會 手推車使用 唷！",bc_self,0xFF0000;
+			close;
+		}
+		setcart;
+		set Zeny,Zeny-$@FRCZeny;
+	}
+	announce "職業系統 : 恭喜您租借服務順利完成！",bc_self,0x00FFFF;
+	close;
+}
+
+//================================================//
+
+function	script	Job_Reset_Quick	{
+
+	set $@RstkZeny,(($@RstZeny+$@RskZeny)*8)/10;
+	switch(select("重置素質 "+$@RstZeny+" z","重置技能 "+$@RskZeny+" z","重置全部 "+$@RstkZeny+" z")) {
+	case 1:
+		if ( Zeny < $@RstZeny ) goto No_Zeny;
+		set Zeny,Zeny-$@RstZeny;
+		ResetStatus;
+		break;
+	case 2:
+		if ( Zeny < $@RskZeny ) goto No_Zeny;
+		set Zeny,Zeny-$@RskZeny;
+		ResetSkill;
+		break;
+	case 3:
+		if ( Zeny < $@RstkZeny ) goto No_Zeny;
+		set Zeny,Zeny-$@RstkZeny;
+		ResetStatus;
+		ResetSkill;
+		break;
+	}
+	announce "職業系統 : 恭喜您重置服務順利完成！",bc_self,0x00FFFF;
+	close;
+No_Zeny:
+	announce "職業系統 : 您沒有足夠的金錢唷！",bc_self,0xFF0000;
+	close;
+}
+
+//================================================//
+
+function	script	Job_Skill_Quick	{
+
+//初心者系列
+	if ( Class == 0 || Class == 4001 || Class == 4023 || Class == 4307 ) {
+		skill 143,1,0;
+	}
+//劍士系列
+	if ( Class == 1 || Class == 4002 || Class == 4024 || Class == 4252 || Class == 4258) {
+		skill 144,1,0; skill 145,1,0; skill 146,1,0;
+	}
+//魔法師系列
+	if ( Class == 2 || Class == 4003 || Class == 4025 || Class == 4255 || Class == 4261 ) {
+		skill 157,1,0;
+	}
+//弓箭手系列
+	if ( Class == 3 || Class == 4004 || Class == 4026 || Class == 4257 || Class == 4263 || Class == 4264 ) {
+		skill 147,1,0; skill 148,1,0;
+	}
+//服事系列
+	if ( Class == 4 || Class == 4005 || Class == 4027 || Class == 4256 || Class == 4262 ) {
+		skill 156,1,0;
+	}
+//商人系列
+	if ( Class == 5 || Class == 4006 || Class == 4028 || Class == 4253 || Class == 4259 ) {
+		skill 153,1,0; skill 154,1,0; skill 155,1,0; skill 2544,1,0;
+	}
+//盜賊系列
+	if ( Class == 6 || Class == 4007 || Class == 4029 || Class == 4254 || Class == 4260 ) {
+		skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0;
+	}
+//騎士系列
+	if ( Class == 7 || Class == 4008 || Class == 4060 || Class == 4096 || Class == 4030 || Class == 4252) {
+		skill 144,1,0; skill 145,1,0; skill 146,1,0; skill 1001,1,0;
+	}
+//祭司系列
+	if ( Class == 8 || Class == 4009 || Class ==4063 || Class == 4099 || Class == 4031 || Class == 4256) {
+		skill 156,1,0;
+		if ( getskilllv(54) != 0 ) {
+			skill 1014,1,0;
+		} else {
+			announce "職業系統 : 您沒有學習 復活術 無法習得 捨身取義 唷！",bc_self,0xFF0000;
+		}
+	}
+//巫師系列
+	if ( Class == 9 || Class == 4010 || Class == 4061 || Class == 4097 || Class == 4032 || Class == 4255) {
+		skill 142,1,0; skill 157,1,0; skill 1006,1,0;
+	}
+//鐵匠系列
+	if ( Class == 10 || Class == 4011 || Class == 4064 || Class == 4100 || Class == 4033 || Class == 4253) {
+		skill 153,1,0; skill 154,1,0; skill 155,1,0; skill 1012,1,0; skill 1013,1,0; skill 2544,1,0;
+	}
+//獵人系列
+	if ( Class == 11 || Class == 4012 || Class == 4062 || Class == 4098 || Class == 4034 || Class == 4257) {
+		skill 147,1,0; skill 148,1,0; skill 1009,1,0;
+	}
+//刺客系列
+	if ( Class == 12 || Class == 4013 || Class == 4065 || Class == 4101 || Class == 4035 || Class == 4254) {
+		skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; skill 1003,1,0; skill 1004,1,0;
+	}
+//十字軍系列
+	if ( Class == 14 || Class == 4015 || Class == 4073 || Class == 4102 || Class ==  4037 || Class ==  4258) {
+		skill 144,1,0; skill 145,1,0; skill 146,1,0; skill 1002,1,0;
+	}
+//武道家系列
+	if ( Class == 15 || Class == 4016 || Class == 4077 || Class == 4106 || Class == 4038 || Class == 4262) {
+		skill 156,1,0; skill 1015,1,0; skill 1016,1,0;
+	}
+//賢者系列
+	if ( Class == 16 || Class == 4017 || Class == 4074 || Class == 4103 || Class == 4039 || Class == 4261) {
+		skill 157,1,0; skill 1007,1,0;
+		if ( getskilllv(1008) == 0 && getskilllv(1017) == 0 && getskilllv(1018) == 0 && getskilllv(1019) == 0 ) {
+			announce "職業系統 : 請選擇您要學習的屬性轉換！(無法在次更換)",bc_self,0xFF0000;
+			switch(select("水屬性轉換","地屬性轉換","火屬性轉換","風屬性轉換")) {
+			case 1:	skill 1008,1,0;	break;
+			case 2:	skill 1017,1,0;	break;
+			case 3:	skill 1018,1,0;	break;
+			case 4:	skill 1019,1,0;	break;
+			}
+		}
+	}
+//流氓系列
+	if ( Class == 17 || Class == 4018 || Class == 4079 || Class == 4105 || Class == 4040 || Class == 4260) {
+		skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; skill 1005,1,0;
+	}
+//鍊金術師系列
+	if ( Class == 18 || Class == 4019 || Class == 4078 || Class == 4107 || Class == 4041 || Class == 4259) {
+		skill 153,1,0; skill 154,1,0; skill 155,1,0; skill 238,1,0;
+	}
+//吟遊詩人系列
+	if ( Class == 19 || Class == 4020 || Class == 4075 || Class == 4104 || Class == 4042 || Class == 4263) {
+		skill 147,1,0; skill 148,1,0; skill 1010,1,0;
+	}
+//舞孃系列
+	if ( Class == 20 || Class == 4021 || Class == 4076 || Class == 4105 || Class == 4043 || Class == 4264) {
+		skill 147,1,0; skill 148,1,0; skill 1011,1,0;
+	}
+
+//基因 機械工匠
+	if ( Class == 4078 || Class == 4064 || Class == 4100 || Class == 4253|| Class == 4259) {
+		skill 2544,1,0;
+	}
+
+//其它職業
+	skill 142,1,0;
+	announce "職業系統 : 恭喜您技能服務順利完成！",bc_self,0x00FFFF;
+	close;
+}
+
+
+//================================================//
+
+function	script	JobL_Quick	{
+
+	announce "職業系統 : 您是否要進行轉生服務呢？",bc_self,0x00FFFF;
+	switch(select("是","否")) {
+	case 1:
+		if ( class >= 4008 && class <= 4021 ) {
+			set Class_Job,(class-4001);
+		} else if ( class >= 4047 && class <= 4049 ) {
+			set Class_Job,4046;
+
+		} else if ( class >= 24 && class <= 25 ) {
+			set Class_Job,23;
+
+		} else if ( class >= 4211 && class <= 4212 ) {
+			set Class_Job,25;
+
+		} else {
+			set Class_Job,class;
+		}
+		jobchange 4001;
+		resetskill;
+		resetstatus;
+		set BaseLevel,1;
+		set JobLevel,1;
+		set CharJobLv,CharJobLv+1;
+		set StatusPoint,100+(CharJobLv*$@CJLStPt)-$@CJLStPt;
+		set SkillPoint,0+(CharJobLv*$@CJLSkPt);
+		announce "職業系統 : 恭喜您第 "+CharJobLv+" 次轉生服務順利完成！",bc_self,0x00FFFF;
+		close;
+	case 2:
+		close;
+	}
+}
+
+

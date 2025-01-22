@@ -1,0 +1,231 @@
+map03,94,128,6	script	代幣兌幣機CX-1 	564,{
+
+		mes "[代幣兌幣機CX-1]";
+		mes "歡迎使用CX-1，您可以將持有的代幣兌換";
+		mes "為高級金幣或是下級代幣";
+		next;
+		switch(select("取消",
+		countitem(6417)>1?"獼猴桃果實":"^CECECE獼猴桃果實(無)^000000",
+		countitem(6423)>1?"海神之憤怒":"^CECECE海神之憤怒(無)^000000",
+		countitem(6418)>1?"A級代幣":"^CECECEA級代幣(無)^000000",
+		countitem(6419)>1?"B級代幣":"^CECECEB級代幣(無)^000000",
+		countitem(6420)>1?"C級代幣":"^CECECEC級代幣(無)^000000",
+		countitem(6421)>1?"D級代幣":"^CECECED級代幣(無)^000000",
+		countitem(6422)>1?"E級代幣":"^CECECEE級代幣(無)^000000"
+		)) {
+
+		case 1:
+		close;
+
+		case 2:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "10個獼猴桃果實可兌換成26~29個A級代幣";
+		next;
+		switch(select("取消",
+		countitem(6417)>=10?"獼猴桃果實("+countitem(6417)+"持有)換A級代幣":"^CECECE獼猴桃果實("+(10-countitem(6417))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6417;
+	if (countitem(@Coin)<10) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(26,29);
+	delitem @Coin,10;
+	getitem 6418,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個A級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FF獼猴桃果實^000000。";
+	close;
+	}
+
+		case 3:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "20個海神之憤怒可兌換成10個獼猴桃果實";
+		next;
+		switch(select("取消",
+		countitem(6423)>=20?"海神之憤怒("+countitem(6423)+"持有)換獼猴桃果實":"^CECECE海神之憤怒("+(20-countitem(6423))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6423;
+	if (countitem(@Coin)<20) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足20個"; close; }
+	delitem @Coin,20;
+	getitem 6417,10;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 10 個 ^0000FF獼猴桃果實^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FF海神之憤怒^000000。";
+	close;
+	}
+
+		case 4:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "10個A級代幣可兌換成26~29個B級代幣";
+		next;
+		switch(select("取消",
+		countitem(6418)>=10?"A級代幣("+countitem(6418)+"持有)換B級代幣":"^CECECEA級代幣("+(10-countitem(6418))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6418;
+	if (countitem(@Coin)<10) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(26,29);
+	delitem @Coin,10;
+	getitem 6419,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個B級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFA級代幣^000000。";
+	close;
+	}
+
+		case 5:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "10個B級代幣可兌換成26~29個C級代幣";
+		mes "30個B級代幣可兌換成8~9個A級代幣";
+		next;
+		switch(select("取消",
+		countitem(6419)>=10?"B級代幣("+countitem(6419)+"持有)換C級代幣":"^CECECEB級代幣("+(10-countitem(6419))+"不足)^000000",
+		countitem(6419)>=30?"B級代幣("+countitem(6419)+"持有)換A級代幣":"^CECECEB級代幣("+(10-countitem(6419))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6419;
+	if (countitem(@Coin)<10) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(26,29);
+	delitem @Coin,10;
+	getitem 6420,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個C級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFB級代幣^000000。";
+	close;
+
+	case 3:
+	set @Coin,6419;
+	if (countitem(@Coin)<30) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足30個"; close; }
+	set @input,rand(8,9);
+	delitem @Coin,30;
+	getitem 6418,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個A級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFB級代幣^000000。";
+	close;
+	}
+
+		case 6:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "10個C級代幣可兌換成26~29個D級代幣";
+		mes "30個C級代幣可兌換成8~9個B級代幣";
+		next;
+		switch(select("取消",
+		countitem(6420)>=10?"C級代幣("+countitem(6420)+"持有)換D級代幣":"^CECECEC級代幣("+(10-countitem(6420))+"不足)^000000",
+		countitem(6420)>=30?"C級代幣("+countitem(6420)+"持有)換B級代幣":"^CECECEC級代幣("+(10-countitem(6420))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6420;
+	if (countitem(@Coin)<10) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(26,29);
+	delitem @Coin,10;
+	getitem 6421,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個D級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+
+	case 3:
+	set @Coin,6420;
+	if (countitem(@Coin)<30) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足30個"; close; }
+	set @input,rand(8,9);
+	delitem @Coin,30;
+	getitem 6419,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個B級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+	}
+
+		case 7:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "10個D級代幣可兌換成26~29個E級代幣";
+		mes "30個D級代幣可兌換成8~9個C級代幣";
+		next;
+		switch(select("取消",
+		countitem(6421)>=10?"D級代幣("+countitem(6421)+"持有)換E級代幣":"^CECECED級代幣("+(10-countitem(6421))+"不足)^000000",
+		countitem(6421)>=30?"D級代幣("+countitem(6421)+"持有)換C級代幣":"^CECECED級代幣("+(10-countitem(6421))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6421;
+	if (countitem(@Coin)<10) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(26,29);
+	delitem @Coin,10;
+	getitem 6422,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個E級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFD級代幣^000000。";
+	close;
+
+	case 3:
+	set @Coin,6421;
+	if (countitem(@Coin)<30) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足30個"; close; }
+	set @input,rand(8,9);
+	delitem @Coin,30;
+	getitem 6420,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個C級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFD級代幣^000000。";
+	close;
+	}
+
+		case 8:
+		mes "[代幣兌幣機CX-1]";
+		mes "你想兌換為哪種代幣?";
+		mes "30個E級代幣可兌換成8~9個D級代幣";
+		next;
+		switch(select("取消",
+		countitem(6422)>=30?"E級代幣("+countitem(6422)+"持有)換D級代幣":"^CECECEE級代幣("+(10-countitem(6422))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6422;
+	if (countitem(@Coin)<30) { mes "[代幣兌幣機CX-1]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,rand(8,9);
+	delitem @Coin,30;
+	getitem 6421,@input;
+	mes "[代幣兌幣機CX-1]";
+	mes "您獲得 "+@input+" ^0000FF個E級代幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFD級代幣^000000。";
+	close;
+	}
+
+		}
+//OnInit:
+//	waitingroom "代幣兌幣機",0;
+//	end;
+}
+

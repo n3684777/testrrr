@@ -1,0 +1,776 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+#SS 等級
+   - Name: SS_Grade
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: Head_Item_22928_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Head_Item_22928
+             Amount: 1
+       - Index: 2
+         Item: Elven_Ears_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Elven_Ears
+             Amount: 1
+       - Index: 3
+         Item: Sunglasses_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Sunglasses
+             Amount: 1
+       - Index: 4
+         Item: Glasses_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Glasses
+             Amount: 1
+       - Index: 5
+         Item: New_Wave_Sunglasses_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: New_Wave_Sunglasses
+             Amount: 1
+       - Index: 6
+         Item: Dark_Blindfold_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Dark_Blindfold
+             Amount: 1
+       - Index: 7
+         Item: Sigrun's_Wing_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Sigrun's_Wings
+             Amount: 1
+       - Index: 8
+         Item: Head_Item_23103_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Head_Item_23103
+             Amount: 1
+       - Index: 9
+         Item: BF_manteau_TW_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: BF_manteau_TW
+             Amount: 1
+       - Index: 10
+         Item: Head_Item_23395_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Head_Item_23395
+             Amount: 1
+       - Index: 11
+         Item: Deepblue_Sunglasses_
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 1
+             Item: Auger_Of_Spirit
+             Amount: 1
+           - Index: 2
+             Item: Deepblue_Sunglasses
+             Amount: 1
+
+
+#S 等級
+   - Name: S_Grade
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: Cutlas_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Cutlas
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 2
+         Item: Dragon_Slayer_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Dragon_Slayer
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 3
+         Item: Executioner__
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Executioner_
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 4
+         Item: Sword_Breaker_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Sword_Breaker
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 5
+         Item: Mail_Breaker_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Mail_Breaker
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 6
+         Item: House_Auger_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: House_Auger
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 7
+         Item: Assasin_Dagger_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Assasin_Dagger
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 8
+         Item: Sucsamad_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Sucsamad
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 9
+         Item: Poison_Knife_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Poison_Knife
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 10
+         Item: Gungnir_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Gungnir
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 11
+         Item: Crescent_Scythe_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Crescent_Scythe
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 12
+         Item: Zephyrus_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Zephyrus
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 13
+         Item: Grand_Cross_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Grand_Cross
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 14
+         Item: Survival_Rod_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Survival_Rod
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+       - Index: 15
+         Item: Ginnungagap_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Ginnungagap
+             Amount: 1
+           - Index: 2
+             Item: Oridecon
+             Amount: 5
+           - Index: 3
+             Item: Steel
+             Amount: 10
+
+       - Index: 16
+         Item: Herald_Of_GOD_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Herald_Of_GOD
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 17
+         Item: Tiara_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Tiara
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 18
+         Item: Crown_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Crown
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 19
+         Item: Magestic_Goat_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Magestic_Goat
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 20
+         Item: Sharp_Gear_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Sharp_Gear
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 21
+         Item: Holy_Robe_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Holy_Robe
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 22
+         Item: Mage_Coat_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Mage_Coat
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 23
+         Item: G_Strings_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: G_Strings
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 24
+         Item: Robe_Of_Casting_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Robe_Of_Casting
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 25
+         Item: Undershirt_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Undershirt
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 26
+         Item: Ring_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Ring
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 27
+         Item: Earring_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Earring
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 28
+         Item: Thimble_Of_Archer_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Thimble_Of_Archer
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 29
+         Item: Bone_Helm_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Bone_Helm
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 30
+         Item: Corsair_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Corsair
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 31
+         Item: Spinx_Helm_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Spinx_Helm
+             Amount: 1
+           - Index: 2
+             Item: Elunium
+             Amount: 5
+       - Index: 32
+         Item: Flame_Sprits_Armor_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Flame_Sprits_Armor
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 33
+         Item: Water_Sprits_Armor_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Water_Sprits_Armor
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 34
+         Item: Wind_Sprits_Armor_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Wind_Sprits_Armor
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 35
+         Item: Earth_Sprits_Armor_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Earth_Sprits_Armor
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 36
+         Item: Alca_Bringer_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Alca_Bringer
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 5
+       - Index: 37
+         Item: Thorn_Staff_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Thorn_Staff
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 5
+       - Index: 38
+         Item: Orc_Archer_Bow_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Orc_Archer_Bow
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 5
+       - Index: 39
+         Item: Chrystal_Pumps_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Chrystal_Pumps
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 40
+         Item: Vesper_Core01_S
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Vesper_Core01
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 41
+         Item: Vesper_Core02_S
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Vesper_Core02
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 42
+         Item: Vesper_Core03_S
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Vesper_Core03
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 43
+         Item: Vesper_Core04_S
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Vesper_Core04
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 44
+         Item: Byeorrun_Gum_S
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Byeorrun_Gum
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 15
+       - Index: 45
+         Item: Magical_Blade_S_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Magical_Blade_S
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 20
+       - Index: 46
+         Item: Quadrille_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Quadrille
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 15
+       - Index: 47
+         Item: Shinobi's_Sash_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Shinobi's_Sash
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 5
+       - Index: 48
+         Item: Whike_Black_Tail_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Whike_Black_Tail
+             Amount: 1
+           - Index: 2
+             Item: Gold
+             Amount: 5
+       - Index: 49
+         Item: Ixion_Wing_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Ixion_Wing
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 15
+       - Index: 50
+         Item: Mysteltainn__
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Mysteltainn_
+             Amount: 1
+           - Index: 2
+             Item: Bradium
+             Amount: 15
+       - Index: 51
+         Item: Clack_Of_Servival_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Clack_Of_Servival
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 30
+       - Index: 52
+         Item: Morrigane's_Manteau_
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Morrigane's_Manteau
+             Amount: 1
+           - Index: 2
+             Item: Carnium
+             Amount: 30
+
+
+
+
+
+
+
+
+
+
+
+
+

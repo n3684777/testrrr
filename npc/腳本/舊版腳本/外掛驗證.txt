@@ -1,0 +1,98 @@
+/*================================================
+- 腳本名稱：人性化外掛驗證
+- 腳本作者：瘋兔工作組
+- 測試環境：rAthenaCN
+- 更新內容：
+- Ver 1.0 完成架構
+>>> 各位大哥大姐轉載請保留以上，萬分感激 <<<
+>>> 感謝柳丁提供人性化的驗證思路 <<<
+================================================*/
+-	script	Check_BOT	-1,{
+
+OnNPCKillEvent:
+	// 可調整觸發機率
+	if(rand(1,200) == 1 && (gettimetick(2) - Anti_interval) > (.ByPassTime*60))
+	{
+		// 副本地圖內不進行驗證
+		if(compare(strcharinfo(3),"@") == 1 || @checkbot || inarray(.ExMap$,strcharinfo(3)) > -1)
+			end;
+		
+		@checkbot = 1;
+		@timetick = 10;
+		initnpctimer "Check_BOT", getcharid(3);
+		soundeffect "effect\\reproduce.wav",1;
+		message strcharinfo(0), "[外掛驗證提示] 請在"+@timetick+"分鐘內使用'外掛驗證裝置'進行外掛驗證。";
+		end;
+	}
+	
+	end;
+
+OnTimer60000:
+OnTimer120000:
+OnTimer180000:
+OnTimer240000:
+OnTimer300000:
+OnTimer360000:
+OnTimer420000:
+OnTimer480000:
+	if(@checkbot)
+	{
+		@timetick --;
+		soundeffect "effect\\reproduce.wav",1;
+		message strcharinfo(0), "[外掛驗證提示] 請在"+@timetick+"分鐘內使用'外掛驗證裝置'進行外掛驗證。";
+	}
+	end;
+
+OnTimer660000:
+	if(@checkbot == 1)
+		atcommand "@jail "+strcharinfo(0);
+	end;
+	
+OnInit:
+	// 不驗證的地圖(預設波士尼亞地圖不驗證)
+	setarray .ExMap$,"bossnia_01","bossnia_02","bossnia_03","bossnia_04";
+	
+	// 設定驗證過後幾分鐘內不再進行驗證
+	.ByPassTime = 60;
+	end;
+}
+
+function	script	BT_INFO	{
+	if(@checkbot)
+	{
+		.@key = rand(111111,999999);
+		mes "[驗證系統]";
+		mes "您好請輸入外掛驗證";
+		mes "輸入錯誤可重新輸入不限次數";
+		mes "若在^FF0000"+@timetick+"分鐘^000000內沒有驗證成功";
+		mes "系統將會把您送去監獄";
+		mes " ";
+		mes "驗證碼 : ^0000FF"+.@key;
+		input .@str;
+		if(.@str == .@key)
+		{
+			@checkbot = 0;
+			stopnpctimer "Check_BOT", getcharid(3);
+			Anti_interval = gettimetick(2);
+			clear;
+			mes "[驗證系統]";
+			mes "^0000FF輸入正確^000000。";
+			message strcharinfo(0),"[外掛驗證提示] 已通過驗證，並賦予狀態獎勵.";
+			specialeffect2 14;
+			percentheal 100,100;
+			sc_start SC_BLESSING,900000,10;
+			sc_start SC_INCREASEAGI,900000,10;
+		}
+		else
+		{
+			clear;
+			mes "[驗證系統]";
+			mes "您^FF0000輸入錯誤^000000，並沒有通過驗證";
+			mes "請重新點擊外掛驗證裝置進行驗證。";
+		}
+		close;
+	}
+	mes "[驗證系統]";
+	mes "您現在不需要進行外掛驗證。";
+	close;
+}

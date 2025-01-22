@@ -1,0 +1,222 @@
+rgsr_in,134,167,4	script	理查德	559,{
+	disable_items;
+	
+	if (checkweight(1201,1) == 0) {
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "你有太多種物品了，請減少這些物品後再繼續。";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "不能再繼續了，因為你有太多的重物品，讓我們試著減輕了重量後再繼續。";
+		close;
+	}
+
+	setarray .@equip_name$[0],"左手","右手","鎧甲","靴子","披肩","頭具頭上","頭具頭中","頭具頭下","飾品","飾品";
+	setarray .@equip_slot[0],EQI_HAND_L,EQI_HAND_R,EQI_ARMOR,EQI_SHOES,EQI_GARMENT,EQI_HEAD_TOP,EQI_HEAD_MID,EQI_HEAD_LOW,EQI_ACC_L,EQI_ACC_R;
+
+	mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+	mes "無論使用哪種方式進行拆除作業";
+	mes "裝備或卡片均不會受損";
+	next;
+	for(set .@i,0; .@i<getarraysize(.@equip_slot); set .@i,.@i+1) {
+		if (getequipisequiped(.@equip_slot[.@i]))
+			set .@menu$, .@menu$+getequipname(.@equip_slot[.@i])+":";
+		else
+			set .@menu$, .@menu$+"^999999"+.@equip_name$[.@i]+" (無)^000000:";
+	}
+	set .@i, select("中止作業:"+.@menu$);
+	switch(.@i) {
+	case 1:
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "需要作業時歡迎隨時來找我喔!";
+		close;
+
+	default:
+		set .@equip_num, .@equip_slot[.@i-2];
+		if (!getequipisequiped(.@equip_num)) {
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "那個部位上什麼都沒有呢?";
+			close;
+		}
+		break;
+	}
+
+	setarray .@check_equip_card[0], getequipcardid(.@equip_num,0),getequipcardid(.@equip_num,1),getequipcardid(.@equip_num,2),getequipcardid(.@equip_num,3);
+	setarray .@equip_card[0], .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3];
+	setarray .@OptID[0],getequiprandomoption(.@equip_num,0,ROA_ID),getequiprandomoption(.@equip_num,1,ROA_ID),getequiprandomoption(.@equip_num,2,ROA_ID),getequiprandomoption(.@equip_num,3,ROA_ID),getequiprandomoption(.@equip_num,4,ROA_ID);
+	setarray .@OptVal[0],getequiprandomoption(.@equip_num,0,ROA_VALUE),getequiprandomoption(.@equip_num,1,ROA_VALUE),getequiprandomoption(.@equip_num,2,ROA_VALUE),getequiprandomoption(.@equip_num,3,ROA_VALUE),getequiprandomoption(.@equip_num,4,ROA_VALUE);
+	setarray .@OptParam[0],getequiprandomoption(.@equip_num,0,ROA_PARAM),getequiprandomoption(.@equip_num,1,ROA_PARAM),getequiprandomoption(.@equip_num,2,ROA_PARAM),getequiprandomoption(.@equip_num,3,ROA_PARAM),getequiprandomoption(.@equip_num,4,ROA_PARAM);
+	.@enclvl = getinventoryinfo(getequipidx(.@equip_num),28);
+	.@index = inarray(.e_weapon,getequipid(.@equip_num));
+	//set .@mvp_list$,
+		//"|4408|4128|4456|4168|4142"+  //Gloom_Under_Night_Card, Golden_Bug_Card, Nidhogg_Shadow_Card, Dark_Lord_Card, Doppelganger_Card
+		//"|4134|4137|4386|4407|4357"+  //Dracula_Card, Drake_Card, Detale_Card, Randgris_Card, B_Seyren_Card
+		//"|4146|4132|4147|4372|4145"+  //Maya_Card, Mistress_Card, Baphomet_Card, Bacsojin_Card, Berzebub_Card
+		//"|4374|4352|4367|4236|4425"+  //Apocalips_H_Card, B_Ygnizem_Card, B_Shecil_Card, Amon_Ra_Card, Atroce_Card
+		//"|4359|4123|4144|4135|4143"+  //B_Eremes_Card, Eddga_Card, Osiris_Card, Orc_Load_Card, Orc_Hero_Card
+		//"|4263|4131|4430|4276|4419"+  //Incant_Samurai_Card, Moonlight_Flower_Card, Ifrit_Card, Lord_Of_Death_Card, Ktullanux_Card
+		//"|4403|4399|4376|4441|4302"+  //Kiel_Card, Thanatos_Card, Lady_Tanee_Card, Fallen_Bishop_Card, Tao_Gunka_Card
+		//"|4305|4148|4318|4121|4365"+  //Turtle_General_Card, Pharaoh_Card, Knight_Windstorm_Card, Phreeoni_Card, B_Katrinn_Card
+		//"|4651|4650|4649|4648|4647"+
+		//"|27020|4576"+
+		//"|4363|4324|4361|4330|4342|"; //B_Magaleta_Card, Garm_Card, B_Harword_Card, Dark_Snake_Lord_Card, Rsx_0806_Card
+
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "要分離第幾個洞的卡片呢?";
+		mes "從最左側洞開始，依序為第 1, 2, 3, 4 洞。";
+		next;
+		set .@menu$,"";
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (.@equip_card[.@i] && callfunc("F_IsCharm",.@equip_card[.@i]) == false && compare(getitemname(.@equip_card[.@i]),"卡片") ) // 護甲附魔系統
+				.@menu$ = .@menu$ + "洞" + (.@i+1) + " - " + getitemname(.@equip_card[.@i])+":";
+			else {
+				.@menu$ = .@menu$ + "^777777洞" + (.@i+1) + " - 無卡片^000000:";
+			}
+		}
+		set .@i, select("中斷作業:"+.@menu$);
+		switch(.@i) {
+		case 1:
+
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "需要作業時歡迎隨時來找我喔!";
+				close;
+
+			default:
+				set .@slot, .@i-2;
+
+				if (.@equip_card[.@slot] == 0 || callfunc("F_IsCharm",.@equip_card[.@slot]) == true) {
+					mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+					mes "這個洞並未插卡，請再次確認好嗎";
+					close;
+				}
+				break;
+			}
+
+		if (compare(.@mvp_list$,"|"+.@equip_card[.@slot]+"|"))
+			set .@boss_chk,1;
+
+
+	if (.@boss_chk == 0) {
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "請選擇作業費用。";
+			next;
+		set .@menu$,"改下次...:"+((Zeny >= 10000)?"使用1,000z(未使用特殊道具):":"^999999使用1,000z(未使用特殊道具)(無)^000000:")+((countitem(25239))?"使用新式高級潤滑油:":"^999999新式高級潤滑油 (無)^000000:")+((countitem(25238))?"使用新式普通潤滑油":"^999999新式普通潤滑油 (無)^000000");
+		switch(select(.@menu$)) {
+		case 1:
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "需要作業時歡迎隨時來找我喔!";
+			close;
+		case 2:
+			set .@success,100;
+			if (Zeny < 1000) {
+				mes .@n$;
+				mes "你沒有足夠的Zeny。";
+				close;
+			}
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "使用Zeny拆卡作業的成功機率是^FF0000"+.@success+"%^000000，但即使失敗裝備或卡片並不會受損。";
+			next;
+			if(select("改下次...:進行") == 1) {
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "需要作業時歡迎隨時來找我喔!";
+				close;
+			}
+			set Zeny, Zeny - 1000;
+			break;
+		case 3:
+			set .@success,100;
+			if (countitem(25239) == 0) {
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "你身上並沒有新式高級潤滑油呢!";
+				close;
+			}
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "使用新式高級潤滑油進行拆卡作業的成功機率是^FF0000"+.@success+"%^000000，但即使失敗裝備或卡片並不會受損。";
+			next;
+			if(select("改下次...:進行") == 1) {
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "需要作業時歡迎隨時來找我喔!";
+				close;
+			}
+			delitem 25239,1; //High_RankLubricant
+			break;
+		case 4:
+			set .@success,100;
+			if (countitem(25238) == 0) {
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "你身上並沒有新式普通潤滑油呢!";
+				close;
+			}
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "使用新式普通潤滑油進行拆卡作業的成功機率是^FF0000"+.@success+"%^000000，但即使失敗裝備或卡片並不會受損。";
+			next;
+			if(select("改下次...:進行") == 1) {
+				mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+				mes "需要作業時歡迎隨時來找我喔!";
+				close;
+			}
+			delitem 25238,1; //High_RankLubricant
+			break;
+		}
+	} else if (.@boss_chk == 1) {
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "該裝備包含了珍貴的MVP卡片，使用1,000z，我就能作業了。";
+		mes "使用Zeny拆卡作業的成功機率是^FF000050%^000000，但即使失敗裝備或卡片並不會受損。";
+		next;
+		switch(select("改下次...:進行")) {
+		case 1:
+			mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+			mes "需要作業時歡迎隨時來找我喔!";
+			close;
+		case 2:
+			set .@success,50;
+			if (Zeny < 1000) {
+				mes .@n$;
+				mes "你沒有足夠的Zeny。";
+				close;
+			}
+			set Zeny, Zeny - 1000;
+			break;
+		}
+	}
+
+	set .@equip_id, getequipid(.@equip_num);
+	set .@equip_refine, getequiprefinerycnt(.@equip_num);
+	.@enclvl = getinventoryinfo(getequipidx(.@equip_num),28);
+	.@index = inarray(.e_weapon,getequipid(.@equip_num));
+	if (rand(1,100) <= .@success) {
+		specialeffect2 EF_MAXPOWER;
+		delequip .@equip_num;
+		getitem .@equip_card[.@slot],1;
+		set .@equip_card[.@slot],0;
+		getgradeitem(.@equip_id, 1, 1, .@equip_refine, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3], .@enclvl,.@OptID, .@OptVal, .@OptParam);
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "拆卡成功!";
+		mes "裝備和卡片未受損，已維持原先裝備狀態。";
+		next;
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "歡迎下次再來使用!";
+		end;
+	} else {
+		specialeffect2 EF_SUI_EXPLOSION;
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "拆卡失敗!";
+		mes "裝備和卡片未受損，已維持原先裝備狀態。";
+		next;
+		mes "[^0044BB"+strnpcinfo(1)+"^000000]";
+		mes "歡迎下次再來使用!";
+		end;
+	}
+
+
+//OnInit:
+//	waitingroom "拆除卡片",0;
+//	end;
+}
+
+
+//---------------------------------
+bago_01,46,67,6	duplicate(理查德)	理查德#pro01	559
+
+

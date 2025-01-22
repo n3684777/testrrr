@@ -1,0 +1,35 @@
+﻿
+vdistrict1,53,40,6	script	飛空艇墜落裝備	4_M_RUSBALD,{
+
+	mes "[飛空艇墜落裝備]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "飛行船墜落地裝備製作員";
+	end;
+
+	case 2:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "飛空艇墜落裝備",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

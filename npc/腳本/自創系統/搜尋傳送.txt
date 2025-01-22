@@ -1,0 +1,518 @@
+/* -------------------------------
+ * Author : HongShin
+ * 嚴禁分享轉載
+ *
+ * 2024/07/25 17:40
+ * - 支援模糊搜尋,以物品搜尋怪物
+ * - 完整掉落率顯示
+ * - 自動排序清單顯示機率&數量
+ * - 無須導入複雜SQL表,加載腳本即可使用
+ * - 支援地圖中文名稱顯示
+ * - 可客製化修改
+ *
+ * -----------------------------*/
+ 
+/*trinity,121,101,4	script	搜尋傳送	100,{
+
+	callfunc "搜尋傳送";
+	close;
+
+}
+*/
+
+function	script	搜尋傳送	{
+
+	function MapNameTw;
+	
+	mes $@SearchNpcName$;
+	mes "輸入名稱(關鍵字) 或 ^FF0000[ 編號 ]^000000";
+	mes "中文搜尋建議2個字以上比較準確";
+	mes "輸入 0 取消查詢";
+	
+	switch(select("上次傳送 [ "+(LastMap$?MapNameTw(LastMap$):"未有紀錄")+" ]",
+				  "魔物查詢",
+				  "物品查詢"
+		))
+	{
+		case 1: 
+				if ( LastMap$ == "" ) {
+					dispbottom "[搜尋系統] - 尚未有記憶地圖";
+					end;
+				}
+				warp LastMap$,0,0;
+				end;
+		case 2: callfunc "SearchMonster",1;
+		case 3: callfunc "SearchMonster",2;
+
+	}
+
+	end;
+	
+	function	MapNameTw	{
+
+		.@index = inarray ( $@MapNameTw$ , getarg(0) );
+	
+		if ( .@index >= 0 )
+			return $@MapNameTw$[.@index-1];
+		else
+			return getarg(0);
+	}
+
+}
+
+function	script	SearchMonster	{
+
+	function WarpFunc;
+	function MapNameTw;
+	
+	function	WarpFunc	{
+
+		getmobspawns(getArg(0));
+		freeloop(1);
+		for ( .@i=0; .@i<@spawn_count; .@i++ ) {
+			.@index = inarray( @spawn_num , max(@spawn_num) );
+			@new_spawn_num[.@i] = @spawn_num[.@index];
+			@new_spawn_mapname$[.@i] = @spawn_mapname$[.@index];
+			deletearray @spawn_num[.@index],1;
+			deletearray @spawn_mapname$[.@index],1;
+		}
+		freeloop(0);
+	
+		if ( !@spawn_count ) {
+			dispbottom "[搜尋系統] - 查無相關地圖分佈";
+			end;
+		}
+		for( .@i=0; .@i<((@spawn_count>$@SearchMenu)?$@SearchMenu:@spawn_count); .@i++ ){
+			.@Monstermap$ = .@Monstermap$ + ""+@new_spawn_num[.@i]+"隻 [ "+(MapNameTw(@new_spawn_mapname$[.@i]))+" ]"+":";		
+			.@Map$[.@count] = @new_spawn_mapname$[.@i];
+			.@count++;
+		}
+
+		.@Monstermap = select(.@Monstermap$)-1;
+		LastMap$ = .@Map$[.@Monstermap];
+		warp .@Map$[.@Monstermap],0,0;
+		end;
+
+	}
+	function	MapNameTw	{
+
+		.@index = inarray ( $@MapNameTw$ , getarg(0) );
+	
+		if ( .@index >= 0 )
+			return $@MapNameTw$[.@index-1];
+		else
+			return getarg(0);
+	}
+	
+	switch ( getArg(0) )
+	{
+		// 搜尋魔物
+		case 1:
+			
+			input .@search$;
+
+			// 輸入相關字
+			if ( !atoi(.@search$) ) {
+				if ( .@search$ == "0" ) end;
+				query_sql "SELECT `mob_id`,`mob_name` FROM `SearchMob` WHERE `mob_name` LIKE '%"+escape_sql(.@search$)+"%'" , .@mob_id , .@mob_name$ ;
+				
+				for( .@i=0; .@i<((getarraysize(.@mob_id)>$@SearchMenu)?$@SearchMenu:getarraysize(.@mob_id)); .@i++ ){
+					if ( !compare( .@Monsterid$ , .@mob_name$[.@i] ) ){
+						.@Monsterid$ = .@Monsterid$ + ""+.@mob_id[.@i]+" [ "+.@mob_name$[.@i]+" ]"+":";
+						.@Mid[.@a] = .@mob_id[.@i];
+						.@a++;
+					}
+				}
+				.@Monsterid = select(.@Monsterid$)-1;
+				.@search$ = .@Mid[.@Monsterid];
+			}
+			if ( atoi(.@search$) == 0 || getmonsterinfo(atoi(.@search$),MOB_NAME) == "null" ) end;
+			WarpFunc(atoi(.@search$));
+			end;
+
+		// 搜尋物品
+		case 2:
+			// 輸入字串關鍵字
+			// 先選取正確物品
+			input .@search$;
+			
+			if ( !atoi(.@search$) ) {
+				.@Count = searchitem(.@item_id,.@search$);
+				if ( !.@Count ) {
+					dispbottom "[搜尋系統] - 查無相關物品資訊";
+					end;
+				}
+				for( .@i=0; .@i<.@Count; .@i++ ){
+					.@Itemid$ = .@Itemid$ + ""+.@item_id[.@i]+" [ "+getitemname(.@item_id[.@i])+" ]"+":";
+					.@Iid[.@a] = .@item_id[.@i];
+					.@a++;
+				}
+				.@Itemid = select(.@Itemid$)-1;
+				.@search$ = .@Iid[.@Itemid];
+			}
+			
+			// 輸入數字
+			if ( atoi(.@search$) == 0 || !itemexists(atoi(.@search$)) ) end;
+			
+			whodropitem(atoi(.@search$), $@SearchMenu);
+			if ( !@whodropitem_count ) {
+				dispbottom "[搜尋系統] - 查無相關魔物掉落";
+				end;
+			}
+			
+			for (.@i = 0; .@i < @whodropitem_count; .@i++) {
+				.@Dropitem$ = .@Dropitem$ + ""+(@whodropitem_chance[.@i]/100 + ((@whodropitem_chance[.@i]%100 < 10) ? ".0":".") + @whodropitem_chance[.@i]%100 )+"% [ "+getmonsterinfo(@whodropitem_mob_id[.@i],MOB_NAME)+" ]"+":";			
+				.@Did[.@b] = @whodropitem_mob_id[.@i];
+				.@b++;
+			}
+			.@Dropitem = select(.@Dropitem$)-1;
+			WarpFunc(.@Did[.@Dropitem]);
+			end;
+	}
+}
+
+
+-	script	SearchMob_	-1,{
+
+OnInit:
+	$@SearchNpcName$ = "搜尋傳送";
+	// 搜尋顯示清單
+	$@SearchMenu = 20;
+	// 最大魔物編號
+	$@SearchMob = 50000;
+
+	// 初始化資料表
+	if(!query_sql("SHOW TABLES LIKE 'SearchMob'",.@table$) || .@table$ == ""){
+		query_sql(
+			"CREATE TABLE IF NOT EXISTS SearchMob ( `mob_id` int(11) NOT NULL ,`mob_name` varchar( 100 ) NOT NULL , PRIMARY KEY (`mob_id`),KEY `mob_id` (`mob_id`))"
+		);
+		freeloop(1);
+		for ( .@i = 1000; .@i<$@SearchMob; .@i++ ){
+			.@mobid = 0;
+			if ( getmonsterinfo(.@i,MOB_NAME) != "null" ) {
+				.Mob_Count++;
+				query_sql "select `mob_id` from `SearchMob` where `mob_id` = '"+.@i+"'" , .@mobid;
+				if ( !.@mobid ){
+					query_sql "INSERT `SearchMob` VALUES ( '"+.@i+"' , '"+escape_sql(getmonsterinfo(.@i,MOB_NAME))+"' )";
+				}
+			}
+		}
+		freeloop(0);
+		debugmes "搜尋傳送 - 已加載 ["+.Mob_Count+"] 條魔物數據";
+	}
+	
+	setarray $@MapNameTw$,"中央首都-普隆德拉","prontera",
+						 "衛星都市-依斯魯得島","izlude",
+						 "沙漠之都-夢羅克","morocc",
+						 "山岳之都-斐揚","payon",
+						 "港口之都-艾爾貝塔","alberta",
+						 "魔法之都-吉芬","geffen",
+						 "海邊之都-克魔島","comodo",
+						 "運河之都-艾爾帕蘭","aldebaran",
+						 "天空之城-朱諾","yuno",
+						 "天水之國-天津町","amatsu",
+						 "神仙之島-崑崙","gonryun",
+						 "雨檀族村落-汶巴拉","umbala",
+						 "白雪村落-姜餅城","xmas",
+						 "死者國家-尼芙菲姆","niflheim",
+						 "龍之城-洛陽","louyang",
+						 "密月島-爪哇咿","jawaii",
+						 "泰國-哎喲泰雅","ayothaya",
+						 "鋼鐵之都-艾音布羅克","einbroch",
+						 "採礦村落-艾音貝赫","einbech",
+						 "企業之都-里希塔樂鎮","lighthalzen",
+						 "田園都市-毀葛","hugel",
+						 "教國首都-拉赫","rachel",
+						 "沙漠之村-維恩斯","veins",
+						 "莫斯科","moscovia",
+						 "史波浪壯麗","splendide",
+						 "巴西","brasilis",
+						 "艾爾迪卡斯特","dicastes01",
+						 "草精族-穆拉村","mora",
+						 "德瓦他","dewata",
+						 "綿綿島","malangdo",
+						 "迷藏森林 1樓","prt_maze01",
+                         "迷藏森林 2樓","prt_maze02",
+                         "迷藏森林 3樓","prt_maze03",
+                         "地下水道 1樓","prt_sewb1",
+                         "地下水道 2樓","prt_sewb2",
+                         "地下水道 3樓","prt_sewb3",
+                         "地下水道 4樓","prt_sewb4",
+                         "海盜地洞密穴 1樓","iz_dun00",
+                         "海盜地洞密穴 2樓","iz_dun01",
+                         "海盜地洞密穴 3樓","iz_dun02",
+                         "海盜地洞密穴 4樓","iz_dun03",
+                         "海盜地洞密穴 5樓","iz_dun04",
+                         "史芬克斯 B1層","in_sphinx1",
+                         "史芬克斯 B2層","in_sphinx2",
+                         "史芬克斯 B3層","in_sphinx3",
+                         "史芬克斯 B4層","in_sphinx4",
+                         "史芬克斯 B5層","in_sphinx5",
+                         "金字塔迷宮 1樓","moc_pryd01",
+                         "金字塔迷宮 2樓","moc_pryd02",
+                         "金字塔迷宮 3樓","moc_pryd03",
+                         "金字塔迷宮 4樓","moc_pryd04",
+                         "金字塔迷宮 B1樓","moc_pryd05",
+                         "金字塔迷宮 B2樓","moc_pryd06",
+                         "螞蟻地獄密穴 1樓","anthell01",
+                         "螞蟻地獄密穴 2樓","anthell02",
+                         "吉芬地下密穴 1樓","gef_dun00",
+                         "吉芬地下密穴 2樓","gef_dun01",
+                         "吉芬地下密穴 3樓","gef_dun02",
+                         "吉芬地下密穴 4樓","gef_dun03",
+                         "廢棄礦場 1樓","mjo_dun01",
+                         "廢棄礦場 2樓","mjo_dun02",
+                         "廢棄礦場 3樓","mjo_dun03",
+                         "古城","glast_01",
+                         "修道院","gl_church",
+                         "地下公墓","gl_chyard",
+                         "古城 1樓","gl_cas01",
+                         "古城 2樓","gl_cas02",
+                         "地下監獄 1樓","gl_prison",
+                         "地下監獄 2樓","gl_prison1",
+                         "騎士團 1樓","gl_knt01",
+                         "騎士團 2樓","gl_knt02",
+                         "克雷斯特漢姆古城室內","gl_in01",
+                         "樓梯密穴","gl_step",
+                         "地下水道 1樓","gl_sew01",
+                         "地下水道 2樓","gl_sew02",
+                         "地下水道 3樓","gl_sew03",
+                         "地下水道 4樓","gl_sew04",
+                         "地下洞穴 1樓","gl_dun01",
+                         "地下洞穴 2樓","gl_dun02",
+                         "獸人地下洞窟 1樓","orcsdun01",
+                         "獸人地下洞窟 2樓","orcsdun02",
+                         "斐揚洞穴 1樓","pay_dun00",
+                         "斐揚洞穴 2樓","pay_dun01",
+                         "斐揚洞穴 3樓","pay_dun02",
+                         "斐揚洞穴 4樓","pay_dun03",
+                         "斐揚洞穴 5樓","pay_dun04",
+                         "沉沒之船 1樓","treasure01",
+                         "沉沒之船 2樓","treasure02",
+                         "鐘塔地上 1樓","c_tower1",
+                         "鐘塔地上 2樓","c_tower2",
+                         "鐘塔地上 3樓","c_tower3",
+                         "鐘塔地上 4樓","c_tower4",
+                         "鐘塔地下 1樓","alde_dun01",
+                         "鐘塔地下 2樓","alde_dun02",
+                         "鐘塔地下 3樓","alde_dun03",
+                         "鐘塔地下 4樓","alde_dun04",
+                         "烏龜島","tur_dun01",
+                         "烏龜島密穴","tur_dun02",
+                         "良龜村","tur_dun03",
+                         "舊良宮","tur_dun04",
+						 "古代神殿迷宮 1樓","ayo_dun01",
+						 "古代神殿迷宮 2樓","ayo_dun02",
+                         "玩具工廠倉庫","xmas_dun01",
+                         "玩具分類場","xmas_dun02",
+                         "諾可羅德 1樓","mag_dun02",
+                         "諾可羅德 2樓","mag_dun02",
+                         "榻榻米迷宮","ama_dun01",
+                         "地下森林戰場","ama_dun02",
+                         "天津町地下神舍","ama_dun03",
+                         "西王母神殿","gon_dun01",
+                         "神仙的圍棋臺","gon_dun02",
+                         "武陵道院","gon_dun03",
+                         "王陵","lou_dun01",
+                         "王陵內部","lou_dun02",
+                         "審良宮","lou_dun03",
+                         "葛帔尼亞 1樓","gefenia01",
+                         "葛帔尼亞 2樓","gefenia02",
+                         "葛帔尼亞 3樓","gefenia03",
+                         "葛帔尼亞 4樓","gefenia04",
+                         "優配擂斯廢墟 外部","juperos_01",
+                         "優配擂斯廢墟 內部","juperos_02",
+                         "優配擂斯 中心部","jupe_core",
+                         "機械人型工廠 1樓","kh_dun01",
+                         "機械人型工廠 2樓","kh_dun02",
+                         "下層部博物館入口 1樓","tha_t01",
+                         "下層部博物館 2樓","tha_t02",
+                         "下層部廢棄空間 3樓","tha_t03",
+                         "下層部 4樓","tha_t04",
+                         "上層部 5樓","tha_t05",
+                         "上層部 6樓","tha_t06",
+                         "上層部天使之屋 7樓","tha_t07",
+                         "上層部 8樓","tha_t08",
+                         "上層部苦惱之屋 9樓","tha_t09",
+                         "上層部悲傷之屋 10樓","tha_t10",
+                         "上層部絕望之屋 11樓","tha_t11",
+                         "上層部憎惡之屋 12樓","tha_t12",
+                         "達納托斯的記憶","thana_boss",
+                         "艾音貝赫礦山 1樓","ein_dun01",
+                         "艾音貝赫礦山 2樓","ein_dun02",
+						 "艾音貝赫礦山 3樓","ein_dun03",
+                         "生體試驗研究所 1樓","lhz_dun01",
+                         "生體試驗研究所 2樓","lhz_dun02",
+                         "生體試驗研究所 3樓","lhz_dun03",
+                         "深淵之湖洞穴 1樓","abyss_01",
+                         "深淵之湖洞穴 2樓","abyss_02",
+                         "深淵之湖洞穴 3樓","abyss_03",
+                         "冰洞穴 1樓","ice_dun01",
+                         "冰洞穴 2樓","ice_dun02",
+                         "冰洞穴 3樓","ice_dun03",
+                         "神殿聖域 1樓","ra_san01",
+                         "神殿聖域 2樓","ra_san02",
+                         "神殿聖域 3樓","ra_san03",
+                         "神殿聖域 4樓","ra_san04",
+                         "神殿聖域 5樓","ra_san05",
+                         "托爾火山洞穴 1樓","thor_v01",
+                         "托爾火山洞穴 2樓","thor_v02",
+                         "托爾火山洞穴 3樓","thor_v03",
+                         "無名島","nameless_n",
+                         "修道院 1樓","abbey01",
+                         "修道院 2樓","abbey02",
+                         "修道院 3樓","abbey03",
+						 "奧丁神殿 西區","odin_tem01",
+						 "奧丁神殿 南區","odin_tem02",
+						 "奧丁神殿 北區","odin_tem03",
+                         "西邊洞穴加露","beach_dun",
+                         "北邊洞穴盧安達","beach_dun2",
+                         "東邊洞穴馬吾","beach_dun3",
+                         "森林洞穴 1層","mosk_dun01",
+                         "森林洞穴 2層","mosk_dun02",
+                         "森林洞穴 3層","mosk_dun03",
+                         "瀑布內的洞窟 1樓","bra_dun01",
+                         "瀑布內的洞窟 2樓","bra_dun02",
+                         "卡米達隧道","dic_dun01",
+                         "斯卡勒伯熔岩","dic_dun02",
+                         "喀拉喀托火山島","dew_dun01",
+                         "伊斯坦納洞穴","dew_dun02",
+                         "粗暴者的傷口","nyd_dun01",
+						 "普隆德拉原野","prt_fild00",
+                         "普隆德拉原野 1號","prt_fild01",
+                         "普隆德拉原野 2號","prt_fild02",
+                         "普隆德拉原野 3號","prt_fild03",
+                         "普隆德拉原野 4號","prt_fild04",
+                         "普隆德拉原野 5號","prt_fild05",
+                         "普隆德拉原野 6號","prt_fild06",
+                         "普隆德拉原野 7號","prt_fild07",
+                         "普隆德拉原野 8號","prt_fild08",
+                         "普隆德拉原野 9號","prt_fild09",
+                         "普隆德拉原野 10號","prt_fild10",
+                         "普隆德拉原野 11號","prt_fild11",
+                         "斐揚樹林 1號","pay_fild01",
+                         "斐揚樹林 2號","pay_fild02",
+                         "斐揚樹林 3號","pay_fild03",
+                         "斐揚樹林 4號","pay_fild04",
+                         "斐揚樹林 5號","pay_fild05",
+                         "斐揚樹林 6號","pay_fild06",
+                         "斐揚樹林 7號","pay_fild07",
+                         "斐揚樹林 8號","pay_fild08",
+                         "斐揚樹林 9號","pay_fild09",
+                         "斐揚樹林 10號","pay_fild10",
+                         "斐揚樹林 11號","pay_fild11",
+                         "蘇克拉特沙漠 1號","moc_fild01",
+                         "蘇克拉特沙漠 2號","moc_fild02",
+                         "蘇克拉特沙漠 3號","moc_fild03",
+                         "蘇克拉特沙漠 7號","moc_fild07",
+                         "蘇克拉特沙漠 11號","moc_fild11",
+                         "蘇克拉特沙漠 12號","moc_fild12",
+                         "蘇克拉特沙漠 13號","moc_fild13",
+                         "蘇克拉特沙漠 16號","moc_fild16",
+                         "蘇克拉特沙漠 17號","moc_fild17",
+                         "蘇克拉特沙漠 18號","moc_fild18",
+                         "蘇克拉特沙漠 19號","moc_fild19",
+                         "時空的裂縫 20號","moc_fild20",
+                         "時空的裂縫 21號","moc_fild21",
+                         "負傷的魔王時空裂縫 22號","moc_fild22",
+                         "哎喲泰雅原野 1號","ayo_fild01",
+                         "哎喲泰雅原野 2號","ayo_fild02",
+                         "巴不其卡森林","cmd_fild01",
+                         "海豹沙灘","cmd_fild02",
+                         "基乃依沼澤地","cmd_fild03",
+                         "克克魔海邊","cmd_fild04",
+                         "艾音布羅克原野 1號","ein_fild01",
+                         "艾音布羅克原野 2號","ein_fild02",
+                         "艾音布羅克原野 3號","ein_fild03",
+                         "艾音布羅克原野 4號","ein_fild04",
+                         "艾音布羅克原野 5號","ein_fild05",
+                         "艾音布羅克原野 6號","ein_fild06",
+                         "艾音布羅克原野 7號","ein_fild07",
+                         "艾音布羅克原野 8號","ein_fild08",
+                         "艾音布羅克原野 9號","ein_fild09",
+                         "吉分東部原野地區","gef_fild00",
+                         "吉分原野地區 1號","gef_fild01",
+                         "吉分原野地區 2號","gef_fild02",
+                         "吉分原野地區 3號","gef_fild03",
+                         "吉分北部原野地區 4號","gef_fild04",
+                         "冷豔舞姬村 5號","gef_fild05",
+                         "吉分原野地區 6號","gef_fild06",
+                         "吉分西部原野地區 7號","gef_fild07",
+                         "吉分原野地區 8號","gef_fild08",
+                         "吉分原野地區 9號","gef_fild09",
+                         "獸人村村落 10號","gef_fild10",
+                         "吉分原野地區 11號","gef_fild11",
+						 "西邊 獸人村","gef_fild14",
+                         "達納托斯塔台","hu_fild01",
+                         "毀葛原野 2號","hu_fild02",
+                         "毀葛原野 3號","hu_fild03",
+                         "毀葛原野 4號","hu_fild04",
+                         "深淵湖水 5號","hu_fild05",
+                         "毀葛原野 6號","hu_fild06",
+                         "毀葛原野 7號","hu_fild07",
+                         "里希塔樂鎮原野 1號","lhz_fild01",
+                         "死神的峽谷 2號","lhz_fild02",
+                         "里希塔樂鎮原野 3號","lhz_fild03",
+                         "魔怒克原野 1號","man_fild01",
+                         "魔怒克營地 2號","man_fild02",
+                         "魔怒克原野 3號","man_fild03",
+                         "妙勒尼山脈北部地方 1號","mjolnir_01",
+                         "妙勒尼山脈 2號","mjolnir_02",
+                         "妙勒尼山脈 3號","mjolnir_03",
+                         "妙勒尼山脈 4號","mjolnir_04",
+                         "妙勒尼山脈 5號","mjolnir_05",
+                         "妙勒尼山脈南部地區 6號","mjolnir_06",
+                         "妙勒尼山脈 7號","mjolnir_07",
+                         "妙勒尼山脈 8號","mjolnir_08",
+                         "妙勒尼山脈南部山麓 9號","mjolnir_09",
+                         "妙勒尼山脈 10號","mjolnir_10",
+                         "妙勒尼山脈 11號","mjolnir_11",
+                         "妙勒尼山脈北部山麓 12號","mjolnir_12",
+                         "偏遠村落","nif_fild01",
+                         "鬼的峽谷","nif_fild02",					
+                         "奧丁神殿西部地區 1號","odin_tem01",
+                         "奧丁神殿南部地區 2號","odin_tem02",
+                         "奧丁神殿北部地方 3號","odin_tem03",
+                         "阿巫敦拉草原 1號","ra_fild01",
+                         "歐茲峽谷 2號","ra_fild02",
+                         "伊達平原 3號","ra_fild03",
+                         "阿巫敦拉草原 4號","ra_fild04",
+                         "阿巫敦拉草原 5號","ra_fild05",
+                         "浦勒吐盧納 6號","ra_fild06",
+                         "歐茲峽谷 7號","ra_fild07",
+                         "伊達平原 8號","ra_fild08",
+                         "阿巫敦拉草原 9號","ra_fild09",
+                         "歐茲峽谷 10號","ra_fild10",
+                         "伊達平原 11號","ra_fild11",
+                         "伊達平原 12號","ra_fild12",
+                         "眼淚之海岸 13號","ra_fild13",
+						 "菲音斯原野 1號","ve_fild01",
+                         "菲音斯原野 2號","ve_fild02",
+                         "菲音斯原野 3號","ve_fild03",
+                         "菲音斯原野 4號","ve_fild04",
+                         "菲音斯原野 5號","ve_fild05",
+                         "菲音斯原野 6號","ve_fild06",
+                         "菲音斯原野 7號","ve_fild07",
+                         "國界檢查站 1號","yuno_fild01",
+                         "吉海伊洛別墅 2號","yuno_fild02",
+                         "爾邁斯瀑雷德 3號","yuno_fild03",
+                         "爾邁斯瀑雷德 4號","yuno_fild04",
+                         "爾邁斯瀑雷德 5號","yuno_fild05",
+                         "爾邁斯瀑雷德 6號","yuno_fild06",
+                         "爾邁斯峽谷 7號","yuno_fild07",
+                         "啟海伊洛學院 8號","yuno_fild08",
+                         "秀發茲發德警備隊露營地 9號","yuno_fild09",
+                         "朱諾原野 10號","yuno_fild10",
+                         "朱諾原野 11號","yuno_fild11",
+                         "國界檢查站 12號","yuno_fild12",
+                         "史波浪壯麗原野 1號","spl_fild01",
+                         "史波浪壯麗原野 2號","spl_fild02",
+                         "史波浪壯麗原野 3號","spl_fild03",
+						 "巴西原野","bra_fild01",
+						 "賈提族部落","dew_fild01",
+						 "羅比奧平原崗亭","lasa_fild01",
+						 "卡米達山麓 1號","dic_fild01",
+						 "卡米達山麓 2號","dic_fild02";
+	end;
+	
+}

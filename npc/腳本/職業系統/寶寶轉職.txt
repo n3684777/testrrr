@@ -1,0 +1,661 @@
+//prontera,130,60,4a	script	寶寶職業服務員	436,{
+
+function	script	Job_Baby	{
+	mes "[寶寶職業服務]";
+	mes "我是負責寶寶職業轉職的服務員";
+	mes "你要轉成哪種寶寶職業呢?";
+	next;
+	menu "寶寶初學者",job00,"寶寶一轉職業",job01,"寶寶二轉職業",job02,"寶寶三轉職業",job03,"寶寶進階超級初學者",job04,"取消",J00;
+
+job00:
+	if(class==0 ) goto L00;
+	goto WrongLevel;
+	L00:
+	if ( JobLevel > 1 ) {
+	mes "[寶寶職業服務]";
+	mes "JOB等級高於1級無法轉職!";
+	close;
+	}
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶初學者^000000";
+	jobchange 4023;
+	close;
+
+job01:
+	if ( class != 4023 ) {
+	mes "[寶寶職業服務]";
+	mes "只有^FF0000寶寶初學者^000000才能進行這個服務!";
+       	close;
+	}
+
+	mes "[寶寶職業服務]";
+	mes "您想要轉職哪種寶寶一轉職業？";
+	next;
+	switch(select("寶寶劍士:寶寶魔法師:寶寶弓箭手:寶寶服事:寶寶商人:寶寶盜賊:不轉了")) {
+
+	case 1:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4023 && JobLevel >=10) goto L01;
+	goto WrongLevel;
+
+	L01:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶劍士^000000";
+	jobchange 4024;
+	ResetStatus;
+	close;
+
+	case 2:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4023 && JobLevel >=10) goto L02;
+	goto WrongLevel;
+
+	L02:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶魔法師^000000";
+	jobchange 4025;
+	ResetStatus;
+	close;
+
+	case 3:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶弓箭手^000000";
+	if(class==4023 && JobLevel >=10) goto L03;
+	goto WrongLevel;
+
+	L03:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4026;
+	ResetStatus;
+	close;
+
+	case 4:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4023 && JobLevel >=10) goto L04;
+	goto WrongLevel;
+
+	L04:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶服事^000000";
+	jobchange 4027;
+	ResetStatus;
+	close;
+
+	case 5:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶商人^000000";
+	if(class==4023 && JobLevel >=10) goto L05;
+	goto WrongLevel;
+
+	L05:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4028;
+	ResetStatus;
+	close;
+
+	case 6:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4023 && JobLevel >=10) goto L06;
+	goto WrongLevel;
+
+	L06:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶盜賊^000000";
+	jobchange 4029;
+	ResetStatus;
+	close;
+
+	case 7:
+	mes "[寶寶職業服務]";
+	mes "無法轉職 請檢查你的職業是否正確";
+	mes "等級以及job等級是否足夠?";
+	close;
+} 
+
+	job02:
+	mes "您確定要轉職嗎？";
+	next;
+	switch(select("寶寶騎士:寶寶祭師:寶寶巫師:寶寶鐵匠:寶寶獵人:寶寶刺客:寶寶十字軍:寶寶武道家:寶寶賢者:寶寶流氓:寶寶煉金術士:寶寶吟遊詩人:寶寶舞孃:寶寶超級初學者:不轉了")) {
+
+	case 1:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4024 && JobLevel >=50) goto L07;
+	goto WrongLevel;
+
+	L07:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶騎士^000000";
+	jobchange 4030;
+	ResetStatus;
+	close;
+
+	case 2:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4027 && JobLevel >=50) goto L08;
+	goto WrongLevel;
+
+	L08:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶祭師^000000";
+	jobchange 4031;
+	ResetStatus;
+	close;
+
+	case 3:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶巫師^000000";
+	if(class==4025 && JobLevel >=50) goto L09;
+	goto WrongLevel;
+
+	L09:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4032;
+	ResetStatus;
+	close;
+
+	case 4:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4028 && JobLevel >=50) goto L10;
+	goto WrongLevel;
+
+	L10:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶鐵匠^000000";
+	jobchange 4033;
+	ResetStatus;
+	close;
+
+	case 5:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4026 && JobLevel >=50) goto L11;
+	goto WrongLevel;
+
+	L11:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶獵人^000000";
+	jobchange 4034;
+	ResetStatus;
+	close;
+
+	case 6:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶刺客^000000";
+	if(class==4029 && JobLevel >=50) goto L12;
+	goto WrongLevel;
+
+	L12:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4035;
+	ResetStatus;
+	close;
+
+	case 7:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4024 && JobLevel >=50) goto L13;
+	goto WrongLevel;
+
+	L13:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶十字軍^000000";
+	jobchange 4037;
+	ResetStatus;
+	close;
+
+	case 8:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶武道家^000000";
+	if(class==4027 && JobLevel >=50) goto L14;
+	goto WrongLevel;
+
+	L14:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4038;
+	ResetStatus;
+	close;
+
+	case 9:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4025 && JobLevel >=50) goto L15;
+	goto WrongLevel;
+
+	L15:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶賢者^000000";
+	jobchange 4039;
+	ResetStatus;
+	close;
+
+	case 10:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4029 && JobLevel >=50) goto L16;
+	goto WrongLevel;
+
+	L16:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶流氓^000000";
+	jobchange 4040;
+	ResetStatus;
+	close;
+
+	case 11:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4028 && JobLevel >=50) goto L17;
+	goto WrongLevel;
+
+	L17:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶煉金術士^000000";
+	jobchange 4041;
+	ResetStatus;
+	close;
+
+	case 12:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4026 && JobLevel >=50) goto L18;
+	goto WrongLevel;
+
+	L18:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶吟遊詩人^000000";
+	jobchange 4042;
+	ResetStatus;
+	close;
+
+	case 13:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4026 && JobLevel >=50) goto L19;
+	goto WrongLevel;
+
+	L19:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶吟遊舞孃^000000";
+	jobchange 4043;
+	ResetStatus;
+	close;
+
+	case 14:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+
+	if(class==4023 && JobLevel >=10) goto L20;
+	goto WrongLevel;
+
+	L20:
+	mes "[寶寶職業服務]";
+	mes "恭喜您成為^FF3355寶寶超級初學者^000000";
+	jobchange 4045;
+	ResetStatus;
+	close;
+
+	case 15:
+	mes "[寶寶職業服務]";
+	mes "無法轉職 請檢查你的職業是否正確";
+	mes "等級以及job等級是否足夠?";
+	close;
+} 
+
+job03:
+	mes "您確定要轉職嗎？";
+	next;
+	switch(select("寶寶盧恩騎士:寶寶咒術士:寶寶遊俠:寶寶大主教:寶寶機械工匠:寶寶十字斬首者:寶寶皇家禁衛隊:寶寶妖術師:寶寶宮廷樂師:寶寶流浪舞者:寶寶修羅:寶寶基因學者:寶寶魅影追蹤者:不轉了")) {
+
+	case 1:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶盧恩騎士^000000";
+	if(class==4030 && BaseLevel==99 && JobLevel >=50) goto L21;
+	goto WrongLevel;
+
+	L21:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4096;
+	ResetStatus;
+	close;
+
+	case 2:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶咒術士^000000";
+	if(class==4032 && BaseLevel==99 && JobLevel >=50) goto L22;
+	goto WrongLevel;
+
+	L22:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4097;
+	ResetStatus;
+	close;
+
+	case 3:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶遊俠^000000";
+	if(class==4034 && BaseLevel==99 && JobLevel >=50) goto L23;
+	goto WrongLevel;
+
+	L23:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4098;
+	ResetStatus;
+	close;
+
+	case 4:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶大主教^000000";
+	if(class==4031 && BaseLevel==99 && JobLevel >=50) goto L24;
+	goto WrongLevel;
+
+	L24:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4099;
+	ResetStatus;
+	close;
+
+	case 5:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶機械師^000000";
+	if(class==4033 && BaseLevel==99 && JobLevel >=50) goto L25;
+	goto WrongLevel;
+
+	L25:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4100;
+	ResetStatus;
+	close;
+
+	case 6:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶十字斬首者^000000";
+	if(class==4035 && BaseLevel==99 && JobLevel >=50) goto L26;
+	goto WrongLevel;
+
+	L26:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4101;
+	ResetStatus;
+	close;
+
+	case 7:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶皇家禁衛隊^000000";
+	if(class==4037 && BaseLevel==99 && JobLevel >=50) goto L27;
+	goto WrongLevel;
+
+	L27:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4102;
+	ResetStatus;
+	close;
+
+	case 8:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶妖術師^000000";
+	if(class==4039 && BaseLevel==99 && JobLevel >=50) goto L28;
+	goto WrongLevel;
+
+	L28:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4103;
+	ResetStatus;
+	close;
+
+	case 9:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶宮廷樂師^000000";
+	if(class==4042 && BaseLevel==99 && JobLevel >=50) goto L29;
+	goto WrongLevel;
+
+	L29:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4104;
+	ResetStatus;
+	close;
+
+	case 10:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶流浪舞者^000000";
+	if(class==4043 && BaseLevel==99 && JobLevel >=50) goto L30;
+	goto WrongLevel;
+
+	L30:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4105;
+	ResetStatus;
+	close;
+
+	case 11:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶修羅^000000";
+	if(class==4038 && BaseLevel==99 && JobLevel >=50) goto L31;
+	goto WrongLevel;
+
+	L31:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4106;
+	ResetStatus;
+	close;
+
+	case 12:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶遺傳學家^000000";
+	if(class==4041 && BaseLevel==99 && JobLevel >=50) goto L32;
+	goto WrongLevel;
+
+	L32:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4107;
+	ResetStatus;
+	close;
+
+	case 13:
+	if ( $@CJLSkPt == 0 && skillpoint > 0 ) {
+		mes "[寶寶職業服務]";
+		mes "技能點數有剩餘的點數無法進行轉職!";
+		close;
+		}
+	mes "恭喜您成為^FF3355寶寶魅影追蹤者^000000";
+	if(class==4040 && BaseLevel==99 && JobLevel >=50) goto L33;
+	goto WrongLevel;
+
+	L33:
+	mes "[寶寶職業服務]";
+	mes "馬上給您轉職.";
+	jobchange 4108;
+	ResetStatus;
+	close;
+} 
+
+job04:
+	if ( BaseLevel < 99 ) {
+		mes "[寶寶職業服務]";
+		mes "基本等級^FF000099級^000000才能進行轉職!";
+       		close;
+	}
+
+			if ( JobLevel < 99 ) {
+				mes "[寶寶職業服務]";
+				mes "職業等級^FF000099級^000000才能進行轉職!";
+				close;
+			}
+//職業檢查
+		if ( class != 4045 ) {
+			mes "[寶寶職業服務]";
+			mes "你的職業無法轉生!";
+			close;
+		}
+	mes "[寶寶職業服務]";
+	mes "恭喜您轉職為進階寶寶超級初心者";
+	jobchange 4191;
+	close;
+
+J00:
+	mes "[寶寶職業服務]";
+	mes "你想轉職時候再來找我吧";
+	close;
+
+WrongLevel:
+	mes "[寶寶職業服務]";
+	mes "無法轉職!";
+	mes "必須是寶寶才可以哦";
+	mes "以及等級以及JOB等級是否足夠?";
+	close;
+
+//OnInit:
+//	waitingroom "寶寶職業服務",0;
+//	end;
+} 
+

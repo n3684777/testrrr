@@ -1,0 +1,240 @@
+
+vdistrict1,80,21,6	script	尼樂妍大神官#Pop	919,{
+
+	mes "[尼樂妍大神官]";
+	mes "你好~";
+	mes "只要有教皇的項鍊";
+	mes "給我夢的碎片當報酬";
+	mes "我就能幫你附魔上新的功能";
+	mes "^FF0000第三插槽需要100個夢的碎片^000000";
+	mes "^FF0000第四插槽需要1000個夢的碎片^000000";
+	next;
+	switch(select("詢問教皇的狀態:請幫我附魔教皇的項鍊:沒事")){
+
+case 1:
+	mes"[尼樂妍大神官]";
+	mes "教皇大人不知道為何陷入深沉的睡眠狀態";
+	mes "導致很多日常事務都無法處理";
+	next;
+	mes"[尼樂妍大神官]";
+	mes "你願意進入教皇的夢中";
+	mes "查看到底是因為什麼原因嗎?";
+	next;
+	mes"[尼樂妍大神官]";
+	mes "只要經由上方的次元裂痕就能進入到教皇的夢中";
+	close; 
+
+case 2:
+	mes "[尼樂妍大神官]";
+	mes "你確定要進行附魔嗎?";
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyour,getequipcardid(.@is,0);
+	set @fakeyour2,getequipcardid(.@is,1);
+	set @fakeyour3,getequipcardid(.@is,2);
+	set @fakeyour4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[尼樂妍大神官]";
+	mes"你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[尼樂妍大神官]";
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 28387) goto Noon_net1;
+	mes "[尼樂妍大神官]";
+	mes "你這個不是教皇的項鍊";
+	close;
+
+Noon_net1:
+	mes "[尼樂妍大神官]";
+	mes "好吧!說吧!你想要強化哪個插槽?";
+	next;
+	switch(select("第三插槽:第四插槽:取消")){
+
+	case 1:
+	mes "[尼樂妍大神官]";
+	mes "好吧!說吧!你想要強化上哪種功能?";
+	next;
+	switch(select("女神的正義A:神的慈愛A:女神的洞察A:取消")){
+	case 1:
+	callfunc "fumoNoonA1",25088,0,rand(1,100);
+	case 2:
+	callfunc "fumoNoonA2",25088,0,rand(1,100);
+	case 3:
+	callfunc "fumoNoonA3",25088,0,rand(1,100);
+	case 4:
+	close;
+	}
+
+	case 2:
+	mes "[尼樂妍大神官]";
+	mes "好吧!說吧!你想要強化上哪種功能?";
+	next;
+	switch(select("女神的正義S:神的慈愛S:女神的洞察S:取消")){
+	case 1:
+	callfunc "fumoNoonS1",25088,0,rand(1,100);
+	case 2:
+	callfunc "fumoNoonS2",25088,0,rand(1,100);
+	case 3:
+	callfunc "fumoNoonS3",25088,0,rand(1,100);
+	case 4:
+	close;
+	}
+
+	case 3:
+	close;
+}
+
+
+case 3:
+	close;
+	}
+OnInit:
+	waitingroom "教皇的項鍊附魔",0;
+	end;
+}
+
+
+
+//--------------------------附魔3S
+
+function	script	fumoNoonA1	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<100){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠100個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第三個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),100;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,29121,@fakeyour4;
+	close;
+}
+
+function	script	fumoNoonA2	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<100){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠100個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第三個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),100;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,29123,@fakeyour4;
+	close;
+}
+
+function	script	fumoNoonA3	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<100){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠100個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第三個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),100;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,29125,@fakeyour4;
+	close;
+}
+
+
+//--------------------------附魔4S
+
+function	script	fumoNoonS1	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<1000){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠1000個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第四個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1000;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,@fakeyour3,29122;
+	close;
+}
+
+function	script	fumoNoonS2	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<1000){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠1000個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第四個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1000;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,@fakeyour3,29124;
+	close;
+}
+
+
+function	script	fumoNoonS3	{
+	if (@fakeyour > 1) {
+	mes "[尼樂妍大神官]";	
+	mes "^ff0000你該插槽已經附魔過!!^000000";
+	close;
+	}
+	if(countitem(getarg(0))<1000){
+	mes "[尼樂妍大神官]";
+	mes"你身上的夢的碎片不夠1000個";
+	close;
+	}
+	unequip (.@is);
+	mes "[尼樂妍大神官]";
+	mes "對第四個插槽賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1000;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,@fakeyour3,29126;
+	close;
+}
+
+
+
+
+

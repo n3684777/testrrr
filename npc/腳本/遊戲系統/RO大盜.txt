@@ -1,0 +1,95 @@
+﻿//---------------------- 主程式
+-	script	RO大盜	-1,{ end;
+
+//活動時間
+OnClock0357:
+OnClock1257:
+OnClock1917:
+	announce "【RO大盜】不好了!!監牢的大門被破壞了，RO大盜全部都脫逃了",15;
+	end;
+//活動時間
+OnClock0359:
+OnClock1259:
+OnClock1919:
+	announce "【RO大盜】RO大盜已經脫逃到各城鎮中躲藏了!!",15;
+	end;
+//活動時間
+OnClock0400:
+OnClock1300:
+OnClock1920:
+	$dio=rand(1,10);
+	setarray $@RO_Thief_Mod$[1],"普隆德拉","夢羅克","吉芬","愛爾貝塔","艾爾帕蘭","姜餅城","毀葛","崑崙","龍之城","汶巴拉";
+	setarray $@moncitymap$[1],"prontera","morocc","geffen","alberta","aldebaran","xmas","hugel","gonryun","louyang","umbala";
+	set $@Thief01,100;
+	monster $@moncitymap$[$dio],0,0,"RO大盜",27098,20,"RO_Thief::OnMobKilled01";
+	monster $@moncitymap$[$dio],0,0,"RO大盜",27098,20,"RO_Thief::OnMobKilled01";
+	monster $@moncitymap$[$dio],0,0,"RO大盜",27098,20,"RO_Thief::OnMobKilled01";
+	monster $@moncitymap$[$dio],0,0,"RO大盜",27098,20,"RO_Thief::OnMobKilled01";
+	monster $@moncitymap$[$dio],0,0,"RO大盜",27098,20,"RO_Thief::OnMobKilled01";
+
+	setmapflag "prontera",mf_noteleport;
+	setmapflag "morocc",mf_noteleport;
+	setmapflag "geffen",mf_noteleport;
+	setmapflag "alberta",mf_noteleport;
+	setmapflag "xmas",mf_noteleport;
+	setmapflag "hugel",mf_noteleport;
+	setmapflag "gonryun",mf_noteleport;
+	setmapflag "louyang",mf_noteleport;
+	setmapflag "umbala",mf_noteleport;
+	setmapflag "prontera",mf_restricted,9;
+	setmapflag "morocc",mf_restricted,9;
+	setmapflag "geffen",mf_restricted,9;
+	setmapflag "alberta",mf_restricted,9;
+	setmapflag "xmas",mf_restricted,9;
+	setmapflag "hugel",mf_restricted,9;
+	setmapflag "gonryun",mf_restricted,9;
+	setmapflag "louyang",mf_restricted,9;
+	setmapflag "umbala",mf_restricted,9;
+	announce "【RO大盜】"+$@RO_Thief_Mod$[$dio]+" 的金庫被RO大盜偷走許多寶物，冒險家們快來幫忙搜捕這些RO大盜",15;
+	announce "【RO大盜】"+$@RO_Thief_Mod$[$dio]+" 受到詛咒導致無法使用瞬間移動跟位移技能!!",15;
+	end;
+//活動結束
+OnClock0256:
+	removemapflag "prontera",mf_noteleport;
+	removemapflag "morocc",mf_noteleport;
+	removemapflag "geffen",mf_noteleport;
+	removemapflag "alberta",mf_noteleport;
+	removemapflag "xmas",mf_noteleport;
+	removemapflag "hugel",mf_noteleport;
+	removemapflag "gonryun",mf_noteleport;
+	removemapflag "louyang",mf_noteleport;
+	removemapflag "umbala",mf_noteleport;
+	removemapflag "prontera",mf_restricted,9;
+	removemapflag "morocc",mf_restricted,9;
+	removemapflag "geffen",mf_restricted,9;
+	removemapflag "alberta",mf_restricted,9;
+	removemapflag "xmas",mf_restricted,9;
+	removemapflag "hugel",mf_restricted,9;
+	removemapflag "gonryun",mf_restricted,9;
+	removemapflag "louyang",mf_restricted,9;
+	removemapflag "umbala",mf_restricted,9;
+	announce "【RO大盜】"+$@RO_Thief_Mod$[$dio]+" 可以使用瞬間移動跟位移技能了",15;
+	end;
+}
+
+//---------------------- 獲得獎勵
+-	script	RO_Thief	-1,{end;
+OnMobKilled01:
+	//獎勵
+	getitem 61006,rand(2,5);
+	if(rand(1000)<2) {
+	getitem 20605,1;
+	announce "【RO大盜】玩家 "+strcharinfo(0)+" 獲得了 "+getitemname(20605)+" !!",15;
+	}
+	if(rand(1000)<2) {
+	getitem 31943,1;
+	announce "【RO大盜】玩家 "+strcharinfo(0)+" 獲得了 "+getitemname(31943)+" !!",15;
+	}
+
+	set $@Thief01,$@Thief01-1;
+	if($@Thief01==1) {
+	mapannounce ""+$@moncitymap$[$dio]+"","【RO大盜】感謝大家!所有RO大盜都被逮捕完畢了!!",bc_map,"0xffff00";
+	}
+	end;
+}
+

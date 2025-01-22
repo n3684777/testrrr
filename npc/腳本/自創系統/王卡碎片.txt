@@ -1,0 +1,535 @@
+//*OnPCKillMvpEvent:
+//當玩家殺死 MVP 魔物後觸發事件
+//*OnNPCKillEvent:
+//當玩家殺死魔物後觸發事件
+
+-	script	王卡碎片	-1,{
+OnPCKillMvpEvent:
+	if(strcharinfo(3) == "guild_1"){  end; }
+	if(strcharinfo(3) == "guild_2"){  end; }
+	if(strcharinfo(3) == "guild_3"){  end; }
+	if(strcharinfo(3) == "guild_4"){  end; }
+	if(strcharinfo(3) == "guild_5"){  end; }
+	if(strcharinfo(3) == "2@gvs"){  end; }
+	if(strcharinfo(3) == instance_mapname("2@gvs")){ end; }
+
+	if(checkquest(43002)==1){ completequest 43002; dispbottom "完成 天賦狩獵任務(首領)";}
+
+	//D級狩獵
+	if ( #inhunt==1 && killedrid==#Mob_Quest_ID_D){
+	set #Mob_Quest_Amt_D,#Mob_Quest_Amt_D-1;
+	if ( #Mob_Quest_Amt_D < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_D+"隻"+getmonsterinfo(#Mob_Quest_ID_D,MOB_NAME),bc_blue|bc_self;
+	}
+	//C級狩獵
+	if ( #inhunt==2 && killedrid==#Mob_Quest_ID_C){
+	set #Mob_Quest_Amt_C,#Mob_Quest_Amt_C-1;
+	if ( #Mob_Quest_Amt_C < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_C+"隻"+getmonsterinfo(#Mob_Quest_ID_C,MOB_NAME),bc_blue|bc_self;
+	}
+	//B級狩獵
+	if ( #inhunt==3 && killedrid==#Mob_Quest_ID_B){
+	set #Mob_Quest_Amt_B,#Mob_Quest_Amt_B-1;
+	if ( #Mob_Quest_Amt_B < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_B+"隻"+getmonsterinfo(#Mob_Quest_ID_B,MOB_NAME),bc_blue|bc_self;
+	}
+	//A級狩獵
+	if ( #inhunt==4 && killedrid==#Mob_Quest_ID_A){
+	set #Mob_Quest_Amt_A,#Mob_Quest_Amt_A-1;
+	if ( #Mob_Quest_Amt_A < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_A+"隻"+getmonsterinfo(#Mob_Quest_ID_A,MOB_NAME),bc_blue|bc_self;
+	}
+	//S級狩獵
+	if ( #inhunt==5 && killedrid==#Mob_Quest_ID_S){
+	set #Mob_Quest_Amt_S,#Mob_Quest_Amt_S-1;
+	if ( #Mob_Quest_Amt_S < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_S+"隻"+getmonsterinfo(#Mob_Quest_ID_S,MOB_NAME),bc_blue|bc_self;
+	}
+
+
+	switch(killedrid){
+	case 1159:
+	if(true) getitem 94001,1;
+	break;
+	case 1115:
+	if(true) getitem 94002,1;
+	break;
+	case 1150:
+	if(true) getitem 94003,1;
+	break;
+	case 1389:
+	if(true) getitem 94004,1;
+	break;
+	case 1190:
+	if(true) getitem 94005,1;
+	break;
+	case 1112:
+	if(true) getitem 94006,1;
+	break;
+	case 1046:
+	if(true) getitem 94007,1;
+	break;
+	case 1087:
+	if(true) getitem 94008,1;
+	break;
+	case 1038:
+	if(true) getitem 94009,1;
+	break;
+	case 1874:
+	if(true) getitem 94010,1;
+	break;
+
+	case 1147:
+	if(true) getitem 94011,1;
+	break;
+	case 1039:
+	if(true) getitem 94012,1;
+	break;
+	case 1157:
+	if(true) getitem 94013,1;
+	break;
+	case 1272:
+	if(true) getitem 94014,1;
+	break;
+	case 1511:
+	if(true) getitem 94015,1;
+	break;
+	case 1492:
+	if(true) getitem 94016,1;
+	break;
+	case 1373:
+	if(true) getitem 94017,1;
+	break;
+	case 1583:
+	if(true) getitem 94018,1;
+	break;
+	case 1312:
+	if(true) getitem 94019,1;
+	break;
+	case 1251:
+	if(true) getitem 94020,1;
+	break;
+
+	case 1252:
+	if(true) getitem 94021,1;
+	break;
+	case 1418:
+	if(true) getitem 94022,1;
+	break;
+	case 1623:
+	if(true) getitem 94023,1;
+	break;
+	case 1658:
+	if(true) getitem 94024,1;
+	break;
+	case 1646:
+	if(true) getitem 94025,1;
+	break;
+	case 1647:
+	if(true) getitem 94026,1;
+	break;
+	case 1648:
+	if(true) getitem 94027,1;
+	break;
+	case 1649:
+	if(true) getitem 94028,1;
+	break;
+	case 1651:
+	if(true) getitem 94029,1;
+	break;
+	case 1650:
+	if(true) getitem 94030,1;
+	break;
+
+	case 1630:
+	if(true) getitem 94031,1;
+	break;
+	case 1685:
+	if(true) getitem 94032,1;
+	break;
+	case 1688:
+	if(true) getitem 94033,1;
+	break;
+	case 1719:
+	if(true) getitem 94034,1;
+	break;
+	case 28231:
+	if(true) getitem 94035,1;
+	break;
+	case 1734:
+	if(true) getitem 94036,1;
+	break;
+	case 1751:
+	if(true) getitem 94037,1;
+	break;
+	case 1768:
+	if(true) getitem 94038,1;
+	break;
+	case 1779:
+	if(true) getitem 94039,1;
+	break;
+	case 1785:
+	if(true) getitem 94040,1;
+	break;
+
+	case 1832:
+	if(true) getitem 94041,1;
+	break;
+	case 1871:
+	if(true) getitem 94042,1;
+	break;
+	case 2087:
+	if(true) getitem 94043,1;
+	break;
+	case 2165:
+	if(true) getitem 94044,1;
+	break;
+	case 2156:
+	if(true) getitem 94045,1;
+	break;
+	case 2202:
+	if(true) getitem 94046,1;
+	break;
+	case 2194:
+	if(true) getitem 94047,1;
+	break;
+	case 1917:
+	if(true) getitem 94048,1;
+	break;
+	case 2253:
+	if(true) getitem 94049,1;
+	break;
+	case 2251:
+	if(true) getitem 94050,1;
+	break;
+
+	case 2249:
+	if(true) getitem 94051,1;
+	break;
+	case 2255:
+	if(true) getitem 94052,1;
+	break;
+	case 3074:
+	if(true) getitem 94053,1;
+	break;
+	case 2362:
+	if(true) getitem 94054,1;
+	break;
+	case 3505:
+	if(true) getitem 94055,1;
+	break;
+	case 3242:
+	if(true) getitem 94056,1;
+	break;
+	case 3243:
+	if(true) getitem 94057,1;
+	break;
+	case 3245:
+	if(true) getitem 94058,1;
+	break;
+	case 3220:
+	if(true) getitem 94059,1;
+	break;
+	case 3221:
+	if(true) getitem 94060,1;
+	break;
+
+	case 3222:
+	if(true) getitem 94061,1;
+	break;
+	case 3223:
+	if(true) getitem 94062,1;
+	break;
+	case 3224:
+	if(true) getitem 94063,1;
+	break;
+	case 3225:
+	if(true) getitem 94064,1;
+	break;
+	case 3240:
+	if(true) getitem 94065,1;
+	break;
+	case 3241:
+	if(true) getitem 94066,1;
+	break;
+	case 3244:
+	if(true) getitem 94067,1;
+	break;
+	case 3246:
+	if(true) getitem 94068,1;
+	break;
+	case 3758:
+	if(true) getitem 94069,1;
+	break;
+	case 3757:
+	if(true) getitem 94070,1;
+	break;
+
+	case 3796:
+	if(true) getitem 94071,1;
+	break;
+	case 3804:
+	if(true) getitem 94072,1;
+	break;
+	case 2068:
+	if(true) getitem 94073,1;
+	break;
+	case 3633:
+	if(true) getitem 94074,1;
+	break;
+	case 1890:
+	if(true) getitem 94075,1;
+	break;
+	case 3741:
+	if(true) getitem 94076,1;
+	break;
+	case 20260:
+	if(true) getitem 94077,1;
+	break;
+	case 20273:
+	if(true) getitem 94078,1;
+	break;
+	case 20277:
+	if(true) getitem 94079,1;
+	break;
+	case 20381:
+	if(true) getitem 94080,1;
+	break;
+
+	case 20520:
+	if(true) getitem 94081,1;
+	break;
+	case 20419:
+	if(true) getitem 94082,1;
+	break;
+	case 20421:
+	if(true) getitem 94083,1;
+	break;
+	case 20422:
+	if(true) getitem 94084,1;
+	break;
+	case 20601:
+	if(true) getitem 94085,1;
+	break;
+	case 20610:
+	if(true) getitem 94086,1;
+	break;
+	case 20611:
+	if(true) getitem 94087,1;
+	break;
+	case 20618:
+	if(true) getitem 94088,1;
+	break;
+	case 20620:
+	if(true) getitem 94089,1;
+	break;
+	case 20648:
+	if(true) getitem 94090,1;
+	break;
+
+
+	case 20843:
+	if(true) getitem 94091,1;
+	break;
+	case 20811:
+	if(true) getitem 94092,1;
+	break;
+	case 21301:
+	if(true) getitem 94093,1;
+	break;
+	case 21395:
+	if(true) getitem 94094,1;
+	break;
+	case 20943:
+	if(true) getitem 94095,1;
+	break;
+	case 20928:
+	if(true) getitem 94096,1;
+	break;
+	case 20934:
+	if(true) getitem 94097,1;
+	break;
+	case 20118:
+	if(true) getitem 94098,1;
+	break;
+	case 21537:
+	if(true) getitem 94099,1;
+	break;
+	case 21950:
+	if(true) getitem 94100,1;
+	break;
+
+
+	case 21955:
+	if(true) getitem 94101,1;
+	break;
+	case 21996:
+	if(true) getitem 94102,1;
+	break;
+	case 21980:
+	if(true) getitem 94103,1;
+	break;
+	case 2022:
+	if(true) getitem 94104,1;
+	break;
+	case 20996:
+	if(true) getitem 94105,1;
+	break;
+	case 2186:
+	if(true) getitem 94106,1;
+	break;
+	case 2187:
+	if(true) getitem 94107,1;
+	break;
+	case 2190:
+	if(true) getitem 94108,1;
+	break;
+	case 2189:
+	if(true) getitem 94109,1;
+	break;
+	case 2240:
+	if(true) getitem 94110,1;
+	break;
+
+	case 2237:
+	if(true) getitem 94111,1;
+	break;
+	case 2238:
+	if(true) getitem 94112,1;
+	break;
+	case 2236:
+	if(true) getitem 94113,1;
+	break;
+	case 2239:
+	if(true) getitem 94114,1;
+	break;
+	case 2235:
+	if(true) getitem 94115,1;
+	break;
+	case 2241:
+	if(true) getitem 94116,1;
+	break;
+	case 2318:
+	if(true) getitem 94117,1;
+	break;
+	case 2320:
+	if(true) getitem 94118,1;
+	break;
+	case 2332:
+	if(true) getitem 94119,1;
+	break;
+	case 2476:
+	if(true) getitem 94120,1;
+	break;
+
+	case 3150:
+	if(true) getitem 94121,1;
+	break;
+	case 2475:
+	if(true) getitem 94122,1;
+	break;
+	case 3151:
+	if(true) getitem 94123,1;
+	break;
+	//case 3190:
+	//if(true) getitem 94124,1;
+	//break;
+	case 3427:
+	if(true) getitem 94125,1;
+	break;
+	case 3426:
+	if(true) getitem 94126,1;
+	break;
+	case 3428:
+	if(true) getitem 94127,1;
+	break;
+	case 3429:
+	if(true) getitem 94128,1;
+	break;
+	case 3430:
+	if(true) getitem 94129,1;
+	break;
+	case 3599:
+	if(true) getitem 94130,1;
+	break;
+
+	case 3628:
+	if(true) getitem 94131,1;
+	break;
+	case 3621:
+	if(true) getitem 94132,1;
+	break;
+	case 2533:
+	if(true) getitem 94133,1;
+	break;
+	case 20340:
+	if(true) getitem 94134,1;
+	break;
+	case 20346:
+	if(true) getitem 94135,1;
+	break;
+	case 20572:
+	if(true) getitem 94136,1;
+	break;
+	case 20573:
+	if(true) getitem 94137,1;
+	break;
+	case 3473:
+	if(true) getitem 94138,1;
+	break;
+	case 20621:
+	if(true) getitem 94139,1;
+	break;
+	case 20667:
+	if(true) getitem 94140,1;
+	break;
+
+	case 20668:
+	if(true) getitem 94141,1;
+	break;
+	case 20892:
+	if(true) getitem 94142,1;
+	break;
+	case 20893:
+	if(true) getitem 94143,1;
+	break;
+	case 20536:
+	if(true) getitem 94144,1;
+	break;
+	case 20785:
+	if(true) getitem 94145,1;
+	break;
+	case 21533:
+	if(true) getitem 94146,1;
+	break;
+	case 21531:
+	if(true) getitem 94147,1;
+	break;
+	case 21981:
+	if(true) getitem 94148,1;
+	break;
+	case 21982:
+	if(true) getitem 94149,1;
+
+	}
+	end;
+
+finhunt:
+	//任務完成
+	announce "狩獵任務完成，請找狩獵任務管理員領取獎勵",bc_blue|bc_self;
+	set #starthunttime,0;
+	set #finhunts,1;
+	end;
+}
+
+
+
+
+
+
+

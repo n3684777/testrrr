@@ -1,0 +1,624 @@
+trinity,92,119,6	script	任務委托管理員#prt	10134,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("調味料","武士修行","致敬愛的同事","環境整潔","黑暗空間","抑制黑暗的...","宴會：烤獅鷲","獨特的眼光","舒適的監獄生活",
+		"為小事過分費心","取消")){
+
+		case 1:
+			if(checkquest(11428)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11429)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11430)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11431)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11422,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11422,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			switch(rand(11428,11431) ) {
+			case 11428:
+			setquest 11428;
+			if(checkquest(11422,PLAYTIME)==2){erasequest 11422;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+			case 11429:
+			setquest 11429;
+			if(checkquest(11422,PLAYTIME)==2){erasequest 11422;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+			case 11430:
+			setquest 11430;
+			if(checkquest(11422,PLAYTIME)==2){erasequest 11422;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+			case 11431:
+			setquest 11431;
+			if(checkquest(11422,PLAYTIME)==2){erasequest 11422;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+			}
+			close;
+
+		case 2:
+			if(checkquest(5405,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5406,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5407,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5408,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5414,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5414,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			switch(rand(5405,5408) ) {
+			case 5405:
+			setquest 5405;
+			if(checkquest(5414,PLAYTIME)==2){erasequest 5414;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+			case 5406:
+			setquest 5406;
+			if(checkquest(5414,PLAYTIME)==2){erasequest 5414;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+			case 5407:
+			setquest 5407;
+			if(checkquest(5414,PLAYTIME)==2){erasequest 5414;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+			case 5408:
+			mes "給我帶來柔軟的口感的調味料";
+			setquest 5408;
+			if(checkquest(5414,PLAYTIME)==2){erasequest 5414;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+			}
+
+		case 3:
+			if(checkquest(5427)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5426,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5426,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5427;
+			if(checkquest(5426,PLAYTIME)==2){erasequest 5426;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(5434)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5435)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5433,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5433,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5434;
+			if(checkquest(5433,PLAYTIME)==2){erasequest 5433;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(5438)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5437)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5437)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5438;
+			if(checkquest(5437,PLAYTIME)==2){erasequest 5437;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(5444)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5443,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5443,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5444;
+			if(checkquest(5443,PLAYTIME)==2){erasequest 5443;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			if(checkquest(11424)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11425,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11425,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11424;
+			if(checkquest(11425,PLAYTIME)==2){erasequest 11425;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 8:
+			if(checkquest(5430)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5429,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5429,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5430;
+			if(checkquest(5429,PLAYTIME)==2){erasequest 5429;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 9:
+			if(checkquest(5441)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5440,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5440,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5441;
+			if(checkquest(5440,PLAYTIME)==2){erasequest 5440;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 10:
+			if(checkquest(5447)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5446,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5446,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5447;
+			if(checkquest(5446,PLAYTIME)==2){erasequest 5446;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 11:
+			close;
+		}
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("調味料","武士修行","致敬愛的同事","環境整潔","黑暗空間","抑制黑暗的...","獨特的眼光","舒適的監獄生活",
+		"為小事過分費心","取消")){
+
+		case 1:
+			if(checkquest(11428)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 11428;
+			setquest 11422;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(11429)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 11429;
+			setquest 11422;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(11430)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 11430;
+			setquest 11422;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(11431)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 11431;
+			setquest 11422;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(5405,HUNTING)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5405;
+			setquest 5414;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(5406,HUNTING)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5406;
+			setquest 5414;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(5407,HUNTING)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5407;
+			setquest 5414;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			if(checkquest(5408,HUNTING)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5408;
+			setquest 5414;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if (countitem(6925)< 1 ) {
+			mes "[任務委托管理員]";
+			mes "你身上沒有罪犯之信";
+			close;	}
+			if(checkquest(5427)==2 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5427;
+			setquest 5426;
+			delitem 6925,1;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(5435)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5435;
+			setquest 5433;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 5:
+			if (countitem(6923)< 1 ) {
+			mes "[任務委托管理員]";
+			mes "你身上沒有明亮火光";
+			close;	}
+			//if(checkquest(5438)>0 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5438;
+			setquest 5437;
+			delitem 6923,1;
+			getitem 6919,4;
+			getexp 300000,300000;
+			//}
+			close;
+
+		case 6:
+			switch(rand(6509,6511) ) {
+
+			case 6509:
+			if (countitem(6509)< 5 ) {
+			mes "[任務委托管理員]";
+			mes "你身上沒有神秘花朵";
+			close;	}
+			if(checkquest(5444)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5444;
+			setquest 5443;
+			delitem 6509,5;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			close;
+
+			case 6510:
+			if (countitem(6510)< 5 ) {
+			mes "[任務委托管理員]";
+			mes "你身上沒有典雅花朵";
+			close;	}
+			if(checkquest(5444)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5444;
+			setquest 5443;
+			delitem 6510,5;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			close;
+
+			case 6511:
+			if (countitem(6511)< 5 ) {
+			mes "[任務委托管理員]";
+			mes "你身上沒有美麗花朵";
+			close;	}
+			if(checkquest(5444)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5444;
+			setquest 5443;
+			delitem 6511,5;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			close;
+			}
+
+		case 7:
+			if (countitem(6924)< 20 ) {
+			mes "[任務委托管理員]";
+			mes "你身上怪物紅眼不足20個";
+			close;	}
+			if(checkquest(5430)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5430;
+			setquest 5429;
+			delitem 6924,20;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 8:
+			if (countitem(6921)< 20 ) {
+			mes "[任務委托管理員]";
+			mes "你身上除溼盒不足20個";
+			close;	}
+			if(checkquest(5441)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5441;
+			setquest 5440;
+			delitem 6921,20;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 9:
+			if (countitem(6922)< 20 ) {
+			mes "[任務委托管理員]";
+			mes "你身上砂紙不足20個";
+			close;	}
+			if(checkquest(5447)==1 ) { 
+			dispbottom "任務回報完成!!";
+			erasequest 5447;
+			setquest 5446;
+			delitem 6922,20;
+			getitem 6919,4;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 10:
+			close;
+		}
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "幻色童話每日任務",0;
+	end;
+}
+
+
+//--------------------------- 每日任務 相關任務NPC
+// 調味料
+prt_cas,303,216,5	script	摩卡果汁#ep16_1	4_ENERGY_BLUE,{
+	if (checkquest(11428) == 1) {
+	completequest 11428;
+	}
+	mes "清爽的口味的果汁";
+	close;
+}
+
+prt_cas,307,196,5	script	波利果凍#ep16_1	4_ENERGY_RED,{
+	if (checkquest(11429) == 1) {
+	completequest 11429;
+	}
+	mes "綿綿的口感的果凍";
+	close;
+}
+
+prt_cas,338,206,5	script	光芒草#ep16_1	4_ENERGY_WHITE,{
+	if (checkquest(11430) == 1) {
+	completequest 11430;
+	}
+	mes "散發炫彩的光的草";
+	close;
+}
+
+prt_cas,330,211,5	script	狂爆米諾斯奶油#ep16_1	4_ENERGY_YELLOW,{
+	if (checkquest(11431) == 1) {
+	completequest 11431;
+	}
+	mes "柔軟的口感的奶油";
+	close;
+}
+
+// 致敬愛的同事
+prt_prison,205,139,4	script	黑色型體#EP161A01	4_GHOST_STAND,{
+	if (checkweight(501,1) == 0) {
+	mes "- 您有太多物品，因此無法繼續進行任務 -";
+	close;
+	}
+	if (checkquest(5427) != 1) {
+	mes "漆黑一片，貌似有人躲在裡面!?";
+	}
+	completequest 5427;
+	getitem 6925,1;// 罪犯之信
+	mes "黑色型體遞給你一封信，然後離開了。意思是要你交付給?";
+	close2;
+	.@num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
+	setarray .@npc_num[1],1,2,3,4,5;
+	deletearray .@npc_num[.@num],1;
+	disablenpc strnpcinfo(0);
+	enablenpc "黑色型體#EP161A0" + .@npc_num[ rand(1,4) ];// enable another npc randomly
+	end;
+
+OnInit:
+	.@npc_num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
+	if (.num_enabled == 0)
+		.num_enabled = rand(1,5);
+	if (.num_enabled != .@npc_num)
+		disablenpc strnpcinfo(0);// disable 4/5 npcs
+	end;
+}
+
+prt_prison,153,175,4	duplicate(黑色型體#EP161A01)	黑色型體#EP161A02	4_GHOST_STAND
+prt_prison,160,224,6	duplicate(黑色型體#EP161A01)	黑色型體#EP161A03	4_GHOST_STAND
+prt_prison,169,81,6	duplicate(黑色型體#EP161A01)	黑色型體#EP161A04	4_GHOST_STAND
+prt_prison,203,215,4	duplicate(黑色型體#EP161A01)	黑色型體#EP161A05	4_GHOST_STAND
+
+
+// 垃圾堆 環境整潔
+prt_prison,118,247,4	script	垃圾堆#EP161C01	4_ENERGY_BLACK,{
+
+	if(checkquest(5435)>=0){
+	mes "一些殘留在地板上的垃圾會聚在一起";
+	close;
+	}
+
+	if(checkquest(5434) == 1) {
+	mes "一些殘留在地板上的垃圾會聚在一起";
+	next;
+	switch(select("清潔它們","不管它們")){
+
+	case 1:
+		progressbar "ffff00",2;
+		if (rand(100) < 75){
+		mes "你打掃完了，還有其他地方需要清潔，再去找找其它垃圾堆吧";
+		initnpctimer;
+		disablenpc strnpcinfo(0);
+		end;
+		close;
+		}
+		mes "你打掃完了，回去回報成果吧";
+		setquest 5435;	// (重複)打掃完畢
+		erasequest 5434;	// (重複)環境整潔
+		initnpctimer;
+		disablenpc strnpcinfo(0);
+		end;
+		close;
+
+	case 2:
+		close;
+		}
+	}
+
+	end;
+OnTimer30000:
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
+	end;
+}
+
+prt_prison,171,247,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C02	4_ENERGY_BLACK
+prt_prison,181,230,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C03	4_ENERGY_BLACK
+prt_prison,238,165,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C04	4_ENERGY_BLACK
+//
+prt_prison,232,137,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C06	4_ENERGY_BLACK
+prt_prison,200,133,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C07	4_ENERGY_BLACK
+prt_prison,212,107,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C08	4_ENERGY_BLACK
+prt_prison,235,107,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C09	4_ENERGY_BLACK
+prt_prison,198,87,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C10	4_ENERGY_BLACK
+prt_prison,218,75,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C11	4_ENERGY_BLACK
+prt_prison,232,83,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C12	4_ENERGY_BLACK
+prt_prison,207,50,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C13	4_ENERGY_BLACK
+prt_prison,231,55,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C14	4_ENERGY_BLACK
+prt_prison,220,19,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C15	4_ENERGY_BLACK
+prt_prison,168,31,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C16	4_ENERGY_BLACK
+prt_prison,160,70,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C17	4_ENERGY_BLACK
+prt_prison,156,87,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C18	4_ENERGY_BLACK
+prt_prison,140,93,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C19	4_ENERGY_BLACK
+prt_prison,113,98,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C20	4_ENERGY_BLACK
+//
+prt_prison,112,79,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C22	4_ENERGY_BLACK
+prt_prison,122,42,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C23	4_ENERGY_BLACK
+prt_prison,135,127,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C24	4_ENERGY_BLACK
+prt_prison,67,149,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C25	4_ENERGY_BLACK
+prt_prison,251,259,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C26	4_ENERGY_BLACK
+prt_prison,220,255,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C27	4_ENERGY_BLACK
+prt_prison,243,239,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C28	4_ENERGY_BLACK
+prt_prison,276,195,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C29	4_ENERGY_BLACK
+prt_prison,188,186,4	duplicate(垃圾堆#EP161C01)	垃圾堆#EP161C30	4_ENERGY_BLACK
+
+
+// 火把 黑暗空間
+prt_prison,146,268,4	script	火把#EP161EB01	CLEAR_NPC,{
+	if (checkweight(501,1) == 0) {
+	mes "- 您有太多物品，因此無法繼續進行任務 -";
+	close;
+	}
+
+	if(checkquest(5438) == 0) end;
+	mes "這是一個很大的火把，燃燒得很明亮。";
+	if (countitem(6923) < 1) {
+		next;
+		select("收集火光");
+		progressbar "ffff00",2;
+		if (rand(100) < 50)
+			mes "你嘗試收集火光，但不小心熄滅了";
+		else {
+			if (countitem(6923) > 0 ) {
+			mes "你身上已經有明亮火光了";
+			close;	}
+
+			getitem 6923,1;	//明亮火光
+			specialeffect2 EF_LIGHTSPHERE;
+			completequest 5438;
+			mes "小心翼翼收集火光，成功拿到了明亮的火光.";
+		}
+		initnpctimer;
+		disablenpc strnpcinfo(0);
+	}
+	close;
+
+OnTimer30000:
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
+	end;
+}
+
+prt_prison,177,268,4	duplicate(火把#EP161EB01)	火把#EP161EB02	CLEAR_NPC
+prt_prison,170,286,4	duplicate(火把#EP161EB01)	火把#EP161EB03	CLEAR_NPC
+prt_prison,39,160,4	duplicate(火把#EP161EB01)	火把#EP161EB04	CLEAR_NPC
+prt_prison,72,160,4	duplicate(火把#EP161EB01)	火把#EP161EB05	CLEAR_NPC
+prt_prison,81,148,4	duplicate(火把#EP161EB01)	火把#EP161EB06	CLEAR_NPC
+prt_prison,81,138,4	duplicate(火把#EP161EB01)	火把#EP161EB07	CLEAR_NPC
+prt_prison,72,126,4	duplicate(火把#EP161EB01)	火把#EP161EB08	CLEAR_NPC
+prt_prison,38,126,4	duplicate(火把#EP161EB01)	火把#EP161EB09	CLEAR_NPC
+prt_prison,141,152,4	duplicate(火把#EP161EB01)	火把#EP161EB10	CLEAR_NPC
+prt_prison,159,153,4	duplicate(火把#EP161EB01)	火把#EP161EB11	CLEAR_NPC
+prt_prison,158,135,4	duplicate(火把#EP161EB01)	火把#EP161EB12	CLEAR_NPC
+prt_prison,141,135,4	duplicate(火把#EP161EB01)	火把#EP161EB13	CLEAR_NPC
+prt_prison,122,46,4	duplicate(火把#EP161EB01)	火把#EP161EB14	CLEAR_NPC
+prt_prison,129,46,4	duplicate(火把#EP161EB01)	火把#EP161EB15	CLEAR_NPC
+prt_prison,186,46,4	duplicate(火把#EP161EB01)	火把#EP161EB16	CLEAR_NPC
+prt_prison,186,37,4	duplicate(火把#EP161EB01)	火把#EP161EB17	CLEAR_NPC
+prt_prison,237,139,4	duplicate(火把#EP161EB01)	火把#EP161EB18	CLEAR_NPC
+prt_prison,246,140,4	duplicate(火把#EP161EB01)	火把#EP161EB19	CLEAR_NPC
+
+
+// 宴會：烤獅鷲
+prt_cas,358,124,0	script	烤獅鷲獸#ep16_1	4_EP16_FOOD,{
+
+	if(checkquest(11424)==1 ) { 
+	dispbottom "成功把香酥烤獅鷲送到餐桌上了";
+	erasequest 11424;
+	setquest 11425;
+	getitem 6919,4;
+	getexp 300000,300000;
+	}
+	mes "美味的烤獅鷲獸";
+	close;
+}
+
+

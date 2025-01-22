@@ -1,0 +1,392 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#推廣商店
+   - Name: 推廣商店
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: Cash_Points_100
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 3
+       - Index: 2
+         Item: Golden_Seal_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 100
+       - Index: 3
+         Item: Advanced_Armor_12Up
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 50
+       - Index: 4
+         Item: Advanced_Weapon_12Up
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 50
+
+       - Index: 5
+         Item: C_Full_BloomCherry_Tree
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 20
+
+       - Index: 6
+         Item: C_Head_Item_44693
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 7
+         Item: C_Midnight_Candle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 8
+         Item: C_Gods_Rabbit_Pet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 9
+         Item: C_Katashiro_Flying
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+
+       - Index: 10
+         Item: C_Head_Item_45256
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 11
+         Item: C_Head_Item_45257
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 12
+         Item: C_Head_Item_45258
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 13
+         Item: C_Head_Item_45259
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 14
+         Item: C_Head_Item_45260
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 15
+         Item: C_Head_Item_45261
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 16
+         Item: C_Head_Item_45262
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+       - Index: 17
+         Item: C_Head_Item_45263
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 40
+
+
+       - Index: 101
+         Item: C_Head_Item_23304
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 102
+         Item: C_Head_Item_23139
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 103
+         Item: C_Head_Item_23140
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 104
+         Item: C_Head_Item_23141
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 105
+         Item: C_Head_Item_23142
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 106
+         Item: C_Head_Item_23143
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 107
+         Item: C_Head_Item_23063
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+
+       - Index: 107
+         Item: C_Head_Item_44476
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 108
+         Item: C_Head_Item_44962
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 109
+         Item: C_Head_Item_23759
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 110
+         Item: C_Head_Item_23728
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 111
+         Item: C_Head_Item_23951
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 112
+         Item: C_Head_Item_23632
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 113
+         Item: C_Head_Item_44255
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 114
+         Item: C_Flowerpot_Mask
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+             
+       - Index: 115
+         Item: C_Head_Item_23765
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 116
+         Item: C_Faith_Of_Yggdrasil
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 117
+         Item: C_Head_Item_44243
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 118
+         Item: C_Head_Item_23298
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 119
+         Item: C_Head_Item_44960
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 120
+         Item: C_Head_Item_22991
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+
+       - Index: 121
+         Item: DMCape_01
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 122
+         Item: DMCape_02
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 123
+         Item: DMCape_03
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 124
+         Item: DMCape_04
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 125
+         Item: DMCape_05
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 126
+         Item: DMCape_06
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+       - Index: 127
+         Item: DMCape_07
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Promote_Coin
+             Amount: 15
+
+
+
+
+
+
+
+
+
+

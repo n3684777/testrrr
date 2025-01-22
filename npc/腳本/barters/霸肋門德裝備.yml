@@ -1,0 +1,658 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#霸肋門德裝備
+   - Name: 霸肋門德裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 0
+         Item: Barmund_Armor
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 15
+           - Index: 1
+             Item: Flame_Barmund_Rune2
+             Amount: 15
+           - Index: 2
+             Item: Ice_Barmund_Rune2
+             Amount: 15
+           - Index: 3
+             Item: Death_Barmund_Rune2
+             Amount: 15
+       - Index: 1
+         Item: Barmund_Manteau
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 10
+           - Index: 1
+             Item: Flame_Barmund_Rune2
+             Amount: 10
+           - Index: 2
+             Item: Ice_Barmund_Rune2
+             Amount: 10
+           - Index: 3
+             Item: Death_Barmund_Rune2
+             Amount: 10
+       - Index: 2
+         Item: Barmund_Greave
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 10
+           - Index: 1
+             Item: Flame_Barmund_Rune2
+             Amount: 10
+           - Index: 2
+             Item: Ice_Barmund_Rune2
+             Amount: 10
+           - Index: 3
+             Item: Death_Barmund_Rune2
+             Amount: 10
+       - Index: 3
+         Item: Barmund_Plain_Armor
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 30
+           - Index: 1
+             Item: Barmund_Armor
+             Amount: 1
+       - Index: 4
+         Item: Barmund_Plain_Hood
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 20
+           - Index: 1
+             Item: Barmund_Manteau
+             Amount: 1
+       - Index: 5
+         Item: Barmund_Plain_Boots
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 15
+           - Index: 1
+             Item: Barmund_Greave
+             Amount: 1
+       - Index: 6
+         Item: Barmund_Flame_Armor
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune2
+             Amount: 30
+           - Index: 1
+             Item: Barmund_Armor
+             Amount: 1
+       - Index: 7
+         Item: Barmund_Flame_Hood
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune2
+             Amount: 20
+           - Index: 1
+             Item: Barmund_Manteau
+             Amount: 1
+       - Index: 8
+         Item: Barmund_Flame_Boots
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune2
+             Amount: 15
+           - Index: 1
+             Item: Barmund_Greave
+             Amount: 1
+       - Index: 9
+         Item: Barmund_Ice_Armor
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune2
+             Amount: 30
+           - Index: 1
+             Item: Barmund_Armor
+             Amount: 1
+       - Index: 10
+         Item: Barmund_Ice_Hood
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune2
+             Amount: 20
+           - Index: 1
+             Item: Barmund_Manteau
+             Amount: 1
+       - Index: 11
+         Item: Barmund_Ice_Boots
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune2
+             Amount: 15
+           - Index: 1
+             Item: Barmund_Greave
+             Amount: 1
+       - Index: 12
+         Item: Barmund_Death_Armor
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 30
+           - Index: 1
+             Item: Barmund_Armor
+             Amount: 1
+       - Index: 13
+         Item: Barmund_Death_Hood
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 20
+           - Index: 1
+             Item: Barmund_Manteau
+             Amount: 1
+       - Index: 14
+         Item: Barmund_Death_Boots
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 15
+           - Index: 1
+             Item: Barmund_Greave
+             Amount: 1
+       - Index: 15
+         Item: Barmund_Plain_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 16
+         Item: Barmund_Death_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 17
+         Item: Barmund_Flame_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 18
+         Item: Barmund_Ice_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 19
+         Item: Barmund_Soul_Ring
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Barmund_Ring
+             Amount: 1
+           - Index: 1
+             Item: Soul_Barmund_Rune2
+             Amount: 20
+       - Index: 20
+         Item: Barmund_Venom_Ring
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Barmund_Ring
+             Amount: 1
+           - Index: 1
+             Item: Venom_Barmund_Rune2
+             Amount: 20
+       - Index: 21
+         Item: Barmund_Temple_Ring
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: Barmund_Ring
+             Amount: 1
+           - Index: 1
+             Item: Temple_Barmund_Rune2
+             Amount: 20
+       - Index: 22
+         Item: Barmund_Soul_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 23
+         Item: Barmund_Venom_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 24
+         Item: Barmund_Temple_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 25
+         Item: Barmund_S_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 26
+         Item: Barmund_V_Reform
+         Stock: 0
+         Zeny: 30000000
+       - Index: 27
+         Item: Barmund_T_Reform
+         Stock: 0
+         Zeny: 30000000
+
+
+#符文石兌換
+   - Name: 符文石兌換
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_CLEANER_W
+     Items:
+       - Index: 0
+         Item: Plain_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune
+             Amount: 10
+       - Index: 1
+         Item: Flame_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune
+             Amount: 10
+       - Index: 2
+         Item: Ice_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune
+             Amount: 10
+       - Index: 3
+         Item: Death_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune
+             Amount: 10
+       - Index: 4
+         Item: Temple_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Temple_Barmund_Rune
+             Amount: 10
+       - Index: 5
+         Item: Venom_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Venom_Barmund_Rune
+             Amount: 10
+       - Index: 6
+         Item: Soul_Barmund_Rune2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Soul_Barmund_Rune
+             Amount: 10
+
+       - Index: 7
+         Item: Bar_D_Fl_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Energy
+             Amount: 10
+       - Index: 8
+         Item: Bar_D_Ea_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Energy
+             Amount: 10
+       - Index: 9
+         Item: Bar_D_Ic_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Energy
+             Amount: 10
+       - Index: 10
+         Item: Bar_D_St_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Energy
+             Amount: 10
+       - Index: 11
+         Item: Bar_D_So_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Energy
+             Amount: 10
+       - Index: 12
+         Item: Bar_D_Pu_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Energy
+             Amount: 10
+       - Index: 13
+         Item: Bar_D_Co_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Energy
+             Amount: 10
+       - Index: 14
+         Item: Bar_D_Po_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Energy
+             Amount: 10
+
+       - Index: 15
+         Item: Bar_D_Fl_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Crystal
+             Amount: 5
+       - Index: 16
+         Item: Bar_D_Ea_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Crystal
+             Amount: 5
+       - Index: 17
+         Item: Bar_D_Ic_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Crystal
+             Amount: 5
+       - Index: 18
+         Item: Bar_D_St_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Crystal
+             Amount: 5
+       - Index: 19
+         Item: Bar_D_So_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Crystal
+             Amount: 5
+       - Index: 20
+         Item: Bar_D_Pu_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Crystal
+             Amount: 5
+       - Index: 21
+         Item: Bar_D_Co_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Crystal
+             Amount: 5
+       - Index: 22
+         Item: Bar_D_Po_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Crystal
+             Amount: 5
+
+       - Index: 23
+         Item: Bar_D_Fl_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Crystal
+             Amount: 10
+       - Index: 24
+         Item: Bar_D_Ea_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Crystal
+             Amount: 10
+       - Index: 25
+         Item: Bar_D_Ic_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Crystal
+             Amount: 10
+       - Index: 26
+         Item: Bar_D_St_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Crystal
+             Amount: 10
+       - Index: 27
+         Item: Bar_D_So_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Crystal
+             Amount: 10
+       - Index: 28
+         Item: Bar_D_Pu_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Crystal
+             Amount: 10
+       - Index: 29
+         Item: Bar_D_Co_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Crystal
+             Amount: 10
+       - Index: 30
+         Item: Bar_D_Po_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Crystal
+             Amount: 10
+
+
+#刻印的裝備兌換
+   - Name: 刻印的裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_SCISSORE
+     Items:
+       - Index: 0
+         Item: ST_Orleans_Gown
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 100
+           - Index: 1
+             Item: Brigan
+             Amount: 200
+           - Index: 2
+             Item: Orleans_Gown
+             Amount: 1
+       - Index: 1
+         Item: ST_Orleans_Server
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 50
+           - Index: 1
+             Item: Brigan
+             Amount: 200
+           - Index: 2
+             Item: Orleans_Server
+             Amount: 1
+       - Index: 2
+         Item: ST_Orleans_Glove
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Death_Barmund_Rune2
+             Amount: 100
+           - Index: 1
+             Item: Brigan
+             Amount: 200
+           - Index: 2
+             Item: Orleans_Glove
+             Amount: 1
+       - Index: 3
+         Item: ST_Pinquicula_Corsage
+         Stock: 0
+         Zeny: 1500000
+         RequiredItems:
+           - Index: 0
+             Item: Plain_Barmund_Rune2
+             Amount: 50
+           - Index: 1
+             Item: Fluorescent_Liquid
+             Amount: 200
+           - Index: 2
+             Item: Pinguicula_Corsage
+             Amount: 1
+       - Index: 4
+         Item: ST_Waterdrop_Brooch
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune2
+             Amount: 50
+           - Index: 1
+             Item: Fluorescent_Liquid
+             Amount: 200
+           - Index: 2
+             Item: Waterdrop_Brooch
+             Amount: 1
+       - Index: 5
+         Item: ST_Servival_Cloak
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Ice_Barmund_Rune2
+             Amount: 75
+           - Index: 1
+             Item: Ice_Scale
+             Amount: 5
+           - Index: 2
+             Item: Clack_Of_Servival
+             Amount: 1
+       - Index: 6
+         Item: ST_Naga_Armor
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune2
+             Amount: 50
+           - Index: 1
+             Item: Scales_Shell
+             Amount: 200
+           - Index: 2
+             Item: Armor_Of_Naga
+             Amount: 1
+       - Index: 7
+         Item: ST_Naga_Shield
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+           - Index: 0
+             Item: Flame_Barmund_Rune2
+             Amount: 50
+           - Index: 1
+             Item: Scales_Shell
+             Amount: 200
+           - Index: 2
+             Item: Shield_Of_Naga
+             Amount: 1
+
+
+
+
+

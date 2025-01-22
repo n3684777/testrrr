@@ -1,0 +1,485 @@
+/*
+= 調試地圖: boss5 請做鏡像地圖
+*/
+boss5	mapflag	nosave	SavePoint
+boss5	mapflag	nomemo
+boss5	mapflag	nobranch
+boss5	mapflag	noicewall
+boss5	mapflag	restricted	9
+boss5	mapflag	nodrop
+
+function	script	PG_block	{
+	setpcblock PCBLOCK_ATTACK,getarg(0);
+	setpcblock PCBLOCK_SKILL,getarg(0);
+	setpcblock PCBLOCK_USEITEM,getarg(0);
+	setpcblock PCBLOCK_IMMUNE,getarg(0);
+	setpcblock PCBLOCK_SITSTAN,getarg(0);
+	setpcblock PCBLOCK_COMMAND,getarg(0);
+	setpcblock PCBLOCK_EMOTION,getarg(0);
+	return;
+	}
+
+trinity,39,134,6	script	魷魚遊戲#1	96,{
+	if (checkfalcon() || checkcart() || checkriding() || ismounting() || checkoption(Option_Wug) || checkoption(Option_Wugrider) || checkmadogear() ||checkdragon()) {
+		mes "請先卸除您所有坐騎/老鷹/狼/手推車等等才能遊戲.";
+		close;
+	}
+	if ( class != 0 ) {
+	mes "[魷魚遊戲工作人員]";
+	mes "為了防止作弊,";
+	mes "你的職業非^0000FF初學者^000000";
+	close;
+	}
+	getinventorylist;
+	if ( @inventorylist_count > 0 ) {
+	mes "[魷魚遊戲工作人員]";
+	mes "為了防止作弊";
+	mes "你身上物品必須為0";
+	close;
+	}
+
+
+	//if(!Fish_G_invitation){
+	//	mes "[魷魚遊戲工作人員]";
+	//	mes "=^00CCCC請聯系GM領取資格證^000000=";
+	//	close;
+	//
+	//}
+	mes "[魷魚遊戲工作人員]";
+	mes "=^00CCCC魷魚遊戲基本信息^000000=";
+	next;
+	switch(select("^00CC00我要報名^000000","^FF6666取消^000000")){
+	case 1:
+		if( $@Fish_G_State==0 ){
+		mes "[魷魚遊戲工作人員]";
+		mes "=^00CCCC魷魚遊戲還未開啟^000000=";
+		close;
+	}
+	
+	else if( $@Fish_G_State==2 ){
+		mes "[魷魚遊戲工作人員]";
+		mes "=^00CCCC魷魚遊戲正在進行^000000=";
+		close;
+	}
+	else {
+		pass = 0;
+		warp "boss5",300,184;
+		//進入條件限製 
+		PG_block(1);
+		//解除所有狀態
+		sc_end SC_All;
+		//解除所有座機
+		if (ismounting()) setmounting();
+		//
+		}
+		end;
+	case 2:
+		close;
+	}
+	
+OnFish_G_State:
+switch(select("- 開放報名:- 強製結束遊戲")) {
+	case 1:
+		donpcevent "魷魚遊戲之123木頭人::OnStart";
+		mes "[開放報名]";	
+		close;	
+	case 2:
+		mes "[強製結束遊戲]";	
+		$@Fish_G_State=0;
+		mapwarp "boss5","trinity",50,120;
+		close;			
+		}
+		end;
+
+
+//公告時間
+OnClock1517:
+OnClock2117:
+	announce "【魷魚遊戲】三分鐘後開始報名，請找小遊戲區的魷魚遊戲報名，必須是初學者跟負重必須是0請注意！",bc_all,0x00FF00;
+	end;
+
+//公告時間
+OnClock1519:
+OnClock2119:
+	announce "【魷魚遊戲】一分鐘後開始報名，請找小遊戲區的魷魚遊戲報名，必須是初學者跟負重必須是0請注意！",bc_all,0x00FF00;
+	end;
+
+
+//設定自動開啟時間		
+OnClock1520:
+OnClock2120:
+		if(!$@Fish_G_State){
+			donpcevent "魷魚遊戲之123木頭人::OnStart";
+			}
+		end;
+	                                                                                       
+OnInit:
+	waitingroom "魷魚遊戲",0;
+//==============================設置區============================
+	$@FG_reg_time = 120;//報名時間秒
+	
+	$@last_turn = 20;//設定多少回合結束
+	
+	$@daytime = 5;//喊最後一下 " 木頭人" 的最大延遲時間,用於玩家可[活動/移動]的時間設定
+	
+	//獎勵順序.第一名 第二名 第三名 道具id
+	setarray $@PG_item_db,61007,61007,61007;
+	//一一對應數量
+	setarray $@PG_item_count,10,8,5;
+	
+	//第4名以後的安慰獎勵道具id與數量
+	$@PG_item_db_4 = 61007;//道具id
+	$@PG_item_count_4 = 1;//數量
+	
+//==============================設置區============================	
+	
+	//初始化
+	$@Fish_G_State = 0;//關閉	
+	bindatcmd("FG","魷魚遊戲#1::OnFish_G_State",99,99);
+	end;
+	}
+
+boss5,294,169,2	script	魷魚遊戲之123木頭人	2219,{
+end;
+OnStart:
+//初始化遊戲內環境
+	$@Fish_G_State = 1;
+	donpcevent strnpcinfo(0)+"::OnInit";
+	
+	announce "[魷魚遊戲]: 開始報名!!"+$@FG_reg_time/60+"分鐘後關閉報名通道,正式開始",0;
+	sleep $@FG_reg_time*1000;
+	if(!getmapusers("boss5")){
+		$@Fish_G_State = 0;
+		announce "[魷魚遊戲]: 無人參與遊戲結束",0;
+		end;
+	}
+	announce "[魷魚遊戲]: 報名結束!遊戲正式開始",0;
+	$@Fish_G_State = 2;
+	donpcevent "魷魚遊戲之123木頭人::OnFish_G_State";
+	end;
+OnFish_G_State:
+	$@turn = 1;
+	mapannounce "boss5","[魷魚遊戲]: 規則: 當系統開始播放語音時[可以移動]!!",0,0x00ff00,10,20;
+	sleep 3000;
+	mapannounce "boss5","[魷魚遊戲]: 規則: 當系統停止播放語音時[禁止移動].不然被爆頭淘汰出局!!",0,0x00ff00,10,20;
+	sleep 3000;
+	mapannounce "boss5","[魷魚遊戲]: 規則: 請在"+$@last_turn+"個回合內到達終點張,否則淘汰出局!!",0,0x00ff00,10,20;
+	sleep 3000;
+	mapannounce "boss5","[魷魚遊戲]: 規則: 5秒後開始播放語音!!",0,0x00ff00,10,20;
+	sleep 5000;
+	mapannounce "boss5","[魷魚遊戲]: 規則:遊戲正式開始!!",0,0x00ff00,10,20;	
+	donpcevent "#玩家移動檢查::OnEnable";
+	killmonster "boss5",strnpcinfo(0)+"::OnWall1";
+	delwall "wall1";
+	end;
+OnInit:
+	mapwarp "boss5","prontera",188,81;
+	deletearray $@win_player_cid[0],getarraysize($@win_player_cid);
+	$@win_play_count = 0;
+
+	
+	killmonster "boss5",strnpcinfo(0)+"::OnWall1";
+	killmonster "boss5",strnpcinfo(0)+"::OnWall2";
+	
+	//起點墻
+	if(!checkwall("wall1")){
+		setwall "boss5",290,164,100,0,0,"wall1";	
+
+	}
+		for(.@i=0;.@i<50;.@i++){
+			monster "boss5",290,164+.@i,"",1905,1,strnpcinfo(0)+"::OnWall1";
+			setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+		}
+	//起點南面圍墻
+	if(!checkwall("wall2")){
+		setwall "boss5",294,164,400,6,0,"wall2";
+
+	}
+			for(.@i=0;.@i<10;.@i++){
+		monster "boss5",294+.@i*5,164,"",1905,1,strnpcinfo(0)+"::OnWall2";
+		setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+		}
+	//起點北面圍墻
+	if(!checkwall("wall3")){
+	setwall "boss5",291,209,400,6,0,"wall3";
+
+		}
+			for(.@i=0;.@i<10;.@i++){
+		monster "boss5",294+.@i*5,209,"",1905,1,strnpcinfo(0)+"::OnWall2";
+		setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+	}
+	//終點南面圍墻
+	if(!checkwall("wall4")){
+		setwall "boss5",91,164,800,2,0,"wall4";
+	}
+	if(!checkwall("wall5")){
+		setwall "boss5",65,164,800,2,0,"wall5";
+
+	}
+			for(.@i=0;.@i<10;.@i++){
+		monster "boss5",91-.@i*5,164,"",1905,1,strnpcinfo(0)+"::OnWall2";
+		setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+		}
+	
+	//終點北面圍墻
+		if(!checkwall("wall6")){
+	setwall "boss5",91,209,400,2,0,"wall6";
+
+	}
+		for(.@i=0;.@i<10;.@i++){
+		monster "boss5",91-.@i*5,209,"",1905,1,strnpcinfo(0)+"::OnWall2";
+		setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+	}
+			if(!checkwall("wall7")){
+		setwall "boss5",90,165,400,0,0,"wall7";
+	}
+		for(.@i=0;.@i<10;.@i++){
+		monster "boss5",90,165+.@i*5,"",1905,1,strnpcinfo(0)+"::OnWall2";
+		setunitdata $@mobid[0],UMOB_DMGIMMUNE,1;	
+	}
+	end;
+OnWall1:
+	end;
+OnWall2:
+	end;	
+}
+
+boss5,0,0,4	script	#玩家移動檢查	-1,{
+end;
+OnEnable:
+	if(!getareausers("boss5",96,164,332,209)){
+		$@Fish_G_State = 0;
+		mapannounce "boss5","[魷魚遊戲]: 遊戲結束 !!",0,0xff6666,10,50;
+		script4each strnpcinfo(0)+"::OnReward",1,"boss5";
+		end;
+	}
+	else {
+		mapannounce "boss5","[魷魚遊戲]: 遊戲場地還剩下: "+getareausers("boss5",96,164,332,209)+" 名玩家 !!",0,0xff6666,10,50;
+	}
+	
+	if($@turn>$@last_turn){
+		$@Fish_G_State = 0;
+		mapannounce "boss5","[魷魚遊戲]: 回合結束.沒到達終點的玩家全部淘汰 !!",0,0xff6666,10,50;
+		script4each strnpcinfo(0)+"::OnFail",5,"boss5",96,164,332,209;
+		script4each strnpcinfo(0)+"::OnReward",1,"boss5";
+		end;
+	}
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnPOS4";	
+		}
+	playBGMall "200","boss5";
+	mapannounce "boss5","[魷魚遊戲第"+$@turn+"回合]: 1 !!",0,0xff6666,10,50;
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnPOS1";	
+		}
+	sleep rand(1,2)*1000;
+	mapannounce "boss5","[魷魚遊戲第"+$@turn+"回合]: 2 !!",0,0xff6666,10,50;
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnPOS2";	
+		}
+	sleep rand(1,2)*1000;	
+	mapannounce "boss5","[魷魚遊戲第"+$@turn+"回合]: 3 !!",0,0xff6666,10,50;
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnPOS3";	
+		}
+	sleep rand(1,$@daytime)*1000;
+	//記錄停止時的玩家坐標
+	mapannounce "boss5","[魷魚遊戲第"+$@turn+"回合]: 木頭人 !!~~",0,0xff6600,10,50;
+	script4each strnpcinfo(0)+"::OnStoppos",5,"boss5",96,164,332,209;
+	playBGMall "997","boss5";
+	.@k = 0;
+	.@count = rand(100,500);
+	do{
+		script4each strnpcinfo(0)+"::OnCheck",5,"boss5",96,164,332,209;
+		sleep 10;
+		.@k++;
+	}while(.@k<.@count);
+	$@turn++;
+	donpcevent "#玩家移動檢查::OnEnable";	
+	end;
+	
+OnStoppos:
+	if(hp<2)end;
+	if(pass)end;
+	getmapxy(.@map$,game_x,game_y,BL_PC);
+	end;
+OnCheck:
+	if(hp<2)end;
+	if(pass)end;
+	getmapxy(.@map$,.@game_x,.@game_y,BL_PC);
+	if(.@game_x!=game_x || .@game_y!=game_y){
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnEffect";	
+		}
+		//specialeffect2 191;
+		playBGMall "201","boss5";
+		percentheal -100,-100;
+		pass = 2;
+		specialeffect2 637;
+		mapannounce "boss5","[ 爆頭 ]",self,0xff0000,10,50;
+		sleep2 1000;
+		mapannounce "boss5","[魷魚遊戲]:玩家 [ "+strcharinfo(0)+" ] 淘汰!",self,0xff0000,10,10;
+		sleep2 1000;		
+		warp "trinity",50,120;
+		PG_block(0);
+		end;
+	}
+
+	end;
+OnFail:
+	if(pass)end;
+	for(.@i=0;.@i<43;.@i++){
+		donpcevent "槍手#"+.@i+"::OnEffect";	
+		}
+		//specialeffect2 191;
+		playBGMall "201","boss5";
+		percentheal -100,-100;
+		specialeffect2 637;
+		mapannounce "boss5","[ 爆頭 ]",self,0xff0000,10,50;
+		dispbottom "[魷魚遊戲]回合結束,你被淘汰";	
+		sleep2 1000;		
+		warp "trinity",50,120;
+		PG_block(0);
+		end;
+OnReward:
+	if(!pass){
+		warp "trinity",50,120;
+		end;
+	}
+	.@index = inarray($@win_player_cid,getcharid(0));
+	if(.@index==-1)end;
+	//前三名
+	if(.@index<3){
+		getitem $@PG_item_db[.@index],$@PG_item_count[.@index];
+		getitem 61052 ,5;
+	}
+	//第四名以後
+	else {
+		getitem $@PG_item_db_4 ,$@PG_item_count_4;
+		getitem 61052 ,3;
+		}	
+		
+		sleep2 2000;
+		warp "trinity",50,120;
+		PG_block(0);
+		end;
+
+	
+}
+
+boss5,294,176,2	script	槍手#0	20356,{
+end;
+OnPOS1:
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
+	movenpc strnpcinfo(0),.@x,.@y,4;
+	showscript "1";
+	end;
+OnPOS2:
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
+	movenpc strnpcinfo(0),.@x,.@y,6;
+	showscript "2";
+	end;
+OnPOS3:
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
+	movenpc strnpcinfo(0),.@x,.@y,8;
+	showscript "3";
+	sleep 1000;
+	showscript "木頭人!!~~";
+	end;
+OnPOS4:
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
+	movenpc strnpcinfo(0),.@x,.@y,2;
+	end;
+	
+OnEffect:
+	specialeffect 191;
+	end;
+}
+
+boss5,294,187,2	duplicate(槍手#0)	槍手#1	20356
+boss5,294,198,2	duplicate(槍手#0)	槍手#2	20356
+boss5,280,176,2	duplicate(槍手#0)	槍手#3	20356
+boss5,280,187,2	duplicate(槍手#0)	槍手#4	20356
+boss5,280,198,2	duplicate(槍手#0)	槍手#5	20356
+boss5,266,176,2	duplicate(槍手#0)	槍手#6	20356
+boss5,266,187,2	duplicate(槍手#0)	槍手#7	20356
+boss5,266,198,2	duplicate(槍手#0)	槍手#8	20356
+boss5,252,176,2	duplicate(槍手#0)	槍手#9	20356
+boss5,252,187,2	duplicate(槍手#0)	槍手#10	20356
+boss5,252,198,2	duplicate(槍手#0)	槍手#11	20356
+boss5,238,176,2	duplicate(槍手#0)	槍手#12	20356
+boss5,238,187,2	duplicate(槍手#0)	槍手#13	20356
+boss5,238,198,2	duplicate(槍手#0)	槍手#14	20356
+boss5,224,176,2	duplicate(槍手#0)	槍手#15	20356
+boss5,224,187,2	duplicate(槍手#0)	槍手#16	20356
+boss5,224,198,2	duplicate(槍手#0)	槍手#17	20356
+boss5,210,176,2	duplicate(槍手#0)	槍手#18	20356
+boss5,210,187,2	duplicate(槍手#0)	槍手#19	20356
+boss5,210,198,2	duplicate(槍手#0)	槍手#20	20356
+boss5,196,176,2	duplicate(槍手#0)	槍手#21	20356
+boss5,196,187,2	duplicate(槍手#0)	槍手#22	20356
+boss5,196,198,2	duplicate(槍手#0)	槍手#23	20356
+boss5,182,176,2	duplicate(槍手#0)	槍手#24	20356
+boss5,182,187,2	duplicate(槍手#0)	槍手#25	20356
+boss5,182,198,2	duplicate(槍手#0)	槍手#26	20356
+boss5,168,176,2	duplicate(槍手#0)	槍手#27	20356
+boss5,168,187,2	duplicate(槍手#0)	槍手#28	20356
+boss5,168,198,2	duplicate(槍手#0)	槍手#29	20356
+boss5,154,176,2	duplicate(槍手#0)	槍手#30	20356
+boss5,154,187,2	duplicate(槍手#0)	槍手#31	20356
+boss5,154,198,2	duplicate(槍手#0)	槍手#32	20356
+boss5,140,176,2	duplicate(槍手#0)	槍手#33	20356
+boss5,140,187,2	duplicate(槍手#0)	槍手#34	20356
+boss5,140,198,2	duplicate(槍手#0)	槍手#35	20356
+boss5,126,176,2	duplicate(槍手#0)	槍手#36	20356
+boss5,126,187,2	duplicate(槍手#0)	槍手#37	20356
+boss5,126,198,2	duplicate(槍手#0)	槍手#38	20356
+boss5,112,176,2	duplicate(槍手#0)	槍手#39	20356
+boss5,112,187,2	duplicate(槍手#0)	槍手#40	20356
+boss5,112,198,2	duplicate(槍手#0)	槍手#41	20356
+//終點小女孩的形象自己設定:默認 86
+boss5,88,187,2	duplicate(槍手#0)	槍手#42	86
+
+
+
+boss5,94,165,2	script	#終點0	4_bulletin_board2,1,1,{
+end;
+OnTouch:
+	if(pass)end;
+		pass = 1;
+		$@win_player_cid[$@win_play_count] = getcharid(0);
+		mapannounce "boss5","[魷魚遊戲]: 恭喜玩家[ "+strcharinfo(0)+" ]第"+($@win_play_count+1)+"名過關 !!~~",0,0xffff00,10,20;
+		$@win_play_count++;
+		warp "boss5",75,189;
+		end;
+OnInit:
+	//while(1){
+	//showscript "*****";
+	//sleep 1500;
+	//}
+	end;
+}
+
+boss5,94,167,2	duplicate(#終點0)	#終點1	4_bulletin_board2,1,1
+boss5,94,169,2	duplicate(#終點0)	#終點2	4_bulletin_board2,1,1
+boss5,94,171,2	duplicate(#終點0)	#終點3	4_bulletin_board2,1,1
+boss5,94,173,2	duplicate(#終點0)	#終點4	4_bulletin_board2,1,1
+boss5,94,175,2	duplicate(#終點0)	#終點5	4_bulletin_board2,1,1
+boss5,94,177,2	duplicate(#終點0)	#終點6	4_bulletin_board2,1,1
+boss5,94,179,2	duplicate(#終點0)	#終點7	4_bulletin_board2,1,1
+boss5,94,181,2	duplicate(#終點0)	#終點8	4_bulletin_board2,1,1
+boss5,94,183,2	duplicate(#終點0)	#終點9	4_bulletin_board2,1,1
+boss5,94,185,2	duplicate(#終點0)	#終點10	4_bulletin_board2,1,1
+boss5,94,187,2	duplicate(#終點0)	#終點11	4_bulletin_board2,1,1
+boss5,94,189,2	duplicate(#終點0)	#終點12	4_bulletin_board2,1,1
+boss5,94,191,2	duplicate(#終點0)	#終點13	4_bulletin_board2,1,1
+boss5,94,193,2	duplicate(#終點0)	#終點14	4_bulletin_board2,1,1
+boss5,94,195,2	duplicate(#終點0)	#終點15	4_bulletin_board2,1,1
+boss5,94,197,2	duplicate(#終點0)	#終點16	4_bulletin_board2,1,1
+boss5,94,199,2	duplicate(#終點0)	#終點17	4_bulletin_board2,1,1
+boss5,94,201,2	duplicate(#終點0)	#終點18	4_bulletin_board2,1,1
+boss5,94,203,2	duplicate(#終點0)	#終點19	4_bulletin_board2,1,1
+boss5,94,205,2	duplicate(#終點0)	#終點20	4_bulletin_board2,1,1
+boss5,94,207,2	duplicate(#終點0)	#終點21	4_bulletin_board2,1,1
+boss5,94,209,2	duplicate(#終點0)	#終點22	4_bulletin_board2,1,1
+

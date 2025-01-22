@@ -1,0 +1,683 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Skill Database
+###########################################################################
+#
+# Skill Settings
+#
+###########################################################################
+# - Id                        Unique skill ID.
+#   Name                      Skill Aegis name.
+#   Description               Skill description.
+#   MaxLevel                  Max skill level.
+#   Type                      Skill type. (Default: None)
+#   TargetType                Skill target type. (Default: Passive)
+#   DamageFlags:              Skill damage properties.
+#   Flags:                    Skill information flags.
+#   Range:                    Skill range. (Default: 0)
+#     - Level                 Skill level.
+#       Size                  Range at specific skill level.
+#   Hit                       Skill hit type. (Default: Normal)
+#   HitCount:                 Skill hit count. (Default: 0)
+#     - Level                 Skill level.
+#       Count                 Number of hits at specific skill level.
+#   Element:                  Skill element. (Default: Neutral)
+#     - Level                 Skill level.
+#       Element               Element at specific skill level.
+#   SplashArea:               Skill splash area of effect. (Default: 0)
+#     - Level                 Skill level.
+#       Area                  Splash area at specific skill level.
+#   ActiveInstance:           Maximum amount of active skill instances that can be on the ground. (Default: 0)
+#     - Level                 Skill level.
+#       Max                   Active instances at specific skill level.
+#   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
+#   CopyFlags:                Determines if the skill is copyable. (Optional)
+#     Skill:                  Type of skill that can copy.
+#     RemoveRequirement:      Remove a requirement type. (Optional)
+#   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
+#     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
+#     Type:                   Type of NPC.
+#   CastCancel                Cancel cast when hit. (Default: false)
+#   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
+#   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Cast time at specific skill level in milliseconds.
+#   AfterCastActDelay:        Time the character cannot use skills in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast action delay at specific skill level in milliseconds.
+#   AfterCastWalkDelay:       Time before the character can move again in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast walk delay at specific skill level in milliseconds.
+#   Duration1:                Duration of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Skill duration at specific skill level in milliseconds.
+#   Duration2:                Duration of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Skill duration at specific skill level in milliseconds.
+#   Cooldown:                 Time before the character can use the same skill again in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Cooldown at specific skill level in milliseconds.
+#   FixedCastTime:            Time that is fixed during cast of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast action delay at specific skill level in milliseconds.
+#   CastTimeFlags:            Effects of the skill's cast time. (Optional)
+#   CastDelayFlags:           Effects of the skill's delay. (Optional)
+#   Requires:                 List of requirements to cast the skill. (Optional)
+#     HpCost:                 HP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              HP required at specific skill level.
+#     SpCost:                 SP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
+#     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              HP rate required at specific skill level.
+#     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
+#     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Maximum HP trigger required at specific skill level.
+#     ZenyCost:               Zeny required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Zeny required at specific skill level.
+#     Weapon:                 Weapon required to cast. (Default: All)
+#     Ammo:                   Ammo required to cast. (Default: None)
+#     AmmoAmount:             Ammo amount required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Ammo amount required at specific skill level.
+#     State                   Special state required to cast. (Default: None)
+#     Status:                 Status change required to cast. (Default: nullptr)
+#     SpiritSphereCost:       Spirit sphere required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Spirit sphere required at specific skill level.
+#     ItemCost:               Item required to cast. (Default: 0)
+#       - Item                Item name.
+#         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
+#     Equipment:              Equipped item required to cast. (Default: nullptr)
+#   Unit:                     Skill unit values. (Optional)
+#     Id                      Skill unit ID.
+#     AlternateId:            Alternate skill unit ID. (Default: 0)
+#     Layout:                 Skill unit layout. (Default: 0)
+#       - Level               Skill level.
+#         Size                Unit layout at specific skill level.
+#     Range:                  Skill unit range. (Default: 0)
+#       - Level               Skill level.
+#         Size                Unit range at specific skill level.
+#     Interval                Skill unit interval in milliseconds. (Default: 0)
+#     Target                  Skill unit target type. (Default: All)
+#     Flag:                   Skill unit flags. (Default: None)
+#   Status                    Status Change that is associated to the skill. (Optional)
+###########################################################################
+
+Header:
+  Type: SKILL_DB
+  Version: 3
+
+Body:
+
+
+#守護神盾
+  - Id: 5256
+    Name: IG_GUARDIAN_SHIELD
+    Description: 守護神盾
+    GiveAp: 35
+
+#元素支配者 冷卻調整
+  - Id: 5375
+    Name: EM_SUMMON_ELEMENTAL_ARDOR
+    Description: 召喚元素:阿爾多雷
+    Cooldown: 60000
+  - Id: 5376
+    Name: EM_SUMMON_ELEMENTAL_DILUVIO
+    Description: 召喚元素:迪盧比奧
+    Cooldown: 60000
+  - Id: 5377
+    Name: EM_SUMMON_ELEMENTAL_PROCELLA
+    Description: 召喚元素:普羅賽拉
+    Cooldown: 60000
+  - Id: 5378
+    Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+    Description: 召喚元素:泰雷莫圖斯
+    Cooldown: 60000
+  - Id: 5379
+    Name: EM_SUMMON_ELEMENTAL_SERPENS
+    Description: 召喚元素:塞爾彭斯
+    Cooldown: 60000
+
+#
+  - Id: 5437
+    Name: SH_HOGOGONG_STRIKE
+    Description: 虎嚎哭亂打
+    Cooldown: 350
+
+#聖裁 冷卻調整
+  - Id: 5254
+    Name: IQ_THIRD_EXOR_FLAME
+    Description: 最終章:驅魔火焰
+    Duration1: 300000
+    Cooldown:
+      - Level: 1
+        Time: 180000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 120000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 60000
+
+
+#夜衛隊 變動詠唱調整
+  - Id: 5405
+    Name: NW_THE_VIGILANTE_AT_NIGHT
+    Description: 黑夜私兵
+    CastTime: 0
+  - Id: 5407
+    Name: NW_SPIRAL_SHOOTING
+    Description: 螺旋射擊
+    CastTime: 0
+  - Id: 5408
+    Name: NW_MAGAZINE_FOR_ONE
+    Description: 耗盡彈匣
+    CastTime: 0
+    Cooldown: 500
+  - Id: 5409
+    Name: NW_WILD_FIRE
+    Description: 狂烈野火
+    CastTime: 0
+  - Id: 5410
+    Name: NW_BASIC_GRENADE
+    Description: 投擲榴彈
+    CastTime: 0
+  - Id: 5411
+    Name: NW_HASTY_FIRE_IN_THE_HOLE
+    Description: 極速爆炸
+    CastTime: 0
+  - Id: 5412
+    Name: NW_GRENADES_DROPPING
+    Description: 榴彈傾落
+    CastTime: 0
+  - Id: 5413
+    Name: NW_AUTO_FIRING_LAUNCHER
+    Description: 榴彈發射器
+    CastTime: 0
+  - Id: 5415
+    Name: NW_MISSION_BOMBARD
+    Description: 轟炸行動
+    CastTime: 0
+
+
+  - Id: 5244
+    Name: IQ_EXPOSION_BLASTER
+    Description: 爆破衝擊
+    GiveAp: 4
+  - Id: 5243
+    Name: IQ_MASSIVE_F_BLASTER
+    Description: 焰魔散彈
+    Requires:
+      ApCost: 150
+
+  - Id: 5437
+    Name: SH_HOGOGONG_STRIKE
+    Description: 虎嚎哭亂打
+    CastTime: 0
+  - Id: 5436
+    Name: SH_HOWLING_OF_CHUL_HO
+    Description: 鐵虎怒咆哮
+    CastTime: 0
+
+  - Id: 381
+    Name: SN_FALCONASSAULT
+    Description: 獵鷹突擊
+    MaxLevel: 5
+    AfterCastActDelay: 500
+
+#次元之書
+  - Id: 2586
+    Name: SJ_BOOKOFDIMENSION
+    Description: 次元之書
+    MaxLevel: 5
+    Duration1: 5000
+    Duration2: 30000
+#易燃
+  - Id: 405
+    Type: Weapon
+
+#風鷹騎狼陷阱
+  - Id: 5331
+    Description: 深盲陷阱
+    Flags:
+      AllowOnWarg: true
+  - Id: 5332
+    Description: 磐石陷阱
+    Flags:
+      AllowOnWarg: true
+  - Id: 5333
+    Description: 急速陷阱
+    Flags:
+      AllowOnWarg: true
+  - Id: 5335
+    Description: 火焰陷阱
+    Flags:
+      AllowOnWarg: true
+
+  - Id: 2492
+    Name: GN_MANDRAGORA
+    Description: 曼陀羅魔花的尖叫
+    MaxLevel: 5
+    Cooldown: 10000
+
+  - Id: 2449
+    Unit:
+      Id: Psychic_Wave
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 3
+        - Level: 3
+          Size: 4
+        - Level: 4
+          Size: 4
+        - Level: 5
+          Size: 5
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+        PathCheck: true
+  - Id: 5431
+    Name: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+    Description: 四方五行陣
+    MaxLevel: 5
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 90
+        - Level: 2
+          Amount: 105
+        - Level: 3
+          Amount: 120
+        - Level: 4
+          Amount: 135
+        - Level: 5
+          Amount: 150
+      Status:
+        TALISMAN_OF_BLACK_TORTOISE: false
+
+  - Id: 5265
+    Name: IG_SHIELD_SHOOTING
+    Description: 盾牌投擲
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 700
+#天龍氣息
+  - Id: 6001
+    Name: DK_DRAGONIC_BREATH
+    Description: 天龍氣息
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+      IgnoreDefenseEx: false
+      IgnoreAtkCard: false
+    Element: Weapon
+  - Id: 5244
+    Name: IQ_EXPOSION_BLASTER
+    Description: 爆破衝擊
+    MaxLevel: 5
+    Cooldown: 700
+
+#可地面重疊
+  - Id: 5321
+    Name: ABC_ABYSS_SQUARE
+    Description: 深淵墳場
+    MaxLevel: 5
+    Unit:
+      Id: Abyss_Square
+      Range: 3
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+  - Id: 5372
+    Name: EM_CONFLAGRATION
+    Description: 灼熱岩漿
+    MaxLevel: 5
+    Type: Magic
+    Unit:
+      Id: Conflagration
+      Range: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+  - Id: 5370
+    Name: EM_LIGHTNING_LAND
+    Description: 雷霆陣地
+    MaxLevel: 5
+    Unit:
+      Id: Lightning_Land
+      Range: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+  - Id: 5371
+    Name: EM_VENOM_SWAMP
+    Description: 毒液沼澤
+    MaxLevel: 5
+    Unit:
+      Id: Venom_Swamp
+      Range: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+
+  - Id: 5267
+    Name: IG_CROSS_RAIN
+    Description: 聖十字雨
+    MaxLevel: 10
+    DamageFlags:
+      IgnoreUnitDamageMotion: true
+    Unit:
+      Id: Cross_Rain
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 1
+        - Level: 3
+          Size: 1
+        - Level: 4
+          Size: 2
+        - Level: 5
+          Size: 2
+        - Level: 6
+          Size: 2
+        - Level: 7
+          Size: 3
+        - Level: 8
+          Size: 3
+        - Level: 9
+          Size: 3
+        - Level: 10
+          Size: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: false
+
+#莎拉相關
+  - Id: 397
+    Name: LK_SPIRALPIERCE
+    Description: 螺旋擊刺
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 62
+    Name: KN_BOWLINGBASH
+    Description: 怪物互擊
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5205
+    Name: DK_SERVANT_W_DEMOL
+    Description: 死侍武器-破滅
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5204
+    Name: DK_SERVANT_W_PHANTOM
+    Description: 死侍武器-瞬幻
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5292
+    Name: SHC_IMPACT_CRATER
+    Description: 神力撞擊
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 2236
+    Name: RA_AIMEDBOLT
+    Description: 瞄準標靶
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5213
+    Name: DK_STORMSLASH
+    Description: 風暴斬擊
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5266
+    Name: IG_OVERSLASH
+    Description: 瞬間斬擊
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5220
+    Name: AG_SOUL_VC_STRIKE
+    Description: 靈魂連擊
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5225
+    Name: AG_CRYSTAL_IMPACT
+    Description: 水晶波爆
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 400
+    Name: HW_NAPALMVULCAN
+    Description: 念力連擊
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 484
+    Name: HW_GRAVITATION
+    Description: 重力原野
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 2203
+    Name: WL_FROSTMISTY
+    Description: 寒冰濃霧
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5355
+    Name: TR_RHYTHMSHOOTING
+    Description: 節奏射擊
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 2518
+    Name: SR_RIDEINLIGHTNING
+    Description: 雷光彈
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5287
+    Name: SHC_SAVAGE_IMPACT
+    Description: 野蠻衝擊
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5322
+    Name: ABC_FRENZY_SHOT
+    Description: 狂暴射擊
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5317
+    Name: ABC_FROM_THE_ABYSS
+    Description: 萬丈深淵
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5474
+    Name: SKE_ALL_IN_THE_SKY
+    Description: 天羅萬象
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5340
+    Name: BO_ACIDIFIED_ZONE_WATER
+    Description: 強酸禁地(水)
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5341
+    Name: BO_ACIDIFIED_ZONE_GROUND
+    Description: 強酸禁地(地)
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5342
+    Name: BO_ACIDIFIED_ZONE_WIND
+    Description: 強酸禁地(風)
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5343
+    Name: BO_ACIDIFIED_ZONE_FIRE
+    Description: 強酸禁地(火)
+    MaxLevel: 5
+    DamageFlags:
+      BreakdownAbsorb: true
+  - Id: 5320
+    Name: ABC_DEFT_STAB
+    Description: 靈巧刺擊
+    MaxLevel: 10
+    DamageFlags:
+      BreakdownAbsorb: true
+
+#無視防禦
+  - Id: 153
+    Name: MC_CARTREVOLUTION
+    Description: 手推車攻擊
+    MaxLevel: 1
+    DamageFlags:
+      IgnoreDefense: true
+
+  - Id: 2310
+    Name: LG_SHIELDPRESS
+    Description: 重壓盾擊
+    MaxLevel: 10
+    HitCount: -5
+  - Id: 2213
+    Name: WL_COMET
+    Description: 毀滅慧星
+    MaxLevel: 5
+    Knockback: 0
+
+  - Id: 675
+    Name: NPC_STONESKIN
+    Description: 鋼筋鐵骨
+    MaxLevel: 5
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 30000
+      - Level: 4
+        Time: 30000
+      - Level: 5
+        Time: 30000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 60000
+      - Level: 8
+        Time: 60000
+      - Level: 9
+        Time: 60000
+      - Level: 10
+        Time: 60000
+
+  - Id: 676
+    Name: NPC_ANTIMAGIC
+    Description: 反魔法
+    MaxLevel: 5
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 30000
+      - Level: 4
+        Time: 30000
+      - Level: 5
+        Time: 30000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 60000
+      - Level: 8
+        Time: 60000
+      - Level: 9
+        Time: 60000
+      - Level: 10
+        Time: 60000
+
+
+
+
+
+
+
+
+
+
+
+
+

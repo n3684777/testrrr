@@ -1,0 +1,29 @@
+//-------------------------- 一期城戰
+prontera,1,1,4	script	GVG_Icon01	-1,{
+OnAgitStart:
+	nochangeemblem 1;
+	end;
+}
+
+prontera,1,1,4	script	GVG_Icon02	-1,{
+
+OnAgitEnd:
+	nochangeemblem 0;
+	end;
+}
+
+
+//-------------------------- 二期城戰
+prontera,1,1,4	script	GVG_Icon03	-1,{
+OnAgitStart2:
+	nochangeemblem 1;
+	end;
+}
+
+prontera,1,1,4	script	GVG_Icon04	-1,{
+OnAgitEnd2:
+	nochangeemblem 0;
+	end;
+}
+
+

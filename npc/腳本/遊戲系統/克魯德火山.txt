@@ -1,0 +1,188 @@
+﻿trinity,95,89,4	script	克魯德火山島管理者#Pop	899,{
+
+	.@playtime = checkquest(16341,PLAYTIME);
+	if(.@playtime == 2) erasequest 16341;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[克魯德火山島管理者]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[克魯德火山島管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "克魯德火山島";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+	set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	//else
+	//set @menu$, ":進入"+.@md_name$;
+
+	mes "[克魯德火山島管理者]";
+	mes "你今天就當拯救世界的英雄吧!只是在另一個次元我無法給你獎勵，這樣還願意貢獻嗎?";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 150) {
+			mes "[克魯德火山島管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.150 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[克魯德火山島管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		set .@char_name$,strcharinfo(0);
+
+		//mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+"的隊長"+.@char_name$+"準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[克魯德火山島管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(!instance_id(IM_PARTY)){
+		mes "還未生成副本";
+		cutin "",255;
+		close;
+		}
+		if(BaseLevel < 150) {
+			mes "[克魯德火山島管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.150 後再來吧…"; 
+			close;
+		}
+		if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+		mes "副本已經開始了，無法再次進入。";
+		close;
+		}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			setquest 16341;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",95,97;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "克魯德火山",0;
+	end;
+}
+
+
+//------------------------------克魯德火山事件
+1@crd,0,0,0	script	克魯德火山事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@crd");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("克魯德火山島管理者#Pop0");
+
+	//副本標籤
+	set 'CD_Pop_Mob_01,0;
+	set 'CD_Pop_Mob_02,0;
+	monster 'map_name$[0],0,0,"--ja--",3822,30;
+	monster 'map_name$[0],0,0,"--ja--",3823,30;
+	monster 'map_name$[0],0,0,"--ja--",3824,30;
+	monster 'map_name$[0],0,0,"--ja--",3822,30;
+	monster 'map_name$[0],0,0,"--ja--",3823,30;
+	monster 'map_name$[0],0,0,"--ja--",3824,30;
+	areamonster 'map_name$[0],173,227,173,227,"--ja--",3825,1,instance_npcname("克魯德火山事件1")+"::OnEnd01";
+	end;
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	announce "【克魯德火山】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("克魯德火山島管理者#Pop0");
+	instance_announce 0, "克魯德火山島管理者：結束了來找我吧(174,229)，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@crd,237,256,0	warp	傳送門#crd01	2,2,1@crd,237,225
+1@crd,159,177,0	warp	傳送門#crd02	2,2,1@crd,160,188
+
+//------------------------------
+1@crd,224,126,3	script	神奇藥草#crd01	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,164,167,3	script	神奇藥草#crd02	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,227,185,3	script	神奇藥草#crd03	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,271,188,3	script	神奇藥草#crd04	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,120,231,3	script	神奇藥草#crd05	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,135,280,3	script	神奇藥草#crd06	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,189,294,3	script	神奇藥草#crd07	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,155,219,3	script	神奇藥草#crd08	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,138,265,3	script	神奇藥草#crd09	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+1@crd,230,236,3	script	神奇藥草#crd10	976 ,{ misceffect 10; disablenpc instance_npcname(strnpcinfo(0)); getitem 6754,1; end;}
+
+//------------------------------ 領獎
+1@crd,174,229,4	script	克魯德火山島管理者#Pop0	654,{
+
+	mes "[克魯德火山島管理者]";
+	mes "讓我把你們送出克魯德火山吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+
+	case 1:
+	getitem 100790,1;	//爆米花嘉年華獎勵箱
+	warp "trinity",95,97;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------地圖屬性
+1@crd	mapflag	partylock
+1@crd	mapflag	noteleport
+1@crd	mapflag	nosave	SavePoint
+1@crd	mapflag	nomemo
+1@crd	mapflag	nobranch
+1@crd	mapflag	noicewall
+1@crd	mapflag	restricted	6
+

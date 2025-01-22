@@ -1,0 +1,162 @@
+﻿//腳本名稱： [ 隨機物品幸運活動 ] v2.0 (2011-07-30)
+//製作環境： 3Ceam[r518]-[SQL] EA14648-[SQL]
+//腳本作者： Jackey650630
+//腳本說明： [1].活動時間為 每 六.日  30分鐘一次.
+//           [2].發放隨機物品給一位在線的幸運玩家.
+//           [3].限 [ SQL ] 專用,[ TxT ] 請勿使用.
+//           [4].GMLv>90在線設置/活動開啟/物品設置/人數限制
+//		 得獎人數/負重設置/負重以郵寄方式取得獎品
+//=============================================================
+-	script	luck_bo	-1,{
+
+//function	script	luck_bo	{
+
+OnClock0100:
+OnClock0200:
+OnClock0400:
+OnClock0500:
+OnClock0600:
+OnClock0700:
+OnClock0800:
+OnClock0900:
+OnClock1000:
+OnClock1153:
+OnClock1200:
+OnClock1300:
+OnClock1400:
+OnClock1500:
+OnClock1600:
+OnClock1700:
+OnClock1800:
+OnClock1900:
+OnClock2000:
+OnClock2100:
+OnClock2200:
+OnClock2300:
+OnClock2400:
+
+	if ( !$Rs || !$Rsoc || !$RUser )end;
+	if (getusers(1) > $Rsnm) {
+	while ( .@i < $RUser ){
+	//if (checkvending()) break;
+
+	query_sql "select count(*) from `char` where `online`= 1",.@count; 
+	query_sql "select `account_id` from `char` where `online`= 1  limit "+rand(.@count)+",1",.@aid;
+	attachrid(getcharid(3,rid2name(.@aid)));
+	announce "【隨機物品幸運活動】： 恭喜在線玩家 [ "+rid2name(.@aid)+" ] 得到 [ "+getitemname(getd("$RSitem"+set(.@j,rand(1,$Rs))+""))+" ] x [ "+getd("$RSnum"+.@j+"")+" ]",15,0xFF7744;
+	if((Weight*100)/MaxWeight >= $RUwei){
+	query_sql("select char_id from `char` where account_id= '"+.@aid+"'",.@cidtemp);
+	query_sql "insert into mail ( send_name, dest_id, title, message, nameid , amount , time ) values ( '隨機物品幸運活動',"+.@cidtemp+",'您在活動中','獲得',"+getd("$RSitem"+.@j+"")+","+getd("$RSnum"+.@j+"")+",unix_timestamp( now() ) )";
+	dispbottom "因負重量高於 "+$RUwei+"%，以郵寄方式來取得獎品";
+}else{
+	getitem getd("$RSitem"+.@j+""),getd("$RSnum"+.@j+""),.@aid;	}
+	set .@i,.@i+1;	}
+	}
+	end;
+
+OnWhisperGlobal:
+//============================================
+//=============== [ 系統設置 ] ===============
+//============================================
+	if( @whispervar0$ == "設置" && getgmlevel() > 90 ){
+		dispbottom "======== [ [ [ 在 線 設 置  ] ] ] ========";
+		dispbottom "系統設置："+($Rsoc==0?"[ 尚未開啟系統 ]":"[ 系統已開啟 ]")+"";
+		dispbottom "人數設置："+($Rsnm==0?"[ 尚未設置人數 ]":"[ 大於 "+$Rsnm+" 人開啟活動 ]")+"";
+		dispbottom "得獎人數："+($RUser==0?"[ 尚未設置人數 ]":"[ "+$RUser+" 人得獎 ]")+"";
+		dispbottom "最大負重："+($RUwei==0?"[ 尚未設置負重 ]":"[ 超過 "+$RUwei+"% 以郵寄方式 ]")+"";
+		if(!$Rs)announce "注意！！[ 物 品 尚 未 設 置 將 不 會 啟 動 ]",bc_self,0xFF7744;
+		dispbottom "==========================================";
+		announce "系統設置，請輸入 0 或 1：( 0 = 關 / 1 = 開 )",bc_self,0xFF0000;
+		if(input(.@Inuma,0,1)){	dispbottom "輸入錯誤！";	close;	}
+			set $Rsoc,.@Inuma;
+			dispbottom "系統設置："+($Rsoc==0?"[ 尚未開啟系統 ]":"[ 系統已開啟 ]")+"";
+		announce "人數設置，請輸入 1 ~ 9999",bc_self,0xFF0000;
+		if(input(.@Inumb,1,9999)){	set $Rsoc,0;	dispbottom "輸入錯誤！";	close;	}
+			set $Rsnm,.@Inumb;
+			dispbottom "人數設置：[ 大於 "+$Rsnm+" 人開啟活動 ]";
+		announce "得獎人數，請輸入 1 ~ 9999",bc_self,0xFF0000;
+		if(input(.@Inumc,1,9999)){	set $Rsoc,0;	set $Rsnm,0;	dispbottom "輸入錯誤！";	close;	}
+			set $RUser,.@Inumc;
+			dispbottom "得獎人數：[ "+$RUser+" 人得獎 ]";
+		announce "最大負重，請輸入 1 ~ 100",bc_self,0xFF0000;
+		if(input(.@Inumd,1,100)){	set $Rsoc,0;	set $Rsnm,0;	set $RUser,0;	dispbottom "輸入錯誤！";	close;	}
+			set $RUwei,.@Inumd;
+			dispbottom "最大負重：[ 超過 "+$RUwei+"% 以郵寄方式 ]";
+		end;	}
+//============================================
+//=============== [ 物品增加 ] ===============
+//============================================
+	if( @whispervar0$ == "增加" && getgmlevel() > 90 ){
+		dispbottom "==[ 編號 ]=== [ 物 品 ] ===== [ 數 量 ]====";
+		while ( .@i < $Rs ){	set .@i,.@i+1;
+		dispbottom "   [ "+.@i+" ]  [ "+getitemname(getd("$RSitem"+.@i+""))+" ] x [ "+getd("$RSnum"+.@i+"")+" ]";	}
+		if(!$Rs)announce "========= [ [ [ 尚 未 設 置 ] ] ] =========",bc_self,0xFF7744;
+		dispbottom "===========================================";
+		announce "請輸入物品編號：",bc_self,0xFF0000;
+		if(input(.@Inum,501,80000)){	dispbottom "輸入錯誤 ( 501 ~ 80000 )！";	close;	}
+		if( getitemname(.@Inum) == "" ){	dispbottom "並無此物品！";	close;	}
+		setd "$RSitem"+set($Rs,$Rs+1)+"",.@Inum;
+		dispbottom "物品：[ "+getitemname(.@Inum)+" ]";
+		announce "請輸入物品數量：",bc_self,0x0000FF;
+		if(input(.@num,1,999)){	dispbottom "輸入錯誤 ( 1 ~ 999 )！";	setd "$RSitem"+$Rs+"",0;	set $Rs,$Rs-1;	close;	}
+		setd "$RSnum"+$Rs+"",.@num;
+		dispbottom "物品：[ "+getitemname(.@Inum)+" ] x [ "+.@num+" ]";
+		end;	}
+//============================================
+//=============== [ 物品修改 ] ===============
+//============================================
+	if( @whispervar0$ == "修改" && getgmlevel() > 90 ){
+		dispbottom "==[ 編號 ]=== [ 物 品 ] ===== [ 數 量 ]====";
+		while ( .@i < $Rs ){	set .@i,.@i+1;
+		dispbottom "   [ "+.@i+" ]  [ "+getitemname(getd("$RSitem"+.@i+""))+" ] x [ "+getd("$RSnum"+.@i+"")+" ]";	}
+		dispbottom "===========================================";
+		dispbottom "請輸入修改編號：";
+		if(input(.@Inum,1,$Rs)){	dispbottom "輸入錯誤 ( 1 ~ "+$Rs+" )！";	close;	}
+		set .@reitem,getd("$RSitem"+.@Inum+"");
+		announce "請輸入物品編號：",bc_self,0xFF0000;
+		if(input(.@Inumm,501,80000)){	dispbottom "輸入錯誤 ( 501 ~ 80000 )！";	close;	}
+		if( getitemname(.@Inumm) == "" ){	dispbottom "並無此物品！";	close;	}
+		setd "$RSitem"+.@Inum+"",.@Inumm;
+		dispbottom "物品：[ "+getitemname(.@Inumm)+" ]";
+		announce "請輸入物品數量：",bc_self,0x0000FF;
+		if(input(.@num,1,999)){	dispbottom "輸入錯誤 ( 1 ~ 999 )！";	setd "$RSitem"+.@Inum+"",.@reitem;	close;	}
+		setd "$RSnum"+.@Inum+"",.@num;
+		dispbottom "物品：[ "+getitemname(.@Inumm)+" ] x [ "+.@num+" ]";
+		end;	}
+//============================================
+//=============== [ 查看設置 ] ===============
+//============================================
+	if( @whispervar0$ == "查看" && getgmlevel() > 90 ){
+		dispbottom "========= [ [ [ 在 線 設 置  ] ] ] ========";
+		dispbottom "系統設置："+($Rsoc==0?"[ 尚未開啟系統 ]":"[ 系統已開啟 ]")+"";
+		dispbottom "人數設置："+($Rsnm==0?"[ 尚未設置人數 ]":"[ 大於 "+$Rsnm+" 人開啟活動 ]")+"";
+		dispbottom "得獎人數："+($RUser==0?"[ 尚未設置人數 ]":"[ "+$RUser+" 人得獎 ]")+"";
+		dispbottom "最大負重："+($RUwei==0?"[ 尚未設置負重 ]":"[ 超過 "+$RUwei+"% 以郵寄方式 ]")+"";
+		if(!$Rs)announce "注意！！[ 物 品 尚 未 設 置 將 不 會 啟 動 ]",bc_self,0xFF0000;
+		dispbottom "===========================================";
+		dispbottom "==[ 編號 ]=== [ 物 品 ] ===== [ 數 量 ]====";
+		while ( .@i < $Rs ){	set .@i,.@i+1;
+		dispbottom "   [ "+.@i+" ]  [ "+getitemname(getd("$RSitem"+.@i+""))+" ] x [ "+getd("$RSnum"+.@i+"")+" ]";	}
+		if(!$Rs)announce "========= [ [ [ 尚 未 設 置 ] ] ] =========",bc_self,0xFF7744;
+		dispbottom "===========================================";
+		end;
+		}
+//============================================
+//=============== [ 清除設置 ] ===============
+//============================================
+	if( @whispervar0$ == "清除" && getgmlevel() > 90 ){
+		while ( .@i < $Rs ){
+		setd "$RSitem"+.@i+"",0;
+		setd "$RSnum"+.@i+"",0;
+		set .@i,.@i+1;	}
+		set $Rs,0;
+		set $Rsoc,0;
+		set $Rsnm,0;
+		set $RUser,0;
+		set $RUwei,0;
+		announce "清除完成！",bc_self,0xFF0000;
+		end;
+		}
+//============================================
+	end;
+}

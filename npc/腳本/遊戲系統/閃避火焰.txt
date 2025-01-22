@@ -1,0 +1,398 @@
+//==========================
+// 地圖屬性
+//==========================
+boss4	mapflag	nomemo	dummy
+boss4	mapflag	noteleport	dummy
+boss4	mapflag	nosave	SavePoint
+boss4	mapflag	nopenalty	dummy
+boss4	mapflag	nobranch	dummy
+boss4	mapflag	restricted	6
+boss4	mapflag	noskill	dummy
+boss4	mapflag	noloot
+
+//==========================
+// 活動公告
+//==========================
+prontera,0,0,0	script	Fire_event	-1,{
+
+OnClock1417:
+OnClock2057:
+OnClock0237:
+	set $@Fire_Game,1;
+	announce "【閃避火焰】3分鐘後開始請找遊戲區域的閃避火焰管理員報名，只能開初學者參加",15;
+	end;
+
+OnClock1419:
+OnClock2059:
+OnClock0239:
+	announce "【閃避火焰】1分鐘後開始請找遊戲區域的閃避火焰管理員報名，只能開初學者參加",15;
+	end;
+
+OnClock1420:
+OnClock2100:
+OnClock0240:
+	set $@Fire_Game,2;
+	donpcevent "閃避火焰管理員::OnStart";
+}
+
+
+//==========================
+// 報名 +傳送NPC
+//==========================
+trinity,62,124,4	script	閃避火焰管理員	10053,{
+
+	if ( class != 0 ) {
+	mes "[閃避火焰管理員]";
+	mes "為了防止作弊,";
+	mes "你的職業非^0000FF初學者^000000";
+	close;
+	}
+
+	mes "[閃避火焰管理員]";
+	if($@Fire_Game==0){ mes "- 活動狀態 :^00CCCC準備中^000000"; }
+	if($@Fire_Game==1){ mes "- 活動狀態 :^00CC00入場中^000000"; }
+	if($@Fire_Game==3){ mes "- 活動狀態 :^00CCCC進行中^000000"; }
+	mes "- 地圖人數 : "+getmapusers("boss4")+"^000000";
+	mes "- 目前時間 : "+ gettimestr("%H:%M:%S",20)+"^000000";
+	mes "- 開放時間 : 19:30、22:30";
+	mes "- 參加獎勵 : ^i[61052]x1個";
+	mes "- 過關獎勵 : ^i[61052]x5個";
+	next;
+	switch(select("^00CC00我要報名^000000","^FF6666取消^000000")){
+	case 1:
+	if( $@Fire_Game==0){
+		mes "[閃避火焰管理]";
+		mes "^00CCCC閃避火焰遊戲還未開啟^000000";
+		close;
+		}
+	
+	if( $@Fire_Game==2 ){
+		mes "[閃避火焰管理]";
+		mes "^00CCCC遊戲正在進行中^000000";
+		close;
+		}
+
+		sc_end SC_All;	//消除狀態
+		warp "boss4",51,30;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+
+		end;
+
+	case 2:
+		close;
+	} 
+
+
+OnStart:
+	set $@test, 1;
+	Initnpctimer "ci";
+	Initnpctimer;
+	announce "【閃避火焰】現在遊戲開始！",15;
+	end;
+
+OnTimer60000:
+	mapannounce "boss4","【閃避火焰】倒數最後 60秒 請在堅持一會",bc_map;
+	end;
+
+OnTimer110000:
+	mapannounce "boss4","【閃避火焰】倒數最後 10秒 請在堅持一會",bc_map;
+	end;
+
+OnTimer120000:
+	set $@test, 0;
+	end;
+
+OnInit:
+	waitingroom "閃避火焰",0;
+	end;
+}
+
+
+//==========================
+// 遊戲核心
+//==========================
+-	script	ci	-1,{
+function	enablenpc2	{
+	enablenpc getarg(0);
+	donpcevent getarg(0)+"::OnDo";
+	return;
+}
+OnInit:
+	disablenpc "fire";
+	for(set .@i, 1; .@i<26 ; set .@i, .@i+1)
+		disablenpc "fire#"+.@i;
+	end;
+
+OnTimer10:
+	enablenpc "fire#"+(.@i = rand(1,25));
+	donpcevent "fire#"+.@i+"::OnCi";
+	sleep(2000);
+	set .g,.g+1;
+	//disablenpc "fire#"+.@i;
+	mapannounce "boss4","【閃避火焰】第 "+.g+" 回合",bc_map;
+	debugmes " "+.g+" ";
+	switch(.@i){
+		case 1:
+			enablenpc2 "fire#2";
+			enablenpc2 "fire#6";
+			break;
+		case 2:
+			enablenpc2 "fire#1";
+			enablenpc2 "fire#3";
+			enablenpc2 "fire#7";
+			break;
+		case 3:
+			enablenpc2 "fire#2";
+			enablenpc2 "fire#4";
+			enablenpc2 "fire#8";
+			break;
+		case 4:
+			enablenpc2 "fire#3";
+			enablenpc2 "fire#5";
+			enablenpc2 "fire#9";
+			break;
+		case 5:
+			enablenpc2 "fire#4";
+			enablenpc2 "fire#10";
+			break;
+		case 6:
+			enablenpc2 "fire#1";
+			enablenpc2 "fire#7";
+			enablenpc2 "fire#11";
+			break;
+		case 7:
+			enablenpc2 "fire#2";
+			enablenpc2 "fire#6";
+			enablenpc2 "fire#8";
+			enablenpc2 "fire#12";
+			break;
+		case 8:
+			enablenpc2 "fire#3";
+			enablenpc2 "fire#7";
+			enablenpc2 "fire#9";
+			enablenpc2 "fire#13";
+			break;
+		case 9:
+			enablenpc2 "fire#4";
+			enablenpc2 "fire#8";
+			enablenpc2 "fire#10";
+			enablenpc2 "fire#14";
+		case 10:
+			enablenpc2 "fire#5";
+			enablenpc2 "fire#9";
+			enablenpc2 "fire#15";
+			break;
+		case 11:
+			enablenpc2 "fire#6";
+			enablenpc2 "fire#12";
+			enablenpc2 "fire#16";
+			break;
+		case 12:
+			enablenpc2 "fire#7";
+			enablenpc2 "fire#11";
+			enablenpc2 "fire#13";
+			enablenpc2 "fire#17";
+			break;
+		case 13:
+			enablenpc2 "fire#8";
+			enablenpc2 "fire#12";
+			enablenpc2 "fire#14";
+			enablenpc2 "fire#18";
+			break;
+		case 14:
+			enablenpc2 "fire#9";
+			enablenpc2 "fire#13";
+			enablenpc2 "fire#15";
+			enablenpc2 "fire#19";
+			break;
+		case 15:
+			enablenpc2 "fire#10";
+			enablenpc2 "fire#14";
+			enablenpc2 "fire#20";
+			break;
+		case 16:
+			enablenpc2 "fire#11";
+			enablenpc2 "fire#17";
+			enablenpc2 "fire#21";
+			break;
+		case 17:
+			enablenpc2 "fire#12";
+			enablenpc2 "fire#16";
+			enablenpc2 "fire#18";
+			enablenpc2 "fire#22";
+			break;
+		case 18:
+			enablenpc2 "fire#13";
+			enablenpc2 "fire#17";
+			enablenpc2 "fire#19";
+			enablenpc2 "fire#23";
+			break;
+		case 19:
+			enablenpc2 "fire#14";
+			enablenpc2 "fire#18";
+			enablenpc2 "fire#20";
+			enablenpc2 "fire#24";
+			break;
+		case 20:
+			enablenpc2 "fire#15";
+			enablenpc2 "fire#19";
+			enablenpc2 "fire#25";
+			break;
+		case 21:
+			enablenpc2 "fire#16";
+			enablenpc2 "fire#22";
+			break;
+		case 22:
+			enablenpc2 "fire#17";
+			enablenpc2 "fire#21";
+			enablenpc2 "fire#23";
+			break;
+		case 23:
+			enablenpc2 "fire#18";
+			enablenpc2 "fire#22";
+			enablenpc2 "fire#24";
+			break;
+		case 24:
+			enablenpc2 "fire#19";
+			enablenpc2 "fire#23";
+			enablenpc2 "fire#25";
+			break;
+		case 25:
+			enablenpc2 "fire#24";
+			enablenpc2 "fire#20";
+			break;
+}
+	sleep(2500);
+	for(set .@i, 1; .@i<26 ; set .@i, .@i+1)
+		disablenpc "fire#"+.@i;
+	if($@test){
+		Initnpctimer;
+		end;
+	}
+	//過關獎勵
+	set .g,0;
+	set $@Fire_Game,0;
+	mapannounce "boss4","【閃避火焰】遊戲結束，存活的玩家將獲得獎勵!!",bc_map;
+	sleep 6000; 
+	script4each "{ getitem 61007,10; getitem 61052,5; }",1,"boss4";
+	mapwarp "boss4","trinity",50,120;
+	end;
+
+}
+
+
+//==========================
+// 死亡事件
+//==========================
+-	script	閃避火焰死亡事件	-1,{
+	end;
+	
+OnPCDieEvent:
+	set .@map$,strcharinfo(3);
+	if( .@map$ == "boss4" ){
+	mapannounce "boss4","【閃避火焰】玩家: "+strcharinfo(0)+" 失敗出局 獲得 參予獎勵!",15;
+	warp "trinity",50,120;
+	getitem 61007,1;
+	getitem 61052,1;
+	}
+	end;
+}
+
+
+//==========================
+// 火焰核心
+//==========================
+boss4,0,0,0	script	fire	100,3,3,{
+
+OnTouch:
+	do { if(HP==1) { percentheal -100000,0; break; }
+	specialeffect2 49; itemheal -100000,0; break; } 
+	while( HP>1 && sleep2(250) && !getmapxy(.@map,.@x,.@y,0) && !getmapxy(.@map,.x,.y,1,strnpcinfo(0)) && distance(.@x,.@y,.x,.y) < 7);
+	end;
+	
+OnCi:
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	sleep(200);
+	misceffect 55;
+	end;
+OnDo:
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	sleep(200);
+	misceffect 97;
+	end;
+}
+
+//==========================
+// 25個火焰映射
+//==========================
+boss4,39,55,0	duplicate(fire)	fire#1	139,3,3
+boss4,44,56,0	duplicate(fire)	fire#2	139,3,3
+boss4,49,56,0	duplicate(fire)	fire#3	139,3,3
+boss4,55,55,0	duplicate(fire)	fire#4	139,3,3
+boss4,62,56,0	duplicate(fire)	fire#5	139,3,3
+
+boss4,39,50,0	duplicate(fire)	fire#6	139,3,3
+boss4,44,50,0	duplicate(fire)	fire#7	139,3,3
+boss4,49,51,0	duplicate(fire)	fire#8	139,3,3
+boss4,55,50,0	duplicate(fire)	fire#9	139,3,3
+boss4,62,51,0	duplicate(fire)	fire#10	139,3,3
+
+boss4,39,47,0	duplicate(fire)	fire#11	139,3,3
+boss4,44,46,0	duplicate(fire)	fire#12	139,3,3
+boss4,49,45,0	duplicate(fire)	fire#13	139,3,3
+boss4,55,46,0	duplicate(fire)	fire#14	139,3,3
+boss4,62,45,0	duplicate(fire)	fire#15	139,3,3
+
+boss4,39,42,0	duplicate(fire)	fire#16	139,3,3
+boss4,44,43,0	duplicate(fire)	fire#17	139,3,3
+boss4,49,42,0	duplicate(fire)	fire#18	139,3,3
+boss4,55,41,0	duplicate(fire)	fire#19	139,3,3
+boss4,62,40,0	duplicate(fire)	fire#20	139,3,3
+
+boss4,39,35,0	duplicate(fire)	fire#21	139,3,3
+boss4,44,33,0	duplicate(fire)	fire#22	139,3,3
+boss4,49,33,0	duplicate(fire)	fire#23	139,3,3
+boss4,55,34,0	duplicate(fire)	fire#24	139,3,3
+boss4,62,33,0	duplicate(fire)	fire#25	139,3,3
+
+

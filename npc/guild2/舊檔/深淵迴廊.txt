@@ -1,0 +1,161 @@
+schg_cas01,242,305,6	script	大門管理員#01	561,{
+	set .@GID, GetCastleData("schg_cas01",1);
+	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
+	mes "[大門管理員]";
+	mes "我是由貓咪手商隊次元移動管理部派來的";
+	mes "大門管理員";
+	mes "請問需要什麼幫助嗎?";
+	next;
+	switch(select("進入英雄之淚:進入亡者之丘:取消")) {
+
+	case 1:
+	warp "gld2_ald",0,0;
+	close;
+
+	case 2:
+	warp "gld2_gef",0,0;
+	close;
+
+	case 3:
+	close;
+	}
+	}
+	mes "[大門管理員]";
+	mes "你不是占領城堡的公會會員!";
+	close;
+}
+
+
+schg_cas02,97,378,6	script	大門管理員#02	561,{
+	set .@GID, GetCastleData("schg_cas02",1);
+	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
+	mes "[大門管理員]";
+	mes "我是由貓咪手商隊次元移動管理部派來的";
+	mes "大門管理員";
+	mes "請問需要什麼幫助嗎?";
+	next;
+	switch(select("進入亡者之丘:進入遠古之風:取消")) {
+
+	case 1:
+	warp "gld2_gef",0,0;
+	close;
+
+	case 2:
+	warp "gld2_pay",0,0;
+	close;
+
+	case 3:
+	close;
+	}
+	}
+	mes "[大門管理員]";
+	mes "你不是占領城堡的公會會員!";
+	close;
+}
+
+
+schg_cas03,75,90,6	script	大門管理員#03	561,{
+	set .@GID, GetCastleData("schg_cas03",1);
+	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
+	mes "[大門管理員]";
+	mes "我是由貓咪手商隊次元移動管理部派來的";
+	mes "大門管理員";
+	mes "請問需要什麼幫助嗎?";
+	next;
+	switch(select("進入遠古之風:進入戰士之路:取消")) {
+
+	case 1:
+	warp "gld2_pay",0,0;
+	close;
+
+	case 2:
+	warp "gld2_prt",0,0;
+	close;
+
+	case 3:
+	close;
+	}
+	}
+	mes "[大門管理員]";
+	mes "你不是占領城堡的公會會員!";
+	close;
+}
+
+
+schg_cas04,242,305,6	script	大門管理員#04	561,{
+	set .@GID, GetCastleData("schg_cas04",1);
+	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
+	mes "[大門管理員]";
+	mes "我是由貓咪手商隊次元移動管理部派來的";
+	mes "大門管理員";
+	mes "請問需要什麼幫助嗎?";
+	next;
+	switch(select("進入戰士之路:進入英雄之淚:取消")) {
+
+	case 1:
+	warp "gld2_prt",0,0;
+	close;
+
+	case 2:
+	warp "gld2_ald",0,0;
+	close;
+
+	case 3:
+	close;
+	}
+	}
+	mes "[大門管理員]";
+	mes "你不是占領城堡的公會會員!";
+	close;
+}
+
+
+schg_cas05,242,305,6	script	大門管理員#05	561,{
+	set .@GID, GetCastleData("schg_cas05",1);
+	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
+	mes "[大門管理員]";
+	mes "我是由貓咪手商隊次元移動管理部派來的";
+	mes "大門管理員";
+	mes "請問需要什麼幫助嗎?";
+	next;
+	switch(select("進入亡者之丘:進入戰士之路:取消")) {
+
+	case 1:
+	warp "gld2_gef",0,0;
+	close;
+
+	case 2:
+	warp "gld2_prt",0,0;
+	close;
+
+	case 3:
+	close;
+	}
+	}
+	mes "[大門管理員]";
+	mes "你不是占領城堡的公會會員!";
+	close;
+}
+
+//-------------------------地圖屬性
+
+gld2_ald	mapflag	nomemo
+gld2_ald	mapflag	nosave
+gld2_ald	mapflag	nobranch
+gld2_ald	mapflag	gvg_dungeon
+
+gld2_gef	mapflag	nomemo
+gld2_gef	mapflag	nosave
+gld2_gef	mapflag	nobranch
+gld2_gef	mapflag	gvg_dungeon
+
+gld2_pay	mapflag	nomemo
+gld2_pay	mapflag	nosave
+gld2_pay	mapflag	nobranch
+gld2_pay	mapflag	gvg_dungeon
+
+gld2_prt	mapflag	nomemo
+gld2_prt	mapflag	nosave
+gld2_prt	mapflag	nobranch
+gld2_prt	mapflag	gvg_dungeon
+

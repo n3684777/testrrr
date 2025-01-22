@@ -1,0 +1,104 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#舊神器製作
+   - Name: 舊神器製作
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP18_GW_WOMAN01
+     Items:
+       - Index: 1
+         Item: Magingiorde
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Foot_Step_Of_Cat
+             Amount: 3
+           - Index: 1
+             Item: Beard_Of_Women
+             Amount: 3
+           - Index: 2
+             Item: Root_Of_Stone
+             Amount: 2
+           - Index: 3
+             Item: Saliva_Of_Bird
+             Amount: 2
+           - Index: 4
+             Item: Tendon_Of_Bear
+             Amount: 2
+       - Index: 2
+         Item: Brysinggamen
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Foot_Step_Of_Cat
+             Amount: 3
+           - Index: 1
+             Item: Beard_Of_Women
+             Amount: 3
+           - Index: 2
+             Item: Root_Of_Stone
+             Amount: 2
+           - Index: 3
+             Item: Saliva_Of_Bird
+             Amount: 2
+           - Index: 4
+             Item: Tendon_Of_Bear
+             Amount: 2
+       - Index: 3
+         Item: Mjolnir
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Foot_Step_Of_Cat
+             Amount: 3
+           - Index: 1
+             Item: Beard_Of_Women
+             Amount: 3
+           - Index: 2
+             Item: Root_Of_Stone
+             Amount: 2
+           - Index: 3
+             Item: Saliva_Of_Bird
+             Amount: 2
+           - Index: 4
+             Item: Tendon_Of_Bear
+             Amount: 2
+       - Index: 4
+         Item: Sleipnir
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Foot_Step_Of_Cat
+             Amount: 3
+           - Index: 1
+             Item: Beard_Of_Women
+             Amount: 3
+           - Index: 2
+             Item: Root_Of_Stone
+             Amount: 2
+           - Index: 3
+             Item: Saliva_Of_Bird
+             Amount: 2
+           - Index: 4
+             Item: Tendon_Of_Bear
+             Amount: 2
+
+
+
+
+
+
+
+
+
+

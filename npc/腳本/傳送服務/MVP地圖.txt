@@ -1,0 +1,678 @@
+function	script	MVP_Map	{
+
+	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+		"黃金蟲",C0,
+                "虎王",C1,
+                "月夜貓",C2,
+                "皮里恩",C3,
+                "塔奧群卡",C4,
+                "海盜之王",C5,
+                "元靈武士",C6,
+                "死靈",C7,
+                "墨蛇君",C8,
+                "卡崙",C9,
+                "蜂后",C10,
+                "獸人酋長",C11,
+                "獸人英雄",C12,
+                "冰暴騎士",C13,
+                "俄塞里斯",C14,
+                "闇●劍士 賽尼亞",C15,
+                "墮落大神官 悉潘",C16,
+                "黑暗之王",C17,
+                "蟻后",C18,
+                "巴風特",C19,
+                "阿特羅斯",C20,
+                "青冠龍",C21,
+                "白素貞",C22,
+                "德古拉男爵",C23,
+                "RSX-0806",C24,
+                "古埃及王",C25,
+                "嗒妮小姐",C26,
+                "幽暗夢魘",C27,
+                "齊爾-D-01",C28,
+                "迪塔勒泰晤勒斯",C29,
+                "法老王",C30,
+                "死靈騎士",C31,
+                "烏龜將軍",C32,
+                "貝思波",C33,
+                "詛咒蠅王",C34,
+                "水晶龍",C35,
+                "闇●神射手 迪文",C36,
+                "闇●神工匠 哈沃得",C37,
+                "闇●十字刺客 艾勒梅斯",C38,
+                "闇●神官 瑪嘉雷特",C39,
+                "闇●騎士領主 賽依連",C40,
+                "闇●超魔導師 凱特莉娜",C41,
+                "古埃及王-夢魘",C42,
+                "蘭特克力斯",C43,
+                "伊夫利特",C44,
+                "負傷夢羅克",C45,
+                "波伊塔塔",C46,
+                "魔鬼大烏賊",C47,
+                "女王甲蟲",C48,
+                "讓特",C49,
+                "時間支配者",C50,
+                "巨大蛋黃波利",C51,
+                "蜘蛛戰車",C52,
+                "R48-85貝斯帝亞",C53,
+                "劇毒凱美拉",C54,
+                "惡夢之巴風特",C55,
+                "亡靈的守護者卡德斯",C56,
+                "憤怒的淘汰者傅立葉",C57,
+                "喬伊亞",C58,
+                "將軍大賢",C59,
+                "骨骸迪塔勒泰晤勒斯",C60,
+                "蕾格萊芙&英格麗",C61,
+                "寶石溫古力安特",C62,
+                "大王喵喵",C63,
+                "火焰狼牙",C64,
+                "魔鬼孩子王",C65,
+                "蓋亞波羅",C66,
+                "雷尼",C67,
+                "暴雪天使",C68,
+                "聖地清掃班長",C69;
+
+
+//--------------------------------------------------------------------;
+C0:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "普隆德拉 地下水道四樓(prt_sewb4) 10分鐘重生",D0;
+D0:	warp "prt_sewb4",103,93;	close;
+
+
+C1:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "斐揚 樹林(pay_fild10) 10分鐘重生",D1,
+        "地下公會密穴(gld_dun01) 10分鐘重生",D2,
+        "地下公會密穴(斐揚)-2(gld_dun01_2) 10分鐘重生",D03;
+D1:	warp "pay_fild10",0,0;	close;
+D2:	warp "gld_dun01",120,20;	close;
+D03:	warp "gld_dun01_2",120,20;	close;
+
+
+C2:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "斐揚 地下五樓(pay_dun04) 10分鐘重生",D3;
+D3:	warp "pay_dun04",118,108;	close;
+
+
+C3:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "蘇克拉特 沙漠(moc_fild17) 10分鐘重生",D4;
+D4:	warp "moc_fild17",52,281;	close;
+
+
+C4:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "克魔島西邊 洞穴 加露(beach_dun) 10分鐘重生",D5;
+D5:	warp "beach_dun",270,260;	close;
+
+
+C5:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "沉沒之船 2樓(treasure02) 10分鐘重生",D6;
+D6:	warp "treasure02",102,32;	close;
+
+
+C6:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "天津町 地下神舍三樓(ama_dun03) 10分鐘重生",D7;
+D7:	warp "ama_dun03",120,15;	close;
+
+
+C7:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "吉芬 地下三樓(gef_dun02) 10分鐘重生",D8,
+       "地下公會密穴(gld_dun02) 10分鐘重生",D9;
+D8:	warp "gef_dun02",107,127;	close;
+D9:	warp "gld_dun02",155,163;	close;
+
+
+C8:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "崑崙迷宮三樓(gon_dun03) 10分鐘重生",D10;
+D10:	warp "gon_dun03",68,15;	close;
+
+
+C9:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "薑餅城 原野(xmas_fild01) 10分鐘重生",D11;
+D11:	warp "xmas_fild01",85,55;	close;
+
+
+C10:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "妙勒尼山脈(mjolnir_04) 10分鐘重生",D12;
+D12:	warp "mjolnir_04",134,208;	close;
+
+
+C11:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "東獸人村(gef_fild10) 10分鐘重生",D13;
+D13:	warp "gef_fild10",71,333;	close;
+
+
+C12:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "吉分 原野地區 (gef_fild03) 10分鐘重生",D14;
+D14:	warp "gef_fild03",0,0;	close;
+
+
+C13:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "玩具工廠二樓(xmas_dun02) 10分鐘重生",D16;
+D16:	warp "xmas_dun02",124,208;	close;
+
+
+C14:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "金字塔地上樓層四樓(moc_pryd04) 10分鐘重生",D17;
+D17:	warp "moc_pryd04",180,180;	close;
+
+
+C15:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生命體實驗研究所2樓(lhz_dun02) 10分鐘重生",D18;
+D18:	warp "lhz_dun02",149,142;	close;
+
+
+C16:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "修道院二樓 (abbey02) 10分鐘重生",D19;
+D19:	warp "abbey02",149,245;	close;
+
+
+C17:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "古城地下墳場 (gl_chyard) 10分鐘重生",D20,
+       "地下公會密穴 (gld_dun04) 10分鐘重生",D21,
+       "地下公會密穴(吉芬)-2 (gld_dun04_2) 10分鐘重生",D023,
+       "夢魘的克雷斯特漢姆地下墳場 (gl_chyard_) 10分鐘重生",D0023;
+
+D20:	warp "gl_chyard",0,0;	close;
+D21:	warp "gld_dun04",0,0;	close;
+D023:	warp "gld_dun04_2",0,0;	close;
+D0023:	warp "gl_chyard_",0,0;	close;
+
+
+C18:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "螞蟻地獄二樓(anthell02) 10分鐘重生",D22,
+       "地下公會密穴(gld_dun03) 10分鐘重生",D23,
+       "地下公會密穴(艾爾帕蘭)-2(gld_dun02_2) 10分鐘重生",D024;
+D22:	warp "anthell02",162,169;	close;
+D23:	warp "gld_dun03",237,268;	close;
+D024:	warp "gld_dun02_2",0,0;	close;
+
+
+C19:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "迷藏森林三樓(prt_maze03) 10分鐘重生",D24;
+D24:	warp "prt_maze03",0,0;	close;
+
+
+C20:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "歐茲 峽谷 (ra_fild04) 10分鐘重生",D25,
+       "伊達 平原 (ra_fild03) 10分鐘重生",D26,
+       "菲音斯 原野 (ve_fild01) 10分鐘重生",D28,
+       "菲音斯 原野 (ve_fild02) 10分鐘重生",D29,
+       "地下公會密穴(普隆德拉)-2 (gld_dun03_2) 10分鐘重生",D030;
+D25:	warp "ra_fild04",0,0;	close;
+D26:	warp "ra_fild03",0,0;	close;
+D28:	warp "ve_fild01",0,0;	close;
+D29:	warp "ve_fild02",0,0;	close;
+D030:	warp "gld_dun03_2",0,0;	close;
+
+
+C21:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "深淵森林洞穴 10分鐘重生",D30;
+D30:	warp "mosk_dun03",210,210;	close;
+
+
+C22:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "洛陽密穴三樓(lou_dun03) 10分鐘重生",D31;
+D31:	warp "lou_dun03",165,42;	close;
+
+
+C23:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "吉芬秘穴二樓(gef_dun01) 10分鐘重生",D32;
+D32:	warp "gef_dun01",115,234;	close;
+
+
+C24:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "艾音秘穴二樓(ein_dun02) 10分鐘重生",D33;
+D33:	warp "ein_dun02",27,255;	close;
+
+
+C25:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "金字塔地下三樓(moc_pryd06) 10分鐘重生",D34;
+D34:	warp "moc_pryd06",102,114;	close;
+
+
+C26:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "泰國密穴二樓(ayo_dun02) 10分鐘重生",D35;
+D35:	warp "ayo_dun02",149,48;	close;
+
+
+C27:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "神殿 聖域 (ra_san 05) 10分鐘重生",D36;
+D36:	warp "ra_san05",150,30;	close;
+
+
+C28:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "機械人型工廠2樓(kh_dun02) 10分鐘重生",D37;
+D37:	warp "kh_dun02",110,60;	close;
+
+
+C29:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "深淵湖水 地下洞穴3樓(abyss_03) 10分鐘重生",D38;
+D38:	warp "abyss_03",97,103;	close;
+
+
+C30:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "司芬克斯迷宮 五樓(in_sphinx5) 10分鐘重生",D39;
+D39:	warp "in_sphinx5",100,104;	close;
+
+
+C31:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "死者國家 尼芙菲姆(niflheim) 10分鐘",D40;
+D40:	warp "niflheim",202,177;	close;
+
+
+C32:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "舊良宮(tur_dun04) 10分鐘",D41;
+D41:	warp "tur_dun04",100,184;	close;
+
+
+C33:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "優配擂斯 中心部(jupe_core) 10分鐘重生",D42;
+D42:	warp "jupe_core",150,280;	close;
+
+
+C34:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "無名島修道院(abbey03) 10分鐘重生",D43;
+D43:	warp "abbey03",120,15;	close;
+
+
+C35:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "冰洞穴 (ice_dun03) 10分鐘重生",D44;
+D44:	warp "ice_dun03",149,30;	close;
+
+
+C36:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生體試驗 研究所3樓(lhz_dun03) 10分鐘重生",D45;
+D45:	warp "lhz_dun03",140,133;	close;
+
+
+C37:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生體試驗 研究所3樓(lhz_dun03) 10分鐘重生",D46;
+D46:	warp "lhz_dun03",140,133;	close;
+
+
+C38:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生體試驗 研究所3樓(lhz_dun03) 10分鐘重生",D47;
+D47:	warp "lhz_dun03",140,133;	close;
+
+
+C39:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+        menu
+       "生體試驗 研究所3樓 (lhz_dun03) 10分鐘重生",D48;
+
+D48:	warp "lhz_dun03",140,133;	close;
+
+
+C40:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生體試驗 研究所3樓 (lhz_dun03) 10分鐘重生",D49;
+D49:	warp "lhz_dun03",140,133;	close;
+
+
+C41:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "生體試驗 研究所3樓 (lhz_dun03) 10分鐘重生",D50;
+D50:	warp "lhz_dun03",140,133;	close;
+
+
+C42:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "夢羅克金字塔地下2樓 (moc_prydn2) 10分鐘重生",D51;
+D51:	warp "moc_prydn2",0,0;	close;
+
+
+C43:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "奧丁神殿 (odin_tem03) 10分鐘重生",D52;
+D52:	warp "odin_tem03",240,40;	close;
+
+
+C44:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "托爾火山 洞穴三樓 (thor_v03) 10分鐘重生",D53;
+D53:	warp "thor_v03",46,260;	close;
+
+
+C45:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "時空的裂縫 (moc_fild22) 10分鐘重生",D54;
+D54:	warp "moc_fild22",120,365;	close;
+
+
+C46:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "瀑布內的洞窟2F (bra_dun02) 10分鐘重生",D59;
+D59:	warp "bra_dun02",262,261;	close;
+
+
+C47:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "海底洞窟6F (iz_dun05) 10分鐘重生",D60;
+D60:	warp "iz_dun05",0,0;	close;
+
+
+C48:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "斯卡勒伯熔岩洞穴 (dic_dun02) 10分鐘重生",D61;
+D61:	warp "dic_dun02",0,0;	close;
+
+
+C49:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "德瓦他密穴1F (dew_dun01) 10分鐘重生",D62;
+D62:	warp "dew_dun01",0,0;	close;
+
+
+C50:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "時間扭曲的鐘塔3樓 (c_tower3_) 10分鐘重生",D63;
+D63:	warp "c_tower3_",0,0;	close;
+
+
+C51:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "龍巢穴 (lasa_dun01) 10分鐘重生",D64;
+D64:	warp "lasa_dun01",0,0;	close;
+
+
+C52:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "洛克理奇岩嶺礦山1 (rockmi1) 10分鐘重生",D65;
+D65:	warp "rockmi1",0,0;	close;
+
+
+C53:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "廢棄實驗場 陸陶斯2F (sp_rudus2) 10分鐘重生",D66,
+       "廢棄實驗場 陸陶斯3 (sp_rudus3) 10分鐘重生",D67;
+D66:	warp "sp_rudus2",0,0;	close;
+D67:	warp "sp_rudus3",0,0;	close;
+
+
+C54:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "維爾納研究所 (slabw01) 10分鐘重生",D68;
+D68:	warp "slabw01",0,0;	close;
+
+
+
+C55:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "夢魘的克雷斯特漢姆古城2F (gl_cas02_) 10分鐘重生",D69;
+D69:	warp "gl_cas02_",0,0;	close;
+
+
+C56:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "亡者之丘 (gld2_gef) 10分鐘重生",D70;
+D70:	warp "gld2_gef",0,0;	close;
+
+
+C57:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "戰士之路 (gld2_prt) 10分鐘重生",D71;
+D71:	warp "gld2_prt",0,0;	close;
+
+
+C58:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "英雄之淚 (gld2_ald) 10分鐘重生",D72;
+D72:	warp "gld2_ald",0,0;	close;
+
+
+C59:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "遠古之風 (gld2_pay) 10分鐘重生",D73;
+D73:	warp "gld2_pay",0,0;	close;
+
+
+C60:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "深淵湖水地下洞穴4F (abyss_04) 10分鐘重生",D74;
+D74:	warp "abyss_04",0,0;	close;
+
+
+C61:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "古代奧丁神殿 (odin_past) 10分鐘重生",D75;
+D75:	warp "odin_past",0,0;	close;
+
+
+C62:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "礦山洞穴3F (ein_dun03) 10分鐘重生",D76;
+D76:	warp "ein_dun03",0,0;	close;
+
+
+C63:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "失落的山谷飼養場 (ba_lost) 10分鐘重生",D77;
+D77:	warp "ba_lost",0,0;	close;
+
+
+C64:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "奧茲 迷宮2樓 (oz_dun02) 10分鐘重生",D78;
+D78:	warp "oz_dun02",0,0;	close;
+
+
+C65:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "葛洛麗雅 公會地下密穴 (teg_dun01) 10分鐘重生",D79,
+       "卡普拉賈登 公會地下密穴 (teg_dun02) 10分鐘重生",D80;
+D79:	warp "teg_dun01",0,0;	close;
+D80:	warp "teg_dun02",0,0;	close;
+
+
+C66:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "魔力扭曲平原 (ra_pol01) 10分鐘重生",D81;
+D81:	warp "ra_pol01",0,0;	close;
+
+
+C67:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "妙勒尼地下洞穴 (mjo_wst01) 10分鐘重生",D82;
+D82:	warp "mjo_wst01",0,0;	close;
+
+
+
+C68:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "蛇神的根2F (jor_root2) 10分鐘重生",D83;
+D83:	warp "jor_root2",0,0;	close;
+
+
+C69:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "深根洞窟 (jor_root3) 10分鐘重生",D84;
+D84:	warp "jor_root3",0,0;	close;
+
+
+
+
+}
+
+
+
+

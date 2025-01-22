@@ -1,0 +1,323 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#王家狩獵
+   - Name: 王家狩獵
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: South
+     Sprite: 4_EP17_ELYUMINA
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44212
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 2
+         Item: C_Midgarts_Glory
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 3
+         Item: C_Head_Item_44424
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 4
+         Item: C_Head_Item_44569
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 5
+         Item: C_Head_Item_22105
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+
+       - Index: 11
+         Item: Reggia_Hunting_Mail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 40
+       - Index: 12
+         Item: Reggia_Hunting_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 40
+       - Index: 13
+         Item: Reggia_Hunting_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 40
+       - Index: 14
+         Item: True_Hunting_Mail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 80
+       - Index: 15
+         Item: True_Hunting_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 80
+       - Index: 16
+         Item: True_Hunting_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 80
+       - Index: 17
+         Item: True_Hunting_Melee_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 18
+         Item: True_Hunting_Magic_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+
+       - Index: 21
+         Item: S_Nihil_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 22
+         Item: S_Agnes_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 23
+         Item: S_Jurgen_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 24
+         Item: S_Spica_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 25
+         Item: S_Kronecker_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 26
+         Item: Skia_Nerius_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 27
+         Item: S_Wolf_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 28
+         Item: S_Poe_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 100
+       - Index: 29
+         Item: S_Wolf_Card_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 30
+         Item: S_Kathryn_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 31
+         Item: S_Issac_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+
+       - Index: 32
+         Item: S_Meyer_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 33
+         Item: S_Helmut_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 34
+         Item: S_Meyer_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 35
+         Item: S_Helmut_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 36
+         Item: aegis_300422
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 37
+         Item: aegis_300424
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 38
+         Item: aegis_300426
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+
+       - Index: 39
+         Item: aegis_300487
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 40
+         Item: aegis_300489
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 41
+         Item: aegis_300491
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 42
+         Item: aegis_300493
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 43
+         Item: aegis_300495
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+       - Index: 44
+         Item: aegis_300497
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Vote_Rose
+             Amount: 200
+
+
+
+
+
+
+
+
+

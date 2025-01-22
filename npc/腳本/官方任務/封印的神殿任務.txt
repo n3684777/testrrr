@@ -1,0 +1,582 @@
+
+monk_test,303,146,6	script	修行憎巴特力	746,{
+
+	set $@Goat,rand(0,16);
+	setarray $@Goating[0],4832,4833,4834,4835,4869,4872,4873,4807,4821,4822,4823,4824,29135,29136,29137,29138,29141;
+
+	getinventorylist;
+	if ( @inventorylist_count > 90 ) {
+	mes "[修行憎巴特力]";
+	mes "你所攜帶的物品太多了";
+	mes "所以不能獲得物品";
+	mes "請把身上的物品減輕之後來找我吧";
+	close;
+	}
+	mes "[修行憎巴特力]";
+	mes "只要給我以下物品";
+	mes "擁有魔力之巴風特娃娃x1";
+	mes "山羊頭盔x1";
+	mes "黑暗的結晶體x30";
+	mes "黑暗之結晶體x50";
+	mes "zeny990000";
+	mes "我就可以給你一個巨大山羊頭盔";
+	mes "另外給我一個詛咒的碎片";
+	mes "我可以幫你強化大型山羊頭盔";
+	next;
+	switch(select("兌換大型山羊頭盔","強化大型山羊頭盔","洗滌大型山羊頭盔","取消")){
+
+case 1:
+	if(zeny<990000){
+	mes "[修行憎巴特力]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if (countitem(6004)<1 || countitem(2256)<1 || countitem(7799)<30 || countitem(7798)<50  ) {
+	mes "[修行憎巴特力]";
+	mes "相關物品不足！";
+	close;	}
+
+	mes "[修行憎巴特力]";
+	mes "大型山羊頭盔兌換成功!!";
+	delitem 6004,1; //擁有魔力之巴風特娃娃
+	delitem 2256,1; //山羊頭盔
+	delitem 7799,30; //黑暗的結晶體
+	delitem 7798,50; //黑暗之結晶體
+	set zeny,zeny-990000;
+	getitem 5374,1; //巨大山羊頭盔
+	close;
+
+case 2:
+	mes "[修行憎巴特力]";
+	mes "你想要要付魔哪個頭盔?";
+
+	if (getequipisequiped(1) == 0) set .@strRetPart1$,"頭上頭飾-[無法裝置]";
+	else set .@strRetPart1$,getequipname(1);
+	set .@is,select(.@strRetPart1$);
+	next;
+	set @abd,getequipid(.@is);
+	set @Goat_Slots,getequipcardid(.@is,0);
+	set @Goat_Slots2,getequipcardid(.@is,1);
+	set @Goat_Slots3,getequipcardid(.@is,2);
+	set @Goat_Slots4,getequipcardid(.@is,3);
+	set @Goat_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[修行憎巴特力]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[修行憎巴特力]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 5374) goto Goat_net;
+	mes "[修行憎巴特力]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Goat_net:
+	if(@Goat_Slots4 == 0) goto Goat_net1;
+	if(@Goat_Slots3 == 0) goto Goat_net2;
+	if(@Goat_Slots2 == 0) goto Goat_net3;
+
+Goat_net1:
+	mes "[修行憎巴特力]";
+	mes "第一階段你想要附魔哪種素質?";
+	mes "附魔材料：1個詛咒的碎片";
+	next;
+	switch(select("取消:STR:INT:DEX:AGI:VIT:LUK")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoGoatA1",34209,0,rand(1,100);
+	case 3:
+	callfunc "fumoGoatA2",34209,0,rand(1,100);
+	case 4:
+	callfunc "fumoGoatA3",34209,0,rand(1,100);
+	case 5:
+	callfunc "fumoGoatA4",34209,0,rand(1,100);
+	case 6:
+	callfunc "fumoGoatA5",34209,0,rand(1,100);
+	case 7:
+	callfunc "fumoGoatA6",34209,0,rand(1,100);
+	}
+
+Goat_net2:
+	mes "[修行憎巴特力]";
+	mes "第二階段你想要附魔哪種素質?";
+	mes "附魔材料：1個詛咒的碎片";
+	next;
+	switch(select("取消:STR:INT:DEX:AGI:VIT:LUK")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoGoatB1",34209,0,rand(1,100);
+	case 3:
+	callfunc "fumoGoatB2",34209,0,rand(1,100);
+	case 4:
+	callfunc "fumoGoatB3",34209,0,rand(1,100);
+	case 5:
+	callfunc "fumoGoatB4",34209,0,rand(1,100);
+	case 6:
+	callfunc "fumoGoatB5",34209,0,rand(1,100);
+	case 7:
+	callfunc "fumoGoatB6",34209,0,rand(1,100);
+	}
+
+Goat_net3:
+	mes "[修行憎巴特力]";
+	mes "第三階段你想要附魔哪種素質?";
+	mes "附魔材料：1個詛咒的碎片";
+	next;
+	switch(select("取消:進行最終付魔")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoGoatC1",34209,0,rand(1,100);
+	}
+
+case 3:
+	mes "[修行憎巴特力]";
+	mes "你想要要洗滌哪個頭盔?";
+
+	if (getequipisequiped(1) == 0) set .@strRetPart1$,"頭上頭飾-[無法裝置]";
+	else set .@strRetPart1$,getequipname(1);
+	set .@is,select(.@strRetPart1$);
+	next;
+	set @abd,getequipid(.@is);
+	set @Goat_Slots,getequipcardid(.@is,0);
+	set @Goat_Slots2,getequipcardid(.@is,1);
+	set @Goat_Slots3,getequipcardid(.@is,2);
+	set @Goat_Slots4,getequipcardid(.@is,3);
+	set @Goat_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[修行憎巴特力]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[修行憎巴特力]";
+	mes "你沒物品怎麼洗滌";
+	close;
+	}
+	if(@abd == 5374) goto Goat_netx;
+	mes "[修行憎巴特力]";
+	mes "你這個裝備無法洗滌哦!";
+	close;
+
+Goat_netx:
+	mes "[修行憎巴特力]";
+	mes "你想要洗滌這頭盔上的附魔?";
+	mes "洗滌材料：3個詛咒的碎片";
+	next;
+	switch(select("取消:洗滌頭盔的附魔")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoGoatD1",34209,0,rand(1,100);
+	}
+
+
+case 4:
+	close;
+	}
+}
+
+
+
+
+//---------------------------------- 第一階段付魔狀態
+
+function	script	fumoGoatA1	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4700,4705);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatA2	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4710,4715);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatA3	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4720,4725);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatA4	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4730,4735);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatA5	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4740,4745);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatA6	{
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,rand(4750,4755);
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+
+
+//---------------------------------- 第二階段付魔狀態
+
+function	script	fumoGoatB1	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4702,4705),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatB2	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4712,4715),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatB3	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4722,4725),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatB4	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4732,4735),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatB5	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4742,4745),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+function	script	fumoGoatB6	{
+	if(@Goat_Slots4 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第一階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,rand(4752,4755),@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+
+//---------------------------------- 第三階段付魔狀態
+
+
+function	script	fumoGoatC1	{
+	if(@Goat_Slots3 == 0){
+	mes "[獸人鍛造師]";
+	mes "你還未進行第二階段附魔!!";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[修行憎巴特力]";
+	mes "你身上詛咒的碎片不足!";
+	close;
+	}
+	set .@Goat_ran,rand(1,100);
+	if ((.@Goat_ran > 0) && (.@Goat_ran <= 30)) {
+	mes "[修行憎巴特力]";
+	mes "附魔成功!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,$@Goating[$@Goat],@Goat_Slots3,@Goat_Slots4;
+	specialeffect 154;
+	close; }
+
+	mes "[修行憎巴特力]";
+	mes "附魔失敗!";
+	delitem getarg(0),1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,@Goat_Slots2,@Goat_Slots3,@Goat_Slots4;
+	specialeffect 155;
+	close;
+}
+
+
+
+//---------------------------------- 洗滌付魔狀態
+
+function	script	fumoGoatD1	{
+
+	if(countitem(getarg(0))<3){
+	mes "[修行憎巴特力]";
+	mes "你身上沒有詛咒的碎片";
+	close;
+	}
+	mes "[修行憎巴特力]";
+	mes "成功洗滌了這個頭盔上的附魔!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Goat_Refine,0,@Goat_Slots,0,0,0;
+	close;
+}
+
+
+
+

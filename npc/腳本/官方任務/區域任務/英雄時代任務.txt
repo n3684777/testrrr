@@ -1,0 +1,228 @@
+﻿mbase_in,302,123,4	script	勞菈‧瓦達利斯#ep21	10580,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 220)) {
+	mes "[勞菈‧瓦達利斯]";
+	mes "這任務限等級 ^ff0000220以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[勞菈‧瓦達利斯]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","所有任務回報","取消")){
+
+	case 1:
+		mes "[勞菈‧瓦達利斯]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("連貓的手都想借!","新鮮的味道!","傷口上的貝殼!","給孩子們的","乾淨俐落地完成(1)","乾淨俐落地完成(2)","取消")){
+
+		case 1:
+			if(checkquest(24024)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24025)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24026)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24027)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24028)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24029)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+
+			if(checkquest(24030,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24030,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24024;
+			set ep21_01,1;
+			if(checkquest(24030,PLAYTIME)==2){erasequest 24030;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(24031,HUNTING)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24032,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24032,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24031;
+			if(checkquest(24032,PLAYTIME)==2){erasequest 24032;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(24033,HUNTING)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24034,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24034,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24033;
+			if(checkquest(24034,PLAYTIME)==2){erasequest 24034;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(24035,HUNTING)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24034,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24034,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24035;
+			if(checkquest(24036,PLAYTIME)==2){erasequest 24036;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(24037,HUNTING)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24038,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24038,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24037;
+			if(checkquest(24038,PLAYTIME)==2){erasequest 24038;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(24039,HUNTING)>=0){mes "[勞菈‧瓦達利斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(24040,PLAYTIME)==0){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(24040,PLAYTIME)==1){mes "[勞菈‧瓦達利斯]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 24039;
+			if(checkquest(24040,PLAYTIME)==2){erasequest 24040;}
+			mes "[勞菈‧瓦達利斯]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			close;
+		}
+
+	case 2:
+		if(checkquest(24029)>=1) { 
+		dispbottom "連貓的手都想借! 任務回報完成!!";
+		erasequest 24029;
+		setquest 24030;
+		getitem 1001618,4;	//魏格納商團交換證
+		getexp 3000000,2000000;	//任務經驗
+		}
+
+		if(checkquest(24031)==1) {
+			if (countitem(1001644) >= 10 || countitem(1001647) >= 10) {
+			erasequest 24031;
+			setquest 24032;
+			delitem 1001644,10;	//浮鰭
+			delitem 1001647,10;	//厚實的肉
+			getitem 1001618,2;	//魏格納商團交換證
+			dispbottom "新鮮的味道! 任務回報完成!!";
+			}
+		}
+
+		if(checkquest(24033,HUNTING)==2 ) { 
+		dispbottom "傷口上的貝殼! 任務回報完成!!";
+		erasequest 24033;
+		setquest 24034;
+		getitem 1001618,4;	//魏格納商團交換證
+		getexp 3000000,2000000;	//任務經驗
+		}
+
+		if(checkquest(24035,HUNTING)==2 ) { 
+		dispbottom "給孩子們的 任務回報完成!!";
+		erasequest 24035;
+		setquest 24036;
+		getitem 1001618,4;	//魏格納商團交換證
+		getexp 3000000,2000000;	//任務經驗
+		}
+
+		if(checkquest(24037,HUNTING)==2 ) { 
+		dispbottom "乾淨俐落地完成(1) 任務回報完成!!";
+		erasequest 24037;
+		setquest 24038;
+		getitem 1001618,20;	//魏格納商團交換證
+		getexp 3000000,2000000;	//任務經驗
+		}
+
+		if(checkquest(24039,HUNTING)==2 ) { 
+		dispbottom "乾淨俐落地完成(2) 任務回報完成!!";
+		erasequest 24039;
+		setquest 24040;
+		getitem 1001618,20;	//魏格納商團交換證
+		getexp 3000000,2000000;	//任務經驗
+		}
+
+		mes "[勞菈‧瓦達利斯]";
+		mes "已完成的任務處理完畢";
+		close;
+
+	case 3:
+		close;
+	}
+
+OnInit:
+	waitingroom "英雄時代每日任務",0;
+	end;
+}
+
+
+//---------------- 連貓的手都想借!任務相關NPC
+//-	script	傭兵團的申請者::ep21_quest01	-1,{
+jor_mbase,306,140,4	script	傭兵團的申請者#ep21_01::ep21_quest01	10397,{
+
+	if (ep21_01 == 0) { 
+	mes "--你還沒接受任務--";
+	close;
+	}
+
+	mes "[傭兵團的申請者]";
+	mes "我想要加入傭兵團";
+	mes "你可以幫我送出申請嗎?";
+	next;
+	if (select("可以","不可以") == 2) {
+	close;
+	}
+
+	if (isbegin_quest(24028)>=1){ erasequest 24028; setquest 24029; set ep21_01,0; }
+	if (isbegin_quest(24027)>=1){ erasequest 24027; setquest 24028; }
+	if (isbegin_quest(24026)>=1){ erasequest 24026; setquest 24027; }
+	if (isbegin_quest(24025)>=1){ erasequest 24025; setquest 24026; }
+	if (isbegin_quest(24024)>=1){ erasequest 24024; setquest 24025; }
+
+	npctalk "我現在就前往傭兵團報到。";
+	specialeffect 16;
+	initnpctimer;
+	disablenpc();
+	close;
+	end;
+
+	//10分鐘後出現
+OnTimer60000:
+	enablenpc();
+	stopnpctimer;
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ep21_01 == 1" );
+	end;
+}
+
+
+//jor_mbase,306,140,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_01	10397
+jor_mbase,268,197,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_02	854
+jor_mbase,274,237,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_03	930
+jor_mbase,243,246,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_04	99
+jor_mbase,211,232,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_05	701
+jor_mbase,183,197,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_06	870
+jor_mbase,128,186,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_07	76
+jor_mbase,133,137,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_08	570
+jor_mbase,100,114,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_09	59
+jor_mbase,148,98,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_10	101
+jor_mbase,159,129,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_11	843
+jor_mbase,172,158,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_12	713
+jor_mbase,217,133,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_13	817
+jor_mbase,228,98,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_14	65
+jor_mbase,202,70,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_15	934
+jor_mbase,219,47,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_16	570
+jor_mbase,278,52,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_17	80
+jor_mbase,351,85,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_18	862
+jor_mbase,185,125,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_19	754
+jor_mbase,137,258,4	duplicate(ep21_quest01)	傭兵團的申請者#ep21_20	70
+
+
+
+
+
+
+
+

@@ -1,0 +1,760 @@
+﻿// #finhunts 任務是否完成
+// #inhunt 任務等級CBAS
+// #Mob_Quest_ID 怪物編號
+// #starthunttime 狩獵時間
+// #Mob_Quest_Amt 怪物數量
+// #revtime 冷卻時間
+// #Quest_Amt 任務內容更新
+// #Quest_Renew 任務次數
+// #Mob_Quest_Renew 任務刷新次數
+// #huntday 狩獵日期
+
+
+trinity,125,121,4	script	狩獵任務管理員	10153,{
+
+	//任務次數
+	if ( #day_Mob_Quest < gettime(8) ){
+	set #Mob_Quest,3;
+	set #Mob_Quest_Renew,5;
+	set #Quest_Renew,0;
+	set #day_Mob_Quest,gettime(8);	//一年中的一天
+	end; }
+
+	if(#Mob_Exp_Lv==0){ set #Mob_Exp_Max,1000; }
+	if(#Mob_Exp_Lv==1){ set #Mob_Exp_Max,1500; }
+	if(#Mob_Exp_Lv==2){ set #Mob_Exp_Max,2000; }
+	if(#Mob_Exp_Lv==3){ set #Mob_Exp_Max,2000; }
+	if(#Mob_Exp_Lv==4){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==5){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==6){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==7){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==8){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==9){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==10){ set #Mob_Exp_Max,3000; }
+	if(#Mob_Exp_Lv==11){ set #Mob_Exp_Max,5000; }
+	if(#Mob_Exp_Lv==12){ set #Mob_Exp_Max,5000; }
+	if(#Mob_Exp_Lv==13){ set #Mob_Exp_Max,5000; }
+	if(#Mob_Exp_Lv==14){ set #Mob_Exp_Max,5000; }
+	if(#Mob_Exp_Lv==15){ set #Mob_Exp_Max,5000; }
+	if(#Mob_Exp_Lv==16){ set #Mob_Exp_Max,6000; }
+	if(#Mob_Exp_Lv==17){ set #Mob_Exp_Max,6000; }
+	if(#Mob_Exp_Lv==18){ set #Mob_Exp_Max,6000; }
+	if(#Mob_Exp_Lv==19){ set #Mob_Exp_Max,6000; }
+	if(#Mob_Exp_Lv==20){ set #Mob_Exp_Max,6000; }
+	if(#Mob_Exp_Lv>=21 && #Mob_Exp_Lv<=30){ set #Mob_Exp_Max,8000; }
+	
+	if(#Mob_Exp>=#Mob_Exp_Max){ 
+	set #Mob_Exp,#Mob_Exp - #Mob_Exp_Max; 
+	set #Mob_Exp_Lv,#Mob_Exp_Lv + 1; 
+	set #Mob_Exp_Points,#Mob_Exp_Points + 1; 
+	dispbottom "狩獵等級提升為 ^0000ff"+#Mob_Exp_Lv+"^000000 級";
+	}
+
+	if ( #finhunts == 1 ) goto getreward;
+	if (gettime(5) != #huntday){
+	set #inhunt,0;
+	set #Mob_Quest_ID,0;
+	set #starthunttime,0;
+	set #Mob_Quest_Amt,0;
+	set #revtime,0;
+	}
+
+	if($@enablehunt==1) {
+	mes"[狩獵任務管理員]";
+	mes "每天半夜23：30-次日00：05不開放狩獵活動";
+	close;
+	} 
+
+	//任務執行中
+	if(#inhunt>0 && #inhunt<6){
+	if(gettime(2)+gettime(3)*60-#starthunttime<$@Quest_time[#inhunt-1]) goto ishunting;
+	if(gettime(2)+gettime(3)*60-#starthunttime>$@Quest_time[#inhunt-1]) goto Timeoutfailure; 
+	}
+
+	//任務冷卻
+	//if(gettime(2)+gettime(3)*60-#revtime<10 && gettime(2)+gettime(3)*60-#revtime>0) {
+	//set @Reti,gettime(2)+gettime(3)*60-#revtime;
+	//mes"[狩獵任務管理員]";
+	//mes "現在沒有任務，你已等待了"+@reti+"分鐘。";
+	//mes "需要等待60分鐘後才能在接任務";
+	//close;
+	//}
+
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務次數：^0000ff"+#Mob_Quest+"^000000 / 3";
+	mes "狩獵等級：^0000ff"+#Mob_Exp_Lv+"^000000 / 30";
+	mes "狩獵點數：^0000ff"+#Mob_Exp_Points+"^000000 / "+#Mob_Exp_Lv+"";
+	mes "狩獵經驗：^0000ff"+#Mob_Exp+"^000000 / "+#Mob_Exp_Max+"";
+	next;
+	switch(select("接取任務:系統說明:狩獵專精:製作裝備:擊殺提醒")){
+
+	case 1:
+	if (#Mob_Quest<1){ mes"任務次數已用完"; close; }
+
+	if(#Quest_Renew==0) {
+	set #Quest_Renew,1;
+	Start01:
+	set @hunta,rand(getarraysize($@Mob_Quest_ID_D));
+	set #Mob_Quest_ID_D,$@Mob_Quest_ID_D[@hunta];
+	set #Mob_Quest_Amt_D,$@Mob_Quest_Amt[0];
+	set @hunta,rand(getarraysize($@Mob_Quest_ID_C));
+	set #Mob_Quest_ID_C,$@Mob_Quest_ID_C[@hunta];
+	set #Mob_Quest_Amt_C,$@Mob_Quest_Amt[1];
+	set @hunta,rand(getarraysize($@Mob_Quest_ID_B));
+	set #Mob_Quest_ID_B,$@Mob_Quest_ID_B[@hunta];
+	set #Mob_Quest_Amt_B,$@Mob_Quest_Amt[2];
+	set @hunta,rand(getarraysize($@Mob_Quest_ID_A));
+	set #Mob_Quest_ID_A,$@Mob_Quest_ID_A[@hunta];
+	set #Mob_Quest_Amt_A,$@Mob_Quest_Amt[3];
+	set @hunta,rand(getarraysize($@Mob_Quest_ID_S));
+	set #Mob_Quest_ID_S,$@Mob_Quest_ID_S[@hunta];
+	set #Mob_Quest_Amt_S,$@Mob_Quest_Amt[4];
+	}
+		mes "[狩獵任務管理員]";
+		mes"必須在規定時間內解決我們要求獵殺的魔物";
+		mes"在這個過程中你不能死亡，並且在時間內完成，不然會判定任務失敗";
+		mes"任務一共分為 D、C、B、A、S 五個等級";
+		mes"等級越高的任務獎勵越高，但是相對失敗機會也越大";
+		next;
+		switch(select(
+		"^0000ff免費刷新^000000 ["+#Mob_Quest_Renew+"] 次",
+		"^0000ff狩獵任務刷新卷^000000 ["+countitem(70130)+"] 張",
+		#Mob_Quest_ID_D==0?"^33cc33[D級]^000000 ^CECECE無任務^000000":"^33cc33[D級]^000000 Lv"+getmonsterinfo(#Mob_Quest_ID_D,MOB_LV)+" ^ff0000"+getmonsterinfo(#Mob_Quest_ID_D,MOB_NAME)+"^000000 "+#Mob_Quest_Amt_D+"隻 - 狩獵經驗："+$@Mob_Quest_Exp[0]+"",
+		#Mob_Quest_ID_C==0?"^33cc33[C級]^000000 ^CECECE無任務^000000":"^33cc33[C級]^000000 Lv"+getmonsterinfo(#Mob_Quest_ID_C,MOB_LV)+" ^ff0000"+getmonsterinfo(#Mob_Quest_ID_C,MOB_NAME)+"^000000 "+#Mob_Quest_Amt_C+"隻 - 狩獵經驗："+$@Mob_Quest_Exp[1]+"",
+		#Mob_Quest_ID_B==0?"^99cc00[B級]^000000 ^CECECE無任務^000000":"^99cc00[B級]^000000 Lv"+getmonsterinfo(#Mob_Quest_ID_B,MOB_LV)+" ^ff0000"+getmonsterinfo(#Mob_Quest_ID_B,MOB_NAME)+"^000000 "+#Mob_Quest_Amt_B+"隻 - 狩獵經驗："+$@Mob_Quest_Exp[2]+"",
+		#Mob_Quest_ID_A==0?"^99cc00[A級]^000000 ^CECECE無任務^000000":"^99cc00[A級]^000000 Lv"+getmonsterinfo(#Mob_Quest_ID_A,MOB_LV)+" ^ff0000"+getmonsterinfo(#Mob_Quest_ID_A,MOB_NAME)+"^000000 "+#Mob_Quest_Amt_A+"隻 - 狩獵經驗："+$@Mob_Quest_Exp[3]+"",
+		#Mob_Quest_ID_S==0?"^ff0000[S級]^000000 ^CECECE無任務^000000":"^ff0000[S級]^000000 Lv"+getmonsterinfo(#Mob_Quest_ID_S,MOB_LV)+" ^ff0000"+getmonsterinfo(#Mob_Quest_ID_S,MOB_NAME)+"^000000 "+#Mob_Quest_Amt_S+"隻 - 狩獵經驗："+$@Mob_Quest_Exp[4]+""
+		)){
+
+			case 1:
+			if (#Mob_Quest_Renew<1){ mes"免費刷新次數已用完"; close; }
+			set #Mob_Quest_Renew,#Mob_Quest_Renew-1;
+			goto Start01;
+
+			case 2:
+			if ( countitem(70130)<1 ) { mes"狩獵任務刷新卷已用完"; close; }
+			delitem 70130,1;
+			goto Start01;
+
+			case 3:
+				if (#Mob_Quest_ID_D<1){ mes"沒有D級狩獵任務可接取"; close; }
+				mes"[狩獵任務管理員]";
+				mes"D級狩獵時間為^0000ff"+$@Quest_time[0]+"^000000分鐘";
+				mes"D級獎金為^0000ff"+$@Award_[0]+"zeny^000000";
+				mes"當你按下確定時計時開始，請根據要求獵殺怪物，在時間結束之前獵殺完怪物即可。領取獎勵時間不限。";
+				next;
+				switch(select("取消","確定"))
+					{
+						case 1:
+							close;
+						case 2:
+							set #Mob_Quest,#Mob_Quest-1;
+							set #inhunt,1;
+							set #starthunttime,gettime(2)+gettime(3)*60;
+							set #huntday,gettime(5);
+							set #revtime,gettime(2)+gettime(3)*60;
+							mes"[狩獵任務管理員]";
+							mes"你要獵殺"+getmonsterinfo(#Mob_Quest_ID_D,MOB_NAME);
+							mes" "+$@Mob_Quest_Amt[0]+"隻";
+							close;
+					}
+
+			case 4:
+				if (#Mob_Quest_ID_C<1){ mes"沒有C級狩獵任務可接取"; close; }
+				mes"[狩獵任務管理員]";
+				mes"C級狩獵時間為^0000ff"+$@Quest_time[1]+"^000000分鐘";
+				mes"C級獎金為^0000ff"+$@Award_[1]+"zeny^000000";
+				mes"當你按下確定時計時開始，請根據要求獵殺怪物，在時間結束之前獵殺完怪物即可。領取獎勵時間不限。";
+				next;
+				switch(select("取消","確定")){
+
+						case 1:
+							close;
+						case 2:
+							set #Mob_Quest,#Mob_Quest-1;
+							set #inhunt,2;
+							set #starthunttime,gettime(2)+gettime(3)*60;
+							set #huntday,gettime(5);
+							set #revtime,gettime(2)+gettime(3)*60;
+							mes"[狩獵任務管理員]";
+							mes"你要獵殺"+getmonsterinfo(#Mob_Quest_ID_C,MOB_NAME);
+							mes" "+$@Mob_Quest_Amt[1]+"隻";
+							close;
+					}
+
+			case 5:
+				if (#Mob_Quest_ID_B<1){ mes"沒有B級狩獵任務可接取"; close; }
+				mes"[狩獵任務管理員]";
+				mes "B級狩獵時間為^0000ff"+$@Quest_time[2]+"^000000分鐘";
+				mes "B級獎金為^0000ff"+$@Award_[2]+"zeny^000000";
+				mes "當你按下確定時計時開始，請根據要求獵殺怪物，在時間結束之前獵殺完怪物即可。領取獎勵時間不限。";
+				next;
+				switch(select("取消","確定")){
+
+						case 1:
+							close;
+						case 2:
+							set #Mob_Quest,#Mob_Quest-1;
+							set #inhunt,3;
+							set #starthunttime,gettime(2)+gettime(3)*60;
+							set #huntday,gettime(5);
+							set #revtime,gettime(2)+gettime(3)*60;
+							mes"[狩獵任務管理員]";
+							mes "你要獵殺"+getmonsterinfo(#Mob_Quest_ID_B,MOB_NAME);
+							mes $@Mob_Quest_Amt[2]+"隻";
+							close;
+					}
+
+			case 6:
+				if (#Mob_Quest_ID_A<1){ mes"沒有A級狩獵任務可接取"; close; }
+				mes"[狩獵任務管理員]";
+				mes "A級狩獵時間為^0000ff"+$@Quest_time[3]+"^000000分鐘";
+				mes "A級獎金為^0000ff"+$@Award_[3]+"zeny^000000";
+				mes "當你按下確定時計時開始，請根據要求獵殺怪物，在時間結束之前獵殺完怪物即可。領取獎勵時間不限。";
+				next;
+				switch(select("取消","確定")){
+						case 1:
+							close;
+						case 2:
+							set #Mob_Quest,#Mob_Quest-1;
+							set #inhunt,4;
+							set #starthunttime,gettime(2)+gettime(3)*60;
+							set #huntday,gettime(5);
+							set #revtime,gettime(2)+gettime(3)*60;
+							mes"[狩獵任務管理員]";
+							mes "你要獵殺"+getmonsterinfo(#Mob_Quest_ID_A,MOB_NAME);
+							mes $@Mob_Quest_Amt[3]+"隻";
+							close;
+					}
+
+			case 7:
+				if (#Mob_Quest_ID_S<1){ mes"沒有S級狩獵任務可接取"; close; }
+				mes "S級狩獵時間為^0000ff"+$@Quest_time[4]+"^000000分鐘";
+				mes "S級獎金為^0000ff"+$@Award_[4]+"zeny^000000";
+				mes "當你按下確定時計時開始，請根據要求獵殺怪物，在時間結束之前獵殺完怪物即可。領取獎勵時間不限。";
+				next;
+				switch(select("取消","確定")){
+
+						case 1:
+							close;
+						case 2:
+							set #Mob_Quest,#Mob_Quest-1;
+							set #inhunt,5;
+							set #starthunttime,gettime(2)+gettime(3)*60;
+							set #huntday,gettime(5);
+							set #revtime,gettime(2)+gettime(3)*60;
+							mes"[狩獵任務管理員]";
+							mes "你要獵殺"+getmonsterinfo(#Mob_Quest_ID_S,MOB_NAME);
+							mes $@Mob_Quest_Amt[4]+"隻";
+							close;
+					}
+
+			}	
+
+	case 2:
+	Mob_Quest_next2:
+	mes "[狩獵任務管理員]";
+	mes "你想要聽哪一方面的說明?";
+	next;
+	switch(select("狩獵專精能力:狩獵任務獎勵:取消")) {
+
+		case 1:
+		mes "[狩獵任務管理員]";
+		mes "狩獵首領專精：每提升一級，^0000FF對首領階級魔物傷害+2%^000000";
+		mes "狩獵無形專精：每提升一級，^0000FF對無形魔物傷害+4%^000000";
+		mes "狩獵不死專精：每提升一級，^0000FF對不死魔物傷害+4%^000000";
+		mes "狩獵動物專精：每提升一級，^0000FF狩獵動物專精+4%^000000";
+		mes "狩獵植物專精：每提升一級，^0000FF狩獵植物專精+4%^000000";
+		mes "狩獵昆蟲專精：每提升一級，^0000FF狩獵昆蟲專精+4%^000000";
+		mes "狩獵魚貝專精：每提升一級，^0000FF狩獵魚貝專精+4%^000000";
+		mes "狩獵惡魔專精：每提升一級，^0000FF狩獵惡魔專精+4%^000000";
+		mes "狩獵人形專精：每提升一級，^0000FF狩獵人形專精+4%^000000"; 
+		mes "狩獵天使專精：每提升一級，^0000FF狩獵天使專精+4%^000000";
+		mes "狩獵龍族專精：每提升一級，^0000FF狩獵龍族專精+4%^000000";
+		next;
+		goto Mob_Quest_next2;
+
+		case 2:
+		mes "[狩獵任務管理員]";
+		mes "D級狩獵任務獎勵：";
+		mes "^i[80113]";
+		mes "狩獵經驗50";
+		mes "50萬Zeny";
+		next;
+		mes "C級狩獵任務獎勵：";
+		mes "^i[80113]";
+		mes "狩獵經驗250";
+		mes "100萬Zeny";
+		next;
+		mes "B級狩獵任務獎勵：";
+		mes "^i[80114]";
+		mes "狩獵經驗200";
+		mes "150萬Zeny";
+		next;
+		mes "A級狩獵任務獎勵：";
+		mes "^i[80114]";
+		mes "狩獵經驗500";
+		mes "300萬Zeny";
+		next;
+		mes "A級狩獵任務獎勵：";
+		mes "^i[80115]";
+		mes "狩獵經驗600";
+		mes "50萬Zeny";
+		next;
+		goto Mob_Quest_next2;
+
+		case 3:
+		close;
+		}
+
+
+	case 3:
+	Mob_Quest_next3:
+	mes "[狩獵任務管理員]";
+	mes "已經學習的狩獵專精：";
+	if(#Mob_Quest_Boss >0){ mes "狩獵首領專精：Lv^0000FF"+#Mob_Quest_Boss+""; mes " 附加能力：^0000FF對首領階級魔物傷害 + "+(#Mob_Quest_Boss*2)+"^000000"; }
+	if(#Mob_Quest_Formless >0){ mes "狩獵無形專精：Lv^0000FF"+#Mob_Quest_Formless+""; mes " 附加能力：^0000FF對無形魔物傷害 + "+(#Mob_Quest_Formless*4)+"^000000"; }
+	if(#Mob_Quest_Undead >0){ mes "狩獵不死專精：Lv^0000FF"+#Mob_Quest_Undead+""; mes " 附加能力：^0000FF對不死魔物傷害 + "+(#Mob_Quest_Undead*4)+"^000000"; }
+	if(#Mob_Quest_Brute >0){ mes "狩獵動物專精：Lv^0000FF"+#Mob_Quest_Brute+""; mes " 附加能力：^0000FF對動物魔物傷害 + "+(#Mob_Quest_Brute*4)+"^000000"; }
+	if(#Mob_Quest_Plant >0){ mes "狩獵植物專精：Lv^0000FF"+#Mob_Quest_Plant+""; mes " 附加能力：^0000FF對植物魔物傷害 + "+(#Mob_Quest_Plant*4)+"^000000"; }
+	if(#Mob_Quest_Insect >0){ mes "狩獵昆蟲專精：Lv^0000FF"+#Mob_Quest_Insect+""; mes " 附加能力：^0000FF對昆蟲魔物傷害 + "+(#Mob_Quest_Insect*4)+"^000000"; }
+	if(#Mob_Quest_Fish >0){ mes "狩獵魚貝專精：Lv^0000FF"+#Mob_Quest_Fish+""; mes " 附加能力：^0000FF對魚貝魔物傷害 + "+(#Mob_Quest_Fish*4)+"^000000"; }
+	if(#Mob_Quest_Demons >0){ mes "狩獵惡魔專精：Lv^0000FF"+#Mob_Quest_Demons+""; mes " 附加能力：^0000FF對惡魔魔物傷害 + "+(#Mob_Quest_Demons*4)+"^000000"; }
+	if(#Mob_Quest_DemiHuman >0){ mes "狩獵人形專精：Lv^0000FF"+#Mob_Quest_DemiHuman+""; mes " 附加能力：^0000FF對人形魔物傷害 + "+(#Mob_Quest_DemiHuman*4)+"^000000"; }
+	if(#Mob_Quest_Angel >0){ mes "狩獵天使專精：Lv^0000FF"+#Mob_Quest_Angel+""; mes " 附加能力：^0000FF對天使魔物傷害 + "+(#Mob_Quest_Angel*4)+"^000000"; }
+	if(#Mob_Quest_Dragon> 0){ mes "狩獵龍族專精：Lv^0000FF"+#Mob_Quest_Dragon+""; mes " 附加能力：^0000FF對龍族魔物傷害 + "+(#Mob_Quest_Dragon*4)+"^000000"; }
+	next;
+	mes "[狩獵任務管理員]";
+	mes "狩獵點數：^0000ff"+#Mob_Exp_Points+"^000000 / "+#Mob_Exp_Lv+"";
+	mes "狩獵專精每升1級，扣1點狩獵點數";
+	mes "你想要提升那個狩獵專精?";
+	next;
+	switch(select("狩獵首領專精:狩獵無形專精:狩獵不死專精:狩獵動物專精:狩獵植物專精:狩獵昆蟲專精:狩獵魚貝專精:狩獵惡魔專精:狩獵人形專精:狩獵天使專精:狩獵龍族專精:重置狩獵專精")) {
+
+		case 1:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Boss==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Boss,#Mob_Quest_Boss + 1;
+		status_calc();
+		dispbottom "狩獵首領專精 等級提升為 "+#Mob_Quest_Boss+"";
+		goto Mob_Quest_next3;
+
+		case 2:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Formless==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Formless,#Mob_Quest_Formless + 1;
+		status_calc();
+		dispbottom "狩獵無形專精 等級提升為 "+#Mob_Quest_Formless+"";
+		goto Mob_Quest_next3;
+
+		case 3:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Undead==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Undead,#Mob_Quest_Undead + 1;
+		status_calc();
+		dispbottom "狩獵不死專精 等級提升為 "+#Mob_Quest_Undead+"";
+		goto Mob_Quest_next3;
+
+		case 4:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Brute==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Brute,#Mob_Quest_Brute + 1;
+		status_calc();
+		dispbottom "狩獵動物專精 等級提升為 "+#Mob_Quest_Brute+"";
+		goto Mob_Quest_next3;
+
+		case 5:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Plant==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Plant,#Mob_Quest_Plant + 1;
+		status_calc();
+		dispbottom "狩獵植物專精 等級提升為 "+#Mob_Quest_Plant+"";
+		goto Mob_Quest_next3;
+
+		case 6:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Insect==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Insect,#Mob_Quest_Insect + 1;
+		status_calc();
+		dispbottom "狩獵昆蟲專精 等級提升為 "+#Mob_Quest_Insect+"";
+		goto Mob_Quest_next3;
+
+		case 7:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Fish==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Fish,#Mob_Quest_Fish + 1;
+		status_calc();
+		dispbottom "狩獵魚貝專精 等級提升為 "+#Mob_Quest_Fish+"";
+		goto Mob_Quest_next3;
+
+		case 8:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Demons==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Demons,#Mob_Quest_Demons + 1;
+		status_calc();
+		dispbottom "狩獵惡魔專精 等級提升為 "+#Mob_Quest_Demons+"";
+		goto Mob_Quest_next3;
+
+		case 9:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_DemiHuman==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_DemiHuman,#Mob_Quest_DemiHuman + 1;
+		status_calc();
+		dispbottom "狩獵人形專精 等級提升為 "+#Mob_Quest_DemiHuman+"";
+		goto Mob_Quest_next3;
+
+		case 10:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Angel==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Angel,#Mob_Quest_Angel + 1;
+		status_calc();
+		dispbottom "狩獵天使專精 等級提升為 "+#Mob_Quest_Angel+"";
+		goto Mob_Quest_next3;
+
+		case 11:
+		if(#Mob_Exp_Points==0){mes "[狩獵任務管理員]"; mes "狩獵點數不夠!"; close;}
+		if(#Mob_Quest_Dragon==10){mes "[狩獵任務管理員]"; mes "這個狩獵專精已經滿級了!"; close;}
+		set #Mob_Exp_Points,#Mob_Exp_Points - 1;
+		set #Mob_Quest_Dragon,#Mob_Quest_Dragon + 1;
+		status_calc();
+		dispbottom "狩獵龍族專精 等級提升為 "+#Mob_Quest_Dragon+"";
+		goto Mob_Quest_next3;
+
+		case 12:
+		set #Mob_Quest_Boss,0;
+		set #Mob_Quest_Formless,0;
+		set #Mob_Quest_Undead,0;
+		set #Mob_Quest_Brute,0;
+		set #Mob_Quest_Plant,0;
+		set #Mob_Quest_Insect,0;
+		set #Mob_Quest_Fish,0;
+		set #Mob_Quest_Demons,0;
+		set #Mob_Quest_DemiHuman,0;
+		set #Mob_Quest_Angel,0;
+		set #Mob_Quest_Dragon,0;
+		set #Mob_Exp_Points,#Mob_Exp_Lv;
+		status_calc();
+		dispbottom "重置狩獵專精完成";
+		goto Mob_Quest_next3;
+		}
+
+	case 4:
+	callshop "舊神器製作";
+	end;
+
+	case 5:
+	mes "[狩獵任務管理員]";
+	mes "擊殺提醒是否開啟";
+	next;
+	switch(select("開啟 擊殺提醒","關閉 擊殺提醒")){
+	case 1:
+	set #Message_Switch,1;
+	announce "擊殺提醒已開啟",bc_blue|bc_self;
+	close;
+	case 2:
+	set #Message_Switch,0;
+	announce "擊殺提醒已關閉",bc_blue|bc_self;
+	close;
+	}
+
+}
+	end;
+//---------------------------------
+ishunting:
+	if(#inhunt==1){
+	mes "[狩獵任務管理員]";
+	mes "剩餘時間："+((gettime(2)+gettime(3)*60-#starthunttime)-$@Quest_time[#inhunt-1])+"分鐘";
+	mes "你還要要獵殺"+getmonsterinfo(#Mob_Quest_ID_D,MOB_NAME);
+	mes #Mob_Quest_Amt_D+"隻";
+	next;
+	if(select("繼續任務:取消任務")==1) end;;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務已取消了";
+	close;
+	}
+
+	if(#inhunt==2){
+	mes"[狩獵任務管理員]";
+	mes "剩餘時間："+((gettime(2)+gettime(3)*60-#starthunttime)-$@Quest_time[#inhunt-1])+"分鐘";
+	mes "你還要要獵殺"+getmonsterinfo(#Mob_Quest_ID_C,MOB_NAME);
+	mes #Mob_Quest_Amt_C+"隻";
+	next;
+	if(select("繼續任務:取消任務")==1) end;;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務已取消了";
+	close;
+	}
+	if(#inhunt==3){
+	mes "[狩獵任務管理員]";
+	mes "剩餘時間："+((gettime(2)+gettime(3)*60-#starthunttime)-$@Quest_time[#inhunt-1])+"分鐘";
+	mes "你還要要獵殺"+getmonsterinfo(#Mob_Quest_ID_B,MOB_NAME);
+	mes #Mob_Quest_Amt_B+"隻";
+	next;
+	if(select("繼續任務:取消任務")==1) end;;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務已取消了";
+	close;
+	}
+	if(#inhunt==4){
+	mes "[狩獵任務管理員]";
+	mes "剩餘時間："+((gettime(2)+gettime(3)*60-#starthunttime)-$@Quest_time[#inhunt-1])+"分鐘";
+	mes "你還要要獵殺"+getmonsterinfo(#Mob_Quest_ID_A,MOB_NAME);
+	mes #Mob_Quest_Amt_A+"隻";
+	next;
+	if(select("繼續任務:取消任務")==1) end;;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務已取消了";
+	close;
+	}
+	if(#inhunt==5){
+	mes "[狩獵任務管理員]";
+	mes "剩餘時間："+((gettime(2)+gettime(3)*60-#starthunttime)-$@Quest_time[#inhunt-1])+"分鐘";
+	mes "你還要要獵殺"+getmonsterinfo(#Mob_Quest_ID_S,MOB_NAME);
+	mes #Mob_Quest_Amt_S+"隻";
+	next;
+	if(select("繼續任務:取消任務")==1) end;;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #revtime,0;
+	mes "[狩獵任務管理員]";
+	mes "任務已取消了";
+	close;
+	}
+	end;
+
+Timeoutfailure:	
+	mes"[狩獵任務管理員]";
+	mes "對不起你已經超時了";
+	set #starthunttime,0;
+	set #inhunt,0;
+	set #Mob_Quest_ID_D,0;
+	set #Mob_Quest_Amt_D,0;
+	set #Mob_Quest_ID_C,0;
+	set #Mob_Quest_Amt_C,0;
+	set #Mob_Quest_ID_B,0;
+	set #Mob_Quest_Amt_B,0;
+	set #Mob_Quest_ID_A,0;
+	set #Mob_Quest_Amt_A,0;
+	set #Mob_Quest_ID_S,0;
+	set #Mob_Quest_Amt_S,0;
+	close;
+
+
+OnNPCKillEvent:
+	//避開地圖
+	if(strcharinfo(3) == "guild_1"){ end; }
+	if(strcharinfo(3) == "guild_2"){ end; }
+	if(strcharinfo(3) == "guild_3"){ end; }
+	if(strcharinfo(3) == "guild_4"){ end; }
+	if(strcharinfo(3) == "guild_5"){ end; }
+	
+	if ( #inhunt>0 && #inhunt<6 && #finhunts==0){
+	if ( gettime(2)+gettime(3)*60-#starthunttime>$@Quest_time[#inhunt-1]) goto Timeoutfailure_End;
+
+	//D級狩獵
+	if ( #inhunt==1 && killedrid==#Mob_Quest_ID_D){
+	set #Mob_Quest_Amt_D,#Mob_Quest_Amt_D-1;
+	if ( #Mob_Quest_Amt_D < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_D+"隻"+getmonsterinfo(#Mob_Quest_ID_D,MOB_NAME),bc_blue|bc_self;
+	}
+	//C級狩獵
+	if ( #inhunt==2 && killedrid==#Mob_Quest_ID_C){
+	set #Mob_Quest_Amt_C,#Mob_Quest_Amt_C-1;
+	if ( #Mob_Quest_Amt_C < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_C+"隻"+getmonsterinfo(#Mob_Quest_ID_C,MOB_NAME),bc_blue|bc_self;
+	}
+	//B級狩獵
+	if ( #inhunt==3 && killedrid==#Mob_Quest_ID_B){
+	set #Mob_Quest_Amt_B,#Mob_Quest_Amt_B-1;
+	if ( #Mob_Quest_Amt_B < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_B+"隻"+getmonsterinfo(#Mob_Quest_ID_B,MOB_NAME),bc_blue|bc_self;
+	}
+	//A級狩獵
+	if ( #inhunt==4 && killedrid==#Mob_Quest_ID_A){
+	set #Mob_Quest_Amt_A,#Mob_Quest_Amt_A-1;
+	if ( #Mob_Quest_Amt_A < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_A+"隻"+getmonsterinfo(#Mob_Quest_ID_A,MOB_NAME),bc_blue|bc_self;
+	}
+	//S級狩獵
+	if ( #inhunt==5 && killedrid==#Mob_Quest_ID_S){
+	set #Mob_Quest_Amt_S,#Mob_Quest_Amt_S-1;
+	if ( #Mob_Quest_Amt_S < 1 ) goto finhunt;
+	if (#Message_Switch==0){ end; }
+	announce "還要獵殺"+#Mob_Quest_Amt_S+"隻"+getmonsterinfo(#Mob_Quest_ID_S,MOB_NAME),bc_blue|bc_self;
+	}
+
+	}
+	end;
+
+Timeoutfailure_End:
+	announce "超過時間，狩獵任務失敗",bc_blue|bc_self;
+	set #Mob_Quest_ID,0;
+	set #starthunttime,0;
+	set #Mob_Quest_Amt,0;
+	set #inhunt,0;
+	end;
+
+finhunt:
+	//任務完成
+	announce "狩獵任務完成，請找狩獵任務管理員領取獎勵",bc_blue|bc_self;
+	set #starthunttime,0;
+	set #finhunts,1;
+	end;
+
+OnPCDieEvent:
+	//人物死亡
+	if ( #inhunt==0 || #finhunts ==1) end;
+	announce "任務期間死亡，導致狩獵任務失敗",bc_blue|bc_self;
+	if ( #inhunt==1 ){ set #Mob_Quest_ID_D,0; set #Mob_Quest_Amt_D,0; }
+	if ( #inhunt==2 ){ set #Mob_Quest_ID_C,0; set #Mob_Quest_Amt_C,0; }
+	if ( #inhunt==3 ){ set #Mob_Quest_ID_B,0; set #Mob_Quest_Amt_B,0; }
+	if ( #inhunt==4 ){ set #Mob_Quest_ID_A,0; set #Mob_Quest_Amt_A,0; }
+	if ( #inhunt==5 ){ set #Mob_Quest_ID_S,0; set #Mob_Quest_Amt_S,0; }
+	set #starthunttime,0;
+	set #inhunt,0;
+	end;
+
+getreward:
+	//領取獎勵
+	mes "[狩獵任務管理員]";
+	mes ""+strcharinfo(0)+"，你出色的完成了任務";
+	set #starthunttime,0;
+	if ( #inhunt==1 ){ 
+	mes"狩獵獎金："+$@Award_[#inhunt-1];
+	mes"狩獵經驗："+$@Mob_Quest_Exp[#inhunt-1];
+	mes"狩獵獎勵：史詩狩獵箱";
+	set zeny,zeny + $@Award_[#inhunt-1];
+	set #Mob_Exp,#Mob_Exp + $@Mob_Quest_Exp[#inhunt-1];
+	getitem 80113,1;	//史詩狩獵箱
+	set #Mob_Quest_ID_D,0;
+	set #Mob_Quest_Amt_D,0;
+	set #finhunts,0;
+	set #inhunt,0;
+	}
+	if ( #inhunt==2 ){ 
+	mes"狩獵獎金："+$@Award_[#inhunt-1];
+	mes"狩獵經驗："+$@Mob_Quest_Exp[#inhunt-1];
+	mes"狩獵獎勵：史詩狩獵箱";
+	set zeny,zeny + $@Award_[#inhunt-1];
+	set #Mob_Exp,#Mob_Exp + $@Mob_Quest_Exp[#inhunt-1];
+	getitem 80113,1;	//史詩狩獵箱
+	set #Mob_Quest_ID_C,0;
+	set #Mob_Quest_Amt_C,0;
+	set #finhunts,0;
+	set #inhunt,0;
+	}
+	if ( #inhunt==3 ){ 
+	mes"狩獵獎金："+$@Award_[#inhunt-1];
+	mes"狩獵經驗："+$@Mob_Quest_Exp[#inhunt-1];
+	mes"狩獵獎勵：傳說狩獵箱";
+	set zeny,zeny + $@Award_[#inhunt-1];
+	set #Mob_Exp,#Mob_Exp + $@Mob_Quest_Exp[#inhunt-1];
+	getitem 80114,1;	//傳說狩獵箱
+	set #Mob_Quest_ID_B,0;
+	set #Mob_Quest_Amt_B,0;
+	set #finhunts,0;
+	set #inhunt,0;
+	}
+	if ( #inhunt==4 ){ 
+	mes"狩獵獎金："+$@Award_[#inhunt-1];
+	mes"狩獵經驗："+$@Mob_Quest_Exp[#inhunt-1];
+	mes"狩獵獎勵：傳說狩獵箱";
+	set zeny,zeny + $@Award_[#inhunt-1];
+	set #Mob_Exp,#Mob_Exp + $@Mob_Quest_Exp[#inhunt-1];
+	getitem 80114,1;	//傳說狩獵箱
+	set #Mob_Quest_ID_A,0;
+	set #Mob_Quest_Amt_A,0;
+	set #finhunts,0;
+	set #inhunt,0;
+	}
+	if ( #inhunt==5 ){ 
+	mes"狩獵獎金："+$@Award_[#inhunt-1];
+	mes"狩獵經驗："+$@Mob_Quest_Exp[#inhunt-1];
+	mes"狩獵獎勵：榮耀狩獵箱";
+	set zeny,zeny + $@Award_[#inhunt-1];
+	set #Mob_Exp,#Mob_Exp + $@Mob_Quest_Exp[#inhunt-1];
+	getitem 80115,1;	//榮耀狩獵箱
+	set #Mob_Quest_ID_S,0;
+	set #Mob_Quest_Amt_S,0;
+	set #finhunts,0;
+	set #inhunt,0;
+	}
+	close;
+
+OnInit:
+	waitingroom "狩獵任務管理員",0;
+	setarray $@Mob_Quest_ID_D[0],1037,1099,1149,1154,1155,1156,1163,1189,1196,1197,1199,1207,1209,1216,1213,1267,1269,1193,1253,1263,1264,1274,1276,1314,1317,1368,1381,1382,1493,1500,1504,1632,1633,1715,1718,1652,1653,1654,1655,1656,1657;
+	setarray $@Mob_Quest_ID_C[0],1037,1099,1149,1154,1155,1156,1163,1189,1196,1197,1199,1207,1209,1216,1213,1267,1269,1193,1253,1263,1264,1274,1276,1314,1317,1368,1381,1382,1493,1500,1504,1632,1633,1715,1718,1652,1653,1654,1655,1656,1657;
+	setarray $@Mob_Quest_ID_B[0],20920,20921,20922,2092320924,20925,20926,20927,20929,20930,20932,20933,20931,20935,20936,20937,20938,20939,20940,20941,20942;
+	setarray $@Mob_Quest_ID_A[0],20920,20921,20922,2092320924,20925,20926,20927,20929,20930,20932,20933,20931,20935,20936,20937,20938,20939,20940,20941,20942;
+	setarray $@Mob_Quest_ID_S[0],1038,1039,1046,1059,1086,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1719,1734,1751,1768,1779,1785,1832,1871,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+//--------------------------------------------------------------狩獵時間
+	setarray $@Quest_time[0],60,360,60,360,360;
+//--------------------------------------------------------------狩獵數量
+	setarray $@Mob_Quest_Amt[0],50,300,50,300,1;
+//--------------------------------------------------------------任務經驗
+	setarray $@Mob_Quest_Exp[0],50,250,200,500,600;
+//--------------------------------------------------------------任務金幣
+	setarray $@Award_[0],500000,1000000,1500000,3000000,5000000;
+	end;
+onclock2330:
+	set $@enablehunt,1;
+	end;
+onclock0005:	
+	set $@enablehunt,0;
+	end;
+}
+
+

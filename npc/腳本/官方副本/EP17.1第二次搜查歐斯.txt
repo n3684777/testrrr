@@ -1,0 +1,268 @@
+
+vdistrict1,34,42,4	script	第二次搜查歐斯管理者	10193,{
+
+	//副本任務獎勵
+	if(checkquest(32067,HUNTING)==2 ) { 
+	dispbottom "第二次搜查歐斯任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25723,1*$EP1701;	//核心元件
+	getitem 25669,5*$EP1701;	//神秘零件
+	getitem 61006,rand(3,5);	//商城1點金幣
+	getexp 800000,760000;
+	erasequest 32067; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_31 < gettime(8) ){
+	set Instance_Bout_31,10;
+	set day_Instance_Bout_31,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_31 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[作戰軍官]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+
+	.@md_name$ = "第二次搜查歐斯";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[作戰軍官]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1701+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_31+"^000000 ]";
+	mes "副本獎勵：";
+	mes "核心元件x1";
+	mes "神秘零件x5";
+	mes "商城1點金幣x3~5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 110) {
+			mes "[作戰軍官]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.110 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[作戰軍官]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[作戰軍官]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 110) {
+			mes "[作戰軍官]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.110 後再來吧…"; 
+			close;
+		}	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_31,Instance_Bout_31-1;
+
+			//副本任務
+			if(checkquest(32067,HUNTING)<0 ){setquest 32067;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "第二次搜查歐斯",0;
+	end;
+}
+
+
+//------------------------------第二次搜查歐斯事件
+1@os_a,0,0,0	script	第二次搜查歐斯事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@os_a");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("作戰軍官#01");
+	//------開始放怪
+	monster 'map_name$[0],316,108,"--ja--",20348,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],309,100,"--ja--",20349,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],299,94,"--ja--",20350,4,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],273,94,"--ja--",20348,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],269,98,"--ja--",20349,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],267,92,"--ja--",20350,4,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],256,65,"--ja--",20348,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],258,52,"--ja--",20349,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],250,57,"--ja--",20350,4,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],246,50,"--ja--",20348,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],260,75,"--ja--",20349,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	monster 'map_name$[0],257,89,"--ja--",20350,4,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd1";
+	//副本標籤
+	set 'CD_OS_Mob_01,40;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：第一區域還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	instance_announce 0, "【副本公告】第二區域的怪物生成了，快去清除掉!",bc_map,"0xFFFF33";
+	areamonster 'map_name$[0],198,87,207,75,"--ja--",20348,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],198,87,207,75,"--ja--",20349,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],198,87,207,75,"--ja--",20350,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd2";
+	set 'CD_OS_Mob_01,15;
+	end;
+
+	OnCcdd2:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：第二區域還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	instance_announce 0, "【副本公告】第三區域的怪物生成了，快去清除掉!",bc_map,"0xFFFF33";
+	areamonster 'map_name$[0],203,132,224,128,"--ja--",20348,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],203,132,224,128,"--ja--",20349,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],203,132,224,128,"--ja--",20350,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd3";
+	set 'CD_OS_Mob_01,15;
+	end;
+
+	OnCcdd3:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：第三區域還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	instance_announce 0, "【副本公告】第四區域的怪物生成了，快去清除掉!",bc_map,"0xFFFF33";
+	areamonster 'map_name$[0],228,159,260,157,"--ja--",20348,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],228,159,260,157,"--ja--",20349,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],228,159,260,157,"--ja--",20350,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd4";
+	set 'CD_OS_Mob_01,15;
+	end;
+
+	OnCcdd4:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：第四區域還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	instance_announce 0, "【副本公告】第五區域的怪物生成了，快去清除掉!",bc_map,"0xFFFF33";
+	areamonster 'map_name$[0],220,170,225,190,"--ja--",20348,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],220,170,225,190,"--ja--",20349,3,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],220,170,225,190,"--ja--",20350,4,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],196,187,255,187,"--ja--",20348,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],196,187,255,187,"--ja--",20349,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],196,187,255,187,"--ja--",20350,5,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd5";
+	set 'CD_OS_Mob_01,25;
+	end;
+
+	OnCcdd5:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：第五區域還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	instance_announce 0, "【副本公告】所有區域的怪物都清除了，有股危險的氣息出現了",bc_map,"0xFFFF33";
+	areamonster 'map_name$[0],197,186,249,186,"--ja--",20346,1,instance_npcname("第二次搜查歐斯事件1")+"::OnCcdd10";
+	end;
+
+	OnCcdd10:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【第二次搜查歐斯】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("作戰軍官#01");
+	instance_announce 0, "作戰軍官：你們動作真是快速來(187,192)找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@os_a,187,195,6	script	作戰軍官#01	10193,{
+
+	mes "[作戰軍官]";
+	mes "讓我把你們送出第二次搜查歐斯吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32067,HUNTING)==2 ) { 
+	dispbottom "第二次搜查歐斯任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25723,1*$EP1701;	//核心元件
+	getitem 25669,5*$EP1701;	//神秘零件
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	getexp 800000,760000;
+	erasequest 32067; }
+	callfunc "offical_instance_finish",43;
+
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@os_a	mapflag	partylock
+1@os_a	mapflag	noteleport
+1@os_a	mapflag	nosave	SavePoint
+1@os_a	mapflag	nomemo
+1@os_a	mapflag	nobranch
+1@os_a	mapflag	noicewall
+1@os_a	mapflag	restricted	6
+
+

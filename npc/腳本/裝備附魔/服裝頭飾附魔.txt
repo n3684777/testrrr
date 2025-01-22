@@ -1,0 +1,750 @@
+//------------------------------------------------
+vdistrict1,80,45,6	script	阿維爾_道旭	505,{
+	mes "[阿維爾 道旭]";
+	mes "我們時尚魔石經營各類服裝道具";
+	next;
+	mes "[阿維爾 道旭]";
+	mes "若想把服裝頭具設計的更酷炫，交給我店長阿維爾 道旭準沒錯";
+	mes "^FF0000服裝頭具和服裝石要親自準備^000000，請別忘了喔~";
+	mes "^FF0000附魔費用10萬RO幣^000000";
+	next;
+	switch(select("附魔服裝(頭上):附魔服裝(頭中):附魔服裝(頭下):結束對話。")){
+
+case 1:
+	mes "[阿維爾 道旭]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(10) == 0) set .@strRetPart11$,"";
+	else set .@strRetPart11$,getequipname(10);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$)-1;
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[阿維爾 道旭]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[阿維爾 道旭]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[阿維爾 道旭]";
+	mes " "+@itemid+" ";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(6636)>=1?"力量石(頭上)":"",Mag6636,
+	countitem(6637)>=1?"智慧石(頭上)":"",Mag6637,
+	countitem(6638)>=1?"敏捷石(頭上)":"",Mag6638,
+	countitem(6639)>=1?"靈巧石(頭上)":"",Mag6639,
+	countitem(6640)>=1?"體力石(頭上)":"",Mag6640,
+	countitem(6641)>=1?"幸運石(頭上)":"",Mag6641,
+	countitem(6740)>=1?"恢復石(頭上)":"",Mag6740,
+	countitem(6741)>=1?"恢復技能石(頭上)":"",Mag6741,
+	countitem(6790)>=1?"大型石(頭上)":"",Mag6790,
+	countitem(6791)>=1?"中型石(頭上)":"",Mag6791,
+	countitem(6792)>=1?"小型石(頭上)":"",Mag6792,
+	countitem(6943)>=1?"攻擊石(頭上)":"",Mag6943,
+	countitem(6944)>=1?"魔攻石(頭上)":"",Mag6944,
+	countitem(6999)>=1?"HP吸收石(頭上)":"",Mag6999,
+	countitem(25000)>=1?"SP吸收石(頭上)":"",Mag25000,
+	countitem(25068)>=1?"ASPD石(頭上)":"",Mag25068,
+	countitem(25069)>=1?"改良石(頭上)":"",Mag25069,
+	countitem(25171)>=1?"經驗值石(頭上)":"",Mag25171,
+	countitem(25172)>=1?"變詠石(頭上)":"",Mag25172,
+	countitem(25304)>=1?"暴擊石(頭上)":"",Mag25304,
+	countitem(1000377)>=1?"近接石(頭上)":"",Mag1000377,
+	countitem(1000375)>=1?"廣域石(頭上)":"",Mag1000375,
+	countitem(1000528)>=1?"魔法屬性石(頭上)":"",Mag1000528,
+
+	countitem(25409)>=1?"武術宗師石(頭上)":"",Mag25409,
+	countitem(25413)>=1?"神射手石(頭上)":"",Mag25413,
+	countitem(25417)>=1?"智者石(頭上)":"",Mag25417,
+	countitem(25445)>=1?"騎士領主石(頭上)":"",Mag25445,
+	countitem(25450)>=1?"創造者石(頭上)":"",Mag25450,
+	countitem(25453)>=1?"超魔導師石(頭上)":"",Mag25453,
+	countitem(25490)>=1?"神行太保石(頭上)":"",Mag25490,
+	countitem(25494)>=1?"神工匠石(頭上)":"",Mag25494,
+	countitem(25498)>=1?"藝人舞姬石(頭上)":"",Mag25498,
+	countitem(25706)>=1?"神官石(頭上)":"",Mag25706,
+	countitem(25710)>=1?"聖殿十字軍石(頭上)":"",Mag25710,
+	countitem(25714)>=1?"十字刺客石(頭上)":"",Mag25714,
+
+	countitem(25800)>=1?"武術宗師石II(頭上)":"",Mag25800,
+	countitem(25804)>=1?"智者石II(頭上)":"",Mag25804,
+	countitem(25808)>=1?"神行太保石II(頭上)":"",Mag25808,
+	countitem(25843)>=1?"悟靈士石(頭上)":"",Mag25843,
+	countitem(25846)>=1?"拳聖石(頭上)":"",Mag25846,
+	countitem(25850)>=1?"忍者石(頭上)":"",Mag25850,
+	countitem(25855)>=1?"槍手石(頭上)":"",Mag25855,
+	countitem(25859)>=1?"杜蘭族石(頭上)":"",Mag25859,
+	countitem(1000008)>=1?"神射手石II(頭上)":"",Mag1000008,
+	countitem(1000012)>=1?"神工匠石II(頭上)":"",Mag1000012,
+	countitem(1000016)>=1?"神官石II(頭上)":"",Mag1000016,
+	countitem(1000214)>=1?"超魔導師石II(頭上)":"",Mag1000214,
+	countitem(1000218)>=1?"聖殿十字軍石II(頭上)":"",Mag1000218,
+	countitem(1000222)>=1?"十字刺客石II(頭上)":"",Mag1000222,
+	countitem(1000297)>=1?"騎士領主石II(頭上)":"",Mag1000297,
+	countitem(1000301)>=1?"創造者石III(頭上)":"",Mag1000301,
+	countitem(1000305)>=1?"搞笑藝人/冷豔舞姬石II(頭上)":"",Mag1000305,
+
+	countitem(1000610)>=1?"盧恩騎士石(頭上)":"",Mag1000610,
+	countitem(1000613)>=1?"咒術士石(頭上)":"",Mag1000613,
+	countitem(1000616)>=1?"皇家禁衛軍石(頭上)":"",Mag1000616,
+	countitem(1000666)>=1?"宮廷樂師/浪跡舞者石(頭上)":"",Mag1000666,
+	countitem(1000669)>=1?"基因學者石(頭上)":"",Mag1000669,
+	countitem(1000672)>=1?"妖術師石(頭上)":"",Mag1000672,
+	countitem(1000857)>=1?"大主教石(頭上)":"",Mag1000857,
+	countitem(1000860)>=1?"遊俠石(頭上)":"",Mag1000860,
+	countitem(1000863)>=1?"魅影追蹤者石(頭上)":"",Mag1000863,
+	countitem(1000968)>=1?"修羅石(頭上)":"",Mag1000968,
+	countitem(1000971)>=1?"機械工匠石(頭上)":"",Mag1000971,
+	countitem(1000974)>=1?"十字斬首者石(頭上)":"",Mag1000974,
+	countitem(1001044)>=1?"拳皇石(頭上)":"",Mag1001044,
+	countitem(1001047)>=1?"叛亂者石(頭上)":"",Mag1001047,
+	countitem(1001050)>=1?"獵靈士石(頭上)":"",Mag1001050,
+
+	countitem(1001159)>=1?"日影忍者石(頭上)":"",Mag1001159,
+	countitem(1001162)>=1?"月影忍者石(頭上)":"",Mag1001162,
+	countitem(1001165)>=1?"召喚師石(頭上)":"",Mag1001165,
+	countitem(1001168)>=1?"防禦石(頭上)":"",Mag1001168,
+	countitem(1001327)>=1?"進階超級初心者石(頭上)":"",Mag1001327,
+
+
+
+
+
+
+
+	"取消",no;
+
+	Mag6636: callfunc "fumoAppA1",6636,4700,100000,rand(1,100); end;
+	Mag6637: callfunc "fumoAppA1",6637,4710,100000,rand(1,100); end;
+	Mag6638: callfunc "fumoAppA1",6638,4730,100000,rand(1,100); end;
+	Mag6639: callfunc "fumoAppA1",6639,4720,100000,rand(1,100); end;
+	Mag6640: callfunc "fumoAppA1",6640,4740,100000,rand(1,100); end;
+	Mag6641: callfunc "fumoAppA1",6641,4750,100000,rand(1,100); end;
+	Mag6740: callfunc "fumoAppA1",6740,4930,100000,rand(1,100); end;
+	Mag6741: callfunc "fumoAppA1",6741,4805,100000,rand(1,100); end;
+	Mag6790: callfunc "fumoAppA1",6790,4936,100000,rand(1,100); end;
+	Mag6791: callfunc "fumoAppA1",6791,4937,100000,rand(1,100); end;
+	Mag6792: callfunc "fumoAppA1",6792,4938,100000,rand(1,100); end;
+	Mag6943: callfunc "fumoAppA1",6943,29028,100000,rand(1,100); end;
+	Mag6944: callfunc "fumoAppA1",6944,29030,100000,rand(1,100); end;
+	Mag6999: callfunc "fumoAppA1",6999,29013,100000,rand(1,100); end;
+	Mag25000: callfunc "fumoAppA1",25000,29032,100000,rand(1,100); end;
+	Mag25068: callfunc "fumoAppA1",25068,4807,100000,rand(1,100); end;
+	Mag25069: callfunc "fumoAppA1",25069,29053,100000,rand(1,100); end;
+	Mag25171: callfunc "fumoAppA1",25171,29159,100000,rand(1,100); end;
+	Mag25172: callfunc "fumoAppA1",25172,29156,100000,rand(1,100); end;
+	Mag25304: callfunc "fumoAppA1",25304,29359,100000,rand(1,100); end;
+	Mag1000377: callfunc "fumoAppA1",1000377,310327,100000,rand(1,100); end;
+	Mag1000375: callfunc "fumoAppA1",1000375,310325,100000,rand(1,100); end;
+	Mag1000528: callfunc "fumoAppA1",1000528,310664,100000,rand(1,100); end;
+
+
+	Mag25409: callfunc "fumoAppA1",25409,29423,100000,rand(1,100); end;
+	Mag25413: callfunc "fumoAppA1",25413,29428,100000,rand(1,100); end;
+	Mag25417: callfunc "fumoAppA1",25417,29432,100000,rand(1,100); end;
+	Mag25445: callfunc "fumoAppA1",25445,29460,100000,rand(1,100); end;
+	Mag25450: callfunc "fumoAppA1",25450,29464,100000,rand(1,100); end;
+	Mag25453: callfunc "fumoAppA1",25453,29468,100000,rand(1,100); end;
+	Mag25490: callfunc "fumoAppA1",25490,29477,100000,rand(1,100); end;
+	Mag25494: callfunc "fumoAppA1",25494,29481,100000,rand(1,100); end;
+	Mag25498: callfunc "fumoAppA1",25498,29485,100000,rand(1,100); end;
+	Mag25706: callfunc "fumoAppA1",25706,29513,100000,rand(1,100); end;
+	Mag25710: callfunc "fumoAppA1",25710,29517,100000,rand(1,100); end;
+	Mag25714: callfunc "fumoAppA1",25714,29521,100000,rand(1,100); end;
+	Mag25800: callfunc "fumoAppA1",25800,29613,100000,rand(1,100); end;
+	Mag25804: callfunc "fumoAppA1",25804,29617,100000,rand(1,100); end;
+	Mag25808: callfunc "fumoAppA1",25808,29621,100000,rand(1,100); end;
+	Mag25843: callfunc "fumoAppA1",25843,29651,100000,rand(1,100); end;
+	Mag25846: callfunc "fumoAppA1",25846,29655,100000,rand(1,100); end;
+	Mag25850: callfunc "fumoAppA1",25850,29659,100000,rand(1,100); end;
+	Mag25855: callfunc "fumoAppA1",25855,29664,100000,rand(1,100); end;
+	Mag25859: callfunc "fumoAppA1",25859,29668,100000,rand(1,100); end;
+	Mag1000008: callfunc "fumoAppA1",1000008,310000,100000,rand(1,100); end;
+	Mag1000012: callfunc "fumoAppA1",1000012,310004,100000,rand(1,100); end;
+	Mag1000016: callfunc "fumoAppA1",1000016,310008,100000,rand(1,100); end;
+	Mag1000214: callfunc "fumoAppA1",1000214,310181,100000,rand(1,100); end;
+	Mag1000218: callfunc "fumoAppA1",1000218,310185,100000,rand(1,100); end;
+	Mag1000222: callfunc "fumoAppA1",1000222,310189,100000,rand(1,100); end;
+	Mag1000297: callfunc "fumoAppA1",1000297,310258,100000,rand(1,100); end;
+	Mag1000301: callfunc "fumoAppA1",1000301,310262,100000,rand(1,100); end;
+	Mag1000305: callfunc "fumoAppA1",1000305,310266,100000,rand(1,100); end;
+
+	Mag1000610: callfunc "fumoAppA1",1000610,310881,100000,rand(1,100); end;
+	Mag1000613: callfunc "fumoAppA1",1000613,310884,100000,rand(1,100); end;
+	Mag1000616: callfunc "fumoAppA1",1000616,310887,100000,rand(1,100); end;
+	Mag1000666: callfunc "fumoAppA1",1000666,311005,100000,rand(1,100); end;
+	Mag1000669: callfunc "fumoAppA1",1000669,311008,100000,rand(1,100); end;
+	Mag1000672: callfunc "fumoAppA1",1000672,311011,100000,rand(1,100); end;
+	Mag1000857: callfunc "fumoAppA1",1000857,311356,100000,rand(1,100); end;
+	Mag1000860: callfunc "fumoAppA1",1000860,311359,100000,rand(1,100); end;
+	Mag1000863: callfunc "fumoAppA1",1000863,311362,100000,rand(1,100); end;
+	Mag1000968: callfunc "fumoAppA1",1000968,311427,100000,rand(1,100); end;
+	Mag1000971: callfunc "fumoAppA1",1000971,311430,100000,rand(1,100); end;
+	Mag1000974: callfunc "fumoAppA1",1000974,311433,100000,rand(1,100); end;
+	Mag1001044: callfunc "fumoAppA1",1001044,311460,100000,rand(1,100); end;
+	Mag1001047: callfunc "fumoAppA1",1001047,311463,100000,rand(1,100); end;
+	Mag1001050: callfunc "fumoAppA1",1001050,311466,100000,rand(1,100); end;
+
+	Mag1001159: callfunc "fumoAppA1",1001159,311912,100000,rand(1,100); end;
+	Mag1001162: callfunc "fumoAppA1",1001162,311915,100000,rand(1,100); end;
+	Mag1001165: callfunc "fumoAppA1",1001165,311918,100000,rand(1,100); end;
+	Mag1001168: callfunc "fumoAppA1",1001168,311921,100000,rand(1,100); end;
+	Mag1001327: callfunc "fumoAppA1",1001327,312403,100000,rand(1,100); end;
+
+
+case 2:
+	mes "[阿維爾 道旭]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(11) == 0) set .@strRetPart12$,"";
+	else set .@strRetPart12$,getequipname(11);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+	if(countitem(@itemid)>1){
+	mes "[阿維爾 道旭]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[阿維爾 道旭]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[阿維爾 道旭]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(6642)>=1?"攻擊石(頭中)":"",Mag6642,
+	countitem(6643)>=1?"魔攻石(頭中)":"",Mag6643,
+	countitem(6742)>=1?"恢復石(頭中)":"",Mag6742,
+	countitem(6743)>=1?"HP石(頭中)":"",Mag6743,
+	countitem(6744)>=1?"SP石(頭中)":"",Mag6744,
+	countitem(6945)>=1?"力量寶石(頭中)":"",Mag6945,
+	countitem(6946)>=1?"智慧寶石(頭中)":"",Mag6946,
+	countitem(6947)>=1?"敏捷寶石(頭中)":"",Mag6947,
+	countitem(6948)>=1?"靈巧寶石(頭中)":"",Mag6948,
+	countitem(6949)>=1?"體力寶石(頭中)":"",Mag6949,
+	countitem(6950)>=1?"運氣寶石(頭中)":"",Mag6950,
+	countitem(25001)>=1?"防禦石(頭中)":"",Mag25001,
+	countitem(25002)>=1?"LUK轉換石(頭中)":"",Mag25002,
+	countitem(25003)>=1?"STR轉換石(頭中)":"",Mag25003,
+	countitem(25004)>=1?"AGI轉換石(頭中)":"",Mag25004,
+	countitem(25005)>=1?"INT轉換石(頭中)":"",Mag25005,
+	countitem(25006)>=1?"VIT轉換石(頭中)":"",Mag25006,
+	countitem(25007)>=1?"DEX轉換石(頭中)":"",Mag25007,
+	countitem(25060)>=1?"暴擊石(頭中)":"",Mag25060,
+	countitem(25061)>=1?"廣域石(頭中)":"",Mag25061,
+	countitem(25070)>=1?"改良石(頭中)":"",Mag25070,
+	countitem(25141)>=1?"經驗值石(頭中)":"",Mag25141,
+	countitem(25173)>=1?"變詠石(頭中)":"",Mag25173,
+	countitem(25175)>=1?"天使之怒石(頭中)":"",Mag25175,
+	countitem(1000378)>=1?"近接石(頭中)":"",Mag1000378,
+	countitem(1000529)>=1?"魔法屬性石(頭中)":"",Mag1000529,
+
+	countitem(25410)>=1?"武術宗師石(頭中)":"",Mag25410,
+	countitem(25414)>=1?"神射手石(頭中)":"",Mag25414,
+	countitem(25418)>=1?"智者石(頭中)":"",Mag25418,
+	countitem(25446)>=1?"騎士領主石(頭中)":"",Mag25446,
+	countitem(25451)>=1?"創造者石(頭中)":"",Mag25451,
+	countitem(25454)>=1?"超魔導師石(頭中)":"",Mag25454,
+	countitem(25491)>=1?"神行太保石(頭中)":"",Mag25491,
+	countitem(25495)>=1?"神工匠石(頭中)":"",Mag25495,
+	countitem(25499)>=1?"藝人舞姬石(頭中)":"",Mag25499,
+	countitem(25707)>=1?"神官石(頭中)":"",Mag25707,
+	countitem(25711)>=1?"聖殿十字軍石(頭中)":"",Mag25711,
+	countitem(25715)>=1?"十字刺客石(頭中)":"",Mag25715,
+
+	countitem(25799)>=1?"武術宗師石II(頭中)":"",Mag25799,
+	countitem(25803)>=1?"智者石II(頭中)":"",Mag25803,
+	countitem(25807)>=1?"神行太保石II(頭中)":"",Mag25807,
+	countitem(25844)>=1?"悟靈士石(頭中)":"",Mag25844,
+	countitem(25847)>=1?"拳聖石(頭中)":"",Mag25847,
+	countitem(25851)>=1?"忍者石(頭中)":"",Mag25851,
+	countitem(25856)>=1?"槍手石(頭中)":"",Mag25856,
+	countitem(25860)>=1?"杜蘭族石(頭中)":"",Mag25860,
+	countitem(1000009)>=1?"神射手石II(頭中)":"",Mag1000009,
+	countitem(1000013)>=1?"神工匠石II(頭中)":"",Mag1000013,
+	countitem(1000017)>=1?"神官石II(頭中)":"",Mag1000017,
+	countitem(1000215)>=1?"超魔導師石II(頭中)":"",Mag1000215,
+	countitem(1000219)>=1?"聖殿十字軍石II(頭中)":"",Mag1000219,
+	countitem(1000223)>=1?"十字刺客石II(頭中)":"",Mag1000223,
+	countitem(1000298)>=1?"騎士領主石II(頭中)":"",Mag1000298,
+	countitem(1000302)>=1?"創造者石II(頭中)":"",Mag1000302,
+	countitem(1000306)>=1?"搞笑藝人/冷豔舞姬石II(頭中)":"",Mag1000306,
+
+	countitem(1000611)>=1?"盧恩騎士石(頭中)":"",Mag1000611,
+	countitem(1000614)>=1?"咒術士石(頭中)":"",Mag1000614,
+	countitem(1000617)>=1?"皇家禁衛軍石(頭中)":"",Mag1000617,
+	countitem(1000667)>=1?"宮廷樂師/浪跡舞者石(頭中)":"",Mag1000667,
+	countitem(1000670)>=1?"基因學者石(頭中)":"",Mag1000670,
+	countitem(1000673)>=1?"妖術師石(頭中)":"",Mag1000673,
+	countitem(1000858)>=1?"大主教石(頭中)":"",Mag1000858,
+	countitem(1000861)>=1?"遊俠石(頭中)":"",Mag1000861,
+	countitem(1000864)>=1?"魅影追蹤者石(頭中)":"",Mag1000864,
+	countitem(1000969)>=1?"修羅石(頭中)":"",Mag1000969,
+	countitem(1000972)>=1?"機械工匠石(頭中)":"",Mag1000972,
+	countitem(1000975)>=1?"十字斬首者石(頭中)":"",Mag1000975,
+	countitem(1001045)>=1?"拳皇石(頭中)":"",Mag1001045,
+	countitem(1001048)>=1?"叛亂者石(頭中)":"",Mag1001048,
+	countitem(1001051)>=1?"獵靈士石(頭中)":"",Mag1001051,
+
+	countitem(1001160)>=1?"日影忍者石(頭中)":"",Mag1001160,
+	countitem(1001163)>=1?"月影忍者石(頭中)":"",Mag1001163,
+	countitem(1001166)>=1?"召喚師石(頭中)":"",Mag1001166,
+	countitem(1001169)>=1?"防禦石(頭中)":"",Mag1001169,
+	countitem(1001328)>=1?"進階超級初心者石(頭中)":"",Mag1001328,
+	"取消",no;
+
+
+	Mag6642: callfunc "fumoAppA2",6642,4819,100000,rand(1,100); end;
+	Mag6643: callfunc "fumoAppA2",6643,4883,100000,rand(1,100); end;
+	Mag6742: callfunc "fumoAppA2",6742,4931,100000,rand(1,100); end;
+	Mag6743: callfunc "fumoAppA2",6743,4861,100000,rand(1,100); end;
+	Mag6744: callfunc "fumoAppA2",6744,4929,100000,rand(1,100); end;
+	Mag6945: callfunc "fumoAppA2",6945,4768,100000,rand(1,100); end;
+	Mag6946: callfunc "fumoAppA2",6946,4771,100000,rand(1,100); end;
+	Mag6947: callfunc "fumoAppA2",6947,4777,100000,rand(1,100); end;
+	Mag6948: callfunc "fumoAppA2",6948,4780,100000,rand(1,100); end;
+	Mag6949: callfunc "fumoAppA2",6949,4774,100000,rand(1,100); end;
+	Mag6950: callfunc "fumoAppA2",6950,4783,100000,rand(1,100); end;
+	Mag25001: callfunc "fumoAppA2",25001,29026,100000,rand(1,100); end;
+	Mag25002: callfunc "fumoAppA2",25002,29024,100000,rand(1,100); end;
+	Mag25003: callfunc "fumoAppA2",25003,29014,100000,rand(1,100); end;
+	Mag25004: callfunc "fumoAppA2",25004,29022,100000,rand(1,100); end;
+	Mag25005: callfunc "fumoAppA2",25005,29016,100000,rand(1,100); end;
+	Mag25006: callfunc "fumoAppA2",25006,29020,100000,rand(1,100); end;
+	Mag25007: callfunc "fumoAppA2",25007,29018,100000,rand(1,100); end;
+	Mag25060: callfunc "fumoAppA2",25060,29047,100000,rand(1,100); end;
+	Mag25061: callfunc "fumoAppA2",25061,310330,100000,rand(1,100); end;
+	Mag25070: callfunc "fumoAppA2",25070,29054,100000,rand(1,100); end;
+	Mag25141: callfunc "fumoAppA2",25141,29145,100000,rand(1,100); end;
+	Mag25173: callfunc "fumoAppA2",25173,29157,100000,rand(1,100); end;
+	Mag25175: callfunc "fumoAppA2",25175,29155,100000,rand(1,100); end;
+	Mag1000378: callfunc "fumoAppA2",1000378,310328,100000,rand(1,100); end;
+	Mag1000529: callfunc "fumoAppA2",1000529,310665,100000,rand(1,100); end;
+
+
+	Mag25410: callfunc "fumoAppA2",25410,29424,100000,rand(1,100); end;
+	Mag25414: callfunc "fumoAppA2",25414,29429,100000,rand(1,100); end;
+	Mag25418: callfunc "fumoAppA2",25418,29433,100000,rand(1,100); end;
+	Mag25446: callfunc "fumoAppA2",25446,29461,100000,rand(1,100); end;
+	Mag25451: callfunc "fumoAppA2",25451,29465,100000,rand(1,100); end;
+	Mag25454: callfunc "fumoAppA2",25454,29469,100000,rand(1,100); end;
+	Mag25491: callfunc "fumoAppA2",25491,29478,100000,rand(1,100); end;
+	Mag25495: callfunc "fumoAppA2",25495,29482,100000,rand(1,100); end;
+	Mag25499: callfunc "fumoAppA2",25499,29486,100000,rand(1,100); end;
+	Mag25707: callfunc "fumoAppA2",25707,29514,100000,rand(1,100); end;
+	Mag25711: callfunc "fumoAppA2",25711,29518,100000,rand(1,100); end;
+	Mag25715: callfunc "fumoAppA2",25715,29522,100000,rand(1,100); end;
+	Mag25799: callfunc "fumoAppA2",25799,29612,100000,rand(1,100); end;
+	Mag25803: callfunc "fumoAppA2",25803,29616,100000,rand(1,100); end;
+	Mag25807: callfunc "fumoAppA2",25807,29620,100000,rand(1,100); end;
+	Mag25844: callfunc "fumoAppA2",25844,29652,100000,rand(1,100); end;
+	Mag25847: callfunc "fumoAppA2",25847,29656,100000,rand(1,100); end;
+	Mag25851: callfunc "fumoAppA2",25851,29660,100000,rand(1,100); end;
+	Mag25856: callfunc "fumoAppA2",25856,29665,100000,rand(1,100); end;
+	Mag25860: callfunc "fumoAppA2",25860,29669,100000,rand(1,100); end;
+	Mag1000009: callfunc "fumoAppA2",1000009,310001,100000,rand(1,100); end;
+	Mag1000013: callfunc "fumoAppA2",1000013,310005,100000,rand(1,100); end;
+	Mag1000017: callfunc "fumoAppA2",1000017,310009,100000,rand(1,100); end;
+	Mag1000215: callfunc "fumoAppA2",1000215,310182,100000,rand(1,100); end;
+	Mag1000219: callfunc "fumoAppA2",1000219,310186,100000,rand(1,100); end;
+	Mag1000223: callfunc "fumoAppA2",1000223,310190,100000,rand(1,100); end;
+	Mag1000298: callfunc "fumoAppA2",1000298,310259,100000,rand(1,100); end;
+	Mag1000302: callfunc "fumoAppA2",1000302,310263,100000,rand(1,100); end;
+	Mag1000306: callfunc "fumoAppA2",1000306,310267,100000,rand(1,100); end;
+
+	Mag1000611: callfunc "fumoAppA2",1000611,310882,100000,rand(1,100); end;
+	Mag1000614: callfunc "fumoAppA2",1000614,310885,100000,rand(1,100); end;
+	Mag1000617: callfunc "fumoAppA2",1000617,310888,100000,rand(1,100); end;
+	Mag1000667: callfunc "fumoAppA2",1000667,311006,100000,rand(1,100); end;
+	Mag1000670: callfunc "fumoAppA2",1000670,311009,100000,rand(1,100); end;
+	Mag1000673: callfunc "fumoAppA2",1000673,311012,100000,rand(1,100); end;
+	Mag1000858: callfunc "fumoAppA2",1000858,311357,100000,rand(1,100); end;
+	Mag1000861: callfunc "fumoAppA2",1000861,311360,100000,rand(1,100); end;
+	Mag1000864: callfunc "fumoAppA2",1000864,311363,100000,rand(1,100); end;
+	Mag1000969: callfunc "fumoAppA2",1000969,311428,100000,rand(1,100); end;
+	Mag1000972: callfunc "fumoAppA2",1000972,311431,100000,rand(1,100); end;
+	Mag1000975: callfunc "fumoAppA2",1000975,311434,100000,rand(1,100); end;
+	Mag1001045: callfunc "fumoAppA2",1001045,311461,100000,rand(1,100); end;
+	Mag1001048: callfunc "fumoAppA2",1001048,311464,100000,rand(1,100); end;
+	Mag1001051: callfunc "fumoAppA2",1001051,311467,100000,rand(1,100); end;
+
+	Mag1001160: callfunc "fumoAppA2",1001160,311913,100000,rand(1,100); end;
+	Mag1001163: callfunc "fumoAppA2",1001163,311916,100000,rand(1,100); end;
+	Mag1001166: callfunc "fumoAppA2",1001166,311919,100000,rand(1,100); end;
+	Mag1001169: callfunc "fumoAppA2",1001169,311922,100000,rand(1,100); end;
+	Mag1001328: callfunc "fumoAppA2",1001328,312404,100000,rand(1,100); end;
+
+
+case 3:
+	mes "[阿維爾 道旭]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(12) == 0) set .@strRetPart13$,"";
+	else set .@strRetPart13$,getequipname(12);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[阿維爾 道旭]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[阿維爾 道旭]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[阿維爾 道旭]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(6644)>=1?"命中石(頭下)":"",Mag6644,
+	countitem(6645)>=1?"迴避石(頭下)":"",Mag6645,
+	countitem(6745)>=1?"恢復石(頭下)":"",Mag6745,
+	countitem(6951)>=1?"HP寶石(頭下)":"",Mag6951,
+	countitem(25008)>=1?"VIT轉換石(頭下)":"",Mag25008,
+	countitem(25009)>=1?"AGI轉換石(頭下)":"",Mag25009,
+	countitem(25010)>=1?"DEX轉換石(頭下)":"",Mag25010,
+	countitem(25011)>=1?"LUK轉換石(頭下)":"",Mag25011,
+	countitem(25012)>=1?"STR轉換石(頭下)":"",Mag25012,
+	countitem(25013)>=1?"INT轉換石(頭下)":"",Mag25013,
+	countitem(25014)>=1?"魔法防禦石(頭下)":"",Mag25014,
+	countitem(25015)>=1?"經驗值石(頭下)":"",Mag25015,
+	countitem(25016)>=1?"攻擊石(頭下)":"",Mag25016,
+	countitem(25017)>=1?"魔攻石(頭下)":"",Mag25017,
+	countitem(25062)>=1?"貪婪石(頭下)":"",Mag25062,
+	countitem(25063)>=1?"體力石(頭下)":"",Mag25063,
+	countitem(25064)>=1?"魔力石2(頭下)":"",Mag25064,
+	countitem(25065)>=1?"解毒石(頭下)":"",Mag25065,
+	countitem(25066)>=1?"復元石(頭下)":"",Mag25066,
+	countitem(25071)>=1?"改良石(頭下)":"",Mag25071,
+	countitem(25072)>=1?"霸邪石(頭下)":"",Mag25072,
+	countitem(25139)>=1?"道具鑑定石(頭下)":"",Mag25139,
+	countitem(25174)>=1?"變詠石(頭下)":"",Mag25174,
+	countitem(25227)>=1?"治癒石(頭下)":"",Mag25227,
+	countitem(25228)>=1?"傳送石(頭下)":"",Mag25228,
+	countitem(25229)>=1?"偷竊石(頭下)":"",Mag25229,
+	countitem(25305)>=1?"暴擊石(頭下)":"",Mag25305,
+	countitem(1000379)>=1?"近接石(頭下)":"",Mag1000379,
+	countitem(1000376)>=1?"廣域石(頭下)":"",Mag1000376,
+	countitem(1000530)>=1?"魔法屬性石(頭下)":"",Mag1000530,
+
+	countitem(25411)>=1?"武術宗師石(頭下)":"",Mag25411,
+	countitem(25415)>=1?"神射手石(頭下)":"",Mag25415,
+	countitem(25419)>=1?"智者石(頭下)":"",Mag25419,
+	countitem(25447)>=1?"騎士領主石(頭下)":"",Mag25447,
+	countitem(25452)>=1?"創造者石(頭下)":"",Mag25452,
+	countitem(25455)>=1?"超魔導師石(頭下)":"",Mag25455,
+	countitem(25492)>=1?"神行太保石(頭下)":"",Mag25492,
+	countitem(25496)>=1?"神工匠石(頭下)":"",Mag25496,
+	countitem(25500)>=1?"藝人舞姬石(頭下)":"",Mag25500,
+	countitem(25708)>=1?"神官石(頭下)":"",Mag25708,
+	countitem(25712)>=1?"聖殿十字軍石(頭下)":"",Mag25712,
+	countitem(25716)>=1?"十字刺客石(頭下)":"",Mag25716,
+
+	countitem(25798)>=1?"武術宗師石II(頭下)":"",Mag25798,
+	countitem(25802)>=1?"智者石II(頭下)":"",Mag25802,
+	countitem(25806)>=1?"神行太保石II(頭下)":"",Mag25806,
+	countitem(25845)>=1?"悟靈士石(頭下)":"",Mag25845,
+	countitem(25848)>=1?"拳聖石(頭下)":"",Mag25848,
+	countitem(25852)>=1?"忍者石(頭下)":"",Mag25852,
+	countitem(25857)>=1?"槍手石(頭下)":"",Mag25857,
+	countitem(25861)>=1?"杜蘭族石(頭下)":"",Mag25861,
+	countitem(1000010)>=1?"神射手石II(頭下)":"",Mag1000010,
+	countitem(1000014)>=1?"神工匠石II(頭下)":"",Mag1000014,
+	countitem(1000018)>=1?"神官石II(頭下)":"",Mag1000018,
+	countitem(1000216)>=1?"超魔導師石II(頭下)":"",Mag1000216,
+	countitem(1000220)>=1?"聖殿十字軍石II(頭下)":"",Mag1000220,
+	countitem(1000224)>=1?"十字刺客石II(頭下)":"",Mag1000224,
+	countitem(1000299)>=1?"騎士領主石II(頭下)":"",Mag1000299,
+	countitem(1000303)>=1?"創造者石II(頭下)":"",Mag1000303,
+	countitem(1000307)>=1?"搞笑藝人/冷豔舞姬石II(頭下)":"",Mag1000307,
+
+	countitem(1000612)>=1?"盧恩騎士石(頭下)":"",Mag1000612,
+	countitem(1000615)>=1?"咒術士石(頭下)":"",Mag1000615,
+	countitem(1000618)>=1?"皇家禁衛軍石(頭下)":"",Mag1000618,
+	countitem(1000668)>=1?"宮廷樂師/浪跡舞者石(頭下)":"",Mag1000668,
+	countitem(1000671)>=1?"基因學者石(頭下)":"",Mag1000671,
+	countitem(1000674)>=1?"妖術師石(頭下)":"",Mag1000674,
+	countitem(1000859)>=1?"大主教石(頭下)":"",Mag1000859,
+	countitem(1000862)>=1?"遊俠石(頭下)":"",Mag1000862,
+	countitem(1000865)>=1?"魅影追蹤者石(頭下)":"",Mag1000865,
+	countitem(1000970)>=1?"修羅石(頭下)":"",Mag1000970,
+	countitem(1000973)>=1?"機械工匠石(頭下)":"",Mag1000973,
+	countitem(1000976)>=1?"十字斬首者石(頭下)":"",Mag1000976,
+	countitem(1001046)>=1?"拳皇石(頭下)":"",Mag1001046,
+	countitem(1001049)>=1?"叛亂者石(頭下)":"",Mag1001049,
+	countitem(1001052)>=1?"獵靈士石(頭下)":"",Mag1001052,
+
+	countitem(1001161)>=1?"日影忍者石(頭下)":"",Mag1001161,
+	countitem(1001164)>=1?"月影忍者石(頭下)":"",Mag1001164,
+	countitem(1001167)>=1?"召喚師石(頭下)":"",Mag1001167,
+	countitem(1001170)>=1?"防禦石(頭下)":"",Mag1001170,
+	countitem(1001329)>=1?"進階超級初心者石(頭下)":"",Mag1001329,
+	"取消",no;
+
+
+	Mag6644: callfunc "fumoAppA3",6644,4884,100000,rand(1,100); end;
+	Mag6645: callfunc "fumoAppA3",6645,4859,100000,rand(1,100); end;
+	Mag6745: callfunc "fumoAppA3",6745,4932,100000,rand(1,100); end;
+	Mag6951: callfunc "fumoAppA3",6951,4861,100000,rand(1,100); end;
+	Mag25008: callfunc "fumoAppA3",25008,29021,100000,rand(1,100); end;
+	Mag25009: callfunc "fumoAppA3",25009,29023,100000,rand(1,100); end;
+	Mag25010: callfunc "fumoAppA3",25010,29019,100000,rand(1,100); end;
+	Mag25011: callfunc "fumoAppA3",25011,29025,100000,rand(1,100); end;
+	Mag25012: callfunc "fumoAppA3",25012,29015,100000,rand(1,100); end;
+	Mag25013: callfunc "fumoAppA3",25013,29017,100000,rand(1,100); end;
+	Mag25014: callfunc "fumoAppA3",25014,29033,100000,rand(1,100); end;
+	Mag25015: callfunc "fumoAppA3",25015,29027,100000,rand(1,100); end;
+	Mag25016: callfunc "fumoAppA3",25016,29029,100000,rand(1,100); end;
+	Mag25017: callfunc "fumoAppA3",25017,29031,100000,rand(1,100); end;
+	Mag25062: callfunc "fumoAppA3",25062,29046,100000,rand(1,100); end;
+	Mag25063: callfunc "fumoAppA3",25063,29049,100000,rand(1,100); end;
+	Mag25064: callfunc "fumoAppA3",25064,29050,100000,rand(1,100); end;
+	Mag25065: callfunc "fumoAppA3",25065,29051,100000,rand(1,100); end;
+	Mag25066: callfunc "fumoAppA3",25066,29052,100000,rand(1,100); end;
+	Mag25071: callfunc "fumoAppA3",25071,29055,100000,rand(1,100); end;
+	Mag25072: callfunc "fumoAppA3",25072,29057,100000,rand(1,100); end;
+	Mag25139: callfunc "fumoAppA3",25139,29146,100000,rand(1,100); end;
+	Mag25174: callfunc "fumoAppA3",25174,29158,100000,rand(1,100); end;
+	Mag25227: callfunc "fumoAppA3",25227,29227,100000,rand(1,100); end;
+	Mag25228: callfunc "fumoAppA3",25228,29229,100000,rand(1,100); end;
+	Mag25229: callfunc "fumoAppA3",25229,29228,100000,rand(1,100); end;
+	Mag25305: callfunc "fumoAppA3",25305,29360,100000,rand(1,100); end;
+	Mag1000379: callfunc "fumoAppA3",1000379,310329,100000,rand(1,100); end;
+	Mag1000376: callfunc "fumoAppA3",1000376,310326,100000,rand(1,100); end;
+	Mag1000530: callfunc "fumoAppA3",1000530,310666,100000,rand(1,100); end;
+
+	Mag25411: callfunc "fumoAppA3",25411,29425,100000,rand(1,100); end;
+	Mag25415: callfunc "fumoAppA3",25415,29430,100000,rand(1,100); end;
+	Mag25419: callfunc "fumoAppA3",25419,29434,100000,rand(1,100); end;
+	Mag25447: callfunc "fumoAppA3",25447,29462,100000,rand(1,100); end;
+	Mag25452: callfunc "fumoAppA3",25452,29466,100000,rand(1,100); end;
+	Mag25455: callfunc "fumoAppA3",25455,29470,100000,rand(1,100); end;
+	Mag25492: callfunc "fumoAppA3",25492,29479,100000,rand(1,100); end;
+	Mag25496: callfunc "fumoAppA3",25496,29483,100000,rand(1,100); end;
+	Mag25500: callfunc "fumoAppA3",25500,29487,100000,rand(1,100); end;
+	Mag25708: callfunc "fumoAppA3",25708,29515,100000,rand(1,100); end;
+	Mag25712: callfunc "fumoAppA3",25712,29519,100000,rand(1,100); end;
+	Mag25716: callfunc "fumoAppA3",25716,29523,100000,rand(1,100); end;
+	Mag25798: callfunc "fumoAppA3",25798,29611,100000,rand(1,100); end;
+	Mag25802: callfunc "fumoAppA3",25802,29615,100000,rand(1,100); end;
+	Mag25806: callfunc "fumoAppA3",25806,29619,100000,rand(1,100); end;
+	Mag25845: callfunc "fumoAppA3",25845,29653,100000,rand(1,100); end;
+	Mag25848: callfunc "fumoAppA3",25848,29657,100000,rand(1,100); end;
+	Mag25852: callfunc "fumoAppA3",25852,29661,100000,rand(1,100); end;
+	Mag25857: callfunc "fumoAppA3",25857,29666,100000,rand(1,100); end;
+	Mag25861: callfunc "fumoAppA3",25861,29670,100000,rand(1,100); end;
+	Mag1000010: callfunc "fumoAppA3",1000010,310002,100000,rand(1,100); end;
+	Mag1000014: callfunc "fumoAppA3",1000014,310006,100000,rand(1,100); end;
+	Mag1000018: callfunc "fumoAppA3",1000018,310010,100000,rand(1,100); end;
+	Mag1000216: callfunc "fumoAppA3",1000216,310183,100000,rand(1,100); end;
+	Mag1000220: callfunc "fumoAppA3",1000220,310187,100000,rand(1,100); end;
+	Mag1000224: callfunc "fumoAppA3",1000224,310191,100000,rand(1,100); end;
+	Mag1000299: callfunc "fumoAppA3",1000299,310260,100000,rand(1,100); end;
+	Mag1000303: callfunc "fumoAppA3",1000303,310264,100000,rand(1,100); end;
+	Mag1000307: callfunc "fumoAppA3",1000307,310268,100000,rand(1,100); end;
+
+	Mag1000612: callfunc "fumoAppA3",1000612,310883,100000,rand(1,100); end;
+	Mag1000615: callfunc "fumoAppA3",1000615,310886,100000,rand(1,100); end;
+	Mag1000618: callfunc "fumoAppA3",1000618,310889,100000,rand(1,100); end;
+	Mag1000668: callfunc "fumoAppA3",1000668,311007,100000,rand(1,100); end;
+	Mag1000671: callfunc "fumoAppA3",1000671,311010,100000,rand(1,100); end;
+	Mag1000674: callfunc "fumoAppA3",1000674,311013,100000,rand(1,100); end;
+	Mag1000859: callfunc "fumoAppA3",1000859,311358,100000,rand(1,100); end;
+	Mag1000862: callfunc "fumoAppA3",1000862,311361,100000,rand(1,100); end;
+	Mag1000865: callfunc "fumoAppA3",1000865,311364,100000,rand(1,100); end;
+	Mag1000970: callfunc "fumoAppA3",1000970,311429,100000,rand(1,100); end;
+	Mag1000973: callfunc "fumoAppA3",1000973,311432,100000,rand(1,100); end;
+	Mag1000976: callfunc "fumoAppA3",1000976,311435,100000,rand(1,100); end;
+	Mag1001046: callfunc "fumoAppA3",1001046,311462,100000,rand(1,100); end;
+	Mag1001049: callfunc "fumoAppA3",1001049,311465,100000,rand(1,100); end;
+	Mag1001052: callfunc "fumoAppA3",1001052,311468,100000,rand(1,100); end;
+
+	Mag1001161: callfunc "fumoAppA3",1001161,311914,100000,rand(1,100); end;
+	Mag1001164: callfunc "fumoAppA3",1001164,311917,100000,rand(1,100); end;
+	Mag1001167: callfunc "fumoAppA3",1001167,311920,100000,rand(1,100); end;
+	Mag1001170: callfunc "fumoAppA3",1001170,311923,100000,rand(1,100); end;
+	Mag1001329: callfunc "fumoAppA3",1001329,312405,100000,rand(1,100); end;
+
+
+case 4:
+	mes "[阿維爾 道旭]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+	}
+
+no:
+	mes "[阿維爾 道旭]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+
+OnInit:
+	waitingroom "服裝頭飾附魔",0;
+	end;
+}
+
+
+//--------------------------附魔(頭上)
+function	script	fumoAppA1	{
+	if(countitem(getarg(0))<1){
+	mes "[阿維爾 道旭]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[阿維爾 道旭]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	if(getarg(3)<=100){
+	dispbottom "阿維爾 道旭:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, getarg(1), @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+	}
+	dispbottom "阿維爾 道旭:附魔失敗了!!對應的魔石消失了";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 155;
+	close;
+}
+
+//--------------------------附魔(頭中)
+function	script	fumoAppA2	{
+	if(countitem(getarg(0))<1){
+	mes "[阿維爾 道旭]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[阿維爾 道旭]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	
+	if(getarg(3)<=100){
+	dispbottom "阿維爾 道旭:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(1), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+	} 
+	dispbottom "阿維爾 道旭:附魔失敗了!!對應的魔石消失了";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 155;
+	close;
+}
+
+//--------------------------附魔(頭下)
+function	script	fumoAppA3	{
+	if(countitem(getarg(0))<1){
+	mes "[阿維爾 道旭]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[阿維爾 道旭]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	
+	if(getarg(3)<=100){
+	dispbottom "阿維爾 道旭:成功的為這個裝備賦予了新的能力!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, getarg(1), @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close;
+	} 
+	dispbottom "阿維爾 道旭:附魔失敗了!!對應的魔石消失了";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @itemid,1;
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, @card1, @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 155;
+	close;
+}
+
+

@@ -1,0 +1,68 @@
+
+function	script	gs	{
+	mes "════製作所需材料表════";
+	for(set @i,1;@i<=getarraysize(@itemlst[0]);set @i,@i+1){
+	if(countitem2(@itemlst[@i-1],1,@Refining[@i-1],0,0,0,0,0)<@itemnum[@i-1] || countitem(5439) < 1 || countitem(31561) < 1 ){
+	mes "【+"+@Refining[@i-1]+""+getitemname(@itemlst[@i-1])+"】x"+@itemnum[@i-1]+"個";
+	mes "【合成元素】x1個";
+	mes "【神威之翼】x1個";
+	mes "════完成物品表════";
+	mes "【+"+@Refining[0]+"^FF0000"+getitemname(getarg(0))+"^000000】x1個";
+
+	} else 	{
+	mes "【+"+@Refining[0]+""+getitemname(@itemlst[@i-1])+"】(已完成)!";
+	mes "【合成元素】(已完成)!";
+	mes "【神威之翼】(已完成)!";
+	mes "════完成物品表════";
+	mes "【+"+@Refining[0]+"^FF0000"+getitemname(getarg(0))+"^000000】x1個";
+	mes "^FF0000請確定你只有一樣材料!!^000000";
+	mes "^FF0000多餘的材料都可能被系統回收^000000";
+	}
+	}
+
+	mes "【費用】:"+getarg(1)+"";
+	next;
+	switch(select("製作","取消")){
+	case 1:
+	for(set @i3,1;@i3<=getarraysize(@itemlst[1]);set @i3,@i3+1){
+	if(countitem2(@itemlst[@i3-1],1,@Refining[@i3-1],0,0,0,0,0)<@itemnum[@i3-1] || countitem(5439) < 1 || countitem(31561) < 1 ){
+		next;
+		mes "[迷失的靈魂]";
+		mes "^FF0000材料不足,請搜集齊全再來！^000000";
+			close;
+			}		
+}
+
+		if(countitem(29016) > 1) {
+		mes "[迷失的靈魂]";
+		mes "^FF0000你身上扇子過多！^000000";
+		close;
+		}
+
+		if(zeny<getarg(1)){
+		next;
+		mes "[迷失的靈魂]";
+		mes "^FF0000你身上還沒帶夠錢！^000000";
+			close;
+		}
+		for(set @i2,1;@i2<=getarraysize(@itemlst[0]);set @i2,@i2+1){
+		delitem @itemlst[@i2-1],@itemnum[@i2-1];
+		delitem 5439,1;
+		delitem 31561,1;
+		}
+
+		set Zeny,Zeny-getarg(1);
+		getitem2 getarg(0),1,1,@Refining[0],0,0,0,0,0;
+		announce "玩家 "+strcharinfo(0)+" 成功的製做出 +"+@Refining[0]+""+getitemname(getarg(0))+" 了!",15;
+		next;
+
+		mes "[迷失的靈魂]";
+		mes "^FF0000製作完成^000000";
+		mes"親愛的"+strcharinfo(0)+"！！！";
+		close;
+		
+				case 2:
+				mes "歡迎下次光臨!";
+				close;
+			}
+}

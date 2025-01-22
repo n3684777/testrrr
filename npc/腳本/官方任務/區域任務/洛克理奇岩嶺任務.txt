@@ -1,0 +1,585 @@
+trinity,94,121,6	script	任務委托管理員#har	10213,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("(1)瓦斯!瓦斯!!","(2)清潔水管","(3)準備煙火節","(4)洛克理奇岩嶺的守護者-初級","(5)洛克理奇岩嶺的守護者-高級","(6)收集礦石碎片","(7)家族的和平","(8)替小白復仇","(9)與巨賈簽約","(10)新大陸的食品供應商","取消")){
+
+		case 1:
+			if(checkquest(1298,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(1299,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(1299,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 1298;
+			if(checkquest(1299,PLAYTIME)==2){erasequest 1299;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(9458,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(9459,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(9459,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 9458;
+			if(checkquest(9459,PLAYTIME)==2){erasequest 9459;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(14672,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14673,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14673,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14672;
+			if(checkquest(1299,PLAYTIME)==2){erasequest 14673;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			switch(rand(1,4)){
+
+			case 1:
+				if(checkquest(12391,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12392,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12393,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12394,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12390,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12390,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12391;
+				if(checkquest(12390,PLAYTIME)==2){erasequest 12390;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+
+			case 2:
+				if(checkquest(12391,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12392,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12393,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12394,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12390,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12390,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12392;
+				if(checkquest(12390,PLAYTIME)==2){erasequest 12390;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+
+			case 3:
+				if(checkquest(12391,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12392,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12393,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12394,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12390,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12390,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12393;
+				if(checkquest(12390,PLAYTIME)==2){erasequest 12390;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+
+			case 4:
+				if(checkquest(12391,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12392,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12393,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12394,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12390,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12390,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12394;
+				if(checkquest(12390,PLAYTIME)==2){erasequest 12390;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+			}
+
+		case 5:
+			switch(rand(1,4)){
+
+			case 1:
+				if(checkquest(12399,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12400,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12401,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12398,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12398,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12399;
+				if(checkquest(12398,PLAYTIME)==2){erasequest 12398;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+
+			case 2:
+				if(checkquest(12399,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12400,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12401,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12398,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12398,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12400;
+				if(checkquest(12398,PLAYTIME)==2){erasequest 12398;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+
+			case 3:
+				if(checkquest(12399,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12400,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12401,HUNTING)>=0){mes "[任務委托管理員]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12398,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12398,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12401;
+				if(checkquest(12398,PLAYTIME)==2){erasequest 12398;}
+				mes "[任務委托管理員]";
+				mes "任務接取完成";
+				close;
+			}
+
+		case 6:
+			if(checkquest(9460,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(9461,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(9461,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 9460;
+			if(checkquest(9461,PLAYTIME)==2){erasequest 9461;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			if(checkquest(16078,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16079,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16079,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16078;
+			if(checkquest(16079,PLAYTIME)==2){erasequest 16079;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 8:
+			if(checkquest(1331,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(1332,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(1332,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 1331;
+			if(checkquest(1332,PLAYTIME)==2){erasequest 1332;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 9:
+			if(checkquest(12410,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12411,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12411,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12410;
+			if(checkquest(12411,PLAYTIME)==2){erasequest 12411;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 10:
+			if(checkquest(12381,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12382,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12382,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12381;
+			if(checkquest(12382,PLAYTIME)==2){erasequest 12382;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 11:
+			close;
+		}
+
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("(1)瓦斯!瓦斯!!","(2)清潔水管","(3)準備煙火節","(4)洛克理奇岩嶺的守護者-初級","(5)洛克理奇岩嶺的守護者-高級","(6)收集礦石碎片","(7)家族的和平","(8)替小白復仇","(9)與巨賈簽約","(10)新大陸的食品供應商","取消")){
+
+		case 1:
+			if(checkquest(1298,HUNTING)==2 ) { 
+			erasequest 1298;
+			setquest 1299;
+			getitem 25250,3;
+			getexp 101600,94320;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(9458,HUNTING)==2 ) { 
+			erasequest 9458;
+			setquest 9459;
+			getitem 25250,1;
+			getexp 25000,20000;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if(checkquest(14672,HUNTING)==2 ) { 
+			erasequest 14672;
+			setquest 14673;
+			getitem 25250,2;
+			getexp 76000,70740;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(12391,HUNTING)==2 ) { 
+			erasequest 12391;
+			setquest 12390;
+			getitem 25250,2;
+			getexp 37040,35140;
+			dispbottom "任務回報完成!!";
+			}
+			if(checkquest(12392,HUNTING)==2 ) { 
+			erasequest 12392;
+			setquest 12390;
+			getitem 25250,2;
+			getexp 37040,35140;
+			dispbottom "任務回報完成!!";
+			}
+			if(checkquest(12393,HUNTING)==2 ) { 
+			erasequest 12393;
+			setquest 12390;
+			getitem 25250,2;
+			getexp 37040,35140;
+			dispbottom "任務回報完成!!";
+			}
+			if(checkquest(12394,HUNTING)==2 ) { 
+			erasequest 12394;
+			setquest 12390;
+			getitem 25250,2;
+			getexp 37040,35140;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 5:
+			if(checkquest(12399,HUNTING)==2 ) { 
+			erasequest 12399;
+			setquest 12398;
+			getitem 25250,3;
+			getexp 95630,102180;
+			dispbottom "任務回報完成!!";
+			}
+			if(checkquest(12400,HUNTING)==2 ) { 
+			erasequest 12400;
+			setquest 12398;
+			getitem 25250,3;
+			getexp 95630,102180;
+			dispbottom "任務回報完成!!";
+			}
+			if(checkquest(12401,HUNTING)==2 ) { 
+			erasequest 12401;
+			setquest 12398;
+			getitem 25250,3;
+			getexp 95630,102180;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 6:
+			if(checkquest(9460,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+			if (countitem(25260)<10 ) {
+			mes "[任務委托管理員]";
+			mes "任務道具不夠啊";
+			close;	}
+			erasequest 9460;
+			setquest 9461;
+			delitem 25260,10;
+			getitem 25250,1;
+			getexp 25000,20000;
+			dispbottom "任務回報完成!!";
+			close;
+
+		case 7:
+			if(checkquest(16078,HUNTING)==2 ) { 
+			erasequest 16078;
+			setquest 16079;
+			getitem 25250,2;
+			getexp 55560,52710;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 8:
+			if(checkquest(1331,HUNTING)==2 ) { 
+			erasequest 1331;
+			setquest 1332;
+			getitem 25250,2;
+			getexp 14500,13860;
+			dispbottom "任務回報完成!!";
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 9:
+			mes "[任務委托管理員]";
+			mes "你想賣給我哪個物品呢?";
+			next;
+			switch(select("乾淨骨頭","劇毒粉","草寇圍巾","粗糙子彈","故障霰彈槍","粗糙彎刀","老舊左輪手槍","褐色披肩","沼澤蠕蟲外殼","溝鼠尾巴","取消")){
+
+			case 1:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25276)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25276,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 2:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25277)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25277,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 3:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25278)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25278,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 4:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25279)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25279,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 5:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25280)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25280,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 6:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25281)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25281,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 7:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25282)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25282,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 8:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25283)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25283,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 9:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25284)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25284,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 10:
+				if(checkquest(12410,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(25285)<5 ) {
+				mes "[任務委托管理員]";
+				mes "任務道具不夠啊";
+				close;	}
+				erasequest 12410;
+				setquest 12411;
+				delitem 25285,5;
+				getitem 25250,2;
+				getexp 20000,18000;
+				dispbottom "任務回報完成!!";
+				close;
+
+				}
+
+		case 10:
+			mes "[任務委托管理員]";
+			mes "你想提供哪種食材100個給我呢?";
+			next;
+			switch(select("蕃薯","肉","紅蘿蔔","香蕉","南瓜","取消")){
+
+			case 1:
+				if(checkquest(12381,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(516)<100 ) {
+				mes "[任務委托管理員]";
+				mes "食材數量不夠100個啊";
+				close;	}
+				erasequest 12381;
+				setquest 12382;
+				delitem 516,100;
+				getitem 25250,1;
+				getexp 16000,12800;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 2:
+				if(checkquest(12381,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(517)<100 ) {
+				mes "[任務委托管理員]";
+				mes "食材數量不夠100個啊";
+				close;	}
+				erasequest 12381;
+				setquest 12382;
+				delitem 517,100;
+				getitem 25250,1;
+				getexp 16000,12800;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 3:
+				if(checkquest(12381,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(515)<100 ) {
+				mes "[任務委托管理員]";
+				mes "食材數量不夠100個啊";
+				close;	}
+				erasequest 12381;
+				setquest 12382;
+				delitem 515,100;
+				getitem 25250,1;
+				getexp 16000,12800;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 4:
+				if(checkquest(12381,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(513)<100 ) {
+				mes "[任務委托管理員]";
+				mes "食材數量不夠100個啊";
+				close;	}
+				erasequest 12381;
+				setquest 12382;
+				delitem 513,100;
+				getitem 25250,1;
+				getexp 16000,12800;
+				dispbottom "任務回報完成!!";
+				close;
+
+			case 5:
+				if(checkquest(12381,PLAYTIME)==-1){mes "[任務委托管理員]"; mes "你還未接取這個任務~"; close;}
+				if (countitem(535)<100 ) {
+				mes "[任務委托管理員]";
+				mes "食材數量不夠100個啊";
+				close;	}
+				erasequest 12381;
+				setquest 12382;
+				delitem 535,100;
+				getitem 25250,1;
+				getexp 16000,12800;
+				dispbottom "任務回報完成!!";
+				close;
+
+				}
+
+		case 11:
+			close;
+		}
+
+
+	case 3:
+		close;
+	}
+
+OnInit:
+	waitingroom "洛克理奇岩嶺每日任務",0;
+	end;
+}
+
+
+
+

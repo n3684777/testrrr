@@ -1,0 +1,25 @@
+trinity,138,65,4	script	贊助滿額禮兌換員	10184,{
+
+	mes "[贊助滿額禮兌換員]";
+	mes "請選擇你要兌換的類別";
+	next;
+	switch(select("贊助服飾","贊助特效石")) {
+
+	case 1:
+	close2;
+	callshop "贊助服飾";
+	end;
+
+	case 2:
+	close2;
+	callshop "贊助特效石";
+	end;
+
+	}
+
+OnInit:
+	waitingroom "贊助滿額禮兌換",0;
+	end;
+}
+
+

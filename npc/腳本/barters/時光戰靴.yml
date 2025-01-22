@@ -1,0 +1,101 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+#時光戰靴
+   - Name: 時光戰靴兌換
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_VENDING_MACHINE1
+     Items:
+       - Index: 0
+         Item: Temporal_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 1
+       - Index: 1
+         Item: Temporal_Str_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 2
+         Item: Temporal_Int_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 3
+         Item: Temporal_Agi_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 4
+         Item: Temporal_Vit_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 5
+         Item: Temporal_Dex_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 6
+         Item: Temporal_Luk_Boots_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Temporal_Crystal
+             Amount: 5
+       - Index: 7
+         Item: White_Knightage_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Coagulated_Spell
+             Amount: 3000
+       - Index: 8
+         Item: White_Knightage_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Polluted_Spell
+             Amount: 70
+       - Index: 9
+         Item: Khaliz_Knightage_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Coagulated_Spell
+             Amount: 5000
+       - Index: 10
+         Item: Khaliz_Knightage_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Polluted_Spell
+             Amount: 100

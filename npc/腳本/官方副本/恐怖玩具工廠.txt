@@ -1,0 +1,2629 @@
+//DEL 一個逃脫裝置 OR □
+//斜線無意義的變動 31 32
+//副本寶箱 等緊急出口 出現了 在出現
+//============================================================
+//= 99MaxEathena 二次開發團隊 [ www.99Max.mE ]
+//============================================================
+//= 此副本由 [99Max腳本組 - ymc] 以官方流程整理/漢化/修正
+//============================================================
+//= 完成時間 [2016.06.30]
+//============================================================
+
+//= Auriga Script ==============================================================
+// Ragnarok Online Toy Factory in Nightmare Script	by refis
+//==============================================================================
+//=========================地圖屬性
+1@xm_d	mapflag	noteleport
+1@xm_d	mapflag	nosave	SavePoint
+1@xm_d	mapflag	monster_noteleport
+1@xm_d	mapflag	nomemo
+1@xm_d	mapflag	nobranch
+1@xm_d	mapflag	noicewall
+1@xm_d	mapflag	restricted	6
+1@xm_d	mapflag	partylock
+
+
+
+prontera,1,1,4	script	恐怖玩具工廠	10032,{
+
+	.@qlv=140;				//要求等級
+	.@pcs=1;				//要求人數
+	.@time=2;				//冷卻顯示
+	.@quid=12331;				//任務  ID
+	.@map$="1@xm_d";			//副本地圖
+	.@idb$="恐怖玩具工廠";			//副本名稱
+	.@pid=getcharid(1);			//隊伍的ID
+	.@team$=getpartyleader(getcharid(1));	//隊長名稱
+	//			     0     1	  2      3      4      5      6      7	     8      9
+	//			     LV   人數   冷卻 quest_db 地圖  副本名 組隊ID 隊長名稱 區別 消耗體力
+	callfunc "instances_enter",.@qlv,.@pcs,.@time,.@quid,.@map$,.@idb$,.@pid,.@team$,5,150;
+	end;
+}
+
+
+vdistrict1,43,34,4	script	凱瑟琳 傑塔	10032,{/* 63274 */
+	.@party_id = getcharid(1);
+	if(BaseLevel < 140) {
+		mes "[凱瑟琳 傑塔]";
+		mes "啊，等等，等等！";
+		mes "這裡很危險。你看起來經驗不足，";
+		mes "還是別往前去了。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "如果要進入玩具工廠，你還需要再鍛煉一下，";
+		mes "至少要達到^ff0000140級^000000吧...";
+		close;
+	}
+	if(checkquest(12330) == -1) {
+		mes "[凱瑟琳 傑塔]";
+		mes "請...請不要這樣盯著我看，";
+		mes "現在我的臉變成了這樣...";
+		mes "但以前可不是這樣的，";
+		mes "眼睛也是有的...";
+		next;
+		mes "^0000ff眼前的少女突然開始哭泣，";
+		mes "  這樣說起來，她的臉上本該是眼睛的地";
+		mes "  方，如今卻是黑漆漆的空洞。^000000";
+		next;
+		menu "你的臉是怎麼了？",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "說來話長...你想要聽下去麼？";
+		next;
+		menu "說說你的故事吧。",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "唉...從哪開始說起好呢...";
+		mes "就從這一切的開始說起吧...";
+		next;
+		mes "^0000ff少女輕輕地歎了一口氣，開始回憶起她";
+		mes "  的過去^000000";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "以前，這裡是一座玩具工廠。";
+		mes "雖然這樣說，但這工廠其實就是製作玩偶，";
+		mes "而我當時，是一名玩偶製造學徒。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "剛開始我還非常慶幸，";
+		mes "找到了一個好的工作，";
+		mes "每次工作結束後都會去街道上，喝杯紅茶";
+		mes "吃一些甜點。";
+		mes "每天都過得很充實。";
+		next;
+		menu "你說的街道，已經不復存在了吧...",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "是的...";
+		mes "工廠的產品一直都沒有好的銷路，";
+		mes "後來連基本的運營都難以維持了。";
+		mes "職員們一個一個離開，";
+		mes "工廠的運營也陷入了危機。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "結果，最後剩下的職員就只剩下";
+		mes "作為玩偶師的爺爺，還有作為徒弟的我...";
+		next;
+		mes "^0000ff少女的白骨下顎微微晃動，可以看出感";
+		mes "  情波動很大^000000";
+		next;
+		menu "請繼續說下去",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "當工廠最終決定關閉時。";
+		mes "爺爺最後製作了一個玩偶，";
+		mes "為她製作衣服時一直在流眼淚。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "當時一定是認為以後再也不可能像那樣制";
+		mes "作玩偶了吧。";
+		mes "...回想起這些事，就好像在昨天發生的";
+		mes "一樣...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "這最後的玩偶名叫^0000ff席琳 基米^000000，";
+		mes "製作完畢後，玩偶師離開了，工廠也關閉";
+		mes "了。";
+		next;
+		menu "玩偶也有名字麼？",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "玩偶製作師對待自己的作品，就好像看待";
+		mes "孩子一般。";
+		mes "將自己全部的心血投入到製作中，而基米";
+		mes "則是這些當中最高的傑作。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "對，對不起。";
+		mes "我說的是席琳基米";
+		mes "我們一般都稱呼她為^0000ff基米^000000。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "玩偶師在製作基米時，";
+		mes "一直回憶著往昔情形，想著如果工廠能回";
+		mes "到從前，職員們都能回來就好了。";
+		mes "而基米也受到了這些思緒的影響，變成了";
+		mes "活物。";
+		next;
+		menu "玩偶活過來了？！",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "是的，^0000ff基米^000000她現在是一種生命體。";
+		mes "但不知道因為什麼原因，我上次見到她時";
+		mes "，她充滿了憤怒和憎恨。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "無論我怎麼喊她，都沒有回應。";
+		mes "在無人的玩具工廠裡，一直徘徊。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "所以我就跟在她的後面...";
+		mes "結果，發現了玩偶師爺爺居然癱坐在角落。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "我快步靠近了爺爺，但他沒有一點反應，";
+		mes "身體也已經冰冷...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "正當我悲痛不已時...";
+		mes "突然發現基米出現在了我的面前...";
+		mes "而死去的爺爺，就站在她的背後，";
+		mes "面無任何表情，就是呆滯地盯著前方...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "雖然看到了這幅情景...";
+		mes "但不知道為何，我絲毫沒有感受到恐懼。";
+		mes "接下來我就失去了意識，醒來時已經在工廠外了。";
+		mes "而我的臉，就變成了這樣...";
+		next;
+		mes "^0000ff眼前少女的臉部，本應是肌膚的地方，";
+		mes "  卻已經變成了白骨...^000000";
+		next;
+		menu "所以你的臉是因為玩偶基米...？",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "這個...其實我也不知道。";
+		mes "可能是基米造成的，也可能是其他的原因。";
+		mes "我只知道，應該是我失去意識時，有什麼";
+		mes "事情發生所導致的...";
+		next;
+		menu "你不認為基米時犯人麼？",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "...說實話，我不知道。";
+		mes "我不希望是基米...";
+		mes "不過除了她，又還能有誰？";
+		mes "我實在想不出來其他的可能...";
+		mes "但是現在就下定論還太早了。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "所以，我很想知道到底是什麼讓我的臉變";
+		mes "成了這樣...";
+		next;
+		mes "^0000ff少女突然開始顫抖，她縮緊雙手，緊抱";
+		mes "  住了自己。^000000";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "好可怕...";
+		mes "我不敢再進去了...";
+		mes "那樣的玩具廠，真的很嚇人。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "但是，我又想知道真相...";
+		mes "也希望我的臉能夠復原。";
+		mes "而且，爺爺的遺體還在裡面，";
+		mes "我想好好的埋葬他...";
+		mes "但是我一個人實在不敢再進去了！";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "...你是冒險者吧？";
+		mes "我能請求你和我一起進去麼？";
+		mes "去玩具工廠內找到基米...";
+		next;
+		menu "我會盡力幫你",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "嗯...也是呢，這樣拜託你肯定會拒絕...";
+		mes "呃...你說什麼？你願意幫我？！";
+		mes "謝謝老天，終於出現願意幫助我的人。";
+		next;
+		menu "那我們現在一起進去吧。",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "請稍等，進去之前我想先說明一下，";
+		mes "這個工廠十分危險，而我沒法幫你戰鬥...";
+		mes "只能給你帶帶路...";
+		next;
+		mes "^0000ff少女剛開心沒一會，";
+		mes "  馬上又陰沉了下來，略微沉吟了一下，";
+		mes "  便把可能的擔憂告訴了你。^000000";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "其實我也知道，即便進去了，也可能不會";
+		mes "解決任何問題。";
+		mes "但是，還是拜託你了...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "如果你們決定好了...";
+		mes "請稍作準備，我會在這裡等你們的。";
+		setquest 12330;
+		close;
+	}
+	if(checkquest(12330) != 2) {
+		mes "[凱瑟琳 傑塔]";
+		mes "準備好了麼？";
+		mes "我來幫你們開啟傳送裝置。";
+		completequest 12330;
+		if(!.@party_id) {
+			//
+			next;
+			mes "[凱瑟琳 傑塔]";
+			mes "前面非常危險，還是組成隊伍再出發吧。";
+			close;
+		}
+	} else {
+		mes "[凱瑟琳 傑塔]";
+		mes "基米的靈魂還未解脫，";
+		mes "我想爺爺的靈魂也難以安心...";
+		mes "如果你們有時間的話，請再次幫助我...";
+		if(!.@party_id) {
+			next;
+			mes "[凱瑟琳 傑塔]";
+			mes "前面非常危險，還是組成隊伍再出發吧。";
+			close;
+		}
+		if(checkquest(12331) > -1) {
+			next;
+			if(checkquest(12331, PLAYTIME) == 2) {
+				mes "^0000ff恐怖玩具工廠副本CD結束，可以再次進";
+				mes "入了。^000000";
+				erasequest 12331;
+				close;
+			}
+			mes "[凱瑟琳 傑塔]";
+			mes "不好意思，工廠現在非常混亂，";
+			mes "還是休息一陣，等運行恢復正常了再進去吧。";
+			next;
+			mes "[凱瑟琳 傑塔]";
+			mes "謝謝你們的幫助，";
+			mes "如果你們之後還願意來幫我，我會很開心的...";
+			close;
+		}
+	}
+	if(HORROR_1QUE >= 0)
+		set .@str$[0],"關於玩具工廠";
+	if(HORROR_1QUE >= 1)
+		set .@str$[1],"關於工廠的熱銷商品";
+	if(HORROR_1QUE >= 3)
+		set .@str$[2],"關於凱瑟琳 傑塔";
+	if(HORROR_1QUE >= 5)
+		set .@str$[3],"玩偶師的死因";
+	if(HORROR_1QUE >= 7)
+		set .@str$[4],"工廠運行的原因";
+	if(HORROR_1QUE >= 9)
+		set .@str$[5],"關於基米";
+	if(HORROR_1QUE >= 11)
+		set .@str$[6],"基米的附屬品";
+	if(HORROR_1QUE >= 13)
+		set .@str$[7],"將來的打算";
+	next;
+	switch(select("^0000ff準備前往工廠^000000","^ff0000取消^000000",
+		.@str$[0],.@str$[1],.@str$[2],.@str$[3],.@str$[4],.@str$[5],.@str$[6],.@str$[7])) {
+	case 1:
+		.@party_id = getcharid(1);
+		if(getcharid(0) != getpartyleader(.@party_id,2)) {
+			mes "[凱瑟琳 傑塔]";
+			mes "對不起，請讓你們隊長來找我，";
+			mes "作為一個隊伍，我想我們需要統一行動。";
+			close;
+		}
+		mes "[凱瑟琳 傑塔]";
+		mes "隊伍名稱："+getpartyname(.@party_id)+"...";
+		mes "隊    長："+strcharinfo(0)+"...";
+		if (instance_create("恐怖玩具工廠") < 0) {
+			mes "呃...？怎麼回事。";
+			next;
+			mes "[凱瑟琳 傑塔]";
+			mes "無法創建副本進度，請稍後再來吧。";
+			close;
+		}
+		next;
+	//入場記錄時間
+	setd "$@Instance_Annal"+instance_id(1),gettimetick(2);
+		mes "[凱瑟琳 傑塔]";
+		mes "好的，傳送裝置已經啟動了，快點一起進去吧。";
+		close;
+	case 2:
+		mes "[凱瑟琳 傑塔]";
+		mes "最終還是不願意進去麼...";
+		mes "好吧...";
+		close;
+	case 3:
+		mes "[凱瑟琳 傑塔]";
+		mes "這個地區一年中絕大部分時間在下雪。";
+		mes "寒冷的氣候造成物資的運輸十分困難。";
+		mes "在這樣困難的地方，還是有人嘗試開辦產業。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "這就是這座工廠的創辦者，";
+		mes "有名的玩偶師爺爺...";
+		mes "工廠設立之後，有很多產品非常受歡迎。";
+		mes "一時間內，整片地區都因為這座工廠而變";
+		mes "得活躍起來...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "但是，也就是一段時期而已。";
+		mes "我也不知道為什麼，漸漸的商品開始積壓...";
+		mes "慢慢的就變成了現在的狀態...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "商品的人氣本來很高，按理來說應該銷量很好。";
+		mes "但不知道為什麼就是賣不出去，難道說有";
+		mes "人設計阻礙了商品的銷路？";
+		mes "不過這也是臆想而已...";
+		close;
+	case 4:
+		mes "[凱瑟琳 傑塔]";
+		mes "想知道工廠原來的熱銷商品啊？";
+		mes "你的好奇心挺強的嘛...";
+		mes "我把我瞭解的都告訴你吧。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "首先是^FF0000「球形關節可動人偶」^000000。";
+		mes "由於加入了關節，手足可以像真人那般活動。";
+		mes "在製作中品質管控非常嚴格，關節基本不會壞掉。";
+		mes "這類產品當中的小女孩外形是最受歡迎的...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "接下來，就是和「球形關節可動人偶」配套";
+		mes "的^FF0000「禮物盒子」^000000了。";
+		mes "設計的非常精美漂亮。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "另外，還有";
+		mes "^FF0000「週年慶餅乾」^000000和";
+		mes "^FF0000「週年慶果汁」^000000。";
+		mes "在重要的紀念日時，一家人可以其樂融融";
+		mes "的享用這些美食。";
+		mes "可以說是帶著幸福味道的產品。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "好像很熱銷的商品就是這些了。";
+		mes "我個人最喜歡的就是餅乾和果汁了。";
+		close;
+	case 5:
+		mes "[凱瑟琳 傑塔]";
+		mes "啊？！";
+		mes "我...麼？";
+		mes "我的故事沒有什麼意思...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "我不離開這裡的理由，";
+		mes "一部分確實是因為臉，";
+		mes "但最重要的還是放不下人偶師爺爺。";
+		mes "以前我剛來的時候，什麼都不會做...";
+		mes "而爺爺總是很照顧我。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "在這工廠工作的人，多多少少都受到了爺爺的關照。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "對我來說，爺爺是很重要的人。";
+		mes "相信對其他受到爺爺照顧的人來說，也是這個感覺吧。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "所以我不忍心看著工廠變成現在這樣，";
+		mes "爺爺的遺體一直徘徊在工廠內，";
+		mes "而他生前所重視的基米，也...";
+		mes "冒險者們，請你們借給我力量，幫助解決";
+		mes "這個事件吧！";
+		close;
+	case 6:
+		mes "[凱瑟琳 傑塔]";
+		mes "...爺爺。";
+		mes "...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "...啊，對不起。";
+		mes "回憶起了那時候的事情。";
+		mes "爺爺是工廠的創始人，非常著名的玩偶製作師。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "爺爺的死因是，單獨製作玩偶時心臟病發作。";
+		mes "雖然調查結果是這樣，但這是不是真正的";
+		mes "死因，我也說不準。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "另外有一件事我一直很在意，";
+		mes "爺爺生前從來沒有提過他心臟不好。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "所以雖說是心臟病發作，但是我那時看見的...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "...我也記不清了。";
+		mes "也許只是我弄錯了。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "所以其實爺爺真正的死因，至今也不太清楚。";
+		mes "不過我覺得基米是不會加害爺爺的。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "雖然過了這麼久，也找不出什麼證據了...";
+		close;
+	case 7:
+		mes "[凱瑟琳 傑塔]";
+		mes "爺爺不在了，但工廠卻在運轉。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "我原來認為，可能是基米讓工廠繼續運作";
+		mes "的，可能是想繼承爺爺的遺志。";
+		mes "但是看到基米的那個樣子，這個可能性又很低了...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "基米怎麼能把最親切的爺爺忘了呢...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "即便基米是一個人偶，但我覺得她也絕對";
+		mes "不會忘記爺爺的事情。";
+		mes "基米比誰都更能體會孤獨的滋味...";
+		mes "這可能是由^FF0000某種原因^000000所造成的。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "但是無論我想多久，都理不清思緒...";
+		close;
+	case 8:
+		mes "[凱瑟琳 傑塔]";
+		mes "真的嚇到我了...";
+		mes "基米已經完全不是我印象中的樣子了...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "雖然不能好好的說明。";
+		mes "但是那恐怖的臉，絕對不是以前基米的樣子。";
+		mes "以前的基米一直會露出寂寞的表情...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "另外，基米認為是自己的錯才導致爺爺的死亡。";
+		mes "而且還因此鑽進牛角尖...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "另外，好像還有另一個基米...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "另一個基米還記得和爺爺一起生活的事情。";
+		mes "工廠的自動運轉是不是也和她有關呢...？";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "如果另一個基米能夠喚醒自己...";
+		mes "也許這件事就能完美解決了吧...";
+		close;
+	case 9:
+		mes "[凱瑟琳 傑塔]";
+		mes "冒險者們，我從爺爺那裡聽說了有關基米";
+		mes "的一些資料。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "基米身上裝飾了一些物品，人手的話相信";
+		mes "會對你們有一些幫助。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "不過，這些資料都沒有記載下來，真是可惜。";
+		mes "我只能告訴你們我知道的一些。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "首先，就是席琳頭上的緞帶了。";
+		mes "然後還有諾布爾十字架。";
+		mes "另外，可能還有一把古舊的洋傘。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "唉，說到這又想起了往事。";
+		mes "基米對爺爺來說，就像女兒一樣。";
+		mes "爺爺把四處收集來的貴重物品都當作了基米的裝飾物...";
+		close;
+	case 10:
+		mes "[凱瑟琳 傑塔]";
+		mes "謝謝你們長久以來幫助我解決這個事件。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "以現在基米的狀態，還是無法直接交流。";
+		mes "看來解決這事件不會很快...";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "不理解的地方還有很多...";
+		mes "但是我，絕對不會放棄的。";
+		next;
+		menu "和之前不一樣了啊。",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "是，多虧了你們的幫助。";
+		mes "真的非常感謝。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "正因為如此，我也希望冒險者們能多瞭解";
+		mes "這個工廠之前所發生的事，關於基米的，";
+		mes "關於爺爺的。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "但在這方面，我能幫助的非常有限。";
+		mes "真是對不起。";
+		next;
+		mes "[凱瑟琳 傑塔]";
+		mes "啊，對了，還有一件事我可能之前沒說過。";
+		next;
+		menu "沒說過的事情？",-;
+		mes "[凱瑟琳 傑塔]";
+		mes "是的，基米無論撤退多少次，最終都會回";
+		mes "到這個工廠來。";
+		mes "我也不會放棄的，所以希望冒險者你們能";
+		mes "繼續幫助我。";
+		next;
+		mes "^0000ff凱瑟琳低下了頭";
+		mes "  一瞬間你彷彿看見了她的笑容。^000000";
+		close;
+	}
+OnInit: 
+	waitingroom "恐怖玩具工廠",0;
+	end;
+}
+
+vdistrict1,40,31,4	script	傳送裝置	10007,{/* 63275 */
+	//副本任務獎勵
+	if(checkquest(32039,HUNTING)==2 ) { 
+	dispbottom "恐怖玩具工廠任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",4;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32039; }
+
+	if(BaseLevel < 140) {
+		mes "[傳送裝置]";
+		mes "沒有達到使用傳送裝置的最低等級要求，";
+		mes "需要等級140以上。";
+		close;
+	}
+	if(checkquest(12331) > -1) {
+		if(checkquest(12331, PLAYTIME) == 2) {
+			mes "^0000ff恐怖玩具工廠副本CD結束，可以再次進";
+			mes "入了。^000000";
+			erasequest 12331;
+			close;
+		}
+		mes "[傳送裝置]";
+		mes "上次使用傳送裝置的能量還殘留著。";
+		mes "為了安全起見還是過一短時間再來吧。";
+		close;
+	}
+	.@party_id = getcharid(1);
+	if(!.@party_id) {
+		mes "[傳送裝置]";
+		mes "前面非常危險，先組成一支隊伍再來吧。";
+		close;
+	}
+	mes "[傳送裝置]";
+	mes "系統自檢中...";
+	next;
+	mes "傳送裝置正常啟動";
+	next;
+	if(select("進入","離開") == 2) {
+		mes "離開傳送裝置";
+		close;
+	}
+	switch(instance_enter("恐怖玩具工廠")) {
+		case 3:
+			mes "發生一個未知錯誤。";
+			close;
+		case 2:
+			mes "副本進度 "+"恐怖玩具工廠"+" 不存在。";
+			mes "隊長還沒有建立副本進度。";
+			close;
+		case 1:
+			mes "只有註冊過的成員可以進入副本 "+"恐怖玩具工廠"+"。";
+			close;
+		case 0:
+	//副本任務
+	if(checkquest(32039,HUNTING)<0 ){setquest 32039;}
+			//mapannounce "prontera",getpartyname(getcharid(1))+"小隊成員 "+strcharinfo(0)+" 進入副本恐怖玩具工廠。",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
+			if(checkquest(50502) > -1)
+				erasequest 50502;
+			if(checkquest(50503) > -1)
+				erasequest 50503;
+			setquest 12331; //state=1
+			if(checkquest(50501) == -1)
+				setquest 50501;
+			//warp "1@xm_d",111,22;
+			end;
+	}
+}
+
+
+1@xm_d,112,20,6	script	凱瑟琳 傑塔#0	10032,{/* 55921 */
+	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+		mes "[凱瑟琳 傑塔]";
+		mes "總算潛入進工廠了。";
+		mes "現在需要聽我詳細說明麼？";
+		npctalk "總算潛入進工廠了。現在需要聽我詳細說明麼？";
+		next;
+		switch(select("結束對話","聽從說明","沒有必要說明，直接開始")) {
+			case 1:
+				mes "[凱瑟琳 傑塔]";
+				mes "請做好準備。";
+				close;
+			case 2:
+				donpcevent instance_npcname("凱瑟琳 傑塔#0") +"::OnStart";
+				close;
+			case 3:
+				donpcevent instance_npcname("凱瑟琳 傑塔#0") +"::OnStart2";
+				close;
+		}
+	} else {
+		mes "[凱瑟琳 傑塔]";
+		mes "對，對不起...";
+		mes "太多的人同時和我對話，我有些混亂了。";
+		mes "可以請你們的隊長來找我麼？";
+		mes "謝謝了。";
+		close;
+	}
+OnInstanceInit:
+	if('flag)
+		end;
+	set 'flag,1;
+	disablenpc instance_npcname("#bgm01");
+	disablenpc instance_npcname("#bgm02");
+	disablenpc instance_npcname("#bgm03");
+	disablenpc instance_npcname("#bgm04");
+	disablenpc instance_npcname("#bgm05");
+	disablenpc instance_npcname("#bgm06");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#01");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#21");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#6");
+	hideonnpc instance_npcname("席琳 基米#2");
+	hideonnpc instance_npcname("被囚禁的聖誕老人#3");
+	hideonnpc instance_npcname("被囚禁的聖誕老人#4");
+	hideonnpc instance_npcname("xm_d_change#1");
+	hideonnpc instance_npcname("xm_d_change#2");
+	hideonnpc instance_npcname("xm_d_change#3");
+	hideonnpc instance_npcname("xm_d_change#4");
+	hideonnpc instance_npcname("作業班長#fac1bs");
+	hideonnpc instance_npcname("包裝好的禮物盒#pck1");
+	disablenpc instance_npcname("#fac1wp");
+	disablenpc instance_npcname("#fac1wp2");
+//	hideonnpc instance_npcname("#kimion1");
+	disablenpc instance_npcname("#fac3wp");
+	disablenpc instance_npcname("#fac3wp2");
+	disablenpc instance_npcname("#fac4wp");
+	disablenpc instance_npcname("#fac4wp2");
+	disablenpc instance_npcname("#fac5wp");
+	disablenpc instance_npcname("#fac5wp2");
+	disablenpc instance_npcname("#fac6wp");
+	disablenpc instance_npcname("#jeton2");
+	hideonnpc instance_npcname("緊急出口#exwp1");
+	for(set .@i,1;.@i<=10; set .@i,.@i+1)
+		hideonnpc instance_npcname("工作人員#xm_d"+.@i);
+	hideonnpc instance_npcname("xm_d_box");
+	hideonnpc instance_npcname("精美包裝的禮品盒#00");
+	for(set .@i,1;.@i<=12; set .@i,.@i+1)
+		hideonnpc instance_npcname("精美包裝的禮品盒#"+.@i);
+	for(set .@i,1;.@i<=9; set .@i,.@i+1)
+		hideonnpc instance_npcname("xm_d#eff_f0"+.@i);
+	donpcevent instance_npcname("xm_d#Barricade00")+"::OnStart";
+	end;
+OnStart:
+	initnpctimer;
+	enablenpc instance_npcname("#bgm01");
+	hideoffnpc instance_npcname("凱瑟琳 傑塔#01");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#0");
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk1";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk2";
+	end;
+OnTimer11000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk3";
+	donpcevent instance_npcname("#fac1ct") + "::OnStart";
+	end;
+OnTimer14000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：工廠的員工們~ 請起床了~ 快樂的工作時間又開始了~。",0x9,0x00ff44;
+	end;
+OnTimer19000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk4";
+	end;
+OnTimer24000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk5";
+	end;
+OnTimer27000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：請正確處理生產出的有害垃圾，注意安全作業。",0x9,0x00ff44;
+	end;
+OnTimer30000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk6";
+	end;
+OnTimer33000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：今天也要努力工作，為孩子們的夢想製作產品。",0x9,0x00ff44;
+	end;
+OnTimer36000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk7";
+	end;
+OnTimer37000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：第一生產線請開始工作，注意戴好安全帽。",0x9,0x00ff44;
+	end;
+OnTimer40000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk8";
+	end;
+OnTimer46000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk9";
+	end;
+OnTimer48000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：工作人員必須穿好工作服，佩戴名牌，安保人員會不定期檢查~。",0x9,0x00ff44;
+	end;
+OnTimer53000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk10";
+	hideoffnpc instance_npcname("xm_d_change#1");
+	hideoffnpc instance_npcname("xm_d_change#2");
+	hideoffnpc instance_npcname("xm_d_change#3");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#1");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#2");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#3");
+	end;
+OnTimer59000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk11";
+	end;
+OnTimer64000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk12";
+	end;
+OnTimer69000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk13";
+	end;
+OnTimer74000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk14";
+	end;
+OnTimer78000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk15";
+	end;
+OnTimer84000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk16";
+	mapannounce instance_mapname("1@xm_d"),"直到廣播通知前，請打敗這些人偶和玩具盒。",0x9,0xffffff;
+	end;
+OnTimer90000:
+	stopnpctimer;
+	hideonnpc instance_npcname("凱瑟琳 傑塔#01");
+	disablenpc instance_npcname("#bgm01");
+	end;
+OnStart2:
+	initnpctimer;
+	setnpctimer 100000;
+	enablenpc instance_npcname("#bgm01");
+	hideoffnpc instance_npcname("凱瑟琳 傑塔#01");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#0");
+	end;
+OnTimer103000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#01")+"::OnTalk17";
+	end;
+OnTimer109000:
+	hideonnpc instance_npcname("凱瑟琳 傑塔#01");
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：工廠的員工們~ 請起床了~ 快樂的工作時間又開始了~。",0x9,0x00ff44;
+	hideoffnpc instance_npcname("xm_d_change#1");
+	hideoffnpc instance_npcname("xm_d_change#2");
+	hideoffnpc instance_npcname("xm_d_change#3");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#1");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#2");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#3");
+	end;
+OnTimer115000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：請正確處理生產出的有害垃圾，注意安全作業。",0x9,0x00ff44;
+	end;
+OnTimer121000:
+	stopnpctimer;
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：今天也要努力工作，為孩子們的夢想製作產品。",0x9,0x00ff44;
+	disablenpc instance_npcname("#bgm01");
+	donpcevent instance_npcname("#fac1ct")+ "::OnStart";
+	end;
+}
+
+1@xm_d,112,20,0	script	#bgm01	139,10,10,{/* 55922 (hide)*/
+	end;
+OnTouch:
+	playBGMall "99",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,112,20,1	script	凱瑟琳 傑塔#01	10032,{/* 55923 (hide)*/
+	end;
+OnTalk1:
+	npctalk "這裡是第1工廠，生產玩具玩偶的場所。";
+	end;
+OnTalk2:
+	npctalk "啊，想起來了，不穿上作業服的話，會被警備兵發現趕出去的...";
+	end;
+OnTalk3:
+	npctalk "只是...";
+	end;
+OnTalk4:
+	npctalk "這...這是什麼？不是人，都是人偶在這來回走動，就像工作人員一樣...";
+	end;
+OnTalk5:
+	npctalk "這個工廠已經荒廢很長時間了，應該一個人都沒有，但好像有誰在一直維持著工廠的運轉...";
+	end;
+OnTalk6:
+	npctalk "就好像工廠關閉前，正常運作的樣子...不，完全就是一模一樣。真厲害，到底是誰...？";
+	end;
+OnTalk7:
+	npctalk "但是，這並不是懷舊的場合，為了向基米所在的區域前進，首先應該停止這裡的生產工作。";
+	end;
+OnTalk8:
+	npctalk "為此，應該要想辦法停止那些到處亂動的人偶和玩具盒。";
+	end;
+OnTalk9:
+	npctalk "啊？停止的方法麼？...嗯，可能直接打倒吧？";
+	end;
+OnTalk10:
+	npctalk "啊，警備兵要來了...穿上工作服的話應該能矇混過關。以前那個裝有工作服的箱子呢...";
+	end;
+OnTalk11:
+	npctalk "原來就在我後面...你們先去找工作服穿上吧，我有工作人員名牌，應該不需要換工作服了...";
+	end;
+OnTalk12:
+	npctalk "不停止第1工廠的作業的話，無法前往第2工廠。總之先穿上工作服，停止這些人偶和玩具盒的生產吧。";
+	end;
+OnTalk13:
+	npctalk "多說無益，控制回路也不知道在哪，先用武力停止這些人偶吧。";
+	end;
+OnTalk14:
+	npctalk "這些人偶都是很容易修復的，所以不用手下留情，用各種手段打到它們。";
+	end;
+OnTalk15:
+	npctalk "停止一定數量的人偶之後，應該會有通告，這時就能前往第2工廠了。";
+	end;
+OnTalk16:
+	npctalk "我會先去找控制回路，到時我們在第2工廠匯合吧！";
+	end;
+OnTalk17:
+	npctalk "那麼我們就在第2工廠那邊見了，加油！";
+	end;
+}
+
+1@xm_d,13,105,6	script	工作服箱子#1::xm_d_change#1	10033,{/* 55924 */
+	progressbar "0xFFFF00",1;
+//	sc_end SC_MONSTER_TRANSFORM;
+	playBGMall "52",instance_mapname("1@xm_d");
+//	sc_start SC_MONSTER_TRANSFORM,180000,1246;
+	transform 1246,180000;
+	mes "^0000ff更換工作服完畢。";
+	mes "  需要再次變裝時，隨時可以回來。^000000";
+	close;
+}
+
+1@xm_d,116,16,6	script	工作服箱子#2::xm_d_change#2	10033,{/* 55925 */
+	progressbar "0xFFFF00",1;
+//	sc_end SC_MONSTER_TRANSFORM;
+	playBGMall "52",instance_mapname("1@xm_d");
+//	sc_start SC_MONSTER_TRANSFORM,180000,1246;
+	transform 1246,180000;
+	mes "^0000ff更換工作服完畢。";
+	mes "  需要再次變裝時，隨時可以回來。^000000";
+	close;
+}
+
+1@xm_d,10,20,6	script	工作服箱子#3::xm_d_change#3	10033,{/* 55926 */
+	progressbar "0xFFFF00",1;
+//	sc_end SC_MONSTER_TRANSFORM;
+	playBGMall "52",instance_mapname("1@xm_d");
+//	sc_start SC_MONSTER_TRANSFORM,180000,1246;
+	transform 1246,180000;
+	mes "^0000ff更換工作服完畢。";
+	mes "  需要再次變裝時，隨時可以回來。^000000";
+	close;
+}
+
+1@xm_d,1,5,3	script	#fac1ct	844,{/* 55927 (hide)*/
+OnStart:
+	areamonster instance_mapname("1@xm_d"),10,20,116,105,"禮物包裝者",2989,31,instance_npcname("#fac1ct")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),10,20,116,105,"未包裝好的禮物箱",2991,36,instance_npcname("#fac1ct")+ "::OnKilled";
+	end;
+OnKilled:
+	set .@count,mobcount(instance_mapname("1@xm_d"),instance_npcname("#fac1ct")+ "::OnKilled");
+	if(.@count < 28) {
+		initnpctimer;
+		viewpoint 1,71,129,1,0xFF8000;
+		killmonster instance_mapname("1@xm_d"),instance_npcname("#fac1ct")+"::OnKilled";
+		mapannounce instance_mapname("1@xm_d"),"作業班長廣播：啊？大家都去哪了？！",0x9,0xff8800;
+	}
+	end;
+OnTimer3000:
+	mapannounce instance_mapname("1@xm_d"),"作業班長廣播：製作包裝的第2工廠人手不足！！",0x9,0xff8800;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	mapannounce instance_mapname("1@xm_d"),"作業班長廣播：有空的工作人員請來11點方向幫我搬一下禮物盒！",0x9,0xff8800;
+	hideoffnpc instance_npcname("作業班長#fac1bs");
+	for(set .@i,61; .@i<=89; set .@i,.@i+1)
+		disablenpc instance_npcname("alert#"+ .@i);
+	end;
+}
+
+1@xm_d,71,129,3	script	作業班長#fac1bs	10020,{/* 55928 */
+	if(getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
+		mes "[作業班長]";
+		mes "在這磨磨蹭蹭做什麼呢？";
+		mes "快去第二工廠啊！";
+		close;
+	}
+	if(getstatus(SC_MONSTER_TRANSFORM,1) != 1246) {
+		mes "[作業班長]";
+		mes "什麼！？人類？！";
+		mes "怎麼這裡會有人類！？";
+		mes "無關人員禁止進入！";
+		mes "警備兵！這有入侵者！";
+		npctalk "作業班長：警備兵！警備兵在哪？！這裡發現了人類！";
+		donpcevent instance_npcname("#alert1") +"::OnStart";
+		close;
+	}
+	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+		mes "[作業班長]";
+		mes "工作人員怎麼都不見了，我有點擔心。";
+		mes "真是的...其他的人呢？";
+		mes "算了，不是在這發牢騷的時候！";
+		mes "孩子們還在等著我們的玩具製造呢。";
+		next;
+		mes "[作業班長]";
+		mes "快點拿上^ff0000包裝完畢的盒子^000000，";
+		mes "沿著軌道往東走，去第2工廠。";
+		npctalk "作業班長：快點拿上包裝完畢的盒子，沿著軌道往東走，去第2工廠。";
+		hideoffnpc instance_npcname("包裝好的禮物盒#pck1");
+		enablenpc instance_npcname("#fac1wp");
+		enablenpc instance_npcname("#fac1wp2");
+		specialeffect 247, AREA, instance_npcname("包裝好的禮物盒#pck1");
+		close;
+	} else {
+		mes "[作業班長]";
+		mes "你們作業班的隊長呢？";
+		mes "沒時間了，快讓你們隊長來找我。";
+		close;
+	}
+OnStart:
+	hideoffnpc instance_npcname("作業班長#fac1bs");
+	hideoffnpc instance_npcname("包裝好的禮物盒#pck1");
+	npctalk "作業班長：看來所有人類都已經被趕出去了？最近這種事情也開始頻繁發生了，真是讓人討厭的傢伙們...";
+	end;
+}
+
+1@xm_d,65,127,6	script	包裝好的禮物盒#pck1	10033,{/* 55929 (hide)*/
+	progressbar "0xFFFF00",1;
+	if(getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
+		mes "^009900已經拿上了包裝好的盒子，不能同時拿";
+		mes "  2個以上。^000000";
+		close;
+	}
+	if(getstatus(SC_MONSTER_TRANSFORM,1) != 1246) {
+		mes "^ff0000沒有穿上工作服，不能拿取包裝盒，快";
+		mes "  去換上工作服吧。^000000";
+		close;
+	}
+//	sc_end SC_MONSTER_TRANSFORM;
+//	sc_start SC_MONSTER_TRANSFORM,60000,1249;
+	transform 1249,60000;
+	mes "^0000ff拿上了包裝好的盒子，盒子實在太過巨";
+	mes "  大了，把自己完全遮住了。^000000";
+	viewpoint 2,1,1,1,0xFFFFFF;
+	viewpoint 1,76,129,2,0xFF8000;
+	close;
+}
+
+1@xm_d,76,129,0	script	#fac1wp	45,2,2,{/* 55930 */
+	set .@map$,instance_mapname("1@xm_d");
+	set .@label$,instance_npcname("#fac1ct")+"::OnKilled";
+	if(mobcount(.@map$,.@label$)){
+		mes "^ff0000還有很多玩偶在活動。";
+		mes "  務必讓更多活動的玩偶停下來。^000000";
+		close;
+	}
+	if(getstatus(SC_MONSTER_TRANSFORM,1) != 1249) {
+		mes "[作業班長]";
+		mes "在這磨磨蹭蹭做什麼呢？";
+		mes "快去拿包裝好的盒子啊！";
+		close;
+	}
+	warp .@map$,88,129;
+	end;
+}
+
+1@xm_d,79,129,0	script	#fac1wp2	45,2,2,{/* 55931 */
+	mes "因為人手不足，作業班長看上去心情很不好。";
+	mes "  如果沒有什麼事，最好還是不要回去吧...";
+	next;
+	if(select("不返回","返回第1工廠") == 1)
+		close;
+	warp instance_mapname("1@xm_d"),73,129;
+	end;
+}
+
+1@xm_d,179,129,0	script	#fac2wp	45,2,2,{
+	if(getstatus(SC_MONSTER_TRANSFORM,1) != 1249) {
+		mes "沒有拿上包裝的盒子，不能使用軌道，";
+		mes "  先去拿上盒子再來吧。";
+		close;
+	}
+	warp instance_mapname("1@xm_d"),183,100;
+	end;
+}
+
+1@xm_d,184,109,0	warp	#fac2wp2	2,2,1@xm_d,170,129
+
+1@xm_d,130,135,4	script	道標#1	858,{/* 55934 */
+	mes "^ff0000↑休息室^000000";
+	mes "  ※可以使用休息室時，會廣播通知※";
+	mes "　";
+	mes "  ^ff0000→第2工廠^000000";
+	mes "  ※沿著軌道前行※";
+	close;
+}
+
+1@xm_d,1,5,3	script	#alert1	844,{/* 55935 (hide)*/
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	hideonnpc instance_npcname("作業班長#fac1bs");
+	end;
+OnTimer2000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer3000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer4000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer5000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer6000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer7000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer8000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer9000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer10000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer11000:
+	areamonster instance_mapname("1@xm_d"),60,133,77,116,"玩具工廠警備兵",2990,1,instance_npcname("#alert1")+ "::OnKilled";
+	end;
+OnTimer60000:
+	stopnpctimer;
+	killmonster instance_mapname("1@xm_d"),instance_npcname("#alert1")+"::OnKilled";
+	donpcevent instance_npcname("作業班長#fac1bs")+"::OnStart";
+	end;
+OnKilled:
+	end;
+}
+
+
+1@xm_d,185,100,6	script	凱瑟琳 傑塔#2	10032,{/* 55936 */
+	mes "[凱瑟琳 傑塔]";
+	mes "你們終於來了，能安全匯合真是太好了...";
+	mes "沒有受傷吧？要休息一下麼？稍微休整一下吧...";
+	npctalk "你們終於來了，能安全匯合真是太好了...沒有受傷吧？要休息一下麼？稍微休整一下吧...";
+	next;
+	switch(select("停止對話","第2工廠的情報","無需說明直接開始")) {
+		case 1:
+			mes "[凱瑟琳 傑塔]";
+			mes "準備好了通知我一聲。";
+			close;
+		case 2:
+			donpcevent instance_npcname("凱瑟琳 傑塔#2") +"::OnStart";
+			close;
+		case 3:
+			donpcevent instance_npcname("凱瑟琳 傑塔#2") +"::OnStart2";
+			close;
+	}
+OnStart:
+	initnpctimer;
+	enablenpc instance_npcname("#bgm06");
+	hideoffnpc instance_npcname("凱瑟琳 傑塔#21");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#2");
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk1";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk2";
+	end;
+OnTimer11000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk3";
+	end;
+OnTimer16000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk4";
+	end;
+OnTimer21000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk5";
+	end;
+OnTimer26000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk6";
+	end;
+OnTimer31000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk7";
+	end;
+OnTimer36000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk8";
+	end;
+OnTimer41000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk9";
+	end;
+OnTimer46000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk10";
+	mapannounce instance_mapname("1@xm_d"),"換上工作服之後，就可以向「工作人員」打聽玩偶製作師的事情了。",0x9,0xffffff;
+	end;
+OnTimer52000:
+	stopnpctimer;
+	hideonnpc instance_npcname("凱瑟琳 傑塔#21");
+	disablenpc instance_npcname("#bgm06");
+	hideoffnpc instance_npcname("xm_d_change#4");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#4");
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		hideoffnpc instance_npcname("工作人員#xm_d"+ .@i);
+	donpcevent instance_npcname("#fac2ct")+ "::OnStart";
+	donpcevent instance_npcname("#fac2wpc")+ "::OnStart";
+	end;
+OnStart2:
+	initnpctimer;
+	setnpctimer 100000;
+	enablenpc instance_npcname("#bgm06");
+	hideoffnpc instance_npcname("凱瑟琳 傑塔#21");
+	hideonnpc instance_npcname("凱瑟琳 傑塔#2");
+	end;
+OnTimer103000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk8";
+	end;
+OnTimer107000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#21")+"::OnTalk9";
+	mapannounce instance_mapname("1@xm_d"),"換上工作服之後，就可以向「工作人員」打聽玩偶製作師的事情了。",0x9,0xffffff;
+	end;
+OnTimer112000:
+	stopnpctimer;
+	hideonnpc instance_npcname("凱瑟琳 傑塔#21");
+	disablenpc instance_npcname("#bgm06");
+	hideoffnpc instance_npcname("xm_d_change#4");
+	specialeffect 247, AREA, instance_npcname("xm_d_change#4");
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		hideoffnpc instance_npcname("工作人員#xm_d"+ .@i);
+	donpcevent instance_npcname("#fac2ct")+ "::OnStart";
+	donpcevent instance_npcname("#fac2wpc")+ "::OnStart";
+	end;
+}
+
+1@xm_d,185,100,0	script	#bgm06	139,10,10,{/* 55937 (hide)*/
+	end;
+OnTouch:
+	playBGMall "99",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,185,100,6	script	凱瑟琳 傑塔#21	10032,{/* 55938 (hide)*/
+	end;
+OnTalk1:
+	npctalk "這裡是包裝禮物盒的第2工廠。";
+	end;
+OnTalk2:
+	npctalk "以前這裡總是有熙熙攘攘的人流，但現在已經...";
+	end;
+OnTalk3:
+	npctalk "啊，對了，來的途中發現了，在這裡徘徊的除了玩偶，還有一幫小孩子。";
+	end;
+OnTalk4:
+	npctalk "但是...看起來樣子有些恐怖，像是一些兇惡或悲傷的靈魂。";
+	end;
+OnTalk5:
+	npctalk "被那些孩子襲擊的話，還請冒險者們不要生氣...可是，找不到拯救那些孩子靈魂的方法...為什麼我...";
+	end;
+OnTalk6:
+	npctalk "另外，在探索過程中，請詢問一下玩偶師的下落。這裡的工作人員好像都忘了爺爺的事情了。";
+	end;
+OnTalk7:
+	npctalk "如果喚醒他們對人偶師的記憶，我們應該就可以知道發生了什麼。這也是我們唯一的希望...";
+	end;
+OnTalk8:
+	npctalk "如果發生了什麼事，請聯絡我。我先去其他地方看看能不能找到線索。";
+	end;
+OnTalk9:
+	npctalk "另外...包裝好的盒子應該暫時不需要了。但是之後別忘了換上工作服。";
+	end;
+OnTalk10:
+	npctalk "拜託你們了...我能幫忙的地方實在有限，真是對不起，晚點我們再匯合吧。";
+	end;
+}
+
+1@xm_d,185,94,6	script	工作服箱子#4::xm_d_change#4	10033,5,5,{/* 55939 (hide)*/
+	progressbar "0xFFFF00",1;
+//	sc_end SC_MONSTER_TRANSFORM;
+	playBGMall "128",instance_mapname("1@xm_d");
+//	sc_start SC_MONSTER_TRANSFORM,300000,1246;
+	transform 1246,300000;
+	mes "^0000ff更換工作服完畢。";
+	mes "  工作中需要替換工作服的話，請再回來";
+	mes "  這裡。^000000";
+	close;
+OnTouch:
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		doevent instance_npcname("工作人員#xm_d"+.@i)+ "::OnCheck";
+	end;
+}
+
+1@xm_d,1,5,3	script	#fac2ct	844,{/* 55940 (hide)*/
+OnStart:
+	areamonster instance_mapname("1@xm_d"),143,36,240,120,"未包裝好的禮物箱",2991,16,instance_npcname("#fac2ct")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),143,36,240,120,"工廠警備員的靈魂",2992,16,instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),155,98,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),155,98,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),130,72,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),130,72,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),134,34,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),134,34,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),195,28,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),195,28,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),228,30,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),228,30,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),203,55,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),203,55,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),132,52,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),132,52,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),162,52,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),162,52,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	//monster instance_mapname("1@xm_d"),242,17,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	//monster instance_mapname("1@xm_d"),242,17,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),209,15,"被遺棄的玩偶熊",2995,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	monster instance_mapname("1@xm_d"),209,15,"未收到禮物的幽靈",2993,rand(1,3),instance_npcname("#fac2ct")+ "::OnKilled";
+	end;
+OnKilled:
+	end;
+}
+
+1@xm_d,130,178,0	warp	#fac3wp		2,2,1@xm_d,130,193
+1@xm_d,130,184,0	warp	#fac3wp2	2,2,1@xm_d,129,173
+
+1@xm_d,1,2,3	script	#fac2wpc	844,{/* 55943 (hide)*/
+OnStart:
+	set 'count,10;
+	end;
+OnCount:
+	set 'count,'count-1;
+	if('count)
+		mapannounce instance_mapname("1@xm_d"),"工廠內廣播：勤務人數確認中，現在包裝生產線上共" +'count+ "名人員作業中。請努力工作，不要犯錯。",0x9,0x00ff44;
+	else {
+		mapannounce instance_mapname("1@xm_d"),"工廠內廣播：配送分類作業的所有員工已離開，工廠的電源即將關閉，工作人員的休息室將開放。",0x9,0x00ff44;
+		mapannounce instance_mapname("1@xm_d"),"通往休息室的門打開了，通過軌道前往休息室吧。",0x9,0xffffff;
+		for(set .@i,90; .@i<=104; set .@i,.@i+1)
+			disablenpc instance_npcname("alert#"+ .@i);
+		killmonster instance_mapname("1@xm_d"),instance_npcname("#fac2ct")+"::OnKilled";
+		enablenpc instance_npcname("#fac3wp");
+		enablenpc instance_npcname("#fac3wp2");
+	}
+	end;
+OnCheck:
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		doevent instance_npcname("工作人員#xm_d"+.@i)+ "::OnCheck";
+	end;
+}
+
+1@xm_d,155,98,3	script	工作人員#xm_d1	10020,{/* 55944 */
+	mes "[工作人員]";
+	mes "嗯，新來的？";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "工作很忙的，別沒事來扯淡。";
+		close;
+	}
+	initnpctimer;
+	set 'flag1,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "人偶師...？啊，那個爺爺啊，這個工廠的創始人麼？";
+	end;
+OnTimer4000:
+	npctalk "哦，原來這裡的所有人都是那個爺爺親手製作的，我也不例外。";
+	end;
+OnTimer7000:
+	npctalk "其中，基米是爺爺的最高傑作。爺爺在信中也是這麼寫道的。";
+	end;
+OnTimer10000:
+	npctalk "為什麼會把爺爺的事忘了呢？...咦？";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d1");
+	end;
+OnCheck:
+	if('flag1)
+		viewpoint 2,1,1,1,0xFFFFFF;
+	end;
+}
+
+1@xm_d,130,72,3	script	工作人員#xm_d2	10020,{/* 55945 */
+	mes "[工作人員]";
+	mes "咦？";
+	mes "沒怎麼見過你啊。";
+	mes "最近才來工作的麼？";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "今天的工作好多好多。";
+		mes "明天的工作也好多好多。";
+		close;
+	}
+	initnpctimer;
+	set 'flag2,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "你是在說基米殺了人偶師爺爺的傳聞麼？我記憶有些混亂了...";
+	end;
+OnTimer4000:
+	npctalk "人偶師爺爺，對我們來說就像親生父親一樣，怎麼可能殺了他呢？";
+	end;
+OnTimer7000:
+	npctalk "...基米，這傳言不可能是真的吧，那個孩子是那麼的單純...";
+	end;
+OnTimer10000:
+	npctalk "啊，在這也想不出什麼來，我也去找人偶師爺爺。";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d2");
+	end;
+OnCheck:
+	if('flag2)
+		viewpoint 2,1,1,2,0xFFFFFF;
+	end;
+}
+
+1@xm_d,134,34,1	script	工作人員#xm_d3	10020,{/* 55946 */
+	mes "[工作人員]";
+	mes "啊！現在正忙呢。";
+	mes "有什麼事的話就快說吧。";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "你沒有工作麼？";
+		mes "怎麼還有時間到處閒聊...";
+		close;
+	}
+	initnpctimer;
+	set 'flag3,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "人偶師爺爺啊？是這個工廠的創始者哦，還是一個很厲害的人偶製作師。";
+	end;
+OnTimer4000:
+	npctalk "他的作品裡，可動的球形關節人偶人氣非常高。";
+	end;
+OnTimer7000:
+	npctalk "是啊...自己也是這樣才能動的啊...";
+	end;
+OnTimer10000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d3");
+	end;
+OnCheck:
+	if('flag3)
+		viewpoint 2,1,1,3,0xFFFFFF;
+	end;
+}
+
+1@xm_d,195,28,3	script	工作人員#xm_d4	10020,{/* 55947 */
+	mes "[工作人員]";
+	mes "...";
+	mes "啊啦，有什麼事麼？";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "今天是工作，明天也是工作。";
+		mes "不工作的話，壞人偶會生氣哦。";
+		close;
+	}
+	initnpctimer;
+	set 'flag4,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "我最後一次見到基米和人偶師爺爺，是在休息室內。";
+	end;
+OnTimer4000:
+	npctalk "說來最近，總能在休息室聽到有人說話。";
+	end;
+OnTimer7000:
+	npctalk "但不是人偶師爺爺的聲音，是其他的什麼人。";
+	end;
+OnTimer10000:
+	npctalk "...啊？人偶師爺爺的事怎麼想不起來了！不好！";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d4");
+	end;
+OnCheck:
+	if('flag4)
+		viewpoint 2,1,1,4,0xFFFFFF;
+	end;
+}
+
+1@xm_d,228,30,1	script	工作人員#xm_d5	10020,{/* 55948 */
+	mes "[工作人員]";
+	mes "嗚~~。";
+	mes "呃~~~。";
+	mes "...不知為什麼，記憶有些混亂。";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "工作工作~。";
+		mes "我快樂地工作~";
+		close;
+	}
+	initnpctimer;
+	set 'flag5,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "嗚。記憶有些混亂。";
+	end;
+OnTimer4000:
+	npctalk "好像有誰篡改了我對人偶師爺爺的記憶。";
+	end;
+OnTimer7000:
+	npctalk "是人類麼？我只記得笑聲很奇怪，讓人不太舒服。";
+	end;
+OnTimer10000:
+	npctalk "謝謝你，我好像開始回憶起爺爺的事情了。";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d5");
+	end;
+OnCheck:
+	if('flag5)
+		viewpoint 2,1,1,5,0xFFFFFF;
+	end;
+}
+
+1@xm_d,203,55,3	script	工作人員#xm_d6	10020,{/* 55949 */
+	mes "[工作人員]";
+	mes "啊~身體不舒服。";
+	mes "動力源不太協調。";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "工作還有很多...";
+		mes "不是閒聊的時候。";
+		close;
+	}
+	initnpctimer;
+	set 'flag6,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "以前呢，這條街上有很多觀光者，爺爺也很開心。";
+	end;
+OnTimer4000:
+	npctalk "結果，不知道為什麼，工廠每況愈下，觀光客也漸漸少了。";
+	end;
+OnTimer7000:
+	npctalk "接下來，爺爺也不見了。好寂寞啊...";
+	end;
+OnTimer10000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d6");
+	end;
+OnCheck:
+	if('flag6)
+		viewpoint 2,1,1,6,0xFFFFFF;
+	end;
+}
+
+1@xm_d,132,52,1	script	工作人員#xm_d7	10020,{/* 55950 */
+	mes "[工作人員]";
+	mes "啊！";
+	mes "找我有什麼事麼？";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "我的工作很忙，";
+		mes "沒法陪你閒聊了。";
+		close;
+	}
+	initnpctimer;
+	set 'flag7,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "爺爺還在的時候，偶爾能見到穿著紅色衣服的人類。";
+	end;
+OnTimer4000:
+	npctalk "是爺爺的熟人麼？詳細的我也不清楚。";
+	end;
+OnTimer7000:
+	npctalk "之後爺爺就開始寫信，寫給誰我也不知道。";
+	end;
+OnTimer10000:
+	npctalk "書信啊...我也想知道爺爺寫了什麼...";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d7");
+	end;
+OnCheck:
+	if('flag7)
+		viewpoint 2,1,1,7,0xFFFFFF;
+	end;
+}
+
+1@xm_d,162,52,1	script	工作人員#xm_d8	10020,{/* 55951 */
+	mes "[工作人員]";
+	mes "什麼？";
+	mes "有事麼？";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "我很忙！正在工作中！";
+		close;
+	}
+	initnpctimer;
+	set 'flag8,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "基米不見了，那個奇怪的人類和基米說話之後，她就不見了。";
+	end;
+OnTimer4000:
+	npctalk "玩具們開始出現了，但那些玩具的樣子好奇怪。發生了什麼事麼？爺爺為什麼不在了？";
+	end;
+OnTimer7000:
+	npctalk "我，我也要去找玩偶師爺爺。";
+	end;
+OnTimer10000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d8");
+	end;
+OnCheck:
+	if('flag8)
+		viewpoint 2,1,1,8,0xFFFFFF;
+	end;
+}
+
+1@xm_d,242,17,5	script	工作人員#xm_d9	10020,{/* 55952 */
+	mes "[工作人員]";
+	mes "啊~啊~啊~";
+	mes "！？";
+	mes "剛剛的，你聽到了？";
+	mes "唱歌的話，工作效率會高一些。";
+	mes "不過還是把你聽到的忘了吧！";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "...沒什麼事啊？";
+		mes "那就集中精神工作吧。";
+		mes "工作起來什麼就不會想其他事情了。";
+		close;
+	}
+	initnpctimer;
+	set 'flag9,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "爺爺的事情麼？完成基米時，就在基米睜眼的那一刻，心臟病發作去世了。";
+	end;
+OnTimer4000:
+	npctalk "這件事也不知道對基米有什麼影響...";
+	end;
+OnTimer7000:
+	npctalk "不過這也無所謂了，因為基米最後還是見到了爺爺。";
+	end;
+OnTimer10000:
+	npctalk "嗯？現在是不是還不算遲，我也能見到的吧？...";
+	end;
+OnTimer13000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d9");
+	end;
+OnCheck:
+	if('flag9)
+		viewpoint 2,1,1,9,0xFFFFFF;
+	end;
+}
+
+1@xm_d,209,15,3	script	工作人員#xm_d10	10020,{/* 55953 */
+	mes "[工作人員]";
+	mes "哈...";
+	mes "唔...有什麼事麼？";
+	mes "我剛剛沒注意。";
+	next;
+	if(select("我在尋找玩偶師","沒什麼事") == 2) {
+		mes "[工作人員]";
+		mes "工作中還是盡量不要私下交談吧。";
+		close;
+	}
+	initnpctimer;
+	set 'flag10,1;
+	doevent instance_npcname("#fac2wpc")+ "::OnCheck";
+	close;
+OnTimer1000:
+	npctalk "雖然人類覺得基米很可怕，但是基米非常照顧我們，就好像爺爺生前一樣。";
+	end;
+OnTimer4000:
+	npctalk "基米經常帶著爺爺製作的漂亮洋傘。";
+	end;
+OnTimer7000:
+	npctalk "爺爺去哪了？到底去哪了？...";
+	end;
+OnTimer10000:
+	stopnpctimer;
+	donpcevent instance_npcname("#fac2wpc")+ "::OnCount";
+	hideonnpc instance_npcname("工作人員#xm_d10");
+	end;
+OnCheck:
+	if('flag10)
+		viewpoint 2,1,1,10,0xFFFFFF;
+	end;
+}
+
+1@xm_d,131,208,0	script	#bgm04	139,10,10,{/* 55954 (hide)*/
+	end;
+OnTouch:
+	playBGMall "54",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,131,208,0	script	#bgm05	139,10,10,{/* 55955 (hide)*/
+	end;
+OnTouch:
+	playBGMall "105",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,113,207,5	script	道標#2	858,{/* 55956 */
+	mes "^ff0000第3工廠！^000000";
+	mes "  第3工廠負責貨物配送，沒有貨物禁止";
+	mes "  進入。";
+	close;
+}
+
+1@xm_d,131,208,8	script	被囚禁的聖誕老人#2	718,10,10,{/* 55957 */
+	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+		if(getstatus(SC_MONSTER_TRANSFORM,1)) {
+			mes "看起來像聖誕老人，你小聲地向他搭話。";
+			next;
+			mes "[被囚禁的聖誕老人]";
+			mes "打扮成怪物的模樣了？我們以前見過吧？";
+		} else {
+			mes "[被囚禁的聖誕老人]";
+			mes "...！？";
+			mes "居然還能見到你？";
+		}
+		mes "你，可以幫我把繩索解開麼？";
+		mes "安東尼奧這傢伙，把我關在了這裡。";
+		next;
+		if(select("跳過對話","繼續對話") == 1) {
+			mes "你幫我解開了繩索，我有一些話要告訴你";
+			close2;
+			donpcevent instance_npcname("被囚禁的聖誕老人#3")+ "::OnStart2";
+			end;
+		}
+		mes "[被囚禁的聖誕老人]";
+		mes "拜託了...！";
+		mes "如果這樣下去的話，孩子們和那個孩子的";
+		mes "夢想和希望都會破碎。";
+		mes "為了防止這樣的悲劇發生，請幫我解開繩索！";
+		next;
+		if(select("停止對話","解開繩索") == 1) {
+			mes "[被囚禁的聖誕老人]";
+			mes "是麼...";
+			mes "以前解開過，這次不解開了麼？";
+			mes "算了吧，就這樣了吧...";
+			close;
+		}
+		donpcevent instance_npcname("被囚禁的聖誕老人#3")+ "::OnStart";
+		close;
+	} else {
+		mes "[被囚禁的聖誕老人]";
+		mes "你們的隊長是誰？";
+		mes "我需要和隊長說說話。";
+		close;
+	}
+OnTouch_:
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	npctalk "被囚禁的聖誕老人：安東尼奧，醒醒吧，另外，把我的繩索解開！現在停止的話，罪孽還不算深重！";
+	end;
+}
+
+1@xm_d,131,208,8	script	被囚禁的聖誕老人#3	718,{/* 55958 (hide)*/
+	mes "[被囚禁的聖誕老人]";
+	mes "雖然如今的工廠已經廢棄，沒有主人。";
+	mes "但擅自盜竊這裡的東西，也是絕對無法原諒的。";
+	close;
+OnStart:
+	initnpctimer;
+	disablenpc instance_npcname("被囚禁的聖誕老人#2");
+	hideoffnpc instance_npcname("被囚禁的聖誕老人#3");
+	enablenpc instance_npcname("#bgm04");
+	end;
+OnStart2:
+	npctalk "被囚禁的聖誕老人：安東尼奧應該在第3工廠，孩子們的未來和這工廠的安寧就拜託你們了...！";
+	hideonnpc instance_npcname("安東尼奧#1");
+	disablenpc instance_npcname("被囚禁的聖誕老人#2");
+	hideoffnpc instance_npcname("被囚禁的聖誕老人#3");
+	disablenpc instance_npcname("#bgm04");
+	enablenpc instance_npcname("#fac4wp");
+	enablenpc instance_npcname("#fac4wp2");
+	enablenpc instance_npcname("#bgm05");
+	donpcevent instance_npcname("#fac3ct")+ "::OnStart";
+	donpcevent instance_npcname("#fac3ct2")+ "::OnStart";
+	donpcevent instance_npcname("#fac3ct3")+ "::OnStart";
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk1";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk2";
+	end;
+OnTimer6000:
+	npctalk "被囚禁的聖誕老人：你這傢伙，我就知道你會這樣偷東西！";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk3";
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk4";
+	end;
+OnTimer16000:
+	npctalk "被囚禁的聖誕老人：這都是你擅自的行為吧！考慮考慮那些孩子們收到這些禮物時的心情吧！";
+	end;
+OnTimer20000:
+	npctalk "被囚禁的聖誕老人：要是知道從聖誕老人那得來的禮物，居然是偷來的！他們會怎麼想？";
+	end;
+OnTimer24000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk5";
+	end;
+OnTimer27000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk6";
+	end;
+OnTimer30000:
+	npctalk "被囚禁的聖誕老人：重點不是禮物，這是盜竊！給我住手！安東尼奧！";
+	end;
+OnTimer34000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：第3工廠發貨準備完成。",0x9,0x00ff44;
+	end;
+OnTimer38000:
+	mapannounce instance_mapname("1@xm_d"),"工廠內廣播：配送部的員工們請準備好。",0x9,0x00ff44;
+	end;
+OnTimer41000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk7";
+	end;
+OnTimer45000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk8";
+	end;
+OnTimer49000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk9";
+	end;
+OnTimer53000:
+	donpcevent instance_npcname("安東尼奧#1")+"::OnTalk10";
+	end;
+OnTimer58000:
+	hideonnpc instance_npcname("安東尼奧#1");
+	end;
+OnTimer60000:
+	npctalk "被囚禁的聖誕老人：啊...聖誕老人都這樣了，孩子們的未來...";
+	end;
+OnTimer64000:
+	npctalk "被囚禁的聖誕老人：我不知道你為什麼在這...但是幫幫我，快追上那個安東尼奧吧。";
+	end;
+OnTimer68000:
+	npctalk "被囚禁的聖誕老人：我們原先是受這座工廠的玩偶師所托，配送禮物的，但是安東尼奧和玩偶師關係不好，早就已經不幹了。";
+	end;
+OnTimer72000:
+	npctalk "被囚禁的聖誕老人：可能是出於怨恨吧，現在又跑來這偷玩偶。";
+	end;
+OnTimer76000:
+	npctalk "被囚禁的聖誕老人：他還把前來阻止的我抓住綁了起來，欺騙了那個小女孩玩偶，讓她去了東邊的房間。";
+	end;
+OnTimer80000:
+	npctalk "被囚禁的聖誕老人：我要是一開始做點什麼阻止他就好了，但念在同是聖誕老人的份上，沒忍心下手...";
+	end;
+OnTimer84000:
+	stopnpctimer;
+	npctalk "被囚禁的聖誕老人：安東尼奧就在第3工廠，可以從左邊的入口進去。孩子們的未來和這工廠的安寧只能拜託你了...！";
+	disablenpc instance_npcname("#bgm04");
+	enablenpc instance_npcname("#fac4wp");
+	enablenpc instance_npcname("#fac4wp2");
+	enablenpc instance_npcname("#bgm05");
+	donpcevent instance_npcname("#fac3ct")+ "::OnStart";
+	donpcevent instance_npcname("#fac3ct2")+ "::OnStart";
+	donpcevent instance_npcname("#fac3ct3")+ "::OnStart";
+	end;
+}
+
+1@xm_d,131,213,4	script	安東尼奧#1	10019,{/* 55959 */
+	mes "[安東尼奧]";
+	mes "哦，哦。";
+	mes "別這樣說啊，這不好像我是大壞蛋一樣？";
+	mes "我只是讓這廢棄的工廠重新運轉起來了，";
+	mes "廢物利用啊，哈哈哈...";
+	close;
+OnTalk1:
+	npctalk "安東尼奧：聽好了，老頭子，我很喜歡這座工廠。";
+	end;
+OnTalk2:
+	npctalk "安東尼奧：這座工廠的主人已經不在了，又有一堆我喜歡的禮物，這不是很好麼？";
+	end;
+OnTalk3:
+	npctalk "安東尼奧：我只是分享沒有主人的禮物而已，有這麼嚴重麼？我可不覺得...";
+	end;
+OnTalk4:
+	npctalk "安東尼奧：這座工廠荒廢這麼久，現在又重新開始運轉，我只是將這些東西廢物利用而已，你沒有說我的資格。";
+	end;
+OnTalk5:
+	npctalk "安東尼奧：啊？孩子們的想法？";
+	end;
+OnTalk6:
+	npctalk "安東尼奧：這有什麼關係嘛？反正都是禮物啊，這不就和什錦燒一樣嘛，吃進肚子裡好吃就行了，誰管原料是什麼啊？";
+	end;
+OnTalk7:
+	npctalk "安東尼奧：啊，禮物應該堆積如山了，我要走了，哈哈哈...";
+	end;
+OnTalk8:
+	npctalk "安東尼奧：對了，那邊的人類，這麼多禮物我一個人搬不過來，你要不要來幫個忙？";
+	end;
+OnTalk9:
+	npctalk "安東尼奧：再留在這裡的話，被那個小女孩人偶發現了，小命可就不保啦，呵呵呵...";
+	end;
+OnTalk10:
+	npctalk "安東尼奧：好了，不說了，我先去第3工廠了。";
+	end;
+}
+
+1@xm_d,143,209,4	script	被囚禁的聖誕老人#4	718,{/* 55960 (hide)*/
+	if(checkquest(50503) > -1) {
+		mes "[被囚禁的聖誕老人]";
+		mes "哈哈，真是幫大忙了，太感謝你了。";
+		mes "那個小女孩人偶就在這房之種，請幫助她吧...";
+		close;
+	}
+	mes "[被囚禁的聖誕老人]";
+	mes "安東尼奧應該近期都不敢再來了吧。";
+	mes "不用擔心他，他身體很強壯，死不了的。";
+	next;
+	mes "[被囚禁的聖誕老人]";
+	mes "你真是幫大忙了。";
+	if(checkquest(50501,HUNTING) == 2) {
+		set .@user,getmapusers(instance_mapname("1@xm_d"));
+		if(.@user < 12)
+			set .@exp,(3500000+500000*.@user) / 7;
+		else
+			set .@exp,10000000 / 7;
+		for(set .@i,0; .@i<7; set .@i,.@i+1)
+			getexp .@exp,0;
+		mes "這是我的一點謝禮，請收下。";
+		erasequest 50501;
+		getitem 7642,10;
+	}
+	setquest 50502;
+	setquest 50503;
+	completequest 50503;
+	close;
+}
+
+1@xm_d,107,208,0	warp	#fac4wp	2,2,1@xm_d,87,208
+1@xm_d,95,208,0	warp	#fac4wp2	2,2,1@xm_d,115,208
+
+1@xm_d,1,5,3	script	#fac3ct	844,{/* 55963 (hide)*/
+OnStart:
+	monster instance_mapname("1@xm_d"),229,234,"安東尼奧",2988,1,instance_npcname("#fac3ct")+ "::OnKilled";
+	end;
+OnKilled:
+	killmonster instance_mapname("1@xm_d"),instance_npcname("#fac3ct2")+"::OnKilled";
+	killmonster instance_mapname("1@xm_d"),instance_npcname("#fac3ct3")+"::OnKilled";
+	donpcevent instance_npcname("#finalbs")+"::OnStart";
+	hideonnpc instance_npcname("被囚禁的聖誕老人#3");
+	hideoffnpc instance_npcname("被囚禁的聖誕老人#4");
+	hideonnpc instance_npcname("#fac3wp");
+	hideonnpc instance_npcname("#fac3wp2");
+	end;
+}
+
+1@xm_d,1,5,3	script	#fac3ct2	844,{/* 55964 (hide)*/
+OnStart:
+	areamonster instance_mapname("1@xm_d"),10,140,90,250,"工廠警備員的靈魂",2992,25,instance_npcname("#fac3ct2")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),10,140,90,250,"被遺棄的玩偶熊",2995,30,instance_npcname("#fac3ct2")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),10,140,90,250,"奇怪裝飾的樹",2987,30,instance_npcname("#fac3ct2")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),10,140,90,250,"未收到禮物的幽靈",2993,30,instance_npcname("#fac3ct2")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),10,140,90,250,"未被包裝的人偶",2994,30,instance_npcname("#fac3ct2")+ "::OnKilled";
+	end;
+OnKilled:
+	end;
+}
+
+1@xm_d,1,5,3	script	#fac3ct3	844,{/* 55965 (hide)*/
+OnStart:
+	areamonster instance_mapname("1@xm_d"),165,218,253,250,"工廠警備員的靈魂",2992,10,instance_npcname("#fac3ct3")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),165,218,253,250,"被遺棄的玩偶熊",2995,15,instance_npcname("#fac3ct3")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),165,218,253,250,"奇怪裝飾的樹",2987,15,instance_npcname("#fac3ct3")+ "::OnKilled";
+	areamonster instance_mapname("1@xm_d"),165,218,253,250,"未收到禮物的幽靈",2993,15,instance_npcname("#fac3ct3")+ "::OnKilled";
+	end;
+OnKilled:
+	end;
+}
+
+1@xm_d,1,5,3	script	#finalbs	844,{/* 55966 (hide)*/
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce instance_mapname("1@xm_d"),"安東尼奧：總，總之，這一次就給你們人類面子，先走了！啊...痛痛痛痛痛...",0x9,0x00ff44;
+	end;
+OnTimer4000:
+	stopnpctimer;
+	enablenpc instance_npcname("#fac5wp");
+	enablenpc instance_npcname("#fac5wp2");
+	mapannounce instance_mapname("1@xm_d"),"凱瑟琳 傑塔：找到基米了！她進了休息室右邊的房間，門口寫著[工作人員以外禁止進入]...快，快點過來！",0x9,0xff6666;
+	end;
+}
+
+1@xm_d,144,207,2	script	道標#3	858,{/* 55967 */
+	mes "^ff0000工作人員以外禁止進入！^000000";
+	mes "  這前面的房間，沒有我的許可不准進入。";
+	mes "  BY  安東尼奧";
+	close;
+}
+
+1@xm_d,152,208,0	warp	#fac5wp	2,2,1@xm_d,167,208
+1@xm_d,160,208,0	warp	#fac5wp2	2,2,1@xm_d,145,208
+
+1@xm_d,233,183,3	script	席琳 基米#0	10034,{/* 55970 */
+	mes "[席琳 基米]";
+	mes "你是以前來過的人類麼？";
+	mes "你說，該怎麼樣才能破壞你們呢？";
+	close;
+OnTalk1:
+	npctalk "席琳 基米：說話？我這麼恐怖的長相，誰也不肯跟我說話，爺爺是這樣的，其他玩具們也是這樣...！";
+	end;
+OnTalk2:
+	npctalk "席琳 基米：不是很壞的孩子...？那為什麼爺爺都不肯再睜開眼睛看我一眼？";
+	end;
+OnTalk3:
+	npctalk "席琳 基米：爺爺他，看見我以後...突然就倒下了，一動不動。任憑我怎麼喊他，怎麼搖晃他的身體，他都沒有一點回應...";
+	end;
+OnTalk4:
+	npctalk "席琳 基米：爺爺...有隱疾麼...？";
+	end;
+OnTalk5:
+	npctalk "席琳 基米：都是我...都是我的長相這麼恐怖，爺爺一看見我就心臟病發了...";
+	end;
+OnTalk6:
+	npctalk "席琳 基米：什麼？...不是我誤解了？不是我害死爺爺的麼？爺爺不討厭我？";
+	end;
+OnTalk7:
+	npctalk "席琳 基米：我...我...醜陋...恐怖...心地還很壞...這樣的我...大家...";
+	end;
+OnTalk8:
+	npctalk "席琳 基米：我到這個房間就是因為...我太醜陋了，大家看見我都嚇得逃跑了...所以我才...這裡...";
+	end;
+OnTalk9:
+	npctalk "席琳 基米：爺爺也是...根本不喜歡我...！穿紅衣服的姐姐也是...欺騙了我...我很可笑吧...！";
+	end;
+}
+
+1@xm_d,222,183,0	script	#jeton1	139,7,7,{/* 55971 */
+	end;
+OnTouch_:
+	mes "找到基米了！";
+	mes "　";
+	mes "聽凱瑟琳和基米的談話麼？";
+	next;
+	switch(select("不聽對話，直接開始","聽對話")) {
+		case 1:
+			disablenpc instance_npcname("#jeton1"); //86889
+			enablenpc instance_npcname("#bgm03"); //81248
+			donpcevent instance_npcname("#finalbs2")+"::OnStart2";
+			close;
+		case 2:
+			disablenpc instance_npcname("#jeton1"); //86889
+			enablenpc instance_npcname("#bgm02"); //86890
+			donpcevent instance_npcname("#finalbs2")+"::OnStart";
+			close;
+	}
+}
+
+1@xm_d.gat,222,183,0	script	#bgm02	139,7,7,{/* 55972 (hide)*/
+	end;
+OnTouch:
+	playBGMall "101",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,222,183,6	script	凱瑟琳 傑塔#5	10032,{/* 55973 */
+	mes "[凱瑟琳 傑塔]";
+	mes "請...請記住這一點！";
+	mes "基米現在不是普通狀態，她聽不進我所說的。";
+	mes "這個樣子看起來有點奇怪！";
+	close;
+OnTalk1:
+	npctalk "基米！聽我說，我和這些人，來到這個荒廢的工廠，就是有話要跟你說。";
+	end;
+OnTalk2:
+	npctalk "我...相信你不是一個壞孩子。所以能告訴我麼？基米，我的臉，到底是為什麼...";
+	end;
+OnTalk3:
+	npctalk "！？是誰？還有誰在說話？不是基米的聲音...";
+	end;
+OnTalk4:
+	npctalk "基米...！不要理會那個聲音，爺爺在喊出你的名字之前，就因為病發...";
+	end;
+OnTalk5:
+	npctalk "是的！就是隱疾！在看見你擁有生命的一瞬，爺爺因為太高興了，而...";
+	end;
+OnTalk6:
+	npctalk "基米，不是這樣的！爺爺絕對不是你害死的！爺爺肯定也是這麼認為的！";
+	end;
+OnTalk7:
+	npctalk "不，不對！沒辦法了...基米快要崩潰了！再這樣下去就危險了...！冒險者們，求求你們阻止那個孩子！";
+	end;
+OnTalk8:
+	npctalk "使用武力也沒關係...如果基米壞了，我會盡力修復她的。冒險者們，請優先考慮自己的安全。";
+	end;
+OnTalk9:
+	npctalk "氣氛變得奇怪了...冒險者們！我去找找緊急出口！";
+	end;
+OnTalk10:
+	npctalk "基米已經自我分裂了！太危險了，冒險者們，請阻止她吧！";
+	end;
+}
+
+1@xm_d,216,193,3	script	xm_d#eff_f01	844,{/* 55974 (hide)*/
+OnStart:
+	misceffect 343;
+	end;
+}
+
+1@xm_d,226,193,3	duplicate(xm_d#eff_f01)	xm_d#eff_f02	844	/* 55975 (hide)*/
+1@xm_d,236,193,3	duplicate(xm_d#eff_f01)	xm_d#eff_f03	844	/* 55976 (hide)*/
+1@xm_d,216,183,3	duplicate(xm_d#eff_f01)	xm_d#eff_f04	844	/* 55977 (hide)*/
+1@xm_d,226,183,3	duplicate(xm_d#eff_f01)	xm_d#eff_f05	844	/* 55978 (hide)*/
+1@xm_d,236,183,3	duplicate(xm_d#eff_f01)	xm_d#eff_f06	844	/* 55979 (hide)*/
+1@xm_d,216,173,3	duplicate(xm_d#eff_f01)	xm_d#eff_f07	844	/* 55980 (hide)*/
+1@xm_d,226,173,3	duplicate(xm_d#eff_f01)	xm_d#eff_f08	844	/* 55981 (hide)*/
+1@xm_d,236,173,3	duplicate(xm_d#eff_f01)	xm_d#eff_f09	844	/* 55982 (hide)*/
+1@xm_d,1,5,3	script	#bssk01	844,{/* 55983 (hide)*/}
+1@xm_d,1,5,3	script	#bssk03	844,{/* 55984 (hide)*/}
+1@xm_d,2,2,3	script	#bear	844,{/* 55985 */}
+
+/*
+1@xm_d,233,183,0	script	#kimion1	139,7,7,{
+OnTouch:
+	initnpctimer;
+	hideonnpc instance_npcname("#kimion1"); //86904
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("席琳 基米#2")+"::OnTalk";
+	specialeffect 247, AREA, instance_npcname("席琳 基米#2");
+	end;
+OnTimer10000:
+	stopnpctimer;
+	hideonnpc instance_npcname("席琳 基米#2"); //86905
+	enablenpc instance_npcname("#bgm03"); //86906
+	hideonnpc instance_npcname("席琳 基米#0"); //86888
+	hideonnpc instance_npcname("凱瑟琳 傑塔#5"); //86891
+	donpcevent instance_npcname("xm_d#heal_c")+"OnStart";
+	end;
+}
+*/
+
+1@xm_d,233,183,3	script	席琳 基米#2	10034,{/* 55987 (hide)*/
+	mes "[席琳 基米]";
+	mes "...我很醜陋。";
+	mes "...我很可怕。";
+	mes "...大家都很討厭我。";
+	mes "...爺爺也是，玩具們也是。";
+	mes "...你們，也是這樣的吧？";
+	close;
+}
+
+1@xm_d,228,183,0	script	#bgm03	139,7,7,{/* 55988 (hide)*/
+	end;
+OnTouch:
+	playBGMall "101",instance_mapname("1@xm_d");
+	end;
+}
+
+1@xm_d,1,5,3	script	#finalbs2	844,{/* 55989 (hide)*/
+OnStart:
+	initnpctimer;
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk1";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk1";
+	end;
+OnTimer7000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk2";
+	end;
+OnTimer12000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：不要信！...這是謊話！",0x9,0xff8800;
+	end;
+OnTimer13000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk2";
+	end;
+OnTimer18000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk3";
+	end;
+OnTimer20000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：謊言哦，基米！你太醜陋了！他們都害怕你哦...可憐的基米...",0x9,0xff8800;
+	end;
+OnTimer23000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk3";
+	end;
+OnTimer26000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk4";
+	end;
+OnTimer29000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk4";
+	end;
+OnTimer32000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk5";
+	end;
+OnTimer34000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：謊話！不要被騙了！你獲得生命的那一刻，爺爺看到你這麼醜陋...是受到了驚嚇，心臟病發作而死的！",0x9,0xff8800;
+	end;
+OnTimer37000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk5";
+	end;
+OnTimer39000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk6";
+	end;
+OnTimer42000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk6";
+	end;
+OnTimer44000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：忘了麼？忘了自己長什麼樣了麼？去照照鏡子吧，基米！",0x9,0xff8800;
+	end;
+OnTimer47000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk7";
+	end;
+OnTimer49000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：爺爺不可能愛你的，因為你太醜陋了。對人偶來說，長相就是一切啊，嘻嘻...",0x9,0xff8800;
+	end;
+OnTimer52000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk8";
+	end;
+OnTimer55000:
+	donpcevent instance_npcname("席琳 基米#0")+"::OnTalk9";
+	end;
+OnTimer56000:
+	specialeffect 247, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer57000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk7";
+	end;
+OnTimer60000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk8";
+	end;
+OnTimer61000:
+	specialeffect 247, AREA, instance_npcname("席琳 基米#0");
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer63000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：憤怒吧，悲傷吧！基米，沒有人會在乎你，沒有人會為你傷心的！嘻嘻嘻嘻...",0x9,0xff8800;
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer64000:
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer66000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk9";
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer67000:
+	hideonnpc instance_npcname("凱瑟琳 傑塔#5"); //86891
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	specialeffect 30, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer68000:
+	specialeffect 72, AREA, instance_npcname("席琳 基米#0");
+	specialeffect 30, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer69000:
+	mapannounce instance_mapname("1@xm_d"),"基米的幻影：可憐啊！可憐的醜陋基米！",0x9,0xff8800;
+	specialeffect 30, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer70000:
+	specialeffect 30, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer72000:
+	specialeffect 90, AREA, instance_npcname("席琳 基米#0");
+	end;
+OnTimer75000:
+	stopnpctimer;
+	hideonnpc instance_npcname("席琳 基米#0"); //86888
+	disablenpc instance_npcname("#bgm02"); //86890
+	enablenpc instance_npcname("#bgm03"); //86906
+	hideonnpc instance_npcname("席琳 基米#0"); //86888
+	hideonnpc instance_npcname("凱瑟琳 傑塔#5"); //86891
+	donpcevent instance_npcname("xm_d#heal_c")+"::OnStart";
+	end;
+OnStart2:
+	donpcevent instance_npcname("凱瑟琳 傑塔#5")+"::OnTalk10";
+	hideonnpc instance_npcname("席琳 基米#0"); //86888
+	hideonnpc instance_npcname("凱瑟琳 傑塔#5"); //86891
+	donpcevent instance_npcname("xm_d#heal_c")+"::OnStart";
+	end;
+}
+
+1@xm_d,1,1,1	script	#kimimatk	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#kimimatk");
+	initnpctimer;
+	end;
+OnTimer1000:
+	//if ('mob1) {
+	//	setunitdata 'mob1,UMOB_MATKMIN,'xmdbossdata1[33]*414/1000;
+	//	setunitdata 'mob1,UMOB_MATKMAX,'xmdbossdata1[34]*473/1000;
+	//}
+	//if ('mob2) {
+	//	setunitdata 'mob2,UMOB_MATKMIN,'xmdbossdata2[33]*414/1000;
+	//	setunitdata 'mob2,UMOB_MATKMAX,'xmdbossdata2[34]*473/1000;
+	//}
+	stopnpctimer;
+	end;
+OnEnd:
+	stopnpctimer;
+OnInstanceInit:
+	disablenpc instance_npcname("#kimimatk");
+	end;
+}
+
+1@xm_d,1,5,3	script	xm_d#heal_c	844,{/* 55990 (hide)*/
+OnStart:
+	'mob1 = 1;
+	'mob2 = 1;
+	monster instance_mapname("1@xm_d"),232,180,"席琳 基米",2996,1,instance_npcname("xm_d#heal_c")+"::OnKilled1";
+	monster instance_mapname("1@xm_d"),226,190,"基米的幻影",2997,1,instance_npcname("xm_d#heal_c")+"::OnKilled2";
+	end;
+
+OnKilled1:
+	set 'mob1,0;
+	if('mob2 == 0) {
+		//出場公告時間
+		set $@Instance_Miao,gettimetick(2)-getd("$@Instance_Annal"+instance_id(1));
+		announce "【恐怖玩具工廠】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+($@Instance_Miao/60)+"分"+($@Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+		mapannounce instance_mapname("1@xm_d"),"席琳 基米：打倒我也沒有用...我是不會死亡的...之後我還會再出現在這個工廠之內...",0x9,0xff6666,0x190,15;
+		//donpcevent instance_npcname("#kimimatk") + "::OnEnd";
+		sleep 3000;
+		//set .@user,getmapusers(instance_mapname("1@xm_d"));
+		hideoffnpc instance_npcname("精美包裝的禮品盒#00");
+		setarray .@box,0,7,10,4,9,5,1,12,2,8,6,11,3;
+		for(set .@i,1;.@i<=12; set .@i,.@i+1) {
+			hideoffnpc instance_npcname("精美包裝的禮品盒#"+.@box[.@i]);
+		}
+		sleep 3000;
+		mapannounce instance_mapname("1@xm_d"),"凱瑟琳 傑塔：！？擊退基米了麼？！厲害...總之，先從西南方向的通路過來吧，我在這裡等你們！！",0x9,0xffff00,0x190,12;
+		enablenpc instance_npcname("#fac6wp");
+		enablenpc instance_npcname("#jeton2");
+		hideoffnpc instance_npcname("凱瑟琳 傑塔#6"); //55995
+		enablenpc instance_npcname("精美包裝的禮品盒#00");
+		donpcevent instance_npcname("精美包裝的禮品盒#00")+"::OnStart";
+	}
+	end;
+
+
+OnKilled2:
+	set 'mob2,0;
+	if('mob1 == 0) {
+		//出場公告時間
+		set $@Instance_Miao,gettimetick(2)-getd("$@Instance_Annal"+instance_id(1));
+		announce "【恐怖玩具工廠】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+($@Instance_Miao/60)+"分"+($@Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+		mapannounce instance_mapname("1@xm_d"),"席琳 基米：打倒我也沒有用...我是不會死亡的...之後我還會再出現在這個工廠之內...",0x9,0xff6666,0x190,15;
+		//donpcevent instance_npcname("#kimimatk") + "::OnEnd";
+		sleep 3000;
+		//set .@user,getmapusers(instance_mapname("1@xm_d"));
+		hideoffnpc instance_npcname("精美包裝的禮品盒#00");
+		setarray .@box,0,7,10,4,9,5,1,12,2,8,6,11,3;
+		for(set .@i,1;.@i<=12; set .@i,.@i+1) {
+			hideoffnpc instance_npcname("精美包裝的禮品盒#"+.@box[.@i]);
+		}
+		sleep 3000;
+		mapannounce instance_mapname("1@xm_d"),"凱瑟琳 傑塔：！？擊退基米了麼？！厲害...總之，先從西南方向的通路過來吧，我在這裡等你們！！",0x9,0xffff00,0x190,12;
+		enablenpc instance_npcname("#fac6wp");
+		enablenpc instance_npcname("#jeton2");
+		hideoffnpc instance_npcname("凱瑟琳 傑塔#6"); //55995
+		enablenpc instance_npcname("精美包裝的禮品盒#00");
+		donpcevent instance_npcname("精美包裝的禮品盒#00")+"::OnStart";
+	}
+	end;
+}
+
+
+
+1@xm_d,1,5,3	script	#finalbs_e	844,{/* 55991 (hide)*/}
+
+1@xm_d,205,159,0	warp	#fac6wp	2,2,1@xm_d,205,147
+
+
+1@xm_d,218,145,0	script	#jeton2	139,5,5,{/* 55993 */
+	end;
+OnTouch_:
+	initnpctimer;
+	disablenpc instance_npcname("#jeton2"); //55993
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk1";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk2";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk3";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk4";
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk5";
+	end;
+OnTimer16000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk6";
+	end;
+OnTimer22000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk7";
+	end;
+OnTimer27000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk8";
+	end;
+OnTimer32000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk9";
+	end;
+OnTimer37000:
+	donpcevent instance_npcname("凱瑟琳 傑塔#6")+"::OnTalk10";
+	end;
+OnTimer40000:
+	stopnpctimer;
+	hideonnpc instance_npcname("凱瑟琳 傑塔#6"); //55995
+	hideoffnpc instance_npcname("緊急出口#exwp1"); //55994
+	mapannounce instance_mapname("1@xm_d"),"凱瑟琳 傑塔：緊急出口已經開放了，太感謝你們了，我們先出去吧。",0x9,0xffff00;
+	end;
+}
+
+1@xm_d,218,150,5	script	緊急出口#exwp1	10007,{/* 55994 (hide)*/
+	mes "通過緊急出口逃出工廠？";
+	next;
+	if(select("請稍等一會","出去") == 1) {
+		mes "緊急出口啟動中止";
+		close;
+	}
+	if(checkquest(50502,HUNTING) == 2) {
+		erasequest 50502;
+		getitem 7642,30;
+	}
+	if(checkquest(50503) == -1)
+		setquest 50503;
+	erasequest 50503;
+	if(HORROR_1QUE < 13)
+		set HORROR_1QUE,HORROR_1QUE + 1;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+1@xm_d,218,145,5	script	凱瑟琳 傑塔#6	10032,{/* 55995 (hide)*/
+	end;
+OnTalk1:
+	npctalk "到這裡應該沒事了吧...";
+	end;
+OnTalk2:
+	npctalk "結果，還是沒有找到解決事件的線索，還差點讓你們捲入危險之中，真是對不起。";
+	end;
+OnTalk3:
+	npctalk "還好我最後能憑借對人偶的經驗，察覺了基米和幻影的聯繫，應該也多多少少幫到了你們把。";
+	end;
+OnTalk4:
+	npctalk "那幻影的真面目到底是什麼呢？為什麼對基米這麼殘酷，一直用話語傷害基米...";
+	end;
+OnTalk5:
+	npctalk "肯定是讓我的臉變成這樣的真兇，雖然我也沒有證據...";
+	end;
+OnTalk6:
+	npctalk "真是可惜，沒有把爺爺的真正想法好好傳達給基米...";
+	end;
+OnTalk7:
+	npctalk "其實說回來，基米偶爾回來這個工廠也不錯，畢竟她把這裡打理得就好像從前一樣。";
+	end;
+OnTalk8:
+	npctalk "不過我還是不會放棄尋找真相的。所以如果你們還願意幫助我的話，請在將來繼續借給我力量！";
+	end;
+OnTalk9:
+	npctalk "對外的緊急傳送裝置已經打開，我先走一步了，冒險者們也跟上來吧。";
+	end;
+OnTalk10:
+	npctalk "...如果有一天，我能把爺爺和其他玩偶真正的想法傳達給基米，那該多好啊...";
+	end;
+}
+
+
+1@xm_d,1,1,0	script	xm_d#Barricade00	139,{/* 55997 */
+OnStart:
+	setcell instance_mapname("1@xm_d"),218,154,220,165,cell_walkable,0;
+	setcell instance_mapname("1@xm_d"),218,202,220,213,cell_walkable,0;
+	end;
+}
+
+1@xm_d,218,154,1	script	#Barricade1	1905,{/* 55998 */}
+1@xm_d,218,155,1	script	#Barricade2	1905,{/* 55999 */}
+1@xm_d,218,156,1	script	#Barricade3	1905,{/* 56000 */}
+1@xm_d,218,157,1	script	#Barricade4	1905,{/* 56001 */}
+1@xm_d,218,158,1	script	#Barricade5	1905,{/* 56002 */}
+1@xm_d,218,159,1	script	#Barricade6	1905,{/* 56003 */}
+1@xm_d,218,160,1	script	#Barricade7	1905,{/* 56004 */}
+1@xm_d,218,161,1	script	#Barricade8	1905,{/* 56005 */}
+1@xm_d,218,162,1	script	#Barricade9	1905,{/* 56006 */}
+1@xm_d,218,163,1	script	#Barricade10	1905,{/* 56007 */}
+1@xm_d,218,164,1	script	#Barricade11	1905,{/* 56008 */}
+1@xm_d,218,165,1	script	#Barricade12	1905,{/* 56009 */}
+1@xm_d,218,202,1	script	#Barricade13	1905,{/* 56010 */}
+1@xm_d,218,203,1	script	#Barricade14	1905,{/* 56011 */}
+1@xm_d,218,204,1	script	#Barricade15	1905,{/* 56012 */}
+1@xm_d,218,205,1	script	#Barricade16	1905,{/* 56013 */}
+1@xm_d,218,206,1	script	#Barricade17	1905,{/* 56014 */}
+1@xm_d,218,207,1	script	#Barricade18	1905,{/* 56015 */}
+1@xm_d,218,208,1	script	#Barricade19	1905,{/* 56016 */}
+1@xm_d,218,209,1	script	#Barricade20	1905,{/* 56017 */}
+1@xm_d,218,210,1	script	#Barricade21	1905,{/* 56018 */}
+1@xm_d,218,211,1	script	#Barricade22	1905,{/* 56019 */}
+1@xm_d,218,212,1	script	#Barricade23	1905,{/* 56020 */}
+1@xm_d,218,213,1	script	#Barricade24	1905,{/* 56021 */}
+
+
+1@xm_d,10,24,0	script	alert#61	139,10,10,{/* 56022 */
+OnTouch:
+	if(getstatus(SC_MONSTER_TRANSFORM,1) != 1246) {
+		initnpctimer;
+		playBGMall "125",instance_mapname("1@xm_d");
+		misceffect 124;
+		hideonnpc instance_npcname(strnpcinfo(0));
+		getmapxy(.@map$, .@x, .@y, BL_PC);
+		areamonster .@map$,.@x-5,.@y-5,.@x+5,.@y+5,"玩具工廠警備兵",2990,6,instance_npcname(strnpcinfo(0))+"::OnKilled";
+	}
+	end;
+
+OnTimer1000:
+	switch(rand(10)) {
+		default:mapannounce instance_mapname("1@xm_d"),"工廠內廣播：警備兵快點出動，消滅外部入侵者。",0x9,0x00ffff; break;
+		case 1:mapannounce instance_mapname("1@xm_d"),"工廠內廣播：發現入侵者，好像是人類，警備隊快點出動。",0x9,0x00ffff; break;
+		case 2:mapannounce instance_mapname("1@xm_d"),"警備隊通告：除工作人員以外的外部人士請離開工廠。",0x9,0xffff00; break;
+		case 3:mapannounce instance_mapname("1@xm_d"),"工廠內廣播：壞消息，感知到外部入侵者的生命反應，請警備隊出動。",0x9,0x00ff88; break;
+		case 4:mapannounce instance_mapname("1@xm_d"),"警報：工廠長來視察了，快點處理掉外部入侵者。",0x9,0xff4444; break;
+		case 5:mapannounce instance_mapname("1@xm_d"),"工廠內廣播：入侵者發現，識別代碼AX0829。形態，人類，請盡快排除。",0x9,0x00ffff; break;
+		case 6:mapannounce instance_mapname("1@xm_d"),"警備隊通告：入侵者發現，好像是人類，可直接消滅！",0x9,0xffff00; break;
+		case 7:mapannounce instance_mapname("1@xm_d"),"工廠內廣播：外來人員速度舉手投降，違抗命令的話就開火了。",0x9,0x00ffff; break;
+	}
+	end;
+OnTimer4000:
+	mapannounce instance_mapname("1@xm_d"),"凱瑟琳 傑塔：這樣的打扮是不行的！快來穿上工作服！",0x9,0xff6666;
+	end;
+OnTimer60000:
+	hideoffnpc instance_npcname("alert#61");
+	stopnpctimer;
+	killmonster instance_mapname("1@xm_d"),instance_npcname(strnpcinfo(0))+"::OnKilled";
+	end;
+OnKilled:
+	end;
+}
+
+1@xm_d,30,24,0	duplicate(alert#61)	alert#62	139,10,10	/* 56023 */
+1@xm_d,50,24,0	duplicate(alert#61)	alert#63	139,10,10	/* 56024 */
+1@xm_d,70,24,0	duplicate(alert#61)	alert#64	139,10,10	/* 56025 */
+1@xm_d,90,24,0	duplicate(alert#61)	alert#65	139,10,10	/* 56026 */
+1@xm_d,10,44,0	duplicate(alert#61)	alert#66	139,10,10	/* 56027 */
+1@xm_d,30,44,0	duplicate(alert#61)	alert#67	139,10,10	/* 56028 */
+1@xm_d,50,44,0	duplicate(alert#61)	alert#68	139,10,10	/* 56029 */
+1@xm_d,70,44,0	duplicate(alert#61)	alert#69	139,10,10	/* 56030 */
+1@xm_d,90,44,0	duplicate(alert#61)	alert#70	139,10,10	/* 56031 */
+1@xm_d,110,44,0	duplicate(alert#61)	alert#71	139,10,10	/* 56032 */
+1@xm_d,10,64,0	duplicate(alert#61)	alert#72	139,10,10	/* 56033 */
+1@xm_d,30,64,0	duplicate(alert#61)	alert#73	139,10,10	/* 56034 */
+1@xm_d,50,64,0	duplicate(alert#61)	alert#74	139,10,10	/* 56035 */
+1@xm_d,70,64,0	duplicate(alert#61)	alert#75	139,10,10	/* 56036 */
+1@xm_d,90,64,0	duplicate(alert#61)	alert#76	139,10,10	/* 56037 */
+1@xm_d,110,64,0	duplicate(alert#61)	alert#77	139,10,10	/* 56038 */
+1@xm_d,10,84,0	duplicate(alert#61)	alert#78	139,10,10	/* 56039 */
+1@xm_d,30,84,0	duplicate(alert#61)	alert#79	139,10,10	/* 56040 */
+1@xm_d,50,84,0	duplicate(alert#61)	alert#80	139,10,10	/* 56041 */
+1@xm_d,70,84,0	duplicate(alert#61)	alert#81	139,10,10	/* 56042 */
+1@xm_d,90,84,0	duplicate(alert#61)	alert#82	139,10,10	/* 56043 */
+1@xm_d,110,84,0	duplicate(alert#61)	alert#83	139,10,10	/* 56044 */
+1@xm_d,10,104,0	duplicate(alert#61)	alert#84	139,10,10	/* 56045 */
+1@xm_d,30,104,0	duplicate(alert#61)	alert#85	139,10,10	/* 56046 */
+1@xm_d,50,104,0	duplicate(alert#61)	alert#86	139,10,10	/* 56047 */
+1@xm_d,70,104,0	duplicate(alert#61)	alert#87	139,10,10	/* 56048 */
+1@xm_d,90,104,0	duplicate(alert#61)	alert#88	139,10,10	/* 56049 */
+1@xm_d,110,104,0	duplicate(alert#61)	alert#89	139,10,10	/* 56050 */
+1@xm_d,155,20,0	duplicate(alert#61)	alert#90	139,10,10	/* 55435 */
+1@xm_d,180,50,0	duplicate(alert#61)	alert#91	139,10,10	/* 55436 */
+1@xm_d,205,80,0	duplicate(alert#61)	alert#92	139,10,10	/* 55437 */
+1@xm_d,230,110,0	duplicate(alert#61)	alert#93	139,10,10	/* 81867 (hide)*/
+1@xm_d,180,20,0	duplicate(alert#61)	alert#94	139,10,10	/* 55439 */
+1@xm_d,180,50,0	duplicate(alert#61)	alert#95	139,10,10	/* 55440 */
+1@xm_d,180,80,0	duplicate(alert#61)	alert#96	139,10,10	/* 55441 */
+1@xm_d,205,20,0	duplicate(alert#61)	alert#97	139,10,10	/* 55442 */
+1@xm_d,205,50,0	duplicate(alert#61)	alert#98	139,10,10	/* 55443 */
+1@xm_d,205,80,0	duplicate(alert#61)	alert#99	139,10,10	/* 55444 */
+1@xm_d,205,110,0	duplicate(alert#61)	alert#100	139,10,10	/* 55445 */
+1@xm_d,230,20,0	duplicate(alert#61)	alert#101	139,10,10	/* 55446 */
+1@xm_d,230,50,0	duplicate(alert#61)	alert#102	139,10,10	/* 55447 */
+1@xm_d,230,80,0	duplicate(alert#61)	alert#103	139,10,10	/* 81877 */
+1@xm_d,230,110,0	duplicate(alert#61)	alert#104	139,10,10	/* 81878 (hide)*/
+
+1@xm_d,0,0,0	script	精美包裝的禮品盒::xm_d_box	10005,{/* 55450 */
+	setarray .@gain[0],603,617,644,7228,7642,7642,7642,7642,12246,22534,13442,18848,2486,2976,2977,2978;
+	setarray .@rate[0],800,500,300, 300, 800, 400, 200, 100,   50,   25,   25,   35,  35,  30,  30, 30;
+	getmapxy(.@map$, .@x, .@y, BL_PC);
+	misceffect 10; //55462
+	hideonnpc instance_npcname(strnpcinfo(0)); //55462
+	for(set .@i,0; .@i<getarraysize(.@gain); set .@i,.@i+1) {
+		set .@xs,.@x+rand(5)-2;
+		set .@ys,.@y+rand(5)-2;
+		if(rand(1000) < .@rate[.@i])
+		makeitem .@gain[.@i],1,instance_mapname("1@xm_d"),.@xs,.@ys;
+	}
+	end;
+}
+
+
+1@xm_d,217,140,3	duplicate(xm_d_box)	精美包裝的禮品盒#1	10005	/* 55451 */
+1@xm_d,220,143,3	duplicate(xm_d_box)	精美包裝的禮品盒#2	10005	/* 55451 */
+1@xm_d,225,144,3	duplicate(xm_d_box)	精美包裝的禮品盒#3	10005	/* 55452 */
+1@xm_d,227,139,3	duplicate(xm_d_box)	精美包裝的禮品盒#4	10005	/* 55453 */
+1@xm_d,226,135,3	duplicate(xm_d_box)	精美包裝的禮品盒#5	10005	/* 55454 */
+1@xm_d,223,132,3	duplicate(xm_d_box)	精美包裝的禮品盒#6	10005	/* 55455 */
+1@xm_d,217,128,3	duplicate(xm_d_box)	精美包裝的禮品盒#7	10005	/* 55456 */
+1@xm_d,211,132,3	duplicate(xm_d_box)	精美包裝的禮品盒#8	10005	/* 55457 */
+1@xm_d,208,135,3	duplicate(xm_d_box)	精美包裝的禮品盒#9	10005	/* 55458 */
+1@xm_d,207,139,3	duplicate(xm_d_box)	精美包裝的禮品盒#10	10005	/* 55459 */
+1@xm_d,209,144,3	duplicate(xm_d_box)	精美包裝的禮品盒#11	10005	/* 55460 */
+1@xm_d,214,143,3	duplicate(xm_d_box)	精美包裝的禮品盒#12	10005	/* 55461 */
+
+1@xm_d,217,135,3	script	精美包裝的禮品盒#00	10005,{/* 55462 */
+	setarray .@gain1[0],12103,13442,18848,2486,2976,2977,2978;
+	setarray .@rate[0],   10,   15,   25,  25,  20,   15,   15;
+	stopnpctimer;
+	misceffect 10; //55462
+	hideonnpc instance_npcname("精美包裝的禮品盒#00"); //55462
+	if(rand(100) < 50)
+		set .@gain,7642;
+	else
+		set .@gain,22534;
+	makeitem .@gain,1,instance_mapname("1@xm_d"),217+rand(5)-2,135+rand(5)-2;
+	for(set .@i,0; .@i<getarraysize(.@gain1); set .@i,.@i+1) {
+		set .@x,217+rand(5)-2;
+		set .@y,135+rand(5)-2;
+		if(rand(1000) < .@rate[.@i])
+			makeitem .@gain1[.@i],1,instance_mapname("1@xm_d"),.@x,.@y;
+	}
+	end;
+OnStart:
+OnTimer3000:
+	stopnpctimer;
+	initnpctimer;
+	misceffect 100; //55462
+	end;
+}
+
+

@@ -1,0 +1,951 @@
+vdistrict1,34,73,4	script	次元裂痕#Pop	10007,{
+
+	//副本任務獎勵
+	if(checkquest(32065,HUNTING)==2 ) { 
+	dispbottom "正午的弦月任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",7;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32065; }
+
+	.@playtime = checkquest(34003,PLAYTIME);
+	if(.@playtime == 2) erasequest 34003;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[次元裂痕]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "正午的弦月";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			setquest 34003;
+
+			//副本任務
+			if(checkquest(32065,HUNTING)<0 ){setquest 32065;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "EDDA正午的弦月",0;
+	end;
+}
+
+
+//------------------------------正午的弦月事件
+1@pop1,0,0,0	script	正午的弦月事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@pop1");
+	'map_name$[1] = instance_mapname("1@pop2");
+	'map_name$[2] = instance_mapname("1@pop3");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("教皇#01");
+	disablenpc instance_npcname("教皇#02");
+	disablenpc instance_npcname("教皇#03");
+	disablenpc instance_npcname("教皇#04");
+	disablenpc instance_npcname("教皇#05");
+	disablenpc instance_npcname("教皇#06");
+	disablenpc instance_npcname("教皇#07");
+	disablenpc instance_npcname("教皇#08");
+	disablenpc instance_npcname("教皇#09");
+	disablenpc instance_npcname("教皇#10");
+	disablenpc instance_npcname("教皇#11");
+	disablenpc instance_npcname("教皇#12");
+	disablenpc instance_npcname("教皇#13");
+	disablenpc instance_npcname("教皇#14");
+	disablenpc instance_npcname("教皇#15");
+	disablenpc instance_npcname("教皇#16");
+	disablenpc instance_npcname("盧敏#01");
+	disablenpc instance_npcname("盧敏#02");
+	disablenpc instance_npcname("盧敏#03");
+	disablenpc instance_npcname("盧敏#04");
+	disablenpc instance_npcname("盧敏#05");
+	disablenpc instance_npcname("盧敏#06");
+	disablenpc instance_npcname("狗#01");
+	disablenpc instance_npcname("尼樂妍大神官#01");
+	disablenpc instance_npcname("傑德大神官#01");
+	disablenpc instance_npcname("傑德大神官#02");
+	disablenpc instance_npcname("神官#01");
+	disablenpc instance_npcname("神官#02");
+	disablenpc instance_npcname("神官#03");
+	disablenpc instance_npcname("神官#04");
+	disablenpc instance_npcname("神官#05");
+	disablenpc instance_npcname("神官#06");
+	disablenpc instance_npcname("神官#07");
+	disablenpc instance_npcname("神官#08");
+	disablenpc instance_npcname("警衛#Pop01");
+	disablenpc instance_npcname("警衛#Pop02");
+	disablenpc instance_npcname("警衛#Pop03");
+	disablenpc instance_npcname("警衛#Pop04");
+	disablenpc instance_npcname("警衛#Pop05");
+	disablenpc instance_npcname("警衛#Pop06");
+	disablenpc instance_npcname("警衛#Pop07");
+	disablenpc instance_npcname("警衛#Pop08");
+	disablenpc instance_npcname("神殿的警衛#01");
+	disablenpc instance_npcname("神殿的警衛#02");
+	disablenpc instance_npcname("神殿的警衛#03");
+	disablenpc instance_npcname("神殿的警衛#04");
+	disablenpc instance_npcname("神殿的警衛#05");
+	disablenpc instance_npcname("?????#Pop01");
+	disablenpc instance_npcname("?????#Pop02");
+	disablenpc instance_npcname("正午的弦月傳送門1_1");
+	disablenpc instance_npcname("正午的弦月傳送門1_2");
+	disablenpc instance_npcname("正午的弦月傳送門1_3");
+	disablenpc instance_npcname("正午的弦月傳送門1_4");
+	disablenpc instance_npcname("正午的弦月傳送門1_5");
+	disablenpc instance_npcname("正午的弦月傳送門1_6");
+	disablenpc instance_npcname("正午的弦月傳送門1_7");
+	enablenpc instance_npcname("教皇#01");
+	//副本標籤
+	setd "$@CD_Pop_1"+instance_id(1),0;
+	setd "$@CD_Pop_2"+instance_id(1),0;
+	end;
+
+	OnCcdd1:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	setd "$@Pop1_mob_01"+instance_id(1),12;
+	areamonster 'map_name$[0],79,99,79,99,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],77,99,77,99,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],75,99,75,99,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],79,96,79,96,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],77,96,77,96,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],75,96,75,96,"--ja--",3519,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],120,99,120,99,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],122,99,122,99,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],124,99,124,99,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],120,96,120,96,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],122,96,122,96,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],124,96,124,96,"--ja--",3520,1,instance_npcname("正午的弦月事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	areamonster 'map_name$[0],100,96,100,96,"--ja--",3522,1,instance_npcname("正午的弦月事件1")+"::OnCcdd3";
+	instance_announce instance_id(1),"傑德大神官：教皇大人你不能跑出去阿!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd3:
+	mercenary_heal -1000000,-1000;	//傭兵消除
+	enablenpc instance_npcname("教皇#04");
+	end;
+
+	OnCcdd4:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	setd "$@Pop1_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[1],61,208,71,200,"--ja--",3518,8,instance_npcname("正午的弦月事件1")+"::OnCcdd5";
+	areamonster 'map_name$[1],65,181,71,181,"--ja--",3518,4,instance_npcname("正午的弦月事件1")+"::OnCcdd5";
+	areamonster 'map_name$[1],66,200,66,164,"--ja--",3518,10,instance_npcname("正午的弦月事件1")+"::OnCcdd5";
+	areamonster 'map_name$[1],66,170,66,155,"--ja--",3518,8,instance_npcname("正午的弦月事件1")+"::OnCcdd5";
+	instance_announce instance_id(1),"教皇：趕快往下走去跟哥哥會合!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd5:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	mercenary_heal -1000000,-1000;	//傭兵消除
+	enablenpc instance_npcname("正午的弦月傳送門1_5");
+	enablenpc instance_npcname("教皇#09");
+	enablenpc instance_npcname("盧敏#03");
+	enablenpc instance_npcname("狗#01");
+	instance_announce instance_id(1),"教皇：到下面的村莊就是了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd6:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	setd "$@Pop1_mob_01"+instance_id(1),13;
+	areamonster 'map_name$[1],126,96,134,79,"--ja--",3520,5,instance_npcname("正午的弦月事件1")+"::OnCcdd7";
+	areamonster 'map_name$[1],126,96,134,79,"--ja--",3521,8,instance_npcname("正午的弦月事件1")+"::OnCcdd7";
+	instance_announce instance_id(1),"傑德大神官：在多來些人來，別讓那個小女孩跑了!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd7:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	setd "$@Pop1_mob_01"+instance_id(1),10;
+	areamonster 'map_name$[1],117,129,114,79,"--ja--",3519,10,instance_npcname("正午的弦月事件1")+"::OnCcdd8";
+	end;
+
+	OnCcdd8:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("教皇#11");
+	viewpoint 2,121,76,1,0xFF0000;
+	viewpoint 2,121,76,2,0x00FF00;
+	viewpoint 1,120,123,3,0xFF0000;
+	viewpoint 1,120,123,4,0x00FF00;
+	end;
+
+	OnCcdd9:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("教皇#12");
+	viewpoint 2,120,123,3,0xFF0000;
+	viewpoint 2,120,123,4,0x00FF00;
+	viewpoint 1,48,127,5,0xFF0000;
+	viewpoint 1,48,127,6,0x00FF00;
+	end;
+
+	OnCcdd10:
+	setd "$@Pop1_mob_01"+instance_id(1),getd("$@Pop1_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@Pop1_mob_01"+instance_id(1))+"個魔物",bc_all,0xD7BA98;
+	if (getd("$@Pop1_mob_01"+instance_id(1))>0) end;
+	getitem 25087,1;
+	enablenpc instance_npcname("教皇#13");
+	viewpoint 2,48,127,5,0xFF0000;
+	viewpoint 2,48,127,6,0x00FF00;
+	viewpoint 1,57,80,7,0xFF0000;
+	viewpoint 1,57,80,8,0x00FF00;
+	instance_announce instance_id(1),"謎之聲：在被追到以前趕快走吧！",16;
+	end;
+
+	OnCcdd11:
+	viewpoint 2,57,80,7,0xFF0000;
+	viewpoint 2,57,80,8,0x00FF00;
+	viewpoint 1,129,21,9,0xFF0000;
+	viewpoint 1,129,21,10,0x00FF00;
+	enablenpc instance_npcname("正午的弦月傳送門1_6");
+	enablenpc instance_npcname("教皇#14");
+	enablenpc instance_npcname("盧敏#05");
+	instance_announce instance_id(1),"謎之聲：從右下門口出去吧...",16;
+	end;
+
+	OnCcdd12:
+	mercenary_heal -1000000,-1000;	//傭兵消除
+	enablenpc instance_npcname("?????#Pop02");
+	disablenpc instance_npcname("教皇#15");
+	instance_announce instance_id(1),"謎之聲：沒用的人類，雖然我本來就不對你抱任何期待，看來現在只好由我出馬了。",16;
+	end;
+
+	OnCcdd13:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【正午的弦月】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+	enablenpc instance_npcname("教皇#16");
+	enablenpc instance_npcname("盧敏#06");
+	instance_announce instance_id(1),"冰晶龍：竟然被區區一個人類打敗，這種恥辱....",16;
+	end;
+
+}
+
+
+//------------------------------副本NPC
+1@pop1,49,136,4	script	教皇#01	936,{
+	mes "[教皇]";
+	mes "你是誰?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "你在作甚麼呢?";
+	next;
+	mes "[教皇]";
+	mes "我在找尼樂妍大神官送我的玩偶";
+	next;
+	mes "[教皇]";
+	mes "我跟人有約，但是因為要找玩偶已經遲到了";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "我是"+strcharinfo(0)+"";
+	mes "是尼樂妍大神官叫我來找你的";
+	mes "那我幫你一起找吧";
+	next;
+	mes "[教皇]";
+	mes "感謝你的幫忙!";
+	enablenpc instance_npcname("正午的弦月傳送門1_1");
+	enablenpc instance_npcname("教皇#02");
+	disablenpc instance_npcname("教皇#01");
+	close;
+}
+
+
+1@pop1,95,98,6	script	神官#01	935,{ end; }
+1@pop1,104,98,4	script	神官#02	920,{ end; }
+1@pop1,93,97,6	script	神官#03	927,{ end; }
+1@pop1,91,95,6	script	神官#04	926,{ end; }
+1@pop1,91,93,6	script	神官#05	926,{ end; }
+1@pop1,106,97,4	script	神官#06	926,{ end; }
+1@pop1,108,95,4	script	神官#07	926,{ end; }
+1@pop1,108,93,4	script	神官#08	926,{ end; }
+
+
+1@pop1,100,98,4	script	教皇#03	936,{
+
+	mes "[神官]";
+	mes "教皇您不應該隨意地和一般人接觸";
+	next;
+	mes "[神官]";
+	mes "沒錯尊貴的教皇是不該跟一般民眾接觸";
+	next;
+	mes "[神官]";
+	mes "當初如果選另一個就好了";
+	next;
+	mes "[神官]";
+	mes "沒錯!我們需要一個聽話的教皇大人";
+	next;
+	mes "[教皇]";
+	mes "我是不被需要的嗎?是失敗的教皇嗎?……";
+	next;
+	mes "[教皇]";
+	mes "但這一切又不是我想要的!?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "教皇大人振作一點啊!這些都只是夢，是由教皇大人現實中的不安在夢裡扭曲而成的，大家在夢外面等您啊!";
+	next;
+	mercenary_create 3569,180000;
+	disablenpc instance_npcname("教皇#03");
+	disablenpc instance_npcname("神官#01");
+	disablenpc instance_npcname("神官#02");
+	disablenpc instance_npcname("神官#03");
+	disablenpc instance_npcname("神官#04");
+	disablenpc instance_npcname("神官#05");
+	disablenpc instance_npcname("神官#06");
+	disablenpc instance_npcname("神官#07");
+	disablenpc instance_npcname("神官#08");
+
+	setd "$@Pop1_mob_01"+instance_id(1),10;
+	areamonster 'map_name$[0],98,89,98,89,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],98,88,98,88,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],98,87,98,87,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],98,86,98,86,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],98,85,98,85,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,89,101,89,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,88,101,88,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,87,101,87,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,86,101,86,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,85,101,85,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd1";
+	close;
+}
+
+
+1@pop1,100,98,4	script	教皇#04	936,{
+	mes "[教皇]";
+	mes "我必須趕去赴約了...";
+	disablenpc instance_npcname("教皇#04");
+	enablenpc instance_npcname("正午的弦月傳送門1_3");
+	enablenpc instance_npcname("教皇#05");
+	enablenpc instance_npcname("?????#Pop01");
+	close;
+}
+
+
+1@pop1,98,17,6	script	?????#Pop01	922,{
+
+	mes "[?????]";
+	mes "你是?";
+	next;
+	mes "[教皇]";
+	mes "哥哥他是我的朋友";
+	next;
+	mes "[盧敏]";
+	mes "嗯..你好我是盧敏";
+	next;
+	mes "[盧敏]";
+	mes "我是擔心妹妹才進來的";
+	next;
+	mes "[盧敏]";
+	mes "爸爸媽媽還在等著妹妹";
+	next;
+	mes "[盧敏]";
+	mes "在被追到以前趕快走吧";
+	next;
+	mes "[盧敏]";
+	mes "對了你要記得換裝，要穿的跟一般的小孩一樣才比較不會被認出來";
+	next;
+	mes "[教皇]";
+	mes "好的";
+	disablenpc instance_npcname("教皇#05");
+	enablenpc instance_npcname("教皇#06");
+	next;
+	mes "[教皇]";
+	mes "好了";
+	next;
+	mes "[教皇]";
+	mes "我們回家吧";
+	next;
+	mes "[盧敏]";
+	mes "接下來我會保護妹妹的，你就不用在跟來了";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "我必須保護到教皇完全安全為止..";
+
+	disablenpc instance_npcname("教皇#06");
+	disablenpc instance_npcname("?????#Pop01");
+	enablenpc instance_npcname("教皇#07");
+	enablenpc instance_npcname("盧敏#01");
+	enablenpc instance_npcname("正午的弦月傳送門1_4");
+	close;
+}
+
+1@pop1,100,16,4	script	教皇#05	936,{end;}
+1@pop1,100,16,4	script	教皇#06	10173,{end;}
+
+
+1@pop2,118,222,4	script	教皇#07	10173,{end;
+OnCcdd01:
+	npctalk "傑德大神官家附近應該是安全的";
+	end;
+}
+
+
+1@pop2,115,224,1	script	盧敏#01	922,{
+	if (getd("$@CD_Pop_1"+instance_id(1))==1){end;}
+	setd "$@CD_Pop_1"+instance_id(1),1;
+	enablenpc instance_npcname("教皇#08");
+	enablenpc instance_npcname("盧敏#02");
+
+	npctalk "怎麼和平常出來的地方不一樣?";
+	sleep2 3000;
+	unittalk getcharid(3),"這裡是傑德大神官家附近";
+	sleep2 3000;
+	donpcevent instance_npcname("教皇#07")+"::OnCcdd01";
+	sleep2 3000;
+	unittalk getcharid(3),"就由這邊過去吧，會比較安全";
+	sleep2 3000;
+	npctalk "那..出發吧";
+	disablenpc instance_npcname("盧敏#01");
+	disablenpc instance_npcname("教皇#07");
+	end;
+}
+
+
+1@pop2,63,238,6	script	教皇#08	10173,{
+
+	mes "[盧敏]";
+	mes "接下來往下走";
+	next;
+	enablenpc instance_npcname("警衛#Pop01");
+	enablenpc instance_npcname("警衛#Pop02");
+	mes "[警衛]";
+	mes "你們是誰!?";
+	next;
+	mes "[教皇]";
+	mes "我是教皇!你們不認得我嗎?";
+	next;
+	enablenpc instance_npcname("傑德大神官#01");
+	mes "[傑德大神官]";
+	mes "教皇大人!?你怎會到這邊來?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "我們是得到尼樂妍神官的同意才出神殿的";
+	next;
+	mes "[傑德大神官]";
+	mes "教皇不可以出神殿啊、如果受傷了怎麼辦啊、路上有很多危險的人啊、尼樂妍應該知道不能讓教皇隨便出來的啊";
+	next;
+	mes "[教皇]";
+	mes "我只是女神的容器嗎?只是容器嗎?";
+	next;
+	mes "[傑德大神官]";
+	mes "不是這樣的，教皇大人...";
+	next;
+	mes "[盧敏]";
+	mes "最危險的人是你吧！隨便的把她關起來，還想把她教育成你心中理想的模樣！";
+	next;
+	mes "[盧敏]";
+	mes "分開逃，逃走之後在村裡會合";
+	disablenpc instance_npcname("盧敏#02");
+	next;
+	mes "[傑德大神官]";
+	mes "你怎麼出的來！警衛！快抓住那個男孩！";
+	next;
+	enablenpc instance_npcname("警衛#Pop03");
+	enablenpc instance_npcname("警衛#Pop04");
+	enablenpc instance_npcname("警衛#Pop05");
+	enablenpc instance_npcname("警衛#Pop06");
+	enablenpc instance_npcname("警衛#Pop07");
+	enablenpc instance_npcname("警衛#Pop08");
+
+	mes "[傑德大神官]";
+	mes "教皇大人你們應該不是得到尼樂妍的同意...";
+	next;
+	mes "[傑德大神官]";
+	mes "而是自己逃出來的吧";
+	next;
+	mes"[傑德大神官]";
+	mes "教皇大人難道你要拋下你的義務了嗎?";
+	next;
+	mes "[教皇]";
+	mes "不！我不是要拋下我的義務，只要離開一下，一下就好了。";
+	next;
+	mes"[傑德大神官]";
+	mes "教皇不能在外面逗留";
+	next;
+	mes"[傑德大神官]";
+	mes "讓我親自送教皇大人回去吧";
+	next;
+	mes "[教皇]";
+	mes "我不要回去!";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "放開教皇大人，不然我就要動手了！";
+	next;
+	mes"[傑德大神官]";
+	mes "區區一個冒險家還想怎樣，大家以不傷害教皇的前提下把她帶回去";
+	mercenary_create 3570,180000;
+	disablenpc instance_npcname("警衛#Pop01");
+	disablenpc instance_npcname("警衛#Pop02");
+	disablenpc instance_npcname("警衛#Pop03");
+	disablenpc instance_npcname("警衛#Pop04");
+	disablenpc instance_npcname("警衛#Pop05");
+	disablenpc instance_npcname("警衛#Pop06");
+	disablenpc instance_npcname("警衛#Pop07");
+	disablenpc instance_npcname("警衛#Pop08");
+	disablenpc instance_npcname("教皇#08");
+	disablenpc instance_npcname("傑德大神官#01");
+
+	setd "$@Pop1_mob_01"+instance_id(1),8;
+	areamonster 'map_name$[1],62,236,62,236,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],60,238,60,238,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],65,241,65,241,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],68,239,68,239,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],62,236,62,236,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],71,238,71,238,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],69,236,69,236,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	areamonster 'map_name$[1],66,234,66,234,"--ja--",3518,1,instance_npcname("正午的弦月事件1")+"::OnCcdd4";
+	close;
+}
+
+1@pop2,66,237,4	script	盧敏#02	922,{end;}
+1@pop2,57,237,7	script	傑德大神官#01	932,{end;}
+1@pop2,62,236,6	script	警衛#Pop01	934,{end;}
+1@pop2,60,238,4	script	警衛#Pop02	934,{end;}
+1@pop2,65,241,4	script	警衛#Pop03	934,{end;}
+1@pop2,68,239,4	script	警衛#Pop04	934,{end;}
+1@pop2,62,236,4	script	警衛#Pop05	934,{end;}
+1@pop2,71,238,4	script	警衛#Pop06	934,{end;}
+1@pop2,69,236,4	script	警衛#Pop07	934,{end;}
+1@pop2,66,234,4	script	警衛#Pop08	934,{end;}
+
+
+1@pop2,55,115,6	script	盧敏#03	922,{
+	mes "[盧敏]";
+	mes "妹妹快點走了，爸爸媽媽還在等我們";
+	next;
+	mes "[教皇]";
+	mes "這隻小狗好可愛，我們能飼養牠嗎?";
+	next;
+	mes "[盧敏]";
+	mes "這個必須回去問過爸爸媽媽..";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "教皇應該一出生就被送去神殿了";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "這些果然只是教皇希望的嗎?";
+	mes "教皇一直想過這種平凡的生活";
+	mes "就讓他在多享受一下這種生活吧…";
+
+	enablenpc instance_npcname("教皇#10");
+	enablenpc instance_npcname("盧敏#04");
+	enablenpc instance_npcname("狗#02");
+	enablenpc instance_npcname("尼樂妍大神官#01");
+	enablenpc instance_npcname("傑德大神官#02");
+	enablenpc instance_npcname("教皇的媽媽#01");
+	enablenpc instance_npcname("教皇的爸爸#01");
+	enablenpc instance_npcname("神殿的警衛#01");
+	enablenpc instance_npcname("神殿的警衛#02");
+	enablenpc instance_npcname("神殿的警衛#03");
+	enablenpc instance_npcname("神殿的警衛#04");
+	enablenpc instance_npcname("神殿的警衛#05");
+
+	disablenpc instance_npcname("盧敏#03");
+	disablenpc instance_npcname("教皇#09");
+	disablenpc instance_npcname("狗#01");
+	viewpoint 1,121,76,1,0xFF0000;
+	viewpoint 1,121,76,2,0x00FF00;
+	close;
+}
+
+1@pop2,56,116,6	script	教皇#09	10173,{end;}
+1@pop2,58,114,4	script	狗#01	81,{end;}
+
+
+
+1@pop2,124,81,4	script	教皇#10	10173,{
+	mes "[傑德大神官]";
+	mes "沒有錯下一任的教皇就在這個家中";
+	next;
+	mes "[教皇的媽媽]";
+	mes "我們家的孩子只是普通的小孩，不會是什麼教皇的";
+	next;
+	mes "[教皇]";
+	mes "尼樂妍大神官不要把我從爸爸媽媽的身邊帶走!";
+	next;
+	mes "[尼樂妍大神官]";
+	mes "這女孩怎麼會知道我的名字，這果然是女神的旨意吧";
+	next;
+	mes "[尼樂妍大神官]";
+	mes "把這個小女孩帶走吧!";
+	next;
+	mes "[教皇的爸爸]";
+	mes "那我兒子怎麼辦?";
+	next;
+	mes "[傑德大神官]";
+	mes "雖然二名小孩條件一樣，但是是男孩子...";
+	next;
+	mes "[尼樂妍大神官]";
+	mes "還是把他們二個都帶回神殿，在來判斷到底應該保留哪位...";
+	next;
+	mes "[盧敏]";
+	mes "--妹妹我們分開行動，從南門離開後，到兩個人的秘密庭院去-- ";
+	disablenpc instance_npcname("盧敏#04");
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "這些都只是一場夢，教皇大人快醒來吧！";
+	next;
+	mes "[教皇]";
+	mes "不要叫我教皇！我一點都不想當教皇！";
+	next;
+	mes "[教皇的媽媽]";
+	mes "妳就乖乖跟者他們去神殿吧";
+	next;
+	mes "[教傑德大神官]";
+	mes "大家動手把她帶回神殿去";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "放開教皇大人，不然我就要動手了！";
+
+	disablenpc instance_npcname("教皇#10");
+	disablenpc instance_npcname("狗#02");
+	disablenpc instance_npcname("尼樂妍大神官#01");
+	disablenpc instance_npcname("傑德大神官#02");
+	disablenpc instance_npcname("教皇的媽媽#01");
+	disablenpc instance_npcname("教皇的爸爸#01");
+	disablenpc instance_npcname("神殿的警衛#01");
+	disablenpc instance_npcname("神殿的警衛#02");
+	disablenpc instance_npcname("神殿的警衛#03");
+	disablenpc instance_npcname("神殿的警衛#04");
+	disablenpc instance_npcname("神殿的警衛#05");
+
+	mercenary_create 3570,180000;
+	setd "$@Pop1_mob_01"+instance_id(1),10;
+	areamonster 'map_name$[1],122,81,135,74,"--ja--",3519,5,instance_npcname("正午的弦月事件1")+"::OnCcdd6";
+	areamonster 'map_name$[1],122,81,135,74,"--ja--",3520,5,instance_npcname("正午的弦月事件1")+"::OnCcdd6";
+	close;
+}
+
+1@pop2,123,79,6	script	盧敏#04	922,{end;}
+1@pop2,124,80,4	script	狗#02	81,{end;}
+1@pop2,125,79,4	script	尼樂妍大神官#01	919,{end;}
+1@pop2,123,78,7	script	傑德大神官#02	932,{end;}
+1@pop2,121,80,6	script	教皇的媽媽#01	701,{end;}
+1@pop2,121,79,8	script	教皇的爸爸#01	99,{end;}
+1@pop2,127,82,8	script	神殿的警衛#01	934,{end;}
+1@pop2,128,81,5	script	神殿的警衛#02	934,{end;}
+1@pop2,128,78,5	script	神殿的警衛#03	934,{end;}
+1@pop2,127,76,5	script	神殿的警衛#04	934,{end;}
+1@pop2,125,76,4	script	神殿的警衛#05	934,{end;}
+
+
+1@pop2,120,123,6	script	教皇#11	936,{
+	npctalk "不要逃了！逃跑也解決不了事情的，你要像這樣撒嬌到什麼時候！";
+	unittalk getcharid(3),"怎麼會有兩個教皇?";
+	setd "$@Pop1_mob_01"+instance_id(1),10;
+	areamonster 'map_name$[1],117,129,114,79,"--ja--",3520,10,instance_npcname("正午的弦月事件1")+"::OnCcdd9";
+	disablenpc instance_npcname("教皇#11");
+}
+
+1@pop2,48,127,6	script	教皇#12	936,{
+	npctalk "是你對你自己說不想回頭的，不要忽視真正的你，回到你該回去的地方吧。";
+	unittalk getcharid(3),"到底是...";
+	setd "$@Pop1_mob_01"+instance_id(1),20;
+	areamonster 'map_name$[1],47,128,68,123,"--ja--",3519,10,instance_npcname("正午的弦月事件1")+"::OnCcdd10";
+	areamonster 'map_name$[1],56,120,65,106,"--ja--",3520,10,instance_npcname("正午的弦月事件1")+"::OnCcdd10";
+	disablenpc instance_npcname("教皇#12");
+}
+
+1@pop2,57,80,7	script	教皇#13	936,{
+	unittalk getcharid(3),"你為到底是誰，什麼要扮成教皇的模樣一直追著我們跑";
+	npctalk "請你一定要抓到我......";
+	areamonster 'map_name$[1],57,80,57,80,"--ja--",3522,1,instance_npcname("正午的弦月事件1")+"::OnCcdd11";
+	disablenpc instance_npcname("教皇#13");
+}
+
+
+1@pop3,45,60,4	script	教皇#14	936,{
+	mes "[盧敏]";
+	mes "已經安全了。";
+	next;
+	mes "[教皇]";
+	mes "這裡是我們以前在夢裡說話的地方，怎麼會....?";
+	next;
+	mes "[盧敏]";
+	mes "到達這邊就安全了，不在需要那個冒險者了";
+	next;
+	mes "[盧敏]";
+	mes "在這裡沒有人會找到我們，我們可以永遠在一起。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "這些都只是教皇您在現實中的不安和他想讓你看到的東西而已";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "如果你一直留在這邊的話，就永遠無法從夢裡醒來了，在現實裡還有很多人在等著您啊。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "你的哥哥已經被尼樂妍封印在冰洞裡面了!";
+	next;
+	mes "[盧敏]";
+	mes "這些都不是我們想要的事，就只是因為我們的長相，就只是因為我是他的雙胞胎哥哥，我們就必須承擔這樣的命運，我就必須被封印嗎";
+	next;
+	mes "[教皇]";
+	mes "哥哥你在做什麼樣的夢呢?";
+	next;
+	mes "[教皇]";
+	mes "那個夢的結局是什麼呢?";
+	next;
+	mes "[教皇]";
+	mes "哥哥所希望的夢是什麼樣的夢呢?";
+	next;
+	mes "[盧敏]";
+	mes "我所希望的就是和以前一樣，我們兩個人一直在一起。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "教皇大人你必須回到現實去!";
+	next;
+	mes "[盧敏]";
+	mes "不關你的事！礙事的人現在給我消失！";
+	disablenpc instance_npcname("盧敏#05");
+	disablenpc instance_npcname("教皇#14");
+	mercenary_create 3570,180000;
+	areamonster 'map_name$[2],57,61,57,61,"--ja--",3524,1,instance_npcname("正午的弦月事件1")+"::OnCcdd12";
+	close;
+}
+
+1@pop3,43,58,7	script	盧敏#05	922,{end;}
+
+
+
+1@pop3,52,68,4	script	?????#Pop02	3526,{
+	mes "[?????]";
+	mes "以人類來說你表現得還不錯嘛。";
+	next;
+	mes "[教皇]";
+	mes "你為什麼要利用我哥哥來做這些事情!?";
+	next;
+	mes "[冰晶龍]";
+	mes "吾身為冰洞窟的主人，卻被拿奧汀之火的人類威脅必須守護你的哥哥，並且永遠都不能離開冰洞窟。";
+	next;
+	mes "[冰晶龍]";
+	mes "跟妳那被封印的哥哥處境類似，所以我同情他決定要幫助他。";
+	next;
+	mes "[冰晶龍]";
+	mes "我看到了你哥哥在被封印前的記憶裡全部都是關於教皇的記憶，所以我讓你哥哥的意志可以透過夢境跟妳來對話。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "不要相信他!!";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "他真正的目的是要讓教皇永遠沉睡在夢境裡，現任教皇昏迷後，那教國的人就必須解除哥哥的封印讓他成為教皇。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "這樣水晶龍也就不用再履行他被強迫賦予的使命了";
+	next;
+	mes "[冰晶龍]";
+	mes "愚蠢的人類受死吧...";
+	disablenpc instance_npcname("?????#Pop02");
+	disablenpc instance_npcname("教皇#15");
+	mercenary_create 3570,180000;
+	areamonster 'map_name$[2],52,68,52,68,"--ja--",3526,1,instance_npcname("正午的弦月事件1")+"::OnCcdd13";
+	close;
+}
+
+1@pop3,45,60,4	script	教皇#15	936,{end;}
+
+
+1@pop3,57,68,1	script	教皇#16	10173,{
+ 	mercenary_heal -1000000,-1000;	//傭兵消除
+	mes "["+strcharinfo(0)+"]";
+	mes "教皇大人....";
+	next;
+	mes "[教皇]";
+	mes "如果連我都否定自己的話，那世界上就沒有人會肯定我了，在這個世界上我最愛而且最愛我的人就是我";
+	next;
+	mes "[教皇]";
+	mes "雖然和哥哥在一起的夢很棒，但現在要從這個夢裡醒來。";
+	next;
+	mes "[教皇]";
+	mes "如果可以見到哥哥的話，儘管是這種形式見面，我也想每天夢見哥哥，總有一天一定要救出哥哥。";
+	next;
+	mes "[教皇]";
+	mes "即使如此，我應該還是會每天夢到這個夢，和哥哥在一起，想拯救哥哥的夢。";
+	next;
+	mes "[教皇]";
+	mes "必須等待白天的半月，等到入夜，等到他成為滿月為止。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "對了這個是你要找的玩偶嗎?";
+	next;
+	mes "[教皇]";
+	mes "人偶是尼樂妍在哥哥被帶走的時候給我的";
+	next;
+	mes "[教皇]";
+	mes "我已經不需要了...就把他留在這邊陪伴哥哥吧..";
+	next;
+	mes "[教皇]";
+	mes "我必須回到該去的地方了..再見了";
+	getitem 25088,2;
+	enablenpc instance_npcname("正午的弦月傳送門1_7");
+	disablenpc instance_npcname("教皇#16");
+	instance_announce instance_id(1),"【副本公告】：請從右邊傳點離開副本",bc_all,0xD7BA98;
+	close;
+}
+
+1@pop3,54,69,6	script	盧敏#06	925,{
+	if (getd("$@CD_Pop_2"+instance_id(1))==1){end;}
+	if(countitem(25087)<1){end;}
+	setd "$@CD_Pop_2"+instance_id(1),1;
+	delitem 25087,1;
+	getitem 25088,2;
+	end;
+}
+
+
+
+//------------------------------觸發點
+
+1@pop1,100,144,0	script	教皇#02	936,8,3,{
+OnTouch:
+	npctalk "....";
+	enablenpc instance_npcname("正午的弦月傳送門1_2");
+	enablenpc instance_npcname("教皇#03");
+	enablenpc instance_npcname("神官#01");
+	enablenpc instance_npcname("神官#02");
+	enablenpc instance_npcname("神官#03");
+	enablenpc instance_npcname("神官#04");
+	enablenpc instance_npcname("神官#05");
+	enablenpc instance_npcname("神官#06");
+	enablenpc instance_npcname("神官#07");
+	enablenpc instance_npcname("神官#08");
+	disablenpc instance_npcname("教皇#02");
+	end;
+}
+
+//------------------------------傳點資訊
+1@pop1,61,139,0	warp	正午的弦月傳送門1_1	2,2,1@pop1,87,143
+1@pop1,99,135,0	warp	正午的弦月傳送門1_2	2,2,1@pop1,99,118
+1@pop1,99,69,0	warp	正午的弦月傳送門1_3	2,2,1@pop1,99,54
+1@pop1,99,7,0	warp	正午的弦月傳送門1_4	2,2,1@pop2,124,219
+1@pop2,65,137,0	warp	正午的弦月傳送門1_5	2,2,1@pop2,66,128
+
+1@pop2,129,21,0	script	正午的弦月傳送門1_6	45,1,1,{
+ 	mercenary_heal -1000000,-1000;	//傭兵消除
+	warp 'map_name$[2],44,54;
+end;
+}
+
+1@pop3,80,66,0	script	正午的弦月傳送門1_7	45,1,1,{
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+//------------------------------地圖屬性
+1@pop1	mapflag	nomemo
+1@pop1	mapflag	noreturn
+1@pop1	mapflag	nomemo
+1@pop1	mapflag	nosave	SavePoint
+1@pop1	mapflag	monster_noteleport
+1@pop1	mapflag	noteleport
+
+1@pop2	mapflag	noreturn
+1@pop2	mapflag	nomemo
+1@pop2	mapflag	nosave	SavePoint
+1@pop2	mapflag	monster_noteleport
+1@pop2	mapflag	noteleport
+
+1@pop3	mapflag	noreturn
+1@pop3	mapflag	nomemo
+1@pop3	mapflag	nosave	SavePoint
+1@pop3	mapflag	monster_noteleport
+1@pop3	mapflag	noteleport

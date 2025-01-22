@@ -1,0 +1,558 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#時間庭園兌換商店
+   - Name: 時間庭園兌換商店#裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP18_MARAM
+     Items:
+       - Index: 1
+         Item: Season_Hood_Spring
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_1
+             Amount: 3
+           - Index: 2
+             Item: Spring_Material_2
+             Amount: 3
+           - Index: 3
+             Item: Spring_Material_3
+             Amount: 3
+       - Index: 2
+         Item: Season_Hood_Summer
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 1
+             Item: Summer_Material_1
+             Amount: 3
+           - Index: 2
+             Item: Summer_Material_2
+             Amount: 3
+           - Index: 3
+             Item: Summer_Material_3
+             Amount: 3
+       - Index: 3
+         Item: Season_Hood_Autumn
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 1
+             Item: Autumn_Material_1
+             Amount: 3
+           - Index: 2
+             Item: Autumn_Material_2
+             Amount: 3
+           - Index: 3
+             Item: Autumn_Material_3
+             Amount: 3
+       - Index: 4
+         Item: Season_Hood_Winter
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 1
+             Item: Winter_Material_1
+             Amount: 3
+           - Index: 2
+             Item: Winter_Material_2
+             Amount: 3
+           - Index: 3
+             Item: Winter_Material_3
+             Amount: 3
+
+       - Index: 5
+         Item: Signet_Of_Spring
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 0
+             Item: Spring_Material_1
+             Amount: 3
+           - Index: 1
+             Item: Spring_Material_2
+             Amount: 3
+           - Index: 2
+             Item: Spring_Material_3
+             Amount: 3
+           - Index: 3
+             Item: Fruit_Of_Birth
+             Amount: 5
+           - Index: 4
+             Item: Fruit_Of_Extinction
+             Amount: 5
+       - Index: 6
+         Item: Signet_Of_Summer
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 0
+             Item: Summer_Material_1
+             Amount: 3
+           - Index: 1
+             Item: Summer_Material_2
+             Amount: 3
+           - Index: 2
+             Item: Summer_Material_3
+             Amount: 3
+           - Index: 3
+             Item: Fruit_Of_Birth
+             Amount: 5
+           - Index: 4
+             Item: Fruit_Of_Extinction
+             Amount: 5
+       - Index: 7
+         Item: Signet_Of_Autumn
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 0
+             Item: Autumn_Material_1
+             Amount: 3
+           - Index: 1
+             Item: Autumn_Material_2
+             Amount: 3
+           - Index: 2
+             Item: Autumn_Material_3
+             Amount: 3
+           - Index: 3
+             Item: Fruit_Of_Birth
+             Amount: 5
+           - Index: 4
+             Item: Fruit_Of_Extinction
+             Amount: 5
+       - Index: 8
+         Item: Signet_Of_Winter
+         Stock: 0
+         Zeny: 100000000
+         RequiredItems:
+           - Index: 0
+             Item: Winter_Material_1
+             Amount: 3
+           - Index: 1
+             Item: Winter_Material_2
+             Amount: 3
+           - Index: 2
+             Item: Winter_Material_3
+             Amount: 3
+           - Index: 3
+             Item: Fruit_Of_Birth
+             Amount: 5
+           - Index: 4
+             Item: Fruit_Of_Extinction
+             Amount: 5
+
+#材料類
+   - Name: 時間庭園兌換商店#物品
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP18_MARAM
+     Items:
+       - Index: 0
+         Item: Season_H_Upgrade
+         Stock: 0
+         Zeny: 50000000
+
+       - Index: 1
+         Item: MD_Hol_Key
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: MD_Hol_Fragment
+             Amount: 100
+           - Index: 2
+             Item: etel_dust
+             Amount: 500
+
+       - Index: 2
+         Item: Energy_Of_Flame
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 1
+             Item: Contored_Agn_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Coagulated_Spell
+             Amount: 5
+           - Index: 3
+             Item: Polluted_Spell
+             Amount: 1
+       - Index: 3
+         Item: Energy_Of_Water
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 1
+             Item: Contored_Aqu_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Coagulated_Spell
+             Amount: 5
+           - Index: 3
+             Item: Polluted_Spell
+             Amount: 1
+       - Index: 4
+         Item: Energy_Of_Wind
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 1
+             Item: Contored_Ven_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Coagulated_Spell
+             Amount: 5
+           - Index: 3
+             Item: Polluted_Spell
+             Amount: 1
+       - Index: 5
+         Item: Energy_Of_Ground
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 1
+             Item: Contored_Ter_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Coagulated_Spell
+             Amount: 5
+           - Index: 3
+             Item: Polluted_Spell
+             Amount: 1
+
+       - Index: 6
+         Item: Grace_Of_Spirit
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Contored_Spi_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Spell_Of_Time
+             Amount: 3
+           - Index: 3
+             Item: Jewel_Of_Time_Ore
+             Amount: 3
+           - Index: 4
+             Item: GH_Cursed_Crystal
+             Amount: 3
+       - Index: 7
+         Item: Energy_Of_Elemental
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Contored_Agn_Wrath
+             Amount: 10
+           - Index: 1
+             Item: Contored_Aqu_Wrath
+             Amount: 10
+           - Index: 2
+             Item: Contored_Ven_Wrath
+             Amount: 10
+           - Index: 3
+             Item: Contored_Ter_Wrath
+             Amount: 10
+           - Index: 4
+             Item: Polluted_Spell
+             Amount: 5
+
+       - Index: 8
+         Item: Energy_Of_Spring
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Storm_Wind_Leaf_Gem
+             Amount: 10
+       - Index: 9
+         Item: Energy_Of_Summer
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Hot_Water_Drop_Gem
+             Amount: 10
+       - Index: 10
+         Item: Energy_Of_Autumn
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Dry_Wind_Leaf_Gem
+             Amount: 10
+       - Index: 11
+         Item: Energy_Of_Winter
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Ice_Water_Drop_Gem
+             Amount: 10
+
+       - Index: 12
+         Item: Energy_Of_Spring
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Energy_Of_Summer
+             Amount: 1
+           - Index: 2
+             Item: Energy_Of_Autumn
+             Amount: 1
+           - Index: 3
+             Item: Energy_Of_Winter
+             Amount: 1
+           - Index: 4
+             Item: Contored_Ven_Wrath
+             Amount: 5
+       - Index: 13
+         Item: Energy_Of_Summer
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Energy_Of_Spring
+             Amount: 1
+           - Index: 2
+             Item: Energy_Of_Autumn
+             Amount: 1
+           - Index: 3
+             Item: Energy_Of_Winter
+             Amount: 1
+           - Index: 4
+             Item: Contored_Ven_Wrath
+             Amount: 5
+       - Index: 14
+         Item: Energy_Of_Autumn
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Energy_Of_Spring
+             Amount: 1
+           - Index: 2
+             Item: Energy_Of_Summer
+             Amount: 1
+           - Index: 3
+             Item: Energy_Of_Winter
+             Amount: 1
+           - Index: 4
+             Item: Contored_Ven_Wrath
+             Amount: 5
+       - Index: 15
+         Item: Energy_Of_Winter
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 1
+             Item: Energy_Of_Spring
+             Amount: 1
+           - Index: 2
+             Item: Energy_Of_Summer
+             Amount: 1
+           - Index: 3
+             Item: Energy_Of_Autumn
+             Amount: 1
+           - Index: 4
+             Item: Contored_Ven_Wrath
+             Amount: 5
+#額外自創
+       - Index: 16
+         Item: Spring_Material_1
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Summer_Material_1
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_1
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_1
+             Amount: 1
+       - Index: 17
+         Item: Spring_Material_2
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Summer_Material_2
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_2
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_2
+             Amount: 1
+       - Index: 18
+         Item: Spring_Material_3
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Summer_Material_3
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_3
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_3
+             Amount: 1
+
+       - Index: 19
+         Item: Summer_Material_1
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_1
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_1
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_1
+             Amount: 1
+       - Index: 20
+         Item: Summer_Material_2
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_2
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_2
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_2
+             Amount: 1
+       - Index: 21
+         Item: Summer_Material_3
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_3
+             Amount: 1
+           - Index: 2
+             Item: Autumn_Material_3
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_3
+             Amount: 1
+
+       - Index: 22
+         Item: Autumn_Material_1
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_1
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_1
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_1
+             Amount: 1
+       - Index: 23
+         Item: Autumn_Material_2
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_2
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_2
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_2
+             Amount: 1
+       - Index: 24
+         Item: Autumn_Material_3
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_3
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_3
+             Amount: 1
+           - Index: 3
+             Item: Winter_Material_3
+             Amount: 1
+
+       - Index: 25
+         Item: Winter_Material_1
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_1
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_1
+             Amount: 1
+           - Index: 3
+             Item: Autumn_Material_1
+             Amount: 1
+       - Index: 26
+         Item: Winter_Material_2
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_2
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_2
+             Amount: 1
+           - Index: 3
+             Item: Autumn_Material_2
+             Amount: 1
+       - Index: 27
+         Item: Winter_Material_3
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 1
+             Item: Spring_Material_3
+             Amount: 1
+           - Index: 2
+             Item: Summer_Material_3
+             Amount: 1
+           - Index: 3
+             Item: Autumn_Material_3
+             Amount: 1
+
+
+
+
+
+
+
+
+
+
+
+
+

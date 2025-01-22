@@ -1,0 +1,196 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#機械工匠套裝
+   - Name: 音格麗塔A
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_CHARLESTON01
+     Items:
+       - Index: 0
+         Item: Charleston_Parts_W
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 15
+       - Index: 1
+         Item: Charleston_Parts_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 15
+       - Index: 2
+         Item: Pilebuncker_P
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Pilebuncker
+             Amount: 1
+           - Index: 1
+             Item: Old_Steel_Plate
+             Amount: 300
+           - Index: 2
+             Item: Failed_Engine
+             Amount: 15
+       - Index: 3
+         Item: Pilebuncker_T
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Pilebuncker
+             Amount: 1
+           - Index: 1
+             Item: Old_Steel_Plate
+             Amount: 300
+           - Index: 2
+             Item: Failed_Engine
+             Amount: 15
+       - Index: 4
+         Item: Supplement_Part_Str
+         Stock: 0
+         Zeny: 3999999
+         RequiredItems:
+       - Index: 5
+         Item: Supplement_Part_Con
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 6
+         Item: Supplement_Part_Agi
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 7
+         Item: Supplement_Part_Dex
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 8
+         Item: Upgrade_Part_Plate
+         Stock: 0
+         Zeny: 3999999
+         RequiredItems:
+       - Index: 9
+         Item: Upgrade_Part_Engine
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 10
+         Item: Upgrade_Part_Booster
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 11
+         Item: Upgrade_Part_Gun_Barrel
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 10
+       - Index: 12
+         Item: Supplement_Part_Str_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 50
+           - Index: 1
+             Item: Supplement_Part_Str
+             Amount: 1
+       - Index: 13
+         Item: Upgrade_Part_Plate_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Charleston_Parts
+             Amount: 50
+           - Index: 1
+             Item: Upgrade_Part_Plate
+             Amount: 1
+       - Index: 14
+         Item: Broken_Chip_01
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Complete_mechanical_parts
+             Amount: 17
+       - Index: 15
+         Item: Broken_Chip_02
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Complete_mechanical_parts
+             Amount: 17
+       - Index: 16
+         Item: Riot_Chip
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Complete_mechanical_parts
+             Amount: 17
+       - Index: 17
+         Item: Excelion_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Old_Tank
+             Amount: 10
+       - Index: 18
+         Item: Excelion_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Old_Tank
+             Amount: 10
+       - Index: 19
+         Item: Excelion_Shield
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Old_Tank
+             Amount: 20
+       - Index: 20
+         Item: Excelion_Leg
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Old_Tank
+             Amount: 20
+
+

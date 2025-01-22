@@ -1,0 +1,2834 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#消耗品合成箱預
+   - Name: 消耗品合成箱(頭飾)
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 0
+         Item: C_Head_Item_44207
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 1
+         Item: C_Head_Item_23958
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: C_Head_Item_44313
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: C_Head_Item_44269
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_hat81
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_44959
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_44961
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_44958
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_44170
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+
+       - Index: 10
+         Item: C_Head_Item_44955
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 11
+         Item: C_Head_Item_44954
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 12
+         Item: C_Head_Item_44968
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 13
+         Item: C_Head_Item_24083
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 14
+         Item: C_Head_Item_22816
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 15
+         Item: C_Head_Item_44455
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 16
+         Item: C_Head_Item_44456
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 17
+         Item: C_Head_Item_44522
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 18
+         Item: C_Head_Item_44523
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 19
+         Item: C_White_Fox_Ear_Ribbon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 20
+         Item: C_Head_Item_22708
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 21
+         Item: C_Head_Item_44508
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 22
+         Item: C_Head_Item_22377
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 23
+         Item: C_Tiger_WH
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 24
+         Item: C_Tiger_BL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 25
+         Item: Einherial_Mantle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 26
+         Item: C_Head_Item_44952
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 27
+         Item: C_Head_Item_44957
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 28
+         Item: C_Head_Item_44241
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 29
+         Item: C_Head_Item_22908
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 30
+         Item: C_Head_Item_23714
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 31
+         Item: C_Head_Item_44554
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 32
+         Item: C_Head_Item_44591
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 33
+         Item: C_Full_Blossom_Sakura_Hairpin_Blue
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 34
+         Item: C_Head_Item_23998
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 35
+         Item: C_Head_Item_44148
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 36
+         Item: C_Rabbit_Ear_Hat
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 37
+         Item: C_Head_Item_22779
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 38
+         Item: C_Head_Item_44502
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 39
+         Item: C_Head_Item_44407
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 40
+         Item: C_Head_Item_44485
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 41
+         Item: C_Head_Item_44526
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 42
+         Item: C_Head_Item_22974
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 43
+         Item: C_Head_Item_22975
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 44
+         Item: C_Head_Item_22976
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 45
+         Item: C_Head_Item_44564
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 46
+         Item: C_Head_Item_44565
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 47
+         Item: C_Head_Item_44572
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 48
+         Item: C_Head_Item_44573
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 49
+         Item: C_Head_Item_44503
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 50
+         Item: C_Head_Item_44504
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 51
+         Item: C_Head_Item_44416
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 52
+         Item: C_Head_Item_23056
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 53
+         Item: C_Head_Item_44347
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 54
+         Item: C_Head_Item_44560
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 55
+         Item: C_Head_Item_22491
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 56
+         Item: C_Head_Item_23395
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 57
+         Item: C_Head_Item_22704
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 58
+         Item: C_Head_Item_22511
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 59
+         Item: C_Head_Item_22310
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 60
+         Item: C_Head_Item_23630
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 61
+         Item: C_Head_Item_a005
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 62
+         Item: C_Head_Item_23301
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 63
+         Item: C_Head_Item_23892
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 64
+         Item: C_Head_Item_23893
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 65
+         Item: C_Head_Item_23523
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 66
+         Item: C_Head_Item_23637
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 67
+         Item: C_Head_Item_apple
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 68
+         Item: C_Head_Item_carrot
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 69
+         Item: C_Head_Item_22757
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 70
+         Item: C_Head_Item_22193
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 71
+         Item: C_Head_Item_22263
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 72
+         Item: C_Head_Item_22264
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 73
+         Item: C_Head_Item_22262
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 74
+         Item: C_Head_Item_22260
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 75
+         Item: C_Head_Item_22261
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 76
+         Item: C_Head_Item_22326
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 77
+         Item: C_Head_Item_22794
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 78
+         Item: C_Head_Item_22359
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 79
+         Item: C_Head_Item_23219
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 80
+         Item: C_Head_Item_23220
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 81
+         Item: C_Head_Item_23127
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 82
+         Item: C_Oxygen_Mask_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 83
+         Item: C_Head_Item_23645
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 84
+         Item: C_Head_Item_23646
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 85
+         Item: C_Head_Item_23193
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 86
+         Item: C_Head_Item_23194
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 87
+         Item: C_Head_Item_22924
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 88
+         Item: C_Head_Item_23685
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 89
+         Item: C_Head_Item_23409
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 90
+         Item: C_Head_Item_22716
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 91
+         Item: C_Head_Item_23772
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 92
+         Item: C_Head_Item_22584
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 93
+         Item: C_Head_Item_23844
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 94
+         Item: C_Head_Item_hat79
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 95
+         Item: C_Head_Item_22996
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 96
+         Item: C_Head_Item_23801
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 97
+         Item: C_Head_Item_22497
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 98
+         Item: C_Head_Item_44106
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 99
+         Item: C_Head_Item_44156_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 100
+         Item: C_Head_Item_24065
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 101
+         Item: C_Elephangel_TH
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 102
+         Item: C_Head_Item_44172
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 103
+         Item: C_Head_Item_22796
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 104
+         Item: C_Head_Item_23361
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 105
+         Item: C_Head_Item_44216
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 106
+         Item: C_Head_Item_22798
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 107
+         Item: C_Head_Item_44468
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 108
+         Item: C_Head_Item_22948
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 109
+         Item: C_Head_Item_24036
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 110
+         Item: C_Head_Item_44218
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 111
+         Item: C_Head_Item_23044
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 112
+         Item: C_Head_Item_44604
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 113
+         Item: C_Head_Item_44603
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 114
+         Item: C_Head_Item_44427
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 115
+         Item: C_Head_Item_23374
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 116
+         Item: C_Head_Item_44110
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 117
+         Item: C_Spare_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 118
+         Item: C_Head_Item_44311
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 119
+         Item: C_Head_Item_23729
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 120
+         Item: C_Head_Item_44301
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 121
+         Item: C_Head_Item_44469
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 122
+         Item: C_Head_Item_44229
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 123
+         Item: C_Head_Item_23207
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 124
+         Item: C_Head_Item_44107
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 125
+         Item: C_Head_Item_44149
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 126
+         Item: C_Head_Item_24038
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 127
+         Item: C_Head_Item_44261
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 128
+         Item: C_Head_Item_44559
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 129
+         Item: C_Head_Item_44230
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 130
+         Item: C_Head_Item_23832
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 131
+         Item: C_Head_Item_44327
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 132
+         Item: C_Head_Item_44567
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 133
+         Item: C_Decoration_Time
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 134
+         Item: C_Head_Item_22540
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 135
+         Item: C_Head_Item_44408
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 136
+         Item: C_Chicken_Bill
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 137
+         Item: Charlie_Beard
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 138
+         Item: C_Head_Item_44464
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 139
+         Item: C_Head_Item_23353_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 140
+         Item: C_Head_Item_44448
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 141
+         Item: C_Head_Item_44324
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 142
+         Item: C_Head_Item_22323
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 143
+         Item: C_Head_Item_22537
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 144
+         Item: C_Head_Item_22198
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 145
+         Item: C_Head_Item_24012
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 146
+         Item: C_Head_Item_22276
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 147
+         Item: C_Head_Item_hat01
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 148
+         Item: C_Head_Item_22274
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 149
+         Item: C_Head_Item_23752
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 150
+         Item: C_Head_Item_23753
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 151
+         Item: C_Head_Item_22150
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 152
+         Item: C_Head_Item_22293
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 153
+         Item: C_Head_Item_23516
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 154
+         Item: C_Head_Item_22379
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 155
+         Item: C_Head_Item_22194
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 156
+         Item: C_Head_Item_22520
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 157
+         Item: C_Head_Item_23367
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 158
+         Item: C_Head_Item_22542
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 159
+         Item: C_Head_Item_22681
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 160
+         Item: C_Head_Item_23368
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 161
+         Item: C_Head_Item_22682
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 162
+         Item: C_Head_Item_23779
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 163
+         Item: C_Head_Item_23825
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 164
+         Item: C_Head_Item_22867
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 165
+         Item: C_Head_Item_23895
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 166
+         Item: C_Head_Item_22517
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 167
+         Item: C_Head_Item_23785
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 168
+         Item: C_Head_Item_hat13
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 169
+         Item: C_Head_Item_22671
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 170
+         Item: C_Head_Item_23839
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 171
+         Item: C_Head_Item_22533
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 172
+         Item: C_Head_Item_22870
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 173
+         Item: C_Head_Item_a004
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 174
+         Item: C_Head_Item_22038
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 175
+         Item: C_Head_Item_24067
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 176
+         Item: C_Head_Item_22775
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 177
+         Item: C_Head_Item_22280
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 178
+         Item: C_Head_Item_22351
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 179
+         Item: C_Head_Item_22356
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 180
+         Item: C_Head_Item_44410
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 181
+         Item: C_Head_Item_44344
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 182
+         Item: C_Head_Item_44409
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 183
+         Item: C_Head_Item_a025
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 184
+         Item: Feather_Beret__
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 185
+         Item: C_Crown_of_Old_King_Red
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 186
+         Item: C_Head_Item_24032
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 187
+         Item: C_Flying_Drone
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 188
+         Item: C_Butterfly_Wings_Ear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 189
+         Item: C_Screw_Stuck_Head
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 190
+         Item: C_Head_Item_44578
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 191
+         Item: C_Head_Item_23725
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 192
+         Item: C_Head_Item_44467
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 193
+         Item: C_Mouton_Life
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 194
+         Item: C_Head_Item_23517
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 195
+         Item: C_Head_Item_23917
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 196
+         Item: C_Head_Item_44444
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 197
+         Item: C_Head_Item_44101
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 198
+         Item: C_Head_Item_44328
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 199
+         Item: C_Head_Item_44249
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 200
+         Item: C_Head_Item_23960
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 201
+         Item: C_Head_Item_44251
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 202
+         Item: C_Head_Item_44507
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 203
+         Item: C_Head_Item_44176
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 204
+         Item: C_Head_Item_44233
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 205
+         Item: C_Head_Item_44515
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 206
+         Item: C_Head_Item_44514
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 207
+         Item: C_Head_Item_23629
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 208
+         Item: C_Blessing_Sky_Lantern
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 209
+         Item: C_Head_Item_23443
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 210
+         Item: C_Head_Item_44600
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 211
+         Item: C_Head_Item_44120
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 212
+         Item: C_Head_Item_44530
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 213
+         Item: C_Head_Item_23333
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 214
+         Item: C_Head_Item_24084
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 215
+         Item: C_Head_Item_44115
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 216
+         Item: C_Head_Item_23674
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 217
+         Item: C_Head_Item_22229
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 218
+         Item: C_Mouton_Life_BL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 219
+         Item: C_Head_Item_44543
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 220
+         Item: C_Head_Item_24039
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 221
+         Item: C_Head_Item_22885
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 222
+         Item: C_Ifrit's_Ear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 223
+         Item: C_Ice_Ear_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 224
+         Item: C_Filir_Wing_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 225
+         Item: C_Eyes_Of_Darkness
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 226
+         Item: C_Head_Item_22703
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 227
+         Item: C_Head_Item_22953
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 228
+         Item: C_Head_Item_22299
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 229
+         Item: C_Head_Item_23520
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 230
+         Item: C_Head_Item_22834
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 231
+         Item: C_Head_Item_hat83
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 232
+         Item: C_Head_Item_hat85
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 233
+         Item: C_Head_Item_22298
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 234
+         Item: C_Head_Item_22993
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 235
+         Item: C_Head_Item_23771
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 236
+         Item: C_Robo_Eye
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 237
+         Item: C_Head_Item_22928
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 238
+         Item: C_Head_Item_23295
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 239
+         Item: C_Head_Item_44156
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 240
+         Item: C_New_Wave_Sunglasses
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 241
+         Item: C_Head_Item_23966
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 242
+         Item: C_Head_Item_44270
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 243
+         Item: C_Head_Item_44272
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 244
+         Item: C_Head_Item_44315
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 245
+         Item: C_Head_Item_44231
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 246
+         Item: C_Head_Item_44141
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 247
+         Item: C_Head_Item_44145
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 248
+         Item: C_Head_Item_23296
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 249
+         Item: C_Head_Item_22999_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 250
+         Item: C_Head_Item_22880
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 251
+         Item: C_Ear_Of_Angel's_Wing_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 252
+         Item: C_Ear_Of_Devil's_Wing_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 253
+         Item: C_Head_Item_23873
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 254
+         Item: C_Head_Item_23918
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 255
+         Item: C_Head_Item_23952
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 256
+         Item: C_Head_Item_23959
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 257
+         Item: C_Head_Item_23600
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 258
+         Item: C_Head_Item_23671
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 259
+         Item: C_Head_Item_22297
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 260
+         Item: C_Head_Item_22864
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 261
+         Item: C_Head_Item_22449
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 262
+         Item: C_Head_Item_22321
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 263
+         Item: C_Head_Item_22322
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 264
+         Item: C_Head_Item_23497
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 265
+         Item: C_Head_Item_22453
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 266
+         Item: C_Head_Item_23002
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 267
+         Item: C_Head_Item_23003
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 268
+         Item: C_Cyclops_Visor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 269
+         Item: C_Head_Item_22985
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 270
+         Item: C_Hawk_Eyes01
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 271
+         Item: C_Head_Item_23593
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 272
+         Item: C_Head_Item_22267
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 273
+         Item: C_Head_Item_22268
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 274
+         Item: C_Head_Item_22923
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 275
+         Item: C_Head_Item_23358
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 276
+         Item: C_Head_Item_23373
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 276
+         Item: C_Head_Item_22715
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 277
+         Item: C_Head_Item_22718
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 278
+         Item: C_Head_Item_22818
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 279
+         Item: C_Head_Item_23536
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 280
+         Item: C_Head_Item_22524
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 281
+         Item: C_Head_Item_22525
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 282
+         Item: C_Head_Item_22526
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 283
+         Item: C_Head_Item_22527
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 284
+         Item: C_Head_Item_22361
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 285
+         Item: C_Head_Item_22362
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 286
+         Item: C_Head_Item_22363
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 287
+         Item: C_Head_Item_22364
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 288
+         Item: C_Head_Item_22522
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 289
+         Item: C_Head_Item_22519
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 290
+         Item: C_Head_Item_22538
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 291
+         Item: C_Head_Item_22736
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 292
+         Item: C_Head_Item_22465
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 293
+         Item: C_Head_Item_23074
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 294
+         Item: C_Head_Item_23066
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 295
+         Item: C_Head_Item_22874
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 296
+         Item: C_Head_Item_23851
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 297
+         Item: C_Head_Item_23423
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 298
+         Item: C_Head_Item_23300
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 129
+       - Index: 299
+         Item: C_Head_Item_23955
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 300
+         Item: C_Head_Item_44125
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 301
+         Item: C_Head_Item_44211
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 302
+         Item: C_Head_Item_44179
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 303
+         Item: C_Head_Item_22236
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 304
+         Item: C_Head_Item_44332
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 305
+         Item: C_Head_Item_23202
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 306
+         Item: C_Head_Item_44345
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 307
+         Item: C_Head_Item_44417
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 308
+         Item: C_Head_Item_44325
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 309
+         Item: C_Head_Item_44263
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 310
+         Item: C_Head_Item_44213
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 311
+         Item: C_Head_Item_44221
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 312
+         Item: C_Angel_Spirit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 313
+         Item: C_Head_Item_23811
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 314
+         Item: C_Head_Item_22192
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 315
+         Item: C_Head_Item_23279
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+
+
+
+#消耗品合成箱預
+   - Name: 消耗品合成箱(披肩)
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: C_AMISTR_BAG1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: C_Kirin_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: C_MechanicWing_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: C_DevilWing_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: C_Cupid_Wing_Pink_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: C_Cupid_Wing_Skyblue_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: C_SwordWing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: C_Light_Darkness_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: C_Blue_Fairy_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 11
+         Item: C_PinkButterfly_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 12
+         Item: C_GoldButterfly_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 13
+         Item: C_Gerhard_Von_Devi_Bag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 14
+         Item: C_2018_RTC_Cape_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 15
+         Item: C_AngelRibbonWing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 16
+         Item: C_Halloween_Poring_Bag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 17
+         Item: C_HeartChocoBag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 18
+         Item: C_Valkyrie_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 19
+         Item: C_School_Bag_RD
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+
+       - Index: 21
+         Item: C_Balloon_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 22
+         Item: C_T_Bear_Bag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 23
+         Item: C_Ru_Bear_Bag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 24
+         Item: C_BlackCatBag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 25
+         Item: C_EXE_Backpack
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 26
+         Item: C_Heart_Wing_Backpack
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+
+       - Index: 28
+         Item: C_Gimmick_One_Feather
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 29
+         Item: C_Evil_Druid_Cross
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 30
+         Item: C_Bow_On_the_Back
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 31
+         Item: C_Santa_Backpack
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 32
+         Item: C_Ice_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 33
+         Item: C_Wedding_Ribbon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 34
+         Item: Wing_Of_Angel_Move_RD
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 35
+         Item: C_BlackBear_Back_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 36
+         Item: Calabash
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 37
+         Item: C_Elec_Guitar_Of_Phen
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_65002
+             Amount: 1
+
+
+
+
+
+

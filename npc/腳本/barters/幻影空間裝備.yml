@@ -1,0 +1,1105 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#幻影空間裝備
+   - Name: 幻影空間裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_JP_RINNE
+     Items:
+       - Index: 0
+         Item: Staff_Of_Bordeaux_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 30
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Staff_Of_Bordeaux
+             Amount: 1
+       - Index: 1
+         Item: Long_Mace_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 20
+           - Index: 2
+             Item: Long_Mace
+             Amount: 1
+       - Index: 2
+         Item: Moonlight_Sword_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 60
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 90
+           - Index: 2
+             Item: Moonlight_Sword
+             Amount: 1
+       - Index: 3
+         Item: Spectral_Spear_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 20
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Spectral_Spear
+             Amount: 1
+       - Index: 4
+         Item: Nurse_Cap_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Nurse_Cap
+             Amount: 1
+       - Index: 5
+         Item: Apple_Of_Archer_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Apple_Of_Archer
+             Amount: 1
+       - Index: 6
+         Item: Muffler_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Muffler_
+             Amount: 1
+       - Index: 7
+         Item: Shoes_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Shoes_
+             Amount: 1
+       - Index: 8
+         Item: Puente_Robe_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Hazy_Dream_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Puente_Robe
+             Amount: 1
+       - Index: 9
+         Item: Wizardy_Staff_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 40
+           - Index: 1
+             Item: Suspicious_Pentacle
+             Amount: 100
+           - Index: 2
+             Item: Wizardy_Staff
+             Amount: 1
+       - Index: 10
+         Item: Balistar_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Shining_Spore
+             Amount: 100
+           - Index: 2
+             Item: Balistar
+             Amount: 1
+       - Index: 11
+         Item: Infiltrator_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Torn_Paper_
+             Amount: 20
+           - Index: 2
+             Item: Infiltrator
+             Amount: 1
+       - Index: 12
+         Item: Ghoul_Leg_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Cluster_of_Nightmares
+             Amount: 100
+           - Index: 2
+             Item: Ghoul_Leg
+             Amount: 1
+       - Index: 13
+         Item: Book_Of_The_Apo_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 10
+           - Index: 1
+             Item: Cluster_of_Nightmares
+             Amount: 100
+           - Index: 2
+             Item: Book_Of_The_Apocalypse
+             Amount: 1
+       - Index: 14
+         Item: Cape_Of_Ancient_Lord_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 30
+           - Index: 1
+             Item: Short_Bat_Hair
+             Amount: 200
+           - Index: 2
+             Item: Cape_Of_Ancient_Lord_
+             Amount: 1
+       - Index: 15
+         Item: Skul_Ring_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Suspicious_Pentacle
+             Amount: 400
+           - Index: 2
+             Item: Skul_Ring_
+             Amount: 1
+       - Index: 16
+         Item: Ring_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Suspicious_Pentacle
+             Amount: 200
+           - Index: 2
+             Item: Ring_
+             Amount: 1
+       - Index: 17
+         Item: Combo_Battle_Glove_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Snowball
+             Amount: 100
+           - Index: 2
+             Item: Combo_Battle_Glove
+             Amount: 1
+       - Index: 18
+         Item: Huuma_Flutter_Snow_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Ktullanux_Eye
+             Amount: 20
+           - Index: 2
+             Item: Huuma_Fluttering_Snow
+             Amount: 1
+       - Index: 19
+         Item: Cap_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Frozen_Stone_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Cap_
+             Amount: 1
+       - Index: 20
+         Item: Illusion_Survivor_Manteau
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Frozen_Stone_Fragment
+             Amount: 100
+           - Index: 2
+             Item: Clack_Of_Servival
+             Amount: 1
+       - Index: 21
+         Item: Herald_Of_GOD_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Spirit_Jewel
+             Amount: 300
+           - Index: 2
+             Item: Herald_Of_GOD_
+             Amount: 1
+       - Index: 22
+         Item: Illusion_Immaterial_Sword
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: ShipsLog
+             Amount: 50
+           - Index: 2
+             Item: Immaterial_Sword
+             Amount: 1
+       - Index: 23
+         Item: Illusion_War_Axe
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Piece_of_Black_Horn
+             Amount: 200
+           - Index: 2
+             Item: War_Axe
+             Amount: 1
+       - Index: 24
+         Item: Illusion_Pole_Axe
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Piece_of_Black_Horn
+             Amount: 200
+           - Index: 2
+             Item: Pole_Axe
+             Amount: 1
+       - Index: 25
+         Item: Illusion_Wing_Shuriken
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Old_Shell
+             Amount: 200
+           - Index: 2
+             Item: Huuma_Bird_Wing
+             Amount: 1
+       - Index: 26
+         Item: Illusion_Iron_Driver
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Old_Shell
+             Amount: 200
+           - Index: 2
+             Item: Iron_Driver
+             Amount: 1
+       - Index: 27
+         Item: Illusion_Fancy_Flower
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Fine_Old_Doll
+             Amount: 200
+           - Index: 2
+             Item: Fancy_Flower
+             Amount: 1
+       - Index: 28
+         Item: Illusion_Gate_Keeper_DD
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 75
+           - Index: 1
+             Item: NasariansSoulstone
+             Amount: 150
+           - Index: 2
+             Item: Gate_KeeperDD
+             Amount: 1
+       - Index: 29
+         Item: Illusion_Counter_Dagger
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 75
+           - Index: 1
+             Item: Chonchon_Doll_HQ
+             Amount: 50
+           - Index: 2
+             Item: Gate_KeeperDD
+             Amount: 1
+       - Index: 30
+         Item: Illusion_Survivor's_Staff
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 125
+           - Index: 1
+             Item: Chonchon_Doll_HQ
+             Amount: 100
+           - Index: 2
+             Item: Survival_Rod_
+             Amount: 1
+       - Index: 31
+         Item: Illusion_Boots
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Gothic_China_Doll
+             Amount: 50
+           - Index: 2
+             Item: Boots_
+             Amount: 1
+       - Index: 32
+         Item: Illusion_Hot_blooded_Headband
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 85
+           - Index: 1
+             Item: NasariansSoulstone
+             Amount: 150
+           - Index: 2
+             Item: Headband_Of_Power
+             Amount: 1
+       - Index: 33
+         Item: Illusion_Tablet
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 50
+           - Index: 1
+             Item: Weak_Worm
+             Amount: 100
+           - Index: 2
+             Item: Tablet
+             Amount: 1
+       - Index: 34
+         Item: Illusion_Hunter_Bow
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Shooting_Stone
+             Amount: 50
+           - Index: 2
+             Item: Pot_Stone
+             Amount: 50
+           - Index: 3
+             Item: Hunter_Bow_
+             Amount: 1
+       - Index: 35
+         Item: Illusion_Goibne_Helm
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Wootan_D_S_Piece
+             Amount: 30
+           - Index: 2
+             Item: Token_Of_Wootan
+             Amount: 50
+           - Index: 3
+             Item: Hunter_Bow_
+             Amount: 1
+       - Index: 36
+         Item: Illusion_Goibne_Armor
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Hard_Mud
+             Amount: 100
+           - Index: 2
+             Item: Token_Of_Bigstone
+             Amount: 150
+           - Index: 3
+             Item: Goibne's_Armor
+             Amount: 1
+       - Index: 37
+         Item: Illusion_Goibne's_Greaves
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 80
+           - Index: 1
+             Item: Wootan_F_Fur
+             Amount: 100
+           - Index: 2
+             Item: Token_Of_Wootan
+             Amount: 150
+           - Index: 3
+             Item: Goibne's_Combat_Boots
+             Amount: 1
+       - Index: 38
+         Item: Illusion_Goibne_Spaulders
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Fragment_Of_Rock
+             Amount: 30
+           - Index: 2
+             Item: Token_Of_Bigstone
+             Amount: 150
+           - Index: 3
+             Item: Goibne's_Shoulder_Arms
+             Amount: 1
+       - Index: 38
+         Item: Illusion_Butcher
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Delicious_Juice
+             Amount: 150
+           - Index: 2
+             Item: Butcher_
+             Amount: 1
+       - Index: 39
+         Item: Illusion_Tae_Goo_Lyeon
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Short_Rope
+             Amount: 150
+           - Index: 2
+             Item: Tae_Goo_Lyeon
+             Amount: 1
+       - Index: 40
+         Item: Illusion_Gold_Lux
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Snake_Deadly_Poison
+             Amount: 150
+           - Index: 2
+             Item: Gold_Lux
+             Amount: 1
+       - Index: 41
+         Item: Illusion_Bazerald
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Mantis_Flower
+             Amount: 150
+           - Index: 2
+             Item: Bazerald
+             Amount: 1
+       - Index: 42
+         Item: Illusion_Morpheus's_Hood
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Soft_Scarf
+             Amount: 100
+           - Index: 2
+             Item: Brilliant_Jelly
+             Amount: 50
+           - Index: 3
+             Item: Morpheus's_Hood
+             Amount: 1
+       - Index: 43
+         Item: Illusion_Morpheus's_Shawl
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: Brilliant_Jelly
+             Amount: 100
+           - Index: 2
+             Item: Medicinal_Stuff
+             Amount: 50
+           - Index: 3
+             Item: Morpheus's_Shawl
+             Amount: 1
+       - Index: 44
+         Item: Illusion_Morpheus's_Ring
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: Purple_Solid_Shell
+             Amount: 100
+           - Index: 2
+             Item: Little_Lovely_Candle
+             Amount: 50
+           - Index: 3
+             Item: Essence_Of_Demon
+             Amount: 15
+           - Index: 4
+             Item: Morpheus's_Ring
+             Amount: 1
+       - Index: 45
+         Item: Illusion_Morpheus's_Bracelet
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: Suspicious_Sap
+             Amount: 100
+           - Index: 2
+             Item: Small_Flashlight
+             Amount: 50
+           - Index: 3
+             Item: Essence_Of_Demon
+             Amount: 15
+           - Index: 4
+             Item: Morpheus's_Armlet
+             Amount: 1
+       - Index: 46
+         Item: Electronic_Guitar_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25895
+             Amount: 150
+           - Index: 2
+             Item: Electronic_Guitar
+             Amount: 1
+       - Index: 47
+         Item: Electric_Eel_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25895
+             Amount: 150
+           - Index: 2
+             Item: Electric_Eel
+             Amount: 1
+       - Index: 48
+         Item: Death_Guidance_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25894
+             Amount: 150
+           - Index: 2
+             Item: Death_Guidance
+             Amount: 1
+       - Index: 49
+         Item: KatarOfCold_Icicle_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25896
+             Amount: 150
+           - Index: 2
+             Item: Katar_Of_Cold_Icicle_
+             Amount: 1
+       - Index: 50
+         Item: Brionac_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25893
+             Amount: 150
+           - Index: 2
+             Item: Brionac
+             Amount: 1
+       - Index: 51
+         Item: Zephyrus_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: aegis_25892
+             Amount: 150
+           - Index: 2
+             Item: Zephyrus_
+             Amount: 1
+       - Index: 52
+         Item: Morrigane's_Helm_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 50
+           - Index: 2
+             Item: aegis_25896
+             Amount: 100
+           - Index: 3
+             Item: Morrigane's_Helm
+             Amount: 1
+       - Index: 53
+         Item: Saint_Robe_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 90
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 20
+           - Index: 2
+             Item: aegis_25893
+             Amount: 100
+           - Index: 3
+             Item: Saint_Robe_
+             Amount: 1
+       - Index: 54
+         Item: Water_Sprits_Armor_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 90
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 20
+           - Index: 2
+             Item: aegis_25896
+             Amount: 100
+           - Index: 3
+             Item: Water_Sprits_Armor_
+             Amount: 1
+       - Index: 55
+         Item: Chain_Mail_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 90
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 20
+           - Index: 2
+             Item: aegis_25895
+             Amount: 100
+           - Index: 3
+             Item: Chain_Mail_
+             Amount: 1
+       - Index: 56
+         Item: Morrigane's_Manteau_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 50
+           - Index: 2
+             Item: aegis_25894
+             Amount: 100
+           - Index: 3
+             Item: Morrigane's_Manteau
+             Amount: 1
+       - Index: 57
+         Item: Morrigane's_Belt_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 50
+           - Index: 2
+             Item: aegis_25893
+             Amount: 100
+           - Index: 3
+             Item: Morrigane's_Belt
+             Amount: 1
+       - Index: 58
+         Item: Morrigane's_Pendant_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: E_Abyss1
+             Amount: 50
+           - Index: 2
+             Item: aegis_25892
+             Amount: 100
+           - Index: 3
+             Item: Morrigane's_Pendant
+             Amount: 1
+#幻影螞蟻洞穴
+       - Index: 59
+         Item: Sprint_Mail_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: IL_Twins_Hat
+             Amount: 55
+           - Index: 2
+             Item: IL_Twins_Fur
+             Amount: 125
+           - Index: 3
+             Item: Sprint_Mail
+             Amount: 1
+             Refine: 9
+       - Index: 60
+         Item: Sprint_Shoes_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: IL_Twins_Leg
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Shovel
+             Amount: 75
+           - Index: 3
+             Item: Sprint_Shoes
+             Amount: 1
+             Refine: 9
+       - Index: 61
+         Item: Thorn_Staff_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 135
+           - Index: 1
+             Item: IL_Twins_Fang
+             Amount: 75
+           - Index: 2
+             Item: IL_Twins_Shovel
+             Amount: 75
+           - Index: 3
+             Item: Thorn_Staff
+             Amount: 1
+             Refine: 9
+       - Index: 62
+         Item: Gelerdria_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 150
+           - Index: 1
+             Item: IL_Twins_Feeler
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Hat
+             Amount: 55
+           - Index: 3
+             Item: Gelerdria
+             Amount: 1
+             Refine: 9
+       - Index: 63
+         Item: Excalibur_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 135
+           - Index: 1
+             Item: IL_Twins_Fang
+             Amount: 75
+           - Index: 2
+             Item: IL_Twins_Acid
+             Amount: 75
+           - Index: 3
+             Item: Excalibur
+             Amount: 1
+             Refine: 9
+       - Index: 64
+         Item: Doom_Slayer_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 150
+           - Index: 1
+             Item: IL_Twins_Leg
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Acid
+             Amount: 75
+           - Index: 3
+             Item: Doom_Slayer
+             Amount: 1
+             Refine: 9
+       - Index: 65
+         Item: Ancient_Dagger_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 150
+           - Index: 1
+             Item: IL_Twins_Fur
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Fang
+             Amount: 75
+           - Index: 3
+             Item: Ancient_Dagger
+             Amount: 1
+             Refine: 9
+       - Index: 66
+         Item: Guard_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: IL_Twins_Fur
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Feeler
+             Amount: 75
+           - Index: 3
+             Item: Guard
+             Amount: 1
+             Refine: 9
+       - Index: 67
+         Item: Siver_Guard_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 100
+           - Index: 1
+             Item: IL_Twins_Feeler
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Fang
+             Amount: 55
+           - Index: 3
+             Item: Silver_Guard
+             Amount: 1
+             Refine: 9
+       - Index: 68
+         Item: Sprint_Ring_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: IL_Twins_Feeler
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Acid
+             Amount: 75
+           - Index: 3
+             Item: Sprint_Ring
+             Amount: 1
+       - Index: 69
+         Item: Sprint_Glove_IL
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Stone
+             Amount: 120
+           - Index: 1
+             Item: IL_Twins_Fur
+             Amount: 125
+           - Index: 2
+             Item: IL_Twins_Fang
+             Amount: 55
+           - Index: 3
+             Item: Sprint_Glove
+             Amount: 1

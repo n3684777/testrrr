@@ -1,0 +1,655 @@
+//====================================================//
+//====================================================//
+//==製作人 : 陳小修 (SkyTwo) 　　　　　　Eathena　　==//
+//==更新日期 : 西元 2008/06/03　　　　　　　Script　==//
+//==腳本版號 : 繁體中文 v1.0 正式版　　　　　　　　 ==//
+//==腳本名稱 : 製作系統　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==腳本出處 : http://srogm.no-ip.info/forum　　　　==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==資料來源 : 台灣仙境傳說官方網站　　　　　　　　 ==//
+//==　　　　　 天野幻境　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==各位大哥大姐轉載請保留以上，萬分感激。　　　　　==//
+//====================================================//
+//====================================================//
+
+function	script	Quests_Head25	{
+
+	mes "[製作系統]";
+	mes "^FF0000No^000000 　　 ^0000FFName^000000";
+	mes "^FF000001^000000 製作 ^0000FF"+getitemname(2214)+"^000000";
+	mes "^FF000002^000000 製作 ^0000FF"+getitemname(2272)+"^000000";
+	mes "^FF000003^000000 製作 ^0000FF"+getitemname(2273)+"^000000";
+	mes "^FF000004^000000 製作 ^0000FF"+getitemname(2278)+"^000000";
+	mes "^FF000005^000000 製作 ^0000FF"+getitemname(2280)+"^000000";
+	mes "^FF000006^000000 製作 ^0000FF"+getitemname(2281)+"^000000";
+	mes "^FF000007^000000 製作 ^0000FF"+getitemname(2283)+"^000000";
+	mes "^FF000008^000000 製作 ^0000FF"+getitemname(2284)+"^000000";
+	mes "^FF000009^000000 製作 ^0000FF"+getitemname(2292)+"^000000";
+	mes "^FF000010^000000 製作 ^0000FF"+getitemname(2293)+"^000000";
+	mes "^FF000011^000000 製作 ^0000FF"+getitemname(2296)+"^000000";
+	mes "^FF000012^000000 製作 ^0000FF"+getitemname(5001)+"^000000";
+	mes "^FF000013^000000 製作 ^0000FF"+getitemname(5004)+"^000000";
+	mes "^FF000014^000000 製作 ^0000FF"+getitemname(5012)+"^000000";
+	mes "^FF000015^000000 製作 ^0000FF"+getitemname(5016)+"^000000";
+	mes "^FF000016^000000 製作 ^0000FF"+getitemname(5018)+"^000000";
+	next;
+	dispbottom "請輸入您要製作編號!!";
+	input .@QHItem;
+	if ( .@QHItem < 1  || .@QHItem > 16 ) {
+	dispbottom "您輸入的編號不正確!!";	close;	}
+	switch(.@QHItem) {
+case 1:
+	setarray .@QH1[1],2214,706,722,949,2213;
+	setarray .@QH2[1],1,1,1,100,1;
+	break;
+case 2:
+	setarray .@QH1[1],2272,983,1019;
+	setarray .@QH2[1],1,1,50;
+	set .@QHZeny,91100;
+	break;
+case 3:
+	setarray .@QH1[1],2273,733,998,2275;
+	setarray .@QH2[1],1,1,50,1;
+	set .@QHZeny,3500;
+	break;
+case 4:
+	setarray .@QH1[1],2278,705,909,914;
+	setarray .@QH2[1],1,10,10,10;
+	break;
+case 5:
+	setarray .@QH1[1],2280,1019;
+	setarray .@QH2[1],1,120;
+	set .@QHZeny,10000;
+	break;
+case 6:
+	setarray .@QH1[1],2281,707,999;
+	setarray .@QH2[1],1,1,20;
+	set .@QHZeny,5000;
+	break;
+case 7:
+	setarray .@QH1[1],2283,724,949,5001;
+	setarray .@QH2[1],1,1,200,1;
+	set .@QHZeny,5000;
+	break;
+case 8:
+	setarray .@QH1[1],2284,923;
+	setarray .@QH2[1],1,20;
+	break;
+case 9:
+	setarray .@QH1[1],2292,999;
+	setarray .@QH2[1],1,50;
+	set .@QHZeny,2000;
+	break;
+case 10:
+	setarray .@QH1[1],2293,1049;
+	setarray .@QH2[1],1,4;
+	break;
+case 11:
+	setarray .@QH1[1],2296,999,2243;
+	setarray .@QH2[1],1,100,1;
+	set .@QHZeny,50000;
+	break;
+case 12:
+	setarray .@QH1[1],5001,970,984,999,1003;
+	setarray .@QH2[1],1,1,1,40,1;
+	set .@QHZeny,2000;
+	break;
+case 13:
+	setarray .@QH1[1],5004,701;
+	setarray .@QH2[1],1,5;
+	break;
+case 14:
+	setarray .@QH1[1],5012,703,704,708,710;
+	setarray .@QH2[1],1,1,1,1,1;
+	break;
+case 15:
+	setarray .@QH1[1],5016,1030;
+	setarray .@QH2[1],1,10;
+	break;
+case 16:
+	setarray .@QH1[1],5018,916,2247;
+	setarray .@QH2[1],1,300,1;
+	set .@QHZeny,500;
+	break;	}
+
+	mes "[製作系統][^FF0000"+.@QHItem+"^000000]";
+	mes "製作 ^0000FF"+getitemname(.@QH1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QH1[2])+" "+.@QH2[2]+"^000000 個";
+	if ( .@QH1[3] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[3])+" "+.@QH2[3]+"^000000 個";
+	if ( .@QH1[4] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[4])+" "+.@QH2[4]+"^000000 個";
+	if ( .@QH1[5] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[5])+" "+.@QH2[5]+"^000000 個";
+	if ( .@QHZeny != 0 ) mes "　和 ^FF0000金錢 "+.@QHZeny+"^000000 z";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Head25";	end;	}
+	if ( countitem(.@QH1[2]) < .@QH2[2] ) { set .@No_Item,1; }
+	if ( .@QH1[3] != 0 ) {
+	if ( countitem(.@QH1[3]) < .@QH2[3] ) { set .@No_Item,1; }	}
+	if ( .@QH1[4] != 0 ) {
+	if ( countitem(.@QH1[4]) < .@QH2[4] ) { set .@No_Item,1; }	}
+	if ( .@QH1[5] != 0 ) {
+	if ( countitem(.@QH1[5]) < .@QH2[5] ) { set .@No_Item,1; }	}
+	if ( .@QHZeny != 0 && Zeny < .@QHZeny ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QH1[2],.@QH2[2];
+	if ( .@QH1[3] != 0 ) delitem .@QH1[3],.@QH2[3];
+	if ( .@QH1[4] != 0 ) delitem .@QH1[4],.@QH2[4];
+	if ( .@QH1[5] != 0 ) delitem .@QH1[5],.@QH2[5];
+	if ( .@QHZeny != 0 ) set Zeny,Zeny - .@QHZeny;
+	getitem .@QH1[1],.@QH2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QH1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Head40	{
+
+	mes "[製作系統]";
+	mes "^FF0000No^000000 　　 ^0000FFName^000000";
+	mes "^FF000001^000000 製作 ^0000FF"+getitemname(5021)+"^000000";
+	mes "^FF000002^000000 製作 ^0000FF"+getitemname(5022)+"^000000";
+	mes "^FF000003^000000 製作 ^0000FF"+getitemname(5023)+"^000000";
+	mes "^FF000004^000000 製作 ^0000FF"+getitemname(5024)+"^000000";
+	mes "^FF000005^000000 製作 ^0000FF"+getitemname(5025)+"^000000";
+	mes "^FF000006^000000 製作 ^0000FF"+getitemname(5026)+"^000000";
+	mes "^FF000007^000000 製作 ^0000FF"+getitemname(5027)+"^000000";
+	mes "^FF000008^000000 製作 ^0000FF"+getitemname(5028)+"^000000";
+	mes "^FF000009^000000 製作 ^0000FF"+getitemname(5029)+"^000000";
+	mes "^FF000010^000000 製作 ^0000FF"+getitemname(5031)+"^000000";
+	mes "^FF000011^000000 製作 ^0000FF"+getitemname(5032)+"^000000";
+	mes "^FF000012^000000 製作 ^0000FF"+getitemname(5033)+"^000000";
+	mes "^FF000013^000000 製作 ^0000FF"+getitemname(5034)+"^000000";
+	mes "^FF000014^000000 製作 ^0000FF"+getitemname(5036)+"^000000";
+	mes "^FF000015^000000 製作 ^0000FF"+getitemname(5038)+"^000000";
+	mes "^FF000016^000000 製作 ^0000FF"+getitemname(5039)+"^000000";
+	mes "^FF000017^000000 製作 ^0000FF"+getitemname(5040)+"^000000";
+	mes "^FF000018^000000 製作 ^0000FF"+getitemname(5041)+"^000000";
+	mes "^FF000019^000000 製作 ^0000FF"+getitemname(5042)+"^000000";
+	mes "^FF000020^000000 製作 ^0000FF"+getitemname(5043)+"^000000";
+	mes "^FF000021^000000 製作 ^0000FF"+getitemname(5045)+"^000000";
+	mes "^FF000022^000000 製作 ^0000FF"+getitemname(5047)+"^000000";
+	mes "^FF000023^000000 製作 ^0000FF"+getitemname(5048)+"^000000";
+	mes "^FF000024^000000 製作 ^0000FF"+getitemname(5049)+"^000000";
+	mes "^FF000025^000000 製作 ^0000FF"+getitemname(5050)+"^000000";
+	mes "^FF000026^000000 製作 ^0000FF"+getitemname(5052)+"^000000";
+	next;
+	dispbottom "請輸入您要製作編號!!";
+	input .@QHItem;
+	if ( .@QHItem < 1  || .@QHItem > 26 ) {
+	dispbottom "您輸入的編號不正確!!";	close;	}
+	switch(.@QHItem) {
+case 1:
+	setarray .@QH1[1],5021,938,949,969,999,2233;
+	setarray .@QH2[1],1,800,80,1,20,1;
+	break;
+case 2:
+	setarray .@QH1[1],5022,969,984,999,1003,7086;
+	setarray .@QH2[1],1,10,2,40,50,1;
+	break;
+case 3:
+	setarray .@QH1[1],5023,907,978,1059;
+	setarray .@QH2[1],1,100,1,150;
+	break;
+case 4:
+	setarray .@QH1[1],5024,529,530,538,539,999;
+	setarray .@QH2[1],1,10,5,15,20,10;
+	break;
+case 5:
+	setarray .@QH1[1],5025,2229,2254,7036;
+	setarray .@QH2[1],1,1,1,5;
+	break;
+case 6:
+	setarray .@QH1[1],5026,539,949,982,1036;
+	setarray .@QH2[1],1,120,330,1,450;
+	break;
+case 7:
+	setarray .@QH1[1],5027,1036,2252,4052,7001;
+	setarray .@QH2[1],1,400,1,1,50;
+	break;
+case 8:
+	setarray .@QH1[1],5028,526,2279,7035;
+	setarray .@QH2[1],1,100,1,50;
+	break;
+case 9:
+	setarray .@QH1[1],5029,1015,7033,7068;
+	setarray .@QH2[1],1,1,850,300;
+	break;
+case 10:
+	setarray .@QH1[1],5031,747,999,5009,5028;
+	setarray .@QH2[1],1,1,25,1,1;
+	break;
+case 11:
+	setarray .@QH1[1],5032,1059,2221,2227,7063;
+	setarray .@QH2[1],1,250,1,1,600;
+	break;
+case 12:
+	setarray .@QH1[1],5033,906,1036,2213,7065;
+	setarray .@QH2[1],1,200,20,1,300;
+	break;
+case 13:
+	setarray .@QH1[1],5034,746,2233;
+	setarray .@QH2[1],1,20,1;
+	break;
+case 14:
+	setarray .@QH1[1],5036,2608,7069;
+	setarray .@QH2[1],1,1,500;
+	break;
+case 15:
+	setarray .@QH1[1],5038,1038,7048;
+	setarray .@QH2[1],1,600,40;
+	break;
+case 16:
+	setarray .@QH1[1],5039,978,5015,7030;
+	setarray .@QH2[1],1,1,1,50;
+	break;
+case 17:
+	setarray .@QH1[1],5040,7047;
+	setarray .@QH2[1],1,100;
+	break;
+case 18:
+	setarray .@QH1[1],5041,7013;
+	setarray .@QH2[1],1,1200;
+	break;
+case 19:
+	setarray .@QH1[1],5042,968,10007;
+	setarray .@QH2[1],1,50,1;
+	break;
+case 20:
+	setarray .@QH1[1],5043,1048,2281;
+	setarray .@QH2[1],1,50,1;
+	break;
+case 21:
+	setarray .@QH1[1],5045,943,1054,2252;
+	setarray .@QH2[1],1,1200,450,1;
+	break;
+case 22:
+	setarray .@QH1[1],5047,975,2271;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 23:
+	setarray .@QH1[1],5048,999,5041;
+	setarray .@QH2[1],1,10,1;
+	break;
+case 24:
+	setarray .@QH1[1],5049,1099;
+	setarray .@QH2[1],1,1500;
+	break;
+case 25:
+	setarray .@QH1[1],5050,5037,7064;
+	setarray .@QH2[1],1,1,500;
+	break;
+case 26:
+	setarray .@QH1[1],5052,978,2211,7003;
+	setarray .@QH2[1],1,1,1,300;
+	break;	}
+
+	mes "[製作系統][^FF0000"+.@QHItem+"^000000]";
+	mes "製作 ^0000FF"+getitemname(.@QH1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QH1[2])+" "+.@QH2[2]+"^000000 個";
+	if ( .@QH1[3] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[3])+" "+.@QH2[3]+"^000000 個";
+	if ( .@QH1[4] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[4])+" "+.@QH2[4]+"^000000 個";
+	if ( .@QH1[5] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[5])+" "+.@QH2[5]+"^000000 個";
+	if ( .@QH1[6] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[6])+" "+.@QH2[6]+"^000000 個";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Head40";	end;	}
+	if ( countitem(.@QH1[2]) < .@QH2[2] ) { set .@No_Item,1; }
+	if ( .@QH1[3] != 0 ) {
+	if ( countitem(.@QH1[3]) < .@QH2[3] ) { set .@No_Item,1; }	}
+	if ( .@QH1[4] != 0 ) {
+	if ( countitem(.@QH1[4]) < .@QH2[4] ) { set .@No_Item,1; }	}
+	if ( .@QH1[5] != 0 ) {
+	if ( countitem(.@QH1[5]) < .@QH2[5] ) { set .@No_Item,1; }	}
+	if ( .@QH1[6] != 0 ) {
+	if ( countitem(.@QH1[6]) < .@QH2[6] ) { set .@No_Item,1; }	}
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QH1[2],.@QH2[2];
+	if ( .@QH1[3] != 0 ) delitem .@QH1[3],.@QH2[3];
+	if ( .@QH1[4] != 0 ) delitem .@QH1[4],.@QH2[4];
+	if ( .@QH1[5] != 0 ) delitem .@QH1[5],.@QH2[5];
+	if ( .@QH1[6] != 0 ) delitem .@QH1[6],.@QH2[6];
+	getitem .@QH1[1],.@QH2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QH1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Head80	{
+
+	mes "[製作系統]";
+	mes "^FF0000No^000000 　　 ^0000FFName^000000";
+	mes "^FF000001^000000 製作 ^0000FF"+getitemname(5057)+"^000000";
+	mes "^FF000002^000000 製作 ^0000FF"+getitemname(5058)+"^000000";
+	mes "^FF000003^000000 製作 ^0000FF"+getitemname(5059)+"^000000";
+	mes "^FF000004^000000 製作 ^0000FF"+getitemname(5060)+"^000000";
+	mes "^FF000005^000000 製作 ^0000FF"+getitemname(5061)+"^000000";
+	mes "^FF000006^000000 製作 ^0000FF"+getitemname(5062)+"^000000";
+	mes "^FF000007^000000 製作 ^0000FF"+getitemname(5063)+"^000000";
+	mes "^FF000008^000000 製作 ^0000FF"+getitemname(5064)+"^000000";
+	mes "^FF000009^000000 製作 ^0000FF"+getitemname(5065)+"^000000";
+	mes "^FF000010^000000 製作 ^0000FF"+getitemname(5067)+"^000000";
+	mes "^FF000011^000000 製作 ^0000FF"+getitemname(5068)+"^000000";
+	mes "^FF000012^000000 製作 ^0000FF"+getitemname(5069)+"^000000";
+	mes "^FF000013^000000 製作 ^0000FF"+getitemname(5070)+"^000000";
+	mes "^FF000014^000000 製作 ^0000FF"+getitemname(5071)+"^000000";
+	mes "^FF000015^000000 製作 ^0000FF"+getitemname(5073)+"^000000";
+	mes "^FF000016^000000 製作 ^0000FF"+getitemname(5074)+"^000000";
+	mes "^FF000017^000000 製作 ^0000FF"+getitemname(5075)+"^000000";
+	mes "^FF000018^000000 製作 ^0000FF"+getitemname(5076)+"^000000";
+	mes "^FF000019^000000 製作 ^0000FF"+getitemname(5077)+"^000000";
+	mes "^FF000020^000000 製作 ^0000FF"+getitemname(5078)+"^000000";
+	mes "^FF000021^000000 製作 ^0000FF"+getitemname(5079)+"^000000";
+	mes "^FF000022^000000 製作 ^0000FF"+getitemname(5080)+"^000000";
+	mes "^FF000023^000000 製作 ^0000FF"+getitemname(5081)+"^000000";
+	mes "^FF000024^000000 製作 ^0000FF"+getitemname(5082)+"^000000";
+	mes "^FF000025^000000 製作 ^0000FF"+getitemname(5083)+"^000000";
+	mes "^FF000026^000000 製作 ^0000FF"+getitemname(5084)+"^000000";
+	mes "^FF000027^000000 製作 ^0000FF"+getitemname(5086)+"^000000";
+	mes "^FF000028^000000 製作 ^0000FF"+getitemname(5091)+"^000000";
+	mes "^FF000029^000000 製作 ^0000FF"+getitemname(5094)+"^000000";
+	next;
+	dispbottom "請輸入您要製作編號!!";
+	input .@QHItem;
+	if ( .@QHItem < 1  || .@QHItem > 29 ) {
+	dispbottom "您輸入的編號不正確!!";	close;	}
+	switch(.@QHItem) {
+case 1:
+	setarray .@QH1[1],5057,914,983,2213;
+	setarray .@QH2[1],1,200,1,1;
+	set .@QHZeny,10000;
+	break;
+case 2:
+	setarray .@QH1[1],5058,983,2233,7206;
+	setarray .@QH2[1],1,1,1,300;
+	break;
+case 3:
+	setarray .@QH1[1],5059,5030,7161,7213,7217;
+	setarray .@QH2[1],1,1,300,100,100;
+	break;
+case 4:
+	setarray .@QH1[1],5060,2236,7111,7151;
+	setarray .@QH2[1],1,1,100,100;
+	break;
+case 5:
+	setarray .@QH1[1],5061,999,2269;
+	setarray .@QH2[1],1,10,1;
+	set .@QHZeny,20000;
+	break;
+case 6:
+	setarray .@QH1[1],5062,2280,7150,7197;
+	setarray .@QH2[1],1,1,300,300;
+	break;
+case 7:
+	setarray .@QH1[1],5063,930,970;
+	setarray .@QH2[1],1,500,1;
+	break;
+case 8:
+	setarray .@QH1[1],5064,945,7030;
+	setarray .@QH2[1],1,600,1;
+	break;
+case 9:
+	setarray .@QH1[1],5065,544,624,938,959,1023;
+	setarray .@QH2[1],1,50,1,100,300,1;
+	break;
+case 10:
+	setarray .@QH1[1],5067,952,1907,5062;
+	setarray .@QH2[1],1,50,1,1;
+	break;
+case 11:
+	setarray .@QH1[1],5068,2255,2286;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 12:
+	setarray .@QH1[1],5069,1022;
+	setarray .@QH2[1],1,999;
+	break;
+case 13:
+	setarray .@QH1[1],5070,982,2211,7047,7097;
+	setarray .@QH2[1],1,1,1,300,300;
+	break;
+case 14:
+	setarray .@QH1[1],5071,5010,5049,7101;
+	setarray .@QH2[1],1,1,1,10;
+	set .@QHZeny,10000;
+	break;
+case 15:
+	setarray .@QH1[1],5073,1550,2285;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 16:
+	setarray .@QH1[1],5074,2254,2286;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 17:
+	setarray .@QH1[1],5075,2248,7030,7120,7194;
+	setarray .@QH2[1],1,1,108,4,108;
+	break;
+case 18:
+	setarray .@QH1[1],5076,7038;
+	setarray .@QH2[1],1,500;
+	break;
+case 19:
+	setarray .@QH1[1],5077,975,2278;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 20:
+	setarray .@QH1[1],5078,5033,5064;
+	setarray .@QH2[1],1,1,1;
+	break;
+case 21:
+	setarray .@QH1[1],5079,2294,7220;
+	setarray .@QH2[1],1,1,400;
+	break;
+case 22:
+	setarray .@QH1[1],5080,714,969,10006;
+	setarray .@QH2[1],1,1,3,1;
+	set .@QHZeny,20000;
+	break;
+case 23:
+	setarray .@QH1[1],5081,714,969,2249;
+	setarray .@QH2[1],1,1,3,1;
+	set .@QHZeny,20000;
+	break;
+case 24:
+	setarray .@QH1[1],5082,921;
+	setarray .@QH2[1],1,300;
+	break;
+case 25:
+	setarray .@QH1[1],5083,2208,2244,10007;
+	setarray .@QH2[1],1,1,1,1;
+	break;
+case 26:
+	setarray .@QH1[1],5084,945,1026,7065;
+	setarray .@QH2[1],1,10,1000,100;
+	break;
+case 27:
+	setarray .@QH1[1],5086,1095,2288;
+	setarray .@QH2[1],1,3000,1;
+	break;
+case 28:
+	setarray .@QH1[1],5091,714,969,10016;
+	setarray .@QH2[1],1,1,3,1;
+	set .@QHZeny,20000;
+	break;
+case 29:
+	setarray .@QH1[1],5094,909,931,968;
+	setarray .@QH2[1],1,1000,1000,100;
+	break;	}
+
+	mes "[製作系統][^FF0000"+.@QHItem+"^000000]";
+	mes "製作 ^0000FF"+getitemname(.@QH1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QH1[2])+" "+.@QH2[2]+"^000000 個";
+	if ( .@QH1[3] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[3])+" "+.@QH2[3]+"^000000 個";
+	if ( .@QH1[4] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[4])+" "+.@QH2[4]+"^000000 個";
+	if ( .@QH1[5] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[5])+" "+.@QH2[5]+"^000000 個";
+	if ( .@QH1[6] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[6])+" "+.@QH2[6]+"^000000 個";
+	if ( .@QH1[7] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[7])+" "+.@QH2[7]+"^000000 個";
+	if ( .@QHZeny != 0 ) mes "　和 ^FF0000金錢 "+.@QHZeny+"^000000 z";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Head80";	end;	}
+	if ( countitem(.@QH1[2]) < .@QH2[2] ) { set .@No_Item,1; }
+	if ( .@QH1[3] != 0 ) {
+	if ( countitem(.@QH1[3]) < .@QH2[3] ) { set .@No_Item,1; }	}
+	if ( .@QH1[4] != 0 ) {
+	if ( countitem(.@QH1[4]) < .@QH2[4] ) { set .@No_Item,1; }	}
+	if ( .@QH1[5] != 0 ) {
+	if ( countitem(.@QH1[5]) < .@QH2[5] ) { set .@No_Item,1; }	}
+	if ( .@QH1[6] != 0 ) {
+	if ( countitem(.@QH1[6]) < .@QH2[6] ) { set .@No_Item,1; }	}
+	if ( .@QH1[7] != 0 ) {
+	if ( countitem(.@QH1[7]) < .@QH2[7] ) { set .@No_Item,1; }	}
+	if ( .@QHZeny != 0 && Zeny < .@QHZeny ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QH1[2],.@QH2[2];
+	if ( .@QH1[3] != 0 ) delitem .@QH1[3],.@QH2[3];
+	if ( .@QH1[4] != 0 ) delitem .@QH1[4],.@QH2[4];
+	if ( .@QH1[5] != 0 ) delitem .@QH1[5],.@QH2[5];
+	if ( .@QH1[6] != 0 ) delitem .@QH1[6],.@QH2[6];
+	if ( .@QH1[7] != 0 ) delitem .@QH1[7],.@QH2[7];
+	if ( .@QHZeny != 0 ) set Zeny,Zeny - .@QHZeny;
+	getitem .@QH1[1],.@QH2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QH1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Head111	{
+
+	mes "[製作系統]";
+	mes "^FF0000No^000000 　　 ^0000FFName^000000";
+	mes "^FF000001^000000 製作 ^0000FF"+getitemname(5107)+"^000000";
+	mes "^FF000002^000000 製作 ^0000FF"+getitemname(5108)+"^000000";
+	mes "^FF000003^000000 製作 ^0000FF"+getitemname(5109)+"^000000";
+	mes "^FF000004^000000 製作 ^0000FF"+getitemname(5110)+"^000000";
+	mes "^FF000005^000000 製作 ^0000FF"+getitemname(5115)+"^000000";
+	mes "^FF000006^000000 製作 ^0000FF"+getitemname(5117)+"^000000";
+	mes "^FF000007^000000 製作 ^0000FF"+getitemname(5121)+"^000000";
+	mes "^FF000008^000000 製作 ^0000FF"+getitemname(5169)+"^000000";
+	mes "^FF000009^000000 製作 ^0000FF"+getitemname(5170)+"^000000";
+	mes "^FF000010^000000 製作 ^0000FF"+getitemname(5173)+"^000000";
+	mes "^FF000011^000000 製作 ^0000FF"+getitemname(5174)+"^000000";
+	mes "^FF000012^000000 製作 ^0000FF"+getitemname(5175)+"^000000";
+	mes "^FF000013^000000 製作 ^0000FF"+getitemname(5176)+"^000000";
+	mes "^FF000014^000000 製作 ^0000FF"+getitemname(5177)+"^000000";
+	next;
+	dispbottom "請輸入您要製作編號!!";
+	input .@QHItem;
+	if ( .@QHItem < 1  || .@QHItem > 14 ) {
+	dispbottom "您輸入的編號不正確!!";	close;	}
+	switch(.@QHItem) {
+case 1:
+	setarray .@QH1[1],5107,519,539,548,7031;
+	setarray .@QH2[1],1,50,50,50,50;
+	break;
+case 2:
+	setarray .@QH1[1],5108,611,5120,7301;
+	setarray .@QH2[1],1,10,1,1887;
+	set .@QHZeny,1887;
+	break;
+case 3:
+	setarray .@QH1[1],5109,975,5032,10007,10015;
+	setarray .@QH2[1],1,1,1,1,1;
+	set .@QHZeny,50000;
+	break;
+case 4:
+	setarray .@QH1[1],5110,526,941,7270,10004;
+	setarray .@QH2[1],1,1,1,1,1;
+	break;
+case 5:
+	setarray .@QH1[1],5115,749,983,7267;
+	setarray .@QH2[1],1,1,1,999;
+	set .@QHZeny,50000;
+	break;
+case 6:
+	setarray .@QH1[1],5117,731,748,982;
+	setarray .@QH2[1],1,10,3,1;
+	set .@QHZeny,50000;
+	break;
+case 7:
+	setarray .@QH1[1],5121,660,7099,7263;
+	setarray .@QH2[1],1,1,30,1;
+	break;
+case 8:
+	setarray .@QH1[1],5169,1024,1049,1054,1059;
+	setarray .@QH2[1],1,100,20,2,500;
+	break;
+case 9:
+	setarray .@QH1[1],5170,982,5172,7063;
+	setarray .@QH2[1],1,1,1,100;
+	break;
+case 10:
+	setarray .@QH1[1],5173,733,954,983;
+	setarray .@QH2[1],1,5,300,2221;
+	break;
+case 11:
+	setarray .@QH1[1],5174,733,954,975,7166;
+	setarray .@QH2[1],1,5,300,1,50;
+	break;
+case 12:
+	setarray .@QH1[1],5175,938,983,7111;
+	setarray .@QH2[1],1,99,1,100;
+	set .@QHZeny,100000;
+	break;
+case 13:
+	setarray .@QH1[1],5176,952,1028,7015;
+	setarray .@QH2[1],1,100,100,20;
+	break;
+case 14:
+	setarray .@QH1[1],5177,980,1048,1053;
+	setarray .@QH2[1],1,1,500,2;
+	break;	}
+
+	mes "[製作系統][^FF0000"+.@QHItem+"^000000]";
+	mes "製作 ^0000FF"+getitemname(.@QH1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QH1[2])+" "+.@QH2[2]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QH1[3])+" "+.@QH2[3]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QH1[4])+" "+.@QH2[4]+"^000000 個";
+	if ( .@QH1[5] != 0 ) mes "　和 ^FF0000"+getitemname(.@QH1[5])+" "+.@QH2[5]+"^000000 個";
+	if ( .@QHZeny != 0 ) mes "　和 ^FF0000金錢 "+.@QHZeny+"^000000 z";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Head111";	end;	}
+	if ( countitem(.@QH1[2]) < .@QH2[2] ) { set .@No_Item,1; }
+	if ( countitem(.@QH1[3]) < .@QH2[3] ) { set .@No_Item,1; }
+	if ( countitem(.@QH1[4]) < .@QH2[4] ) { set .@No_Item,1; }
+	if ( .@QH1[5] != 0 ) {
+	if ( countitem(.@QH1[5]) < .@QH2[5] ) { set .@No_Item,1; }	}
+	if ( .@QHZeny != 0 && Zeny < .@QHZeny ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QH1[2],.@QH2[2];
+	delitem .@QH1[3],.@QH2[3];
+	delitem .@QH1[4],.@QH2[4];
+	if ( .@QH1[5] != 0 ) delitem .@QH1[5],.@QH2[5];
+	if ( .@QHZeny != 0 ) set Zeny,Zeny - .@QHZeny;
+	getitem .@QH1[1],.@QH2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QH1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//

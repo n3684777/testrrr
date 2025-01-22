@@ -1,0 +1,317 @@
+function	script	petskill	{
+    .@pet_id = getarg(0);
+
+    setarray .@piv[0],1,2,3,4,7,9,22,23,36,37,38,39,43,44,48,49,55,60,63,64,65,94,95,96,97,98,99,100,101,102,103,104,105,106,107,109,126,127,128,132,133,134,144,145,146,
+    210,223,224,225,226,227,238,248,255,259,260,263,265,274,278,284;
+    setarray .@atk[0],5,6,11,13,14,15,16,17,18,19,20,21,30,32,42,46,47,50,52,56,57,58,59,62,76,77,78,79,80,81,83,84,85,86,87,88,89,90,91,92,93,
+    110,115,116,117,118,119,120,121,122,123,129,131,136,137,140,141,148,149,152,153,155,156,192,194,211,212,214,215,216,217,218,219,229,230,250,251,253,254,266,267,269,
+    271,272,273,276,277,285,286,287,288,289;
+    setarray .@sup[0],8,10,12,24,25,26,27,28,29,31,33,34,35,40,41,45,51,53,54,61,66,67,68,69,70,71,72,73,74,75,108,111,112,113,114,124,125,130,135,138,139,142,143,147,150,
+    151,154,157,201,213,228,231,232,233,234,235,236,237,243,244,247,249,252,256,257,258,261,262,264,268,270,275,279,280,281,282,283,290,304,305;
+
+	switch(.@pet_id) {
+    set SkillTimer,30; // 寵物施放輔助技能間隔時間
+    set MinSkillRate,5; // 寵物最小施放攻擊技能機率
+    set MaxSkillRate,10; // 寵物最大施放攻擊技能機率
+
+    .@atk_size = getarraysize(.@atk);
+    .@atk_rand = rand(0,.@atk_size-1);
+    .@piv_size = getarraysize(.@piv);
+    .@piv_rand = rand(0,.@piv_size-1);
+    .@sup_size = getarraysize(.@sup);
+    .@sup_rand = rand(0,.@sup_size-1);  
+
+    //set RandomSkill[0],"",
+    // 研究所三樓魔物
+    case 960061:
+      petskillsupport "LK_CONCENTRATION",5,SkillTimer,100,100;
+      petskillattack "LK_SPIRALPIERCE",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960062:
+      petskillsupport "ASC_EDP",5,SkillTimer,100,100;
+      petskillattack "GC_DARKCROW",5,30,50;
+      break;
+    case 960063:
+      petskillsupport "WS_MELTDOWN",10,SkillTimer,100,100;
+      petskillattack "WS_CARTTERMINATION",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960064:
+      petskillsupport "AL_HEAL",10,SkillTimer,100,100;
+      petskillattack "PR_MAGNUS",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960065:
+      petskillsupport "SN_SIGHT",10,SkillTimer,100,100;
+      petskillattack "SN_SHARPSHOOTING",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960066:
+      petskillsupport "HW_MAGICPOWER",10,SkillTimer,100,100;
+      petskillattack "HW_GRAVITATION",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960067:
+      petskillsupport "CR_DEVOTION",5,SkillTimer,100,100;
+      petskillattack "CR_GRANDCROSS",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960068:
+      petskillsupport "MC_LOUD",1,SkillTimer,100,100;
+      petskillattack "CR_ACIDDEMONSTRATION",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960069:
+      petskillsupport "PF_DOUBLECASTING",5,SkillTimer,100,100;
+      petskillattack "PF_SPIDERWEB",1,MinSkillRate,MaxSkillRate;
+      break;
+    case 960070:
+      petskillsupport "CH_SOULCOLLECT",1,SkillTimer,100,100;
+      petskillattack "MO_EXTREMITYFIST",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960071:
+      petskillsupport "ST_CHASEWALK",5,SkillTimer,100,100;
+      petskillattack "RG_INTIMIDATE",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960072:
+      petskillsupport "BA_POEMBRAGI",10,SkillTimer,100,100;
+      petskillattack "CG_ARROWVULCAN",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960073:
+      petskillsupport "DC_FORTUNEKISS",10,SkillTimer,100,100;
+      petskillattack "CG_ARROWVULCAN",10,MinSkillRate,MaxSkillRate;
+      break;
+
+    // 戰死王
+    case 961069:
+      petskillsupport "WL_TELEKINESIS_INTENSE",5,SkillTimer,100,100;
+      petskillattack "NPC_COMET",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 961070:
+      petskillsupport "MC_LOUD",1,SkillTimer,100,100;
+      petskillattack "NC_AXETORNADO",5,MinSkillRate,MaxSkillRate;
+      break;    
+    case 961071:
+      petskillsupport "RA_UNLIMIT",5,SkillTimer,100,100;
+      petskillattack "NPC_ARROWSTORM",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 961072:
+      petskillsupport "AB_RENOVATIO",4,SkillTimer,100,100;
+      petskillattack "AB_ADORAMUS",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 961073:
+      petskillsupport "GC_HALLUCINATIONWALK",5,SkillTimer,100,100;
+      petskillattack "GC_DARKCROW",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 961074:
+      petskillsupport "RK_ENCHANTBLADE",10,SkillTimer,100,100;
+      petskillattack "NPC_IGNITIONBREAK",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 961075:
+      petskillsupport "LG_SHIELDSPELL",3,SkillTimer,100,100;
+      petskillattack "NPC_RAYOFGENESIS",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 961076:
+      petskillsupport "GN_BLOOD_SUCKER",5,SkillTimer,100,100;
+      petskillattack "GN_SPORE_EXPLOSION",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 961077:
+      petskillsupport "SO_ELEMENTAL_SHIELD",5,SkillTimer,100,100;
+      petskillattack "NPC_PSYCHIC_WAVE",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 961078:
+      petskillsupport "SR_POWERVELOCITY",1,SkillTimer,100,100;
+      petskillattack "SR_HELLGATE",10,MinSkillRate,MaxSkillRate;
+     break;
+    case 961079:
+      petskillsupport "SC_INVISIBILITY",5,SkillTimer,100,100;
+      petskillattack "SC_FATALMENACE",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 961080:
+      petskillsupport "WM_FRIGG_SONG",5,SkillTimer,100,100;
+      petskillattack "WM_REVERBERATION",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 961081:
+      petskillsupport "WM_FRIGG_SONG",5,SkillTimer,100,100;
+      petskillattack "WM_SEVERE_RAINSTORM",5,MinSkillRate,MaxSkillRate;
+      break;
+
+// 夢魘王
+    case 960835:
+      petskillsupport "SHC_POTENT_VENOM",10,SkillTimer,100,100;
+      petskillattack "SHC_SAVAGE_IMPACT",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960834:
+      petskillattack "CD_PNEUMATICUS_PROCELLA",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960833:
+      petskillsupport "WH_CALAMITYGALE",1,SkillTimer,100,100;
+      petskillattack "WH_GALESTORM",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960832:
+      petskillsupport "ALL_FULL_THROTTLE",5,SkillTimer,100,100;
+      petskillattack "MT_SPARK_BLASTER",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960831:
+      petskillsupport "AG_CLIMAX",5,SkillTimer,100,100;
+      petskillattack "AG_ASTRAL_STRIKE",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960830:
+      petskillsupport "ALL_FULL_THROTTLE",5,SkillTimer,100,100;
+      petskillattack "DK_DRAGONIC_AURA",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960829:
+      petskillsupport "IG_ULTIMATE_SACRIFICE",5,SkillTimer,100,100;
+      petskillattack "IG_GRAND_JUDGEMENT",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960828:
+      petskillsupport "BO_WOODENWARRIOR",5,SkillTimer,100,100;
+      petskillattack "BO_EXPLOSIVE_POWDER",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960827:
+      petskillsupport "EM_SUMMON_ELEMENTAL_SERPENS",1,SkillTimer,100,100;
+      petskillattack "EM_VENOM_SWAMP",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960826:
+      petskillsupport "IQ_POWERFUL_FAITH",5,SkillTimer,100,100;
+      petskillattack "IQ_EXPOSION_BLASTER",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960825:
+      petskillsupport "ABC_ABYSS_SLAYER",10,SkillTimer,100,100;
+      petskillattack "ABC_DEFT_STAB",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960824:
+      petskillsupport "TR_MYSTIC_SYMPHONY",1,SkillTimer,100,100;
+      petskillattack "TR_METALIC_FURY",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960823:
+      petskillsupport "TR_MYSTIC_SYMPHONY",1,SkillTimer,100,100;
+      petskillattack "TR_ROSEBLOSSOM",5,MinSkillRate,MaxSkillRate;
+      break;
+
+// mvp魔物
+
+    case 960047: // 俄塞里斯
+      petskillsupport "GC_POISONINGWEAPON",5,SkillTimer,100,100;
+      petskillattack "GC_POISONSMOKE",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960059: // 死靈
+      petskillsupport "MS_BERSERK",1,SkillTimer,100,100;
+      petskillattack "GC_DARKCROW",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960080: // 蜂后
+      petskillsupport "WL_RECOGNIZEDSPELL",5,SkillTimer,100,100;
+      petskillattack "WL_EARTHSTRAIN",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960103: // 黃金蟲
+      petskillsupport "SR_LIGHTNINGWALK",5,SkillTimer,100,100;
+      petskillattack "NC_ARMSCANNON",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960104: // 獸人英雄
+      petskillsupport "WL_WHITEIMPRISON",5,SkillTimer,100,100;
+      petskillattack "GN_CRAZYWEED",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960118: // 海盜之王
+      petskillsupport "SP_SOULGOLEM",5,SkillTimer,100,100;
+      petskillattack "WL_FROSTMISTY",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960046: // 虎王
+      petskillsupport "KG_KAGEMUSYA",5,SkillTimer,100,100;
+      petskillattack "SU_SCAROFTAROU",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960148: // 蟻后
+      petskillsupport "AB_PRAEFATIO",10,SkillTimer,100,100;
+      petskillattack "AB_JUDEX",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960157: // 法老王
+      petskillsupport "AB_DUPLELIGHT",10,SkillTimer,100,100;
+      petskillattack "NC_AXEBOOMERANG",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960173: // 獸人酋長
+      petskillsupport "SC_FEINTBOMB",10,SkillTimer,100,100;
+      petskillattack "LG_CANNONSPEAR",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960203: // 冰暴騎士
+      petskillsupport "WA_SWING_DANCE",5,SkillTimer,100,100;
+      petskillattack "WZ_STORMGUST",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960204: // 卡崙
+      petskillsupport "SA_FROSTWEAPON",5,SkillTimer,100,100;
+      petskillattack "NJ_HYOUSYOURAKU",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960221: // 黑暗之王R9
+      petskillsupport "SM_ENDURE",10,SkillTimer,100,100;
+      petskillattack "NPC_DARKNESSBREATH",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960255: // 烏龜將軍
+      petskillsupport "AC_CONCENTRATION",10,SkillTimer,100,100;
+      petskillattack "NPC_SELFDESTRUCTION",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960271: // 死靈騎士
+      petskillsupport "RL_FIREDANCE",10,SkillTimer,100,100;
+      petskillattack "NPC_WIDEFREEZE",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960283: // 德古拉男爵
+      petskillsupport "AL_TELEPORT",1,SkillTimer,100,100;
+      petskillattack "NPC_STORMGUST2",3,MinSkillRate,MaxSkillRate;
+      break;
+    case 960436: // 墨蛇君
+      petskillsupport "AB_CONVENIO",1,SkillTimer,100,100;
+      petskillattack "AB_VITUPERATUM",5,MinSkillRate,MaxSkillRate;
+      break;
+
+    case 960438: // 元靈武士
+      petskillsupport "AB_OFFERTORIUM",5,SkillTimer,100,100;
+      petskillattack "NPC_LEX_AETERNA",5,MinSkillRate,MaxSkillRate;
+      break;
+    case 960444: // 魔王波利
+      petskillsupport "NW_HIDDEN_CARD",10,SkillTimer,100,100;
+      petskillattack "ASC_METEORASSAULT",10,MinSkillRate,MaxSkillRate;
+      break;
+    case 960452: // 古埃及王
+      petskillsupport "KN_TWOHANDQUICKEN",10,SkillTimer,100,100;
+      petskillattack "CR_ACIDDEMONSTRATION",10,MinSkillRate,MaxSkillRate;
+      break;
+
+  
+    case 960460: // 塔奧群卡
+      petskillsupport "NPC_STONESKIN",5,SkillTimer,100,100;
+      petskillattack "NPC_WIDEWEB",1,MinSkillRate,MaxSkillRate;
+      break;
+
+
+
+    case 960806: // 魔劍士[夢魘] 隨機技能
+      petskillsupport .@sup[.@sup_rand],10,1,100,100;
+      petskillattack .@atk[.@atk_rand],10,MinSkillRate,MaxSkillRate;
+      break;
+    default:
+
+    //.@sup_maxlv = getskillmaxlv(.@sup[.@sup_rand]);
+    //.@atk_maxlv = getskillmaxlv(.@atk[.@atk_rand]);
+      // 預設技能
+       petskillsupport "CD_REPARATIO",5,SkillTimer,100,100;
+       petskillattack "NPC_IGNITIONBREAK",5,MinSkillRate,MaxSkillRate;
+       break;  
+
+    }
+}
+
+function	script	petstatus	{
+    .@pet_id = getarg(0);
+	switch(.@pet_id) {
+    case 960834: // 樞機主教夢魘王
+      bonus bAllStats,20; 
+      skill "CD_COMPETENTIA",5;
+      bonus2 bSkillCooldown,"CD_COMPETENTIA",-60000;
+      break;
+    default:
+     // .@i = getpetinfo(PETINFO_INTIMATE);
+     // if (.@i >= PET_INTIMATE_LOYAL) {
+     //   bonus bLuk,3000;
+     //   bonus bCritical,1000;
+     // } else if (.@i >= PET_INTIMATE_CORDIAL) {
+     //   bonus bLuk,2000;
+     //   bonus bCritical,1000;
+     // }
+
+      bonus bAllStats,20; 
+      break;
+    }
+
+
+}

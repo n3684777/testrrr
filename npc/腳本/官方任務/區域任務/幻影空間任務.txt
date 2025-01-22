@@ -1,0 +1,705 @@
+trinity,98,125,6	script	任務委托管理員#li	643,{
+
+	mes "[任務委托管理員]";
+	mes "我是負責幻影空間任務的守衛";
+	mes "你能幫我去消滅為害幻影空間的魔物嗎?";
+	next;
+	mes "[任務委托管理員]";
+	mes "你想要接取討伐哪幻影空間的任務?";
+	next;
+	switch(select("幻影月夜貓","幻影吸血鬼","幻影冰洞穴","幻影烏龜島","幻影泰迪熊","幻影盧安達","幻影迷藏森林","所有任務回報","取消")){
+
+	case 1:
+		mes "[月夜貓的惡夢任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("阻止大魔法師","對幻影沒有憐憫","悼念祖先","取消")){
+
+		case 1:
+			if(checkquest(7782,HUNTING)>=0){mes "[月夜貓的惡夢任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7783,PLAYTIME)==0){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7783,PLAYTIME)==1){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7782;
+			if(checkquest(7783,PLAYTIME)==2){erasequest 7783;}
+			mes "[月夜貓的惡夢任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(7784,HUNTING)>=0){mes "[月夜貓的惡夢任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7785,PLAYTIME)==0){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7785,PLAYTIME)==1){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7784;
+			if(checkquest(7785,PLAYTIME)==2){erasequest 7785;}
+			mes "[月夜貓的惡夢任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(7786,HUNTING)>=0){mes "[月夜貓的惡夢任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7787,PLAYTIME)==0){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7787,PLAYTIME)==1){mes "[月夜貓的惡夢任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7786;
+			if(checkquest(7787,PLAYTIME)==2){erasequest 7787;}
+			mes "[月夜貓的惡夢任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			close;
+		}
+
+	case 2:
+		mes "[吸血鬼任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("入土為安","甜蜜的夢","不放心的假血","心情問題","好奇心是本性","取消")){
+
+		case 1:
+			if(checkquest(14667,HUNTING)>=0){mes "[吸血鬼任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14668,PLAYTIME)==0){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14668,PLAYTIME)==1){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14667;
+			if(checkquest(14668,PLAYTIME)==2){erasequest 14668;}
+			mes "[吸血鬼任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(14669,HUNTING)>=0){mes "[吸血鬼任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14670,PLAYTIME)==0){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14670,PLAYTIME)==1){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14669;
+			if(checkquest(14670,PLAYTIME)==2){erasequest 14670;}
+			mes "[吸血鬼任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(14671,HUNTING)>=0){mes "[吸血鬼任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14674,PLAYTIME)==0){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14674,PLAYTIME)==1){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14671;
+			if(checkquest(14670,PLAYTIME)==2){erasequest 14674;}
+			mes "[吸血鬼任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(14675,HUNTING)>=0){mes "[吸血鬼任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14676,PLAYTIME)==0){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14676,PLAYTIME)==1){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14675;
+			if(checkquest(14676,PLAYTIME)==2){erasequest 14676;}
+			mes "[吸血鬼任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(14679,HUNTING)>=0){mes "[吸血鬼任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14680,PLAYTIME)==0){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14680,PLAYTIME)==1){mes "[吸血鬼任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14679;
+			if(checkquest(14680,PLAYTIME)==2){erasequest 14680;}
+			mes "[吸血鬼任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			close;
+		}
+
+	case 3:
+		mes "[冰洞穴任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("擊殺幻影冰洞穴的怪物","擊殺可疑的蜥蜴","取消")){
+
+		case 1:
+			switch(rand(1,4)){
+
+			case 1:
+				if(checkquest(15111,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15117,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15118,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15119,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15115,PLAYTIME)==0){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(15115,PLAYTIME)==1){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 15111;
+				if(checkquest(15115,PLAYTIME)>=0){erasequest 15115;}
+				mes "[冰洞穴任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+
+			case 2:
+				if(checkquest(15111,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15117,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15118,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15119,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15115,PLAYTIME)==0){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(15115,PLAYTIME)==1){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 15117;
+				if(checkquest(15115,PLAYTIME)>=0){erasequest 15115;}
+				mes "[冰洞穴任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 3:
+				if(checkquest(15111,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15117,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15118,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15119,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15115,PLAYTIME)==0){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(15115,PLAYTIME)==1){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 15118;
+				if(checkquest(15115,PLAYTIME)>=0){erasequest 15115;}
+				mes "[冰洞穴任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 4:
+				if(checkquest(15111,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15117,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15118,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15119,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(15115,PLAYTIME)==0){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(15115,PLAYTIME)==1){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 15119;
+				if(checkquest(15115,PLAYTIME)>=0){erasequest 15115;}
+				mes "[冰洞穴任務委托看板]";
+				mes "任務接取完成";
+				close;
+			}
+
+		case 2:
+			if(checkquest(15114,HUNTING)>=0){mes "[冰洞穴任務委托看板]";mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(15116,PLAYTIME)==0){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(15116,PLAYTIME)==1){mes "[冰洞穴任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 15114;
+			if(checkquest(15116,PLAYTIME)>=0){erasequest 15116;}
+			mes "[冰洞穴任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			close;
+		}
+
+	case 4:
+		mes "[烏龜島任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("不可忘卻的記憶","無限地肌餓","取消")){
+
+		case 1:
+			if(checkquest(16106,HUNTING)>=0){mes "[烏龜島任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16108,PLAYTIME)==0){mes "[烏龜島任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16108,PLAYTIME)==1){mes "[烏龜島任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16106;
+			if(checkquest(16108,PLAYTIME)>=0){erasequest 16108;}
+			mes "[烏龜島任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(16111,HUNTING)>=0){mes "[烏龜島任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16113,PLAYTIME)==0){mes "[烏龜島任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16113,PLAYTIME)==1){mes "[烏龜島任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16111;
+			if(checkquest(16113,PLAYTIME)>=0){erasequest 16113;}
+			mes "[烏龜島任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			close;
+		}
+
+
+	case 5:
+		mes "[泰迪熊任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("別讓他們逃了！","不能存在的存在","光明將黑暗吞噬","取消")){
+
+		case 1:
+			if(checkquest(11565,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11566,PLAYTIME)==0){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11566,PLAYTIME)==1){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11565;
+			if(checkquest(11566,PLAYTIME)>=0){erasequest 11566;}
+			mes "[泰迪熊任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			switch(rand(1,2)){
+			case 1:
+				if(checkquest(11567,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(11568,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(11569,PLAYTIME)==0){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(11569,PLAYTIME)==1){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 11567;
+				if(checkquest(11569,PLAYTIME)>=0){erasequest 11569;}
+				mes "[泰迪熊任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 2:
+				if(checkquest(11567,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(11568,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(11569,PLAYTIME)==0){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(11569,PLAYTIME)==1){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 11568;
+				if(checkquest(11569,PLAYTIME)>=0){erasequest 11569;}
+				mes "[泰迪熊任務委托看板]";
+				mes "任務接取完成";
+				close;
+			}
+
+		case 3:
+			if(checkquest(11570,HUNTING)>=0){mes "[泰迪熊任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11571,PLAYTIME)==0){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11571,PLAYTIME)==1){mes "[泰迪熊任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11570;
+			if(checkquest(11571,PLAYTIME)>=0){erasequest 11571;}
+			mes "[泰迪熊任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			close;
+		}
+
+
+	case 6:
+		mes "[盧安達任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("伍坦族擊退作戰","巨石族擊退作戰","取消")){
+
+		case 1:
+			if(checkquest(5854,HUNTING)>=0){mes "[盧安達任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5855,PLAYTIME)==0){mes "[盧安達任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5855,PLAYTIME)==1){mes "[盧安達任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5854;
+			if(checkquest(5855,PLAYTIME)>=0){erasequest 5855;}
+			mes "[盧安達任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(5852,HUNTING)>=0){mes "[盧安達任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(5853,PLAYTIME)==0){mes "[盧安達任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(5853,PLAYTIME)==1){mes "[盧安達任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 5852;
+			if(checkquest(5853,PLAYTIME)>=0){erasequest 5853;}
+			mes "[盧安達任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			close;
+		}
+
+
+	case 7:
+		mes "[迷藏森林任務委托看板]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("安德烈的復仇I","安德烈的復仇II","安涅斯的復仇I","安涅斯的復仇II","希瓦諾的復仇I","希瓦諾的復仇II","西亞的復仇I","辛西亞的復仇II","邪惡淨化","取消")){
+
+		case 1:
+			if(checkquest(12470,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12481,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12481,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12470;
+			if(checkquest(12481,PLAYTIME)>=0){erasequest 12481;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12471,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12482,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12482,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12471;
+			if(checkquest(12482,PLAYTIME)>=0){erasequest 12482;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(12472,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12483,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12483,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12472;
+			if(checkquest(12483,PLAYTIME)>=0){erasequest 12483;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(12473,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12484,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12484,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12473;
+			if(checkquest(12484,PLAYTIME)>=0){erasequest 12484;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(12474,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12485,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12485,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12474;
+			if(checkquest(12485,PLAYTIME)>=0){erasequest 12485;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(12475,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12486,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12486,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12475;
+			if(checkquest(12486,PLAYTIME)>=0){erasequest 12486;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			if(checkquest(12476,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12487,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12487,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12476;
+			if(checkquest(12487,PLAYTIME)>=0){erasequest 12487;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 8:
+			if(checkquest(12477,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(12488,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(12488,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 12477;
+			if(checkquest(12488,PLAYTIME)>=0){erasequest 12488;}
+			mes "[迷藏森林任務委托看板]";
+			mes "任務接取完成";
+			close;
+
+		case 9:
+			switch(rand(1,4)){
+
+			case 1:
+				if(checkquest(12478,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12479,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12480,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12481,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12489,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12489,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12478;
+				if(checkquest(12489,PLAYTIME)>=0){erasequest 12489;}
+				mes "[迷藏森林任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 2:
+				if(checkquest(12478,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12479,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12480,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12481,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12489,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12489,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12479;
+				if(checkquest(12489,PLAYTIME)>=0){erasequest 12489;}
+				mes "[迷藏森林任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 3:
+				if(checkquest(12478,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12479,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12480,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12481,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12489,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12489,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12480;
+				if(checkquest(12489,PLAYTIME)>=0){erasequest 12489;}
+				mes "[迷藏森林任務委托看板]";
+				mes "任務接取完成";
+				close;
+
+			case 4:
+				if(checkquest(12478,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12479,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12480,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12481,HUNTING)>=0){mes "[迷藏森林任務委托看板]"; mes "您已經接了這個任務了唷~!"; close;}
+				if(checkquest(12489,PLAYTIME)==0){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				if(checkquest(12489,PLAYTIME)==1){mes "[迷藏森林任務委托看板]"; mes "你今天已經接取過這個任務了"; close;}
+				setquest 12481;
+				if(checkquest(12489,PLAYTIME)>=0){erasequest 12489;}
+				mes "[迷藏森林任務委托看板]";
+				mes "任務接取完成";
+				close;
+			}
+
+		case 10:
+			close;
+		}
+
+
+	case 8:
+			//幻影月夜貓
+			if(checkquest(7782,HUNTING)==2 ) { 
+			erasequest 7782;
+			setquest 7783;
+			getitem 25271,3;
+			getexp 300000,300000;
+			dispbottom "阻止大魔法師任務回報完成!!";
+			}
+			if(checkquest(7784,HUNTING)==2 ) { 
+			erasequest 7784;
+			setquest 7785;
+			getitem 25271,3;
+			getexp 300000,300000;
+			dispbottom "對幻影沒有憐憫任務回報完成!!";
+			}
+			if(checkquest(7786,HUNTING)==2 ) { 
+			erasequest 7786;
+			setquest 7787;
+			getitem 25271,3;
+			getexp 300000,300000;
+			dispbottom "悼念祖先任務回報完成!!";
+			}
+
+			//幻影吸血鬼
+			if(checkquest(14667,HUNTING)==2 ) { 
+			erasequest 14667;
+			setquest 14668;
+			getitem 25271,3;
+			getexp 500000,500000;
+			dispbottom "入土為安任務回報完成!!";
+			}
+			if(checkquest(14669,HUNTING)==2 ) { 
+			erasequest 14669;
+			setquest 14670;
+			getitem 25271,3;
+			getexp 500000,500000;
+			dispbottom "甜蜜的夢任務回報完成!!";
+			}
+			if(checkquest(14671,HUNTING)==2 ) { 
+			erasequest 14671;
+			setquest 14674;
+			getitem 25271,3;
+			getexp 500000,500000;
+			dispbottom "不放心的假血任務回報完成!!";
+			}
+			if(checkquest(14675,HUNTING)==2 ) { 
+			erasequest 14675;
+			setquest 14676;
+			getitem 25271,3;
+			getexp 500000,500000;
+			dispbottom "心情問題任務回報完成!!";
+			}
+			if(checkquest(14679,HUNTING)==2 ) { 
+			erasequest 14679;
+			setquest 14680;
+			getitem 25271,3;
+			getexp 500000,500000;
+			dispbottom "好奇心是本性任務回報完成!!";
+			}
+
+			//幻影冰洞穴
+			if(checkquest(15111,HUNTING)==2 ) { 
+			erasequest 15111;
+			setquest 15115;
+			getitem 25271,5;
+			getexp 12000000,12000000;
+			dispbottom "擊殺幻影冰洞穴的怪物任務回報完成!!";
+			}
+			if(checkquest(15117,HUNTING)==2 ) { 
+			erasequest 15117;
+			setquest 15115;
+			getitem 25271,5;
+			getexp 12000000,12000000;
+			dispbottom "擊殺幻影冰洞穴的怪物任務回報完成!!";
+			}
+			if(checkquest(15118,HUNTING)==2 ) { 
+			erasequest 15118;
+			setquest 15115;
+			getitem 25271,5;
+			getexp 12000000,12000000;
+			dispbottom "擊殺幻影冰洞穴的怪物任務回報完成!!";
+			}
+			if(checkquest(15119,HUNTING)==2 ) { 
+			erasequest 15119;
+			setquest 15115;
+			getitem 25271,5;
+			getexp 12000000,12000000;
+			dispbottom "擊殺幻影冰洞穴的怪物任務回報完成!!";
+			}
+			if(checkquest(15114,HUNTING)==2 ) { 
+			erasequest 15114;
+			setquest 15116;
+			getitem 25271,20;
+			getexp 12000000,12000000;
+			dispbottom "擊殺可疑的蜥蜴任務回報完成!!";
+			}
+			//幻影烏龜島
+			if(checkquest(16106,HUNTING)==2 ) { 
+			erasequest 16106;
+			setquest 16108;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "不可忘卻的記憶任務回報完成!!";
+			}
+			if(checkquest(16111,HUNTING)==2 ) { 
+			erasequest 16111;
+			setquest 16113;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "無限地肌餓任務回報完成!!";
+			}
+			//幻影泰迪熊
+			if(checkquest(11565,HUNTING)==2 ) { 
+			erasequest 11565;
+			setquest 11566;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "別讓他們逃了！任務回報完成!!";
+			}
+			if(checkquest(11567,HUNTING)==2 ) { 
+			erasequest 11567;
+			setquest 11569;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "不能存在的存在任務回報完成!!";
+			}
+			if(checkquest(11568,HUNTING)==2 ) { 
+			erasequest 11568;
+			setquest 11569;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "不能存在的存在任務回報完成!!";
+			}
+			if(checkquest(11570,HUNTING)==2 ) { 
+			erasequest 11570;
+			setquest 11566;
+			getitem 25271,3;
+			getexp 1800000,1800000;
+			dispbottom "光明將黑暗吞噬任務回報完成!!";
+			}
+			//幻影盧安
+			if(checkquest(5854,HUNTING)==2 ) { 
+			erasequest 5854;
+			setquest 5855;
+			getitem 25271,3;
+			getexp 4300000,4300000;
+			dispbottom "伍坦族擊退作戰任務回報完成!!";
+			}
+			if(checkquest(5852,HUNTING)==2 ) { 
+			erasequest 5852;
+			setquest 5853;
+			getitem 25271,3;
+			getexp 4300000,4300000;
+			dispbottom "巨石族擊退作戰任務回報完成!!";
+			}
+
+			//幻影迷藏森林
+			if(checkquest(12470,HUNTING)==2 ) { 
+			erasequest 12470;
+			setquest 12481;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "安德烈的復仇I任務回報完成!!";
+			}
+			if(checkquest(12471,HUNTING)==2 ) { 
+			erasequest 12471;
+			setquest 12482;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "安德烈的復仇II任務回報完成!!";
+			}
+			if(checkquest(12472,HUNTING)==2 ) { 
+			erasequest 12472;
+			setquest 12483;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "安涅斯的復仇I任務回報完成!!";
+			}
+			if(checkquest(12473,HUNTING)==2 ) { 
+			erasequest 12473;
+			setquest 12484;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "安涅斯的復仇II任務回報完成!!";
+			}
+			if(checkquest(12474,HUNTING)==2 ) { 
+			erasequest 12474;
+			setquest 12485;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "希瓦諾的復仇I任務回報完成!!";
+			}
+			if(checkquest(12475,HUNTING)==2 ) { 
+			erasequest 12475;
+			setquest 12486;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "希瓦諾的復仇II任務回報完成!!";
+			}
+			if(checkquest(12476,HUNTING)==2 ) { 
+			erasequest 12476;
+			setquest 12487;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "辛西亞的復仇I任務回報完成!!";
+			}
+			if(checkquest(12477,HUNTING)==2 ) { 
+			erasequest 12477;
+			setquest 12488;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "辛西亞的復仇II任務回報完成!!";
+			}
+			if(checkquest(12478,HUNTING)==2 ) { 
+			erasequest 12478;
+			setquest 12489;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "邪惡淨化任務回報完成!!";
+			}
+			if(checkquest(12479,HUNTING)==2 ) { 
+			erasequest 12479;
+			setquest 12489;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "邪惡淨化任務回報完成!!";
+			}
+			if(checkquest(12480,HUNTING)==2 ) { 
+			erasequest 12480;
+			setquest 12489;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "邪惡淨化任務回報完成!!";
+			}
+			if(checkquest(12481,HUNTING)==2 ) { 
+			erasequest 12481;
+			setquest 12489;
+			getitem 25271,3;
+			getexp 1750000,1137500;
+			dispbottom "邪惡淨化任務回報完成!!";
+			}
+			dispbottom "已經幫你處理完所有已完成的任務!!";
+			close;
+	case 9:
+		close;
+	}
+OnInit:
+	waitingroom "幻影空間每日任務",0;
+	end;
+}
+

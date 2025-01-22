@@ -1,0 +1,1089 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#全自動裝備
+   - Name: 全自動裝備製作
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_CLEANER_W
+     Items:
+       - Index: 0
+         Item: Auto_Armor_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Armor_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 1
+         Item: Auto_Armor_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Armor_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 2
+         Item: Auto_Leg_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Leg_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 3
+         Item: Auto_Leg_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Leg_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 4
+         Item: Auto_Engine_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Engine_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 5
+         Item: Auto_Engine_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_Engine_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 6
+         Item: Auto_B_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_B_R
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 7
+         Item: Auto_B_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_B_L
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 8
+         Item: Auto_BC_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_BC_R
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 9
+         Item: Auto_BC_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Illusion_BC_L
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+
+       - Index: 10
+         Item: Auto_Armor_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Armor_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 11
+         Item: Auto_Armor_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Armor_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 12
+         Item: Auto_Leg_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Leg_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 13
+         Item: Auto_Leg_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Leg_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 14
+         Item: Auto_Engine_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Engine_A
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 15
+         Item: Auto_Engine_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_Engine_B
+             Amount: 1
+             Refine: 9
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 900
+       - Index: 16
+         Item: Auto_B_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_B_R
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 17
+         Item: Auto_B_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_B_L
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 18
+         Item: Auto_BC_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_BC_R
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 19
+         Item: Auto_BC_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: E_Illusion_BC_L
+             Amount: 1
+           - Index: 1
+             Item: BarMealTicket
+             Amount: 1500
+       - Index: 20
+         Item: Ep17_2_C_Admin1_Egg
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: BarMealTicket
+             Amount: 30
+
+
+#賢者的遺產 模組製作
+   - Name: 模組製作
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_CLEANER_W
+     Items:
+       - Index: 0
+         Item: Auto_Imp_Melee_3
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+       - Index: 1
+         Item: Auto_Imp_Magic_3
+         Stock: 0
+         Zeny: 3000000
+         RequiredItems:
+       - Index: 2
+         Item: Auto_Imp_Melee_3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: BarMealTicket
+             Amount: 90
+       - Index: 3
+         Item: Auto_Imp_Magic_3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: BarMealTicket
+             Amount: 90
+
+       - Index: 5
+         Item: Auto_M_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: BarMealTicket
+             Amount: 100
+
+       - Index: 10
+         Item: EP17_2_NO1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 11
+         Item: EP17_2_NO2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 12
+         Item: EP17_2_NO3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 13
+         Item: EP17_2_NO4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 14
+         Item: EP17_2_NO5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 15
+         Item: EP17_2_NO6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 16
+         Item: EP17_2_NO7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 17
+         Item: EP17_2_NO8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 18
+         Item: EP17_2_RA1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 19
+         Item: EP17_2_RA2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 20
+         Item: EP17_2_RA3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 21
+         Item: EP17_2_RA4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 22
+         Item: EP17_2_RA5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 23
+         Item: EP17_2_RA6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 24
+         Item: EP17_2_RA7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 25
+         Item: EP17_2_RA8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 26
+         Item: EP17_2_RA9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 27
+         Item: EP17_2_RA10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 28
+         Item: EP17_2_RA11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 29
+         Item: EP17_2_RA12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 30
+         Item: EP17_2_RA13
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 31
+         Item: EP17_2_RA14
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 32
+         Item: EP17_2_RA15
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 33
+         Item: EP17_2_RA16
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 34
+         Item: EP17_2_RA17
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 35
+         Item: EP17_2_RA18
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 36
+         Item: EP17_2_RA19
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 37
+         Item: EP17_2_RA20
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 38
+         Item: EP17_2_RA21
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 39
+         Item: EP17_2_UQ1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 40
+         Item: EP17_2_UQ2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 41
+         Item: EP17_2_UQ3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 42
+         Item: EP17_2_UQ4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 43
+         Item: EP17_2_UQ5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 44
+         Item: EP17_2_UQ6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 45
+         Item: EP17_2_UQ7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 46
+         Item: EP17_2_UQ8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 47
+         Item: EP17_2_UQ9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 48
+         Item: EP17_2_UQ10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 49
+         Item: EP17_2_UQ11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 50
+         Item: EP17_2_UQ12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 51
+         Item: EP17_2_EP1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 52
+         Item: EP17_2_EP2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 53
+         Item: EP17_2_EP3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 54
+         Item: EP17_2_EP4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 55
+         Item: EP17_2_EP5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 56
+         Item: EP17_2_EP6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 57
+         Item: EP17_2_EP7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 58
+         Item: EP17_2_EP8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 59
+         Item: EP17_2_EP9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 60
+         Item: EP17_2_EP10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 61
+         Item: EP17_2_EP11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 62
+         Item: EP17_2_EP12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 63
+         Item: EP17_2_EP13
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 64
+         Item: EP17_2_EP14
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 65
+         Item: EP17_2_EP15
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 66
+         Item: EP17_2_EP16
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 67
+         Item: EP17_2_EP17
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 68
+         Item: EP17_2_EP18
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 69
+         Item: EP17_2_EP19
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 70
+         Item: EP17_2_EP20
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 71
+         Item: EP17_2_EP21
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 72
+         Item: EP17_2_EP22
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 73
+         Item: EP17_2_EP23
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 74
+         Item: EP17_2_EP24
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 75
+         Item: EP17_2_EP25
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 76
+         Item: EP17_2_EP26
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 77
+         Item: EP17_2_EP27
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 78
+         Item: EP17_2_EP28
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 79
+         Item: EP17_2_EP29
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 80
+         Item: EP17_2_EP30
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 81
+         Item: EP17_2_EP31
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 82
+         Item: EP17_2_EP32
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 83
+         Item: EP17_2_EP33
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 84
+         Item: EP17_2_EP34
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 85
+         Item: EP17_2_EP35
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 86
+         Item: EP17_2_EP36
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 87
+         Item: EP17_2_EP37
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 88
+         Item: EP17_2_EP38
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 89
+         Item: EP17_2_EP39
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 90
+         Item: EP17_2_EP40
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 91
+         Item: EP17_2_EP41
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 92
+         Item: EP17_2_EP42
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 93
+         Item: EP17_2_EP43
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 94
+         Item: EP17_2_EP44
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 95
+         Item: EP17_2_EP45
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 96
+         Item: EP17_2_EP46
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 97
+         Item: EP17_2_EP47
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 98
+         Item: EP17_2_EP48
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 99
+         Item: EP17_2_EP49
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 100
+         Item: EP17_2_EP50
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 101
+         Item: EP17_2_EP51
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 102
+         Item: EP17_2_LE1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 103
+         Item: EP17_2_LE2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 104
+         Item: EP17_2_LE3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 105
+         Item: EP17_2_LE4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 106
+         Item: EP17_2_LE5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+       - Index: 107
+         Item: EP17_2_LE6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Igni_Stone
+             Amount: 300
+
+
+
+

@@ -1,0 +1,332 @@
+﻿trinity,85,33,4	script	道館挑戰	856,{
+
+
+	mes "[道館挑戰]";
+	mes "^ff0000道館僅能單開多開會無法領獎^000000";
+	mes "簡單模式獎勵：^i[34112]";
+	mes "普通模式獎勵：^i[34113]";
+	mes "困難模式獎勵：^i[34114]";
+	mes "每挑戰10關獎勵數量+1";
+	mes "請選擇要挑戰的難度";
+	mes "^0000ff報名費用：10萬RO幣^000000";
+	next;
+
+	callsub PickArena,select("挑戰 簡單模式","挑戰 普通模式","挑戰 困難模式");
+	mes "[道館挑戰]";
+	for (set .@i,1; .@i<=getarraysize($@Dc_Map$); set .@i,.@i+1) {
+		if ($@Dc_Ultra[.@i]!=3) 
+		mes "[場地"+.@i+"]隊伍: ["+getpartyname($@Dc_Party[.@i-1])+"]";
+		else mes "[場地"+.@i+"]單挑: ["+$@Dc_Char$[.@i-1]+"]";
+	}
+	mes "全部場地都有人在挑戰了,請稍後再試";
+	mes "=========================";
+	close;
+
+
+PickArena:
+	mes "[道館挑戰]";
+	if (getarg(0)==1) mes "- 簡單模式";
+	if (getarg(0)==2) mes "- 普通模式";
+	if (getarg(0)==3) mes "- 困難模式";
+	if (getarg(0)==4) mes "- 個人版";
+	if (getarg(0)==5) mes "- 專業版";
+	mes "- 報名費 :"+$@Dc_Fee[getarg(0)];
+	mes "=========================";
+	next;
+	menu "報名挑戰",-;
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+		mes "[道館挑戰]";
+		mes "- ^C63131你不是隊長^000000";
+		mes "=========================";
+		close;
+	}
+
+
+	if (!getcharid(1)&&getarg(0)!=3) {
+		mes "[道館挑戰]";
+		mes "- ^C63131您沒有隊伍,無法參賽^000000";
+		mes "=========================";
+		close;
+	}
+	for (set .@i,0; .@i<getarraysize($@Dc_Map$);set .@i,.@i+1) {
+		if (!getmapusers($@Dc_Map$[.@i])) {
+			setarray .@Dc_MapID[.@n],.@i;
+			set .@n,.@n+1;
+		}
+	}
+	if (!getarraysize(.@Dc_MapID)) return;
+	if (Zeny<$@Dc_Fee[getarg(0)]&&!countitem(7603)){
+		mes "[道館挑戰]";
+		mes "- ^C63131金錢不足^000000,快去銀行取錢";
+		mes "=========================";
+		close;
+	}
+	else if (!countitem(7603)) set Zeny,Zeny-$@Dc_Fee[getarg(0)];
+	else delitem 7603,1;
+	set .@i, .@Dc_MapID[rand(getarraysize(.@Dc_MapID))];
+	killmonsterall $@Dc_Map$[.@i];
+	stopnpctimer "裁判#"+.@i;
+	removemapflag $@Dc_Map$[.@i],mf_noskill;
+
+	if (getarg(0)==4)
+	removemapflag $@Dc_Map$[.@i],0;
+	else setmapflag $@Dc_Map$[.@i],0;
+
+	//if (getarg(0)==3) warp $@Dc_Map$[.@i],0,0;
+	//else 
+	if (getarg(0)==4) {
+		getpartymember getcharid(1);
+		set .@partymembercount, $@partymembercount;
+		copyarray .@partymembername$[0], $@partymembername$[0], .@partymembercount;
+		for(set .@n, 0; .@n < .@partymembercount; set .@n, .@n + 1)
+			if(!getmapxy(.@mapm$, .@xm, .@ym, 0, .@partymembername$[.@n]) && .@mapm$ == "moc_para01" && !getpetinfo(0))
+				warpchar $@Dc_Map$[.@i], 0, 0, getcharid(0, .@partymembername$[.@n]);
+	}
+	warpparty $@Dc_Map$[.@i],0,0,getcharid(1);
+	setarray $@Dc_Round[.@i],1;
+	setarray $@Dc_VIP[.@i],0;
+	setarray $@Dc_Party[.@i],getcharid(1);
+	setarray $@Dc_Char$[.@i],strcharinfo(0);
+	setarray $@Dc_Ultra[.@i],getarg(0);
+	setarray $@magpause[.@i],0; 
+	enablenpc "裁判#"+.@i;
+	close;
+/*
+OnMinute30:
+	announce "【普通模式-管理員】：道場開放報名，請前往首都中間水池。",15;
+	end;
+OnMinute40:
+	announce "【普通模式-管理員】：道場停止報名，下次開放時間將在50分鐘之後。",15;
+	end;
+*/
+OnInit:
+	waitingroom "道館挑戰",0;
+	setarray $@Dc_Mob[0],1015,1016,1026,1028,1032,1036,1041,1071,1076,1117,1152,1153,1169,1188,1192,1196,1197,1257,1290,1291,1297,1298,1403,1504,1508,1509,1512,1864,1865,1870;
+	setarray $@Dc_Boss1[0],1038,1039,1046,1059,1086,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1689;
+	setarray $@Dc_Boss2[0],1719,1734,1751,1768,1779,1785,1832,1871,1874,1890,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+	setarray $@Dc_Boss3[0],1891,1768,1832,1871,3741,20381,20419,20421,20422,20601,20610,20611,20618,1708,3633,2202,1805,1806,1807,1808,1809,1810,2189;
+
+	setarray $@Dc_Map$[0],"guild_1","guild_2","guild_3","guild_4","guild_5";
+	setarray $@Dc_Ultra[0],0,0,0,0,0;		//道場模式
+	setarray $@Dc_Round[0],0,0,0,0,0;		//闖關數
+	setarray $@Dc_Party[0],0,0,0,0,0;		//隊伍id
+	setarray $@Dc_Char$[0],"","","","","";		//報名者姓名
+	setarray $@Dc_Vip[0],0,0,0,0,0;			//vip使用次數
+	setarray $@Dc_Fee[0],100000,100000,100000,100000,100000;	//入場費
+	setarray $@magpause[0],0,0,0,0,0;	//vip清場狀態
+	setarray $@magtimer[0],0,0,0,0,0;	//計時器循環數
+	setarray $@magmob[0],0,0,0,0,0;		//刷怪數量
+	end;
+}
+
+/**************
+   [場地]
+**************/
+-	script	Dc_Main::Dc_Main	-1,{
+OnMain:
+	for (set .@i,0; .@i < getarraysize($@Dc_Map$); set .@i,.@i+1) if (strnpcinfo(0)=="Dc_Main#"+.@i) break;
+	setarray $@magmob[.@i],0;
+	for(set .@Dc1,1;.@Dc1<=$@Dc_Round[.@i]/60+1;set .@Dc1,.@Dc1+1) {
+
+		if ($@Dc_Ultra[.@i]<=1){
+		areamonster $@Dc_Map$[.@i],34,67,63,32,"--ja--",$@Dc_Boss1[rand(getarraysize($@Dc_Boss1))],1,"Dc_Main#"+.@i+"::OnKillMob";
+		}
+		if ($@Dc_Ultra[.@i]==2){
+		areamonster $@Dc_Map$[.@i],34,67,63,32,"--ja--",$@Dc_Boss2[rand(getarraysize($@Dc_Boss2))],1,"Dc_Main#"+.@i+"::OnKillMob";
+		}
+		if ($@Dc_Ultra[.@i]==3){
+		areamonster $@Dc_Map$[.@i],34,67,63,32,"--ja--",$@Dc_Boss3[rand(getarraysize($@Dc_Boss3))],1,"Dc_Main#"+.@i+"::OnKillMob";
+		}
+		//monster $@Dc_Map$[.@i],0,0,"--ja--",$@Dc_Mob[rand(getarraysize($@Dc_Mob))],1;
+		//monster $@Dc_Map$[.@i],0,0,"--ja--",$@Dc_Mob[rand(getarraysize($@Dc_Mob))],1;
+		//monster $@Dc_Map$[.@i],0,0,"--ja--",$@Dc_Mob[rand(getarraysize($@Dc_Mob))],1;
+		//monster $@Dc_Map$[.@i],0,0,"--ja--",$@Dc_Mob[rand(getarraysize($@Dc_Mob))],1;
+		setarray $@magmob[.@i],$@magmob[.@i]+1;
+	}
+	mapannounce $@Dc_Map$[.@i],"魔物放出！挑戰開始！",17;
+	end;
+
+OnKillMob:
+	for (set .@i,0; .@i < getarraysize($@Dc_Map$); set .@i,.@i+1) if (strnpcinfo(0)=="Dc_Main#"+.@i) break;
+	setarray $@magmob[.@i],$@magmob[.@i]-1;
+	if( $@magmob[.@i] || $@magpause[.@i] ) end;
+	mapannounce $@Dc_Map$[.@i],"恭喜你,挑戰成功！",17;
+	if ($@Dc_Ultra[.@i]==3)
+	mapannounce $@Dc_Map$[.@i],"獨自挑戰第"+$@Dc_Round[.@i]+"關成功！",15;
+
+	else
+	mapannounce $@Dc_Map$[.@i],getpartyname($@Dc_Party[.@i]) + " 隊伍, 第"+$@Dc_Round[.@i]+"關挑戰成功！",15;
+
+	if ($@Dc_Round[.@i] > $MVPARound[$@Dc_Ultra[.@i]] ) {
+		setarray $MVPARound[$@Dc_Ultra[.@i]],$@Dc_Round[.@i];
+		setarray $MVPALeader$[$@Dc_Ultra[.@i]],$@Dc_Char$[.@i];
+		if ($@Dc_Ultra[.@i]!=3) setarray $MVPAParty$[$@Dc_Ultra[.@i]],getpartyname($@Dc_Party[.@i]);
+	}
+	setarray $@Dc_Round[.@i],$@Dc_Round[.@i] + 1;
+	if( ($@Dc_Round[.@i] - 1) % 10 == 0) {
+		if ($@Dc_Ultra[.@i]==2) stopnpctimer "裁判#"+.@i;
+		setmapflag $@Dc_Map$[.@i],mf_noskill;
+		enablenpc "裁判#"+.@i;
+		end;
+	}
+	if ($@Dc_Ultra[.@i]==2) {
+		mapannounce $@Dc_Map$[.@i],"剩餘時間："+(600-getnpctimer(0,"裁判#"+.@i)/1000+600*$@magtimer[.@i])/60+"分"+(600-getnpctimer(0,"裁判#"+.@i)/1000+600*$@magtimer[.@i])%60+"秒",17;
+	}
+	sleep 1000;
+	donpcevent "Dc_Main#"+.@i+"::OnMain";
+	end;
+}
+/**************
+    [裁判]
+**************/
+-	script	裁判::裁判	-1,{
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 1){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			goto Start;}}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			close;
+			}
+
+
+Start:
+	for (set .@i,0; .@i < getarraysize($@Dc_Map$); set .@i,.@i+1) if (strnpcinfo(0)=="裁判#"+.@i) break;
+	if ( $@magpause[.@i] || ($@Dc_Round[.@i]-1)%10 || $@Dc_Round[.@i]==1 ) {
+cancel:
+	if (strcharinfo(0) != $@Dc_Char$[.@i]){
+		mes "[裁判]";
+		mes "你不是報名的人";
+		close;
+	}
+	if ($@Dc_Round[.@i]>=60&&!$@magpause[.@i]){
+		mes "[裁判]";
+		mes "已經到達最高關卡";
+		mes "無法再繼續挑戰了!";
+		close;
+	} 
+	mes "[裁判]";
+	mes "您準備要開始挑戰了嗎？";
+	next;
+	menu "是的",-;
+	mes "[裁判]";
+	mes "挑戰開始！";
+	close2;
+
+	//announce "【道館挑戰】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰道館！",15,0x33ea91;
+	donpcevent "Dc_Main#"+.@i+"::OnMain";
+	if ($@Dc_Ultra[.@i]==2&&!$@magpause[.@i]) {
+		initnpctimer "裁判#"+.@i;
+		setarray $@magtimer[.@i],$@Dc_Round[.@i]/10;
+	}
+	removemapflag $@Dc_Map$[.@i],mf_noskill;
+	setarray $@magpause[.@i],0; 
+	disablenpc "裁判#"+.@i;
+	end;
+} else {
+	mes "[裁判]";
+	mes "你很厲害！能打到這裡，讓我給你一些獎勵吧！";
+	percentheal 100,100;
+	next;
+	mes "[裁判]";
+	mes "你要繼續挑戰，還是直接拿獎品？";
+	mes "請注意你的負重，超重將不會得到神秘包裹！";
+	next;
+
+	switch(select("我要繼續挑戰！","我要領獎品！")){
+
+	case 1:
+		goto cancel;
+		end;
+
+	case 2:
+		//簡單
+		if ($@Dc_Ultra[.@i]==1){
+		getitem 34112,($@Dc_Round[.@i]/10);
+		getitem 25731,($@Dc_Round[.@i]/10);
+		getitem 25729,($@Dc_Round[.@i]/10);
+		}
+		//普通
+		if ($@Dc_Ultra[.@i]==2){
+		getitem 34113,($@Dc_Round[.@i]/10);
+		getitem 25731,($@Dc_Round[.@i]/10);
+		getitem 25729,($@Dc_Round[.@i]/10);
+		}
+		//困難
+		if ($@Dc_Ultra[.@i]==3){
+		getitem 34114,($@Dc_Round[.@i]/10);
+		getitem 25731,($@Dc_Round[.@i]/5);
+		getitem 25729,($@Dc_Round[.@i]/5);
+		}
+		warp "trinity",85,25;
+		end;
+	}
+}
+
+end;
+OnTimer600000:
+	for (set .@i,0; .@i < getarraysize($@Dc_Map$); set .@i,.@i+1) if (strnpcinfo(0)=="裁判#"+.@i) break;
+	if ($@magtimer[.@i]) {
+		//stopnpctimer "裁判#"+.@i;	//沒必要，後續沒有OnTimer標籤時，timer直接被釋放，stop不會運行。
+		initnpctimer;
+		setarray $@magtimer[.@i],$@magtimer[.@i]-1;
+		end;
+	}
+	//stopnpctimer "裁判#"+.@i;	//沒必要，後續沒有OnTimer標籤時，timer直接被釋放，stop不會運行。
+	mapannounce $@Dc_Map$[.@i],"時間到！挑戰失敗！",17;
+	mapwarp $@Dc_Map$[.@i],"trinity",85,25;
+	end;
+}
+
+//####################################地圖屬性####################################
+guild_1	mapflag	nomemo
+guild_1	mapflag	noteleport
+guild_1	mapflag	nosave
+guild_1	mapflag	nopenalty
+guild_1	mapflag	nobranch
+guild_1	mapflag	noloot
+
+guild_2	mapflag	nomemo
+guild_2	mapflag	noteleport
+guild_2	mapflag	nosave
+guild_2	mapflag	nopenalty
+guild_2	mapflag	nobranch
+guild_2	mapflag	noloot
+
+guild_3	mapflag	nomemo
+guild_3	mapflag	noteleport
+guild_3	mapflag	nosave
+guild_3	mapflag	nopenalty
+guild_3	mapflag	nobranch
+guild_3	mapflag	noloot
+
+guild_4	mapflag	nomemo
+guild_4	mapflag	noteleport
+guild_4	mapflag	nosave
+guild_4	mapflag	nopenalty
+guild_4	mapflag	nobranch
+guild_4	mapflag	noloot
+
+guild_5	mapflag	nomemo
+guild_5	mapflag	noteleport
+guild_5	mapflag	nosave
+guild_5	mapflag	nopenalty
+guild_5	mapflag	nobranch
+guild_5	mapflag	noloot
+
+
+guild_1,50,50,4	duplicate(裁判)	裁判#0	758
+guild_2,50,50,4	duplicate(裁判)	裁判#1	758
+guild_3,50,50,4	duplicate(裁判)	裁判#2	758
+guild_4,50,50,4	duplicate(裁判)	裁判#3	758
+guild_5,50,50,4	duplicate(裁判)	裁判#4	758
+guild_1,0,0,0	duplicate(Dc_Main)	Dc_Main#0	-1
+guild_2,0,0,0	duplicate(Dc_Main)	Dc_Main#1	-1
+guild_3,0,0,0	duplicate(Dc_Main)	Dc_Main#2	-1
+guild_4,0,0,0	duplicate(Dc_Main)	Dc_Main#3	-1
+guild_5,0,0,0	duplicate(Dc_Main)	Dc_Main#4	-1
+

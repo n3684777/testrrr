@@ -1,0 +1,293 @@
+
+-	script	Bga_OnInit	-1,{
+OnInit:
+//--------------------------------------------------------------
+//-------放出炸彈數量---
+	setarray $@boogmo[1],1,2,3,4,5,6,7,8,9,10;
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+//--------參加人數(預設5人)------
+	set $@EWbgapeo,3;
+//--------------------------------------------------------------
+//--------獲勝人數(預設1人)------
+	set $@EWbgagp,1;
+//--------------------------------------------------------------
+//--------GM選單權限(預設90)--------
+	set $@EWgmbga,90;
+}
+
+trinity,39,117,6	script	炸彈波利管理員	96,{
+
+	if(getgmlevel()>=$@EWgmbga && $@booStart == 1){
+	mes "[炸彈波利管理員]";
+	mes "是否開起炸彈波利遊戲";
+	next;
+	menu	
+		"跳過GM選單",Menu_1,
+		"^FF0000馬上啟動炸彈^000000",bga_st2,
+		"進入活動場地",bga_en,
+		"關閉視窗",bga_ed;
+	}
+
+	if(getgmlevel()>=$@EWgmbga && $@booStart != 1){
+	mes "[炸彈波利管理員]";
+	mes "是否開起炸彈波利遊戲";
+	next;
+	menu	
+		"跳過GM選單",Menu_1,
+		"開啟炸彈",bga_st,
+		"進入活動場地",bga_en,
+		"關閉視窗",bga_ed;
+
+bga_en:
+	warp "game02",15,10;
+	end;
+bga_ed:
+	close;
+	end;
+bga_st2:
+	if ($@booStart == 1) {
+	setnpctimer 290000,"SYSbooTimmerCher";
+	announce "炸彈波利管理員： GM強制啟動了炸彈波利將在 10 秒後開始遊戲",15,"0xff0000";
+	next;
+	goto Menu_1;
+	}
+bga_st:
+	if ($@booStart != 1) {
+	mes "炸彈波利已開啟";
+	callfunc "SYSbooggw";
+	sleep2(1000);
+	next;
+	goto bga_st;
+	end;
+	}
+	}
+Menu_1:
+	
+	if ($@booStart != 1) {
+	mes "[炸彈波利管理員]";
+	mes "時間還沒開始或遊戲進行中呦";
+	mes "開始時間:14:40、18:20、20:30、24:30";
+	mes "共四場，如有另外時間將會由GM開啟";
+	close;
+	end;
+	}
+
+	mes "[炸彈波利管理員]";
+	mes "準備出發去進行遊戲囉~";
+	mes "是否要報名呢";
+	next;
+	menu "快點帶我過去吧",-,"太難了，我要走了",cancel;
+	mes "[炸彈波利管理員]";
+	mes "大夥們~出發囉~";
+	next;
+	warp "game02",15,10;
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+	end;
+
+cancel:
+	mes "[炸彈波利管理員]";
+	mes "在報名期間等你想玩的時候";
+	mes "歡迎隨時光臨";
+	close;
+	end;
+
+
+OnClock1155:
+	callfunc "SYSbooggw";
+	end;
+OnClock1255:
+	if(getmapusers("splendide") < 1 && ($@bga <getarraysize($@boogmo) || ($@bga==getarraysize($@boogmo) && $@bgge!=0))){
+	killmonsterall "splendide";
+	}
+	end;
+
+OnClock1755:
+	callfunc "SYSbooggw";
+	end;
+OnClock1855:
+	if(getmapusers("splendide") < 1 && ($@bga <getarraysize($@boogmo) || ($@bga==getarraysize($@boogmo) && $@bgge!=0))){
+	killmonsterall "splendide";
+	}
+	end;
+
+OnClock2255:
+	callfunc "SYSbooggw";
+	end;
+OnClock2355:
+	if(getmapusers("splendide") < 1 && ($@bga <getarraysize($@boogmo) || ($@bga==getarraysize($@boogmo) && $@bgge!=0))){
+	killmonsterall "splendide";
+	}
+	end;
+
+OnClock0655:
+	callfunc "SYSbooggw";
+	end;
+OnClock0755:
+	if(getmapusers("splendide") < 1 && ($@bga <getarraysize($@boogmo) || ($@bga==getarraysize($@boogmo) && $@bgge!=0))){
+	killmonsterall "splendide";
+	}
+	end;
+
+OnPCDieEvent:
+	if(strcharinfo(3) == "game02" ){
+		warp "SavePoint",0,0;
+	}
+	end;
+OnInit:
+	waitingroom "炸彈波利",0;
+	end;
+}
+
+function	script	SYSbooggw	{
+	disablenpc "炸彈波利頒獎人員";
+	initnpctimer "SYSbooTimmerCher";
+	return;
+}
+
+game02,15,15,1	script	SYSbooTimmerCher	-1,{
+OnTimer1000:
+	set $@booStart,1;
+	announce "炸彈波利管理員：炸彈波利開始倒數5分鐘，地點在遊戲區，請於這段時間去報名",15;
+	end;
+OnTimer120000:
+	announce "炸彈波利管理員：炸彈波利開始倒數3分鐘，地點在遊戲區，請於這段時間去報名",15;
+	end;
+OnTimer240000:
+	announce "炸彈波利管理員：炸彈波利開始倒數1分鐘，地點在遊戲區，請於這段時間去報名",15;
+	end;
+OnTimer300000:
+	if (getmapusers("game02") < $@EWbgapeo) goto No_pp;
+	announce "炸彈波利管理員：炸彈波利活動參加人數" + getmapusers("game02") + "人，現在開始",15;
+	end;
+OnTimer301000:
+	MapAnnounce "game02","開始前先說明規則。",17;
+	end;
+OnTimer303000:
+	MapAnnounce "game02","遊戲總共"+(getarraysize($@boogmo) - 1)+"關，每經過一關將會多出一隻炸彈。",17;
+	end;
+OnTimer305000:
+	MapAnnounce "game02","只要經過"+(getarraysize($@boogmo) - 1)+"關或是玩家剩一位以下(包含一位)，遊戲就結束。",17;
+	end;
+OnTimer307000:
+	MapAnnounce "game02","現在宣布，遊戲開始。",17;
+	set $@booStart,0;
+	set $@bga,1;
+	initnpctimer "SYSbooStartTime";
+	goto SYS_EndbooTime;
+No_pp:
+	announce "炸彈波利管理員：人數少於"+$@EWbgapeo+"人參加炸彈波利，活動取消",15;
+	areawarp "game02",0,0,50,50,"trinity",50,120;
+	set $@booStart,0;
+SYS_EndbooTime:
+	stopnpctimer;
+	setnpctimer 0,"SYSbooTimmerCher";
+	end;
+}
+
+game02,15,15,0	script	SYSbooStartTime	-1,{
+OnTimer1000:
+	set $@bgge,0;
+	areamonster "game02",2,29,29,2,"炸彈波利",1904,$@boogmo[$@bga],"starterbga::OnMobDead";
+	MapAnnounce "game02","魔物放出！挑戰開始！",17;
+	set $@bgge,$@boogmo[$@bga];
+	end;
+OnTimer2000:
+	setnpctimer 0,"SYSbooStartTime";
+	stopnpctimer;
+	end;
+
+OnTimer7000:
+	areamonster "game02",2,29,29,2,"炸彈波利",1904,$@boogmo[$@bga],"starterbga::OnMobDead";
+	set $@bgge,$@boogmo[$@bga];
+	if($@bga==(getarraysize($@boogmo)-1)){
+	MapAnnounce "game02","最後一批魔物已放出，請各位加油！！",17;
+	end;
+	}
+	MapAnnounce "game02","魔物放出！挑戰開始！",17;
+	end;
+
+OnTimer8000:
+	setnpctimer 0,"SYSbooStartTime";
+	stopnpctimer;
+	end;
+
+}
+
+game02,15,15,0	script	starterbga	-1,{
+
+OnMobDead:
+	set $@bgge,$@bgge-1;
+	if(getmapusers("game02") < 1){
+	announce "炸彈波利管理員：因地圖上沒有玩家了，所以活動到此無人勝利。",15;
+	killmonsterall "game02";
+	//areawarp "game02",0,0,300,300,"SavePoint",0,0;
+	end;
+	}
+	if(getmapusers("game02") < ($@EWbgagp + 1) || ($@bga==(getarraysize($@boogmo)-1) && $@bgge==0) ){
+	killmonsterall "game02";
+	announce "炸彈波利管理員：地圖上只剩下"+$@EWbgagp+"人或是怪物死亡，所以遊戲結束。",15;
+	announce "炸彈波利管理員：請獲勝玩家找NPC領取獲勝道具。",15;
+	enablenpc "炸彈波利頒獎人員";
+	end;
+	}
+	if($@bga <(getarraysize($@boogmo)-1) && $@bgge==0){
+	MapAnnounce "game02","第"+$@bga+"關挑戰成功。",17;
+	set $@bga,$@bga+1;
+	setnpctimer 3000,"SYSbooStartTime";
+	startnpctimer "SYSbooStartTime";
+	end;
+	}
+	end;
+}
+
+game02,15,15,4	script	炸彈波利頒獎人員	793,{
+	mes "[炸彈波利頒獎人員]";
+	mes "你很厲害！可以閃過如此多的炸彈！";
+	next;
+	menu	"領取獎勵!!",-,"我想想!!",bgacancel;
+	getitem 61052,3;	//小遊戲積分10點兌換券
+	getitem 61007,10;	//商城10點金幣
+	//announce "炸彈波利人員：恭喜 "+strcharinfo(0)+" ，獲得"+itemlink(40005)+" "+.@a+" 個",15;
+    	warp "SavePoint",0,0;
+	close;
+	end;
+
+bgacancel:
+	mes "[炸彈波利頒獎人員]";
+	mes "請慢慢考慮吧";
+	close;
+	end;
+}
+
+//-----限制地圖變數-------------
+
+game02	mapflag	nomemo
+game02	mapflag	noteleport
+game02	mapflag	noreturn
+game02	mapflag	monster_noteleport
+game02	mapflag	nosave
+game02	mapflag	nobranch
+game02	mapflag	noexppenalty
+game02	mapflag	nozenypenalty
+game02	mapflag	notrade
+game02	mapflag	nowarp
+game02	mapflag	noicewall
+game02	mapflag	noskill
+game02	mapflag	nobaseexp
+game02	mapflag	nojobexp
+game02	mapflag	noloot
+game02	mapflag	nodrop
+game02	mapflag	novending
+game02	mapflag	nochat

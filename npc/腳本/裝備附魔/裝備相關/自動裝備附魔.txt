@@ -1,0 +1,1564 @@
+vdistrict1,79,69,6	script	打掃機器人	10359,{
+
+	mes "[打掃機器人]";
+	mes "只要給我各種全自動改造模組";
+	mes "我就可以幫你合成到各種自動防具上";
+	next;
+	switch(select("裝備製作:物品兌換:模組兌換(活動版本):進行附魔(官方版本):進行附魔(活動版本)")){
+
+case 1:
+	close2;
+	callshop "全自動裝備製作";
+	end;
+
+case 2:
+	close2;
+	callshop "模組製作";
+	end;
+
+case 3:
+	close2;
+	callshop "EP17.2模組#01";
+	end;
+
+
+case 4:
+	mes "[打掃機器人]";
+	mes "進行強化需要消耗1個對應的全自動改造模組";
+	mes "你確定要進行嗎?";
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Card_Auto_1,getequipcardid(.@is,0);
+	set @Card_Auto_2,getequipcardid(.@is,1);
+	set @Card_Auto_3,getequipcardid(.@is,2);
+	set @Card_Auto_4,getequipcardid(.@is,3);
+	set @Refine_Auto,getequiprefinerycnt(.@is);
+	if(countitem(@abd)>1){
+	mes "[打掃機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 450127) goto Auto_net1; //全自動機甲A型
+	if(@abd == 450128) goto Auto_net1; //全自動機甲B型
+	if(@abd == 480020) goto Auto_net2; //全自動推進翼A型
+	if(@abd == 480021) goto Auto_net2; //全自動推進翼B型
+	if(@abd == 470022) goto Auto_net3; //全自動戰靴A型
+	if(@abd == 470023) goto Auto_net3; //全自動戰靴B型
+	if(@abd == 490027) goto Auto_net4; //全自動戰鬥晶片L
+	if(@abd == 490025) goto Auto_net4; //全自動助推器L
+	if(@abd == 490026) goto Auto_net5; //全自動戰鬥晶片R
+	if(@abd == 490024) goto Auto_net5; //全自動助推器器R
+	mes "[打掃機器人]";
+	mes "我只會幫你附魔自動防具相關裝備";
+	close;
+
+Auto_net1:
+	mes "[打掃機器人]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000122)>=1?"全自動改造模組(ATK)":"",
+		countitem(1000123)>=1?"全自動改造模組(MATK)":"",
+		countitem(1000124)>=1?"全自動改造模組(Archer)":"",
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":"",
+		countitem(1000207)>=1?"全自動改造模組(反射機甲)":"",
+		countitem(1000208)>=1?"全自動改造模組(反射推進翼)":"",
+
+		countitem(1000152)>=1?"全自動改造模組(龍之氣息)":"",
+		countitem(1000153)>=1?"全自動改造模組(衝擊波爆裂)":"",
+		countitem(1000154)>=1?"全自動改造模組(螺旋穿刺)":"",
+		countitem(1000155)>=1?"全自動改造模組(毀滅盾擊)":"",
+		countitem(1000156)>=1?"全自動改造模組(放逐加農砲)":"",
+		countitem(1000157)>=1?"全自動改造模組(創世威壓)":"",
+		countitem(1000158)>=1?"全自動改造模組(噴射加農砲)":"",
+		countitem(1000159)>=1?"全自動改造模組(冷卻火焰噴射)":"",
+		countitem(1000160)>=1?"全自動改造模組(颶風揮斧)":"",
+		countitem(1000161)>=1?"全自動改造模組(加農砲龍捲風)":"",
+		countitem(1000162)>=1?"全自動改造模組(瘋狂曼陀羅魔花)":"",
+		countitem(1000163)>=1?"全自動改造模組(強酸爆炸)":"",
+		countitem(1000164)>=1?"全自動改造模組(音速十字斬)":"",
+		countitem(1000165)>=1?"全自動改造模組(十字斬刀刃)":"",
+		countitem(1000166)>=1?"全自動改造模組(震波反擊斬)":"",
+		countitem(1000167)>=1?"全自動改造模組(致命潛擊)":"",
+		countitem(1000168)>=1?"全自動改造模組(魅影念咒)":"",
+		countitem(1000169)>=1?"全自動改造模組(角度L_DEX)":"",
+		countitem(1000170)>=1?"全自動改造模組(碧血翻身)":"",
+		countitem(1000171)>=1?"全自動改造模組(凍僵電擊)":"",
+		countitem(1000172)>=1?"全自動改造模組(彗星漩渦)":"",
+		countitem(1000173)>=1?"全自動改造模組(元素箭)":"",
+		countitem(1000174)>=1?"全自動改造模組(自然波加熱)":"",
+		countitem(1000175)>=1?"全自動改造模組(鑽石墳場)":"",
+		countitem(1000176)>=1?"全自動改造模組(驅魔謳歌)":"",
+		countitem(1000177)>=1?"全自動改造模組(神聖審判)":"",
+		countitem(1000178)>=1?"全自動改造模組(二道殿堂)":"",
+		countitem(1000179)>=1?"全自動改造模組(虎砲崩墜)":"",
+		countitem(1000180)>=1?"全自動改造模組(爆氣身彈)":"",
+		countitem(1000181)>=1?"全自動改造模組(猛龍崩擊)":"",
+		countitem(1000182)>=1?"全自動改造模組(榴霰彈)":"",
+		countitem(1000183)>=1?"全自動改造模組(微風L_DEX)":"",
+		countitem(1000184)>=1?"全自動改造模組(瞄準風暴)":"",
+		countitem(1000185)>=1?"全自動改造模組(重金屬共鳴)":"",
+		countitem(1000186)>=1?"全自動改造模組(殘響)":"",
+		countitem(1000187)>=1?"全自動改造模組(亂舞大暴雨)":"",
+		countitem(1000188)>=1?"全自動改造模組(紅焰爆炸)":"",
+		countitem(1000189)>=1?"全自動改造模組(朔月滿月)":"",
+		countitem(1000190)>=1?"全自動改造模組(閃光殞落)":"",
+		countitem(1000191)>=1?"全自動改造模組(艾斯核)":"",
+		countitem(1000192)>=1?"全自動改造模組(艾斯帕)":"",
+		countitem(1000193)>=1?"全自動改造模組(邪靈爆炸)":"",
+		countitem(1000194)>=1?"全自動改造模組(亡命天神暗舞)":"",
+		countitem(1000195)>=1?"全自動改造模組(火焰怒吼擺尾)":"",
+		countitem(1000196)>=1?"全自動改造模組(風暴驅逐舞蹈)":"",
+		countitem(1000197)>=1?"全自動改造模組(忍術)":"",
+		countitem(1000198)>=1?"全自動改造模組(幽冥十字斬)":"",
+		countitem(1000199)>=1?"全自動改造模組(禁術)":"",
+		countitem(1000200)>=1?"全自動改造模組(海洋力量)":"",
+		countitem(1000201)>=1?"全自動改造模組(大地力量)":"",
+		countitem(1000202)>=1?"全自動改造模組(生命力量)":"",
+
+		countitem(1000128)>=1?"全自動改造模組(魔法力量)":"",
+		countitem(1000129)>=1?"全自動改造模組(攻擊力量)":"",
+		countitem(1000130)>=1?"全自動改造模組(遠距離攻擊力量)":"",
+		countitem(1000131)>=1?"全自動改造模組(暴擊力量)":"",
+		countitem(1000132)>=1?"全自動改造模組(恢復力量)":"",
+		countitem(1000133)>=1?"全自動改造模組(Delay)":"",
+		countitem(1000140)>=1?"全自動改造模組(洪荒之力)":""
+		)) {
+		case 1: callfunc "Auto_Armor2_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Armor2_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Armor2_2",1000122,310099,rand(1,100);
+		case 4: callfunc "Auto_Armor2_2",1000123,310100,rand(1,100);
+		case 5: callfunc "Auto_Armor2_2",1000124,310101,rand(1,100);
+		case 6: callfunc "Auto_Armor2_2",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Armor2_2",1000142,310119,rand(1,100);
+		case 8: callfunc "Auto_Armor2_2",1000143,310120,rand(1,100);
+		case 9: callfunc "Auto_Armor2_2",1000207,310178,rand(1,100);
+		case 10: callfunc "Auto_Armor2_2",1000208,310179,rand(1,100);
+
+		case 11: callfunc "Auto_Armor2_2",1000152,310127,rand(1,100);
+		case 12: callfunc "Auto_Armor2_2",1000153,310128,rand(1,100);
+		case 13: callfunc "Auto_Armor2_2",1000154,310129,rand(1,100);
+		case 14: callfunc "Auto_Armor2_2",1000155,310130,rand(1,100);
+		case 15: callfunc "Auto_Armor2_2",1000156,310131,rand(1,100);
+		case 16: callfunc "Auto_Armor2_2",1000157,310132,rand(1,100);
+		case 17: callfunc "Auto_Armor2_2",1000158,310133,rand(1,100);
+		case 18: callfunc "Auto_Armor2_2",1000159,310134,rand(1,100);
+		case 19: callfunc "Auto_Armor2_2",1000160,310135,rand(1,100);
+		case 20: callfunc "Auto_Armor2_2",1000161,310136,rand(1,100);
+		case 21: callfunc "Auto_Armor2_2",1000162,310137,rand(1,100);
+		case 22: callfunc "Auto_Armor2_2",1000163,310138,rand(1,100);
+		case 23: callfunc "Auto_Armor2_2",1000164,310139,rand(1,100);
+		case 24: callfunc "Auto_Armor2_2",1000165,310140,rand(1,100);
+		case 25: callfunc "Auto_Armor2_2",1000166,310141,rand(1,100);
+		case 26: callfunc "Auto_Armor2_2",1000167,310142,rand(1,100);
+		case 27: callfunc "Auto_Armor2_2",1000168,310143,rand(1,100);
+		case 28: callfunc "Auto_Armor2_2",1000169,310144,rand(1,100);
+		case 29: callfunc "Auto_Armor2_2",1000170,310145,rand(1,100);
+		case 30: callfunc "Auto_Armor2_2",1000171,310146,rand(1,100);
+		case 31: callfunc "Auto_Armor2_2",1000172,310147,rand(1,100);
+		case 32: callfunc "Auto_Armor2_2",1000173,310148,rand(1,100);
+		case 33: callfunc "Auto_Armor2_2",1000174,310149,rand(1,100);
+		case 34: callfunc "Auto_Armor2_2",1000175,310150,rand(1,100);
+		case 35: callfunc "Auto_Armor2_2",1000176,310151,rand(1,100);
+
+		case 36: callfunc "Auto_Armor2_2",1000177,310152,rand(1,100);
+		case 37: callfunc "Auto_Armor2_2",1000178,310153,rand(1,100);
+		case 38: callfunc "Auto_Armor2_2",1000179,310154,rand(1,100);
+		case 39: callfunc "Auto_Armor2_2",1000180,310155,rand(1,100);
+		case 40: callfunc "Auto_Armor2_2",1000181,310156,rand(1,100);
+		case 41: callfunc "Auto_Armor2_2",1000182,310157,rand(1,100);
+		case 42: callfunc "Auto_Armor2_2",1000183,310158,rand(1,100);
+		case 43: callfunc "Auto_Armor2_2",1000184,310159,rand(1,100);
+		case 44: callfunc "Auto_Armor2_2",1000185,310160,rand(1,100);
+		case 45: callfunc "Auto_Armor2_2",1000186,310161,rand(1,100);
+		case 46: callfunc "Auto_Armor2_2",1000187,310162,rand(1,100);
+		case 47: callfunc "Auto_Armor2_2",1000188,310163,rand(1,100);
+		case 48: callfunc "Auto_Armor2_2",1000189,310164,rand(1,100);
+		case 49: callfunc "Auto_Armor2_2",1000190,310165,rand(1,100);
+		case 50: callfunc "Auto_Armor2_2",1000191,310166,rand(1,100);
+		case 51: callfunc "Auto_Armor2_2",1000192,310167,rand(1,100);
+		case 52: callfunc "Auto_Armor2_2",1000193,310168,rand(1,100);
+		case 53: callfunc "Auto_Armor2_2",1000194,310169,rand(1,100);
+		case 54: callfunc "Auto_Armor2_2",1000195,310170,rand(1,100);
+		case 55: callfunc "Auto_Armor2_2",1000196,310171,rand(1,100);
+		case 56: callfunc "Auto_Armor2_2",1000197,310172,rand(1,100);
+		case 57: callfunc "Auto_Armor2_2",1000198,310173,rand(1,100);
+		case 58: callfunc "Auto_Armor2_2",1000199,310174,rand(1,100);
+		case 59: callfunc "Auto_Armor2_2",1000200,310175,rand(1,100);
+		case 60: callfunc "Auto_Armor2_2",1000201,310176,rand(1,100);
+		case 61: callfunc "Auto_Armor2_2",1000202,310177,rand(1,100);
+
+		case 62: callfunc "Auto_Armor2_1",1000128,310105,rand(1,100);
+		case 63: callfunc "Auto_Armor2_1",1000129,310106,rand(1,100);
+		case 64: callfunc "Auto_Armor2_1",1000130,310107,rand(1,100);
+		case 65: callfunc "Auto_Armor2_1",1000131,310108,rand(1,100);
+		case 66: callfunc "Auto_Armor2_1",1000132,310109,rand(1,100);
+		case 67: callfunc "Auto_Armor2_1",1000133,310110,rand(1,100);
+		case 68: callfunc "Auto_Armor2_1",1000140,310117,rand(1,100);
+		}
+	case 2:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000122)>=1?"全自動改造模組(ATK)":"",
+		countitem(1000123)>=1?"全自動改造模組(MATK)":"",
+		countitem(1000124)>=1?"全自動改造模組(Archer)":"",
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":"",
+		countitem(1000207)>=1?"全自動改造模組(反射機甲)":"",
+		countitem(1000208)>=1?"全自動改造模組(反射推進翼)":"",
+
+		countitem(1000152)>=1?"全自動改造模組(龍之氣息)":"",
+		countitem(1000153)>=1?"全自動改造模組(衝擊波爆裂)":"",
+		countitem(1000154)>=1?"全自動改造模組(螺旋穿刺)":"",
+		countitem(1000155)>=1?"全自動改造模組(毀滅盾擊)":"",
+		countitem(1000156)>=1?"全自動改造模組(放逐加農砲)":"",
+		countitem(1000157)>=1?"全自動改造模組(創世威壓)":"",
+		countitem(1000158)>=1?"全自動改造模組(噴射加農砲)":"",
+		countitem(1000159)>=1?"全自動改造模組(冷卻火焰噴射)":"",
+		countitem(1000160)>=1?"全自動改造模組(颶風揮斧)":"",
+		countitem(1000161)>=1?"全自動改造模組(加農砲龍捲風)":"",
+		countitem(1000162)>=1?"全自動改造模組(瘋狂曼陀羅魔花)":"",
+		countitem(1000163)>=1?"全自動改造模組(強酸爆炸)":"",
+		countitem(1000164)>=1?"全自動改造模組(音速十字斬)":"",
+		countitem(1000165)>=1?"全自動改造模組(十字斬刀刃)":"",
+		countitem(1000166)>=1?"全自動改造模組(震波反擊斬)":"",
+		countitem(1000167)>=1?"全自動改造模組(致命潛擊)":"",
+		countitem(1000168)>=1?"全自動改造模組(魅影念咒)":"",
+		countitem(1000169)>=1?"全自動改造模組(角度L_DEX)":"",
+		countitem(1000170)>=1?"全自動改造模組(碧血翻身)":"",
+		countitem(1000171)>=1?"全自動改造模組(凍僵電擊)":"",
+		countitem(1000172)>=1?"全自動改造模組(彗星漩渦)":"",
+		countitem(1000173)>=1?"全自動改造模組(元素箭)":"",
+		countitem(1000174)>=1?"全自動改造模組(自然波加熱)":"",
+		countitem(1000175)>=1?"全自動改造模組(鑽石墳場)":"",
+		countitem(1000176)>=1?"全自動改造模組(驅魔謳歌)":"",
+		countitem(1000177)>=1?"全自動改造模組(神聖審判)":"",
+		countitem(1000178)>=1?"全自動改造模組(二道殿堂)":"",
+		countitem(1000179)>=1?"全自動改造模組(虎砲崩墜)":"",
+		countitem(1000180)>=1?"全自動改造模組(爆氣身彈)":"",
+		countitem(1000181)>=1?"全自動改造模組(猛龍崩擊)":"",
+		countitem(1000182)>=1?"全自動改造模組(榴霰彈)":"",
+		countitem(1000183)>=1?"全自動改造模組(微風L_DEX)":"",
+		countitem(1000184)>=1?"全自動改造模組(瞄準風暴)":"",
+		countitem(1000185)>=1?"全自動改造模組(重金屬共鳴)":"",
+		countitem(1000186)>=1?"全自動改造模組(殘響)":"",
+		countitem(1000187)>=1?"全自動改造模組(亂舞大暴雨)":"",
+		countitem(1000188)>=1?"全自動改造模組(紅焰爆炸)":"",
+		countitem(1000189)>=1?"全自動改造模組(朔月滿月)":"",
+		countitem(1000190)>=1?"全自動改造模組(閃光殞落)":"",
+		countitem(1000191)>=1?"全自動改造模組(艾斯核)":"",
+		countitem(1000192)>=1?"全自動改造模組(艾斯帕)":"",
+		countitem(1000193)>=1?"全自動改造模組(邪靈爆炸)":"",
+		countitem(1000194)>=1?"全自動改造模組(亡命天神暗舞)":"",
+		countitem(1000195)>=1?"全自動改造模組(火焰怒吼擺尾)":"",
+		countitem(1000196)>=1?"全自動改造模組(風暴驅逐舞蹈)":"",
+		countitem(1000197)>=1?"全自動改造模組(忍術)":"",
+		countitem(1000198)>=1?"全自動改造模組(幽冥十字斬)":"",
+		countitem(1000199)>=1?"全自動改造模組(禁術)":"",
+		countitem(1000200)>=1?"全自動改造模組(海洋力量)":"",
+		countitem(1000201)>=1?"全自動改造模組(大地力量)":"",
+		countitem(1000202)>=1?"全自動改造模組(生命力量)":"",
+
+		countitem(1000128)>=1?"全自動改造模組(魔法力量)":"",
+		countitem(1000129)>=1?"全自動改造模組(攻擊力量)":"",
+		countitem(1000130)>=1?"全自動改造模組(遠距離攻擊力量)":"",
+		countitem(1000131)>=1?"全自動改造模組(暴擊力量)":"",
+		countitem(1000132)>=1?"全自動改造模組(恢復力量)":"",
+		countitem(1000133)>=1?"全自動改造模組(Delay)":"",
+		countitem(1000140)>=1?"全自動改造模組(洪荒之力)":""
+		)) {
+		case 1: callfunc "Auto_Armor3_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Armor3_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Armor3_2",1000122,310099,rand(1,100);
+		case 4: callfunc "Auto_Armor3_2",1000123,310100,rand(1,100);
+		case 5: callfunc "Auto_Armor3_2",1000124,310101,rand(1,100);
+		case 6: callfunc "Auto_Armor3_2",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Armor3_2",1000142,310119,rand(1,100);
+		case 8: callfunc "Auto_Armor3_2",1000143,310120,rand(1,100);
+		case 9: callfunc "Auto_Armor3_2",1000207,310178,rand(1,100);
+		case 10: callfunc "Auto_Armor3_2",1000208,310179,rand(1,100);
+
+		case 11: callfunc "Auto_Armor3_2",1000152,310127,rand(1,100);
+		case 12: callfunc "Auto_Armor3_2",1000153,310128,rand(1,100);
+		case 13: callfunc "Auto_Armor3_2",1000154,310129,rand(1,100);
+		case 14: callfunc "Auto_Armor3_2",1000155,310130,rand(1,100);
+		case 15: callfunc "Auto_Armor3_2",1000156,310131,rand(1,100);
+		case 16: callfunc "Auto_Armor3_2",1000157,310132,rand(1,100);
+		case 17: callfunc "Auto_Armor3_2",1000158,310133,rand(1,100);
+		case 18: callfunc "Auto_Armor3_2",1000159,310134,rand(1,100);
+		case 19: callfunc "Auto_Armor3_2",1000160,310135,rand(1,100);
+		case 20: callfunc "Auto_Armor3_2",1000161,310136,rand(1,100);
+		case 21: callfunc "Auto_Armor3_2",1000162,310137,rand(1,100);
+		case 22: callfunc "Auto_Armor3_2",1000163,310138,rand(1,100);
+		case 23: callfunc "Auto_Armor3_2",1000164,310139,rand(1,100);
+		case 24: callfunc "Auto_Armor3_2",1000165,310140,rand(1,100);
+		case 25: callfunc "Auto_Armor3_2",1000166,310141,rand(1,100);
+		case 26: callfunc "Auto_Armor3_2",1000167,310142,rand(1,100);
+		case 27: callfunc "Auto_Armor3_2",1000168,310143,rand(1,100);
+		case 28: callfunc "Auto_Armor3_2",1000169,310144,rand(1,100);
+		case 29: callfunc "Auto_Armor3_2",1000170,310145,rand(1,100);
+		case 30: callfunc "Auto_Armor3_2",1000171,310146,rand(1,100);
+		case 31: callfunc "Auto_Armor3_2",1000172,310147,rand(1,100);
+		case 32: callfunc "Auto_Armor3_2",1000173,310148,rand(1,100);
+		case 33: callfunc "Auto_Armor3_2",1000174,310149,rand(1,100);
+		case 34: callfunc "Auto_Armor3_2",1000175,310150,rand(1,100);
+		case 35: callfunc "Auto_Armor3_2",1000176,310151,rand(1,100);
+
+		case 36: callfunc "Auto_Armor3_2",1000177,310152,rand(1,100);
+		case 37: callfunc "Auto_Armor3_2",1000178,310153,rand(1,100);
+		case 38: callfunc "Auto_Armor3_2",1000179,310154,rand(1,100);
+		case 39: callfunc "Auto_Armor3_2",1000180,310155,rand(1,100);
+		case 40: callfunc "Auto_Armor3_2",1000181,310156,rand(1,100);
+		case 41: callfunc "Auto_Armor3_2",1000182,310157,rand(1,100);
+		case 42: callfunc "Auto_Armor3_2",1000183,310158,rand(1,100);
+		case 43: callfunc "Auto_Armor3_2",1000184,310159,rand(1,100);
+		case 44: callfunc "Auto_Armor3_2",1000185,310160,rand(1,100);
+		case 45: callfunc "Auto_Armor3_2",1000186,310161,rand(1,100);
+		case 46: callfunc "Auto_Armor3_2",1000187,310162,rand(1,100);
+		case 47: callfunc "Auto_Armor3_2",1000188,310163,rand(1,100);
+		case 48: callfunc "Auto_Armor3_2",1000189,310164,rand(1,100);
+		case 49: callfunc "Auto_Armor3_2",1000190,310165,rand(1,100);
+		case 50: callfunc "Auto_Armor3_2",1000191,310166,rand(1,100);
+		case 51: callfunc "Auto_Armor3_2",1000192,310167,rand(1,100);
+		case 52: callfunc "Auto_Armor3_2",1000193,310168,rand(1,100);
+		case 53: callfunc "Auto_Armor3_2",1000194,310169,rand(1,100);
+		case 54: callfunc "Auto_Armor3_2",1000195,310170,rand(1,100);
+		case 55: callfunc "Auto_Armor3_2",1000196,310171,rand(1,100);
+		case 56: callfunc "Auto_Armor3_2",1000197,310172,rand(1,100);
+		case 57: callfunc "Auto_Armor3_2",1000198,310173,rand(1,100);
+		case 58: callfunc "Auto_Armor3_2",1000199,310174,rand(1,100);
+		case 59: callfunc "Auto_Armor3_2",1000200,310175,rand(1,100);
+		case 60: callfunc "Auto_Armor3_2",1000201,310176,rand(1,100);
+		case 61: callfunc "Auto_Armor3_2",1000202,310177,rand(1,100);
+
+		case 62: callfunc "Auto_Armor3_1",1000128,310105,rand(1,100);
+		case 63: callfunc "Auto_Armor3_1",1000129,310106,rand(1,100);
+		case 64: callfunc "Auto_Armor3_1",1000130,310107,rand(1,100);
+		case 65: callfunc "Auto_Armor3_1",1000131,310108,rand(1,100);
+		case 66: callfunc "Auto_Armor3_1",1000132,310109,rand(1,100);
+		case 67: callfunc "Auto_Armor3_1",1000133,310110,rand(1,100);
+		case 68: callfunc "Auto_Armor3_1",1000140,310117,rand(1,100);
+		}
+
+	case 3:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000122)>=1?"全自動改造模組(ATK)":"",
+		countitem(1000123)>=1?"全自動改造模組(MATK)":"",
+		countitem(1000124)>=1?"全自動改造模組(Archer)":"",
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":"",
+		countitem(1000207)>=1?"全自動改造模組(反射機甲)":"",
+		countitem(1000208)>=1?"全自動改造模組(反射推進翼)":"",
+
+		countitem(1000152)>=1?"全自動改造模組(龍之氣息)":"",
+		countitem(1000153)>=1?"全自動改造模組(衝擊波爆裂)":"",
+		countitem(1000154)>=1?"全自動改造模組(螺旋穿刺)":"",
+		countitem(1000155)>=1?"全自動改造模組(毀滅盾擊)":"",
+		countitem(1000156)>=1?"全自動改造模組(放逐加農砲)":"",
+		countitem(1000157)>=1?"全自動改造模組(創世威壓)":"",
+		countitem(1000158)>=1?"全自動改造模組(噴射加農砲)":"",
+		countitem(1000159)>=1?"全自動改造模組(冷卻火焰噴射)":"",
+		countitem(1000160)>=1?"全自動改造模組(颶風揮斧)":"",
+		countitem(1000161)>=1?"全自動改造模組(加農砲龍捲風)":"",
+		countitem(1000162)>=1?"全自動改造模組(瘋狂曼陀羅魔花)":"",
+		countitem(1000163)>=1?"全自動改造模組(強酸爆炸)":"",
+		countitem(1000164)>=1?"全自動改造模組(音速十字斬)":"",
+		countitem(1000165)>=1?"全自動改造模組(十字斬刀刃)":"",
+		countitem(1000166)>=1?"全自動改造模組(震波反擊斬)":"",
+		countitem(1000167)>=1?"全自動改造模組(致命潛擊)":"",
+		countitem(1000168)>=1?"全自動改造模組(魅影念咒)":"",
+		countitem(1000169)>=1?"全自動改造模組(角度L_DEX)":"",
+		countitem(1000170)>=1?"全自動改造模組(碧血翻身)":"",
+		countitem(1000171)>=1?"全自動改造模組(凍僵電擊)":"",
+		countitem(1000172)>=1?"全自動改造模組(彗星漩渦)":"",
+		countitem(1000173)>=1?"全自動改造模組(元素箭)":"",
+		countitem(1000174)>=1?"全自動改造模組(自然波加熱)":"",
+		countitem(1000175)>=1?"全自動改造模組(鑽石墳場)":"",
+		countitem(1000176)>=1?"全自動改造模組(驅魔謳歌)":"",
+		countitem(1000177)>=1?"全自動改造模組(神聖審判)":"",
+		countitem(1000178)>=1?"全自動改造模組(二道殿堂)":"",
+		countitem(1000179)>=1?"全自動改造模組(虎砲崩墜)":"",
+		countitem(1000180)>=1?"全自動改造模組(爆氣身彈)":"",
+		countitem(1000181)>=1?"全自動改造模組(猛龍崩擊)":"",
+		countitem(1000182)>=1?"全自動改造模組(榴霰彈)":"",
+		countitem(1000183)>=1?"全自動改造模組(微風L_DEX)":"",
+		countitem(1000184)>=1?"全自動改造模組(瞄準風暴)":"",
+		countitem(1000185)>=1?"全自動改造模組(重金屬共鳴)":"",
+		countitem(1000186)>=1?"全自動改造模組(殘響)":"",
+		countitem(1000187)>=1?"全自動改造模組(亂舞大暴雨)":"",
+		countitem(1000188)>=1?"全自動改造模組(紅焰爆炸)":"",
+		countitem(1000189)>=1?"全自動改造模組(朔月滿月)":"",
+		countitem(1000190)>=1?"全自動改造模組(閃光殞落)":"",
+		countitem(1000191)>=1?"全自動改造模組(艾斯核)":"",
+		countitem(1000192)>=1?"全自動改造模組(艾斯帕)":"",
+		countitem(1000193)>=1?"全自動改造模組(邪靈爆炸)":"",
+		countitem(1000194)>=1?"全自動改造模組(亡命天神暗舞)":"",
+		countitem(1000195)>=1?"全自動改造模組(火焰怒吼擺尾)":"",
+		countitem(1000196)>=1?"全自動改造模組(風暴驅逐舞蹈)":"",
+		countitem(1000197)>=1?"全自動改造模組(忍術)":"",
+		countitem(1000198)>=1?"全自動改造模組(幽冥十字斬)":"",
+		countitem(1000199)>=1?"全自動改造模組(禁術)":"",
+		countitem(1000200)>=1?"全自動改造模組(海洋力量)":"",
+		countitem(1000201)>=1?"全自動改造模組(大地力量)":"",
+		countitem(1000202)>=1?"全自動改造模組(生命力量)":"",
+
+		countitem(1000128)>=1?"全自動改造模組(魔法力量)":"",
+		countitem(1000129)>=1?"全自動改造模組(攻擊力量)":"",
+		countitem(1000130)>=1?"全自動改造模組(遠距離攻擊力量)":"",
+		countitem(1000131)>=1?"全自動改造模組(暴擊力量)":"",
+		countitem(1000132)>=1?"全自動改造模組(恢復力量)":"",
+		countitem(1000133)>=1?"全自動改造模組(Delay)":"",
+		countitem(1000140)>=1?"全自動改造模組(洪荒之力)":""
+		)) {
+		case 1: callfunc "Auto_Armor4_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Armor4_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Armor4_2",1000122,310099,rand(1,100);
+		case 4: callfunc "Auto_Armor4_2",1000123,310100,rand(1,100);
+		case 5: callfunc "Auto_Armor4_2",1000124,310101,rand(1,100);
+		case 6: callfunc "Auto_Armor4_2",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Armor4_2",1000142,310119,rand(1,100);
+		case 8: callfunc "Auto_Armor4_2",1000143,310120,rand(1,100);
+		case 9: callfunc "Auto_Armor4_2",1000207,310178,rand(1,100);
+		case 10: callfunc "Auto_Armor4_2",1000208,310179,rand(1,100);
+
+		case 11: callfunc "Auto_Armor4_2",1000152,310127,rand(1,100);
+		case 12: callfunc "Auto_Armor4_2",1000153,310128,rand(1,100);
+		case 13: callfunc "Auto_Armor4_2",1000154,310129,rand(1,100);
+		case 14: callfunc "Auto_Armor4_2",1000155,310130,rand(1,100);
+		case 15: callfunc "Auto_Armor4_2",1000156,310131,rand(1,100);
+		case 16: callfunc "Auto_Armor4_2",1000157,310132,rand(1,100);
+		case 17: callfunc "Auto_Armor4_2",1000158,310133,rand(1,100);
+		case 18: callfunc "Auto_Armor4_2",1000159,310134,rand(1,100);
+		case 19: callfunc "Auto_Armor4_2",1000160,310135,rand(1,100);
+		case 20: callfunc "Auto_Armor4_2",1000161,310136,rand(1,100);
+		case 21: callfunc "Auto_Armor4_2",1000162,310137,rand(1,100);
+		case 22: callfunc "Auto_Armor4_2",1000163,310138,rand(1,100);
+		case 23: callfunc "Auto_Armor4_2",1000164,310139,rand(1,100);
+		case 24: callfunc "Auto_Armor4_2",1000165,310140,rand(1,100);
+		case 25: callfunc "Auto_Armor4_2",1000166,310141,rand(1,100);
+		case 26: callfunc "Auto_Armor4_2",1000167,310142,rand(1,100);
+		case 27: callfunc "Auto_Armor4_2",1000168,310143,rand(1,100);
+		case 28: callfunc "Auto_Armor4_2",1000169,310144,rand(1,100);
+		case 29: callfunc "Auto_Armor4_2",1000170,310145,rand(1,100);
+		case 30: callfunc "Auto_Armor4_2",1000171,310146,rand(1,100);
+		case 31: callfunc "Auto_Armor4_2",1000172,310147,rand(1,100);
+		case 32: callfunc "Auto_Armor4_2",1000173,310148,rand(1,100);
+		case 33: callfunc "Auto_Armor4_2",1000174,310149,rand(1,100);
+		case 34: callfunc "Auto_Armor4_2",1000175,310150,rand(1,100);
+		case 35: callfunc "Auto_Armor4_2",1000176,310151,rand(1,100);
+
+		case 36: callfunc "Auto_Armor4_2",1000177,310152,rand(1,100);
+		case 37: callfunc "Auto_Armor4_2",1000178,310153,rand(1,100);
+		case 38: callfunc "Auto_Armor4_2",1000179,310154,rand(1,100);
+		case 39: callfunc "Auto_Armor4_2",1000180,310155,rand(1,100);
+		case 40: callfunc "Auto_Armor4_2",1000181,310156,rand(1,100);
+		case 41: callfunc "Auto_Armor4_2",1000182,310157,rand(1,100);
+		case 42: callfunc "Auto_Armor4_2",1000183,310158,rand(1,100);
+		case 43: callfunc "Auto_Armor4_2",1000184,310159,rand(1,100);
+		case 44: callfunc "Auto_Armor4_2",1000185,310160,rand(1,100);
+		case 45: callfunc "Auto_Armor4_2",1000186,310161,rand(1,100);
+		case 46: callfunc "Auto_Armor4_2",1000187,310162,rand(1,100);
+		case 47: callfunc "Auto_Armor4_2",1000188,310163,rand(1,100);
+		case 48: callfunc "Auto_Armor4_2",1000189,310164,rand(1,100);
+		case 49: callfunc "Auto_Armor4_2",1000190,310165,rand(1,100);
+		case 50: callfunc "Auto_Armor4_2",1000191,310166,rand(1,100);
+		case 51: callfunc "Auto_Armor4_2",1000192,310167,rand(1,100);
+		case 52: callfunc "Auto_Armor4_2",1000193,310168,rand(1,100);
+		case 53: callfunc "Auto_Armor4_2",1000194,310169,rand(1,100);
+		case 54: callfunc "Auto_Armor4_2",1000195,310170,rand(1,100);
+		case 55: callfunc "Auto_Armor4_2",1000196,310171,rand(1,100);
+		case 56: callfunc "Auto_Armor4_2",1000197,310172,rand(1,100);
+		case 57: callfunc "Auto_Armor4_2",1000198,310173,rand(1,100);
+		case 58: callfunc "Auto_Armor4_2",1000199,310174,rand(1,100);
+		case 59: callfunc "Auto_Armor4_2",1000200,310175,rand(1,100);
+		case 60: callfunc "Auto_Armor4_2",1000201,310176,rand(1,100);
+		case 61: callfunc "Auto_Armor4_2",1000202,310177,rand(1,100);
+
+		case 62: callfunc "Auto_Armor4_1",1000128,310105,rand(1,100);
+		case 63: callfunc "Auto_Armor4_1",1000129,310106,rand(1,100);
+		case 64: callfunc "Auto_Armor4_1",1000130,310107,rand(1,100);
+		case 65: callfunc "Auto_Armor4_1",1000131,310108,rand(1,100);
+		case 66: callfunc "Auto_Armor4_1",1000132,310109,rand(1,100);
+		case 67: callfunc "Auto_Armor4_1",1000133,310110,rand(1,100);
+		case 68: callfunc "Auto_Armor4_1",1000140,310117,rand(1,100);
+		}
+	}
+
+
+Auto_net2:
+	mes "[打掃機器人]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+		countitem(1000125)>=1?"全自動改造模組(ASPD)":"",
+		countitem(1000126)>=1?"全自動改造模組(Cast)":"",
+		countitem(1000127)>=1?"全自動改造模組(CRI)":"",
+
+		countitem(1000135)>=1?"全自動改造模組(Above)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":""
+		)) {
+		case 1: callfunc "Auto_Engine_wing2_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Engine_wing2_3",1000106,310083,rand(1,100);
+		case 3: callfunc "Auto_Engine_wing2_2",1000125,310102,rand(1,100);
+		case 4: callfunc "Auto_Engine_wing2_2",1000126,310103,rand(1,100);
+		case 5: callfunc "Auto_Engine_wing2_2",1000127,310104,rand(1,100);
+
+		case 6: callfunc "Auto_Engine_wing2_1",1000135,310112,rand(1,100);
+		case 7: callfunc "Auto_Engine_wing2_1",1000142,310119,rand(1,100);
+		}
+
+	case 2:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+		countitem(1000125)>=1?"全自動改造模組(ASPD)":"",
+		countitem(1000126)>=1?"全自動改造模組(Cast)":"",
+		countitem(1000127)>=1?"全自動改造模組(CRI)":"",
+
+		countitem(1000135)>=1?"全自動改造模組(Above)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":""
+		)) {
+		case 1: callfunc "Auto_Engine_wing3_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Engine_wing3_3",1000106,310083,rand(1,100);
+		case 3: callfunc "Auto_Engine_wing3_2",1000125,310102,rand(1,100);
+		case 4: callfunc "Auto_Engine_wing3_2",1000126,310103,rand(1,100);
+		case 5: callfunc "Auto_Engine_wing3_2",1000127,310104,rand(1,100);
+
+		case 6: callfunc "Auto_Engine_wing3_1",1000135,310112,rand(1,100);
+		case 7: callfunc "Auto_Engine_wing3_1",1000142,310119,rand(1,100);
+		}
+
+	case 3:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+		countitem(1000125)>=1?"全自動改造模組(ASPD)":"",
+		countitem(1000126)>=1?"全自動改造模組(Cast)":"",
+		countitem(1000127)>=1?"全自動改造模組(CRI)":"",
+
+		countitem(1000135)>=1?"全自動改造模組(Above)":"",
+		countitem(1000142)>=1?"全自動改造模組(魄力)":""
+		)) {
+		case 1: callfunc "Auto_Engine_wing4_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Engine_wing4_3",1000106,310083,rand(1,100);
+		case 3: callfunc "Auto_Engine_wing4_2",1000125,310102,rand(1,100);
+		case 4: callfunc "Auto_Engine_wing4_2",1000126,310103,rand(1,100);
+		case 5: callfunc "Auto_Engine_wing4_2",1000127,310104,rand(1,100);
+
+		case 6: callfunc "Auto_Engine_wing4_1",1000135,310112,rand(1,100);
+		case 7: callfunc "Auto_Engine_wing4_1",1000142,310119,rand(1,100);
+		}
+	}
+
+Auto_net3:
+	mes "[打掃機器人]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000119)>=1?"全自動改造模組(MHP)":"",
+		countitem(1000120)>=1?"全自動改造模組(MSP)":"",
+		countitem(1000121)>=1?"全自動改造模組(Heal)":"",
+
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000134)>=1?"全自動改造模組(固定詠唱)":"",
+
+		countitem(1000144)>=1?"全自動改造模組(L_Vit)":"",
+		countitem(1000145)>=1?"全自動改造模組(L_INT)":"",
+		countitem(1000146)>=1?"全自動改造模組(L_DEX)":"",
+		countitem(1000147)>=1?"全自動改造模組(超功率)":"",
+		countitem(1000148)>=1?"全自動改造模組(致命閃光)":"",
+		countitem(1000149)>=1?"全自動改造模組(幸運打擊)":""
+		)) {
+		case 1: callfunc "Auto_Leg2_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Leg2_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Leg2_2",1000119,310096,rand(1,100);
+		case 4: callfunc "Auto_Leg2_2",1000120,310097,rand(1,100);
+		case 5: callfunc "Auto_Leg2_2",1000121,310098,rand(1,100);
+
+		case 6: callfunc "Auto_Leg2_1",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Leg2_1",1000134,310111,rand(1,100);
+
+		case 8: callfunc "Auto_Leg2_0",1000144,310121,rand(1,100);
+		case 9: callfunc "Auto_Leg2_0",1000145,310122,rand(1,100);
+		case 10: callfunc "Auto_Leg2_0",1000146,310123,rand(1,100);
+		case 11: callfunc "Auto_Leg2_0",1000147,310124,rand(1,100);
+		case 12: callfunc "Auto_Leg2_0",1000148,310125,rand(1,100);
+		case 13: callfunc "Auto_Leg2_0",1000149,310126,rand(1,100);
+		}
+
+	case 2:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000119)>=1?"全自動改造模組(MHP)":"",
+		countitem(1000120)>=1?"全自動改造模組(MSP)":"",
+		countitem(1000121)>=1?"全自動改造模組(Heal)":"",
+
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000134)>=1?"全自動改造模組(固定詠唱)":"",
+
+		countitem(1000144)>=1?"全自動改造模組(L_Vit)":"",
+		countitem(1000145)>=1?"全自動改造模組(L_INT)":"",
+		countitem(1000146)>=1?"全自動改造模組(L_DEX)":"",
+		countitem(1000147)>=1?"全自動改造模組(超功率)":"",
+		countitem(1000148)>=1?"全自動改造模組(致命閃光)":"",
+		countitem(1000149)>=1?"全自動改造模組(幸運打擊)":""
+		)) {
+		case 1: callfunc "Auto_Leg3_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Leg3_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Leg3_2",1000119,310096,rand(1,100);
+		case 4: callfunc "Auto_Leg3_2",1000120,310097,rand(1,100);
+		case 5: callfunc "Auto_Leg3_2",1000121,310098,rand(1,100);
+
+		case 6: callfunc "Auto_Leg3_1",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Leg3_1",1000134,310111,rand(1,100);
+
+		case 8: callfunc "Auto_Leg3_0",1000144,310121,rand(1,100);
+		case 9: callfunc "Auto_Leg3_0",1000145,310122,rand(1,100);
+		case 10: callfunc "Auto_Leg3_0",1000146,310123,rand(1,100);
+		case 11: callfunc "Auto_Leg3_0",1000147,310124,rand(1,100);
+		case 12: callfunc "Auto_Leg3_0",1000148,310125,rand(1,100);
+		case 13: callfunc "Auto_Leg3_0",1000149,310126,rand(1,100);
+		}
+
+	case 3:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000105)>=1?"全自動改造模組(DEF)":"",
+		countitem(1000106)>=1?"全自動改造模組(MDEF)":"",
+
+		countitem(1000119)>=1?"全自動改造模組(MHP)":"",
+		countitem(1000120)>=1?"全自動改造模組(MSP)":"",
+		countitem(1000121)>=1?"全自動改造模組(Heal)":"",
+
+		countitem(1000141)>=1?"全自動改造模組(精力旺盛)":"",
+		countitem(1000134)>=1?"全自動改造模組(固定詠唱)":"",
+
+		countitem(1000144)>=1?"全自動改造模組(L_Vit)":"",
+		countitem(1000145)>=1?"全自動改造模組(L_INT)":"",
+		countitem(1000146)>=1?"全自動改造模組(L_DEX)":"",
+		countitem(1000147)>=1?"全自動改造模組(超功率)":"",
+		countitem(1000148)>=1?"全自動改造模組(致命閃光)":"",
+		countitem(1000149)>=1?"全自動改造模組(幸運打擊)":""
+		)) {
+		case 1: callfunc "Auto_Leg4_3",1000105,310082,rand(1,100);
+		case 2: callfunc "Auto_Leg4_3",1000106,310083,rand(1,100);
+
+		case 3: callfunc "Auto_Leg4_2",1000119,310096,rand(1,100);
+		case 4: callfunc "Auto_Leg4_2",1000120,310097,rand(1,100);
+		case 5: callfunc "Auto_Leg4_2",1000121,310098,rand(1,100);
+
+		case 6: callfunc "Auto_Leg4_1",1000141,310118,rand(1,100);
+		case 7: callfunc "Auto_Leg4_1",1000134,310111,rand(1,100);
+
+		case 8: callfunc "Auto_Leg4_0",1000144,310121,rand(1,100);
+		case 9: callfunc "Auto_Leg4_0",1000145,310122,rand(1,100);
+		case 10: callfunc "Auto_Leg4_0",1000146,310123,rand(1,100);
+		case 11: callfunc "Auto_Leg4_0",1000147,310124,rand(1,100);
+		case 12: callfunc "Auto_Leg4_0",1000148,310125,rand(1,100);
+		case 13: callfunc "Auto_Leg4_0",1000149,310126,rand(1,100);
+		}
+	}
+
+Auto_net4:
+	mes "[打掃機器人]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000111)>=1?"全自動改造模組(INT)":"",
+		countitem(1000112)>=1?"全自動改造模組(DEX)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+		countitem(1000114)>=1?"全自動改造模組(HealSP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000137)>=1?"全自動改造模組(Soul)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_L2_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_L2_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_L2_3",1000111,310088,rand(1,100);
+		case 4: callfunc "Auto_Ring_L2_3",1000112,310089,rand(1,100);
+		case 5: callfunc "Auto_Ring_L2_2",1000113,310090,rand(1,100);
+		case 6: callfunc "Auto_Ring_L2_2",1000114,310091,rand(1,100);
+
+		case 7: callfunc "Auto_Ring_L2_1",1000115,310092,rand(1,100);
+		case 8: callfunc "Auto_Ring_L2_1",1000116,310093,rand(1,100);
+		case 9: callfunc "Auto_Ring_L2_1",1000117,310094,rand(1,100);
+		case 10: callfunc "Auto_Ring_L2_1",1000118,310095,rand(1,100);
+
+		case 11: callfunc "Auto_Ring_L2_1",1000137,310114,rand(1,100);
+		case 12: callfunc "Auto_Ring_L2_1",1000138,310115,rand(1,100);
+		case 13: callfunc "Auto_Ring_L2_1",1000143,310120,rand(1,100);
+		}
+
+	case 2:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000111)>=1?"全自動改造模組(INT)":"",
+		countitem(1000112)>=1?"全自動改造模組(DEX)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+		countitem(1000114)>=1?"全自動改造模組(HealSP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000137)>=1?"全自動改造模組(Soul)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_L3_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_L3_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_L3_3",1000111,310088,rand(1,100);
+		case 4: callfunc "Auto_Ring_L3_3",1000112,310089,rand(1,100);
+		case 5: callfunc "Auto_Ring_L3_2",1000113,310090,rand(1,100);
+		case 6: callfunc "Auto_Ring_L3_2",1000114,310091,rand(1,100);
+
+		case 7: callfunc "Auto_Ring_L3_1",1000115,310092,rand(1,100);
+		case 8: callfunc "Auto_Ring_L3_1",1000116,310093,rand(1,100);
+		case 9: callfunc "Auto_Ring_L3_1",1000117,310094,rand(1,100);
+		case 10: callfunc "Auto_Ring_L3_1",1000118,310095,rand(1,100);
+
+		case 11: callfunc "Auto_Ring_L3_1",1000137,310114,rand(1,100);
+		case 12: callfunc "Auto_Ring_L3_1",1000138,310115,rand(1,100);
+		case 13: callfunc "Auto_Ring_L3_1",1000143,310120,rand(1,100);
+		}
+
+	case 3:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000111)>=1?"全自動改造模組(INT)":"",
+		countitem(1000112)>=1?"全自動改造模組(DEX)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+		countitem(1000114)>=1?"全自動改造模組(HealSP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000137)>=1?"全自動改造模組(Soul)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_L4_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_L4_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_L4_3",1000111,310088,rand(1,100);
+		case 4: callfunc "Auto_Ring_L4_3",1000112,310089,rand(1,100);
+		case 5: callfunc "Auto_Ring_L4_2",1000113,310090,rand(1,100);
+		case 6: callfunc "Auto_Ring_L4_2",1000114,310091,rand(1,100);
+
+		case 7: callfunc "Auto_Ring_L4_1",1000115,310092,rand(1,100);
+		case 8: callfunc "Auto_Ring_L4_1",1000116,310093,rand(1,100);
+		case 9: callfunc "Auto_Ring_L4_1",1000117,310094,rand(1,100);
+		case 10: callfunc "Auto_Ring_L4_1",1000118,310095,rand(1,100);
+
+		case 11: callfunc "Auto_Ring_L4_1",1000137,310114,rand(1,100);
+		case 12: callfunc "Auto_Ring_L4_1",1000138,310115,rand(1,100);
+		case 13: callfunc "Auto_Ring_L4_1",1000143,310120,rand(1,100);
+		}
+	}
+
+Auto_net5:
+	mes "[打掃機器人]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000109)>=1?"全自動改造模組(STR)":"",
+		countitem(1000110)>=1?"全自動改造模組(AGI)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000136)>=1?"全自動改造模組(Life)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_R2_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_R2_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_R2_3",1000109,310086,rand(1,100);
+		case 4: callfunc "Auto_Ring_R2_3",1000110,310087,rand(1,100);
+		case 5: callfunc "Auto_Ring_R2_2",1000113,310090,rand(1,100);
+
+		case 6: callfunc "Auto_Ring_R2_1",1000115,310092,rand(1,100);
+		case 7: callfunc "Auto_Ring_R2_1",1000116,310093,rand(1,100);
+		case 8: callfunc "Auto_Ring_R2_1",1000117,310094,rand(1,100);
+		case 9: callfunc "Auto_Ring_R2_1",1000118,310095,rand(1,100);
+
+		case 10: callfunc "Auto_Ring_R2_1",1000136,310113,rand(1,100);
+		case 11: callfunc "Auto_Ring_R2_1",1000138,310115,rand(1,100);
+		case 12: callfunc "Auto_Ring_R2_1",1000143,310120,rand(1,100);
+		}
+
+	case 2:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000109)>=1?"全自動改造模組(STR)":"",
+		countitem(1000110)>=1?"全自動改造模組(AGI)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000136)>=1?"全自動改造模組(Life)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_R3_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_R3_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_R3_3",1000109,310086,rand(1,100);
+		case 4: callfunc "Auto_Ring_R3_3",1000110,310087,rand(1,100);
+		case 5: callfunc "Auto_Ring_R3_2",1000113,310090,rand(1,100);
+
+		case 6: callfunc "Auto_Ring_R3_1",1000115,310092,rand(1,100);
+		case 7: callfunc "Auto_Ring_R3_1",1000116,310093,rand(1,100);
+		case 8: callfunc "Auto_Ring_R3_1",1000117,310094,rand(1,100);
+		case 9: callfunc "Auto_Ring_R3_1",1000118,310095,rand(1,100);
+
+		case 10: callfunc "Auto_Ring_R3_1",1000136,310113,rand(1,100);
+		case 11: callfunc "Auto_Ring_R3_1",1000138,310115,rand(1,100);
+		case 12: callfunc "Auto_Ring_R3_1",1000143,310120,rand(1,100);
+		}
+
+	case 3:
+		mes "[打掃機器人]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		countitem(1000107)>=1?"全自動改造模組(VIT)":"",
+		countitem(1000108)>=1?"全自動改造模組(LUK)":"",
+		countitem(1000109)>=1?"全自動改造模組(STR)":"",
+		countitem(1000110)>=1?"全自動改造模組(AGI)":"",
+		countitem(1000113)>=1?"全自動改造模組(HealHP)":"",
+
+		countitem(1000115)>=1?"全自動改造模組(魔力)":"",
+		countitem(1000116)>=1?"全自動改造模組(攻擊ASPD)":"",
+		countitem(1000117)>=1?"全自動改造模組(致命)":"",
+		countitem(1000118)>=1?"全自動改造模組(名弓)":"",
+
+		countitem(1000136)>=1?"全自動改造模組(Life)":"",
+		countitem(1000138)>=1?"全自動改造模組(HP治癒)":"",
+		countitem(1000143)>=1?"全自動改造模組(全部力量)":""
+		)) {
+		case 1: callfunc "Auto_Ring_R4_3",1000107,310084,rand(1,100);
+		case 2: callfunc "Auto_Ring_R4_3",1000108,310085,rand(1,100);
+		case 3: callfunc "Auto_Ring_R4_3",1000109,310086,rand(1,100);
+		case 4: callfunc "Auto_Ring_R4_3",1000110,310087,rand(1,100);
+		case 5: callfunc "Auto_Ring_R4_2",1000113,310090,rand(1,100);
+
+		case 6: callfunc "Auto_Ring_R4_1",1000115,310092,rand(1,100);
+		case 7: callfunc "Auto_Ring_R4_1",1000116,310093,rand(1,100);
+		case 8: callfunc "Auto_Ring_R4_1",1000117,310094,rand(1,100);
+		case 9: callfunc "Auto_Ring_R4_1",1000118,310095,rand(1,100);
+
+		case 10: callfunc "Auto_Ring_R4_1",1000136,310113,rand(1,100);
+		case 11: callfunc "Auto_Ring_R4_1",1000138,310115,rand(1,100);
+		case 12: callfunc "Auto_Ring_R4_1",1000143,310120,rand(1,100);
+		}
+	}
+
+case 5:
+	mes "[打掃機器人]";
+	mes "請選擇你要附魔的全自動裝備位置";
+	next;
+	switch(select("身體:斗篷:鞋子:飾品右:飾品左:取消")){
+
+	case 1:
+	close2;
+	item_enchant 44;
+	end;
+
+	case 2:
+	close2;
+	item_enchant 45;
+	end;
+
+	case 3:
+	close2;
+	item_enchant 46;
+	end;
+
+	case 4:
+	close2;
+	item_enchant 41;
+	end;
+
+	case 5:
+	close2;
+	item_enchant 35;
+	end;
+
+	case 6:
+	close;
+	}
+
+}
+OnInit:
+	waitingroom "全自動裝備",0;
+	end;
+}
+
+
+//-------------------------------- 自動鎧甲 2S
+function	script	Auto_Armor2_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Armor2_2	{
+	if ((@Card_Auto_3 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Armor2_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+//-------------------------------- 自動鎧甲 3S
+function	script	Auto_Armor3_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Armor3_2	{
+	if ((@Card_Auto_2 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Armor3_1	{
+
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+
+
+//-------------------------------- 自動鎧甲 4S
+function	script	Auto_Armor4_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Armor4_2	{
+	if ((@Card_Auto_2 + @Card_Auto_3) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Armor4_1	{
+
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_3 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+
+//-------------------------------- 自動引擎翼 2S
+function	script	Auto_Engine_wing2_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Engine_wing2_2	{
+	if ((@Card_Auto_3 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Engine_wing2_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+
+//-------------------------------- 自動引擎翼 3S
+function	script	Auto_Engine_wing3_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Engine_wing3_2	{
+	if ((@Card_Auto_2 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Engine_wing3_1	{
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+
+
+//-------------------------------- 自動引擎翼 4S
+function	script	Auto_Engine_wing4_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Engine_wing4_2	{
+	if ((@Card_Auto_3 + @Card_Auto_2) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Engine_wing4_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_2 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+
+//-------------------------------- 自動長靴 2S
+function	script	Auto_Leg2_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Leg2_2	{
+	if ((@Card_Auto_3 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Leg2_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+function	script	Auto_Leg2_0	{
+	if( @Card_Auto_3 == 1000144 || @Card_Auto_4 == 1000144 || @Card_Auto_3 == 1000145 || @Card_Auto_4 == 1000145 || @Card_Auto_3 == 1000146 || @Card_Auto_4 == 1000146|| @Card_Auto_3 == 1000147 || @Card_Auto_4 == 1000147|| @Card_Auto_3 == 1000148 || @Card_Auto_4 == 1000148|| @Card_Auto_3 == 1000149 || @Card_Auto_4 == 1000149 ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+
+//-------------------------------- 自動長靴 3S
+function	script	Auto_Leg3_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Leg3_2	{
+	if ((@Card_Auto_2 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Leg3_1	{
+
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Leg3_0	{
+	if( @Card_Auto_2 == 1000144 || @Card_Auto_4 == 1000144 || @Card_Auto_2 == 1000145 || @Card_Auto_4 == 1000145 || @Card_Auto_2 == 1000146 || @Card_Auto_4 == 1000146|| @Card_Auto_2 == 1000147 || @Card_Auto_4 == 1000147|| @Card_Auto_2 == 1000148 || @Card_Auto_4 == 1000148|| @Card_Auto_2 == 1000149 || @Card_Auto_4 == 1000149 ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+
+
+//-------------------------------- 自動長靴 4S
+function	script	Auto_Leg4_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Leg4_2	{
+	if ((@Card_Auto_3 + @Card_Auto_2) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Leg4_1	{
+
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_3 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Leg4_0	{
+	if( @Card_Auto_2 == 1000144 || @Card_Auto_3 == 1000144 || @Card_Auto_2 == 1000145 || @Card_Auto_3 == 1000145 || @Card_Auto_2 == 1000146 || @Card_Auto_3 == 1000146|| @Card_Auto_2 == 1000147 || @Card_Auto_3 == 1000147|| @Card_Auto_2 == 1000148 || @Card_Auto_3 == 1000148|| @Card_Auto_2 == 1000149 || @Card_Auto_3 == 1000149 ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+
+
+//-------------------------------- 裝飾品L 2S
+function	script	Auto_Ring_L2_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_L2_2	{
+	if ((@Card_Auto_3 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_L2_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+//-------------------------------- 裝飾品L 3S
+function	script	Auto_Ring_L3_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_L3_2	{
+	if ((@Card_Auto_2 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_L3_1	{
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+
+//-------------------------------- 裝飾品L 4S
+function	script	Auto_Ring_L4_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Ring_L4_2	{
+	if ((@Card_Auto_2 + @Card_Auto_3) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Ring_L4_1	{
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_3 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+
+
+//-------------------------------- 裝飾品R 2S
+function	script	Auto_Ring_R2_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_R2_2	{
+	if ((@Card_Auto_3 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_R2_1	{
+	if( @Card_Auto_3 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,getarg(1),@Card_Auto_3,@Card_Auto_4;
+	close;
+}
+
+//-------------------------------- 裝飾品R 3S
+function	script	Auto_Ring_R3_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_R3_2	{
+	if ((@Card_Auto_2 + @Card_Auto_4) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+function	script	Auto_Ring_R3_1	{
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_4 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,getarg(1),@Card_Auto_4;
+	close;
+}
+
+//-------------------------------- 裝飾品R 4S
+function	script	Auto_Ring_R4_3	{
+	if(countitem(getarg(0))<1){
+	mes "[打掃機器人]";
+	mes "你身上沒有對應的全自動改造模組";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Ring_R4_2	{
+	if ((@Card_Auto_2 + @Card_Auto_3) == getarg(1)*2 ) {
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在2個^000000";
+	close; }
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+function	script	Auto_Ring_R4_1	{
+	if( @Card_Auto_2 == getarg(1) || @Card_Auto_3 == getarg(1) ){
+	mes "[打掃機器人]";
+	mes "^ff0000這個系列的模組只能存在1個^000000";
+	close; }
+
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_Auto,0,@Card_Auto_1,@Card_Auto_2,@Card_Auto_3,getarg(1);
+	close;
+}
+
+
+
+

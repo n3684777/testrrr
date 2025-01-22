@@ -1,0 +1,715 @@
+
+trinity,77,33,4	script	冰封峽谷管理者	10035,{
+
+	//挑戰次數
+	if ( day_Instance_S_Bout_01 < gettime(8) ){
+	set Instance_S_Bout_01,3;
+	set day_Instance_S_Bout_01,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_01 < 1) {
+		mes "[冰封峽谷管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[冰封峽谷管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "冰封峽谷";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[冰封峽谷管理者]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP_S+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_01+"^000000 ]";
+	mes "等級限制：200";
+	mes "副本難度：★";
+	mes "副本獎勵：^i[61007]";
+	mes "自創副本積分x10";
+	mes "自選一種官方材料秘寶";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[冰封峽谷管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[冰封峽谷管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】副本，請在90秒內入場！",15,0x33ea91;
+		mes "[冰封峽谷管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[冰封峽谷管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";	
+			//扣除挑戰次數
+			set Instance_S_Bout_01,Instance_S_Bout_01-1;		
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 1){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "冰封峽谷",0;
+	end;
+}
+
+
+//----------------------------------- 副本事件
+1@bf,0,0,0	script	冰封峽谷事件1	-1,{
+
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@bf");
+	'map_name$[1] = instance_mapname("2@bf");
+	'map_name$[2] = instance_mapname("3@bf");
+
+	//副本MOD資訊
+	setarray $@Water_mobid1[1],28042,28043,28044,28045,28046,28047,28048,28049,28050,1251,1252,1418,1623,1685,1785,1751,1312,1779,1708,28067;
+
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("冰封峽谷傳送門#Water01");
+	disablenpc instance_npcname("冰封峽谷傳送門#Water02");
+
+	//副本標籤
+	set 'Water_mob_01,0;
+	set 'Water_mob_02,0;
+	set 'Water_mob_03,0;
+	set 'Water_mob_04,0;
+	//出怪
+	set 'Water_mob_01,100;
+	areamonster 'map_name$[0],0,0,300,300,"--ja--",28042,60,instance_npcname("冰封峽谷事件1")+"::OnCcdd01";
+	areamonster 'map_name$[0],0,0,300,300,"--ja--",28043,60,instance_npcname("冰封峽谷事件1")+"::OnCcdd01";
+
+	//副本公告
+	sleep 1000;
+	instance_announce instance_id(1),"冰封峽谷：副本開始後打倒100個雪獸就能在左下跟右下召喚出卡侖",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"冰封峽谷：打倒卡侖後可以在地圖中央召換出冰暴騎士",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"冰封峽谷：打倒冰暴騎士後就能開啟通往第二層的傳點了",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"冰封峽谷：冰封峽谷挑戰開始!!",bc_all,0xD7BA98;
+	//副本開始關閉入場
+	sleep 90000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+OnCcdd01:
+	set 'Water_mob_01,'Water_mob_01-1;
+	instance_announce instance_id(1),"冰封峽谷：還需要打倒 "+'Water_mob_01+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_01==0) {
+	killmonsterall 'map_name$[0];
+	set 'Water_boss_01,2;
+	instance_announce instance_id(1),"冰封峽谷：地圖左下跟右下都出現了卡侖",bc_all,0xD7BA98;
+	monster 'map_name$[0],56,73,"--ja--",1252,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd02";
+	monster 'map_name$[0],250,96,"--ja--",1252,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd02";
+	viewpoint 1,56,73,1,0xffffff;
+	viewpoint 1,250,96,2,0xffffff;
+	}
+	end;
+
+OnCcdd02:
+	set 'Water_boss_01,'Water_boss_01-1;
+	instance_announce instance_id(1),"冰封峽谷：還剩下"+'Water_boss_01+"個卡侖",bc_all,0xD7BA98;
+	if ('Water_boss_01>0) end;
+	instance_announce instance_id(1),"冰封峽谷：地圖中間出現了冰暴騎士",bc_all,0xD7BA98;
+	monster 'map_name$[0],148,168,"--ja--",1251,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd03";
+	viewpoint 2,56,73,1,0xffffff;
+	viewpoint 2,250,96,2,0xffffff;
+	viewpoint 1,148,168,3,0xffffff;
+	end;
+
+OnCcdd03:
+	enablenpc instance_npcname("冰封峽谷傳送門#Water01");
+	instance_announce instance_id(1),"冰封峽谷：地圖中間出現了通往第二層的傳送點",bc_all,0xD7BA98;
+	sleep2 2000;
+	instance_announce instance_id(1),"冰封峽谷：尋找隱藏在第二層某地方的四個華麗金屬將其打破",bc_all,0xD7BA98;
+	set 'Water_boss_01,4;
+	monster 'map_name$[1],0,0,"--ja--",28044,50;
+	monster 'map_name$[1],0,0,"--ja--",28045,50;
+	monster 'map_name$[1],17,19,"--ja--",28200,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd04";
+	monster 'map_name$[1],283,19,"--ja--",28200,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd05";
+	monster 'map_name$[1],283,285,"--ja--",28200,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd06";
+	monster 'map_name$[1],17,285,"--ja--",28200,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd07";
+	viewpoint 2,148,168,3,0xffffff;
+	end;
+
+OnCcdd04:
+	instance_announce 0,"墨蛇君守衛：誰敢侵犯我們的聖地",bc_map,0x00ff00;
+	monster 'map_name$[1],17,19,"--ja--",1418,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd08";
+	end;
+
+OnCcdd05:
+	instance_announce 0,"RSX-0806：誰敢侵犯我們的聖地",bc_map,0x00ff00;
+	monster 'map_name$[1],283,19,"--ja--",1623,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd08";
+	end;
+
+OnCcdd06:
+	instance_announce 0,"貝思波：誰敢侵犯我們的聖地",bc_map,0x00ff00;
+	monster 'map_name$[1],283,285,"--ja--",1685,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd08";
+	end;
+
+OnCcdd07:
+	instance_announce 0,"阿特羅斯：誰敢侵犯我們的聖地",bc_map,0x00ff00;
+	monster 'map_name$[1],17,285,"--ja--",1785,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd08";
+	end;
+
+OnCcdd08:
+	set 'Water_boss_01,'Water_boss_01-1;
+	instance_announce instance_id(1),"冰封峽谷：還剩下"+'Water_boss_01+"個守衛BOSS",bc_all,0xD7BA98;
+	if ('Water_boss_01>0) end;
+	instance_announce instance_id(1),"冰封峽谷：通往下一層傳送點已經打開",bc_all,0xD7BA98;
+	enablenpc instance_npcname("冰封峽谷傳送門#Water02");
+	sleep2 1000;
+	instance_announce instance_id(1),"冰封峽谷：打倒一定數量的魔物能召換出這區域的守衛BOSS",bc_all,0xD7BA98;
+	set 'Water_mob_01,30;
+	set 'Water_mob_02,30;
+	set 'Water_mob_03,30;
+	set 'Water_mob_04,30;
+	set 'Water_boss_01,4;
+	monster 'map_name$[2],0,0,"--ja--",28042,20;
+	monster 'map_name$[2],0,0,"--ja--",28044,20;
+	monster 'map_name$[2],0,0,"--ja--",28046,20;
+	areamonster 'map_name$[2],18,150,150,36,"--ja--",28047,30,instance_npcname("冰封峽谷事件1")+"::OnCcdd09";
+	areamonster 'map_name$[2],18,150,150,275,"--ja--",28048,30,instance_npcname("冰封峽谷事件1")+"::OnCcdd10";
+	areamonster 'map_name$[2],275,150,150,36,"--ja--",28049,30,instance_npcname("冰封峽谷事件1")+"::OnCcdd11";
+	areamonster 'map_name$[2],275,168,150,275,"--ja--",28050,30,instance_npcname("冰封峽谷事件1")+"::OnCcdd12";
+	end;
+
+OnCcdd09:
+	set 'Water_mob_01,'Water_mob_01-1;
+	instance_announce instance_id(1),"冰封峽谷：蘭特克力斯的封印還剩下 "+'Water_mob_01+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_01>0) end;
+	instance_announce instance_id(1),"冰封峽谷：蘭特克力斯的封印已經解除，找出他所在並將其打倒吧!",bc_all,0xD7BA98;
+	monster 'map_name$[2],47,248,"--ja--",1751,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd13";
+	end;
+
+OnCcdd10:
+	set 'Water_mob_02,'Water_mob_02-1;
+	instance_announce instance_id(1),"冰封峽谷：烏龜將軍的封印還剩下 "+'Water_mob_02+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_02>0) end;
+	instance_announce instance_id(1),"冰封峽谷：烏龜將軍的封印已經解除，找出他所在並將其打倒吧!",bc_all,0xD7BA98;
+	monster 'map_name$[2],38,39,"--ja--",1312,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd13";
+	end;
+
+OnCcdd11:
+	set 'Water_mob_03,'Water_mob_03-1;
+	instance_announce instance_id(1),"冰封峽谷：水晶龍的封印還剩下 "+'Water_mob_03+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_03>0) end;
+	instance_announce instance_id(1),"冰封峽谷：水晶龍的封印已經解除，找出他所在並將其打倒吧!",bc_all,0xD7BA98;
+	monster 'map_name$[2],263,40,"--ja--",1779,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd13";
+	end;
+
+OnCcdd12:
+	set 'Water_mob_04,'Water_mob_04-1;
+	instance_announce instance_id(1),"冰封峽谷：魔劍士 達納托斯的記憶的封印還剩下 "+'Water_mob_04+" 個魔物",bc_all,0xD7BA98;
+	if ('Water_mob_04>0) end;
+	instance_announce instance_id(1),"冰封峽谷：魔劍士 達納托斯的記憶的封印已經解除，找出他所在並將其打倒吧!",bc_all,0xD7BA98;
+	monster 'map_name$[2],255,253,"--ja--",1708,1,instance_npcname("冰封峽谷事件1")+"::OnCcdd13";
+	end;
+
+OnCcdd13:
+	set 'Water_boss_01,'Water_boss_01-1;
+	instance_announce instance_id(1),"冰封峽谷：還剩下"+'Water_boss_01+"個守衛BOSS",bc_all,0xD7BA98;
+	if ('Water_boss_01>0) end;
+	instance_announce 0,"水之精靈：不錯的人類嘛，打敗我四個得力的手下，但是這次你們的對手是我!",bc_map,0x00ff00;
+	monster 'map_name$[2],150,112,"--ja--",28067,1,instance_npcname("冰封峽谷事件1")+"::OnEnd1";
+	end;
+
+
+OnEnd1:
+//-----------------------------------------------------------
+	viewpoint 1,149,116,20,0xffffff;
+	killmonsterall 'map_name$[3];
+	enablenpc instance_npcname("飛空艇祕寶#Water_Box_02");
+	enablenpc instance_npcname("星座祕寶#Water_Box_02");
+	enablenpc instance_npcname("灰狼祕寶#Water_Box_02");
+	enablenpc instance_npcname("淨化祕寶#Water_Box_02");
+	enablenpc instance_npcname("幽靈祕寶#Water_Box_02");
+	enablenpc instance_npcname("生物祕寶#Water_Box_02");
+	enablenpc instance_npcname("悔恨祕寶#Water_Box_02");
+	enablenpc instance_npcname("雪花祕寶#Water_Box_02");
+	enablenpc instance_npcname("自動祕寶#Water_Box_02");
+	enablenpc instance_npcname("死亡祕寶#Water_Box_02");
+	enablenpc instance_npcname("超時空祕寶#Water_Box_02");
+	enablenpc instance_npcname("施密特祕寶#Water_Box_02");
+	enablenpc instance_npcname("EDDA祕寶#Water_Box_02");
+	enablenpc instance_npcname("古城祕寶#Water_Box_02");
+	instance_announce 0, "冰封峽谷：來地圖中間(149,116)找我領取獎勵吧!!",bc_map,"0x00cc66";
+	//set $@Water_count,getmapusers('map_name$[2]);
+	//出場公告時間
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	announce "【冰封峽谷】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------副本NPC
+//------------------------------傳點資訊
+1@bf,145,161,0	script	冰封峽谷傳送門#Water01	45,1,1,{ warp 'map_name$[1],151,140; end; }
+2@bf,150,286,0	script	冰封峽谷傳送門#Water02	45,1,1,{ warp 'map_name$[2],149,24; end; }
+
+//------------------------------ 副本寶箱
+3@bf,141,116,3	script	飛空艇祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000363,10*$EP_S;	//伊米爾碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem rand(470071,470077),1;	//不明之靴
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 飛空艇祕寶",bc_all,0xD7BA98;	
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,145,116,3	script	星座祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem rand(1000442,1000447),10*$EP_S;	//隨機一種隕石碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000372,300;	//隕石浮塵
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 星座祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,149,116,3	script	灰狼祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000405,30*$EP_S;	//紫水晶碎片
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000405,500;	//紫水晶碎片
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 灰狼祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,154,116,3	script	淨化祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000501,2*$EP_S;	//淨化聖油
+	getitem 1000502,2*$EP_S;	//化聖水
+	getitem 1000503,2*$EP_S;	//安息手帕
+	getitem 100655,1*$EP_S;	//淨化藍圖包
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//活力信念武器
+	getitem callfunc("F_Rand",50021,650022,800012,820006,810008,830011,840007,540045,540046,550064,550026,550065,550066,500027,500028,510033,520009,530014,540024,540025,540026,550029,560020,560021,570019,570020,580019,580020,590023,590024,600018,610022,610023,630013,640021,640022,700033,700034,700035),1;
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 淨化祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,158,116,3	script	幽靈祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 6672,250*$EP_S;	//黃土的碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",400134,400141,400146,400150),1;
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 幽靈祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,158,112,3	script	生物祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000636,50*$EP_S;	//草原盧恩碎片
+	getitem 1000637,50*$EP_S;	//火焰盧恩碎片
+	getitem 1000638,50*$EP_S;	//寒冰盧恩碎片
+	getitem 1000639,50*$EP_S;	//死亡盧恩碎片
+	getitem 1001177,50*$EP_S;	//聖殿盧恩碎片
+	getitem 1001179,50*$EP_S;	//猛毒盧恩碎片
+	getitem 1001181,50*$EP_S;	//靈魂盧恩碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",1000640,1000641,1000642,1000643,1001178,1001180,1001182),200;
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 生物祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,154,112,3	script	悔恨祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000367,35*$EP_S;	//悔恨寶石
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//
+	getitem callfunc("F_Rand",100480,100486),10;
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 悔恨祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,149,112,3	script	雪花祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000608,50*$EP_S;	//雪花花瓣
+	getitem 1000812,100*$EP_S;	//雪花魔石
+	getitem 1001034,1*$EP_S;	//雪花魔石萃取精華
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	//閃亮的雪花魔石萃取精華 燦爛雪花魔石萃取精華
+	getitem callfunc("F_Rand",1001035,1001036),2;
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 雪花祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,145,112,3	script	自動祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000103,150*$EP_S;	//霸肋門德餐券
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000104,600;	//魔凍石
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 自動祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,141,112,3	script	死亡祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 1000257,30*$EP_S;	//惡行雕塑
+	getitem 1000263,30*$EP_S;	//善行雕塑
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 1000257,300;	//惡行雕塑
+	getitem 1000263,300;	//善行雕塑
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 死亡祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,142,108,3	script	超時空祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 25865,50*$EP_S;	//超時空寶石原石
+	getitem 25867,15*$EP_S;	//超時空魔力碎片
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 100295,1;	//時光斗篷寶箱
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 超時空祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+3@bf,146,108,3	script	施密特祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+//冰封峽谷寶箱
+	getitem 25740,50*$EP_S;	//血腥詛咒原石
+	getitem 25739,50*$EP_S;	//血腥詛咒水晶
+
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 101199,1;	//時光天地樹苗寶箱
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 施密特祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+3@bf,150,108,3	script	EDDA祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	set #Instance_S_Points,#Instance_S_Points+10;	//自創副本積分
+	dispbottom "自創副本積分+10";
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+	getitem 25786,50*$EP_S;	//生物研究卷宗
+	getitem 25787,50*$EP_S;	//生物研究零件
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 100742,1;	//神話英雄武器盒
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 EDDA祕寶",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+3@bf,154,108,3	script	古城祕寶#Water_Box_02	4_STAR_BOX_SCORE,{
+
+	misceffect 10;
+	callfunc "Custom_instance_reward";
+	getitem 61007,1*$EP_S;	//商城10點金幣
+	getitem 6607,20*$EP_S;	//時光結晶
+	getitem 6755,20*$EP_S;	//受汙染的魔力
+	getitem 6608,40*$EP_S;	//凝結的魔力
+	//額外獎勵
+	set @pay,rand(1,50);
+	if(@pay==1){
+	getitem 6607,400;	//時光結晶
+	getitem 6755,400;	//受汙染的魔力
+	getitem 6608,800;	//凝結的魔力
+	announce "【冰封峽谷】："+strcharinfo(0)+"獲得了稀有的 古城祕寶 獲得大量材料",bc_all,0xD7BA98;
+	}
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+//-------------------------------- 地圖屬性
+1@bf	mapflag	nomemo
+1@bf	mapflag	nosave	SavePoint
+1@bf	mapflag	monster_noteleport
+1@bf	mapflag	noteleport
+1@bf	mapflag	noreturn
+1@bf	mapflag	restricted	6
+
+2@bf	mapflag	nomemo
+2@bf	mapflag	nosave	SavePoint
+2@bf	mapflag	monster_noteleport
+2@bf	mapflag	noteleport
+2@bf	mapflag	noreturn
+2@bf	mapflag	restricted	6
+
+3@bf	mapflag	nomemo
+3@bf	mapflag	nosave	SavePoint
+3@bf	mapflag	monster_noteleport
+3@bf	mapflag	noteleport
+3@bf	mapflag	noreturn
+3@bf	mapflag	restricted	6
+

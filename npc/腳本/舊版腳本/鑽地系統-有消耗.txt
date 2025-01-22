@@ -1,0 +1,123 @@
+/* ===============================
+ *
+ * 2021/09/07
+ * - 作者 : By.cC
+ * - 測試端口 : PandasWs 1.1.5
+ *
+ * -----------------------------*/
+
+/*
+
+	callfunc "DigSystem",挖礦秒數,挖礦機率,是否挖到武器,是否挖到防具,是否挖到普通卡片,是否挖到MVP卡片;
+	
+	getArg(0) = 挖礦秒數
+	getArg(1) = 能挖到的物品機率[萬分率] ex:5000 代表只能挖到機率50%以上物品
+	getArg(2) = 是否挖到武器
+	getArg(3) = 是否挖到防具
+	getArg(4) = 是否挖到普通卡片 
+	getArg(5) = 是否挖到MVP卡片
+	getArg(6) = 電鑽ID
+	假設普通卡片的機率是1% 如果設定要挖到普卡 機率必須設定大於100 代表能挖到1%以上的物品
+	callfunc "DigSystem",3,100,0,0,1,0;
+
+*/
+
+
+
+function	script	DigSystem	{
+	set itemid$,getArg(6);
+	function NewDig;
+	
+	// MVP卡片
+	setarray .@MvpCard[0],4047,4054,4121,4123,4128,4131,4132,4134,4135,4137,
+						  4142,4143,4144,4145,4146,4147,4148,4168,4169,4174,
+						  4198,4236,4241,4263,4276,4305,4318,4324,4330,4342,
+						  4352,4357,4359,4361,4363,4365,4367,4372,4374,4376,
+						  4386,4399,4403,4407,4408,4419,4425,4441,4451,4590,
+						  4591,4592,4601,4602,4603,4604,4605,4606,4608,4609,
+						  4159,4283,4098,4103,4094,4290;
+	  
+Again:
+	ChangeMaterial();
+	
+	if ( @MiningMap$ != strcharinfo(3) ) NewDig();
+	getinventorylist;
+	// 該地圖無魔物
+	if ( !@DigItemN[0] ) {	
+		showscript "[ 鑽地 ] - 該地圖無法使用電鑽";
+		dispbottom "[ 鑽地 ] - 該地圖無法使用電鑽",0x888888;
+		@MiningMap$ = 0;
+		end;
+	}
+	// 身上負重或格子不足
+	if ( Weight*100/MaxWeight >= 90 || @inventorylist_count == 100 ) {	
+		showscript "[ 鑽地 ] - 身上負重或格子已滿 , 無法鑽地";
+		dispbottom "[ 鑽地 ] - 身上負重或格子已滿 , 無法鑽地",0x888888;
+		@MiningMap$ = 0;
+		end;
+	}	
+		showscript "[ 鑽地 ] - 鑽地中 ! 可移動取消..";	
+		progressbar "0xFF0000",getArg(0);
+		do {
+			freeloop(1);
+			.@Num = rand(0,@DigNumber-1);
+			// 判斷是否為 MVP卡片
+			.@index = inarray( .@MvpCard[0], @DigItemN[.@Num] );
+			// 判斷能否挖到武器
+			if ( getArg(2) == 1 && getiteminfo(@DigItemN[.@Num],2) == 5 && @DigRateN[.@Num] >= getArg(1) ) break;
+			// 判斷能否挖到防具
+			if ( getArg(3) == 1 && getiteminfo(@DigItemN[.@Num],2) == 4 && @DigRateN[.@Num] >= getArg(1) ) break;
+			// 判斷能否挖到普通卡片
+			if ( getArg(4) == 1 && getiteminfo(@DigItemN[.@Num],2) == 6 && .@index == -1 && @DigRateN[.@Num] >= getArg(1) ) break;
+			// 判斷能否挖到MVP卡片
+			if ( getArg(5) == 1 && getiteminfo(@DigItemN[.@Num],2) == 6 && .@index != -1 && @DigRateN[.@Num] >= getArg(1) ) break;		
+			freeloop(0);
+		} while ( @DigRateN[.@Num] < getArg(1) || getiteminfo(@DigItemN[.@Num],2) == 4 || getiteminfo(@DigItemN[.@Num],2) == 5 || getiteminfo(@DigItemN[.@Num],2) == 6 );
+			
+			if ( getiteminfo(@DigItemN[.@Num],2) == 6 && .@index > -1 )
+				announce "[ 鑽地 ] - '"+strcharinfo(0)+"' 鑽地鑽到一張埋在土裡的 "+getitemname(@DigItemN[.@Num])+" 真是太好運拉～！",0xFFFF00;
+			
+				specialeffect2 459;
+				specialeffect2 501;		
+				specialeffect2 376;			
+				specialeffect2 429;
+				getitem @DigItemN[.@Num],1;
+				delitem 2210001,1;
+				dispbottom "[ 鑽地 ] - 從 "+sprintf("%12s",getmonsterinfo(@DigMobN[.@Num],MOB_NAME))+" 身上挖到 : "+sprintf("%16s",getitemname(@DigItemN[.@Num]))+" , 機率 : "+@DigRateN[.@Num]/100+""+((@DigRateN[.@Num]%100<10)?".0":".")+""+@DigRateN[.@Num]%100+" %",0x1AFD9C;
+				if(countitem(2210001) <= 0 ){
+					dispbottom "[ 鑽地 ] - 沒有電鑽了 ... ",0x1AFD9C;
+					end;
+				}
+				goto Again;
+		
+	function	NewDig	{
+		
+		cleararray @DigItem[0],0,getarraysize(@DigItem);
+		cleararray @DigRate[0],0,getarraysize(@DigRate);
+		cleararray @DigMobN[0],0,getarraysize(@DigMobN);
+		cleararray @DigItemN[0],0,getarraysize(@DigItemN);
+		cleararray @DigRateN[0],0,getarraysize(@DigRateN);
+		@DigNumber = 0;
+		getmapxy(@MiningMap$,@Digx,@Digy,BL_PC);
+		getmapunits(BL_MOB,@MiningMap$,.@array[0]);
+		freeloop(1);
+		for(.@i=2;.@i<getarraysize(.@array);.@i++){
+			getunitdata(.@array[.@i],.@gid);		
+			getmobdrops(.@gid[UMOB_CLASS]);
+			@MiningDropCount = $@MobDrop_count;				
+			copyarray @DigItem[0],$@MobDrop_item[0],@MiningDropCount;
+			copyarray @DigRate[0],$@MobDrop_rate[0],@MiningDropCount;
+			for(.@k=0;.@k<@MiningDropCount;.@k++){
+				@DigItemN[@DigNumber] = @DigItem[.@k];
+				@DigRateN[@DigNumber] = @DigRate[.@k];
+				@DigMobN[@DigNumber] = .@gid[UMOB_CLASS];
+				@DigNumber++;
+			}
+		}
+		freeloop(0);
+		dispbottom "[ 鑽地 ] - 系統偵測到數據變更,請在使用一次電鑽",0x888888;
+		set item,itemid$;
+		getitem item,1;
+		end;
+	}
+}

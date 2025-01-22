@@ -1,0 +1,590 @@
+//============
+//  變量說明
+//============
+//@DQ1	玩家第一次投注
+//@DQ2	玩家第二次投注
+//@DQ3	玩家第三次投注
+//$@DQNPC	NPC投注
+
+//$DQZ	設置每注金額	NPC的投注金額將是這個的1.5倍
+//$DQC	投注者總數
+
+//$DQTZ$[]	投注者名字
+//$DQTZP[]	投注者點數
+
+//$DQWIN$[]	獲勝者名字
+//$DQWINZ[]	獲勝者獲得的獎金
+
+//$@DQXH$[]	存儲投點序號
+//$@DQOP	設置賭錢是否已準備好
+
+//$DQMAX	存儲每輪投點最大的數字
+
+//$DQPHWIN[]	排行榜獲勝次數
+//$DQPHNA$[]	排行榜人名
+//$DQPHSHOW	設置排行榜顯示的數目
+
+//DQWIN	個人獲勝次數
+//============
+//  流程說明
+//============
+//一個或多個玩家投注 > NPC最後投注 > 判斷勝者 > 勝者領錢 (並列獲勝則均分獎金) 如果是流氓的話還可以獲得Base以及Job經驗值
+//每隔兩分鐘進行一輪,如果沒人投注則不向下進行
+//============
+//1.5版更新說明
+//============
+//·按照雲逝的建議將全服公告修改為首都地圖公告
+//·改進每輪投注最大的點數判斷算法,降低系統運算負荷
+//·增加「賭壇風雲排行榜」功能,且在產生冠軍時會進行公告
+//·增加GM管理功能，可以在線設置投注金、排行榜顯示條目以及刪除長時間不領取獎金的記錄
+//·設定GM在投注時可以看到當前本輪的最大投注點數
+//·流氓在投擲點數後如果投出的點數小於10將會有1/3的幾率重新投點
+
+trinity,55,111,4	script	無賴賭徒	497,{
+	if(getgmlevel()>90) goto DQGM;
+PLA:	set @TID,0;
+SA:	if($DQWIN$[@TID]==strcharinfo(0))
+	{
+		mes"[無賴賭徒]";
+		mes"哈哈~你運氣真不賴啊!";
+		mes"一下贏了^FF0000"+$DQWINZ[@TID]+"W^000000的獎金。";
+		if(Zeny+$DQWINZ[@TID]*10000>1000000000)
+		{
+			mes"不過你身上拿的錢太多了,這些錢現在沒有辦法給你。";
+			mes"把身上的錢先存到銀行再來領吧。";
+			close;
+		}
+		mes"喏,錢都在這裡了,拿去吧!";
+		npctalk strcharinfo(0)+"~拿走這"+$DQWINZ[@TID]+"W吧~不過記得要請我吃飯!";
+		set Zeny,Zeny+$DQWINZ[@TID]*10000;
+		if(Class==17)
+		{
+			announce "無賴賭徒:哈哈~跟我賭錢準沒錯~是不是又有了不少心得啊~哈哈!",3;
+			set BaseExp,BaseExp+$DQWINZ[@TID]*5000;
+			set JobExp,JobExp+$DQWINZ[@TID]*10000;
+		}
+		set $DQWINZ[@TID],0;
+		set $DQWIN$[@TID],"";
+		set DQWIN,DQWIN+1;
+		if($DQPHNA$[0]==strcharinfo(0))set @DQONE,1;
+		else set @DQONE,0;
+		set @TID,0;
+		set @TCO,0;
+DQPHSE:		if(@TCO!=0)
+		{
+			set $DQPHWIN[@TID-1],$DQPHWIN[@TID];
+			set $DQPHNA$[@TID-1],$DQPHNA$[@TID];
+		}
+		if($DQPHNA$[@TID]==strcharinfo(0))
+		{
+			set $DQPHWIN[@TID],0;
+			set $DQPHNA$[@TID],"";
+			set @TCO,1;
+		}
+		set @TID,@TID+1;
+		if(@TID<100)goto DQPHSE;
+		set @TID,100;
+		set @TCO,0;
+DQPHST:		if($DQPHWIN[@TID]<DQWIN)
+		{
+			set $DQPHWIN[@TID+1],$DQPHWIN[@TID];
+			set $DQPHNA$[@TID+1],$DQPHNA$[@TID];
+		}
+		else
+		{
+			set $DQPHWIN[@TID+1],DQWIN;
+			set $DQPHNA$[@TID+1],strcharinfo(0);
+			set @TCO,1;
+		}
+		set @TID,@TID-1;
+		if(@TID>=0&&@TCO==0)goto DQPHST;
+		if(@TCO==0)
+		{
+			set $DQPHWIN[0],DQWIN;
+			set $DQPHNA$[0],strcharinfo(0);
+			if(@DQONE==0)mapannounce "prontera","無賴賭徒:新一代賭聖誕生啦!"+strcharinfo(0)+"刷新了排行榜!以"+DQWIN+"勝次躋身賭壇冠軍!",15;
+		}
+		next;
+		menu "查看^F00000賭壇風雲排行榜^000000",DTPH;
+		end;
+	}
+	set @TID,@TID+1;
+	if(@TID<100)goto SA;
+	if($@DQOP<1)
+	{
+		mes"[無賴賭徒]";
+		mes"稍等一下啊~服務器剛開~我還沒有準備好道具~";
+		mes"兩分鐘內就OK!";
+		next;
+		menu "查看^F00000賭壇風雲排行榜^000000",DTPH;
+		end;
+	}
+	set @TID,0;
+SB:	if($DQTZ$[@TID]==strcharinfo(0))
+	{
+		mes"[無賴賭徒]";
+		mes"呵呵~你已經投注過了。";
+		mes"本輪現在已經有^0158BD"+$DQC+"^000000人進行了投注。";
+		set @TID2,0;set @TNB,0;
+SC:		if($DQWIN$[@TID2]==strcharinfo(0))
+		{
+			set @TNB,@TNB+1;
+			mes"你的投注點數是^0000FF"+$DQTZP[@TID]+"^000000點。";
+		}
+		set @TID2,@TID2+1;
+		if(@TID2<100)goto SC;
+		if(getcharid(3)==2000001)mes"現在最大的投注點數為^FF0000"+$DQMAX+"^000000點。";
+		mes"再等一會結果就會出來啦!別著急!";
+		next;
+		if(getcharid(3)==2000001)
+		{
+			
+			menu "查看^F00000賭壇風雲排行榜^000000",DTPH,"查看未領取獎金的列表",LLIST;
+		}
+		else menu "查看^F00000賭壇風雲排行榜^000000",DTPH;
+		close;
+	}
+	set @TID,@TID+1;
+	if(@TID<100)goto SB;
+	mes"[無賴賭徒]";
+	if($DQC>=100)
+	{
+		mes"抱歉!本輪賭局參加的人已經太多了!";
+		mes"請下一局再來吧!";
+		menu "查看^F00000賭壇風雲排行榜^000000",DTPH;
+		close;
+	}
+	if(sex==1)mes"哈哈~小兄弟~來一起賭錢吧!";
+	else mes"哈哈~小美人~來一起賭錢吧!";
+	if($DQC>0)
+	{
+		mes"本輪現在已經有^0158BD"+$DQC+"^000000人投注啦!";
+		if(getcharid(3)==2000001)mes"現在最大的投注點數為^FF0000"+$DQMAX+"^000000點。";
+	}
+	else
+	{
+		mes"本輪目前還沒有人投注呢!";
+	}
+	mes"你還不來投一把試試運氣!?";
+	next;
+	menu "投注(^019901每注"+$DQZ+"W^000000)",-,"查看^F00000賭壇風雲排行榜^000000",DTPH,"不感興趣..",DQ_OT;
+
+	mes"[無賴賭徒]";
+	if(Zeny<$DQZ*10000)
+	{
+		mes"喂!請看清楚你口袋裡的錢!";
+		mes"不夠^019901"+$DQZ+"W^000000別想投注!";
+		mes"我們可不和窮鬼賭錢。";
+		close;
+	}
+	mes"好!這^019901"+$DQZ+"W^000000投下了。";
+	mes"下面請擲三次點,決定投注的點數。";
+	set Zeny,Zeny-$DQZ*10000;
+	next;
+	set @DQ1,rand(10)+1;
+	mes"[擲點機]";
+	mes"第一次擲點..";
+	mes"下面繼續投第二次..";
+	next;
+	set @DQ2,rand(10)+1;
+	mes"[擲點機]";
+	mes"第二次擲點..";
+	mes"下面繼續投第三次..";
+	next;
+	set @DQ3,rand(10)+1;
+	mes"[擲點機]";
+	mes"第三次擲點..";
+	mes"╒══╤══╤══╕";
+	mes"│ "+$@DQXH$[@DQ1]+" │ "+$@DQXH$[@DQ2]+" │ "+$@DQXH$[@DQ3]+" │";
+	mes"╘══╧══╧══╛";
+	if(Class==17&&(@DQ1+@DQ2+@DQ3)<10&&rand(10)<3)
+	{
+		set @CXZD,(@DQ1+@DQ2+@DQ3);
+CXT:		set @DQ1,rand(10)+1;
+		set @DQ2,rand(10)+1;
+		set @DQ3,rand(10)+1;
+		if(@CXZD==(@DQ1+@DQ2+@DQ3))goto CXT;
+		npctalk strcharinfo(0)+"擲出"+@CXZD+"點後氣急敗壞的猛踹了一腳擲點機!點數變成"+(@DQ1+@DQ2+@DQ3)+"了!";
+		emotion 19;
+		set @TID,0;
+SEC:		if($DQTZP[@TID]!=0)
+		{
+			set @TID,@TID+1;
+			if(@TID<100)goto SEC;
+		}
+		set $DQTZP[@TID],@DQ1+@DQ2+@DQ3;
+		set $DQTZ$[@TID],strcharinfo(0);
+		if($DQMAX<$DQTZP[@TID])set $DQMAX,$DQTZP[@TID];
+		set $DQC,$DQC+1;
+		mes"哈哈!你總共才投了^FF0000"+@CXZD+"^000000點。";
+		mes"喂!你幹什麼!別踢我的機器!";
+		mes"靠!點數變成^FF0000"+(@DQ1+@DQ2+@DQ3)+"^000000了!";
+		mes"以後別亂動我機器!";
+		close2;
+		emotion 32;
+		end;
+	}
+	npctalk strcharinfo(0)+"擲出骰子了!大家別光看!快來一起投注啊!";
+	set @TID,0;
+SE:	if($DQTZP[@TID]!=0)
+	{
+		set @TID,@TID+1;
+		if(@TID<100)goto SE;
+	}
+	set $DQTZP[@TID],@DQ1+@DQ2+@DQ3;
+	set $DQTZ$[@TID],strcharinfo(0);
+	if($DQMAX<$DQTZP[@TID])set $DQMAX,$DQTZP[@TID];
+	set $DQC,$DQC+1;
+	mes"OK!你已經全部擲完了!";
+	mes"你總共擲出^FF0000"+$DQTZP[@TID]+"^000000點。";
+	mes"在這旁邊坐會,等待結果吧,很快就會出來的。";
+	mes"嘿嘿~祝你好運吧!";
+	close2;
+	emotion 21;
+	end;
+
+DQ_OT:	mes"[無賴賭徒]";
+	mes"哼~不想賭就別圍著看!";
+	mes"靠邊站吧你!";
+	close;
+
+DTPH:	mes"[賭壇風雲排行榜]";
+	set @TID,0;
+PH:	if($DQPHWIN[@TID]!=0)
+	{
+		if($DQPHNA$[@TID]==strcharinfo(0))mes"^FF00F0第"+(@TID+1)+"名 "+$DQPHNA$[@TID]+" 獲勝"+$DQPHWIN[@TID]+"次^000000";
+		else mes"第^8F0000"+(@TID+1)+"^000000名 ^0020C0"+$DQPHNA$[@TID]+"^000000 獲勝^008000"+$DQPHWIN[@TID]+"^000000次";
+	}
+	else
+	{
+		mes"^808080第"+(@TID+1)+"名 ---- 尚未登錄排行 ----";
+	}
+	set @TID,@TID+1;
+	if(@TID<$DQPHSHOW)goto PH;
+	close;
+
+DQGM:	mes"[無賴賭徒]";
+	mes"啊~GM大人好!";
+	mes"請問有什麼事嗎?";
+	next;
+	menu "切入玩家模式",PLA,"查看未領取獎金的列表",LLIST,"設置排行榜顯示長度(^0000A0目前為"+$DQPHSHOW+"名^000000)",SETPH,"設置投注賭金(^0000A0目前為"+$DQZ+"W^000000)",SETTZ;
+
+SETPH:	mes"[無賴賭徒]";
+	mes"請輸入排行榜顯示的名單長度。";
+	mes"目前設定為顯示^FF0000"+$DQPHSHOW+"^000000名。";
+	mes"長度數量請不要超過200名。";
+	next;
+PHLES:	input $DQPHSHOW;
+	if($DQPHSHOW<1||$DQPHSHOW>200)
+	{
+		set $DQPHSHOW,10;
+		announce "輸入錯誤,輸入的值不要大於200或小於1,請重新輸入一次..",3;
+		goto PHLES;
+	}
+	mes"[無賴賭徒]";
+	mes"好啦!設置完畢!";
+	mes"排行榜顯示長度被設置為^FF0000"+$DQPHSHOW+"^000000名。";
+	next;
+	menu "查看排行榜",DTPH,"返回",DQGM;
+	end;
+
+SETTZ:	mes"[無賴賭徒]";
+	mes"請輸入投注的金額。";
+	mes"目前設定的投注金額為^FF0000"+$DQZ+"^000000W。";
+	mes"NPC的投注金額是這個的1.5倍。";
+	mes"填寫時的單位是萬。";
+	mes"所以注意請不要填寫過多。";
+	next;
+TZSE:	input $DQZ;
+	if($DQZ<1||$DQZ>10000)
+	{
+		set $DQZ,30;
+		announce "輸入錯誤,輸入的值不要大於10000或小於1,請重新輸入一次..",3;
+		goto TZSE;
+	}
+	mes"[無賴賭徒]";
+	mes"好啦!設置完畢!";
+	mes"設定的投注金額為^FF0000"+$DQZ+"^000000W。";
+	next;
+	menu "返回",DQGM;
+	end;
+
+OnInit:	setarray $@DQXH$[0],"？","１","２","３","４","５","６","７","８","９","１０";
+	if($DQPHSHOW<=0)set $DQPHSHOW,10;
+	if($DQZ<=0)set $DQZ,30;
+	end;
+
+OnMinute00:
+OnMinute02:
+OnMinute04:
+OnMinute06:
+OnMinute08:
+OnMinute10:
+OnMinute12:
+OnMinute14:
+OnMinute16:
+OnMinute18:
+OnMinute20:
+OnMinute22:
+OnMinute24:
+OnMinute26:
+OnMinute28:
+OnMinute30:
+OnMinute32:
+OnMinute34:
+OnMinute36:
+OnMinute38:
+OnMinute40:
+OnMinute42:
+OnMinute44:
+OnMinute46:
+OnMinute48:
+OnMinute50:
+OnMinute52:
+OnMinute54:
+OnMinute56:
+OnMinute58:
+
+	if($@DQOP<1)
+	{
+		set $@CON,1;
+		set $@DQOP,1;
+		mapannounce "prontera", "無賴賭徒:第1輪賭局已經開始啦!各位快來投注啊!",15;
+		npctalk "賭錢啦!賭錢啦!大家快來賭錢啊!";
+		end;
+	}
+	else
+	{
+		if($DQC<1)
+		{
+			if(rand(10)<4)emotion 16;
+			else emotion 32;
+			if(rand(10)<3)
+			npctalk "唉~怎麼沒人和我賭錢阿!好無聊呀!";
+			end;
+		}
+		set $@DMAX,$DQMAX;
+		set $DQMAX,0;
+		set $@TDQC,$DQC;
+		set $DQC,0;
+		set $@CON,$@CON+1;
+		set $@WINNER,0;
+NPCT:		set $@DQNPC,rand(28)+6;
+		if($@DQNPC==4||$@DQNPC==7||$@DQNPC==11||$@DQNPC==14) set $@DQNPC,$@DQNPC+2;
+		if($@DQNPC==$@DMAX)goto NPCT;
+		if($@DMAX<$@DQNPC)
+		{
+			emotion 29;
+			npctalk "哈~最後看我的了!"+$@DQNPC+"點!哇哈!我贏啦!";
+			mapannounce "prontera","無賴賭徒:哇哈~這第"+($@CON-1)+"局我贏啦!"+($@TDQC*$DQZ+$DQZ+$DQZ/2)+"W賭金歸我啦!哈哈哈!第"+$@CON+"輪現在開始!沒贏的請在這一輪加油!",15;
+			goto DQQL;
+		}
+		npctalk "哈~最後看我的了!"+$@DQNPC+"點!喵的勒!輸了!誰贏了來我這領錢吧~";
+		if(rand(10)<5)emotion 23;
+		else emotion 28;
+		set $@TID,0;
+		set $@TSTR$,"";
+SG:		if($DQTZP[$@TID]==$@DMAX)
+		{
+			set $@WINNER,$@WINNER+1;
+			if($@WINNER>1)set $@TSTR$,$@TSTR$+"、";
+			set $@TSTR$,$@TSTR$+$DQTZ$[$@TID];
+		}
+		else
+		{
+			set $DQTZP[$@TID],0;
+			set $DQTZ$[$@TID],"";
+		}
+		set $@TID,$@TID+1;
+		if($@TID<100)goto SG;
+		set $@TSTR$,$@TSTR$+"在第"+($@CON-1)+"輪的賭局中";
+		if($@WINNER==1)
+		{
+			set $@TSTR$,$@TSTR$+"獲勝!贏走了全部共";
+		}
+		else
+		{
+			set $@TSTR$,$@TSTR$+"並列獲勝!他們每個人將獲得";
+		}
+		//announce "無賴賭徒:"+$@TSTR$+(($@TDQC*$DQZ+$DQZ+$DQZ/2)/$@WINNER)+"W的賭金!第"+$@CON+"輪現在開始!沒贏的請在這一輪加油!",bc_npc,0xEABE60;
+		mapannounce "prontera","無賴賭徒:"+$@TSTR$+(($@TDQC*$DQZ+$DQZ+$DQZ/2)/$@WINNER)+"W的賭金!第"+$@CON+"輪現在開始!沒贏的請在這一輪加油!",15;
+		set $@TID,0;
+SH:		if($DQTZP[$@TID]==$@DMAX)
+		{
+			set $@TID2,0;
+SI:			if($DQWINZ[$@TID2]!=0)
+			{
+				set $@TID2,$@TID2+1;
+				if($@TID2<100)goto SI;
+			}
+			set $DQWIN$[$@TID2],$DQTZ$[$@TID];
+			set $DQWINZ[$@TID2],(($@TDQC*$DQZ+$DQZ+$DQZ/2)/$@WINNER);
+			set $DQTZP[$@TID],0;
+		}
+		set $@TID,$@TID+1;
+		if($@TID<100)goto SH;
+
+DQQL:		set $@TID,0;
+SJ:		set $DQTZ$[$@TID],"";
+		set $DQTZP[$@TID],0;
+		set $@TID,$@TID+1;
+		if($@TID<100)goto SJ;
+		set $DQC,0;
+	}
+	end;
+
+LLIST:	mes"[無賴賭徒]";
+	mes"好的,請GM大人過目:";
+	set @TID,0;
+	set @TCO,0;
+SL:	if($DQWINZ[@TID]!=0)
+	{
+		mes"No.^FF0000"+@TID+"^000000 [^FF00F0"+$DQWIN$[@TID]+"^000000] [^0000A0"+$DQWINZ[@TID]+"W^000000]";
+		set @TCO,@TCO+1;
+	}
+	set @TID,@TID+1;
+	if(@TID<100)goto SL;
+	if(@TCO==0)
+	{
+		mes"啊~抱歉!現在獎金已經全被領取了。";
+		mes"我這裡沒有相關記錄了。";
+		close;
+	}
+	else
+	{
+		mes"未領取獎金者共"+@TCO+"人次。";
+		announce "未領取獎金者共"+@TCO+"人次",3;
+		next;
+		menu "刪除一個項目",LDE,"刪除指定數量的項目",LDN,"清空列表",LCL;
+	}
+	
+LDE:	mes"[無賴賭徒]";
+	mes"請輸入要刪除的項目的編號..";
+	set @TID,0;
+SL2:	if($DQWINZ[@TID]!=0)
+	{
+		mes"No.^FF0000"+@TID+"^000000 [^FF00F0"+$DQWIN$[@TID]+"^000000] [^0000A0"+$DQWINZ[@TID]+"W^000000]";
+	}
+	set @TID,@TID+1;
+	if(@TID<100)goto SL2;
+	announce "請輸入要刪除的項目的編號..",3;
+LIP:	input @TID;
+	if(@TID>=100||@TID<0)
+	{
+		announce "輸入錯誤,輸入的編號值不要大於254或小於0,請重新輸入一次..",3;
+		goto LIP;
+	}
+	announce "請按Next按鈕繼續..",3;
+	next;
+	mes"[無賴賭徒]";
+	if($DQWINZ[@TID]==0)
+	{
+		mes"抱歉~你的輸入有誤。";
+		mes"沒有這個編號的記錄。";
+		next;
+		menu "重新輸入",LDE;
+	}
+	mes"要刪除這個項目嗎?";
+	mes"No.^FF0000"+@TID+"^000000";
+	mes"獲獎者:^FF00F0"+$DQWIN$[@TID]+"^000000";
+	mes"獎金:^0000A0"+$DQWINZ[@TID]+"W^000000";
+	next;
+	menu "刪除該項目",-;
+	set $DQWIN$[@TID],"";
+	set $DQWINZ[@TID],0;
+	mes"[無賴賭徒]";
+	mes"OK!此項目已刪除!";
+	close;
+
+LDN:	mes"[無賴賭徒]";
+	mes"好的,現在總共有^FF0000"+@TCO+"^000000條項目記錄。";
+	mes"請告訴我要刪除多少條項目?";
+LIP2:	input @TCA;
+	if(@TCA>@TCO||@TCA<1)
+	{
+		announce "輸入錯誤,輸入的值不要大於現有記錄總數"+@TCO+"或小於1,請重新輸入一次..",3;
+		goto LIP2;
+	}
+	mes"要刪除^FF0000"+@TCA+"^000000條項目,你確定嗎?";
+	next;
+	menu "從總數^FF0000"+@TCO+"^000000條項目中刪除^FF0000"+@TCA+"^000000條項目",-;
+	set @TID,0;
+SL3:	if($DQWINZ[@TID]!=0)
+	{
+		set $DQWIN$[@TID],"";
+		set $DQWINZ[@TID],0;
+		set @TCA,@TCA-1;
+	}
+	set @TID,@TID+1;
+	if(@TID<100&&@TCA>0)goto SL3;
+	mes"[無賴賭徒]";
+	mes"好了,已經刪除了指定數目的項目。";
+	close;
+	
+
+LCL:	mes"[無賴賭徒]";
+	mes"真的要清空整個列表數據嗎?";
+	next;
+	menu "清空整個列表數據",-;
+	mes"[無賴賭徒]";
+	set @TID,0;
+SL4:	if($DQWINZ[@TID]!=0)
+	{
+		set $DQWIN$[@TID],"";
+		set $DQWINZ[@TID],0;
+	}
+	set @TID,@TID+1;
+	if(@TID<100)goto SL4;
+	mes"遵命,列表已清空。";
+	close;
+	
+OnMinute01:
+OnMinute03:
+OnMinute05:
+OnMinute07:
+OnMinute09:
+OnMinute11:
+OnMinute13:
+OnMinute15:
+OnMinute17:
+OnMinute19:
+OnMinute21:
+OnMinute23:
+OnMinute25:
+OnMinute27:
+OnMinute29:
+OnMinute31:
+OnMinute33:
+OnMinute35:
+OnMinute37:
+OnMinute39:
+OnMinute41:
+OnMinute43:
+OnMinute45:
+OnMinute47:
+OnMinute49:
+OnMinute51:
+OnMinute53:
+OnMinute55:
+OnMinute57:
+OnMinute59:
+
+	if($DQC>=1&&$@DQOP>=1)
+	{
+		npctalk "下注時間還剩下1分鐘!下好離手!!";
+	}
+	end;
+
+//OnTouch:
+//	if(sex==1)
+//	{
+//		npctalk "喂!那邊那個帥哥!過來一起賭錢吧!別回頭!就是說你呢!";
+//		emotion 5;
+//	}
+//	else 
+//	{
+//		npctalk "哇!那邊那個辣妹要不要一起來賭錢呀?很有意思的!";
+//		emotion 3;
+//	}
+//	end;
+}

@@ -1,0 +1,33 @@
+﻿function	script	self_help	{
+
+rewrite:
+	mes "此功能用於同帳號但其他角色卡圖";
+	mes "輸入之數字對應選取角色頁面";
+	mes "^0000ff 1  2  3  4  5";
+	mes "^0000ff 6  7  8  9 10";
+	mes "^0000ff11 12 13 14 15";
+	mes "請輸入角色所在欄位:";
+	input .@slot;
+	if(.@slot <= 0 || .@slot > 15){
+		mes "請輸入1~15";
+		next;
+		goto rewrite;
+	}
+	clear;
+	mes "此功能用於同帳號但其他角色卡圖";
+	mes "輸入之數字對應選取角色頁面";
+	mes "^0000ff 1  2  3  4  5";
+	mes "^0000ff 6  7  8  9 10";
+	mes "^0000ff11 12 13 14 15";
+	mes "請輸入角色所在欄位:^0000ff"+.@slot;
+	.@slot = .@slot - 1;
+	if(select("主城:依斯魯德") == 1){
+		query_sql("update `char` set last_map = 'prontera', last_x = 156, last_y = 188 where account_id = "+getcharid(3)+" and char_num = "+ .@slot +" and last_map != 'sec_pri'");
+		mes "已將角色重置至主城";
+	}else{
+		query_sql("update `char` set last_map = 'izlude', last_x = 127, last_y = 145 where account_id = "+getcharid(3)+" and char_num = "+ .@slot +" and last_map != 'sec_pri'");
+		mes "已將角色重置至依斯魯德";
+	}
+	
+	end;
+}

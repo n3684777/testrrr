@@ -1,0 +1,233 @@
+/*
+= 適用範圍:RA
+*/
+boss2	mapflag	nosave	SavePoint
+boss2	mapflag	nomemo
+boss2	mapflag	nobranch
+boss2	mapflag	noicewall
+boss2	mapflag	restricted	9
+boss2	mapflag	nodrop
+boss2	mapflag	noskill
+boss2	mapflag	noteleport
+boss2	mapflag	noitemconsumption
+
+
+trinity,37,127,6	script	聽歌趣味問答遊戲#1	625,{
+
+	mes "[聽歌趣味問答遊戲工作人員]";
+	mes "=^00CCCC聽歌趣味問答遊戲基本信息^000000=";
+	next;
+	switch(select("我要報名","取消")){
+	case 1:
+		if( !$@guessmusic){
+		mes "[聽歌趣味問答遊戲工作人員]";
+		mes "=^00CCCC聽歌趣味問答遊戲還未開啟^000000=";
+		close;
+		}
+	
+	if( $@guessmusic==2 ){
+		mes "[聽歌趣味問答遊戲工作人員]";
+		mes "=^00CCCC聽歌趣味問答遊戲正在進行^000000=";
+		close;
+		}
+
+//		if (BaseLevel <$@guesslevel){
+//			mes "[聽歌趣味問答遊戲工作人員]";
+//			mes "等級需要"+$@guesslevel+"級";
+//			close;		
+//		}
+
+		warp "boss2",50,30;
+		end;
+	case 2:
+		close;
+
+	} 
+
+OnInit:
+	waitingroom "聽歌遊戲",0;
+	end;
+}
+
+
+
+
+boss2,51,54,6	script	小婭音樂電台	435,{
+	mes "你要回去了嗎?";
+	next;
+	if(select("是的:取消")==2)end;
+	warp "trinity",50,120;
+	end;
+
+OnGM_Crtl:
+	if(select("手動開啟遊戲:取消")==1){
+		donpcevent strnpcinfo(0)+"::OnGameStart";
+	}
+	end;
+
+
+//公告時間
+OnClock1557:
+OnClock2337:
+OnClock0317:
+	announce "【聽歌趣味問答遊戲】三分鐘後開始報名，請找小遊戲區的聽歌趣味問答遊戲報名！",bc_all,0x00FF00;
+	end;
+
+//公告時間
+OnClock1559:
+OnClock2339:
+OnClock0319:
+	announce "【聽歌趣味問答遊戲】一分鐘後開始報名，請找小遊戲區的聽歌趣味問答遊戲報名！",bc_all,0x00FF00;
+	end;
+
+OnGameStart:	
+OnClock1600:
+OnClock2340:
+OnClock0320:
+	if($@guessmusic == 1 || $@guessmusic == 2)end;
+		$@guessmusic = 1;
+		announce "【聽歌趣味問答遊戲】還有60秒就要開始了.要參與的小夥伴快來哦",bc_all;
+		sleep 60000;
+		announce "【聽歌趣味問答遊戲】遊戲正式開始",bc_all;
+		$@guessmusic = 2;		
+		
+		.sum_pc = 0;
+		.questing = 0;
+		.index = 0;
+		initnpctimer;
+		end;
+OnTimer1000:
+	script4each strnpcinfo(0)+"::OnReset",1,"boss2";
+	sleep 1000;
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 準備好請聽題哦~",bc_all,0xef3b0a;
+	sleep 1000;
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 3~~~",bc_all,0xef3b0a;
+	sleep 1000;
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 2~~~",bc_all,0xef3b0a;
+	sleep 1000;
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 1~~~",bc_all,0xef3b0a;
+	sleep 1000;
+	
+	.index = rand(getarraysize(.musiclist$));
+
+	explode(.my_array$, .musiclist$[.index], ":");
+	.var$[0] = .my_array$[0];
+	.var$[1] = .my_array$[1];
+	.var$[2] = .my_array$[2];
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 第"+(.questing+1)+"題:請在10秒內完成回答,直接在聊天框中輸出-[ 完整的答案 ]",bc_all,0xef3b0a;
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 第"+(.questing+1)+"題:[ "+.my_array$[1]+" ]",bc_all,0xef3b0a;
+
+	$@timeover_music = 0;
+	playBGMall .my_array$[0],"boss2";
+	end;
+OnTimer15000:
+	mapannounce "boss2","[聽歌趣味問答遊戲]: 時間到,第"+(.questing+1)+"題正確的名字應該是-[ "+ .my_array$[2]+" ]",bc_all;
+Onnextqus:
+	.sum_pc = 0;
+	$@timeover_music = 1;
+	.questing++;
+	if(.questing==.quest_co){
+		$@guessmusic = 0;
+		mapannounce "boss2","[聽歌趣味問答遊戲]: 活動結束",bc_all;
+		script4each strnpcinfo(0)+"::OnBmpend",1,"boss2";
+		mapwarp "boss2","trinity",50,120;
+		stopnpctimer;
+		end;
+	}
+	script4each strnpcinfo(0)+"::OnBmpend",1,"boss2";
+	stopnpctimer;
+	sleep 5000;
+	initnpctimer;
+	end;
+
+			script4each strnpcinfo(0)+"::OnStop",1,.map$;
+		end;
+OnStop:		
+		playBGM "1000";
+OnBmpshow:	
+	playBGMall .my_array$[0],"boss2";
+	end;
+OnBmpend:	
+	playBGMall "1000","boss2";
+	end;	
+OnReset:
+	pc_quest = 0;
+	end;
+
+end;
+OnPCTalkExpress:
+	if("boss2"==strcharinfo(3)){
+		
+		if(pc_quest || $@timeover_music)end;
+
+	
+		if(@talk_mes$ == .my_array$[2] ){
+			.sum_pc++;
+			.@index_pc = rand(getarraysize(.item_id));
+			getitem .item_id[.@index_pc],.item_CO[.@index_pc];
+			dispbottom "[聽歌趣味問答遊戲]: 恭喜你回答正確";
+			pc_quest = 1;			
+
+			if(.sum_pc>=.max_pc){
+				stopnpctimer;
+				mapannounce "boss2","[聽歌趣味問答遊戲]:  前"+.max_pc+"名已經完成,第"+(.questing+1)+"題正確的名字應該是-[ "+ .my_array$[2]+" ]",bc_all;
+				donpcevent strnpcinfo(0)+"::Onnextqus";
+				end;	
+			}
+
+
+		}
+		else {
+			dispbottom "[聽歌趣味問答遊戲]: 回答錯誤出局!!";
+			//warp "prontera",195,97;
+		}
+	}
+	end;
+	
+Oninit:
+	//設置遊戲題目數量
+	.quest_co = 10;
+	
+	//設置每輪獲獎勵最大人數
+	.max_pc = 5;
+	
+	//設置音樂題庫 格式-   "客戶端對應的音樂文件名:問題:答案"
+	setarray .musiclist$,
+	"149:這是什麼地方的音樂?:馬來港",
+	"93:這是什麼地方的音樂?:毀葛",
+	"74:這是什麼地方的音樂?:崑崙",
+	"68:這是什麼地方的音樂?:汶巴拉",
+	"84:這是什麼地方的音樂?:尼芙菲姆",
+	"86:這是什麼地方的音樂?:艾音布羅克",
+	"114:這是什麼地方的音樂?:莫斯科",
+	"94:這是什麼地方的音樂?:拉赫",
+	"70:這是什麼地方的音樂?:朱諾",
+	"131:這是什麼地方的音樂?:魔怒克",
+	"145:這是什麼地方的音樂?:綿綿島",
+	"133:這是什麼地方的音樂?:巴西",
+	"08:這是什麼地方的音樂?:普隆德拉",
+	"15:這是什麼地方的音樂?:艾爾貝塔",
+	"39:這是什麼地方的音樂?:艾爾帕蘭",
+	"26:這是什麼地方的音樂?:伊斯魯德",
+	"11:這個什麼地方的音樂?:夢羅克",
+	"13:這是什麼地方的音樂?:吉芬",
+	"14:這是什麼地方的音樂?:斐揚";
+
+	//獎勵道具id庫
+	setarray .item_id,61007,61052;
+	
+	//獎勵道具id一一對應數量
+	setarray .item_CO,3,3;
+
+	//報名限時等級
+	$@guesslevel =10;
+
+	//下面不要動
+	.index = 0;
+	.sum_pc = 0;
+	.questing = 0;	
+	mapwarp "boss2","trinity",50,120;
+	bindatcmd("guess",strnpcinfo(0)+"::OnGM_Crtl",99,99);
+	end;
+}
+

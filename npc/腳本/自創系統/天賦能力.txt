@@ -1,0 +1,166 @@
+//---------------------------- 天賦能力
+	-	script	天賦能力	-1,{
+OnPCStatCalcEvent:
+	if(getmapflag(strcharinfo(3),mf_gvg)) { end; }
+	//一般天賦
+	if(Talent_Pow>0){ bonus bPow,Talent_Pow*2; }
+	if(Talent_Sta>0){ bonus bSta,Talent_Sta*2; }
+	if(Talent_Wis>0){ bonus bWis,Talent_Wis*2; }
+	if(Talent_Spl>0){ bonus bSpl,Talent_Spl*2; }
+	if(Talent_Con>0){ bonus bCon,Talent_Con*2; }
+	if(Talent_Crt>0){ bonus bCrt,Talent_Crt*2; }
+	if(Talent_PAtk>0){ bonus bPAtk,Talent_PAtk*2; }
+	if(Talent_SMatk>0){ bonus bSMatk,Talent_SMatk*2; }
+	if(Talent_HPlus>0){ bonus bHPlus,Talent_HPlus*2; }
+	if(Talent_CRate>0){ bonus bCRate,Talent_CRate*2; }
+	
+	if(Talent_Castrate>0){ bonus bCastrate,-Talent_Castrate*2; }
+	if(Talent_SPrate>0){ bonus bUseSPrate,-Talent_SPrate*2; }
+	if(Talent_CritAtkRate>0){ bonus bCritAtkRate,Talent_CritAtkRate*5; }
+	if(Talent_HealPower>0){ bonus bHealPower,Talent_HealPower*2; }
+
+	//職業天賦
+	//盧恩騎士
+	if(Talent_HUNDREDSPEAR_ATK>0){ bonus2 bSkillAtk,"RK_HUNDREDSPEAR",Talent_HUNDREDSPEAR_ATK*10; }
+	if(Talent_IGNITIONBREAK_ATK>0){ bonus2 bSkillAtk,"RK_IGNITIONBREAK",Talent_IGNITIONBREAK_ATK*10; }
+	if(Talent_DRAGONBREATH_ATK>0){ bonus2 bSkillAtk,"RK_DRAGONBREATH",Talent_DRAGONBREATH_ATK*10; }
+	if(Talent_DRAGONBREATH_WATER_ATK>0){ bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",Talent_DRAGONBREATH_WATER_ATK*10; }
+	if(Talent_HACKANDSLASHER_ATK>0){ bonus2 bSkillAtk,"DK_HACKANDSLASHER",Talent_HACKANDSLASHER_ATK*5; }
+	if(Talent_STORMSLASH_ATK>0){ bonus2 bSkillAtk,"DK_STORMSLASH",Talent_STORMSLASH_ATK*10; }
+	if(Talent_HUNDREDSPEAR_Cool>0){ bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-Talent_HUNDREDSPEAR_Cool*100; }
+	if(Talent_SERVANTWEAPON_ATK>0){ bonus2 bSkillAtk,"DK_SERVANTWEAPON",Talent_SERVANTWEAPON_ATK*10; }
+	if(Talent_HACKANDSLASHER_Cool>0){ bonus2 bSkillCooldown,"DK_HACKANDSLASHER",-Talent_HACKANDSLASHER_Cool*350; }
+	if(Talent_SERVANTWEAPON_Cool>0){ bonus2 bSkillCooldown,"DK_SERVANTWEAPON",-Talent_SERVANTWEAPON_Cool*15000; }
+	if(Talent_IGNITIONBREAK_Cool>0){ bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-Talent_IGNITIONBREAK_Cool*400;}
+
+	//聖裁者
+	if(Talent_EXPOSION_BLASTER_Cool>0){ bonus2 bSkillCooldown,"IQ_EXPOSION_BLASTER",-Talent_EXPOSION_BLASTER_Cool*30; }
+
+	//超級初心者
+	if(Talent_NOVICE_ATK>0){ bonus bSkillAtk,Talent_NOVICE_ATK*5; }
+	if(Talent_NOVICE_Cool>0){ bonus bSkillCooldownRate,-(Talent_NOVICE_Cool*10); }
+
+	//基因學者
+	if(Talent_CARTCANNON_ATK>0){ bonus2 bSkillAtk,"GN_CARTCANNON",Talent_CARTCANNON_ATK*5; }
+	if(Talent_MAYHEMIC_THORNS_ATK>0){ bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",Talent_MAYHEMIC_THORNS_ATK*5; }
+	if(Talent_ACIDIFIED_ZONE_ATK>0){ 
+	bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",Talent_ACIDIFIED_ZONE_ATK*5;
+	bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",Talent_ACIDIFIED_ZONE_ATK*5;
+	bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",Talent_ACIDIFIED_ZONE_ATK*5;
+	bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",Talent_ACIDIFIED_ZONE_ATK*5;
+	}
+
+	//禁咒魔導士
+	if(Talent_Ele_All_2_ATK>0){bonus2 bMagicAtkEle,Ele_All,Talent_Ele_All_2_ATK*5; }
+
+	//元素支配
+	if(Talent_Ele_All_ATK>0){bonus2 bMagicAtkEle,Ele_Water,Talent_Ele_All_ATK*10; }
+	if(Talent_DIAMOND_STORM_ATK>0){ bonus2 bSkillAtk,"EM_DIAMOND_STORM",Talent_DIAMOND_STORM_ATK*5; }
+	if(Talent_TERRA_DRIVE_ATK>0){ bonus2 bSkillAtk,"EM_TERRA_DRIVE",Talent_TERRA_DRIVE_ATK*5; }
+	if(Talent_STORM_DRIVE_Cool>0){ bonus2 bSkillCooldown,"EM_DIAMOND_STORM",-Talent_STORM_DRIVE_Cool*150; bonus2 bSkillCooldown,"EM_TERRA_DRIVE",-Talent_STORM_DRIVE_Cool*150; }
+	if(Talent_LAND_ROKS_SWAMP_Cool>0){ 
+	bonus2 bSkillCooldown,"EM_LIGHTNING_LAND",-Talent_LAND_ROKS_SWAMP_Cool*200; 
+	bonus2 bSkillCooldown,"EM_VENOM_SWAMP",-Talent_LAND_ROKS_SWAMP_Cool*200; 
+	bonus2 bSkillCooldown,"EM_CONFLAGRATION",-Talent_LAND_ROKS_SWAMP_Cool*200; 
+	}
+
+	//遊俠
+	if(Talent_GALESTORM_ATK>0){ bonus2 bSkillAtk,"WH_GALESTORM",Talent_GALESTORM_ATK*5; }
+	if(Talent_CRESCIVE_BOLT_ATK>0){ bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",Talent_CRESCIVE_BOLT_ATK*5; }
+	if(Talent_CALAMITYGALE_Cool>0){ bonus2 bSkillCooldown,"WH_CALAMITYGALE",-Talent_CALAMITYGALE_Cool*15000; }
+	//皇家禁衛隊
+	if(Talent_CROSS_RAIN_ATK>0){ bonus2 bSkillAtk,"IG_CROSS_RAIN",Talent_CROSS_RAIN_ATK*5; }
+	if(Talent_SHIELDPRESS_ATK>0){ bonus2 bSkillAtk,"LG_SHIELDPRESS",Talent_SHIELDPRESS_ATK*10; }
+	if(Talent_RAYOFGENESIS_ATK>0){ bonus2 bSkillAtk,"LG_RAYOFGENESIS",Talent_RAYOFGENESIS_ATK*10; }
+	if(Talent_BANISHINGPOINT_ATK>0){ bonus2 bSkillAtk,"LG_BANISHINGPOINT",Talent_BANISHINGPOINT_ATK*10; }
+	if(Talent_OVERBRAND_ATK>0){ bonus2 bSkillAtk,"LG_OVERBRAND",Talent_OVERBRAND_ATK*10; }
+	if(Talent_SHIELDPRESS_Cool>0){ bonus2 bSkillCooldown,"LG_SHIELDPRESS",-Talent_SHIELDPRESS_Cool*100; }
+	if(Talent_RAYOFGENESIS_Cool>0){ bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-Talent_RAYOFGENESIS_Cool*100; }
+	if(Talent_SHIELD_SHOOTING_Cool>0){ bonus2 bSkillCooldown,"IG_SHIELD_SHOOTING",-Talent_SHIELD_SHOOTING_Cool*30; }
+
+
+	//機械工匠
+	if(Talent_ARMSCANNON_ATK>0){ bonus2 bSkillAtk,"NC_ARMSCANNON",Talent_ARMSCANNON_ATK*5; }
+	if(Talent_TRIPLE_LASER_ATK>0){ bonus2 bSkillAtk,"MT_TRIPLE_LASER",Talent_TRIPLE_LASER_ATK*5; }
+	if(Talent_AXETORNADO_ATK>0){ bonus2 bSkillAtk,"NC_AXETORNADO",Talent_AXETORNADO_ATK*10; }
+	if(Talent_AXEBOOMERANG_ATK>0){ bonus2 bSkillAtk,"NC_AXEBOOMERANG",Talent_AXEBOOMERANG_ATK*10; }
+	if(Talent_POWERSWING_ATK>0){ bonus2 bSkillAtk,"NC_POWERSWING",Talent_POWERSWING_ATK*10; }
+	if(Talent_ARMSCANNON_Cool>0){ bonus2 bSkillCooldown,"NC_ARMSCANNON",-Talent_ARMSCANNON_Cool*100; }
+	if(Talent_AXETORNADO_Cool>0){ bonus2 bSkillCooldown,"NC_AXETORNADO",-Talent_AXETORNADO_Cool*100; }
+	if(Talent_AXEBOOMERANG_Cool>0){ bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-Talent_AXEBOOMERANG_Cool*100; }
+	//魅影追蹤者
+	if(Talent_BACKSTAP_ATK>0){ bonus2 bSkillAtk,"RG_BACKSTAP",Talent_BACKSTAP_ATK*10; }
+	if(Talent_TRIANGLESHOT_ATK>0){ bonus2 bSkillAtk,"SC_TRIANGLESHOT",Talent_TRIANGLESHOT_ATK*10; }
+	if(Talent_FATALMENACE_ATK>0){ bonus2 bSkillAtk,"SC_FATALMENACE",Talent_FATALMENACE_ATK*10; }
+	if(Talent_DEFT_STAB_ATK>0){ bonus2 bSkillAtk,"ABC_DEFT_STAB",Talent_DEFT_STAB_ATK*5; }
+	if(Talent_CHAIN_REACTION_SHOT_ATK>0){ bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",Talent_CHAIN_REACTION_SHOT_ATK*5; }
+	if(Talent_FRENZY_SHOT_ATK>0){ bonus2 bSkillAtk,"ABC_FRENZY_SHOT",Talent_FRENZY_SHOT_ATK*5; }
+
+	//大主教
+	if(Talent_ADORAMUS_ATK>0){ bonus2 bSkillAtk,"AB_ADORAMUS",Talent_ADORAMUS_ATK*10; }
+	//if(Talent_JUDEX_ATK>0){ bonus2 bSkillAtk,"AB_JUDEX",Talent_JUDEX_ATK*10; }
+	if(Talent_HIGHNESSHEAL_Heal>0){ bonus2 bSkillHeal,"AB_HIGHNESSHEAL",Talent_HIGHNESSHEAL_Heal*10; }
+	if(Talent_CHEAL_Heal>0){ bonus2 bSkillHeal,"AB_CHEAL",Talent_CHEAL_Heal*10; }
+	if(Talent_HIGHNESSHEAL_Cool>0){ bonus2 bSkillCooldown,"AB_HIGHNESSHEAL",-Talent_HIGHNESSHEAL_Cool*500; }
+	if(Talent_CHEAL_Cool>0){ bonus2 bSkillCooldown,"AB_CHEAL",-Talent_CHEAL_Cool*100; }
+	if(Talent_ARBITRIUM_ATK>0){ bonus2 bSkillAtk,"CD_ARBITRIUM",Talent_ARBITRIUM_ATK*5; }
+	if(Talent_PNEUMATICUS_ATK>0){ bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",Talent_PNEUMATICUS_ATK*5; }
+
+	//十字影武
+	if(Talent_SAVAGE_IMPACT_ATK>0){ bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",Talent_SAVAGE_IMPACT_ATK*5; }
+	if(Talent_SHADOW_STAB_ATK>0){ bonus2 bSkillAtk,"SHC_SHADOW_STAB",Talent_SHADOW_STAB_ATK*5; }
+	if(Talent_ETERNAL_SLASH_ATK>0){ bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",Talent_ETERNAL_SLASH_ATK*5; }
+	if(Talent_DARKCROW_Cool>0){ bonus2 bSkillCooldown,"GC_DARKCROW",-Talent_DARKCROW_Cool*5000; }
+
+	//舞者/樂師
+	if(Talent_ARROWVULCAN_ATK>0){ bonus2 bSkillAtk,"CG_ARROWVULCAN",Talent_ARROWVULCAN_ATK*10; }
+	if(Talent_RAINSTORM_ATK>0){ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",Talent_RAINSTORM_ATK*10; }
+	if(Talent_ROSEBLOSSOM_ATK>0){ bonus2 bSkillAtk,"TR_ROSEBLOSSOM",Talent_ROSEBLOSSOM_ATK*5; }
+	if(Talent_METALIC_FURY_ATK>0){ bonus2 bSkillAtk,"TR_METALIC_FURY",Talent_METALIC_FURY_ATK*5; }
+	if(Talent_RHYTHMSHOOTING_ATK>0){ bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",Talent_RHYTHMSHOOTING_ATK*5; }
+
+	//反叛者
+	if(Talent_BUSTER_ATK>0){ bonus2 bSkillAtk,"RL_BANISHING_BUSTER",Talent_BUSTER_ATK*10; }
+	if(Talent_SLUGSHOT_ATK>0){ bonus2 bSkillAtk,"RL_SLUGSHOT",Talent_SLUGSHOT_ATK*10; }
+	if(Talent_D_TAIL_ATK>0){ bonus2 bSkillAtk,"RL_D_TAIL",Talent_D_TAIL_ATK*10; }
+	if(Talent_R_TRIP_ATK>0){ bonus2 bSkillAtk,"RL_R_TRIP",Talent_R_TRIP_ATK*10; }
+	if(Talent_Long_ATK>0){ bonus bLongAtkRate,Talent_Long_ATK*5; }
+	
+	//天帝
+	if(Talent_SOLARBURST_ATK>0){ bonus2 bSkillAtk,"SJ_SOLARBURST",Talent_SOLARBURST_ATK*10; }
+	if(Talent_FULLMOONKICK_ATK>0){ bonus2 bSkillAtk,"SJ_FULLMOONKICK",Talent_FULLMOONKICK_ATK*10; }
+	if(Talent_FALLINGSTAR_ATK>0){ bonus2 bSkillAtk,"SJ_FALLINGSTAR",Talent_FALLINGSTAR_ATK*10; }
+	if(Talent_UNIVERSESTANCE_ATK>0){ bonus2 bAddClass,Class_All,Talent_UNIVERSESTANCE_ATK*5; }
+
+	//日影/月影忍者
+	if(Talent_HUUMARANKA_ATK>0){ bonus2 bSkillAtk,"KO_HUUMARANKA",Talent_HUUMARANKA_ATK*10; }
+	if(Talent_HAPPOKUNAI_ATK>0){ bonus2 bSkillAtk,"KO_HAPPOKUNAI",Talent_HAPPOKUNAI_ATK*10; }
+	if(Talent_Water_MATK>0){ bonus2 bMagicAtkEle,Ele_Water,Talent_Water_MATK*10; }
+	if(Talent_Fire_MATK>0){ bonus2 bMagicAtkEle,Ele_Fire,Talent_Fire_MATK*10; }
+	if(Talent_Wind_MATK>0){ bonus2 bMagicAtkEle,Ele_Wind,Talent_Wind_MATK*10; }
+	if(Talent_Earth_MATK>0){ bonus2 bMagicAtkEle,Ele_Earth,Talent_Earth_MATK*10; }
+
+	//契靈師
+	if(Talent_TALISMAN_OF_ATK>0){ bonus2 bMagicAtkEle,Ele_All,Talent_TALISMAN_OF_ATK*3; }
+
+
+
+	//靈魂師
+	if(Talent_CHUL_HO_SONIC_CLAW_ATK>0){ bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",Talent_CHUL_HO_SONIC_CLAW_ATK*5; }
+	if(Talent_HOGOGONG_STRIKE_ATK>0){ bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",Talent_HOGOGONG_STRIKE_ATK*5; }
+	if(Talent_HYUN_ROK_CANNON_ATK>0){ bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",Talent_HYUN_ROK_CANNON_ATK*5; }
+	if(Talent_HYUN_ROKS_BREEZE_ATK>0){ bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",Talent_HYUN_ROKS_BREEZE_ATK*5; }
+	if(Talent_HYUN_ROK_CANNON_Cool>0){ bonus2 bSkillCooldown,"SH_HYUN_ROK_CANNON",-Talent_HYUN_ROK_CANNON_Cool*100; }
+	if(Talent_HYUN_ROKS_BREEZE_Cool>0){ bonus2 bSkillCooldown,"SH_HYUN_ROKS_BREEZE",-Talent_HYUN_ROKS_BREEZE_Cool*250; }
+
+	//普攻強化天賦
+	if(Talent_NORMAL>0){ bonus5 bAutoSpell,"GC_DARKCROW",5,30,BF_NORMAL,1; autobonus "{ sc_start SC_INSPIRATION,1200000,4; }",10,100,BF_NORMAL; }
+	if(Talent_Rune>0){ bonus5 bAutoSpell,"RK_HUNDREDSPEAR",getskilllv("RK_HUNDREDSPEAR"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+	if(Talent_Royal>0){ bonus5 bAutoSpell,"LG_BANISHINGPOINT",getskilllv("LG_BANISHINGPOINT"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+	if(Talent_Mechanic>0){ bonus5 bAutoSpell,"NC_POWERSWING",getskilllv("NC_POWERSWING"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+	if(Talent_Guillotine>0){ bonus5 bAutoSpell,"GC_CROSSIMPACT",getskilllv("GC_CROSSIMPACT"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+	if(Talent_Shadow>0){ bonus5 bAutoSpell,"SC_TRIANGLESHOT",getskilllv("SC_TRIANGLESHOT"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+	if(Talent_Ranger>0){ bonus5 bAutoSpell,"SN_SHARPSHOOTING",getskilllv("SN_SHARPSHOOTING"),getequiprefinerycnt(EQI_HAND_R)*5,BF_NORMAL,1; }
+
+	end;
+}

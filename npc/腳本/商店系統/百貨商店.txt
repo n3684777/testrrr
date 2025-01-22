@@ -1,0 +1,308 @@
+﻿
+-	shop	sellpatch	-,501:-1
+prontera,1,1,4	script	百貨商店	10344,{ 
+	//cutin "shop",2;
+	switch(select("^0066ff販賣物品^000000","^0066ff一鍵販售^000000","購買物品")) {
+
+	case 1:
+	callshop "道具商店",2; end;
+
+	case 2:
+	disable_items;
+	function getspace {
+		for(set .@i,20-getstrlen(""+getarg(0));.@i>0;set .@i,.@i-1) set .@h$,.@h$+" ";
+		return getarg(0)+.@h$;
+	}
+//	function sleep3 {
+//		if(playerattached()) sleep2 getarg(0);
+//		else sleep getarg(0);
+//		return;
+//	}
+	dispbottom "＊目前啟用組別: "+#SellGroupName$[sellGrp]+" 高價賣出加成 [ ^FF0000"+.sellhigh[10]+"%^000000 ]",0xFFFF90;
+	dispbottom "┌────────────────────┐",0xFFFF90;
+	dispbottom getspace("│物品名稱")+getspace("收購價格              │"),0xFFFF90;
+	dispbottom "├────────────────────┤",0xFFFF90;
+	for(.@i = 0; .@i<getarraysize(getd("#SellItem_"+sellGrp)); .@i++)
+	{
+		if(.@i%10 == 0) sleep2 1;
+		.@Item_id = getd("#SellItem_"+sellGrp+"["+.@i+"]");
+		.@zeny = getiteminfo(.@Item_id, ITEMINFO_SELL)+(getiteminfo(.@Item_id, ITEMINFO_SELL)*.sellhigh[10]*100/10000);
+		dispbottom getitemname(.@Item_id)!="null"?"│"+getspace(getitemname(.@Item_id))+getspace(.@zeny)+"│":"",0xFFFF90;
+	}
+	dispbottom "└────────────────────┘",0xFFFF90;
+	mes "[百貨商店]";
+	mes "^0066CC"+strcharinfo(0)+"^000000你好.";
+	mes "我能將你想販賣的道具";
+	mes "通通幫你記錄起來";
+	mes "方便^0066FF一次性的販賣^000000";
+	mes "就不用再折磨你的手指囉!";
+	next;
+	switch(select("- 販賣道具[^0000FF"+#SellGroupName$[sellGrp]+"^000000]","- 新增道具","- 刪除道具","- 組的設置")){
+		case 1:
+			.@sizeof = getarraysize(getd("#SellItem_"+sellGrp));
+			if(!.@sizeof){
+				mes "[百貨商店]";
+				mes "尚未新增販賣道具.";
+				close;
+			}
+			for(.@i=0; .@i<.@sizeof; .@i++){
+				.@Item_id = getd("#SellItem_"+sellGrp+"["+.@i+"]");
+				.@amount = countitem(.@Item_id);
+				if(.@amount){
+					delitem .@Item_id,.@amount;
+					.@zeny = getiteminfo(.@Item_id, ITEMINFO_SELL)+(getiteminfo(.@Item_id, ITEMINFO_SELL)*.sellhigh[10]*100/10000);
+					.@zeny2 = .@zeny*.@amount;
+					Zeny += .@zeny2;
+					.@total += .@zeny2;
+					dispbottom "- 販賣 ^0066CC"+getitemname(.@Item_id)+"^000000 x ^FF1493"+.@amount+"^000000 個獲得 "+.@zeny2+" z.",0xFFFF90;
+				}
+			}
+			if(.@zeny2)
+				dispbottom "- 此次販售一共獲得 ^0000FF"+.@total+"^000000 z.",0xFFFF90;
+			else
+				mes "- 您沒有設置中的道具可以販賣.";
+			close;
+		case 2:
+			deletearray @sold_nameid;
+			callshop "sellpatch",2;
+			npcshopattach "sellpatch";
+			end;
+		case 3:
+			if(!getarraysize(getd("#SellItem_"+sellGrp))){
+				mes "[百貨商店]";
+				mes "尚未新增販賣道具.";
+				close;
+			}
+			if(select("單一刪除:全部刪除(組)")==1){
+				for(.@i=0; .@i<getarraysize(getd("#SellItem_"+sellGrp)); .@i++)
+					.@menu$ += (getitemname(getd("#SellItem_"+sellGrp+"["+.@i+"]")))+":";
+				.@c = select(.@menu$)-1;
+				mes "[百貨商店]";
+				mes "確定刪除 ^0000FF"+getitemname(getd("#SellItem_"+sellGrp+"["+.@c+"]"))+"^000000?";
+				next;
+				if(select("確定:取消")==1){
+					mes "[百貨商店]";
+					mes "- 已刪除 ^FF0000"+getitemname(getd("#SellItem_"+sellGrp+"["+.@c+"]"))+"^000000.";
+					deletearray getd("#SellItem_"+sellGrp+"["+.@c+"]"),1;
+				} else close;
+			} else {
+				mes "[百貨商店]";
+				mes "確定要^FF0000全部刪除^000000嗎，這會連同該組的設定一起刪除?";
+				next;
+				if(select("確定:取消")==1){
+					deletearray getd("#SellItem_"+sellGrp);
+					#SellGroupName$[sellGrp] = "";
+					mes "[百貨商店]";
+					mes "已經^0000FF全部刪除^000000了.";
+					close;
+				} else close;
+			}
+			close;
+		case 4:
+			switch(select("選擇組","新增組"))
+			{
+				case 1:
+					if(!#SellGroup)
+					{
+						mes "[百貨商店]";
+						mes "您並沒有新增任何組, 請新增後再選擇.";
+						close;
+					}
+					for(.@i=1; .@i<=#SellGroup; .@i++)
+						.@menu$ += (sellGrp == .@i && #SellGroupName$[.@i] != "" ? "^0000FF"+#SellGroupName$[.@i]+"^000000" : #SellGroupName$[.@i] != "" ? "^888888"+#SellGroupName$[.@i]+"^000000" : "")+":";
+					sellGrp = select(.@menu$);
+					dispbottom "- 已選擇 ["+#SellGroupName$[sellGrp]+"].",0xFFFF90;
+					end;
+				case 2:
+					input .@str$;
+					#SellGroup ++;
+					#SellGroupName$[#SellGroup] = .@str$;
+					dispbottom "- 已新增 ["+.@str$+"].",0xFFFF90;
+					end;
+			}
+			end;
+	}
+end;
+
+OnSellItem:
+	for(.@i=0; .@i<getarraysize(@sold_nameid); .@i++){
+		if(inarray(getd("#SellItem_"+sellGrp),@sold_nameid[.@i]) > -1) continue;
+		.@sizeof = getarraysize(getd("#SellItem_"+sellGrp));
+		setd "#SellItem_"+sellGrp+"["+.@sizeof+"]",@sold_nameid[.@i];
+		dispbottom "- 新增 ^00FF8C"+getitemname(getd("#SellItem_"+sellGrp+"["+.@sizeof+"]"))+"^000000.",0xFFFF90;
+	}
+	end;
+
+	case 3:
+	callfunc "Npc_Item_A"; end;
+	}
+
+OnInit:
+	waitingroom "百貨商店",0;
+	npcshopdelitem "sellpatch",501;
+	setarray .sellhigh[1],7,9,11,13,15,17,19,21,23,24;
+	end;
+}
+
+
+
+//====================================================// 
+function	script	Npc_Item_A	{ 
+
+switch(select("道具商店","職業商店","裝備商店","附魔商店","寵物商店","料理商店","礦石商店","雜物商店")){
+
+case 1:	callshop	"道具商店",1;	end;
+case 2:	callfunc "職業商店"; end;
+case 3:	callfunc "裝備商店"; end;
+case 4:	callshop	"附魔商店",1;	end;
+case 5: callshop	"寵物商店",1;	end;
+case 6: callshop	"料理商店",1;	end;
+case 7: callshop	"礦石商店",1;	end;
+case 8: callshop	"雜物商店",1;	end;
+
+	}
+}
+
+//====================================================//
+
+function	script	職業商店	{ 
+
+switch(select("機甲神匠&生命締造者","十字影武&深淵追蹤者","禁咒魔導士&元素支配者","盧恩龍爵&帝國聖衛軍","舞詩&獵人","槍手&忍者","天帝&靈導士","魂靈師")){
+
+case 1: callshop	"機甲神匠&生命締造者",1;	end;
+case 2: callshop	"十字影武&深淵追蹤者",1;	end;
+case 3: callshop	"禁咒魔導士&元素支配者",1;	end;
+case 4: callshop	"盧恩龍爵&帝國聖衛軍",1;	end;
+case 5: callshop	"舞詩&風鷹狩獵者",1;	end;
+case 6: callshop	"槍手&忍者",1;	end;
+case 7: callshop	"天帝&靈導士",1;	end;
+case 8: callshop	"魂靈師",1;	end;
+
+	} 
+} 
+
+
+//====================================================// 裝備商店
+
+function	script	裝備商店	{ 
+
+switch(select("購買武器","購買防具")) {
+
+	case 1: callfunc "Npc_Item_D"; end;
+	case 2: callfunc "Npc_Item_C"; end;
+	}
+}
+
+//====================================================// 
+
+function	script	Npc_Item_C	{ 
+
+switch(select("頭飾","鎧甲","盾牌","鞋子","披肩","飾品")){
+
+case 1:	callshop	"頭飾#01",1;	end; 
+case 2:	callshop	"鎧甲#02",1;	end; 
+case 3:	callshop	"盾牌#03",1;	end; 
+case 4:	callshop	"鞋子#04",1;	end; 
+case 5:	callshop	"披肩#05",1;	end; 
+case 6:	callshop	"飾品#06",1;	end; } 
+} 
+
+//====================================================// 
+
+function	script	Npc_Item_D	{ 
+
+switch(select("長劍商人","短劍&拳刃商人","斧頭商人","矛戟商人","鈍器商人","法杖商人",
+"弓箭商人","拳套商人","樂器商人","鞭子商人","槍械商人","書本商人","忍具商人")){
+
+case 1:	callshop	"長劍商人",1;	end; 
+case 2:	callshop	"短劍&拳刃商人",1;	end; 
+case 3: callshop	"斧頭商人",1;	end; 
+case 4:	callshop	"矛戟商人",1;	end; 
+case 5: callshop	"鈍器商人",1;	end; 
+case 6: callshop	"法杖商人",1;	end; 
+case 7:	callshop	"弓箭商人",1;	end; 
+case 8:	callshop	"拳套商人",1;	end; 
+case 9:	callshop	"樂器商人",1;	end; 
+case 10:	callshop	"鞭子商人",1;	end; 
+case 11:	callshop	"槍械商人",1;	end; 
+case 12:	callshop	"書本商人",1;	end; 
+case 13:	callshop	"忍具商人",1;	end;} 
+} 
+
+//====================================================// 
+
+function	script	Npc_Item_E	{ 
+
+switch(select("TE武器商人","TE防具商人","TE百貨商店")){
+
+case 1:	callshop	"TE武器商人#01",1;	end; 
+case 2:	callshop	"TE防具商人#01",1;	end;
+case 3:	callshop	"TE百貨商店#01",1;	end; }
+} 
+
+
+//====================================================// 
+
+function	script	Npc_Item_F	{ 
+
+switch(select("戰神武器商人","城戰防具商人","城戰百貨商店")){
+
+case 1:	callshop	"戰神武器商人#01",1;	end; 
+case 2:	callshop	"城戰防具商人#01",1;	end;
+case 3:	callshop	"城戰百貨商店#01",1;	end; }
+} 
+
+
+
+//====================================================// 
+trinity,118,65,4	duplicate(百貨商店)	百貨商店#tri01	10344	//新手區
+trinity,102,37,6	duplicate(百貨商店)	百貨商店#tri02	10344	//自創副本
+trinity,1,1,6	duplicate(百貨商店)	百貨商店#tri03	10344	//
+trinity,1,1,6	duplicate(百貨商店)	百貨商店#tri04	10344	//
+
+rgsr_in,116,183,6	duplicate(百貨商店)	百貨商店#gt01	10344	//精煉區
+vdistrict1,52,47,6	duplicate(百貨商店)	百貨商店#gt02	10344	//裝備附魔
+
+
+
+prontera,263,212,4	duplicate(百貨商店)	百貨商店#pro01	10344	//東
+prontera,35,196,6	duplicate(百貨商店)	百貨商店#pro02	10344	//西
+prontera,147,47,6	duplicate(百貨商店)	百貨商店#pro03	10344	//南
+prontera,150,318,6	duplicate(百貨商店)	百貨商店#pro04	10344	//北
+
+verus04,114,243,4	duplicate(百貨商店)	百貨商店#ver01	10344
+geffen,111,62,6	duplicate(百貨商店)	百貨商店#gef01	10344
+izlude,135,152,6	duplicate(百貨商店)	百貨商店#04	10344
+gonryun,151,116,6	duplicate(百貨商店)	百貨商店#06	10344
+xmas,142,123,6	duplicate(百貨商店)	百貨商店#07	10344
+payon,169,234,6	duplicate(百貨商店)	百貨商店#08	10344
+jawaii,132,188,6	duplicate(百貨商店)	百貨商店#09	10344
+aldebaran,132,118,6	duplicate(百貨商店)	百貨商店#10	10344
+morocc,146,100,6	duplicate(百貨商店)	百貨商店#11	10344
+morocc,166,270,4	duplicate(百貨商店)	百貨商店#12	10344
+malaya,228,204,4	duplicate(百貨商店)	百貨商店#13	10344
+hugel,101,169,4	duplicate(百貨商店)	百貨商店#14	10344
+ayothaya,196,189,6	duplicate(百貨商店)	百貨商店#15	10344
+louyang,233,104,4	duplicate(百貨商店)	百貨商店#18	10344
+ayothaya,57,145,6	duplicate(百貨商店)	百貨商店#19	10344
+comodo,195,152,4	duplicate(百貨商店)	百貨商店#20	10344
+alberta,114,67,6	duplicate(百貨商店)	百貨商店#21	10344
+moscovia,211,197,6	duplicate(百貨商店)	百貨商店#22	10344
+lighthalzen,166,87,4	duplicate(百貨商店)	百貨商店#23	10344
+payon,179,104,4	duplicate(百貨商店)	百貨商店#24	10344
+rachel,108,134,6	duplicate(百貨商店)	百貨商店#25	10344
+brasilis,340,247,6	duplicate(百貨商店)	百貨商店#26	10344
+mora,55,129,6	duplicate(百貨商店)	百貨商店#27	10344
+splendide,233,315,6	duplicate(百貨商店)	百貨商店#28	10344
+moscovia,152,72,6	duplicate(百貨商店)	百貨商店#29	10344
+har_in01,34,84,6	duplicate(百貨商店)	百貨商店#30	10344
+ba_maison,210,253,4	duplicate(百貨商店)	百貨商店#31	10344
+prt_in,51,143,6	duplicate(百貨商店)	百貨商店#32	10344
+prt_in,240,25,6	duplicate(百貨商店)	百貨商店#33	10344
+prt_in,236,137,6	duplicate(百貨商店)	百貨商店#34	10344
+icas_in,133,263,6	duplicate(百貨商店)	百貨商店#35	10344
+icecastle,63,127,6	duplicate(百貨商店)	百貨商店#36	10344
+amatsu,102,161,6	duplicate(百貨商店)	百貨商店#ama01	10344	//
+
+
+

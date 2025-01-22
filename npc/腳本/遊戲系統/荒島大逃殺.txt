@@ -1,0 +1,289 @@
+﻿/*=======================================================================================================================
+- 腳本名稱：大逃殺
+- 腳本作者：Claymoreaki
+- 測試環境：Rathena
+- 注意事項: 腳本僅供，程式語言研究，學術研究用途
+- 更新內容：
+-
+-
+=========================================================================================================================*/
+
+//遊戲地圖限制1
+br_map	mapflag	notoken			//禁止使用不死之證
+br_map	mapflag	noteleport		//無法瞬移
+br_map	mapflag	nodrop			//無法扔道具
+br_map	mapflag	nomemo			//無法記憶地圖
+br_map	mapflag	monster_noteleport	//魔物無法瞬移
+br_map	mapflag	nosave			//無法儲存位置
+br_map	mapflag	nobranch		//無法使用樹枝
+br_map	mapflag	nochat			//無法開聊天室
+br_map	mapflag	novending		//無法開露天商店
+br_map	mapflag	nozenypenalty	//死亡無金錢懲罰
+br_map	mapflag	noexppenalty	//死亡沒有經驗懲罰
+br_map	mapflag	noattack	//禁止普通攻擊
+br_map	mapflag	noexppenalty	//
+
+
+//遊戲地圖限制2
+br_map	mapflag	noicewall		//無法使用冰牆
+br_map	mapflag	noskill			//無法使用全部技能
+br_map	mapflag	nocostume		//無法觀看到服裝
+br_map	mapflag	noitemconsumption		//無法使用物品
+br_map	mapflag	restricted	9
+
+
+//----------------------------------------------
+trinity,60,130,4	script	大逃殺	10023,{
+
+
+	if (checkfalcon() || checkcart() || checkriding() || ismounting() || checkoption(Option_Wug) || checkoption(Option_Wugrider) || checkmadogear() ||checkdragon()) {
+	mes "[大逃殺管理員]";
+	mes "請先卸除您所有坐騎/老鷹/狼/手推車等等才能遊戲.";
+	close;
+	}
+
+		set .@lv,1;
+		mes $@starthot_escape==1?"大逃殺: ^FF0000開放入場中 ....^000000":"大逃殺: ^FF0000尚未開放入場^000000";
+		mes "限時活動 手動開啟";
+		if(getgmlevel()>=90) goto mygm;
+		if(!$@starthot_escape){ mes "尚未達到 入場時段"; end; }
+		
+mygm:
+		switch(select("傳送地圖",getgmlevel()>=90 && $@hot_escape_Play!=1?"^FF0000手動模式 [GM]^000000":"","結束對話")){
+		
+	case 1:
+			if(!$@starthot_escape){ mes "尚未達到 入場時段"; end; }
+			//if(BaseLevel < .@lv) { mes "等級不足"; mes "等級至少: ^FF0000"+.@lv+"^000000 等"; close; }
+			//callfunc "count_limit_game",strcharinfo(0),1,1;
+			if($@starthot_escape ==1){ 
+			//if(getpetinfo(PETINFO_ID)) return2egg();
+			
+			sc_end SC_All;	//消除狀態
+			sc_start SC_STRIPARMOR,300000,5;	//卸除裝備
+
+			warp "br_map",162,33; 
+			end;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+			}
+			break;
+			
+	case 2:
+			set .@open,select("啟動遊戲 [倒數 30秒]","啟動遊戲 [倒數 3分鐘]","結束服務");
+			
+			switch(.@open){
+		case 1:
+		case 2:
+			if($@starthot_escape ==1 || $@hot_escape_Play ==1){ mes "^FF0000無法重複 啟動遊戲^000000"; close; }
+			set $@starthot_escape ,1;
+			if(.@open==1){ mes "^0000FF啟動成功^000000"; mes " "; 
+			mes "結束對話後 開始倒數30秒"; 
+			close2; 
+			announce "[大逃殺]: GM 手動 啟動遊戲  倒數最後30秒 請趕快入場",15; 
+			sleep 30000; 
+			donpcevent "hot_escape_on::OnStart"; 
+			end; }
+			mes "^0000FF啟動成功^000000";
+			announce "[大逃殺]: GM 手動 啟動遊戲",15;
+			initnpctimer "hot_escape_on";
+			break;
+			
+		case 3:
+			break;
+			}//switch .@open
+			break;
+
+	case 3:
+			break;
+			}
+			end;
+			
+Onalive:
+		set .@map$,"br_map";
+		if( strcharinfo(3) != .@map$ ) end;
+		if(Hp>1) end;
+		getitem 61052,1;	//小遊戲積分10點兌換券
+		getitem 61007,1;	//商城10點金幣
+		//message2 "[大逃殺]: 玩家: "+strcharinfo(0)+" 失敗出局 獲得 參予獎勵";
+		mapannounce "br_map","[大逃殺]: 玩家: "+strcharinfo(0)+" 失敗出局 獲得 參予獎勵!",15;
+		atcommand "@alive";
+		warp "SavePoint",0,0;	
+		end;
+
+
+OnClock2017:
+	initnpctimer "hot_escape_on";
+	end;
+
+OnInit:
+	waitingroom "荒島大逃殺",0;
+	end;
+
+}
+
+//New2
+//prontera,156,196,4	duplicate(大逃殺)	大逃殺#2	637
+
+
+-	script	hot_escape_on	-1,{
+
+
+OnTimer300:
+	$@starthot_escape=1;
+	//disablenpc "傳送回城#大逃殺";
+	announce "【荒島大逃殺】開始倒數3分鐘，請於這段時間內進入遊戲地圖(需使用初學者)",15;
+	end;
+
+
+OnTimer120000:
+	announce "【荒島大逃殺】開始倒數2分鐘，請於這段時間內進入遊戲地圖(需使用初學者)",15;
+	end;
+	
+OnTimer165000:
+	announce "【荒島大逃殺】開始倒數15秒，請於這段時間內進入遊戲地圖(需使用初學者)",15;
+	end;
+
+OnTimer180000:
+OnStart:
+	.@play_pcs=1;				//開啟遊戲 最低人數 預設四人
+	$@starthot_escape=0;		//報名時間 到了變數歸零 無法報名了
+	.@join_pcs=getmapusers("br_map");
+
+	if (.@join_pcs < .@play_pcs)	
+	{
+		//enablenpc "傳送回城#大逃殺";
+		announce "[大逃殺 提早結束]: 沒有達到 參予人數 最低標準",15;
+		end;
+	}	
+
+	$@hot_escape_Play=1;	//宣告遊戲 正式開始 到時候判斷 開始就無法 再用 GM模式
+	announce "[大逃殺 結束報名]: 遊戲準備 開始囉",15;
+	donpcevent "規則說明#大逃殺"+"::OnStart";
+	end;
+
+}	 
+
+
+
+-	script	規則說明#大逃殺	-1,{
+	end;
+
+OnStart:
+		initnpctimer;
+		setmapflag "br_map",mf_noskill;
+		end;
+
+OnTimer3000:		
+		mapannounce "br_map", "[大逃殺 規則說明]: 等等會有 屠殺者出現 請找 空曠處地方 逃跑 已禁用 全部技能",15;
+		end;
+		
+OnTimer6000:		
+		mapannounce "br_map", "[大逃殺 規則說明]: 遊戲開始後 可以生存至 最後的為 贏家",15;
+		end;
+
+OnTimer10000:
+		set $@hot_escape_ifplay,1;
+		mapannounce "br_map", "[大逃殺]: 遊戲正式開始",15;
+		end;
+		
+OnTimer12000:
+		donpcevent "時間計時#大逃殺"+"::OnStart";
+		areamonster "br_map",208,75,208,57,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",159,80,159,66,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",136,75,136,75,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",88,56,88,56,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",98,71,98,71,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",135,111,135,111,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",96,135,137,135,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",155,151,155,151,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",178,123,178,123,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",163,177,163,177,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",191,166,191,166,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",221,206,221,178,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",131,190,131,190,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",156,231,156,231,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",153,211,153,211,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",85,189,85,189,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",110,164,110,164,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		areamonster "br_map",156,42,156,42,"--ja--",7115,2,"規則說明#大逃殺"+"::OnMyMobDead";
+		//------------------------------------------------------------------------------------------
+		monster "br_map",0,0,"--ja--",7115,30,"規則說明#大逃殺"+"::OnMyMobDead";
+		monster "br_map",0,0,"--ja--",7115,30,"規則說明#大逃殺"+"::OnMyMobDead";
+		end;
+		
+OnMyMobDead:
+		end;
+		
+}
+
+
+-	script	時間計時#大逃殺	-1,{
+	end;
+	
+	
+OnStart:
+	initnpctimer;
+	end;
+	
+	
+OnTimer150000:
+	mapannounce "br_map", "[大逃殺]: 倒數最後 30秒 請在堅持一會",15;	
+	end;
+
+
+OnTimer165000:
+	mapannounce "br_map", "[大逃殺]: 倒數最後 15秒 請在堅持一會",15;	
+	end;
+
+OnTimer175000:
+	mapannounce "br_map", "[大逃殺]: 倒數最後  5秒 請在堅持一會",15;	
+	end;	
+
+OnTimer180000:
+	$@hot_escape_Play=0;
+	killmonsterall "br_map";
+	script4each "{ getitem 61007,10; getitem 61052,5; }",1,"br_map";
+	mapannounce "br_map", "[大逃殺]: 時間已到 生存獎勵 已發送 30秒後 自動傳送出去",15;
+	set .@stat,getmapflag("br_map",mf_noskill);
+	if(.@stat>0) removemapflag "br_map",mf_noskill;		
+	end;
+
+OnTimer210000:
+	set .@mpcs,getmapusers("br_map");
+	if(.@mpcs>0) script4each "{ warp \"SavePoint\",0,0; }",1,"br_map";	
+	end;
+
+}
+
+
+/*=======================================================================================================================
+- 腳本名稱：死亡事件
+- 測試環境：Rathena
+- 更新內容：
+=========================================================================================================================*/
+-	script	死亡事件	-1,{
+	end;
+	
+OnPCDieEvent:
+
+	set .@map$,strcharinfo(3);
+
+	if( .@map$ == "br_map" ){
+		if($@hot_escape_Play==1){
+			deltimer "大逃殺"+"::Onalive";
+			addtimer 2000,"大逃殺"+"::Onalive";
+		}
+	}
+	end;
+}

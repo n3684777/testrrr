@@ -1,0 +1,1402 @@
+﻿trinity,117,69,4	script	新手商店	564,{
+
+	//附魔狀態
+	set $@Rac1,rand(0,17);
+	set $@Rac2,rand(0,23);
+	set $@Rac3,rand(0,29);
+	setarray $@Rac_ing1[0],4700,4701,4702,4710,4711,4712,4720,4721,4722,4730,4731,4732,4740,4741,4742,4750,4751,4752;
+	setarray $@Rac_ing2[0],4700,4701,4702,4703,4710,4711,4712,4713,4720,4721,4722,4723,4730,4731,4732,4733,4740,4741,4742,4743,4750,4751,4752,4753;
+	setarray $@Rac_ing3[0],4811,4810,4832,4833,4815,4814,4818,4817,4863,4864,4948,4949,29310,29313,29316,29319,29322,29325,29328,29331,29334,29337,29340,29343,29346,29349,29352,29355,300070,300073;
+
+	mes "[新手商店]";
+	mes "^i[61172]可以在新手訓練任務中取得!";
+	mes "請選擇你要購買的內容";
+	next;
+	switch(select("見習武器:仙境武器:貴族裝備:帝國裝備:恩典裝備:幻象裝備:灰狼裝備:戰魂頭盔:附魔戰魂頭盔:取消")){
+
+	case 1:
+	close2;
+	callshop "見習武器兌換員";
+	end;
+
+	case 2:
+	close2;
+	callshop "仙境武器兌換員";
+	end;
+
+	case 3:
+	close2;
+	callshop "貴族裝備兌換員";
+	end;
+
+	case 4:
+	close2;
+	callshop "帝國裝備兌換員";
+	end;
+
+	case 5:
+	close2;
+	callshop "恩典裝備兌換員";
+	end;
+
+	case 6:
+	close2;
+	callshop "幻象裝備兌換";
+	end;
+
+
+	case 7:
+	close2;
+	callshop "灰狼裝備兌換2";
+	end;
+
+
+	case 8:
+	close2;
+	callshop "戰魂頭盔製作";
+	end;
+
+	case 9:
+	mes "[競技研究師]";
+	mes "只要給我新手金幣跟Zeny";
+	mes "我就能幫你附魔各種戰魂頭盔";
+	next;
+	switch(select("附魔戰魂頭盔:重置戰魂頭盔:取消")){
+
+case 1:
+	mes "[競技研究師]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Rac_Slots,getequipcardid(.@is,0);
+	set @Rac_Slots2,getequipcardid(.@is,1);
+	set @Rac_Slots3,getequipcardid(.@is,2);
+	set @Rac_Slots4,getequipcardid(.@is,3);
+	set @Rac_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[競技研究師]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[競技研究師]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 19189) goto Rac_net;	//機械工匠戰魂頭盔
+	if(@abd == 19190) goto Rac_net;	//基因學者戰魂頭盔
+	if(@abd == 19191) goto Rac_net;	//十字斬首者戰魂頭盔
+	if(@abd == 19192) goto Rac_net;	//魅影追縱者戰魂頭盔
+	if(@abd == 19193) goto Rac_net;	//咒術師戰魂頭盔
+	if(@abd == 19194) goto Rac_net;	//妖術師戰魂頭盔
+	if(@abd == 19195) goto Rac_net;	//盧恩騎士戰魂頭盔
+	if(@abd == 19196) goto Rac_net;	//皇家禁衛軍戰魂頭盔
+	if(@abd == 19197) goto Rac_net;	//大主教戰魂頭盔
+	if(@abd == 19198) goto Rac_net;	//修羅戰魂頭盔
+	if(@abd == 19199) goto Rac_net;	//遊俠戰魂頭盔
+	if(@abd == 19200) goto Rac_net;	//宮廷樂師戰魂頭盔
+	if(@abd == 19201) goto Rac_net;	//浪跡舞者戰魂頭盔
+	if(@abd == 19202) goto Rac_net;	//神槍手戰魂頭盔
+	if(@abd == 19203) goto Rac_net;	//忍者戰魂頭盔
+	if(@abd == 19204) goto Rac_net;	//超級初學者戰魂頭盔
+	if(@abd == 19205) goto Rac_net;	//朵蘭族戰魂頭盔
+	if(@abd == 19206) goto Rac_net;	//拳皇戰魂頭盔
+	if(@abd == 19207) goto Rac_net;	//獵靈士戰魂頭盔
+
+	mes "[競技研究師]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Rac_net:
+	//附魔
+	if(@Rac_Slots4 == 0) goto Rac_net1;
+	if(@Rac_Slots3 == 0) goto Rac_net2;
+	if(@Rac_Slots2 == 0) goto Rac_net3;
+	//附魔升級
+	if(@Rac_Slots2 == 29310) goto Rac_net1_2;
+	if(@Rac_Slots2 == 29311) goto Rac_net1_3;
+	if(@Rac_Slots2 == 29313) goto Rac_net2_2;
+	if(@Rac_Slots2 == 29314) goto Rac_net2_3;
+	if(@Rac_Slots2 == 29316) goto Rac_net3_2;
+	if(@Rac_Slots2 == 29317) goto Rac_net3_3;
+	if(@Rac_Slots2 == 29319) goto Rac_net4_2;
+	if(@Rac_Slots2 == 29320) goto Rac_net4_3;
+	if(@Rac_Slots2 == 29322) goto Rac_net5_2;
+	if(@Rac_Slots2 == 29323) goto Rac_net5_3;
+	if(@Rac_Slots2 == 29325) goto Rac_net6_2;
+	if(@Rac_Slots2 == 29326) goto Rac_net6_3;
+	if(@Rac_Slots2 == 29328) goto Rac_net7_2;
+	if(@Rac_Slots2 == 29329) goto Rac_net7_3;
+	if(@Rac_Slots2 == 29331) goto Rac_net8_2;
+	if(@Rac_Slots2 == 29332) goto Rac_net8_3;
+	if(@Rac_Slots2 == 29334) goto Rac_net9_2;
+	if(@Rac_Slots2 == 29335) goto Rac_net9_3;
+	if(@Rac_Slots2 == 29337) goto Rac_net10_2;
+	if(@Rac_Slots2 == 29338) goto Rac_net10_3;
+	if(@Rac_Slots2 == 29340) goto Rac_net11_2;
+	if(@Rac_Slots2 == 29341) goto Rac_net11_3;
+	if(@Rac_Slots2 == 29343) goto Rac_net12_2;
+	if(@Rac_Slots2 == 29344) goto Rac_net12_3;
+	if(@Rac_Slots2 == 29346) goto Rac_net13_2;
+	if(@Rac_Slots2 == 29347) goto Rac_net13_3;
+	if(@Rac_Slots2 == 29349) goto Rac_net14_2;
+	if(@Rac_Slots2 == 29350) goto Rac_net14_3;
+	if(@Rac_Slots2 == 29352) goto Rac_net15_2;
+	if(@Rac_Slots2 == 29353) goto Rac_net15_3;
+	if(@Rac_Slots2 == 29355) goto Rac_net16_2;
+	if(@Rac_Slots2 == 29356) goto Rac_net16_3;
+	if(@Rac_Slots2 == 300070) goto Rac_net17_2;
+	if(@Rac_Slots2 == 300071) goto Rac_net17_3;
+	if(@Rac_Slots2 == 300073) goto Rac_net18_2;
+	if(@Rac_Slots2 == 300074) goto Rac_net18_3;
+
+	mes "[競技研究師]";
+	mes "其他階段尚未開放付魔!!";
+	close;
+
+Rac_net1:
+	mes "[競技研究師]";
+	mes "你想要進行第一階段附魔?";
+	mes "附魔材料：10個新手金幣、100,000Zeny";
+	next;
+	switch(select("取消:第一階段附魔：第四洞")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA1",61172,100000,rand(1,100);
+	}
+
+Rac_net2:
+	mes "[競技研究師]";
+	mes "你想要進行第二階段附魔?";
+	mes "附魔材料：15個新手金幣、150,000Zeny";
+	next;
+	switch(select("取消:第二階段附魔：第三洞")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA2",61172,150000,rand(1,100);
+	}
+
+Rac_net3:
+	mes "[競技研究師]";
+	mes "你想要附魔那個戰魂?";
+	mes "附魔材料：50個新手金幣、200,000Zeny";
+	next;
+	switch(select("取消:戰魂(盧恩騎士)1Lv:戰魂(皇家禁衛軍)1Lv:戰魂(機械工匠)1Lv:戰魂(基因學者)1Lv:戰魂(十字斬首者)1Lv:戰魂(魅影追縱者)1Lv:戰魂(咒術師)1Lv:戰魂(妖術師)1Lv:戰魂(大主教)1Lv:戰魂(修羅)1Lv:戰魂(遊俠)1Lv:戰魂(宮廷樂師&浪跡舞者)1Lv:戰魂(神槍手)1Lv:戰魂(忍者)1Lv:戰魂(超級初學者)1Lv:戰魂(朵蘭族)1Lv:戰魂(拳皇)1Lv:戰魂(獵靈士)1Lv")){
+
+	case 1: close;
+	case 2: callfunc "fumoRacA3",61172,200000,29310,rand(1,100);
+	case 3: callfunc "fumoRacA3",61172,200000,29313,rand(1,100);
+	case 4: callfunc "fumoRacA3",61172,200000,29316,rand(1,100);
+	case 5: callfunc "fumoRacA3",61172,200000,29319,rand(1,100);
+	case 6: callfunc "fumoRacA3",61172,200000,29322,rand(1,100);
+	case 7: callfunc "fumoRacA3",61172,200000,29325,rand(1,100);
+	case 8: callfunc "fumoRacA3",61172,200000,29328,rand(1,100);
+	case 9: callfunc "fumoRacA3",61172,200000,29331,rand(1,100);
+	case 10: callfunc "fumoRacA3",61172,200000,29334,rand(1,100);
+	case 11: callfunc "fumoRacA3",61172,200000,29337,rand(1,100);
+
+	case 12: callfunc "fumoRacA3",61172,200000,29340,rand(1,100);
+
+	case 13: callfunc "fumoRacA3",61172,200000,29343,rand(1,100);
+	case 14: callfunc "fumoRacA3",61172,200000,29346,rand(1,100);
+	case 15: callfunc "fumoRacA3",61172,200000,29349,rand(1,100);
+	case 16: callfunc "fumoRacA3",61172,200000,29352,rand(1,100);
+	case 17: callfunc "fumoRacA3",61172,200000,29355,rand(1,100);
+	case 18: callfunc "fumoRacA3",61172,200000,300070,rand(1,100);
+	case 19: callfunc "fumoRacA3",61172,200000,300073,rand(1,100);
+	}
+
+
+Rac_net1_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29311,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net1_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29312,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net2_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29314,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net2_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29315,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net3_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29317,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net3_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29318,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net4_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29320,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net4_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29321,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net5_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29323,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net5_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29324,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net6_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29326,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net6_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29327,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net7_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29329,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net7_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29330,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net8_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29332,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net8_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29333,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net9_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29335,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net9_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29336,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net10_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29338,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net10_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29339,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net11_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29341,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net11_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29342,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net12_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29344,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net12_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29345,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net13_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29347,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net13_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29348,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net14_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29350,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net14_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29351,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+Rac_net15_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29353,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net15_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29354,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net16_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29356,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net16_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,29357,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net17_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,300071,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net17_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,300072,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net18_2:
+	if(countitem(61172)<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<500000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,300074,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,50;
+	set zeny,zeny-500000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+Rac_net18_3:
+	if(countitem(61172)<100){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足!";
+	close; }
+	if(zeny<1000000){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[競技研究師]";
+	mes "附魔升級成功!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,300075,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[競技研究師]";
+	mes "附魔升級失敗!";
+	delitem 61172,100;
+	set zeny,zeny-1000000;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,@Rac_Slots4;
+	specialeffect 155;
+	close;
+
+
+//----------------------洗滌附魔
+case 2:
+	mes "[競技研究師]";
+	mes "你想要要洗滌哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Rac_Slots,getequipcardid(.@is,0);
+	set @Rac_Slots2,getequipcardid(.@is,1);
+	set @Rac_Slots3,getequipcardid(.@is,2);
+	set @Rac_Slots4,getequipcardid(.@is,3);
+	set @Rac_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[競技研究師]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[競技研究師]";
+	mes "你沒物品怎麼洗滌";
+	close;
+	}
+	if(@abd == 19189) goto Rac_netx;	//機械工匠戰魂頭盔
+	if(@abd == 19190) goto Rac_netx;	//基因學者戰魂頭盔
+	if(@abd == 19191) goto Rac_netx;	//十字斬首者戰魂頭盔
+	if(@abd == 19192) goto Rac_netx;	//魅影追縱者戰魂頭盔
+	if(@abd == 19193) goto Rac_netx;	//咒術師戰魂頭盔
+	if(@abd == 19194) goto Rac_netx;	//妖術師戰魂頭盔
+	if(@abd == 19195) goto Rac_netx;	//盧恩騎士戰魂頭盔
+	if(@abd == 19196) goto Rac_netx;	//皇家禁衛軍戰魂頭盔
+	if(@abd == 19197) goto Rac_netx;	//大主教戰魂頭盔
+	if(@abd == 19198) goto Rac_netx;	//修羅戰魂頭盔
+	if(@abd == 19199) goto Rac_netx;	//遊俠戰魂頭盔
+	if(@abd == 19200) goto Rac_netx;	//宮廷樂師戰魂頭盔
+	if(@abd == 19201) goto Rac_netx;	//浪跡舞者戰魂頭盔
+	if(@abd == 19202) goto Rac_netx;	//神槍手戰魂頭盔
+	if(@abd == 19203) goto Rac_netx;	//忍者戰魂頭盔
+	if(@abd == 19204) goto Rac_netx;	//超級初學者戰魂頭盔
+	if(@abd == 19205) goto Rac_netx;	//朵蘭族戰魂頭盔
+	if(@abd == 19206) goto Rac_netx;	//拳皇戰魂頭盔
+	if(@abd == 19207) goto Rac_netx;	//獵靈士戰魂頭盔
+
+	mes "[競技研究師]";
+	mes "你這個裝備無法洗滌哦!";
+	close;
+
+Rac_netx:
+	mes "[競技研究師]";
+	mes "你想要洗滌這頭盔上的附魔?";
+	mes "洗滌材料：10個新手金幣";
+	next;
+	switch(select("取消:洗滌頭盔的附魔^009933(消耗新手金幣x10)^000000")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoRacA4",61172,500000,rand(1,100);
+	}
+}
+
+	case 10:
+	close;
+	}
+
+OnInit:
+	waitingroom "新手商店",0;
+	end;
+}
+
+
+
+//-------------------------- 第一階段附魔
+function	script	fumoRacA1	{
+
+	if(countitem(getarg(0))<10){
+	mes "[競技研究師]";
+	mes "你身上沒有新手金幣";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第一階段附魔成功!";
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,@Rac_Slots3,$@Rac_ing1[$@Rac1];
+	close;
+}
+
+//-------------------------- 第二階段附魔
+function	script	fumoRacA2	{
+
+	if(countitem(getarg(0))<15){
+	mes "[競技研究師]";
+	mes"你身上沒有新手金幣";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第二階段附魔成功!";
+	delitem getarg(0),15;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,@Rac_Slots2,$@Rac_ing2[$@Rac2],@Rac_Slots4;
+	close;
+}
+
+//-------------------------- 第三階段附魔
+function	script	fumoRacA3	{
+
+	if(countitem(getarg(0))<50){
+	mes "[競技研究師]";
+	mes "你身上新手金幣不足50個";
+	close;
+	}
+	if(zeny<getarg(1)){
+	mes "[競技研究師]";
+	mes "你身上的RO幣不夠!";
+	close; }
+	mes "[競技研究師]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),50;
+	set zeny,zeny-getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,getarg(2),@Rac_Slots3,@Rac_Slots4;
+	close;
+}
+
+
+
+//-------------------------- 洗滌附魔
+function	script	fumoRacA4	{
+
+	if(@Rac_Slots4 == 0){
+	mes "[競技研究師]";
+	mes "這個頭盔上並無附魔!";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[競技研究師]";
+	mes "你身上沒有新手金幣";
+	close;
+	}
+	mes "[競技研究師]";
+	mes "成功洗滌了這個頭盔上的附魔!";
+	delitem getarg(0),10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Rac_Refine,0,@Rac_Slots,0,0,0;
+	close;
+}
+
+
+
+

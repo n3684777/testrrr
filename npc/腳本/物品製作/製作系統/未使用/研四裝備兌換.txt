@@ -1,0 +1,141 @@
+//========================
+// 中文eAthena模擬器
+// -----------------------------------------
+// - 怪老人 腳本 -
+//========================
+//= 版本：1.0 (共119種頭飾製作)
+//========================
+//= 編寫：flamen 於 2008-08-19
+//========================
+
+prontera,146,75,6	script	怪老人	847,{
+
+	mes "[怪老人]";  
+	mes "想不想擁有研四的新裝備阿？";
+	mes "是不是打研四怪物都打不到阿？"; 
+	next;
+	mes "[怪老人]"; 
+	mes "只要你有這些材料："; 
+	mes "勇士的意志、血的飢渴、亡者的寒氣"; 
+	mes "我就能幫你製作各種研四裝備，";
+	mes "怎麼樣？心動了吧";
+	next;
+	mes "[怪老人]"; 
+	mes "希望我幫你製作哪一種的研四裝備呢？";
+	next;
+	switch(select("武器類:防具類:我再想想")) {
+		case 1:
+			mes "[怪老人]";
+			mes "這些就是我的武器";
+			next;
+			switch(select("特務拳刃:斬首拳刃:火焰戰斧:急凍戰斧:鈣礦石長矛:守護巨人長矛:寒氣篇魔法書:元氣之光魔杖:綠光魔短劍:紅光魔短劍:嗜血十字錘:元戎弩:超異能十字弓:束縛之弓")) {
+				case 1: setarray .@HR[0],1290,50,6469,100,6470,10,6471; break;
+				case 2: setarray .@HR[0],1291,50,6469,100,6470,85,6471; break;
+				case 3: setarray .@HR[0],1392,50,6469,100,6470,35,6471; break;
+				case 4: setarray .@HR[0],1393,50,6469,100,6470,35,6471; break;
+				case 5: setarray .@HR[0],1435,50,6469,100,6470,40,6471; break;
+
+				case 6: setarray .@HR[0],1490,300,6469,300,6470,400,6471; break;
+				case 7: setarray .@HR[0],1584,50,6469,100,6470,40,6471; break;
+				case 8: setarray .@HR[0],1659,50,6469,100,6470,35,6471; break;
+				case 9: setarray .@HR[0],13069,50,6469,100,6470,35,6471; break;
+				case 10: setarray .@HR[0],13070,50,6469,100,6470,35,6471; break;
+
+				case 11: setarray .@HR[0],16017,50,6469,100,6470,40,6471; break;
+				case 12: setarray .@HR[0],18109,50,6469,100,6470,35,6471; break;
+				case 13: setarray .@HR[0],18110,50,6469,100,6470,35,6471; break;
+				case 14: setarray .@HR[0],18111,50,6469,100,6470,35,6471; break;
+
+			}
+			break;
+		case 2:
+			mes "[怪老人]";
+			mes "這些就是我的防具";
+			next;
+			switch(select("守護巨人鋼盾:葛帔尼亞的古書(水):誓言之書(貳):救援斗篷:刺客的手銬:綠色研究服:古代的金飾")) {
+				case 1: setarray .@HR[0],2160,100,6469,50,6470,35,6471; break;
+				case 2: setarray .@HR[0],2161,100,6469,50,6470,22,6471; break;
+				case 3: setarray .@HR[0],2162,100,6469,50,6470,22,6471; break;
+				case 4: setarray .@HR[0],2582,300,6469,300,6470,400,6471; break;
+				case 5: setarray .@HR[0],2892,100,6469,50,6470,35,6471; break;
+				case 6: setarray .@HR[0],15044,100,6469,50,6470,30,6471; break;
+				case 7: setarray .@HR[0],18570,300,6469,300,6470,400,6471; break;
+
+			}
+			break;
+
+		case 3:
+			mes "[怪老人]";
+			mes "好吧，想好再來找我吧";
+			close;
+	}	
+	mes "[怪老人]";
+	mes "你想製作 ^3355FF" +getitemname(.@HR[0])+ " ^000000嗎？";
+	mes "準備好下面的材料:";
+	for( set .@i, 1; .@i <= getarraysize(.@HR)-2; set .@i, .@i+2 ) {
+				if (.@HR[.@i+1] == 1) { 
+						mes "費用是 ^FF0000" +.@HR[.@i]+ "^000000Zeny";
+				
+				}
+				else {
+						if (getiteminfo(.@HR[.@i+1],10)>=1)
+							set .@stoc$,"[" +getiteminfo(.@HR[.@i+1],10)+ "]";
+						else
+							set .@stoc$,"";
+						mes "^3355FF" +.@HR[.@i]+ " ^000000個^FF0000" +getitemname(.@HR[.@i+1])+.@stoc$+ "^000000";
+				}
+	}
+	next;
+	if (select("幫我製作吧:放棄") == 2 ) {
+		mes "[怪老人]";
+		mes "那麼下次有機會再見";
+		close;
+	}
+	set .@j,1;
+	for( set .@i, 1; .@i <= getarraysize(.@HR)-2; set .@i, .@i+2 ) {
+		if (.@HR[.@i+1] == 1) {
+			if (Zeny < .@HR[.@i]){
+				set .@j,0;
+				break;
+			}
+		}
+		else {
+			if (countitem(.@HR[.@i+1]) < .@HR[.@i]) {
+				set .@j,0;
+				break;
+			}
+		}
+	}
+	if (.@j == 0) {
+		mes "[怪老人]";
+		mes "材料還沒有準備夠哦";
+		mes "再去準備準備吧";
+	}
+	else {
+		for( set .@i, 1; .@i <= getarraysize(.@HR)-2; set .@i, .@i+2 ) {
+			if (.@HR[.@i+1] == 1) 
+				set Zeny,Zeny - .@HR[.@i];
+			 
+			else 
+				delitem .@HR[.@i+1],.@HR[.@i];
+			
+		}
+		mes "[怪老人]";
+		mes "作好了，拿去吧";
+		getitem .@HR[0],1;
+		next;
+		mes "[怪老人]";
+		mes "需要時再來找我吧，再見";
+	}
+	close;
+
+OnInit:
+	waitingroom "研四裝備兌換",0;
+	end;
+
+}
+
+
+
+
+

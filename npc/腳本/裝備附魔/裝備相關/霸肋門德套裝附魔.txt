@@ -1,0 +1,178 @@
+﻿vdistrict1,75,42,6	script	霸肋門德套裝#Con12	4_EP17_BASKET,{
+
+	mes "[霸肋門德套裝]";
+	mes "<TIPBOX>霸肋門德盧恩防具附魔<INFO>20108</INFO></TIPBOX>";
+	mes "<TIPBOX>盧恩防具附魔<INFO>20109</INFO></TIPBOX>";
+	mes "<TIPBOX>霸肋門德盧恩戒指附魔<INFO>20105</INFO></TIPBOX>";
+	mes "<TIPBOX>盧恩戒指/魔戒附魔<INFO>20104</INFO></TIPBOX>";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("裝備製作:物品兌換:進行附魔:前往霸肋門德環境生態圈")){
+
+	case 1:
+	close2;
+	callshop "霸肋門德裝備";
+	end;
+
+	case 2:
+	103:
+	close2;
+	callshop "符文石兌換";
+	end;
+
+	case 3:
+	mes "[霸肋門德套裝附魔]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("附魔 霸肋門德套裝1.0:附魔 霸肋門德套裝2.0:附魔 霸肋門德飾品3.0:取消")){
+
+	case 1:
+		mes "[霸肋門德套裝附魔1.0]";
+		mes "請選擇你要附魔的霸肋門德套裝";
+		next;
+		switch(select("霸肋門德的草原盧恩套裝:霸肋門德的火焰盧恩套裝:霸肋門德的寒冰盧恩套裝:霸肋門德的死亡盧恩套裝:取消")){
+
+		case 1:
+		Barmund01:
+		set Barmund_Memo,01;
+		close2;
+		item_enchant 16;
+		end;
+
+		case 2:
+		Barmund02:
+		set Barmund_Memo,02;
+		close2;
+		item_enchant 17;
+		end;
+
+		case 3:
+		Barmund03:
+		set Barmund_Memo,03;
+		close2;
+		item_enchant 18;
+		end;
+
+		case 4:
+		Barmund04:
+		set Barmund_Memo,04;
+		close2;
+		item_enchant 19;
+		end;
+
+		case 5:
+		close;
+		}
+	case 2:
+		mes "[霸肋門德套裝附魔2.0]";
+		mes "請選擇你要附魔的盧恩套裝";
+		next;
+		switch(select("草原盧恩套裝:火焰盧恩套裝:寒冰盧恩套裝:死亡盧恩套裝:取消")){
+
+		case 1:
+		Barmund05:
+		set Barmund_Memo,05;
+		close2;
+		item_enchant 52;
+		end;
+
+		case 2:
+		Barmund06:
+		set Barmund_Memo,06;
+		close2;
+		item_enchant 53;
+		end;
+
+		case 3:
+		Barmund07:
+		set Barmund_Memo,07;
+		close2;
+		item_enchant 54;
+		end;
+
+		case 4:
+		Barmund08:
+		set Barmund_Memo,08;
+		close2;
+		item_enchant 55;
+		end;
+
+		case 5:
+		close;
+	}
+
+	case 3:
+		mes "[霸肋門德飾品附魔3.0]";
+		mes "請選擇你要附魔的霸肋門德飾品";
+		next;
+		switch(select("霸肋門德的靈魂盧恩戒指:霸肋門德猛毒盧恩戒指:霸肋門德聖殿盧恩戒指:靈魂戒指、靈魂魔戒:猛毒戒指、猛毒魔戒:聖殿戒指、聖殿魔戒:取消")){
+
+		case 1:
+		Barmund09:
+		set Barmund_Memo,09;
+		close2;
+		item_enchant 57;
+		end;
+
+		case 2:
+		Barmund10:
+		set Barmund_Memo,10;
+		close2;
+		item_enchant 58;
+		end;
+
+		case 3:
+		Barmund11:
+		set Barmund_Memo,11;
+		close2;
+		item_enchant 59;
+		end;
+
+		case 4:
+		Barmund12:
+		set Barmund_Memo,12;
+		close2;
+		item_enchant 60;
+		end;
+
+		case 5:
+		Barmund13:
+		set Barmund_Memo,13;
+		close2;
+		item_enchant 61;
+		end;
+
+		case 6:
+		Barmund14:
+		set Barmund_Memo,14;
+		close2;
+		item_enchant 62;
+		end;
+
+		case 7:
+		close;
+	}
+
+	case 4:
+	close;
+	}
+
+	case 4:
+		switch(select("環境生態圈-草原【bl_grass】","環境生態圈-火焰【bl_lava】","環境生態圈-寒冰【bl_ice】","環境生態圈-死亡【bl_death】",
+		"環境生態圈-猛毒【bl_venom】","環境生態圈-聖殿【bl_temple】","環境生態圈-靈魂【bl_soul】")) {
+		case 1: set WarpMap$,"bl_grass"; set WarpMapX,0; set WarpMapY,0; warp "bl_grass",0,0;	close;
+		case 2: set WarpMap$,"bl_lava"; set WarpMapX,0; set WarpMapY,0; warp "bl_lava",0,0;	close;
+		case 3: set WarpMap$,"bl_ice"; set WarpMapX,0; set WarpMapY,0; warp "bl_ice",0,0;	close;
+		case 4: set WarpMap$,"bl_death"; set WarpMapX,0; set WarpMapY,0; warp "bl_death",0,0;	close;
+		case 5: set WarpMap$,"bl_venom"; set WarpMapX,0; set WarpMapY,0; warp "bl_venom",0,0;	close;
+		case 6: set WarpMap$,"bl_temple"; set WarpMapX,0; set WarpMapY,0; warp "bl_temple",0,0;	close;
+		case 7: set WarpMap$,"bl_soul"; set WarpMapX,0; set WarpMapY,0; warp "bl_soul",0,0;	close;
+		}
+	}
+
+OnInit:
+	waitingroom "霸肋門德套裝",0;
+	end;
+}
+
+

@@ -1,0 +1,252 @@
+//====================================================//
+//====================================================//
+//==製作人 : 陳小修 (SkyTwo) 　　　　　　Eathena　　==//
+//==更新日期 : 西元 2008/06/03　　　　　　　Script　==//
+//==腳本版號 : 繁體中文 v1.0 正式版　　　　　　　　 ==//
+//==腳本名稱 : 製作系統　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==腳本出處 : http://srogm.no-ip.info/forum　　　　==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==資料來源 : 台灣仙境傳說官方網站　　　　　　　　 ==//
+//==　　　　　 天野幻境　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==各位大哥大姐轉載請保留以上，萬分感激。　　　　　==//
+//====================================================//
+//====================================================//
+
+function	script	Quests_Weapon_A	{
+
+	switch(select("製作 ^0000FF妖劍 弒光^000000",
+			"製作 ^0000FF死神之劍^000000",
+			"製作 ^0000FF魔短劍 闇噬^000000")) {
+case 1:
+	setarray .@QW1[1],1138,714,7018,7019,7020,7021;
+	setarray .@QW2[1],1,1,1,1,1,1;
+	break;
+case 2:
+	setarray .@QW1[1],1169,609,714,1008,7017,7024;
+	setarray .@QW2[1],1,50,1,3,2,10;
+	break;
+case 3:
+	setarray .@QW1[1],1237,714,724,922,7022,7023;
+	setarray .@QW2[1],1,1,5,100,1,10;
+	break; }
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[2])+" "+.@QW2[2]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[3])+" "+.@QW2[3]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[4])+" "+.@QW2[4]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[5])+" "+.@QW2[5]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[6])+" "+.@QW2[6]+"^000000 個";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Weapon_A";	end;	}
+	if ( countitem(.@QW1[2]) < .@QW2[2] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[3]) < .@QW2[3] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[4]) < .@QW2[4] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[5]) < .@QW2[5] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[6]) < .@QW2[6] ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QW1[2],.@QW2[2];
+	delitem .@QW1[3],.@QW2[3];
+	delitem .@QW1[4],.@QW2[4];
+	delitem .@QW1[5],.@QW2[5];
+	delitem .@QW1[6],.@QW2[6];
+	getitem .@QW1[1],.@QW2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Weapon_1L4	{
+
+	switch(select("製作 ^0000FF利剪劍^000000","製作 ^0000FF魔刀 吞神^000000",
+			"製作 ^0000FF聖劍 渾沌^000000","製作 ^0000FF削刃短劍^000000",
+			"製作 ^0000FF破甲短劍^000000","製作 ^0000FF暗靈之斧^000000",
+			"製作 ^0000FF斯勒特斧^000000","製作 ^0000FF魔錘 安魂曲^000000",
+			"製作 ^0000FF秘錘 冷月^000000")) {
+case 1:
+	setarray .@QW1[1],1134,714,969,999,7290;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 2:
+	setarray .@QW1[1],1139,714,969,999,7289;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 3:
+	setarray .@QW1[1],1141,714,969,999,7295;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 4:
+	setarray .@QW1[1],1224,714,969,999,7297;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 5:
+	setarray .@QW1[1],1225,714,969,999,7292;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 6:
+	setarray .@QW1[1],1365,714,969,999,7293;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 7:
+	setarray .@QW1[1],1367,714,969,999,7296;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 8:
+	setarray .@QW1[1],1526,714,969,999,7294;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;
+case 9:
+	setarray .@QW1[1],1527,714,969,999,7291;
+	setarray .@QW2[1],1,10,10,50,30;
+	break;	}
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[2])+" "+.@QW2[2]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[3])+" "+.@QW2[3]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[4])+" "+.@QW2[4]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[5])+" "+.@QW2[5]+"^000000 個";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Weapon_1L4";	end;	}
+	if ( countitem(.@QW1[2]) < .@QW2[2] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[3]) < .@QW2[3] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[4]) < .@QW2[4] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[5]) < .@QW2[5] ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QW1[2],.@QW2[2];
+	delitem .@QW1[3],.@QW2[3];
+	delitem .@QW1[4],.@QW2[4];
+	delitem .@QW1[5],.@QW2[5];
+	getitem .@QW1[1],.@QW2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Weapon_2L4	{
+
+	switch(select("隨機製作^0000FF秘劍 慕戀^000000或^0000FF石中劍^000000",
+			"隨機製作^0000FF首領之劍^000000或^0000FF戰鬥短劍^000000",
+			"隨機製作^0000FF龍牙劍^000000或^0000FF風靈之劍^000000",
+			"隨機製作^0000FF除靈短劍^000000或^0000FF聖錘 十字星^000000",
+			"隨機製作^0000FF克萊伊特斧^000000或^0000FF斬首之斧^000000",
+			"隨機製作^0000FF魔力之矛^000000或^0000FF邪靈之矛^000000",
+			"隨機製作^0000FF龍戚弩斯長矛^000000或^0000FF聖光之戟^000000",
+			"隨機製作^0000FF熾天使之弓^000000或^0000FF秘拳套 閃光^000000",
+			"製作^0000FF黃金之錘^000000[1]")) {
+case 1:
+	setarray .@QW1[1],1132,1137,7293,7294,7297;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 2:
+	setarray .@QW1[1],1140,1228,7291,7292,7295;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 3:
+	setarray .@QW1[1],1166,1167,7290,7295,7296;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 4:
+	setarray .@QW1[1],1233,1528,7290,7294,7296;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 5:
+	setarray .@QW1[1],1364,1369,7289,7291,7294;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 6:
+	setarray .@QW1[1],1415,1416,7291,7295,7297;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 7:
+	setarray .@QW1[1],1469,1470,7290,7293,7296;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+case 8:
+	setarray .@QW1[1],1720,1814,7289,7292,7293;
+	setarray .@QW2[1],1,1,30,30,30;
+	break;
+
+case 9:
+	setarray .@QW1[1],1524,1524,614,969,7289;
+	setarray .@QW2[1],1,1,20,30,30;
+	break;	}
+
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000";
+	mes "　或 ^0000FF"+getitemname(.@QW1[2])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[3])+" "+.@QW2[3]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[4])+" "+.@QW2[4]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QW1[5])+" "+.@QW2[5]+"^000000 個";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Weapon_2L4";	end;	}
+	if ( countitem(.@QW1[3]) < .@QW2[3] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[4]) < .@QW2[4] ) { set .@No_Item,1; }
+	if ( countitem(.@QW1[5]) < .@QW2[5] ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QW1[3],.@QW2[3];
+	delitem .@QW1[4],.@QW2[4];
+	delitem .@QW1[5],.@QW2[5];
+	set .@GetItem,rand(1,2);
+	getitem .@QW1[.@GetItem],.@QW2[.@GetItem];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[.@GetItem])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+
+function	script	Quests_Weapon_3L4	{
+
+	switch(select("製作^0000FF生魚片刀^000000")) {
+
+case 1:
+	setarray .@QW1[1],1144,950;
+	setarray .@QW2[1],1,1000;
+	break;	}
+
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[2])+" "+.@QW2[2]+"^000000 個";
+	next;
+	switch(select("開始製作","放棄製作","返回選單")) {
+	case 1:	break;
+	case 2:	close;
+	case 3:	callfunc "Quests_Weapon_3L4";	end;	}
+	if ( countitem(.@QW1[2]) < .@QW2[2] ) { set .@No_Item,1; }
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QW1[2],.@QW2[2];
+	set .@GetItem,rand(1,2);
+	getitem .@QW1[.@GetItem],.@QW2[.@GetItem];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[.@GetItem])+"^000000] 製作已完成!!";
+	close;
+
+
+}

@@ -1,0 +1,1631 @@
+-	script	RandomItem	-1,{
+
+/*
+OnPCKillMvpEvent:
+
+announce "殺了王",bc_blue|bc_self;
+end;
+*/
+
+OnPCAddItemFilter:
+setarray .@questId[0],70000,70002,70004,70006,70008,70010,70012,70014,70016,70018,70020,70022,70024,70026,70028,70030,70032,70034,70036,70038,70040,70042,70044,70046,70048,70050,70052,70054,70056,70058,70060,70062,70064,70066,70068,70070,70072,70074,70076,70078,70080;
+setarray .@questRequiredItemId[0],4144,4147,4142,4132,4128,4143,4137,4123,4146,4131,4148,4121,4135,4318,4324,4168,4305,4278,4134,4330,4263,4236,4302,4342,4372,4374,4376,4399,4386,4403,4407,4408,4419,4425,4430,4441,4145,27162,4559,27126,4507;
+setarray .@questRequiredAmount[0],30;
+// 測試任務道具
+    for(.@qi = 0;.@qi <= getarraysize(.@questId);.@qi++)
+    {
+    if (checkquest(.@questId[.@qi],HUNTING) >= 0 && @additem_nameid == .@questRequiredItemId[.@qi] && countitem(.@questRequiredItemId[.@qi]) < .@questRequiredAmount[0])
+    {
+        announce getitemname(.@questRequiredItemId[.@qi]) + ": " + countitem(.@questRequiredItemId[.@qi])	 +" / " + .@questRequiredAmount[0] ,bc_blue|bc_self;
+    }
+    else if(countitem(.@questRequiredItemId[.@qi]) == .@questRequiredAmount[0])
+    {
+        announce getitemname(.@questRequiredItemId[.@qi]) + ": " + countitem(.@questRequiredItemId[.@qi])	 +" / " + .@questRequiredAmount[0] + " (道具已蒐集完畢)" ,bc_blue|bc_self;
+    }
+    } 
+    end;
+    }
+
+trinity,127,93,6	script	每日任務情報員#li	643,{
+    set .@mvpcard1,30;
+	mes "[每日任務情報員]";
+	mes "我是負責卡片升級任務的學者";
+	mes "我可以幫你升級可以升級的卡片任務～";
+    mes "你想要做甚麼呢？";
+    next;
+    switch(select("接取卡片任務","接取特殊每日任務","回報所有卡片任務"))
+    {
+//卡片選單
+            case 1:
+	        mes "[每日任務情報員]";
+            mes "那你想要接取哪張卡片升級的任務呢？";
+            switch(select("俄塞里斯卡片-等級1","巴風特卡片-等級1","死靈卡片-等級1","蜂后卡片-等級1","黃金蟲卡片-等級1","獸人英雄卡片-等級1","海盜之王卡片-等級1","虎王卡片-等級1","蟻后卡片-等級1","月夜貓卡片-等級1","法老王卡片-等級1","皮里恩卡片-等級1","獸人酋長卡片-等級1","冰暴騎士卡片-等級1","卡崙卡片-等級1","黑暗之王卡片-等級1","烏龜將軍卡片-等級1","死靈騎士卡片-等級1","德古拉伯爵卡片-等級1","墨蛇君卡片-等級1","元靈武士卡片-等級1","古埃及王卡片-等級1","塔奧群卡卡片-等級1","RSX-0806卡片-等級1","白素貞卡片-等級1","貝思波卡片-等級1","嗒妮小姐卡片-等級1","魔劍士 達納托斯的記憶卡片-等級1","迪塔勒泰晤勒斯卡片-等級1","齊爾-D-01卡片-等級1","巴基力 蘭特克力斯卡片-等級1","幽暗夢魘卡片-等級1","水晶龍卡片-等級1","阿特羅斯卡片-等級1","伊夫利特卡片-等級1","墮落大神官卡片-等級1","貝雷傑卡片-等級1","青冠龍卡片-等級1","魔神夢羅克卡片-等級1","波伊塔塔卡片-等級1","女王甲蟲卡片-等級1"))
+            {
+//接取任務           
+        //1 俄塞里斯卡片-等級1接取
+            case 1:
+			    if(checkquest(70000,HUNTING)>=0)
+                    {
+                        mes "[每日任務情報員]"; 
+                        mes "您已經接了這個任務了唷~!"; 
+                        close;
+                    }
+			    if(checkquest(70001,PLAYTIME)==0)
+                    {
+                        mes "[每日任務情報員]"; 
+                        mes "你今天已經接取過這個任務了"; 
+                        close;
+                    }
+			    if(checkquest(70001,PLAYTIME)==1)
+                    {
+                         mes "[每日任務情報員]"; 
+                         mes "你今天已經接取過這個任務了"; 
+                         close;
+                    }
+			    setquest 70000;
+			    if(checkquest(70001,PLAYTIME)==2)
+                {
+                    erasequest 70001;
+                }
+			    mes "任務接取完成";
+			    close;            
+        //2 巴風特卡片-等級1接取
+                case 2:
+			    if(checkquest(70002,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]"; 
+                    mes "您已經接了這個任務了唷~!"; 
+                    close;
+                }
+			    if(checkquest(70003,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]"; 
+                    mes "你今天已經接取過這個任務了"; 
+                    close;
+                }
+			    if(checkquest(70002,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    setquest 70002;
+			    if(checkquest(70003,PLAYTIME)==2)
+                {
+                    erasequest 70003;
+                }
+			    mes "任務接取完成";
+			    close;           
+        //3 死靈卡片-等級1接取
+                case 3:
+			    if(checkquest(70004,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                     close;
+                }
+			    if(checkquest(70005,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    if(checkquest(70004,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    setquest 70004;
+			    if(checkquest(70005,PLAYTIME)==2)
+                {
+                    erasequest 70005;
+                }
+			    mes "任務接取完成";
+			    close;            
+        //4 蜂后卡片-等級1接取
+                case 4:
+			    if(checkquest(70006,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70007,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70006,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70006;
+			    if(checkquest(70007,PLAYTIME)==2)
+                {
+                    erasequest 70007;
+                }
+			    mes "任務接取完成";
+			    close;            
+        //5 黃金蟲卡片-等級1接取
+                case 5:
+			    if(checkquest(70008,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70009,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70008,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70008;
+			    if(checkquest(70009,PLAYTIME)==2)
+                {
+                    erasequest 70009;
+                }
+			    mes "任務接取完成";
+			    close;
+        //6 獸人英雄卡片-等級1接取
+                case 6:
+			    if(checkquest(70010,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70011,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70010,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70010;
+			    if(checkquest(70011,PLAYTIME)==2)
+                {
+                    erasequest 70011;
+                }
+			    mes "任務接取完成";
+			    close;
+        //7 海盜之王卡片-等級1接取
+                case 7:
+			    if(checkquest(70012,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70013,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70012,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70012;
+			    if(checkquest(70013,PLAYTIME)==2)
+                {
+                    erasequest 70013;
+                }
+			    mes "任務接取完成";
+			    close;
+        //8 虎王卡片-等級1接取
+                case 8:
+			    if(checkquest(70014,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70015,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70014,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70014;
+			    if(checkquest(70015,PLAYTIME)==2)
+                {
+                    erasequest 70015;
+                }
+			    mes "任務接取完成";
+			    close;           
+        //9 蟻后卡片-等級1接取
+                case 9:
+			    if(checkquest(70016,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70017,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70016,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70016;
+			    if(checkquest(70017,PLAYTIME)==2)
+                {
+                    erasequest 70017;
+                }
+			    mes "任務接取完成";
+			    close;
+        //10 月夜貓卡片-等級1接取
+                case 10:
+			    if(checkquest(70018,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70019,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70018,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70018;
+			    if(checkquest(70019,PLAYTIME)==2)
+                {
+                    erasequest 70019;
+                }
+			    mes "任務接取完成";
+			    close;
+        //11 法老王卡片-等級1接取
+                case 11:
+			    if(checkquest(70020,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70021,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70020,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70020;
+			    if(checkquest(70021,PLAYTIME)==2)
+                {
+                    erasequest 70021;
+                }
+			    mes "任務接取完成";
+			    close;
+        //12 皮里恩卡片-等級1接取
+                case 12:
+			    if(checkquest(70022,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70023,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70022,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70022;
+			    if(checkquest(70023,PLAYTIME)==2)
+                {
+                    erasequest 70023;
+                }
+			    mes "任務接取完成";
+			    close;
+        //13 獸人酋長卡片-等級1接取
+                case 13:
+			    if(checkquest(70024,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70025,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70024,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70024;
+			    if(checkquest(70025,PLAYTIME)==2)
+                {
+                    erasequest 70025;
+                }
+			    mes "任務接取完成";
+			    close;
+        //14 冰暴騎士卡片-等級1接取
+                case 14:
+			    if(checkquest(70026,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70027,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70026,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70026;
+			    if(checkquest(70027,PLAYTIME)==2)
+                {
+                    erasequest 70027;
+                }
+			    mes "任務接取完成";
+			    close;
+        //15 卡崙卡片-等級1接取
+                case 15:
+			    if(checkquest(70028,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70029,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70028,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70028;
+			    if(checkquest(70029,PLAYTIME)==2)
+                {
+                    erasequest 70029;
+                }
+			    mes "任務接取完成";
+			    close;
+        //16 黑暗之王卡片-等級1接取
+                case 16:
+			    if(checkquest(70030,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70031,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70030,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70030;
+			    if(checkquest(70031,PLAYTIME)==2)
+                {
+                    erasequest 70031;
+                }
+			    mes "任務接取完成";
+			    close;
+        //17 烏龜將軍卡片-等級1接取
+                case 17:
+			    if(checkquest(70032,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70033,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70032,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70032;
+			    if(checkquest(70033,PLAYTIME)==2)
+                {
+                    erasequest 70033;
+                }
+			    mes "任務接取完成";
+			    close;
+        //18 死靈騎士卡片-等級1接取
+                case 18:
+			    if(checkquest(70034,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70035,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70034,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70034;
+			    if(checkquest(70035,PLAYTIME)==2)
+                {
+                    erasequest 70035;
+                }
+			    mes "任務接取完成";
+			    close;
+        //19 德古拉伯爵卡片-等級1接取
+                case 19:
+			    if(checkquest(70036,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70037,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70036,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70036;
+			    if(checkquest(70037,PLAYTIME)==2)
+                {
+                    erasequest 70037;
+                }
+			    mes "任務接取完成";
+			    close;
+        //20 墨蛇君卡片-等級1接取
+                case 20:
+			    if(checkquest(70038,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70039,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70038,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70038;
+			    if(checkquest(70039,PLAYTIME)==2)
+                {
+                    erasequest 70039;
+                }
+			    mes "任務接取完成";
+			    close;
+        //21 元靈武士卡片-等級1接取
+                case 21:
+			    if(checkquest(70040,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70041,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70040,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70040;
+			    if(checkquest(70041,PLAYTIME)==2)
+                {
+                    erasequest 70041;
+                }
+			    mes "任務接取完成";
+			    close;
+        //22 古埃及王卡片-等級1接取
+                case 22:
+			    if(checkquest(70042,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70043,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70042,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70042;
+			    if(checkquest(70043,PLAYTIME)==2)
+                {
+                    erasequest 70043;
+                }
+			    mes "任務接取完成";
+			    close;
+        //23 塔奧群卡卡片-等級1接取
+                case 23:
+			    if(checkquest(70044,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70045,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70044,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70044;
+			    if(checkquest(70045,PLAYTIME)==2)
+                {
+                    erasequest 70045;
+                }
+			    mes "任務接取完成";
+			    close;
+        //24 RSX-0806卡卡片-等級1接取
+                case 24:
+			    if(checkquest(70046,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70047,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70046,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70046;
+			    if(checkquest(70047,PLAYTIME)==2)
+                {
+                    erasequest 70047;
+                }
+			    mes "任務接取完成";
+			    close;
+        //25 白素貞卡卡片-等級1接取
+                case 25:
+			    if(checkquest(70048,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70049,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70048,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70048;
+			    if(checkquest(70049,PLAYTIME)==2)
+                {
+                    erasequest 70049;
+                }
+			    mes "任務接取完成";
+			    close;                
+        //26 貝思波卡卡片-等級1接取
+                case 26:
+			    if(checkquest(70050,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70051,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70050,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70050;
+			    if(checkquest(70051,PLAYTIME)==2)
+                {
+                    erasequest 70051;
+                }
+			    mes "任務接取完成";
+			    close;                
+        //27 嗒妮小姐卡片-等級1接取
+                case 27:
+			    if(checkquest(70052,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70053,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70052,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70052;
+			    if(checkquest(70053,PLAYTIME)==2)
+                {
+                    erasequest 70053;
+                }
+			    mes "任務接取完成";
+			    close;
+        //28 魔劍士 達納托斯的記憶卡片-等級1接取
+                case 28:
+			    if(checkquest(70054,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70055,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70054,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70054;
+			    if(checkquest(70055,PLAYTIME)==2)
+                {
+                    erasequest 70055;
+                }
+			    mes "任務接取完成";
+			    close;
+        //29 迪塔勒泰晤勒斯卡片-等級1接取
+                case 29:
+			    if(checkquest(70056,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70057,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70056,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70056;
+			    if(checkquest(70057,PLAYTIME)==2)
+                {
+                    erasequest 70057;
+                }
+			    mes "任務接取完成";
+			    close;
+        //30 齊爾-D-01卡片-等級1接取
+                case 30:
+			    if(checkquest(70058,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70059,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70058,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70058;
+			    if(checkquest(70059,PLAYTIME)==2)
+                {
+                    erasequest 70059;
+                }
+			    mes "任務接取完成";
+			    close;
+        //31 巴基力 蘭特克力斯卡片-等級1接取
+                case 31:
+			    if(checkquest(70060,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70061,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70060,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70060;
+			    if(checkquest(70061,PLAYTIME)==2)
+                {
+                    erasequest 70061;
+                }
+			    mes "任務接取完成";
+			    close;
+        //32 幽暗夢魘卡片-等級1接取
+                case 32:
+			    if(checkquest(70062,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70063,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70062,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70062;
+			    if(checkquest(70063,PLAYTIME)==2)
+                {
+                    erasequest 70063;
+                }
+			    mes "任務接取完成";
+			    close;
+        //33 幽暗夢魘卡片-等級1接取
+                case 33:
+			    if(checkquest(70064,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70065,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70064,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70064;
+			    if(checkquest(70065,PLAYTIME)==2)
+                {
+                    erasequest 70065;
+                }
+			    mes "任務接取完成";
+			    close;
+        //34 阿特羅斯卡片-等級1接取
+                case 34:
+			    if(checkquest(70066,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70067,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70066,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70066;
+			    if(checkquest(70067,PLAYTIME)==2)
+                {
+                    erasequest 70067;
+                }
+			    mes "任務接取完成";
+			    close;
+        //35 伊夫利特卡片-等級1接取
+                case 35:
+			    if(checkquest(70068,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70069,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70068,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70068;
+			    if(checkquest(70069,PLAYTIME)==2)
+                {
+                    erasequest 70069;
+                }
+			    mes "任務接取完成";
+			    close;
+        //36 墮落大神官卡片-等級1接取
+                case 36:
+			    if(checkquest(70070,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70071,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70070,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70070;
+			    if(checkquest(70071,PLAYTIME)==2)
+                {
+                    erasequest 70071;
+                }
+			    mes "任務接取完成";
+			    close;
+        //37 貝雷傑卡片-等級1接取
+                case 37:
+			    if(checkquest(70072,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70073,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70072,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70072;
+			    if(checkquest(70073,PLAYTIME)==2)
+                {
+                    erasequest 70073;
+                }
+			    mes "任務接取完成";
+			    close;
+        //38 貝雷傑卡片-等級1接取
+                case 38:
+			    if(checkquest(70074,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70075,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70074,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70074;
+			    if(checkquest(70075,PLAYTIME)==2)
+                {
+                    erasequest 70075;
+                }
+			    mes "任務接取完成";
+			    close;
+        //39 魔神夢羅克卡片-等級1接取
+                case 39:
+			    if(checkquest(70076,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70077,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70076,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70076;
+			    if(checkquest(70077,PLAYTIME)==2)
+                {
+                    erasequest 70077;
+                }
+			    mes "任務接取完成";
+			    close;
+        //40 波伊塔塔卡片-等級1接取
+                case 40:
+			    if(checkquest(70078,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70079,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70078,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70078;
+			    if(checkquest(70079,PLAYTIME)==2)
+                {
+                    erasequest 70079;
+                }
+			    mes "任務接取完成";
+			    close;
+        //41 女王甲蟲卡片-等級1接取
+                case 41:
+			    if(checkquest(70080,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(70081,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(70080,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 70080;
+			    if(checkquest(70081,PLAYTIME)==2)
+                {
+                    erasequest 70081;
+                }
+			    mes "任務接取完成";
+			    close;
+//接取任務結束
+    
+            }
+
+//特殊每日任務
+            case 2:
+	        mes "[每日任務情報員]";
+            mes "那你想要接取什麼特殊任務呢？";
+            switch(select("服飾大雜燴","寵物蛋抽抽樂箱任務","回報所有特殊任務"))
+            {
+  //1 服飾大雜燴
+            case 1:
+			    if(checkquest(80000,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(80001,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(80000,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 80000;
+			    if(checkquest(80001,PLAYTIME)==2)
+                {
+                    erasequest 80001;
+                }
+			    mes "任務接取完成";
+			    close;
+  //2 寵物蛋抽抽樂箱
+            case 2:
+			    if(checkquest(80002,HUNTING)>=0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "您已經接了這個任務了唷~!";
+                    close;
+                }
+			    if(checkquest(80003,PLAYTIME)==0)
+                {
+                    mes "[每日任務情報員]";
+                    mes "你今天已經接取過這個任務了";
+                    close;
+                }
+			    if(checkquest(80002,PLAYTIME)==1)
+                {
+                    mes "[每日任務情報員]";
+                     mes "你今天已經接取過這個任務了";
+                     close;
+                }
+			    setquest 80002;
+			    if(checkquest(80003,PLAYTIME)==2)
+                {
+                    erasequest 80003;
+                }
+			    mes "任務接取完成";
+			    close;
+//回報特殊任務
+
+            case 3:
+     // 服飾大雜燴回報
+            if(checkquest(80000,HUNTING)==2)
+            {              
+                erasequest 80000;
+                setquest 80001;
+                getitem 950000,1;
+                dispbottom "已完成今日服飾大雜燴任務";
+            }  
+     // 寵物蛋抽抽樂箱回報
+            if(checkquest(80002,HUNTING)==2)
+            {              
+                erasequest 80002;
+                setquest 80003;
+                getitem 959999,3;
+                dispbottom "已完成今日寵物蛋抽抽樂箱任務";
+            }  
+                close;
+
+
+
+
+
+// -------------
+            }
+
+
+// 回報任務
+
+         case 3:
+        // 俄塞里斯卡片-等級1回報
+            if(checkquest(70000,HUNTING)==2 && countitem(4144) >= .@mvpcard1)
+            {
+                delitem 4144,.@mvpcard1;               
+                erasequest 70000;
+                setquest 70001;
+                getitem 2020000,1;
+                dispbottom "已完成俄塞里斯卡片卡片-等級1升級任務";
+            }  
+        // 巴風特卡片-等級1回報
+            else if(checkquest(70002,HUNTING)==2 && countitem(4147) >= .@mvpcard1)
+            {
+                delitem 4147,.@mvpcard1;               
+                erasequest 70002;
+                setquest 70003;
+                getitem 2020001,1;
+                dispbottom "已完成巴風特卡片-等級1升級任務";
+            } 
+        // 死靈卡片-等級1回報
+            else if(checkquest(70004,HUNTING)==2 && countitem(4142) >= .@mvpcard1)
+            {
+                delitem 4142,.@mvpcard1;               
+                erasequest 70004;
+                setquest 70005;
+                getitem 2020002,1;
+                dispbottom "已完成死靈卡片-等級1升級任務";
+            }  
+        // 蜂后卡片-等級1回報
+            else if(checkquest(70006,HUNTING)==2 && countitem(4132) >= .@mvpcard1)
+            {
+                delitem 4132,.@mvpcard1;               
+                erasequest 70006;
+                setquest 70007;
+                getitem 2020003,1;
+                dispbottom "已完成蜂后卡片-等級1升級任務";
+            } 
+        // 黃金蟲卡片-等級1回報
+            else if(checkquest(70008,HUNTING)==2 && countitem(4128) >= .@mvpcard1)
+            {
+                delitem 4128,.@mvpcard1;               
+                erasequest 70008;
+                setquest 70009;
+                getitem 2020004,1;
+                dispbottom "已完成黃金蟲卡片-等級1升級任務";
+            } 
+        // 獸人英雄卡片-等級1回報
+            else if(checkquest(70010,HUNTING)==2 && countitem(4143) >= .@mvpcard1)
+            {
+                delitem 4143,.@mvpcard1;               
+                erasequest 70010;
+                setquest 70011;
+                getitem 2020005,1;
+                dispbottom "已完成獸人英雄卡片-等級1升級任務";
+            } 
+        // 海盜之王卡片-等級1回報
+            else if(checkquest(70012,HUNTING)==2 && countitem(4137) >= .@mvpcard1)
+            {
+                delitem 4137,.@mvpcard1;               
+                erasequest 70012;
+                setquest 70013;
+                getitem 2020006,1;
+                dispbottom "已完成海盜之王卡片-等級1升級任務";
+            } 
+        // 虎王卡片-等級1回報
+            else if(checkquest(70014,HUNTING)==2 && countitem(4123) >= .@mvpcard1)
+            {
+                delitem 4123,.@mvpcard1;               
+                erasequest 70014;
+                setquest 70015;
+                getitem 2020007,1;
+                dispbottom "已完成虎王卡片-等級1升級任務";
+            }
+        // 蟻后卡片-等級1回報
+            else if(checkquest(70016,HUNTING)==2 && countitem(4146) >= .@mvpcard1)
+            {
+                delitem 4146,.@mvpcard1;               
+                erasequest 70016;
+                setquest 70017;
+                getitem 2020008,1;
+                dispbottom "已完成蟻后卡片-等級1升級任務";
+            }
+        // 月夜貓卡片-等級1回報
+            else if(checkquest(70018,HUNTING)==2 && countitem(4131) >= .@mvpcard1)
+            {
+                delitem 4146,.@mvpcard1;               
+                erasequest 70018;
+                setquest 70019;
+                getitem 2020009,1;
+                dispbottom "已完成月夜貓卡片-等級1升級任務";
+            }
+        // 法老王卡片-等級1回報
+            else if(checkquest(70020,HUNTING)==2 && countitem(4148) >= .@mvpcard1)
+            {
+                delitem 4148,.@mvpcard1;               
+                erasequest 70020;
+                setquest 70021;
+                getitem 2020010,1;
+                dispbottom "已完成法老王卡片-等級1升級任務";
+            }
+        // 皮里恩卡片-等級1回報
+            else if(checkquest(70022,HUNTING)==2 && countitem(4121) >= .@mvpcard1)
+            {
+                delitem 4121,.@mvpcard1;               
+                erasequest 70022;
+                setquest 70023;
+                getitem 2020011,1;
+                dispbottom "已完成皮里恩卡片-等級1升級任務";
+            }
+        // 獸人酋長卡片-等級1回報
+            else if(checkquest(70024,HUNTING)==2 && countitem(4135) >= .@mvpcard1)
+            {
+                delitem 4135,.@mvpcard1;               
+                erasequest 70024;
+                setquest 70025;
+                getitem 2020012,1;
+                dispbottom "已完成獸人酋長卡片-等級1升級任務";
+            }
+        // 冰暴騎士卡片-等級1回報
+            else if(checkquest(70026,HUNTING)==2 && countitem(4318) >= .@mvpcard1)
+            {
+                delitem 4318,.@mvpcard1;               
+                erasequest 70026;
+                setquest 70027;
+                getitem 2020013,1;
+                dispbottom "已完成冰暴騎士卡片-等級1升級任務";
+            }
+        // 卡崙卡片-等級1回報
+            else if(checkquest(70028,HUNTING)==2 && countitem(4324) >= .@mvpcard1)
+            {
+                delitem 4324,.@mvpcard1;               
+                erasequest 70028;
+                setquest 70029;
+                getitem 2020014,1;
+                dispbottom "已完成卡崙卡片-等級1升級任務";
+            }
+        // 黑暗之王卡片-等級1回報
+            else if(checkquest(70030,HUNTING)==2 && countitem(4168) >= .@mvpcard1)
+            {
+                delitem 4168,.@mvpcard1;               
+                erasequest 70030;
+                setquest 70031;
+                getitem 2020015,1;
+                dispbottom "已完成黑暗之王卡片-等級1升級任務";
+            }
+        // 烏龜將軍卡片-等級1回報
+            else if(checkquest(70032,HUNTING)==2 && countitem(4305) >= .@mvpcard1)
+            {
+                delitem 4305,.@mvpcard1;               
+                erasequest 70032;
+                setquest 70033;
+                getitem 2020016,1;
+                dispbottom "已完成烏龜將軍卡片-等級1升級任務";
+            }
+        // 死靈騎士卡片-等級1回報
+            else if(checkquest(70034,HUNTING)==2 && countitem(4278) >= .@mvpcard1)
+            {
+                delitem 4278,.@mvpcard1;               
+                erasequest 70034;
+                setquest 70035;
+                getitem 2020017,1;
+                dispbottom "已完成死靈騎士卡片-等級1升級任務";
+            }
+        // 德古拉伯爵卡片-等級1回報
+            else if(checkquest(70036,HUNTING)==2 && countitem(4134) >= .@mvpcard1)
+            {
+                delitem 4134,.@mvpcard1;               
+                erasequest 70036;
+                setquest 70037;
+                getitem 2020018,1;
+                dispbottom "已完成德古拉伯爵卡片-等級1升級任務";
+            }
+        // 墨蛇君卡片-等級1回報
+            else if(checkquest(70038,HUNTING)==2 && countitem(4330) >= .@mvpcard1)
+            {
+                delitem 4330,.@mvpcard1;               
+                erasequest 70038;
+                setquest 70039;
+                getitem 2020019,1;
+                dispbottom "已完成墨蛇君卡片-等級1升級任務";
+            }
+        // 元靈武士卡片-等級1回報
+            else if(checkquest(70040,HUNTING)==2 && countitem(4263) >= .@mvpcard1)
+            {
+                delitem 4263,.@mvpcard1;               
+                erasequest 70040;
+                setquest 70041;
+                getitem 2020020,1;
+                dispbottom "已完成元靈武士卡片-等級1升級任務";
+            }            
+        // 古埃及王卡片-等級1回報
+            else if(checkquest(70042,HUNTING)==2 && countitem(4236) >= .@mvpcard1)
+            {
+                delitem 4236,.@mvpcard1;               
+                erasequest 70042;
+                setquest 70043;
+                getitem 2020021,1;
+                dispbottom "已完成古埃及王卡片-等級1升級任務";
+            } 
+        // 塔奧群卡卡片-等級1回報
+            else if(checkquest(70044,HUNTING)==2 && countitem(4302) >= .@mvpcard1)
+            {
+                delitem 4302,.@mvpcard1;               
+                erasequest 70044;
+                setquest 70045;
+                getitem 2020022,1;
+                dispbottom "已完成塔奧群卡卡片-等級1升級任務";
+            }
+        // RSX-0806卡片-等級1回報
+            else if(checkquest(70046,HUNTING)==2 && countitem(4342) >= .@mvpcard1)
+            {
+                delitem 4342,.@mvpcard1;               
+                erasequest 70046;
+                setquest 70047;
+                getitem 2020023,1;
+                dispbottom "已完成RSX-0806卡片-等級1升級任務";
+            }
+        // 白素貞卡片-等級1回報
+            else if(checkquest(70048,HUNTING)==2 && countitem(4372) >= .@mvpcard1)
+            {
+                delitem 4372,.@mvpcard1;               
+                erasequest 70048;
+                setquest 70049;
+                getitem 2020024,1;
+                dispbottom "已完成RSX-0806卡片-等級1升級任務";
+            }
+        // 貝思波卡片-等級1回報
+            else if(checkquest(70050,HUNTING)==2 && countitem(4374) >= .@mvpcard1)
+            {
+                delitem 4374,.@mvpcard1;               
+                erasequest 70050;
+                setquest 70051;
+                getitem 2020025,1;
+                dispbottom "已完成RSX-0806卡片-等級1升級任務";
+            }            
+        // 嗒妮小姐卡片-等級1回報
+            else if(checkquest(70052,HUNTING)==2 && countitem(4376) >= .@mvpcard1)
+            {
+                delitem 4376,.@mvpcard1;               
+                erasequest 70052;
+                setquest 70053;
+                getitem 2020026,1;
+                dispbottom "已完成嗒妮小姐卡片-等級1升級任務";
+            } 
+        // 魔劍士 達納托斯的記憶卡片-等級1回報
+            else if(checkquest(70054,HUNTING)==2 && countitem(4399) >= .@mvpcard1)
+            {
+                delitem 4399,.@mvpcard1;               
+                erasequest 70054;
+                setquest 70055;
+                getitem 2020027,1;
+                dispbottom "已完成魔劍士 達納托斯的記憶卡片-等級1升級任務";
+            } 
+        // 迪塔勒泰晤勒斯卡片-等級1回報
+            else if(checkquest(70056,HUNTING)==2 && countitem(4386) >= .@mvpcard1)
+            {
+                delitem 4386,.@mvpcard1;               
+                erasequest 70056;
+                setquest 70057;
+                getitem 2020028,1;
+                dispbottom "已完成迪塔勒泰晤勒斯卡片-等級1升級任務";
+            } 
+        // 齊爾-D-01卡片-等級1回報
+            else if(checkquest(70058,HUNTING)==2 && countitem(4403) >= .@mvpcard1)
+            {
+                delitem 4403,.@mvpcard1;               
+                erasequest 70058;
+                setquest 70059;
+                getitem 2020029,1;
+                dispbottom "已完成齊爾-D-01卡片-等級1升級任務";
+            } 
+        // 巴基力 蘭特克力斯卡片-等級1回報
+            else if(checkquest(70060,HUNTING)==2 && countitem(4407) >= .@mvpcard1)
+            {
+                delitem 4407,.@mvpcard1;               
+                erasequest 70060;
+                setquest 70061;
+                getitem 2020030,1;
+                dispbottom "已完成巴基力 蘭特克力斯卡片-等級1升級任務";
+            } 
+        // 幽暗夢魘卡片-等級1回報
+            else if(checkquest(70062,HUNTING)==2 && countitem(4408) >= .@mvpcard1)
+            {
+                delitem 4408,.@mvpcard1;               
+                erasequest 70062;
+                setquest 70063;
+                getitem 2020031,1;
+                dispbottom "已完成幽暗夢魘卡片-等級1升級任務";
+            } 
+        // 水晶龍卡片-等級1回報
+            else if(checkquest(70064,HUNTING)==2 && countitem(4419) >= .@mvpcard1)
+            {
+                delitem 4419,.@mvpcard1;               
+                erasequest 70064;
+                setquest 70065;
+                getitem 2020032,1;
+                dispbottom "已完成水晶龍卡片-等級1升級任務";
+            } 
+        // 阿特羅斯卡片-等級1回報
+            else if(checkquest(70066,HUNTING)==2 && countitem(4425) >= .@mvpcard1)
+            {
+                delitem 4425,.@mvpcard1;               
+                erasequest 70066;
+                setquest 70067;
+                getitem 2020033,1;
+                dispbottom "已完成阿特羅斯卡片-等級1升級任務";
+            } 
+        // 伊夫利特卡片-等級1回報
+            else if(checkquest(70068,HUNTING)==2 && countitem(4430) >= .@mvpcard1)
+            {
+                delitem 4430,.@mvpcard1;               
+                erasequest 70068;
+                setquest 70069;
+                getitem 2020034,1;
+                dispbottom "已完成伊夫利特卡片-等級1升級任務";
+            } 
+        // 墮落大神官卡片-等級1回報
+            else if(checkquest(70070,HUNTING)==2 && countitem(4441) >= .@mvpcard1)
+            {
+                delitem 4441,.@mvpcard1;               
+                erasequest 70070;
+                setquest 70071;
+                getitem 2020035,1;
+                dispbottom "已完成墮落大神官卡片-等級1升級任務";
+            } 
+        // 貝雷傑卡片-等級1回報
+            else if(checkquest(70072,HUNTING)==2 && countitem(4145) >= .@mvpcard1)
+            {
+                delitem 4145,.@mvpcard1;               
+                erasequest 70072;
+                setquest 70073;
+                getitem 2020036,1;
+                dispbottom "已完成貝雷傑卡片-等級1升級任務";
+            }      
+        // 青冠龍卡片-等級1回報
+            else if(checkquest(70074,HUNTING)==2 && countitem(27162) >= .@mvpcard1)
+            {
+                delitem 27162,.@mvpcard1;               
+                erasequest 70074;
+                setquest 70075;
+                getitem 2020037,1;
+                dispbottom "已完成青冠龍卡片-等級1升級任務";
+            }          
+        // 魔神夢羅克卡片-等級1回報
+            else if(checkquest(70076,HUNTING)==2 && countitem(4559) >= .@mvpcard1)
+            {
+                delitem 4559,.@mvpcard1;               
+                erasequest 70076;
+                setquest 70077;
+                getitem 2020038,1;
+                dispbottom "已完成魔神夢羅克卡片-等級1升級任務";
+            } 
+        // 波伊塔塔卡片-等級1回報
+            else if(checkquest(70078,HUNTING)==2 && countitem(27126) >= .@mvpcard1)
+            {
+                delitem 27126,.@mvpcard1;               
+                erasequest 70078;
+                setquest 70079;
+                getitem 2020039,1;
+                dispbottom "已完成波伊塔塔卡片-等級1升級任務";
+            } 
+        // 女王甲蟲卡片-等級1回報
+            else if(checkquest(70080,HUNTING)==2 && countitem(4507) >= .@mvpcard1)
+            {
+                delitem 4507,.@mvpcard1;               
+                erasequest 70080;
+                setquest 70081;
+                getitem 2020040,1;
+                dispbottom "已完成女王甲蟲卡片-等級1升級任務";
+            }
+//回報任務結束
+//回報任務失敗               
+                else
+                {
+                    dispbottom "卡片升級任務未完成，或者部分任務今日已經回報過。";
+                }     
+            close;
+            
+ 
+    }
+    end;
+OnInit:
+	waitingroom "卡片升級/每日任務",0;
+	end;
+}

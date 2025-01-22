@@ -1,0 +1,377 @@
+
+vdistrict1,59,18,6	script	黑暗的魔法匠人#enchant	66,{
+	mes "[黑暗的魔法匠人]";
+	mes "我負責給上位時光戰靴(洞)附魔.";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "附魔分為兩個階段.";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "階段一: ";
+	mes " - 對第4槽進行選擇性附魔.";
+	mes " - 附魔分為6個系列:";
+	mes " - ^0000FF鬥志系, 名弓系, 魔力系,";
+	mes " - 體力系, 攻速系, 幸運系.^000000";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "每一個系列最多附魔四次(升級附魔).";
+	mes "^ff0000注: 不能跨系列進行附魔.^000000";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "每次附魔消耗一定數量的^0000FF凝結的魔力^000000.";
+	mes "第一次:^0000FF凝結的魔力^000000×1、^0000FF汙染的魔力^000000×1";
+	mes "第二次:^0000FF凝結的魔力^000000×10、^0000FF汙染的魔力^000000×2";
+	mes "第三次:^0000FF凝結的魔力^000000×20、^0000FF汙染的魔力^000000×4";
+	mes "第四次:^0000FF凝結的魔力^000000×40、^0000FF汙染的魔力^000000×7";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "當階段一任意系列附魔完成四次後,";
+	mes "可選擇階段二進行附魔.";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "階段二:";
+	mes " - 對第3槽進行隨機附魔.(100%成功)";
+	mes " - 隨機種類(6選1):";
+	mes " - ^0000FF熊的力量, 失控的魔力, 光速,";
+	mes " - 鋼鐵鎧甲, 鷹眼, 幸運日^000000";
+	next;
+	mes "[黑暗的魔法匠人]";
+	mes "請問你要進行那種操作?";
+	mes "^ff0000附魔後精煉跟卡片會消失^000000";
+	next;
+	switch(select("裝備製作:- 第一階段附魔:- 第二階段附魔:- 重置時光戰鞋")){
+
+		case 1:
+		close2;
+		callshop "時光戰靴兌換";
+		end;
+
+		case 2:
+			mes "[黑暗的魔法匠人]";
+			mes "請選擇你想要的附魔種類";
+			next;
+			switch(select("- 鬥志系:- 名弓系:- 魔力系:- 體力系:- 攻速系:- 幸運系:- 取消")){
+				case 1: callsub S_enchant_lv1,1;
+				case 2: callsub S_enchant_lv1,2;
+				case 3: callsub S_enchant_lv1,3;
+				case 4: callsub S_enchant_lv1,4;
+				case 5: callsub S_enchant_lv1,5;
+				case 6: callsub S_enchant_lv1,6;
+			}
+			break;
+		case 3:
+			callsub S_enchant_lv2;
+			break;
+
+		case 4:
+			mes "[黑暗的魔法匠人]";
+			mes "你想要要重置哪個時光戰靴?";
+			if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+			else set .@strRetPart3$,getequipname(2);
+			set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$)-1;
+
+			next;
+			set @abd,getequipid(.@is);
+			set @TemporalEX_Slots,getequipcardid(.@is,0);
+			set @TemporalEX_Slots2,getequipcardid(.@is,1);
+			set @TemporalEX_Slots3,getequipcardid(.@is,2);
+			set @TemporalEX_Slots4,getequipcardid(.@is,3);
+			set @TemporalEX_Refine,getequiprefinerycnt(.@is);
+
+			if(countitem(@abd)>1){
+			mes "[黑暗的魔法匠人]";
+			mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+			close;
+			}
+			if(getequipisequiped(.@is) == 0){
+			mes "[黑暗的魔法匠人]";
+			mes "你沒物品怎麼重置";
+			close;
+			}
+			if(@abd == 22006) goto TemporalEX_netx;
+			if(@abd == 22007) goto TemporalEX_netx;
+			if(@abd == 22008) goto TemporalEX_netx;
+			if(@abd == 22009) goto TemporalEX_netx;
+			if(@abd == 22010) goto TemporalEX_netx;
+			if(@abd == 22011) goto TemporalEX_netx;
+
+			mes "[黑暗的魔法匠人]";
+			mes "你這個裝備無法重置哦!";
+			close;
+
+TemporalEX_netx:
+			mes "[黑暗的魔法匠人]";
+			mes "你想要重置這時光戰靴上的附魔?";
+			mes "重置材料：1個強大的精華";
+			next;
+			switch(select("取消:重置時光戰靴的附魔")){
+			case 1:
+			close;
+			case 2:
+			if (@TemporalEX_Slots4 == 0) {
+			mes "[黑暗的魔法匠人]";	
+			mes "你裝備上的插槽並無附魔效果";
+			close;
+			}
+			if(countitem(7925)<1){
+			mes "[黑暗的魔法匠人]";
+			mes"你身上沒有強大的精華";
+			close;
+			}
+			mes "[黑暗的魔法匠人]";
+			mes "初始化成功";
+			specialeffect 154;
+			delitem @abd,1;
+			delitem 7925,1;
+			getitem2 @abd,1,1,@TemporalEX_Refine,0,@TemporalEX_Slots,0,0,0;
+			close;
+			}
+
+	}
+	mes "[黑暗的魔法匠人]";
+	mes "等你想好了再來找我吧!";
+	close;
+
+S_enchant_lv1:
+	setarray .@enchant_list[0],
+	4808, 4820, 4821, 4822,//鬥志系
+	4832, 4833, 4834, 4835,//名弓系
+	4814, 4813, 4812, 4826,//魔力系
+	4741, 4742, 4861, 4862,//體力系
+	4869, 4872, 4873, 4881,//攻速系
+	4752, 4753, 4754, 4755;//幸運系
+
+	//升級所需的凝結的魔力數量表,和附魔表對應
+	setarray .@price1_list[0],
+	10, 20, 40, 0,
+	10, 20, 40, 0,
+	10, 20, 40, 0,
+	10, 20, 40, 0,
+	10, 20, 40, 0,
+	10, 20, 40, 0;
+
+	//升級所需的汙染的魔力數量表,和附魔表對應
+	setarray .@price2_list[0],
+	2, 4, 7, 0,
+	2, 4, 7, 0,
+	2, 4, 7, 0,
+	2, 4, 7, 0,
+	2, 4, 7, 0,
+	2, 4, 7, 0;
+
+	//上位時光戰靴id表
+	setarray .@shoes_list[0],
+	22006, 22007, 22008, 22009, 22010, 22011;
+
+	set .@type, getarg(0);
+	//鞋子的id
+	set .@equip_id, getequipid(EQI_SHOES);
+	for ( .@i = 0; .@i < getarraysize(.@shoes_list); .@i++ ) {
+		if (.@equip_id == .@shoes_list[.@i]) {
+			set .@isequip,1;
+			break;
+		}
+	}
+	if (.@isequip == 0) {
+		mes "[黑暗的魔法匠人]";
+		mes "請裝備上要附魔的上位時光戰靴再來!";
+		close;
+	}
+	//獲得鞋子的第4插槽的附魔
+	set .@equip_card_slot4, getequipcardid(EQI_SHOES,3);
+	//是否為第一次附魔
+	if (.@equip_card_slot4 == 0) {
+		switch (.@type) {
+			case 1:	set .@enchant, 4808; break;
+			case 2: set .@enchant, 4832; break;
+			case 3: set .@enchant, 4814; break;
+			case 4: set .@enchant, 4741; break;
+			case 5: set .@enchant, 4869; break;
+			case 6: set .@enchant, 4752; break;
+		}
+		//第一次附魔需要凝結的魔力*3
+		//第一次附魔需要汙染的魔力*1
+		set .@price1, 3;
+		set .@price2, 1;
+	} else {
+		set .@index, -1;
+		for ( .@i = 0; .@i < getarraysize(.@enchant_list); .@i++ ) {
+			if (.@equip_card_slot4 == .@enchant_list[.@i]) {
+				set .@index, .@i;
+				set .@enchant, .@enchant_list[.@i+1];
+				break;
+			}
+		}
+		if (.@index == -1) {
+			mes "[黑暗的魔法匠人]";
+			mes "第4插槽已經被佔用, 無法附魔!";
+			close;
+		}
+		//如果升級到4級
+		if (.@index == 3 || .@index == 7 || .@index == 11 || .@index == 15 || .@index == 19 || .@index == 23) {
+			mes "[黑暗的魔法匠人]";
+			mes "階段一附魔已經進行了四次,";
+			mes "無法再附魔了!";
+			close;
+		}
+		//判斷是否為同一系列
+		switch (.@type) {
+			case 1: if (.@index != 0 && .@index != 1 && .@index != 2) set .@iswrong, 1; break;
+			case 2: if (.@index != 4 && .@index != 5 && .@index != 6) set .@iswrong, 1; break;
+			case 3: if (.@index != 8 && .@index != 9 && .@index != 10) set .@iswrong, 1; break;
+			case 4: if (.@index != 12 && .@index != 13 && .@index != 14) set .@iswrong, 1; break;
+			case 5: if (.@index != 16 && .@index != 17 && .@index != 18) set .@iswrong, 1; break;
+			case 6: if (.@index != 20 && .@index != 21 && .@index != 22) set .@iswrong, 1; break;
+		}
+		if (.@iswrong == 1) {
+			mes "[黑暗的魔法匠人]";
+			mes "不能跨系列進行附魔!";
+			close;
+		}
+		//設置升級所需的凝結的魔力數量
+		set .@price1, .@price1_list[.@index];
+		//設置升級所需的汙染的魔力數量
+		set .@price2, .@price2_list[.@index];
+	}
+	if (countitem(6608) < .@price1) {
+		mes "[黑暗的魔法匠人]";
+		mes "本次附魔需要"+.@price1+"塊凝結的魔力.";
+		mes "等你帶上足夠的凝結的魔力再來找我!";
+		close;
+	}
+	if (countitem(6755) < .@price2) {
+		mes "[黑暗的魔法匠人]";
+		mes "本次附魔需要"+.@price2+"塊汙染的魔力.";
+		mes "等你帶上足夠的汙染的魔力再來找我!";
+		close;
+	}
+
+
+	//獲得精煉值
+	set .@equip_refine, getequiprefinerycnt(EQI_SHOES);
+	//刪除身上的鞋子
+	delequip EQI_SHOES;
+	//刪除凝結的魔力
+	delitem 6608, .@price1;
+	delitem 6755, .@price2;
+	//成功率80%
+//	if (rand(1,10) < 3) {
+//		specialeffect2 EF_SUI_EXPLOSION;
+//		mes "[黑暗的魔法匠人]";
+//		mes "啊~~! 真不好意思!!";
+//		mes "附魔失敗了, 時光戰靴也損壞了!";
+//		close;
+//	}
+
+	specialeffect2 EF_REPAIRWEAPON;
+	//覆蓋第4卡槽的數據
+	set .@equip_card_slot4,.@enchant;
+	//附魔成功
+	getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,0,.@equip_card_slot4;
+
+	mes "[黑暗的魔法匠人]";
+	mes "恭喜你!";
+	mes "附魔成功了.";
+	close;
+
+S_enchant_lv2:
+	setarray .@enchant_list[0],
+	4808, 4820, 4821, 4822,
+	4832, 4833, 4834, 4835,
+	4814, 4813, 4812, 4826,
+	4741, 4742, 4861, 4862,
+	4869, 4872, 4873, 4881,
+	4752, 4753, 4754, 4755;
+
+	setarray .@enchant_list2[0],
+	4875, 4876, 4877, 4878, 4879, 4880;
+
+	setarray .@shoes_list[0],
+	22006, 22007, 22008, 22009, 22010, 22011;
+
+	set .@equip_id, getequipid(EQI_SHOES);
+
+	for ( .@i = 0; .@i < getarraysize(.@shoes_list); .@i++ ) {
+		if (.@equip_id == .@shoes_list[.@i]) {
+			set .@isequip,1;
+			break;
+		}
+	}
+	if (.@isequip == 0) {
+		mes "[黑暗的魔法匠人]";
+		mes "請裝備上要附魔的上位時光戰靴(洞)再來!";
+		close;
+	}
+
+	set .@equip_refine, getequiprefinerycnt(EQI_SHOES);
+	set .@equip_card_slot4, getequipcardid(EQI_SHOES,3);
+	set .@equip_card_slot3, getequipcardid(EQI_SHOES,2);
+
+	set .@index, -1;
+	for ( .@i = 0; .@i < getarraysize(.@enchant_list); .@i++ ) {
+		if (.@equip_card_slot4 == .@enchant_list[.@i]) {
+			set .@index, .@i;
+			break;
+		}
+	}
+	if (.@index == -1) {
+		mes "[黑暗的魔法匠人]";
+		mes "第4插槽的附魔不正確, 無法附魔!";
+		close;
+	}
+
+	if (.@index != 3 && .@index != 7 && .@index != 11 && .@index != 15 && .@index != 19 && .@index != 23) {
+		mes "[黑暗的魔法匠人]";
+		mes "尚未完成階段一的四次附魔,";
+		mes "無法進行階段二附魔!";
+		close;
+	}
+
+	if (.@equip_card_slot3 != 0) {
+		set .@isLv2, -1;
+		for ( .@i = 0; .@i < getarraysize(.@enchant_list2); .@i++ ) {
+			if (.@equip_card_slot3 == .@enchant_list2[.@i]) {
+				set .@isLv2, .@i;
+				break;
+			}
+		}
+		if (.@isLv2 == -1) {
+			mes "[黑暗的魔法匠人]";
+			mes "第3槽已經被佔用, 無法附魔!";
+			close;
+		}
+		mes "[黑暗的魔法匠人]";
+		mes "階段二附魔已經完成, 無法再次附魔!";
+		close;
+	}
+
+	if (countitem(6608) < 50) {
+		mes "[黑暗的魔法匠人]";
+		mes "本次附魔需要50塊凝結的魔力.";
+		mes "等你帶上足夠的凝結的魔力再來找我!";
+		close;
+	}
+	if (countitem(6755) < 10) {
+		mes "[黑暗的魔法匠人]";
+		mes "本次附魔需要10塊汙染的魔力.";
+		mes "等你帶上足夠的汙染的魔力再來找我!";
+		close;
+	}
+
+	delequip EQI_SHOES;
+	delitem 6608, 50;
+	delitem 6755, 10;
+	specialeffect2 EF_REPAIRWEAPON;
+	set .@equip_card_slot3,.@enchant_list2[rand(6)];
+	getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@equip_card_slot3,.@equip_card_slot4;
+	mes "[黑暗的魔法匠人]";
+	mes "恭喜你!";
+	mes "附魔成功了.";
+	close;
+
+OnInit:
+	waitingroom "時光戰靴",0;
+	end;
+
+}
+

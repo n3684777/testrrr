@@ -1,0 +1,159 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARfuTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 meㄋans unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+# X 地圖x坐標。 （默認值：0）
+# Y 映射y坐標。 （默認值：0）
+#  Direction NPC 正在尋找的方向。 （默認：北）
+# Sprite NPC 的 Sprite 名稱。 (默認: FakeNpc)
+# Items：已售商品列表。
+# - Index 商店內物品的索引。 (0-...)
+# 最大索引取決於客戶端。
+# Item Aegis 項目的名稱。
+# Stock 庫存商品的數量。 0 表示無限制。 （默認值：0）
+# Zeny 中物品的 Zeny 成本。 （默認值：0）
+#RequiredItems：所需項目列表（可選）
+# - 所需項目的索引索引。 (0-4)
+# Item Aegis 所需項目的名稱。
+# Amount 所需項目的數量。 （默認值：1）
+# Refine 所需項目的細化級別。 （默認值：0）
+###########################################################################
+# Body:
+#   - Name: Pharmacist Merchant
+#     Map: geffen
+#     X: 117
+#     Y: 72
+#     Direction: North
+#     Sprite: 2_F_MAGICMASTER
+#     Items:
+#       - Index: 0
+#         Item: White_Potion
+#         Stock: 0
+#         Zeny: 100
+#         RequiredItems:
+#           - Index: 0
+#             Item: Red_Potion
+#             Amount: 2
+#           - Index: 1
+#             Item: Jellopy
+#             Amount: 1
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+Footer:
+  Imports:
+    - Path: npc/腳本/barters/物品互換服務員.yml
+    - Path: npc/腳本/barters/裝備打洞.yml
+    - Path: npc/腳本/barters/埃克拉珠手套.yml
+    - Path: npc/腳本/barters/馬來港符紋.yml
+
+    - Path: npc/腳本/barters/寶石鑲崁.yml
+    - Path: npc/腳本/barters/每日服飾.yml
+    - Path: npc/腳本/barters/每周服飾.yml
+
+    - Path: npc/腳本/barters/洛克理奇岩嶺裝備.yml
+    - Path: npc/腳本/barters/幻色童話裝備.yml
+    - Path: npc/腳本/barters/星火同盟裝備.yml
+    - Path: npc/腳本/barters/幻象裝備.yml
+    - Path: npc/腳本/barters/全自動裝備.yml
+    - Path: npc/腳本/barters/灰狼裝備.yml
+    - Path: npc/腳本/barters/雪花防具冰川武器.yml
+    - Path: npc/腳本/barters/冰河防具.yml
+
+    - Path: npc/腳本/barters/幻影空間裝備.yml
+    - Path: npc/腳本/barters/恐怖玩具工廠裝備.yml
+    - Path: npc/腳本/barters/機械工匠套裝.yml
+    - Path: npc/腳本/barters/戰魂頭盔.yml
+    - Path: npc/腳本/barters/時光戰靴.yml
+    - Path: npc/腳本/barters/戰死者頭盔.yml
+    - Path: npc/腳本/barters/施密特裝備.yml
+    - Path: npc/腳本/barters/超時空頭冠.yml
+    - Path: npc/腳本/barters/撒旦&聖光飾品裝備.yml
+
+    - Path: npc/腳本/barters/幽靈皇宮裝備.yml
+    - Path: npc/腳本/barters/吉芬魔法大賽裝備.yml
+    - Path: npc/腳本/barters/吉芬夜間鬥技場裝備.yml
+    - Path: npc/腳本/barters/無限空間裝備.yml
+    - Path: npc/腳本/barters/懺悔之墓裝備.yml
+    - Path: npc/腳本/barters/飛行船墜落地裝備.yml
+    - Path: npc/腳本/barters/深淵湖水裝備.yml
+    - Path: npc/腳本/barters/艾音貝赫礦山洞穴裝備.yml
+    - Path: npc/腳本/barters/穆卡達斯武器.yml
+
+    - Path: npc/腳本/barters/堅硬&邪惡&精確裝備.yml
+    - Path: npc/腳本/barters/星座之塔裝備.yml
+    - Path: npc/腳本/barters/霸肋門德裝備.yml
+    - Path: npc/腳本/barters/霸肋門德深層套裝.yml
+    - Path: npc/腳本/barters/時序象限裝備.yml
+
+    - Path: npc/腳本/barters/日本RO企劃社裝備.yml
+    - Path: npc/腳本/barters/20周年活動.yml
+    - Path: npc/腳本/barters/見習武器.yml
+    - Path: npc/腳本/barters/仙境武器.yml
+    - Path: npc/腳本/barters/塔諾斯武器.yml
+    - Path: npc/腳本/barters/貴族&帝國&恩典裝備.yml
+    - Path: npc/腳本/barters/轉蛋保底商店.yml
+    - Path: npc/腳本/barters/綿綿島服飾.yml
+    - Path: npc/腳本/barters/綿綿島硬幣.yml
+    - Path: npc/腳本/barters/紅利轉蛋保底商店.yml
+    - Path: npc/腳本/barters/凱薩再臨.yml
+    - Path: npc/腳本/barters/道館頭飾.yml
+    - Path: npc/腳本/barters/服飾(道館).yml
+    - Path: npc/腳本/barters/消耗品合成箱預覽.yml
+    - Path: npc/腳本/barters/1新式裝備預覽員.yml
+    - Path: npc/腳本/barters/聲望任務商店.yml
+
+    - Path: npc/腳本/barters/歡慶開服活動.yml
+    - Path: npc/腳本/barters/推廣商店.yml
+    - Path: npc/腳本/barters/王家狩獵.yml
+    - Path: npc/腳本/barters/贊助服飾.yml
+    - Path: npc/腳本/barters/王卡碎片.yml
+
+    - Path: npc/腳本/barters/神器製作.yml
+    - Path: npc/腳本/barters/時間庭園兌換商店.yml
+    - Path: npc/腳本/barters/凱渥寶樂格兌換商店.yml
+    - Path: npc/腳本/barters/喬樂斯加爾夫兌換商店.yml

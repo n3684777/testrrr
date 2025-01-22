@@ -1,0 +1,303 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#吉芬夜間鬥技場裝備
+   - Name: 吉芬夜間鬥技場裝備製作員
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_YURI
+     Items:
+       - Index: 0
+         Item: MD_Geffen_Rarmor
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 15
+           - Index: 1
+             Item: MD_Geffen_Cert
+             Amount: 1
+       - Index: 1
+         Item: MD_Geffen_Rhood
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 15
+           - Index: 1
+             Item: MD_Geffen_Cert
+             Amount: 1
+       - Index: 2
+         Item: MD_Geffen_Racc
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 25
+           - Index: 1
+             Item: MD_Geffen_Cert
+             Amount: 1
+       - Index: 3
+         Item: MD_Geffen_Rsheild
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 25
+           - Index: 1
+             Item: MD_Geffen_Cert
+             Amount: 1
+       - Index: 4
+         Item: MD_Geffen_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 5
+         Item: MD_Geffen_Suits
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 6
+         Item: MD_Geffen_Shield
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 45
+       - Index: 7
+         Item: MD_Geffen_Shield2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 45
+       - Index: 8
+         Item: MD_Geffen_Hood
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 9
+         Item: MD_Geffen_Hood2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 10
+         Item: MD_Geffen_Hood3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 11
+         Item: MD_Geffen_Hood4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 30
+       - Index: 12
+         Item: MD_Geffen_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 60
+       - Index: 13
+         Item: MD_Geffen_Ring2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: MD_Geffen_Coin
+             Amount: 60
+       - Index: 14
+         Item: MD_Geffen_Archi_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Archi_Card
+             Amount: 7
+       - Index: 15
+         Item: MD_Geffen_Dio_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Dio_Anemos_Card
+             Amount: 7
+       - Index: 16
+         Item: MD_Geffen_Thief_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Geffen_Thief_Card
+             Amount: 7
+       - Index: 17
+         Item: MD_Geffen_Gang_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Geffen_Gang_Card
+             Amount: 7
+       - Index: 18
+         Item: MD_Geffen_Thug_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Geffen_Thug_Card
+             Amount: 7
+       - Index: 19
+         Item: MD_Geffen_Monk_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Pa_Monk_Card
+             Amount: 7
+       - Index: 20
+         Item: MD_Geffen_Ordre_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Ordre_Card
+             Amount: 7
+       - Index: 21
+         Item: MD_Geffen_Blut_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Blut_Hase_Card
+             Amount: 7
+       - Index: 22
+         Item: MD_Geffen_Akuma_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Kuro_Akuma_Card
+             Amount: 7
+       - Index: 23
+         Item: MD_Geffen_Hyper_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Hyper_Death_Card
+             Amount: 7
+       - Index: 24
+         Item: MD_Geffen_Odorico_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Odorico_Card
+             Amount: 7
+       - Index: 25
+         Item: MD_Geffen_Reche_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Rechenier_Card
+             Amount: 7
+       - Index: 26
+         Item: MD_Geffen_Jew_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Jew_Card
+             Amount: 10
+           - Index: 1
+             Item: Jew_Card
+             Amount: 7
+       - Index: 27
+         Item: MD_Geffen_Fei_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Fei_Kanabian_Card
+             Amount: 7
+       - Index: 28
+         Item: MD_Geffen_Dy_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Geffen_Win
+             Amount: 10
+           - Index: 1
+             Item: Dy_Card
+             Amount: 7

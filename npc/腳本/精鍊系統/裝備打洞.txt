@@ -1,0 +1,50 @@
+
+rgsr_in,117,167,6	script	裝備打洞研究員	84,{
+	
+	mes "[裝備打洞研究員]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("C 等級:B 等級:A 等級:S 等級:SS 等級:取消")){
+
+	case 1:
+	close2;
+	callshop "C_Grade";
+	end;
+
+	case 2:
+	close2;
+	callshop "B_Grade";
+	end;
+
+	case 3:
+	close2;
+	callshop "A_Grade";
+	end;
+
+	case 4:
+	close2;
+	callshop "S_Grade";
+	end;
+
+	case 5:
+	close2;
+	callshop "SS_Grade";
+	end;
+
+
+	case 6:
+	close;
+	}
+
+//OnInit:
+//	waitingroom "新手商店",0;
+//	end;
+}
+
+
+
+
+
+
+
+

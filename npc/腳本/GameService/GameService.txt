@@ -1,0 +1,311 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 卡普拉服務人員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+prontera,1,1,6	script	卡普拉服務人員#00	-1,{
+
+	callfunc "GameService",0,0;
+OnInit:	set $@GameService_Str$,"[卡普拉服務人員]";
+
+//--- Script 執行時的相關設定 , 請各伺服器依情況斟酌 ---
+
+//----- 使用倉庫的費用 ( 預設：100 Zeny ) -----
+	set $@GSS_Zeny,100;
+
+//----- 使用公會倉庫的費用 ( 預設：1000 Zeny ) -----
+	set $@GSGS_Zeny,1000;
+
+//----- 使用銀行的手續費 ( 預設：1% Zeny ) -----
+	set $@GSB_Zeny,0;
+
+//----- 使用拍賣場的費用 ( 預設：1000 Zeny ) -----
+	set $@GSA_Zeny,1000;
+
+//----- 使用郵遞桶的費用 ( 預設：120 Zeny ) -----
+	set $@GSM_Zeny,120;
+
+//----- 城鎮傳送的費用 ( 預設：1200 Zeny ) -----
+	set $@GSCW_Zeny,1200;
+
+//----- 洞穴傳送的費用 ( 預設：1800 Zeny ) -----
+	set $@GSDW_Zeny,1800;
+
+//----- 原野傳送的費用 ( 預設：2000 Zeny ) -----
+	set $@GSFW_Zeny,2000;
+
+//----- 城堡傳送的費用 ( 預設：4000 Zeny ) -----
+	set $@GSGW_Zeny,4000;
+
+//----- 是否開啟『角色服務』功能 ( 預設：1 ) ( No = 0 , Yes = 1 )
+	set $@GS_Job_System,0;
+
+//-----	Ｐｓ：請確定您的 NPC 目錄下有"Job_System.txt"文件，
+//	　　　如果沒有的話將會自動視為不開啟『角色服務』功能。
+}
+
+//================================================//
+
+function	script	GameService	{
+
+	mes $@GameService_Str$;
+	mes "親愛的^0000FF"+strcharinfo(0)+"^000000玩家您好，";
+	mes "我是此伺服器的^0000FF卡普拉服務人員^000000。";
+	mes "請問您需要什麼服務呢？";
+	next;
+	switch(select("儲存服務","倉庫服務","手推車服務")) {
+
+
+	case 1:
+		switch(getarg(0)) {
+		case 0:
+			// 使用者自訂 ( 預設："prontera",155,185 )
+			savepoint "prontera",117,57;
+			break;
+		case 1:
+			setarray .@SavePointM$[1],"lighthalzen","hugel","rachel","veins","prontera","xmas","eclage","verus04","jawaii","mid_camp","aldebaran","malaya","rachel","ayothaya","mora","pud_land","brasilis","splendide","moscovia","lasagna","ra_temple";
+			setarray .@SavePointMX[1],158,96,117,204,92,148,278,121,115,210,141,207,58,68,45,127,339,248,165,135,118;
+			setarray .@SavePointMY[1],87,155,135,103,108,104,288,247,175,282,103,204,245,138,119,108,239,311,79,258,93;
+			break;
+
+		case 2:
+			setarray .@SavePointM$[1],"alberta","alberta","aldeba_in","comodo","cmd_fild07","geffen","geffen","izlude","morocc","morocc",
+			"payon","payon","pay_arche","prontera","prontera","prontera","prontera","prontera","yuno","yuno","yuno","prontera","prontera","prontera","prt_in","prt_in","prt_in","rgsr_in","prontera","happyfarm","happyfarm","prontera","prontera";
+			setarray .@SavePointMX[1],31,117,96,190,127,119,200,128,156,159,
+			160,156,50,155,155,33,281,156,157,328,
+			274,156,102,156,60,43,224,125,185,100,
+			214,118,188;
+
+			setarray .@SavePointMY[1],231,57,179,145,134,40,124,135,94,254,
+			58,225,120,318,41,208,203,102,190,101,
+			229,120,120,168,136,106,20,164,90,190,
+			66,97,91;
+			break;
+		case 3:
+			setarray .@SavePointM$[1],"amatsu","ayothaya","einbech","einbroch","einbroch","gonryun","moscovia","lighthalzen","lighthalzen","lhz_in02","louyang","umbala","niflheim","amatsu";
+			setarray .@SavePointMX[1],107,208,182,238,240,159,219,158,194,278,217,100,192,52;
+			setarray .@SavePointMY[1],147,198,124,198,197,114,193,87,313,215,92,154,182,128;
+			break;
+		case 4:
+			setarray .@SavePointM$[1],"izlu2dun","prt_fild05","mjolnir_02","moc_ruins","gef_fild10","alb2trea","harboro1","sp_cor","que_swat","moc_para01","dali","dali02","ba_maison","wolfvill","icecastle","icas_in";
+			setarray .@SavePointMX[1],87,274,98,41,54,92,296,91,147,30,64,66,197,141,60,139;
+			setarray .@SavePointMY[1],170,243,352,141,326,64,209,128,52,19,121,104,242,145,118,259;
+			break;
+
+		case 5:
+			setarray .@SavePointM$[1],"vdistrict","vdistrict1","vdistrict2","trinity","trinity","trinity","trinity";
+			setarray .@SavePointMX[1],46,46,46,110,50,109,99;
+			setarray .@SavePointMY[1],49,49,49,85,120,46,99;
+			break;
+
+		}
+
+
+		if ( getarg(0) ) {
+			savepoint .@SavePointM$[getarg(1)],.@SavePointMX[getarg(1)],.@SavePointMY[getarg(1)];
+		}
+		mes $@GameService_Str$;
+		mes "復活點已經儲存了，";
+		mes "非常感謝您的使用！";
+		close;
+
+	case 2:
+		set #StoragePass,0;
+		set #StoragePass$,"";
+		set @Pass_Num,getstrlen(#GameServicePass$);
+		set @GPass_Num,getstrlen(getd("$GameServiceG"+getcharid(2)+"Pass$"));
+		if ( @Pass_Num < 4 && @Pass_Num > 16 ) {
+			set @Pass_Num,0;
+			set #GameServicePass$,"";
+		}
+		if ( @GPass_Num < 4 && @GPass_Num > 16 ) {
+			set @GPass_Num,0;
+			setd "$GameServiceG"+getcharid(2)+"Pass$","";
+		}
+		mes $@GameService_Str$;
+		mes "請選擇您要服務的項目。";
+		next;
+		switch(select("倉庫服務","倉庫密碼鎖服務")) {
+		case 1:
+			callfunc "GS_Storage";
+
+		case 2:
+			switch(select("倉庫密碼鎖服務","^FF0000公會倉庫^000000密碼鎖服務")) {
+			case 1:
+				callfunc "GS_PassNPC",0;
+			case 2:
+				callfunc "GS_PassNPC",1;
+			}
+		}
+
+	case 3:
+		mes $@GameService_Str$;
+//		if(BaseClass != Job_Merchant){
+//			mes "很抱歉，";
+//			mes "手推車是商人和鐵匠、煉金術師專用的服務";
+//			close;
+//		}
+		if(getskilllv(39) == 0){
+			mes "如果沒學相關技能的話";
+			mes "是沒有手推車的";
+			close;
+		}
+		if(checkcart() == 1){
+			mes "你已經租過手推車了";
+			close;
+		}
+		if(countitem(7061)){
+			delitem 7061,1;
+			setcart;
+			close;
+		}
+		mes "手推車使用費是800金幣，";
+		mes "請問您要使用嗎?";
+		next;
+		if(select("使用:取消") == 1){
+			if(Zeny < 800){
+			mes $@GameService_Str$;
+			mes "顧客，您支付的金額不足啊，";
+			mes "手推車使用費是800金幣，";
+			close;
+			} else {
+			set Zeny, Zeny - 800;
+			set RESRVPTS, RESRVPTS + 80;
+			setcart;
+			close;
+			}
+			close;
+		}
+		close;
+
+	}
+}
+
+//================================================ 城市屬性
+prontera	mapflag	town
+izlude	mapflag	town
+moc_ruins	mapflag	town
+geffen	mapflag	town
+payon	mapflag	town
+pay_arche	mapflag	town
+alberta	mapflag	town
+aldebaran	mapflag	town
+yuno	mapflag	town
+lighthalzen	mapflag	town
+einbroch	mapflag	town
+einbech	mapflag	town
+comodo	mapflag	town
+umbala	mapflag	town
+amatsu	mapflag	town
+ayothaya	mapflag	town
+louyang	mapflag	town
+hugel	mapflag	town
+rachel	mapflag	town
+veins	mapflag	town
+gonryun	mapflag	town
+xmas	mapflag	town
+jawaii	mapflag	town
+malaya	mapflag	town
+morocc	mapflag	town
+dali	mapflag	town
+dali02	mapflag	town
+
+
+//================================================ NPC位置
+vdistrict,48,50,6	script	卡普拉服務人員#map01	10242,{ callfunc "GameService",5,1; OnInit: waitingroom "卡普拉服務人員",0; end;  } //露天商店
+vdistrict1,48,50,6	script	卡普拉服務人員#map02	10242,{ callfunc "GameService",5,2; OnInit: waitingroom "卡普拉服務人員",0; end;  } //官方副本&裝備製作
+vdistrict2,48,50,6	script	卡普拉服務人員#map03	10242,{ callfunc "GameService",5,3; OnInit: waitingroom "卡普拉服務人員",0; end;  } //測試傷害
+rgsr_in,121,161,6	script	卡普拉服務人員#rgsr1	10242,{ callfunc "GameService",2,28; OnInit: waitingroom "卡普拉服務人員",0; end;  } //精煉工房
+
+trinity,102,96,4	script	卡普拉服務人員#tr1	10242,{ callfunc "GameService",5,4; OnInit: waitingroom "卡普拉服務人員",0; end;  } //重生點
+trinity,52,129,6	script	卡普拉服務人員#tr2	10242,{ callfunc "GameService",5,5; OnInit: waitingroom "卡普拉服務人員",0; end;  } //小遊戲
+
+trinity,102,49,6	script	卡普拉服務人員#tr3	10242,{ callfunc "GameService",5,6; OnInit: waitingroom "卡普拉服務人員",0; end;  } //中間
+trinity,1,1,4	script	卡普拉服務人員#tr4	10242,{ callfunc "GameService",5,7; OnInit: waitingroom "卡普拉服務人員",0; end;  } //
+
+
+
+
+
+prontera,149,326,3	script	卡普拉服務人員#pro01	10242,{ callfunc "GameService",2,14; OnInit: waitingroom "卡普拉服務人員",0; end;  } //北
+prontera,277,212,4	script	卡普拉服務人員#pro02	10242,{ callfunc "GameService",2,17; OnInit: waitingroom "卡普拉服務人員",0; end;  } //東
+prontera,147,37,6	script	卡普拉服務人員#pro03	10242,{ callfunc "GameService",2,15; OnInit: waitingroom "卡普拉服務人員",0; end;  } //南
+prontera,30,211,6	script	卡普拉服務人員#pro04	10242,{ callfunc "GameService",2,16; OnInit: waitingroom "卡普拉服務人員",0; end;  } //西
+amatsu,102,149,6	script	卡普拉服務人員#am01	10242,{ callfunc "GameService",3,1; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+moc_para01,24,22,6	script	卡普拉服務人員#moc01	10242,{ callfunc "GameService",4,10; OnInit: waitingroom "卡普拉服務人員",0; end; }	//伊甸園
+verus04,121,243,4	script	卡普拉服務人員#ver01	10242,{ callfunc "GameService",1,8; OnInit: waitingroom "卡普拉服務人員",0; end; }
+geffen,115,65,6	script	卡普拉服務人員#10	10242,{ callfunc "GameService",2,6; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+geffen,203,123,2	script	卡普拉服務人員#11	10242,{ callfunc "GameService",2,7; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+dali,57,127,6	script	卡普拉服務人員#dali01	10242,{ callfunc "GameService",4,11; OnInit: waitingroom "卡普拉服務人員",0; end; }
+dali02,58,98,6	script	卡普拉服務人員#dali02	10242,{ callfunc "GameService",4,12; OnInit: waitingroom "卡普拉服務人員",0; end; }
+
+lighthalzen,94,248,4	script	卡普拉服務人員#01	10242,{ callfunc "GameService",1,1; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+hugel,88,169,4	script	卡普拉服務人員#02	10242,{ callfunc "GameService",1,2; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+rachel,109,138,5	script	卡普拉服務人員#03	10242,{ callfunc "GameService",1,3; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+veins,208,128,5	script	卡普拉服務人員#04	10242,{ callfunc "GameService",1,4; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+alberta,28,229,0	script	卡普拉服務人員#05	10242,{ callfunc "GameService",2,1; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+alberta,113,60,6	script	卡普拉服務人員#06	10242,{ callfunc "GameService",2,2; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+aldeba_in,96,181,4	script	卡普拉服務人員#07	10242,{ callfunc "GameService",2,3; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+comodo,192,158,4	script	卡普拉服務人員#08	10242,{ callfunc "GameService",2,4; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+cmd_fild07,136,134,4	script	卡普拉服務人員#09	10242,{ callfunc "GameService",2,5; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+izlude,132,149,6	script	卡普拉服務人員#12	10242,{ callfunc "GameService",2,8; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+morocc,151,107,6	script	卡普拉服務人員#13	10242,{ callfunc "GameService",2,9; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+morocc,153,271,6	script	卡普拉服務人員#14	10242,{ callfunc "GameService",2,10; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+payon,181,104,4	script	卡普拉服務人員#15	10242,{ callfunc "GameService",2,11; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+payon,169,230,4	script	卡普拉服務人員#16	10242,{ callfunc "GameService",2,12; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+//pay_arche,55,123,4	script	卡普拉服務人員#17	10242,{ callfunc "GameService",2,13; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+yuno,152,187,4	script	卡普拉服務人員#23	10242,{ callfunc "GameService",2,19; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+yuno,327,108,4	script	卡普拉服務人員#24	10242,{ callfunc "GameService",2,20; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+yuno,277,221,4	script	卡普拉服務人員#25	10242,{ callfunc "GameService",2,21; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+ayothaya,202,192,6	script	卡普拉服務人員#27	10242,{ callfunc "GameService",3,2; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+einbech,181,132,5	script	卡普拉服務人員#28	10242,{ callfunc "GameService",3,3; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+einbroch,242,205,5	script	卡普拉服務人員#29	10242,{ callfunc "GameService",3,4; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+einbroch,59,203,6	script	卡普拉服務人員#30	10242,{ callfunc "GameService",3,5; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+gonryun,163,122,4	script	卡普拉服務人員#31	10242,{ callfunc "GameService",3,6; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+moscovia,230,199,4	script	卡普拉服務人員#32	10242,{ callfunc "GameService",3,7; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+lighthalzen,164,100,4	script	卡普拉服務人員#33	10242,{ callfunc "GameService",3,8; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+lighthalzen,191,320,4	script	卡普拉服務人員#34	10242,{ callfunc "GameService",3,9; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+lhz_in02,237,284,4	script	卡普拉服務人員#35	10242,{ callfunc "GameService",3,10; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+louyang,227,104,4	script	卡普拉服務人員#36	10242,{ callfunc "GameService",3,11; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+umbala,87,160,6	script	卡普拉服務人員#37	10242,{ callfunc "GameService",3,12; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+niflheim,202,180,3	script	卡普拉服務人員#38	10242,{ callfunc "GameService",3,13; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+izlu2dun,106,58,8	script	卡普拉服務人員#39	10242,{ callfunc "GameService",4,1; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+prt_fild05,290,224,3	script	卡普拉服務人員#40	10242,{ callfunc "GameService",4,2; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+mjolnir_02,83,362,4	script	卡普拉服務人員#41	10242,{ callfunc "GameService",4,3; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+moc_ruins,61,156,5	script	卡普拉服務人員#42	10242,{ callfunc "GameService",4,4; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+gef_fild10,73,340,5	script	卡普拉服務人員#43	10242,{ callfunc "GameService",4,5; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+alb2trea,59,69,5	script	卡普拉服務人員#44	10242,{ callfunc "GameService",4,6; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+xmas,140,126,6	script	卡普拉服務人員#51	10242,{ callfunc "GameService",1,6; OnInit: waitingroom "卡普拉服務人員",0; end; }
+eclage,279,293,6	script	卡普拉服務人員#52	10242,{ callfunc "GameService",1,7; OnInit: waitingroom "卡普拉服務人員",0; end; }
+jawaii,130,184,6	script	卡普拉服務人員#54	10242,{ callfunc "GameService",1,9; OnInit: waitingroom "卡普拉服務人員",0; end; }
+mid_camp,202,286,6	script	卡普拉服務人員#55	10242,{ callfunc "GameService",1,10; OnInit: waitingroom "卡普拉服務人員",0; end; }
+aldebaran,132,122,6	script	卡普拉服務人員#56	10242,{ callfunc "GameService",1,11; OnInit: waitingroom "卡普拉服務人員",0; end; }
+malaya,219,206,4	script	卡普拉服務人員#57	10242,{ callfunc "GameService",1,12; OnInit: waitingroom "卡普拉服務人員",0; end; }
+ayothaya,64,151,6	script	卡普拉服務人員#58	10242,{ callfunc "GameService",1,14; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+mora,48,127,6	script	卡普拉服務人員#59	10242,{ callfunc "GameService",1,15; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+pud_land,125,116,4	script	卡普拉服務人員#60	10242,{ callfunc "GameService",1,16; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+brasilis,337,247,4	script	卡普拉服務人員#61	10242,{ callfunc "GameService",1,17; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+splendide,246,304,4	script	卡普拉服務人員#62	10242,{ callfunc "GameService",1,18; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+moscovia,171,87,4	script	卡普拉服務人員#63	10242,{ callfunc "GameService",1,19; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+lasagna,131,257,6	script	卡普拉服務人員#64	10242,{ callfunc "GameService",1,20; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+ra_temple,126,95,6	script	卡普拉服務人員#65	10242,{ callfunc "GameService",1,21; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+harboro1,288,212,6	script	卡普拉服務人員#67	10242,{ callfunc "GameService",4,7; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+sp_cor,95,142,4	script	卡普拉服務人員#69	10242,{ callfunc "GameService",4,8; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+ba_maison,194,253,6	script	卡普拉服務人員#70	10242,{ callfunc "GameService",4,13; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+wolfvill,145,149,4	script	卡普拉服務人員#71	10242,{ callfunc "GameService",4,14; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+
+icecastle,59,123,4	script	卡普拉服務人員#72	10242,{ callfunc "GameService",4,15; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+icas_in,132,266,6	script	卡普拉服務人員#73	10242,{ callfunc "GameService",4,16; OnInit: waitingroom "卡普拉服務人員",0; end;  }
+
+
+
+
+
+
+
+

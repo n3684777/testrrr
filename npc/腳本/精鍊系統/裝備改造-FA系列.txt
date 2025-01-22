@@ -1,0 +1,56 @@
+﻿rgsr_in,114,174,6	script	FA研究員#prt02	4_M_SCIENCE,{
+
+	mes "[FA研究員]";
+	mes "我可以對一些裝備進行改良";
+	mes "改良後的裝備精煉度會下降";
+	mes "裝備上的卡片不會消失";
+	mes "你想要改良哪種裝備?";
+	next;
+	switch(select("FA-下級改造","FA-中級改造","取消")) {
+
+	case 1:
+		mes "[FA研究員]";
+		mes "^ff0000改良的裝備需要精煉值+9以上^000000";
+		mes "^ff0000改良後的裝備精煉度-5^000000";
+		mes "[目標道具]";
+		mes "魔劍士塔納托斯之劍";
+		next;
+		switch(select("我要進行改造","取消")) {
+
+		case 1:
+		close2;
+		item_reform 102396;
+		end;
+
+		case 2:
+		close;
+		end;
+		}
+
+	case 2:
+		mes "[FA研究員]";
+		mes "^ff0000改良的裝備需要精煉值+9以上^000000";
+		mes "^ff0000改良後的裝備精煉度-1^000000";
+		mes "[目標道具]";
+		mes "魔劍士塔納托斯之劍";
+		next;
+		switch(select("我要進行改造","取消")) {
+
+		case 1:
+		close2;
+		item_reform 102397;
+		end;
+
+		case 2:
+		close;
+		end;
+		}
+
+	case 3:
+	end;
+	}
+}
+
+
+
+

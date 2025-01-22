@@ -1,0 +1,38 @@
+rgsr_in,125,188,3	script	忽克連	85,{
+
+	mes "[忽克連]";
+	mes "我是專門鍛治武器與防具的鐵匠";
+	mes "我可以為你鍛治物品欄中武器和防具";
+	mes "你想要鍛治哪一項物品呢?";
+	next;
+	switch(select("精煉裝備","取消")) {
+
+	case 1:
+	close2;
+	refineui;
+	end;
+
+	case 2:
+	end;
+	}
+
+//OnInit:
+//	waitingroom "武防精煉",0;
+//	end;
+}
+
+
+//地圖屬性
+rgsr_in	mapflag	town
+//----------------------------
+//amatsu,119,165,4	duplicate(忽克連)	忽克連#new01	85	//天津
+
+
+
+
+
+
+
+
+
+

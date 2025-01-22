@@ -1,0 +1,124 @@
+﻿
+#時間裂隙武器
+  - Id: 150
+    TargetItems:
+      Time_Gap_Spear_IG: true
+      Time_Gap_Staff_AG: true
+      Time_Gap_Revolver_NW: true
+      Time_Gap_MT_Axe: true
+      Time_Gap_TR_Ribbon: true
+      Time_Gap_TR_Vilolin: true
+      Time_Gap_HN_Staff: true
+      Time_Gap_BO_Blade: true
+      Time_Gap_SHC_Dagger1: true
+      Time_Gap_SOA_Rod: true
+      Time_Gap_DK_Spear: true
+      Time_Gap_CD_Staff: true
+      Time_Gap_SKE_Book: true
+      Time_Gap_ABC_Dagger: true
+      Time_Gap_SH_Foxtail: true
+      Time_Gap_ABC_Dagger: true
+      Time_Gap_SH_Foxtail: true
+      Time_Gap_IQ_Knuckle: true
+      Time_Gap_WH_Bow: true
+      Time_Gap_SS_Dagger1: true
+      Time_Gap_EM_S_Book: true
+    Reset:
+      Chance: 100000
+      Price: 5000000
+      Materials:
+        - Material: Zelunium
+          Amount: 50
+        - Material: Shadowdecon
+          Amount: 50
+        - Material: Etel_Dust
+          Amount: 100
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Bio_Jam_Df2
+            Price: 0
+            Materials:
+              - Material: Bar_D_St_Rune
+                Amount: 50
+              - Material: Bar_D_Ic_Rune
+                Amount: 20
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Es2
+            Price: 0
+            Materials:
+              - Material: Bar_D_Co_Rune
+                Amount: 50
+              - Material: Bar_D_Po_Rune
+                Amount: 20
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Vl2
+            Price: 0
+            Materials:
+              - Material: Bar_D_Pu_Rune
+                Amount: 50
+              - Material: Bar_D_So_Rune
+                Amount: 20
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Eq2
+            Price: 0
+            Materials:
+              - Material: Bar_D_Fl_Rune
+                Amount: 50
+              - Material: Bar_D_Po_Rune
+                Amount: 20
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Hd2
+            Price: 0
+            Materials:
+              - Material: Bar_D_Ea_Rune
+                Amount: 50
+              - Material: Bar_D_So_Rune
+                Amount: 20
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Barmund_Flame3
+            Price: 0
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Ice3
+            Price: 0
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Plain3
+            Price: 0
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Death3
+            Price: 0
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Poison3
+            Price: 0
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15

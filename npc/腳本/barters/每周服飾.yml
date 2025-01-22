@@ -1,0 +1,1408 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+#每周服飾
+   - Name: 每周服飾#01
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Wings_of_Uriel
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Silent_Energy_Particle
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_C_Blossom_Fluttering
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_44169
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_44512
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_23334
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23335
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Mud_Lump
+             Amount: 150
+       - Index: 7
+         Item: C_Head_Item_23354
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+       - Index: 8
+         Item: C_Head_Item_23776
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hydra_Card
+             Amount: 5
+           - Index: 1
+             Item: Glitter_Shell
+             Amount: 150
+           - Index: 2
+             Item: Cyfar
+             Amount: 150
+
+
+   - Name: 每周服飾#02
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Wings_of_Michael
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Weak_Energy_Particle
+             Amount: 150
+       - Index: 2
+         Item: C_Maple_Which_Falls
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_44636
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_23072
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_24030
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_22485
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Mud_Lump
+             Amount: 150
+       - Index: 7
+         Item: C_Head_Item_22514
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+       - Index: 8
+         Item: C_Head_Item_44744
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hydra_Card
+             Amount: 5
+           - Index: 1
+             Item: Glitter_Shell
+             Amount: 150
+           - Index: 2
+             Item: Cyfar
+             Amount: 150
+
+   - Name: 每周服飾#03
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: Costume_Popping_Poring_Aura
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Mutant_Plaga_Card
+             Amount: 5
+           - Index: 1
+             Item: Reptile_Tongue
+             Amount: 150
+           - Index: 2
+             Item: Pointed_Scale
+             Amount: 150
+           - Index: 3
+             Item: Weak_Energy_Particle
+             Amount: 150
+       - Index: 2
+         Item: C_Earmuff_Flowerform
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sanare_Card
+             Amount: 5
+           - Index: 1
+             Item: Claw_Of_Wolves
+             Amount: 150
+           - Index: 2
+             Item: Scales_Shell
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_44529
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: High_Bellare_Card
+             Amount: 5
+           - Index: 1
+             Item: Shell
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_22988
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Ancient_Megalith_Card
+             Amount: 5
+           - Index: 1
+             Item: Orcish_Voucher
+             Amount: 150
+           - Index: 2
+             Item: Rotten_Bandage
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_23619
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Big_Ben_Card
+             Amount: 5
+           - Index: 1
+             Item: Immortal_Heart
+             Amount: 150
+           - Index: 2
+             Item: Insect_Feeler
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23716
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Petal_Card
+             Amount: 5
+           - Index: 1
+             Item: Bill_Of_Birds
+             Amount: 150
+           - Index: 2
+             Item: Scale_Of_Snakes
+             Amount: 150
+       - Index: 7
+         Item: C_Head_Item_23727
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Menblatt_Card
+             Amount: 5
+           - Index: 1
+             Item: Powder_Of_Butterfly
+             Amount: 150
+           - Index: 2
+             Item: Evil_Horn
+             Amount: 150
+       - Index: 8
+         Item: C_Head_Item_23731
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: MANGKUKULAM_Card
+             Amount: 5
+           - Index: 1
+             Item: Animal's_Skin
+             Amount: 150
+           - Index: 2
+             Item: Orcish_Cuspid
+             Amount: 150
+
+   - Name: 每周服飾#04
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Wings_Of_Lucifer
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Feather_Fluttering
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_24044
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_44411
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_23105
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_24057
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Mud_Lump
+             Amount: 150
+       - Index: 7
+         Item: C_Head_Item_44109
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+       - Index: 8
+         Item: C_Head_Item_45052
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hydra_Card
+             Amount: 5
+           - Index: 1
+             Item: Glitter_Shell
+             Amount: 150
+           - Index: 2
+             Item: Cyfar
+             Amount: 150
+
+#2023 8/4
+   - Name: 每周服飾#05
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Sandalphon_Wing_TW
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Silent_Energy_Particle
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_22062
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23625
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_44551
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_44705
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Fluff
+             Amount: 150
+           - Index: 2
+             Item: Animal's_Skin
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23493
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Mud_Lump
+             Amount: 150
+
+       - Index: 8
+         Item: C_Head_Item_22203
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hydra_Card
+             Amount: 5
+           - Index: 1
+             Item: Glitter_Shell
+             Amount: 150
+           - Index: 2
+             Item: Cyfar
+             Amount: 150
+
+   - Name: 每周服飾#06
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Baldr_Wing_TW
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_23675
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23624
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_44505
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_44506
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23822
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Coco_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Mud_Lump
+             Amount: 150
+       - Index: 7
+         Item: C_Head_Item_23658
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+       - Index: 8
+         Item: C_Head_Item_23802
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hydra_Card
+             Amount: 5
+           - Index: 1
+             Item: Glitter_Shell
+             Amount: 150
+           - Index: 2
+             Item: Cyfar
+             Amount: 150
+
+#每周服飾 2023 8月18日
+   - Name: 每周服飾#07
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Wings_Of_Raguel
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_22644
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23150
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_23526
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_22036
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23445
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#08
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Wings_Of_Raphael
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_22643
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23117
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_23697
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_22938
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_22427
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#09
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: Violet_Halo_
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_23156
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23155
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_22819
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_22423
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23390
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#10
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Maple_Which_Falls_Rd
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_44220
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23231
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_23742
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Heaven_Cage
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23280
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#11
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Ghost_Effect
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_23749
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_23448
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_24094
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Side_Cap
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_23030
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#12
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Shining_Angel_Wings
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Red_Wing_Hat
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Love_Berry
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_44162
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_44164
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_44163
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+   - Name: 每周服飾#13
+     Map: trinity
+     X: 117
+     Y: 40
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: Costume_Popping_Poring_Aura
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poring_Card
+             Amount: 5
+           - Index: 1
+             Item: Warrior's_Will
+             Amount: 150
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 150
+           - Index: 3
+             Item: Golden_Feather
+             Amount: 150
+       - Index: 2
+         Item: C_Head_Item_23041
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fabre_Card
+             Amount: 5
+           - Index: 1
+             Item: Blood_Thirst
+             Amount: 150
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 150
+       - Index: 3
+         Item: C_Head_Item_22456
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Drops_Card
+             Amount: 5
+           - Index: 1
+             Item: Chills_Of_Death
+             Amount: 150
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 150
+       - Index: 4
+         Item: C_Head_Item_23201
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lunatic_Card
+             Amount: 5
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 150
+       - Index: 5
+         Item: C_Head_Item_44331
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hornet_Card
+             Amount: 5
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 150
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 150
+       - Index: 6
+         Item: C_Head_Item_44418
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Snake_Card
+             Amount: 5
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 150
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 150
+
+
+
+
+
+
+
+
+

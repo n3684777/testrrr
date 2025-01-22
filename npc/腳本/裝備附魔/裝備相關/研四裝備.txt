@@ -1,0 +1,413 @@
+//===================================
+// =研四附魔
+// =================================
+vdistrict1,67,42,6	script	神奇的魔術師	786,{
+
+	//附魔狀態
+	set $@Y4Enc1,rand(0,30);
+	set $@Y4Enc2,rand(0,33);
+	setarray $@Y4Enchanting1[0],4700,4701,4702,4730,4731,4732,4740,4741,4742,4710,4711,4712,4720,4721,4722,4750,4751,4752,4811,4810,4809,4815,4814,4813,4807,4818,4817,4816,4832,4833,4834;
+	setarray $@Y4Enchanting2[0],4700,4701,4702,4730,4731,4732,4740,4741,4742,4710,4711,4712,4720,4721,4722,4750,4751,4752,4786,4787,4788,4789,4790,4791,4792,4793,4794,4859,4860,4762,4800,4795,4796,4797;
+
+	mes "[神奇的魔術師]";
+	mes "你好 !";
+	mes "我可以幫你把研四所取得的裝備";
+	mes "在第三或是第四插槽進行附魔或是洗滌";
+	mes "然後我還會酌收30萬的工錢";
+	mes "附魔成功率^FF000040%^000000";
+	next;
+	switch(select("裝備介紹:裝備製作:進行附魔:重置附魔")){
+
+	case 1:
+	mes "[神奇的魔術師]";
+	mes "給我10個^ff0000血的飢渴^000000";
+	mes "我就能在研四裝備的^0000ff第三插槽^000000進行附魔";
+	mes "給我10個^ff0000勇士的意志^000000";
+	mes "就能在研四裝備的^0000ff第四插槽^000000進行附魔";
+	mes "給我10個^ff0000亡者的寒氣^000000";
+	mes "就能把研四裝備上的附魔狀態清除";
+	close;
+
+	case 2:
+	close2;
+	callfunc "qshop",1;
+
+	case 3:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[神奇的魔術師]";
+	mes"你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+
+	if(@abd == 1290) goto Y4_net1;
+	if(@abd == 1291) goto Y4_net1;
+	if(@abd == 1392) goto Y4_net1;
+	if(@abd == 1393) goto Y4_net1;
+	if(@abd == 1435) goto Y4_net1;
+	if(@abd == 1584) goto Y4_net1;
+	if(@abd == 1659) goto Y4_net1;
+	if(@abd == 13069) goto Y4_net1;
+	if(@abd == 13070) goto Y4_net1;
+	if(@abd == 16017) goto Y4_net1;
+	if(@abd == 18109) goto Y4_net1;
+	if(@abd == 18110) goto Y4_net1;
+	if(@abd == 18111) goto Y4_net1;
+	if(@abd == 1490) goto Y4_net1;
+
+	if(@abd == 2160) goto Y4_net2;
+	if(@abd == 2161) goto Y4_net2;
+	if(@abd == 2162) goto Y4_net2;
+	if(@abd == 2582) goto Y4_net2;
+	if(@abd == 2892) goto Y4_net2;
+	if(@abd == 15044) goto Y4_net2;
+	if(@abd == 18570) goto Y4_net2;
+
+	mes "[神奇的魔術師]";
+	mes"你要附魔的裝備非研四裝備，不能幫你附魔";
+	close;
+
+Y4_net1:
+	switch(select("附魔武器第三插槽:附魔武器第四插槽")){
+	case 1:
+	callfunc "fumo1E",6470,300000,rand(1,100);
+	case 2:
+	callfunc "fumo1D",6469,300000,rand(1,100);
+	}
+
+Y4_net2:
+	switch(select("附魔防具第三插槽:附魔防具第四插槽")){
+	case 1:
+	callfunc "fumo2E",6470,300000,rand(1,100);
+	case 2:
+	callfunc "fumo2D",6469,300000,rand(1,100);
+	}
+
+	case 4:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[神奇的魔術師]";
+	mes"你身上有同樣的物品，為了防止洗滌時發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼洗滌";
+	close;
+	}
+
+	if(@abd == 1490) goto Y4_net3;
+	if(@abd == 1290) goto Y4_net3;
+	if(@abd == 1291) goto Y4_net3;
+	if(@abd == 1392) goto Y4_net3;
+	if(@abd == 1393) goto Y4_net3;
+	if(@abd == 1435) goto Y4_net3;
+	if(@abd == 1584) goto Y4_net3;
+	if(@abd == 1659) goto Y4_net3;
+	if(@abd == 2160) goto Y4_net3;
+	if(@abd == 2161) goto Y4_net3;
+	if(@abd == 2162) goto Y4_net3;
+	if(@abd == 2582) goto Y4_net3;
+	if(@abd == 2892) goto Y4_net3;
+	if(@abd == 13069) goto Y4_net3;
+	if(@abd == 13070) goto Y4_net3;
+	if(@abd == 15044) goto Y4_net3;
+	if(@abd == 16017) goto Y4_net3;
+	if(@abd == 18109) goto Y4_net3;
+	if(@abd == 18110) goto Y4_net3;
+	if(@abd == 18111) goto Y4_net3;
+	if(@abd == 18570) goto Y4_net3;
+
+	mes "[神奇的魔術師]";
+	mes"你要洗滌的裝備非研四裝備，不能幫你洗滌";
+	close;
+
+Y4_net3:
+
+	switch(select("洗滌第三插槽:洗滌第四插槽")){
+	case 1:
+	callfunc "fumo3E",6471,300000,rand(1,100);
+	case 2:
+	callfunc "fumo3D",6471,300000,rand(1,100);
+	}
+}
+
+OnInit:
+	waitingroom "研四裝備",0;
+	end;
+}
+
+
+
+//--------------------------------------------
+function	script	fumo1E	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[神奇的魔術師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上的血的飢渴不夠10個";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=40){
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@Y4Enchanting1[$@Y4Enc1],@fakeyouc4;
+	close;
+	} else {
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,1,@fakeyouc,@fakeyouc2,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+function	script	fumo1D	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[神奇的魔術師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上的勇士的意志不夠10個";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=40){
+	mes"附魔成功";
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@Y4Enchanting1[$@Y4Enc1];
+	close;
+	} else {
+	mes"附魔失敗";
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,1,@fakeyouc,@fakeyouc2,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+
+
+function	script	fumo2E	{
+
+	if (@fakeyouc3 > 1) {
+	mes "[神奇的魔術師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有附魔物品。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=40){
+	mes"附魔成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,$@Y4Enchanting2[$@Y4Enc2],@fakeyouc4;
+	close;
+	} else {
+	mes"附魔失敗";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,1,@fakeyouc,@fakeyouc2,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+
+function	script	fumo2D	{
+
+	if (@fakeyouc4 > 1) {
+	mes "[神奇的魔術師]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有附魔物品。";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(2)<=40){
+	mes"附魔成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,$@Y4Enchanting2[$@Y4Enc2];
+	close;
+	} else {
+	mes"附魔失敗";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,1,@fakeyouc,@fakeyouc2,@fakeyouc3,@fakeyouc4;
+	close;
+	}
+}
+
+
+function	script	fumo3E	{
+
+	if (@fakeyouc3 == 0) {
+	mes "[神奇的魔術師]";	
+	mes "你裝備上的第三插槽並無附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有洗滌材料。";
+	close;
+	}
+	mes "[神奇的魔術師]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,0,@fakeyouc4;
+	close;
+}
+
+
+function	script	fumo3D	{
+
+	if (@fakeyouc4 == 0) {
+	mes "[神奇的魔術師]";	
+	mes "你裝備上的第四插槽並無附魔效果";
+	close;
+	}
+
+	if(zeny<getarg(1)){
+	mes "[神奇的魔術師]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+	if(countitem(getarg(0))<10){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有洗滌材料。";
+	close;
+	}
+	mes "[神奇的魔術師]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem getarg(0),10;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyouc,@fakeyouc2,@fakeyouc3,0;
+	close;
+}
+
+
+
+

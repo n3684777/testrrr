@@ -1,0 +1,24 @@
+﻿trinity,117,33,4	script	道館頭飾製作員	10165,{
+
+	mes "[道館頭飾製作員]";
+	mes "請選擇你要製作的服飾類別";
+	next;
+	switch(select("道館頭飾(頭上)","道館頭飾(頭中)","道館頭飾(頭下)")) {
+
+	case 1:
+	close2;
+	callshop "道館頭飾(頭上)";
+	end;
+
+	case 2:
+	close2;
+	callshop "道館頭飾(頭中)";
+	end;
+
+	case 3:
+	close2;
+	callshop "道館頭飾(頭下)";
+	end;
+
+	}
+}

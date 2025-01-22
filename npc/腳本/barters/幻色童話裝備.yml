@@ -1,0 +1,111 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#幻色童話裝備 後勤官
+   - Name: 幻色童話裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: South
+     Sprite: 4_M_GUNSLINGER
+     Items:
+       - Index: 0
+         Item: Parchment_City
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 2
+       - Index: 1
+         Item: Shining_Holy_Water
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 6
+       - Index: 2
+         Item: prontera_Medal
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 6
+       - Index: 3
+         Item: Prison_Key
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 6
+       - Index: 4
+         Item: Market_Map
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 300
+       - Index: 5
+         Item: Prontera_Badge
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 300
+       - Index: 6
+         Item: Guardsman_Shield
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 800
+       - Index: 7
+         Item: Shining_Hholy_Water
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 800
+       - Index: 8
+         Item: Flattering_Jacket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 1200
+       - Index: 9
+         Item: Abuse_Jacket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 1200
+       - Index: 10
+         Item: C_Decoration_Time
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 2000
+       - Index: 11
+         Item: C_Head_Item_23923
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: TokenOfHonor
+             Amount: 2000
+

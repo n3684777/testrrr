@@ -1,0 +1,102 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+
+#綿綿島硬幣
+   - Name: 綿綿島硬幣
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_CATMAN2
+     Items:
+       - Index: 1
+         Item: Enchant_Stone_Box24
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 2
+         Item: Enchant_Stone_Box25
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 3
+         Item: Enchant_Stone_Box26
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 4
+         Item: Enchant_Stone_Box27
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 5
+         Item: Enchant_Stone_Box28
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 6
+         Item: Enchant_Stone_Box29
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 7
+         Item: Enchant_Stone_Box30
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 8
+         Item: Enchant_Stone_Box31
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 9
+         Item: Enchant_Stone_Box32
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+       - Index: 10
+         Item: Enchant_Stone_Box33
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_80082
+             Amount: 1
+
+
+
+
+
+
+

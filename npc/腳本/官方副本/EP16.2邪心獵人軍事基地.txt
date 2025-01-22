@@ -1,0 +1,513 @@
+
+vdistrict1,18,57,4	script	茹茹#swa	10198,{
+
+	//副本任務獎勵
+	if(checkquest(32018,HUNTING)==2 ) { 
+	dispbottom "邪心獵人軍事基地任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25155,10*$EP1602;	//秀發茲榮譽之證
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	erasequest 32018; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_28 < gettime(8) ){
+	set Instance_Bout_28,10;
+	set day_Instance_Bout_28,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_28 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[茹茹]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "邪心獵人軍事基地";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[茹茹]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1602+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_28+"^000000 ]";
+	mes "副本獎勵：";
+	mes "秀發茲榮譽之證x10";
+	mes "商城1點兌換券3~5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[茹茹]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[茹茹]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[茹茹]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[茹茹]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_28,Instance_Bout_28-1;
+
+			//副本任務
+			if(checkquest(32018,HUNTING)<0 ){setquest 32018;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "邪心獵人軍事基地",0;
+	end;
+}
+
+
+//------------------------------邪心獵人軍事基地事件
+1@swat,0,0,0	script	邪心獵人軍事基地事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@swat");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("茹茹#swa02");
+	disablenpc instance_npcname("茹茹#swa03");
+	disablenpc instance_npcname("茹茹#swa04");
+	disablenpc instance_npcname("茹茹#swa05");
+	disablenpc instance_npcname("茹茹#swa06");
+	disablenpc instance_npcname("茹茹#swa07");
+	disablenpc instance_npcname("闇●邪心獵人#swa01");
+	disablenpc instance_npcname("安全裝置#swa01");
+	disablenpc instance_npcname("邪心獵人軍事基地傳送門#1");
+	//防禦線1
+	setcell instance_mapname('map_name$[0]),23,223,29,223,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),23,223,29,223,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),39,223,32,223,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),39,223,32,223,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),29,223,36,223,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),29,223,36,223,cell_shootable,0;
+	//防禦線2
+	setcell instance_mapname('map_name$[0]),22,275,32,275,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),22,275,32,275,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),50,275,38,275,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),50,275,38,275,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),32,275,39,275,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),32,275,39,275,cell_shootable,0;
+	//副本標籤
+	set 'CD_swa_1,0;
+	set 'CD_swa_2,0;
+	set 'CD_swa_3,0;
+	set 'CD_swa_4,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'swa1_mob_01,'swa1_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'swa1_mob_01+"個邪心獵人",bc_all,0xD7BA98;
+	if ('swa1_mob_01>0) end;
+	setcell instance_mapname('map_name$[0]),29,223,36,223,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),29,223,36,223,cell_shootable,1;
+	disablenpc instance_npcname("障礙物#swa08");
+	disablenpc instance_npcname("障礙物#swa09");
+	disablenpc instance_npcname("障礙物#swa10");
+	disablenpc instance_npcname("障礙物#swa11");
+	enablenpc instance_npcname("茹茹#swa02");
+	instance_announce 0, "敵人部隊已侵入第1保安系統，保安系統失效",bc_map,"ff0000";
+	end;
+
+
+	OnCcdd2:
+	set 'swa1_mob_01,'swa1_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'swa1_mob_01+"個邪心獵人",bc_all,0xD7BA98;
+	if ('swa1_mob_01>0) end;
+	setcell instance_mapname('map_name$[0]),32,275,39,275,cell_walkable,1;
+	setcell instance_mapname('map_name$[0]),32,275,39,275,cell_shootable,1;
+	disablenpc instance_npcname("障礙物#swa28");
+	disablenpc instance_npcname("障礙物#swa29");
+	disablenpc instance_npcname("障礙物#swa30");
+	disablenpc instance_npcname("障礙物#swa31");
+	disablenpc instance_npcname("障礙物#swa32");
+	disablenpc instance_npcname("障礙物#swa33");
+	disablenpc instance_npcname("障礙物#swa34");
+	enablenpc instance_npcname("茹茹#swa03");
+	instance_announce 0, "敵人部隊已侵入第2保安系統，保安系統失效",bc_map,"ff0000";
+	end;
+
+	OnCcdd3:
+	set 'swa1_mob_01,'swa1_mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'swa1_mob_01+"個邪心獵人",bc_all,0xD7BA98;
+	if ('swa1_mob_01>0) end;
+	enablenpc instance_npcname("茹茹#swa04");
+	enablenpc instance_npcname("茹茹#swa05");
+	enablenpc instance_npcname("闇●邪心獵人#swa01");
+	enablenpc instance_npcname("邪心獵人軍事基地傳送門#1");
+	instance_announce 0, "敵人部隊已侵入第2保安系統，保安系統失效",bc_map,"ff0000";
+	end;
+
+	OnCcdd4:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【邪心獵人軍事基地】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("茹茹#swa07");
+	instance_announce 0, "保全系統：緊急狀況解除，終止自動防禦裝置",bc_map,"ff0000";
+	instance_announce instance_id(1),"茹茹：感謝你們的幫忙，來找我離開這裡吧，我會給你們一些獎勵的",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------ 副本NPC
+1@swat,53,123,6	script	茹茹#swa01	10198,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_swa_1==1) {end;}
+	set 'CD_swa_1,1;
+	npctalk "我們占領處的後側隱藏者很大一片空地";
+	sleep2 2000;
+	npctalk "雖說不能當作兵力移動使用，但地點非常適合做模擬戰鬥";
+	sleep2 2000;
+	npctalk "所以改造成類似上次戰鬥型態的模擬戰戰場";
+	sleep2 2000;
+	npctalk "這次請你仍扮演滲透角色，防禦是由偽裝成闇●邪心獵人的我方士兵擔任";
+	sleep2 2000;
+	npctalk "這是一種防禦訓練，目的是為了理解多少兵力才能守住這裡";
+	sleep2 2000;
+	npctalk "演習視同作戰，請你不要手下留情";
+	sleep2 2000;
+	instance_announce 0, "偵測到基地被攻擊，全員採取防禦戰術",bc_map,"0xff0000";
+	set 'swa1_mob_01,20;
+	areamonster 'map_name$[0],28,199,44,154,"--ja--",3627,17,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],37,191,47,184,"--ja--",3626,3,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd1";
+	specialeffect 16;
+	disablenpc instance_npcname("茹茹#swa01");
+	end;
+}
+
+
+1@swat,31,235,6	script	茹茹#swa02	10198,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_swa_2==1) {end;}
+	set 'CD_swa_2,1;
+	mes "[茹茹]";
+	mes "第1區順利通過，再請協助第2區防禦訓練";
+	close2;
+	set 'swa1_mob_01,30;
+	areamonster 'map_name$[0],30,265,67,254,"--ja--",3627,25,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],30,265,67,254,"--ja--",3626,5,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd2";
+	sleep2 2000;
+	npctalk "茹茹：太簡單了嗎?第2區也是類似殲滅戰訓練";
+	sleep2 2000;
+	npctalk "茹茹：這次會投入大量的防禦兵力和交戰中變強的兵力";
+	sleep2 2000;
+	npctalk "茹茹：總之剩下的挑戰也請多多協助";
+	sleep2 2000;
+	instance_announce 0, "敵人接近第2防禦陣地中，發布第2階段緊急狀況",bc_map,"ff0000";
+	specialeffect 16;
+	disablenpc instance_npcname("茹茹#swa02");
+	end;
+}
+
+
+1@swat,50,288,4	script	茹茹#swa03	10198,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_swa_3==1) {end;}
+	set 'CD_swa_3,1;
+	mes "[茹茹]";
+	mes "那邊的保全系統控制者所有的安全機關";
+	next;
+	mes "[茹茹]";
+	mes "啟動機關後可打開一人可通行的小通道";
+	next;
+	mes "[茹茹]";
+	mes "若不啟動機關就無法開始防禦訓練，等準備好就啟動吧!";
+	close2;
+	enablenpc instance_npcname("安全裝置#swa01");
+	donpcevent instance_npcname("安全裝置#swa01")+"::OnTalk1";
+	sleep2 2000;
+	npctalk "第2區變強的兵力也順利殲滅成功，必須改變一下我方的防禦戰術了";
+	sleep2 2000;
+	npctalk "總之前方剩餘的防禦裝置會跟先前的不太一樣";
+	sleep2 2000;
+	npctalk "廣設闇●邪心獵人所用的保全系統，建置了自動化的防禦系統";
+	sleep2 2000;
+	specialeffect 16;
+	disablenpc instance_npcname("茹茹#swa03");
+	end;
+}
+
+
+1@swat,54,290,4	script	安全裝置#swa01	858,{
+
+	mes "發現啟動機關的紅色按鈕";
+	mes "-----------------------------";
+	mes "^FF0000[請勿按]^000000";
+	next;
+	switch( select("取消:按下去")) {
+
+	case 1:
+	close;
+
+	case 2:
+	instance_announce 0, "限制區域理有侵入者，全體隊員集結",bc_map,"ff0000";
+	set 'swa1_mob_01,35;
+	areamonster 'map_name$[0],30,330,105,304,"--ja--",3627,30,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],30,330,105,304,"--ja--",3626,5,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd3";
+	specialeffect 16;
+	disablenpc instance_npcname("安全裝置#swa01");
+	end;
+
+OnTalk1:
+	specialeffect 16;
+	end;
+
+	}
+}
+
+
+1@swat,164,300,6	script	茹茹#swa04	10198,{
+
+	mes "[茹茹]";
+	mes "若防禦機的失敗時，還剩下最後手段，只要測試那個即可";
+	next;
+	mes "[茹茹]";
+	mes "從前面的門進去吧!";
+	close;
+}
+
+
+1@swat,135,259,4	script	茹茹#swa05	10198,5,5,{end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	npctalk "很好，闇●邪心獵人，別去踢他...他不是敵人";
+	specialeffect 16;
+	disablenpc instance_npcname("茹茹#swa05");
+	enablenpc instance_npcname("茹茹#swa06");
+	end;
+}
+
+
+1@swat,135,259,4	script	茹茹#swa06	10198,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_swa_4==1) {end;}
+
+	mes "[茹茹]";
+	mes "為了能跟這傢伙溝通花了我一周的時間，現在很會講話";
+	next;
+	switch( select("關係好到直接叫名字嗎??:知道啦!馬上開始吧!")) {
+
+	case 1:
+	close;
+
+	case 2:
+	close2;
+	set 'CD_swa_4,1;
+	npctalk "闇●邪心獵人 上次跟他有較量過，還記得嗎?";
+	sleep2 2000;
+	donpcevent instance_npcname("闇●邪心獵人#swa01")+"::OnTalk1";
+	sleep2 2000;
+	npctalk "嗯...差不多";
+	sleep2 2000;
+	donpcevent instance_npcname("闇●邪心獵人#swa01")+"::OnTalk2";
+	sleep2 2000;
+	donpcevent instance_npcname("闇●邪心獵人#swa01")+"::OnTalk3";
+	sleep2 2000;
+	donpcevent instance_npcname("闇●邪心獵人#swa01")+"::OnTalk4";
+	instance_announce 0, "保全系統：發布第2階段緊急狀況，啟動自動防禦裝置",bc_map,"ff0000";
+	specialeffect 16;
+	disablenpc instance_npcname("茹茹#swa06");
+	disablenpc instance_npcname("闇●邪心獵人#swa01");
+	areamonster 'map_name$[0],128,259,128,259,"--ja--",3628,1,instance_npcname("邪心獵人軍事基地事件1")+"::OnCcdd4";
+	end;
+	}
+}
+
+
+1@swat,128,259,6	script	闇●邪心獵人#swa01	10191,{
+	cutin "ep16_evil101",2;
+	mes "[闇●邪心獵人]";
+	mes "是敵是友?哪一邊?";
+	close2;
+	cutin "ep16_evil101",255;
+	end;
+
+OnTalk1:
+	npctalk "不記得，他是來摧毀這裡的嗎?";
+	end;
+OnTalk2:
+	npctalk "那麼...";
+	end;
+OnTalk3:
+	npctalk "我來阻止吧!";
+	end;
+OnTalk4:
+	specialeffect 16;
+	end;
+}
+
+
+
+//------------------------------ 1區障礙物
+1@swat,23,223,3	script	障礙物#swa01	10024,{end;}
+1@swat,24,223,3	script	障礙物#swa02	10024,{end;}
+1@swat,25,223,3	script	障礙物#swa03	10024,{end;}
+1@swat,26,223,3	script	障礙物#swa04	10024,{end;}
+1@swat,27,223,3	script	障礙物#swa05	10024,{end;}
+1@swat,28,223,3	script	障礙物#swa06	10024,{end;}
+1@swat,29,223,3	script	障礙物#swa07	10024,{end;}
+
+1@swat,30,223,3	script	障礙物#swa08	10024,{end;}
+1@swat,31,223,3	script	障礙物#swa09	10024,{end;}
+1@swat,32,223,3	script	障礙物#swa10	10024,{end;}
+1@swat,33,223,3	script	障礙物#swa11	10024,{end;}
+
+1@swat,34,223,3	script	障礙物#swa12	10024,{end;}
+1@swat,35,223,3	script	障礙物#swa13	10024,{end;}
+1@swat,36,223,3	script	障礙物#swa14	10024,{end;}
+1@swat,37,223,3	script	障礙物#swa15	10024,{end;}
+1@swat,38,223,3	script	障礙物#swa16	10024,{end;}
+1@swat,39,223,3	script	障礙物#swa17	10024,{end;}
+
+//------------------------------ 2區障礙物
+1@swat,22,275,3	script	障礙物#swa18	10024,{end;}
+1@swat,23,275,3	script	障礙物#swa19	10024,{end;}
+1@swat,24,275,3	script	障礙物#swa20	10024,{end;}
+1@swat,25,275,3	script	障礙物#swa21	10024,{end;}
+1@swat,26,275,3	script	障礙物#swa22	10024,{end;}
+1@swat,27,275,3	script	障礙物#swa23	10024,{end;}
+1@swat,28,275,3	script	障礙物#swa24	10024,{end;}
+1@swat,29,275,3	script	障礙物#swa25	10024,{end;}
+1@swat,30,275,3	script	障礙物#swa26	10024,{end;}
+1@swat,31,275,3	script	障礙物#swa27	10024,{end;}
+
+1@swat,32,275,3	script	障礙物#swa28	10024,{end;}
+1@swat,33,275,3	script	障礙物#swa29	10024,{end;}
+1@swat,34,275,3	script	障礙物#swa30	10024,{end;}
+1@swat,35,275,3	script	障礙物#swa31	10024,{end;}
+1@swat,36,275,3	script	障礙物#swa32	10024,{end;}
+1@swat,37,275,3	script	障礙物#swa33	10024,{end;}
+1@swat,38,275,3	script	障礙物#swa34	10024,{end;}
+
+1@swat,39,275,3	script	障礙物#swa35	10024,{end;}
+1@swat,40,275,3	script	障礙物#swa36	10024,{end;}
+1@swat,41,275,3	script	障礙物#swa37	10024,{end;}
+1@swat,42,275,3	script	障礙物#swa38	10024,{end;}
+1@swat,43,275,3	script	障礙物#swa39	10024,{end;}
+1@swat,44,275,3	script	障礙物#swa40	10024,{end;}
+1@swat,45,275,3	script	障礙物#swa41	10024,{end;}
+1@swat,46,275,3	script	障礙物#swa42	10024,{end;}
+1@swat,47,275,3	script	障礙物#swa43	10024,{end;}
+1@swat,48,275,3	script	障礙物#swa44	10024,{end;}
+1@swat,49,275,3	script	障礙物#swa45	10024,{end;}
+1@swat,50,275,3	script	障礙物#swa46	10024,{end;}
+
+//------------------------------ 獎勵
+1@swat,135,259,4	script	茹茹#swa07	10198,{
+
+	mes "[茹茹]";
+	mes "讓我把你們送出邪心獵人軍事基地吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32018,HUNTING)==2 ) { 
+	dispbottom "邪心獵人軍事基地任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25155,10*$EP1602;	//秀發茲榮譽之證
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	erasequest 32018; 
+	callfunc "offical_instance_finish",40;
+	}
+
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------ 傳點資訊
+1@swat,167,296,0	warp	邪心獵人軍事基地傳送門#1	1,1,1@swat,150,264
+
+//------------------------------ 地圖屬性
+1@swat	mapflag	partylock
+1@swat	mapflag	noteleport
+1@swat	mapflag	nosave	SavePoint
+1@swat	mapflag	nomemo
+1@swat	mapflag	nobranch
+1@swat	mapflag	noicewall
+1@swat	mapflag	restricted	6
+
+

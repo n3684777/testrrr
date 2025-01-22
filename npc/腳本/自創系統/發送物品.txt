@@ -1,0 +1,90 @@
+﻿
+//------------------------------------------ 全服發送物品
+function	script	Give_to_SameServer	{
+
+	if(!getgmlevel())
+		end;
+	mes "請輸入物品編號";
+	input @Newitem1;
+	set $MAP_item_1,@Newitem1;
+	next;
+	mes "請輸入物品數量";
+	input @Newitem2;
+	set $MAP_item_2,@Newitem2;
+	next;
+	mes "確定要發送這個物品給全服玩家";
+	mes "物品："+getitemname($MAP_item_1)+"  數量"+$MAP_item_2+" ";
+	next;
+	switch( select("取消","是")) {
+	case 1:
+	close;
+
+	case 2:
+	script4each "{ if(getmapflag(strcharinfo(3),mf_autotrade)) {end;} getitem $MAP_item_1, $MAP_item_2; }", 0;
+
+	end;
+	}
+}
+
+
+//------------------------------------------ 地圖發送物品
+function	script	Give_to_SameMap	{
+
+
+OnWhisperGlobal:
+	if(!getgmlevel())
+		end;
+	mes "請輸入物品編號";
+	input @Newitem1;
+	set $MAP_item_1,@Newitem1;
+	next;
+	mes "請輸入物品數量";
+	input @Newitem2;
+	set $MAP_item_2,@Newitem2;
+	next;
+	mes "確定要發送這個物品給地圖玩家";
+	mes "物品："+getitemname($MAP_item_1)+"  數量"+$MAP_item_2+" ";
+	next;
+	switch( select("取消","是")) {
+	case 1:
+	close;
+
+	case 2:
+	set .@m$,strcharinfo(3);
+	script4each "getitem $MAP_item_1, $MAP_item_2;", 1, .@m$;
+	end;
+	}
+}
+
+
+
+
+
+//------------------------------------------ 地圖發送物品
+map03,0,0,6	script	地圖發送物品	139,{
+
+OnWhisperGlobal:
+	if(!getgmlevel())
+		end;
+	mes "請輸入物品編號";
+	input @Newitem1;
+	set $MAP_item_1,@Newitem1;
+	next;
+	mes "請輸入物品數量";
+	input @Newitem2;
+	set $MAP_item_2,@Newitem2;
+	next;
+	mes "確定要發送這個物品給地圖玩家";
+	mes "物品："+getitemname($MAP_item_1)+"  數量"+$MAP_item_2+" ";
+	next;
+	switch( select("取消","是")) {
+	case 1:
+	close;
+
+	case 2:
+	set .@m$,strcharinfo(3);
+	script4each "getitem $MAP_item_1, $MAP_item_2;", 1, .@m$;
+	end;
+	}
+}
+

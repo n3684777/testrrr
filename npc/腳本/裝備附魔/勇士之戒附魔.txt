@@ -1,0 +1,338 @@
+
+vdistrict1,71,30,6	script	強化專家柏恩斯	49,{
+	//附魔狀態
+	set $@BraEnc1,rand(0,17);
+	set $@BraEnc2,rand(0,15);
+	set $@BraEnc3,rand(0,15);
+	set $@BraEnc4,rand(0,29);
+
+	setarray $@BraEnchanting1[0],4890,4786,4891,4787,4890,4786,4891,4787,4892,4791,4792,4793,4794,4791,4792,4793,4794,4893;
+	setarray $@BraEnchanting2[0],4870,4800,4871,4870,4800,4871,4801,4802,4861,4862,4867,4861,4862,4867,4868,4900;
+	setarray $@BraEnchanting3[0],4819,4766,4767,4819,4766,4767,4894,4895,4760,4761,4806,4760,4761,4806,4898,4899;
+	setarray $@BraEnchanting4[0],4700,4701,4702,4703,4704,4710,4711,4712,4713,4714,4720,4721,4722,4723,4724,4730,4731,4732,4733,4734,4740,4741,4742,4743,4744,4750,4751,4752,4753,4754;
+
+	mes "[強化專家柏恩斯]";
+	mes "你好~";
+	mes "只要有勇士之戒";
+	mes "給我一個勇士之證當報酬";
+	mes "我就能幫你附魔上新的功能";
+	next;
+	switch(select("請幫我附魔勇士之戒:請幫我洗滌附魔狀態:沒事")){
+
+case 1:
+	mes "[強化專家柏恩斯]";
+	mes "你確定要進行附魔嗎?";
+
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyour,getequipcardid(.@is,0);
+	set @fakeyour2,getequipcardid(.@is,1);
+	set @fakeyour3,getequipcardid(.@is,2);
+	set @fakeyour4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes "[強化專家柏恩斯]";
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+
+	if(@abd == 2981) goto Bra_net1;
+	mes "[強化專家柏恩斯]";
+	mes "你這個不是勇士之戒";
+	close;
+
+Bra_net1:
+	mes "[強化專家柏恩斯]";
+	mes "好吧!說吧!你想要強化哪個插槽?";
+	next;
+	switch(select("第一插槽:第二插槽:第三插槽:第四插槽:取消")){
+	case 1:
+	callfunc "fumoBraA1",6684,0,rand(1,100);
+	case 2:
+	callfunc "fumoBraA2",6684,0,rand(1,100);
+	case 3:
+	callfunc "fumoBraA3",6684,0,rand(1,100);
+	case 4:
+	callfunc "fumoBraA4",6684,0,rand(1,100);
+	case 5:
+	close;
+	}
+
+
+case 2:
+	mes "[強化專家柏恩斯]";
+	mes "洗的勇士之戒需要勇士之證，另外請再次確認是否為已經賦予附魔狀態的物品!";
+	next;
+	switch(select("我再想一下:請幫我洗滌勇士之戒")){
+
+	case 1:
+	mes "[強化專家柏恩斯]";
+	mes "真是個沒有決心的人";
+	close;
+
+	case 2:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyour,getequipcardid(.@is,0);
+	set @fakeyour2,getequipcardid(.@is,1);
+	set @fakeyour3,getequipcardid(.@is,2);
+	set @fakeyour4,getequipcardid(.@is,3);
+	set @jinglian_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上有同樣的物品，為了防止洗滌時發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼洗滌";
+	close;
+	}
+
+	if(@abd == 2981) goto Bra_net2;
+	mes "[強化專家柏恩斯]";
+	mes"你要洗滌的裝備非勇士之戒，不能幫你洗滌";
+	close;
+
+Bra_net2:
+	switch(select("洗滌第一插槽:洗滌第二插槽:洗滌第三插槽:洗滌第四插槽:取消")){
+	case 1:
+	callfunc "fumoBash1",6684,0,rand(1,100);
+	case 2:
+	callfunc "fumoBash2",6684,0,rand(1,100);
+	case 3:
+	callfunc "fumoBash3",6684,0,rand(1,100);
+	case 4:
+	callfunc "fumoBash4",6684,0,rand(1,100);
+	case 5:
+	close;
+	}
+}
+
+case 3:
+	close;
+	}
+OnInit:
+	waitingroom "勇士之戒附魔",0;
+	end;
+}
+
+
+
+//--------------------------附魔
+
+function	script	fumoBraA1	{
+
+	if (@fakeyour > 1) {
+	mes "[強化專家柏恩斯]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第一插槽上的附魔效果";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上的勇士之證不夠";
+	close;
+	}
+
+	unequip (.@is);
+	mes "[強化專家柏恩斯]";
+	mes"對第一個洞賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@jinglian_100,0,$@BraEnchanting1[$@BraEnc1],@fakeyour2,@fakeyour3,@fakeyour4;
+	close;
+}
+
+function	script	fumoBraA2	{
+
+	if (@fakeyour2 > 1) {
+	mes "[強化專家柏恩斯]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第二插槽上的附魔效果";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上的勇士之證不夠";
+	close;
+	}
+
+	unequip (.@is);
+	mes "[強化專家柏恩斯]";
+	mes"對第二個洞賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,$@BraEnchanting2[$@BraEnc2],@fakeyour3,@fakeyour4;
+	close;
+}
+
+function	script	fumoBraA3	{
+
+	if (@fakeyour3 > 1) {
+	mes "[強化專家柏恩斯]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第三插槽上的附魔效果";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上的勇士之證不夠";
+	close;
+	}
+
+	unequip (.@is);
+	mes "[強化專家柏恩斯]";
+	mes"對第三個洞賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,$@BraEnchanting3[$@BraEnc3],@fakeyour4;
+	close;
+}
+
+function	script	fumoBraA4	{
+
+	if (@fakeyour4 > 1) {
+	mes "[強化專家柏恩斯]";	
+	mes "^ff0000你的裝備已經附魔過^000000";
+	mes "請先洗滌掉第四插槽上的附魔效果";
+	close;
+	}
+	if(countitem(getarg(0))<1){
+	mes "[強化專家柏恩斯]";
+	mes"你身上的勇士之證不夠";
+	close;
+	}
+
+	unequip (.@is);
+	mes "[強化專家柏恩斯]";
+	mes"對第四個洞賦予了能力值!";
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,@fakeyour3,$@BraEnchanting4[$@BraEnc4];
+	close;
+}
+
+
+
+//--------------------------洗滌
+
+function	script	fumoBash1	{
+
+	if (@fakeyour == 0) {
+	mes "[強化專家柏恩斯]";	
+	mes "你裝備上的第一插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<1){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有勇士之證。";
+	close;
+	}
+
+	mes "[強化專家柏恩斯]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem 6684,1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@jinglian_100,0,0,@fakeyour2,@fakeyour3,@fakeyour4;
+	close;
+}
+
+function	script	fumoBash2	{
+
+	if (@fakeyour2 == 0) {
+	mes "[強化專家柏恩斯]";	
+	mes "你裝備上的第二插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<1){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有勇士之證。";
+	close;
+	}
+
+	mes "[強化專家柏恩斯]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem 6684,1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,0,@fakeyour3,@fakeyour4;
+	close;
+}
+
+
+function	script	fumoBash3	{
+
+	if (@fakeyour3 == 0) {
+	mes "[強化專家柏恩斯]";	
+	mes "你裝備上的第三插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<1){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有勇士之證。";
+	close;
+	}
+
+	mes "[強化專家柏恩斯]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem 6684,1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,0,@fakeyour4;
+	close;
+}
+
+
+function	script	fumoBash4	{
+
+	if (@fakeyour4 == 0) {
+	mes "[強化專家柏恩斯]";	
+	mes "你裝備上的第四插槽並無附魔效果";
+	close;
+	}
+
+	if(countitem(getarg(0))<1){
+	mes "[神奇的魔術師]";
+	mes"你身上有沒有勇士之證。";
+	close;
+	}
+
+	mes "[強化專家柏恩斯]";
+	mes"洗滌成功";
+	specialeffect 154;
+	delitem 6684,1;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@jinglian_100,0,@fakeyour,@fakeyour2,@fakeyour3,0;
+	close;
+}
+
+

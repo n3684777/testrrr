@@ -1,0 +1,305 @@
+﻿vdistrict1,40,67,4	script	瑪利亞久#Gef	726,{
+
+	//副本任務獎勵
+	if(checkquest(32014,HUNTING)==2 ) { 
+	dispbottom "週五副本討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32014; }
+
+	.@playtime = checkquest(34001,PLAYTIME);
+	if(.@playtime == 2) erasequest 34001;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[瑪利亞久]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[瑪利亞久]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "週五副本";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[瑪利亞久]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 40) {
+			mes "[瑪利亞久]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.40 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[瑪利亞久]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		//announce "[副本公告]隊伍 [ "+getpartyname(getcharid(1)) +" ] 準備挑戰【 "+.@md_name$+" 】副本！",15,0x33ea91;
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[瑪利亞久]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 40) {
+			mes "[瑪利亞久]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.40 後再來吧…"; 
+			close;
+		}
+		
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			setquest 34001;
+
+			//副本任務
+			if(checkquest(32014,HUNTING)<0 ){setquest 32014;}
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "週五副本",0;
+	end;
+}
+
+
+//------------------------------ 週五副本事件
+1@md_gef,0,0,0	script	週五副本事件1	-1,{
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@md_gef");
+
+	//副本標籤
+	setd "$@CD_Gef51_1"+instance_id(1),50;
+	setd "$@CD_Gef51_2"+instance_id(1),50;
+	setd "$@CD_Gef51_3"+instance_id(1),50;
+	setd "$@CD_Gef51_4"+instance_id(1),50;
+
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("微妙光芒的野草#1");
+	disablenpc instance_npcname("微妙光芒的野草#2");
+	disablenpc instance_npcname("微妙光芒的野草#3");
+	disablenpc instance_npcname("微妙光芒的野草#4");
+	disablenpc instance_npcname("奇特雕塑物#01");
+	disablenpc instance_npcname("瑪利亞久#01");
+
+	//開始放怪
+	donpcevent instance_npcname("週五副本事件1")+"::OnStart";
+	//areamonster 'map_name$[0],142,140,11,10,"--ja--",3661,100;
+	end;
+
+	OnStart:
+	monster 'map_name$[0],0,0,"夢魘",3661,25,instance_npcname("週五副本事件1")+"::OnCcdd1";
+	monster 'map_name$[0],0,0,"南瓜先生",3663,25,instance_npcname("週五副本事件1")+"::OnCcdd2";
+	monster 'map_name$[0],0,0,"綠腐屍",3665,25,instance_npcname("週五副本事件1")+"::OnCcdd3";
+	monster 'map_name$[0],0,0,"紅蝙蝠",3667,25,instance_npcname("週五副本事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd1:
+	setd "$@CD_Gef51_1"+instance_id(1),getd("$@CD_Gef51_1"+instance_id(1))-1;
+	monster 'map_name$[0],0,0,"夢魘",3661,1,instance_npcname("週五副本事件1")+"::OnCcdd1";
+	if (getd("$@CD_Gef51_1"+instance_id(1))>0) end;
+	instance_announce 0, "有奇妙光芒的物體生成散布於右下角",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("微妙光芒的野草#1");
+	setd "$@CD_Gef51_1"+instance_id(1),50;
+	end;
+
+	OnCcdd2:
+	setd "$@CD_Gef51_2"+instance_id(1),getd("$@CD_Gef51_2"+instance_id(1))-1;
+	monster 'map_name$[0],0,0,"南瓜先生",3663,1,instance_npcname("週五副本事件1")+"::OnCcdd2";
+	if (getd("$@CD_Gef51_2"+instance_id(1))>0) end;
+	instance_announce 0, "有奇妙光芒的物體生成散布於左下角",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("微妙光芒的野草#2");
+	setd "$@CD_Gef51_2"+instance_id(1),50;
+	end;
+
+	OnCcdd3:
+	setd "$@CD_Gef51_3"+instance_id(1),getd("$@CD_Gef51_3"+instance_id(1))-1;
+	monster 'map_name$[0],0,0,"綠腐屍",3665,1,instance_npcname("週五副本事件1")+"::OnCcdd3";
+	if (getd("$@CD_Gef51_3"+instance_id(1))>0) end;
+	instance_announce 0, "有奇妙光芒的物體生成散布於左上角",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("微妙光芒的野草#3");
+	setd "$@CD_Gef51_3"+instance_id(1),50;
+	end;
+
+	OnCcdd4:
+	setd "$@CD_Gef51_4"+instance_id(1),getd("$@CD_Gef51_4"+instance_id(1))-1;
+	monster 'map_name$[0],0,0,"紅蝙蝠",3667,1,instance_npcname("週五副本事件1")+"::OnCcdd4";
+	if (getd("$@CD_Gef51_4"+instance_id(1))>0) end;
+	instance_announce 0, "有奇妙光芒的物體生成散布於右上角",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("微妙光芒的野草#4");
+	setd "$@CD_Gef51_4"+instance_id(1),50;
+	end;
+
+	OnCcdd10:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【"+.@md_name$+"】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	//viewpoint 1,108,129,0,0xffffff;
+	enablenpc instance_npcname("瑪利亞久#01");
+	instance_announce 0, "瑪利亞久：想不到你們真的能打倒亡者君王，來(108,129)找我吧我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+//------------------------------相關NPC
+1@md_gef,182,217,4	script	陌生人的屍體#01	697,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "[冒險家的記錄]";
+	mes "發現了陌生人的屍體，可能是事先來探險的而不幸死亡的冒險家屍體";
+	next;
+	switch( select("不理他:探索身體")) {
+
+	case 1:
+	close;
+
+	case 2:
+	mes "[冒險家的記錄]";
+	mes "在口袋裡發現了一張字條，看來這位冒險家的名字沃特";
+	next;
+	mes "[冒險家的記錄]";
+	mes "我叫沃特，我留下記錄曾在這裡所犯的錯誤，以免以後造訪這裡的冒險重蹈覆轍";
+	next;
+	mes "[冒險家的記錄]";
+	mes "冒險第一天，都是那該死的好奇心，誤觸了這附近奇特雕塑物的石頭，且吵醒了絕對不能吵醒的人";
+	next;
+	mes "[冒險家的記錄]";
+	mes "現在有個古代國王復活後在我眼前徘迴，可能完全失去了前世的記憶，唯一確定的是他正想殺我";
+	next;
+	mes "[冒險家的記錄]";
+	mes "萬一遇到可疑的石版野絕對不要碰他，不然你們一定會後悔的";
+	donpcevent instance_npcname("亡者君王觸發")+"::OnEnable";
+	disablenpc instance_npcname("陌生人的屍體#01");
+	close;
+	}
+}
+
+1@md_gef,0,0,0	script	亡者君王觸發	-1,{
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc instance_npcname("奇特雕塑物#01");
+	instance_announce 0, "地圖右下的奇特雕塑物發出了光芒...",bc_map,"0xFFFF33";
+	stopnpctimer;
+	end;
+
+OnEnd:
+	end;
+}
+
+
+1@md_gef,0,0,0	script	微妙光芒的野草::Gef	10044,{
+	setarray .@item,25235;
+	getmapxy .@m$,.@x,.@y,1,instance_npcname(strnpcinfo(0));
+	for(set .@i,0; .@i<3; set .@i,.@i+1)
+	makeitem .@item[rand(getarraysize(.@item))],rand(1,3),.@m$,.@x+rand(-2,2),.@y+rand(-2,2);
+	misceffect 99;
+	if(atoi(strnpcinfo(2))) hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@md_gef,180,52,0	duplicate(Gef)	微妙光芒的野草#1	10044
+1@md_gef,47,49,0	duplicate(Gef)	微妙光芒的野草#2	10044
+1@md_gef,43,211,0	duplicate(Gef)	微妙光芒的野草#3	10044
+1@md_gef,202,213,0	duplicate(Gef)	微妙光芒的野草#4	10044
+
+
+1@md_gef,199,72,0	script	奇特雕塑物#01	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "過不久灰塵散去後在雕塑物底下石板上發現了10個空洞";
+	next;
+	mes "感覺10個空洞的大小跟附魔原石一模一樣";
+	next;
+	switch( select("不理他:把附魔原石投入空洞裡")) {
+
+	case 1:
+	close;
+
+	case 2:
+	if (countitem(25235)<10 ) {
+	mes "附魔原石不足10個..";
+	close;	}
+	delitem 25235,10;
+	instance_announce 0, "亡者君王:是誰吵我呢!我要親自問他理由",bc_map,"0xFFFF33";
+	monster 'map_name$[0],0,0,"亡者君王",3659,1,instance_npcname("週五副本事件1")+"::OnCcdd10";
+	disablenpc instance_npcname("奇特雕塑物#01");
+	close;
+	}
+}
+
+
+1@md_gef,108,129,4	script	瑪利亞久#01	751,{
+	getinventorylist;
+	if ( @inventorylist_count > 95 ) {
+	mes "你所攜帶的物品太多了";
+	mes "所以不能獲得物品";
+	mes "請把身上的物品減輕之後";
+	mes "再來找我領獎吧";
+	close;
+	}
+	mes "[瑪利亞久]";
+	mes "讓我把你們送出週五副本吧";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+	//副本任務獎勵
+	if(checkquest(32014,HUNTING)==2 ) { 
+	dispbottom "週五副本討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32014; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@md_gef	mapflag	nomemo
+1@md_gef	mapflag	nosave	SavePoint
+1@md_gef	mapflag	monster_noteleport
+1@md_gef	mapflag	noteleport
+1@md_gef	mapflag	noicewall
+

@@ -1,0 +1,415 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#超時空頭冠 MUNNIN2001
+   - Name: 超時空頭冠
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_VENDING_MACHINE1
+     Items:
+       - Index: 0
+         Item: C_White_Knight_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 50
+       - Index: 1
+         Item: C_Khaliz_Knight_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 70
+       - Index: 2
+         Item: Head_Item_19472
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 3
+         Item: S_Circlet_Of_Time_RK
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 4
+         Item: S_Circlet_Of_Time_LG
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 5
+         Item: S_Circlet_Of_Time_NC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 6
+         Item: S_Circlet_Of_Time_GN
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 7
+         Item: S_Circlet_Of_Time_GC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 8
+         Item: S_Circlet_Of_Time_SC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 9
+         Item: S_Circlet_Of_Time_AB
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 10
+         Item: S_Circlet_Of_Time_SR
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 11
+         Item: S_Circlet_Of_Time_WL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 12
+         Item: S_Circlet_Of_Time_SO
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 13
+         Item: S_Circlet_Of_Time_RA
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 14
+         Item: S_Circlet_Of_Time_WM
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 15
+         Item: S_Circlet_Of_Time_SJ
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 16
+         Item: S_Circlet_Of_Time_SP
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 17
+         Item: S_Circlet_Of_Time_RL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 18
+         Item: S_Circlet_Of_Time_OB
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 19
+         Item: S_Circlet_Of_Time_KG
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 20
+         Item: S_Circlet_Of_Time_NV
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 21
+         Item: S_Circlet_Of_Time_SU
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: S_Circlet_Of_Time
+             Amount: 5
+       - Index: 22
+         Item: G_Knight_Axe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 23
+         Item: R_Magician_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 24
+         Item: G_Knight_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 25
+         Item: G_Knight_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 26
+         Item: R_Cleric_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 27
+         Item: R_Magician_Wand
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 28
+         Item: R_Wheep
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 29
+         Item: R_Katar_Katar
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 30
+         Item: G_Knight_BattleAxe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 31
+         Item: R_Sage_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 32
+         Item: R_Gladius_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 33
+         Item: R_Gladius_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 34
+         Item: R_Magician_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 35
+         Item: G_Knight_Spear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 36
+         Item: R_Cello
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 37
+         Item: G_Knight_JewelSword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 38
+         Item: R_Pillar
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 39
+         Item: R_Syringe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 40
+         Item: G_Alchemist_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 41
+         Item: Royal_Knuckle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 42
+         Item: Royal_Huuma_Shuriken
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 43
+         Item: Royal_Knight_Archer_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 44
+         Item: Royal_Foxtail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+       - Index: 45
+         Item: Royal_Revolver
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 10
+
+#封印超時空頭冠兌換
+   - Name: 封印超時空頭冠兌換
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_VENDING_MACHINE1
+     Items:
+       - Index: 0
+         Item: S_Circlet_Of_Time
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Fragment_Of_Time
+             Amount: 25
+       - Index: 1
+         Item: S_Circlet_Of_Time
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Jewel_Of_Time_Ore
+             Amount: 6
+       - Index: 2
+         Item: S_Circlet_Of_Time
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Spell_Of_Time
+             Amount: 4

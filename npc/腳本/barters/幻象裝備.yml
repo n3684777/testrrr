@@ -1,0 +1,287 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#幻象裝備製作 艾琉米那
+   - Name: 幻象裝備製作
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: South
+     Sprite: 4_EP17_ELYUMINA
+     Items:
+       - Index: 0
+         Item: Armor_Modification_Part_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT02
+             Amount: 30
+           - Index: 1
+             Item: EP17_1_EVT39
+             Amount: 5
+       - Index: 1
+         Item: Illusion_Box01
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT02
+             Amount: 30
+           - Index: 1
+             Item: EP17_1_EVT39
+             Amount: 7
+       - Index: 2
+         Item: Illusion_Box02
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT02
+             Amount: 30
+           - Index: 1
+             Item: EP17_1_EVT39
+             Amount: 7
+       - Index: 3
+         Item: Illusion_Box03
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT02
+             Amount: 30
+           - Index: 1
+             Item: EP17_1_EVT39
+             Amount: 7
+       - Index: 4
+         Item: Illusion_Box04
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT02
+             Amount: 30
+           - Index: 1
+             Item: EP17_1_EVT39
+             Amount: 7
+       - Index: 5
+         Item: OS_Weapons_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT01
+             Amount: 1
+           - Index: 1
+             Item: EP17_1_EVT02
+             Amount: 50
+       - Index: 6
+         Item: Weapons_Modification_Part_Box_Ph
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 5
+       - Index: 7
+         Item: Weapons_Modification_Part_Box_Mag
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 5
+       - Index: 8
+         Item: Weapons_Modification_Part_Box_Ph
+         Stock: 0
+         Zeny: 1000000
+       - Index: 9
+         Item: Weapons_Modification_Part_Box_Mag
+         Stock: 0
+         Zeny: 1000000
+       - Index: 10
+         Item: Illusion_Armor_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 11
+         Item: Illusion_Armor_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 12
+         Item: Illusion_Engine_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 13
+         Item: Illusion_Engine_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 14
+         Item: Illusion_Leg_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 15
+         Item: Illusion_Leg_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 16
+         Item: Illusion_B_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 17
+         Item: Illusion_B_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 18
+         Item: Illusion_BC_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+       - Index: 19
+         Item: Illusion_BC_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: EP17_1_EVT39
+             Amount: 50
+
+
+#幻象裝備兌換
+   - Name: 幻象裝備兌換
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_MAL_KAFRA
+     Items:
+       - Index: 0
+         Item: E_ILL_Up
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 50
+       - Index: 1
+         Item: Illusion_Armor_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 50
+       - Index: 2
+         Item: Illusion_Armor_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 50
+       - Index: 3
+         Item: Illusion_Leg_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 4
+         Item: Illusion_Leg_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 5
+         Item: Illusion_Engine_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 6
+         Item: Illusion_Engine_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 7
+         Item: Illusion_B_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 8
+         Item: Illusion_B_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 9
+         Item: Illusion_BC_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+       - Index: 10
+         Item: Illusion_BC_L
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 30
+
+
+
+
+

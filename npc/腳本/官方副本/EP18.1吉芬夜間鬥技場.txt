@@ -1,0 +1,810 @@
+﻿
+vdistrict1,23,39,4	script	吉芬夜間鬥技場管理者	853,{
+
+	//副本任務獎勵
+	if(checkquest(32052,HUNTING)==2 ) { 
+	dispbottom "吉芬夜間鬥技場任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32052; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_43 < gettime(8) ){
+	set Instance_Bout_43,10;
+	set day_Instance_Bout_43,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_43 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "吉芬夜間鬥技場";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+	mes "你想要幹嘛呢？";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_43+"^000000 ]";
+	mes "副本獎勵：";
+	mes "吉芬鬥技場硬幣";
+	mes "吉芬鬥技場證書";
+	mes "吉芬鬥技場冠軍獎狀";
+	mes "商城1點金幣x10";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 210) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.210 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 210) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.210 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_43,Instance_Bout_43-1;
+
+			//副本任務
+			if(checkquest(32052,HUNTING)<0 ){setquest 32052;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "吉芬夜間鬥技場",0;
+	end;
+}
+
+
+//------------------------------副本NPC
+1@ge_sn,111,58,4	script	鬥技場主人#gef01	853,{
+
+	//副本任務獎勵
+	if(checkquest(32052,HUNTING)==2 ) { 
+	dispbottom "吉芬夜間鬥技場任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32052; }
+
+	if('CD_gef_GF_2==1) goto Levent1;
+	if('CD_gef_GF_2==2) goto Levent2;
+	if('CD_gef_GF_2==3) goto Levent3;
+	if('CD_gef_GF_2==4) goto Levent4;
+	if('CD_gef_GF_2==5) goto Levent5;
+	if('CD_gef_GF_2==6) goto Levent6;
+	if('CD_gef_GF_2==7) goto Levent7;
+	if('CD_gef_GF_2==8) goto Levent8;
+	if('CD_gef_GF_2==9) goto Levent9;
+	if('CD_gef_GF_2==10) goto Levent10;
+	if(getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+
+	if('CD_gef_GF_quest==1) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x2";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第2回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力12,400,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		enablenpc instance_npcname("狄歐艾瑞默司#gef");
+		instance_announce 0, "鬥技場主人：只有心態是大魔法師的狄歐艾瑞默司",bc_map,"0xFFFF33";
+		sleep2 4000;
+		disablenpc instance_npcname("狄歐艾瑞默司#gef");
+		instance_warpall 'map_name$[0],104,48, instance_id();
+		areamonster 'map_name$[0],116,48,116,48,"--ja--",20857,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd2";
+		instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+		end;
+
+		case 2:
+		Levent1:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,1;
+		getitem 1000316,2;	//大賽硬幣x2
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==2) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x3";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第3回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力34,700,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,3)){
+
+			case 1:
+			enablenpc instance_npcname("吉分小偷#gef");
+			instance_announce 0, "鬥技場主人：以前也見過的小偷，最近在吉芬城內多次作案！",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("吉分小偷#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20858,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd3";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("吉分鐵匠#gef");
+			instance_announce 0, "鬥技場主人：吉芬兄弟幫頭領 吉分鐵匠！",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("吉分鐵匠#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20859,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd3";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 3:
+			enablenpc instance_npcname("吉芬流氓#gef");
+			instance_announce 0, "鬥技場主人：胡作非為的混混，吉芬流氓",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("吉芬流氓#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20860,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd3";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent2:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!"; 
+		set 'CD_gef_GF_2,2;
+		getitem 1000316,3;	//大賽硬幣x3
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==3) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x4";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第4回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力107,600,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		enablenpc instance_npcname("沛蒙#gef");
+		instance_announce 0, "鬥技場主人：來自普隆德拉的潮人，沛蒙",bc_map,"0xFFFF33";
+		sleep2 4000;
+		disablenpc instance_npcname("沛蒙#gef");
+		instance_warpall 'map_name$[0],104,48, instance_id();
+		areamonster 'map_name$[0],116,48,116,48,"--ja--",20861,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd4";
+		instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+		end;
+
+		case 2:
+		Levent3:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,3;
+		getitem 1000316,4;	//大賽硬幣x4
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==4) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x6、大賽證明x1";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第5回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力362,400,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,2)){
+
+			case 1:
+			enablenpc instance_npcname("奧樂德#gef");
+			instance_announce 0, "鬥技場主人：努力的典範，正統派戰鬥大師，奧樂德",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("奧樂德#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20862,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd5";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("布魯德哈載#gef");
+			instance_announce 0, "鬥技場主人：血染的兔耳，布魯德哈載",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("布魯德哈載#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20863,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd5";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent4:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,4;
+		getitem 1000316,6;	//大賽硬幣x6
+		getitem 1000317,1;	//大賽證明x1
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==5) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x9、大賽證明x1";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第6回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力516,300,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,2)){
+
+			case 1:
+			enablenpc instance_npcname("庫洛雅庫瑪#gef");
+			instance_announce 0, "鬥技場主人：漆黑之牙，庫洛雅庫瑪",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("庫洛雅庫瑪#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20864,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd6";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("伊佛德斯#gef");
+			instance_announce 0, "鬥技場主人：擁有炙熱的鬥志，伊佛德斯",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("伊佛德斯#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20865,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd6";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent5:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,5;
+		getitem 1000316,9;	//大賽硬幣x9
+		getitem 1000317,1;	//大賽證明x1
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+	if('CD_gef_GF_quest==6) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x14、大賽證明x1";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第7回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力555,900,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,2)){
+
+			case 1:
+			enablenpc instance_npcname("萊采尼芮#gef");
+			instance_announce 0, "鬥技場主人：死之修女，萊采尼芮",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("萊采尼芮#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20866,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd7";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("歐託莉柯#gef");
+			instance_announce 0, "鬥技場主人：引導死亡的舞女，歐託莉柯",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("歐託莉柯#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20867,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd7";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent6:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,6;
+		getitem 1000316,14;	//大賽硬幣x14
+		getitem 1000317,1;	//大賽證明x1
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==7) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x22、大賽證明x2、大賽冠軍證明x1";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第8回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力972,300,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,2)){
+
+			case 1:
+			enablenpc instance_npcname("朱朱#gef");
+			instance_announce 0, "鬥技場主人：實戰的達人！朱朱",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("朱朱#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20868,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd8";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("狄瓦伊#gef");
+			instance_announce 0, "鬥技場主人：戰場的毀滅漩渦，狄瓦伊",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("狄瓦伊#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20869,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd8";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent7:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,7;
+		getitem 1000316,22;	//大賽硬幣x22
+		getitem 1000317,2;	//大賽證明x2
+		getitem 1000366,1;	//大賽冠軍證明x1
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==8) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x35、大賽證明x2、大賽冠軍證明x1";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第9回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力1,337,300,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		switch(rand(1,2)){
+
+			case 1:
+			enablenpc instance_npcname("培坎納比恩#gef");
+			instance_announce 0, "鬥技場主人：來自寧靜都市艾爾帕蘭的煉金術士，培坎納比恩",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("培坎納比恩#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20870,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd9";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+
+			case 2:
+			enablenpc instance_npcname("艾爾馮斯#gef");
+			instance_announce 0, "鬥技場主人：巨大人造生命體，艾爾馮斯",bc_map,"0xFFFF33";
+			sleep2 4000;
+			disablenpc instance_npcname("艾爾馮斯#gef");
+			instance_warpall 'map_name$[0],104,48, instance_id();
+			areamonster 'map_name$[0],116,48,116,48,"--ja--",20871,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd9";
+			instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+			end;
+			}
+
+		case 2:
+		Levent8:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,8;
+		getitem 1000316,35;	//大賽硬幣x35
+		getitem 1000317,2;	//大賽證明x2
+		getitem 1000366,1;	//大賽冠軍證明x1
+		callfunc "offical_instance_finish",50;
+
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==9) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x56、大賽證明x3、大賽冠軍證明x2";
+		mes "你要繼續挑戰還是領取獎勵出場";
+		next;
+		switch(select("繼續挑戰","領取獎勵","我還需要準備一下")){
+
+		case 1:
+		if('CD_gef_GF_1==1) { mes "[鬥技場主人]"; mes "比賽進行中..."; close; }
+		if('CD_gef_GF_2==1) { mes "[鬥技場主人]"; mes "比賽已經結束..."; close; }
+		close2;
+		set 'CD_gef_GF_1,1;
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：第10回合開始!!",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "鬥技場主人：然後對手是...戰鬥力1,416,300,000的",bc_map,"0xFFFF33";
+		sleep2 1000;
+		instance_announce 0, "簡直可以說是米德加爾特大陸，哦不，說不定是世界最強！",bc_map,"0xFFFF33";
+		sleep2 1000;
+		enablenpc instance_npcname("潘利爾#gef");
+		instance_announce 0, "鬥技場主人：青色魔法師！潘利爾 潘利爾！",bc_map,"0xFFFF33";
+		sleep2 4000;
+		disablenpc instance_npcname("潘利爾#gef");
+		instance_warpall 'map_name$[0],104,48, instance_id();
+		areamonster 'map_name$[0],116,48,116,48,"--ja--",20872,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd10";
+		instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+		end;
+
+		case 2:
+		Levent9:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,9;
+		getitem 1000316,56;	//大賽硬幣x56
+		getitem 1000317,3;	//大賽證明x3
+		getitem 1000366,2;	//大賽冠軍證明x2
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 3:
+		close;
+		}
+	}
+
+
+	if('CD_gef_GF_quest==10) {
+		mes "[鬥技場主人]";
+		mes "目前進度：第"+'CD_gef_GF_quest+"回合";
+		mes "目前獎勵：大賽硬幣x89、大賽證明x3、大賽冠軍證明x3";
+		mes "你要領取獎勵出場了嗎?";
+		next;
+		switch(select("領取獎勵","我想在四處看看")){
+
+		case 1:
+		Levent10:
+		dispbottom "吉芬夜間鬥技場挑戰完成，以下是你的獎勵!!";
+		set 'CD_gef_GF_2,10;
+		getitem 1000316,89;	//吉芬鬥技場硬幣x89
+		getitem 1000317,3;	//吉芬鬥技場證書x3
+		getitem 1000366,3;	//吉芬鬥技場冠軍獎狀x3
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		close;
+
+		case 2:
+		close;
+		}
+	}
+
+	mes "[鬥技場主人]";
+	mes "我是本次比賽的裁判";
+	mes "你準備好後就告訴我吧";
+	next;
+	switch(select("我準備好了!","我還需要準備一下")){
+	case 1:
+	if ('CD_gef_GF_1>0) end;
+	close2;
+	set 'CD_gef_GF_1,1;
+	sleep2 1000;
+	instance_announce 0, "鬥技場主人：那麼，吉芬夜間鬥技場，現在開幕！",bc_map,"0xFFFF33";
+	sleep2 1000;
+	instance_announce 0, "鬥技場主人：即將開始的是A組第一回合的較量。",bc_map,"0xFFFF33";
+	sleep2 1000;
+	instance_announce 0, "鬥技場主人：首先是第一次參加魔法大賽的神秘隊伍！",bc_map,"0xFFFF33";
+	sleep2 1000;
+	instance_announce 0, "鬥技場主人：連名字都不被世人熟知的神秘隊伍！",bc_map,"0xFFFF33";
+	sleep2 1000;
+	instance_announce 0, "鬥技場主人：然後對手是...戰鬥力4,800,000的",bc_map,"0xFFFF33";
+	sleep2 1000;
+	enablenpc instance_npcname("雅樂西#gef");
+	instance_announce 0, "鬥技場主人：年輕的參賽者，假面的雅樂西！",bc_map,"0xFFFF33";
+	sleep2 3000;
+	disablenpc instance_npcname("雅樂西#gef");
+	instance_warpall 'map_name$[0],104,48, instance_id();
+	areamonster 'map_name$[0],116,48,116,48,"--ja--",20856,1,instance_npcname("吉芬夜間鬥技場事件1")+"::OnCcdd1";
+	instance_announce 0, "鬥技場主人：比賽開始!!",bc_map,"0xFFFF33";
+	end;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------吉芬夜間鬥技場事件
+1@ge_sn,0,0,0	script	吉芬夜間鬥技場事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@ge_sn");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("雅樂西#gef");
+	disablenpc instance_npcname("狄歐艾瑞默司#gef");
+	disablenpc instance_npcname("吉分小偷#gef");
+	disablenpc instance_npcname("吉分鐵匠#gef");
+	disablenpc instance_npcname("吉芬流氓#gef");
+	disablenpc instance_npcname("沛蒙#gef");
+	disablenpc instance_npcname("奧樂德#gef");
+	disablenpc instance_npcname("布魯德哈載#gef");
+	disablenpc instance_npcname("庫洛雅庫瑪#gef");
+	disablenpc instance_npcname("伊佛德斯#gef");
+	disablenpc instance_npcname("萊采尼芮#gef");
+	disablenpc instance_npcname("歐託莉柯#gef");
+	disablenpc instance_npcname("朱朱#gef");
+	disablenpc instance_npcname("狄瓦伊#gef");
+	disablenpc instance_npcname("培坎納比恩#gef");
+	disablenpc instance_npcname("艾爾馮斯#gef");
+	disablenpc instance_npcname("潘利爾#gef");
+	//副本標籤
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_2,0;
+	set 'CD_gef_GF_quest,0;
+	end;
+
+	OnCcdd1:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,1;
+	instance_announce 0, "鬥技場主人：第1回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd2:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,2;
+	instance_announce 0, "鬥技場主人：第2回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd3:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,3;
+	instance_announce 0, "鬥技場主人：第3回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd4:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,4;
+	instance_announce 0, "鬥技場主人：第4回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd5:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,5;
+	instance_announce 0, "鬥技場主人：第5回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd6:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,6;
+	instance_announce 0, "鬥技場主人：第6回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd7:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,7;
+	instance_announce 0, "鬥技場主人：第7回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd8:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,8;
+	instance_announce 0, "鬥技場主人：第8回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd9:
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,9;
+	instance_announce 0, "鬥技場主人：第9回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd10:
+	'win = 1;
+	set 'CD_gef_GF_1,0;
+	set 'CD_gef_GF_quest,10;
+	instance_announce 0, "鬥技場主人：第10回合結束 隊伍 ["+strcharinfo(1)+"] 獲勝!!",bc_map,"0xFFFF33";
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【吉芬夜間鬥技場】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------ 任務NPC
+1@ge_sn,116,48,4	script	雅樂西#gef	670,{ end; }
+1@ge_sn,116,48,4	script	狄歐艾瑞默司#gef	669,{ end; }
+1@ge_sn,116,48,4	script	吉分小偷#gef	671,{ end; }
+1@ge_sn,116,48,4	script	吉分鐵匠#gef	681,{ end; }
+1@ge_sn,116,48,4	script	吉芬流氓#gef	682,{ end; }
+1@ge_sn,116,48,4	script	沛蒙#gef	672,{ end; }
+1@ge_sn,116,48,4	script	奧樂德#gef	672,{ end; }
+1@ge_sn,116,48,4	script	布魯德哈載#gef	674,{ end; }
+1@ge_sn,116,48,4	script	庫洛雅庫瑪#gef	675,{ end; }
+1@ge_sn,116,48,4	script	伊佛德斯#gef	676,{ end; }
+1@ge_sn,116,48,4	script	萊采尼芮#gef	677,{ end; }
+1@ge_sn,116,48,4	script	歐託莉柯#gef	678,{ end; }
+1@ge_sn,116,48,4	script	朱朱#gef	679,{ end; }
+1@ge_sn,116,48,4	script	狄瓦伊#gef	680,{ end; }
+1@ge_sn,116,48,4	script	培坎納比恩#gef	665,{ end; }
+1@ge_sn,116,48,4	script	艾爾馮斯#gef	20871,{ end; }
+1@ge_sn,116,48,4	script	潘利爾#gef	664,{ end; }
+
+
+//------------------------------ 地圖屬性
+1@ge_sn	mapflag	partylock
+1@ge_sn	mapflag	noteleport
+1@ge_sn	mapflag	nosave	SavePoint
+1@ge_sn	mapflag	nomemo
+1@ge_sn	mapflag	nobranch
+1@ge_sn	mapflag	noicewall
+1@ge_sn	mapflag	restricted	6
+
+
+
+
+

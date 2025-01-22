@@ -1,0 +1,850 @@
+//--------------------------- 每日任務-啟動控制裝置蒐集任務
+verus04,144,193,4	script	伊安 阿突納多	10056,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[伊安 阿突納多]";
+	mes "你願意幫我從勘查機器人或是修繕機器人";
+	mes "哪邊取回20個啟動控制裝置嗎";
+	mes "我會給你1個大型廢鐵當作回報";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30034,PLAYTIME)==0 ) { 
+		mes "[伊安 阿突納多]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30033,HUNTING)>0 ) { 
+		mes "[伊安 阿突納多]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30034,PLAYTIME)==2 ) {
+		changequest 30034,30033;
+		close;
+		}
+		setquest 30033;
+		close;
+
+	case 2:
+		mes "[伊安 阿突納多]";
+		mes "已經取消您的任務了~";
+		erasequest 30033;
+		close;
+
+	case 3:
+		if(checkquest(30033)<0 ) {
+		mes "[機械工匠 羅伊德]";
+		mes "你沒接取啟動控制裝置蒐集任務！";
+		close; }
+		if (countitem(6749)<20 ) {
+		mes "[伊安 阿突納多]";
+		mes "您身上的啟動控制裝置不足20個！";
+		close;	}
+		mes "[伊安 阿突納多]";
+		mes "這任務獎勵就給你了";
+		delitem 6749,20;
+		getitem 6961,1;
+		getexp 6000000,3000000;
+		changequest 30033,30034;
+		close;
+	}
+}
+
+
+//--------------------------- 每日任務-凝集的能量蒐集任務
+verus03,103,177,6	script	機械工匠 羅伊德	421,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[機械工匠 羅伊德]";
+	mes "所有機械都存在者靈魂";
+	mes "只要你拿者空瓶到附近的機械的殘骸處";
+	mes "就可以取得凝集的能量";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30036,PLAYTIME)==0 ) { 
+		mes "[機械工匠 羅伊德]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30035,HUNTING)>0 ) { 
+		mes "[機械工匠 羅伊德]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30036,PLAYTIME)==2 ) {
+		changequest 30036,30035;
+		close;
+		}
+		setquest 30035;
+		close;
+
+	case 2:
+		mes "[機械工匠 羅伊德]";
+		mes "已經取消您的任務了~";
+		erasequest 30035;
+		close;
+
+	case 3:
+		if(checkquest(30035)<0 ) {
+		mes "[機械工匠 羅伊德]";
+		mes "你沒接取凝集的能量蒐集任務！";
+		close; }
+		if (countitem(6756)<10 ) {
+		mes "[機械工匠 羅伊德]";
+		mes "你身上凝集的能量不足10個！";
+		close;	}
+		mes "[械工匠 羅伊德]";
+		mes "這任務獎勵就給你了";
+		delitem 6756,10;
+		getitem 6962,1;
+		getexp 6000000,3000000;
+		changequest 30035,30036;
+		close;
+	}
+}
+
+
+verus03,103,183,6	script	機械的殘骸#01	10042,{
+
+	if(checkquest(30035,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的機械殘骸";
+	close;}
+	if (countitem(6756)>10 ) {
+	mes "您已經收集10個凝集的能量了！";
+	close;	}
+	if (countitem(713)<1 ) {
+	mes "您身上的空瓶不足1個！";
+	close;	}
+	message strcharinfo(0),"蒐集能源中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "機械的殘骸#01";
+	specialeffect 16;
+	delitem 713,1;
+	getitem 6756,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "機械的殘骸#01";
+	stopnpctimer;
+	end;
+}
+
+verus03,127,144,6	script	機械的殘骸#02	10042,{
+
+	if(checkquest(30035,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的機械殘骸";
+	close;}
+	if (countitem(6756)>10 ) {
+	mes "您已經收集10個凝集的能量了！";
+	close;	}
+	if (countitem(713)<1 ) {
+	mes "您身上的空瓶不足1個！";
+	close;	}
+	message strcharinfo(0),"蒐集能源中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "機械的殘骸#02";
+	specialeffect 16;
+	delitem 713,1;
+	getitem 6756,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "機械的殘骸#02";
+	stopnpctimer;
+	end;
+}
+
+verus03,84,151,6	script	機械的殘骸#03	10042,{
+
+	if(checkquest(30035,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的機械殘骸";
+	close;}
+	if (countitem(6756)>10 ) {
+	mes "您已經收集10個凝集的能量了！";
+	close;	}
+	if (countitem(713)<1 ) {
+	mes "您身上的空瓶不足1個！";
+	close;	}
+	message strcharinfo(0),"蒐集能源中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "機械的殘骸#03";
+	specialeffect 16;
+	delitem 713,1;
+	getitem 6756,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "機械的殘骸#03";
+	stopnpctimer;
+	end;
+}
+
+verus03,62,125,6	script	機械的殘骸#04	10042,{
+
+	if(checkquest(30035,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的機械殘骸";
+	close;}
+	if (countitem(6756)>10 ) {
+	mes "您已經收集10個凝集的能量了！";
+	close; }
+	if (countitem(713)<1 ) {
+	mes "您身上的空瓶不足1個！";
+	close; }
+	message strcharinfo(0),"蒐集能源中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "機械的殘骸#04";
+	specialeffect 16;
+	delitem 713,1;
+	getitem 6756,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "機械的殘骸#04";
+	stopnpctimer;
+	end;
+}
+
+verus03,62,125,6	script	機械的殘骸#05	10042,{
+
+	if(checkquest(30035,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的機械殘骸";
+	close;}
+	if (countitem(6756)>10 ) {
+	mes "您已經收集10個凝集的能量了！";
+	close;	}
+	if (countitem(713)<1 ) {
+	mes "您身上的空瓶不足1個！";
+	close;	}
+	message strcharinfo(0),"蒐集能源中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "機械的殘骸#05";
+	specialeffect 16;
+	delitem 713,1;
+	getitem 6756,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "機械的殘骸#05";
+	stopnpctimer;
+	end;
+}
+
+
+
+//--------------------------- 每日任務-提交每日成果報告
+verus04,141,193,6	script	考古學者 阿烏雷斯	10057,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[考古學者 阿烏雷斯]";
+	mes "只要你完成啟動控制裝置跟凝集的能量蒐集任務";
+	mes "我就能幫你寫成報告書";
+	mes "讓你交給指揮官 路易斯就可以領取到獎勵";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("領取報告書","取消")){
+
+	case 1:
+		if(checkquest(30034,PLAYTIME)<0 || checkquest(30036,PLAYTIME)<0) { 
+		mes "[考古學者 阿烏雷斯]";
+		mes "你還沒完成相關的蒐集任務！";
+		close;
+		}
+		if(checkquest(30034,PLAYTIME)>1 || checkquest(30036,PLAYTIME)>1) { 
+		mes "[考古學者 阿烏雷斯]";
+		mes "你完成啟動控制裝置跟凝集的能量蒐集在時間內在來找我！";
+		close;
+		}
+		if(checkquest(30038,PLAYTIME)==0 ) { 
+		mes "[考古學者 阿烏雷斯]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30037,HUNTING)>0 ) { 
+		mes "[考古學者 阿烏雷斯]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30038,PLAYTIME)==2 ) {
+		changequest 30038,30037;
+		getitem 6748,1;
+		close;
+		}
+		setquest 30037;
+		getitem 6748,1;
+		close;
+
+	case 2:
+		close;
+
+	}
+}
+
+
+verus04,179,165,6	script	指揮官 路易斯	868,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[指揮官 路易斯]";
+	mes "威爾斯中央廣場的怪物越來越多了";
+	mes "你幫我去消滅15隻修繕機器人吧";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務","繳交報告書","取消")){
+
+	case 1:
+		if(checkquest(30042,PLAYTIME)==0 ) { 
+		mes "[指揮官 路易斯]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30041,HUNTING)>0 ) { 
+		mes "[指揮官 路易斯]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30042,PLAYTIME)==2 ) {
+		changequest 30042,30041;
+		close;
+		}
+		setquest 30041;
+		close;
+
+	case 2:
+		mes "[指揮官 路易斯]";
+		mes "已經取消您的任務了~";
+		erasequest 30041;
+		close;
+
+	case 3:
+		if(checkquest(30041,HUNTING)<2 ) { 
+		mes "[指揮官 路易斯]";
+		mes "你還沒完成任務";
+		mes "趕快去消滅15隻偵修理機器人吧！";
+		close; }
+		mes "[管理者 米歇爾]";
+		mes "這任務獎勵就給你了";
+		getitem 6961,1;
+		changequest 30041,30042;
+		close;
+
+	case 4:
+		if(checkquest(30037)<0 ) { 
+		mes "[指揮官 路易斯]";
+		mes "你還沒完成成果報告書任務";
+		close; }
+		if (countitem(6748)<1 ) {
+		mes "[指揮官 路易斯]";
+		mes "你身上沒有成果報告書！";
+		close; }
+		mes "[指揮官 路易斯]";
+		mes "這任務獎勵就給你了";
+		delitem 6748,1;
+		getitem 6962,2;
+		changequest 30037,30038;
+		close;
+
+	case 5:
+		close;
+	}
+}
+
+
+//--------------------------- 每日任務-威爾斯隧道怪物討伐
+ver_eju,114,40,4	script	管理者 米歇爾	868,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[管理者 米歇爾]";
+	mes "威爾斯隧道的怪物越來越多了";
+	mes "你幫我去消滅10隻偵察機械蟲吧";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30040,PLAYTIME)==0 ) { 
+		mes "[管理者 米歇爾]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30039,HUNTING)>0 ) { 
+		mes "[管理者 米歇爾]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30040,PLAYTIME)==2 ) {
+		changequest 30040,30039;
+		close;
+		}
+		setquest 30039;
+		close;
+
+	case 2:
+		mes "[管理者 米歇爾]";
+		mes "已經取消您的任務了~";
+		erasequest 30039;
+		close;
+
+	case 3:
+		if(checkquest(30039,HUNTING)<2 ) { 
+		mes "[管理者 米歇爾]";
+		mes "你還沒完成任務";
+		mes "趕快去消滅10隻偵察機械蟲吧！";
+		close; }
+		mes "[管理者 米歇爾]";
+		mes "這任務獎勵就給你了";
+		getitem 6961,1;
+		changequest 30039,30040;
+		close;
+	}
+}
+
+
+//--------------------------- 每日任務-研究大樓的錄音帶蒐集&實驗大樓的錄音帶蒐集
+verus04,172,149,4	script	伊甸園團長 阿爾克伊埃	951,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[伊甸園團長 阿爾克伊埃]";
+	mes "在研究大樓跟實驗大樓中";
+	mes "有者之前調查員所遺留的錄音帶";
+	mes "你可以去幫我各收集二卷回來嗎?";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("錄音帶收集","回報收集情況")){
+
+	case 1:
+		mes "[伊甸園團長 阿爾克伊埃]";
+		mes "你想去收集哪棟建築的錄音帶";
+		next;
+		switch(select("研究大樓-WISH","實驗大樓-OPTATIO")){
+
+		case 1:
+			if(checkquest(30044,PLAYTIME)==0 ) { 
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你還有任務冷卻時間";
+			mes "請過一段時間在來吧！";
+			close;
+			}
+			if(checkquest(30043,HUNTING)>0 ) { 
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你已經接取這個任務了";
+			mes "請先去完成他吧!";
+			close;
+			}
+			if(checkquest(30044,PLAYTIME)==2 ) {
+			changequest 30044,30043;
+			close;
+			}
+			setquest 30043;
+			close;
+
+		case 2:
+			if(checkquest(30046,PLAYTIME)==0 ) { 
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你還有任務冷卻時間";
+			mes "請過一段時間在來吧！";
+			close;
+			}
+			if(checkquest(30045,HUNTING)>0 ) { 
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你已經接取這個任務了";
+			mes "請先去完成他吧!";
+			close;
+			}
+			if(checkquest(30046,PLAYTIME)==2 ) {
+			changequest 30046,30045;
+			close;
+			}
+			setquest 30045;
+			close;
+		}
+
+	case 2:
+		mes "[伊甸園團長 阿爾克伊埃]";
+		mes "你收集完成了哪棟建築的錄音帶";
+		next;
+		switch(select("研究大樓-WISH","實驗大樓-OPTATIO")){
+
+		case 1:
+			if(checkquest(30043)<0 ) {
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你還沒完成成果報告書任務";
+			mes "你沒接取凝集的能量蒐集任務！";
+			close; }
+			if (countitem(6757)<2 ) {
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "您身上的研究大樓的錄音帶不足2個！";
+			close;	}
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "這任務獎勵就給你了";
+			delitem 6757,2;
+			getitem 6962,1;
+			changequest 30043,30044;
+			close;
+
+		case 2:
+			if(checkquest(30045)<0 ) {
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "你還沒完成成果報告書任務";
+			mes "你沒接取凝集的能量蒐集任務！";
+			close; }
+			if (countitem(6824)<2 ) {
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "您身上的研究大樓的錄音帶不足2個！";
+			close;	}
+			mes "[伊甸園團長 阿爾克伊埃]";
+			mes "這任務獎勵就給你了";
+			delitem 6824,2;
+			getitem 6962,1;
+			changequest 30045,30046;
+			close;
+		}
+	}
+}
+
+
+//verus04,171,150,4	script	播放器	111,{
+//	if ((BaseLevel<160)) {
+//	mes "本任務限等級^ff0000160以上^000000才能接取";
+//	close; }
+//	mes "[播放器]";
+//	mes "只要把當日的實驗大樓的錄音帶給阿爾克伊埃";
+//	mes "就可以在這邊聽取內容";
+//	next;
+//	switch(select("聽取錄音內容","取消")){
+
+//	case 1:
+//		if(checkquest(30045,PLAYTIME)<2 ) { 
+//		mes "[播放器]";
+//		mes "請完成實驗大樓的錄音帶蒐集任務一次";
+//		mes "並且在冷卻時間內在來吧！";
+//		close;
+//		}
+//		if(quest_30045==1){
+//		set quest_30045,2;
+//		getitem 22692,1;
+//		close; }
+//		if(quest_30045==2){
+//		set quest_30045,3;
+//		getitem 22693,1;
+//		close; }
+//		if(quest_30045==3){
+//		set quest_30045,4;
+//		getitem 22694,1;
+//		close; }
+//		if(quest_30045==4){
+//		set quest_30045,0;
+//		getitem 22695,1;
+//		close; }
+//		set quest_30045,1;
+//		getitem 22691,1;
+//		close;
+
+//	case 2:
+//		close;
+//	}
+//}
+
+
+verus02,60,30,6	script	散亂的書堆#01	10043,{
+
+	if(checkquest(30043,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的散亂的書堆";
+	close;}
+	if (countitem(6757)>2 ) {
+	mes "您已經收集2個研究大樓的錄音帶蒐集了！";
+	close;	}
+	message strcharinfo(0),"調查中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "散亂的書堆#01";
+	specialeffect 16;
+	getitem 6757,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "散亂的書堆#01";
+	stopnpctimer;
+	end;
+}
+
+verus02,160,150,6	script	散亂的書堆#02	10043,{
+
+	if(checkquest(30043,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的雜物堆";
+	close;}
+	if (countitem(6757)>2 ) {
+	mes "您已經收集2個研究大樓的錄音帶蒐集了！";
+	close;	}
+	message strcharinfo(0),"調查中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "散亂的書堆#02";
+	specialeffect 16;
+	getitem 6757,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "散亂的書堆#02";
+	stopnpctimer;
+	end;
+}
+
+verus02,79,128,6	script	散亂的書堆#03	10043,{
+
+	if(checkquest(30043,HUNTING)<0 ) { 
+	mes "散發者神秘的光芒的雜物堆";
+	close;}
+	if (countitem(6757)>2 ) {
+	mes "您已經收集2個研究大樓的錄音帶蒐集了！";
+	close;	}
+	message strcharinfo(0),"調查中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "散亂的書堆#03";
+	specialeffect 16;
+	getitem 6757,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "散亂的書堆#03";
+	stopnpctimer;
+	end;
+}
+
+
+un_bunker,103,176,6	script	座椅底下#01	10043,{
+
+	if(checkquest(30045,HUNTING)<0 ) { 
+	mes "座椅底下散發者神秘的光芒的";
+	close;}
+	if (countitem(6824)>2 ) {
+	mes "您已經收集2個研究大樓的錄音帶！";
+	close;	}
+	message strcharinfo(0),"調查中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "座椅底下#01";
+	specialeffect 16;
+	getitem 6824,1;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "座椅底下#01";
+	stopnpctimer;
+	end;
+}
+
+un_bunker,86,163,6	script	座椅底下#02	10043,{
+
+	if(checkquest(30045,HUNTING)<0 ) { 
+	mes "座椅底下散發者神秘的光芒的";
+	close;}
+	if (countitem(6824)>2 ) {
+	mes "您已經收集2個研究大樓的錄音帶！";
+	close;	}
+	message strcharinfo(0),"調查中...移動視為取消";
+	progressbar "0x000000",10;
+	disablenpc "座椅底下#02";
+	specialeffect 16;
+	getitem 6824,2;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	enablenpc "座椅底下#02";
+	stopnpctimer;
+	end;
+}
+
+
+//--------------------------- 每日任務-使命!煙霧討伐
+
+verus01,172,146,4	script	新手記者	742,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[新手記者]";
+	mes "實驗大樓-OPTATIO的怪物越來越多了";
+	mes "你幫我去消滅30隻煙霧吧";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30048,PLAYTIME)==0 ) { 
+		mes "[新手記者]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30047,HUNTING)>0 ) { 
+		mes "[新手記者]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30048,PLAYTIME)==2 ) {
+		changequest 30048,30047;
+		close;
+		}
+		setquest 30047;
+		close;
+
+	case 2:
+		mes "[新手記者]";
+		mes "已經取消您的任務了~";
+		erasequest 30047;
+		close;
+
+	case 3:
+		if(checkquest(30047,HUNTING)<2 ) { 
+		mes "[新手記者]";
+		mes "你還沒完成任務";
+		mes "趕快去消滅30隻煙霧吧！";
+		close; }
+		mes "[新手記者]";
+		mes "這任務獎勵就給你了";
+		getitem 6961,1;
+		changequest 30047,30048;
+		close;
+	}
+}
+
+//--------------------------- 每日任務-命!修理機器人Ⅱ決鬥
+
+verus02,41,103,6	script	攝影師	854,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[攝影師]";
+	mes "研究大樓-WISH的怪物越來越多了";
+	mes "你幫我去消滅30隻修理機器人Ⅱ吧";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30050,PLAYTIME)==0 ) { 
+		mes "[攝影師]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30049,HUNTING)>0 ) { 
+		mes "[攝影師]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30050,PLAYTIME)==2 ) {
+		changequest 30050,30049;
+		close;
+		}
+		setquest 30049;
+		close;
+
+	case 2:
+		mes "[攝影師]";
+		mes "已經取消您的任務了~";
+		erasequest 30047;
+		close;
+
+	case 3:
+		if(checkquest(30049,HUNTING)<2 ) { 
+		mes "[攝影師]";
+		mes "你還沒完成任務";
+		mes "趕快去消滅30隻修理機器人Ⅱ吧！";
+		close; }
+		mes "[新手記者]";
+		mes "這任務獎勵就給你了";
+		getitem 6961,1;
+		changequest 30049,30050;
+		close;
+	}
+}
+
+
+//--------------------------- 每日任務-使命!鐵甲蟲收集
+verus01,41,103,6	script	倔強的記者	731,{
+	if ((BaseLevel<160)) {
+	mes "本任務限等級^ff0000160以上^000000才能接取";
+	close; }
+	mes "[倔強的記者]";
+	mes "你願意幫我從修理機器人Ⅱ或是探測機器人Ⅱ";
+	mes "哪邊取回30個鐵甲蟲嗎";
+	mes "^FF0000每個人物23小時只能接取一次任務^000000";
+	next;
+	switch(select("接取任務","取消任務","回報任務")){
+
+	case 1:
+		if(checkquest(30052,PLAYTIME)==0 ) { 
+		mes "[倔強的記者]";
+		mes "你還有任務冷卻時間";
+		mes "請過一段時間在來吧！";
+		close;
+		}
+		if(checkquest(30051,HUNTING)>0 ) { 
+		mes "[倔強的記者]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		close;
+		}
+		if(checkquest(30052,PLAYTIME)==2 ) {
+		changequest 30052,30051;
+		close;
+		}
+		setquest 30051;
+		close;
+
+	case 2:
+		mes "[倔強的記者]";
+		mes "已經取消您的任務了~";
+		erasequest 30051;
+		close;
+
+	case 3:
+		if(checkquest(30051)<0 ) {
+		mes "[機械工匠 羅伊德]";
+		mes "你還沒完成使命!鐵甲蟲收集";
+		close; }
+		if (countitem(11597)<30 ) {
+		mes "[倔強的記者]";
+		mes "您身上的鐵甲蟲不足30個！";
+		close;	}
+		mes "[倔強的記者]";
+		mes "這任務獎勵就給你了";
+		delitem 11597,30;
+		getitem 6962,1;
+		changequest 30051,30052;
+		close;
+	}
+}
+
+
+

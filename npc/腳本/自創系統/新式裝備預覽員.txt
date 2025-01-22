@@ -1,0 +1,30 @@
+﻿vdistrict1,66,51,4	script	新式裝備預覽員#01	10464,{
+
+	mes "[新式裝備預覽員]";
+	mes "請選擇你要查詢的裝備資訊";
+	next;
+	switch(select("時序象限頭冠:時序象限武器:生命循環斗篷")){
+
+	case 1:
+	close2;
+	callshop "時序象限頭冠#01";
+	end;
+
+	case 2:
+	close2;
+	callshop "時序象限武器#01";
+	end;
+
+	case 3:
+	close2;
+	callshop "生命循環斗篷#01";
+	end;
+
+
+	}
+OnInit:
+	waitingroom "新式裝備預覽員",0;
+	end;
+}
+
+

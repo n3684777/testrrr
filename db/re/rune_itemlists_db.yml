@@ -1,0 +1,1290 @@
+﻿#####################################################################################
+# 符文物品清單資料庫
+#####################################################################################
+#
+# 此檔案是符文物品清單 (Rune Item List) 資料庫,
+# 它是符文石碑系統的組成部分.
+#
+# 此資料庫定義了清單編號及其對應的道具名稱 (AegisName) 和數量,
+# 全部資訊都可以在客戶端 LUB 檔案中提取.
+#
+#####################################################################################
+# - Id                         [數值型] 物品清單編號
+#
+#                              對應客戶端 runeSystem_table.lub 中 RuneTable_itemList 陣列的 Key
+#
+#   Items                      [列表陣列] 物品清單中包含的道具名稱 (AegisName) 和數量
+#                              清單中的道具用於啟用符文碎片, 啟用符文集和符文集強化等場景都要用到
+#
+#                              對應客戶端 runeSystem_table.lub 中 RuneTable_itemList 陣列的 Value
+#                              其中的數值型道具編號會在 itemdbnametbl.lub 中查詢到對應的 AegisName 填入下表,
+#                              但還需要額外確保你的物品資料庫中存在對應的道具定義才可以
+######################################################################################
+
+Header:
+  Type: RUNE_ITEMLISTS_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Items:
+      EP17_1_EVT02: 75
+      EP17_1_EVT39: 35
+      EP17_1_EVT01: 5
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 2
+    Items:
+      BarMealTicket: 1350
+      Imperfect_Rune: 100
+      Perfect_Rune: 1
+  - Id: 3
+    Items:
+      EP17_1_EVT02: 65
+      EP17_1_EVT39: 30
+      EP17_1_EVT01: 5
+      Imperfect_Rune: 125
+      Perfect_Rune: 2
+  - Id: 4
+    Items:
+      EP17_1_EVT02: 80
+      EP17_1_EVT39: 35
+      EP17_1_EVT01: 15
+      Imperfect_Rune: 150
+      Perfect_Rune: 2
+  - Id: 5
+    Items:
+      EP17_1_EVT02: 100
+      EP17_1_EVT39: 50
+      EP17_1_EVT01: 10
+      Imperfect_Rune: 250
+      Perfect_Rune: 3
+  - Id: 6
+    Items:
+      BarMealTicket: 850
+      Magical_Igni_Stone: 3
+      Imperfect_Rune: 150
+      Perfect_Rune: 3
+  - Id: 7
+    Items:
+      BarMealTicket: 850
+      Magical_Igni_Stone: 5
+      Imperfect_Rune: 175
+      Perfect_Rune: 2
+  - Id: 8
+    Items:
+      BarMealTicket: 850
+      Magical_Igni_Stone: 5
+      Imperfect_Rune: 175
+      Perfect_Rune: 2
+  - Id: 9
+    Items:
+      BarMealTicket: 1250
+      Magical_Igni_Stone: 5
+      Imperfect_Rune: 175
+      Perfect_Rune: 3
+  - Id: 10
+    Items:
+      BarMealTicket: 1500
+      Magical_Igni_Stone: 7
+      Imperfect_Rune: 200
+      Perfect_Rune: 3
+  - Id: 11
+    Items:
+      BarMealTicket: 1500
+      Magical_Igni_Stone: 7
+      Imperfect_Rune: 200
+      Perfect_Rune: 3
+  - Id: 12
+    Items:
+      BarMealTicket: 1350
+      Magical_Igni_Stone: 10
+      Imperfect_Rune: 300
+      Perfect_Rune: 5
+      EP17_1_EVT02: 150
+      EP17_1_EVT39: 100
+      EP17_1_EVT01: 30
+  - Id: 13
+    Items:
+      BarMealTicket: 1550
+      Magical_Igni_Stone: 10
+      Imperfect_Rune: 350
+      Perfect_Rune: 5
+      EP17_1_EVT02: 175
+      EP17_1_EVT39: 125
+      EP17_1_EVT01: 45
+  - Id: 14
+    Items:
+      R_Boost_Lance_OS: 1
+      R_Blasti_OS: 1
+      R_Beam_Claymore_OS: 1
+      R_Cannon_Rapier_OS: 1
+      EP17_1_EVT02: 75
+      EP17_1_EVT01: 40
+  - Id: 15
+    Items:
+      R_AC_B44_OS: 1
+      R_Virtual_Bow_OS: 1
+      R_HR_S55_OS: 1
+      R_MH_P89_OS: 1
+      EP17_1_EVT02: 75
+      EP17_1_EVT01: 40
+  - Id: 16
+    Items:
+      R_Saphir_Hall_OS: 1
+      R_ElectricFox_OS: 1
+      R_Rutilus_Stick_OS: 1
+      R_Circuit_Board_OS: 1
+      EP17_1_EVT02: 75
+      EP17_1_EVT01: 40
+  - Id: 17
+    Items:
+      R_Kuroiro_OS: 1
+      R_Meuchler_OS: 1
+      R_Burning_Knuckle_OS: 1
+      R_Ultio_Spes_OS: 1
+      EP17_1_EVT02: 75
+      EP17_1_EVT01: 40
+  - Id: 18
+    Items:
+      R_Auto_BC_R: 1
+      R_Auto_B_R: 1
+      R_Auto_Armor_A: 1
+      R_Auto_Engine_A: 1
+      R_Auto_Leg_A: 1
+      BarMealTicket: 250
+  - Id: 19
+    Items:
+      R_Auto_BC_L: 1
+      R_Auto_B_L: 1
+      R_Auto_Armor_B: 1
+      R_Auto_Engine_B: 1
+      R_Auto_Leg_B: 1
+      BarMealTicket: 250
+  - Id: 20
+    Items:
+      Bellare_Card: 5
+      High_Bellare_Card: 5
+      Heart_Hunter_Seal: 30
+      Explosive_Powder: 150
+      EP17_1_EVT39: 25
+      EP17_1_EVT02: 50
+  - Id: 21
+    Items:
+      Sanare_Card: 5
+      High_Sanare_Card: 5
+      Heart_Hunter_Seal: 50
+      Explosive_Powder: 100
+      EP17_1_EVT39: 30
+      EP17_1_EVT02: 60
+  - Id: 22
+    Items:
+      Plaga_Card: 5
+      Mutant_Plaga_Card: 5
+      Solid_Shell: 250
+      Dragon's_Skin: 200
+      Fluorescent_Liquid: 300
+      EP17_1_EVT39: 30
+      EP17_1_EVT02: 60
+  - Id: 23
+    Items:
+      R48_85_Bestia_Card: 1
+      EP17_1_EVT02: 100
+      EP17_1_EVT39: 50
+      Piece_Of_Bone_Armor: 350
+  - Id: 24
+    Items:
+      Venenum_Card: 5
+      Mt_Venenum_Card: 5
+      Sticky_Mucus: 250
+      Sticky_Poison: 175
+      Fluorescent_Liquid: 125
+      EP17_1_EVT39: 25
+      EP17_1_EVT02: 50
+  - Id: 25
+    Items:
+      Dolor_Card: 5
+      Mt_Dolor_Card: 5
+      Caput_Card: 3
+      Tough_Scalelike_Stem: 225
+      Sticky_Poison: 175
+      Bloody_Rune: 150
+      EP17_1_EVT39: 25
+      EP17_1_EVT02: 50
+  - Id: 26
+    Items:
+      E_EA1L_Card: 5
+      E_EA2S_Card: 3
+      EL_A17T_Card: 1
+      Screw: 300
+      Distorted_Iron_Plate: 250
+      Burnt_Parts: 125
+      EP17_1_EVT39: 50
+      EP17_1_EVT02: 100
+  - Id: 27
+    Items:
+      Redpepper_Card: 1
+      Assistant_Card: 5
+      Assistant_H_Card: 3
+      R_Ep172_1h_Book2: 1
+      R_Ep172_1h_Book: 1
+      Sturdy_Iron_Piece: 350
+      BarMealTicket: 1250
+  - Id: 28
+    Items:
+      Plaga3_Card: 5
+      Sanare3_Card: 5
+      R_Ep172_1h_Shotgun: 1
+      R_Ep172_1h_Hammer: 1
+      BarMealTicket: 850
+  - Id: 29
+    Items:
+      Plasma_R_Card: 5
+      Plasma_R2_Card: 5
+      R_Ep172_1h_Inst: 1
+      R_Ep172_1h_Whip: 1
+      Yellow_Gemstone: 175
+      Red_Gemstone: 175
+      BarMealTicket: 850
+  - Id: 30
+    Items:
+      Dolor3_Card: 5
+      Plasma_Y_Card: 5
+      R_Ep172_1h_Foxtail: 1
+      R_Ep172_Bh_Staff: 1
+      Yellow_Gemstone: 175
+      BarMealTicket: 850
+  - Id: 31
+    Items:
+      Beta_Baths_A_Card: 5
+      Beta_Cleaner_Card: 5
+      Bath_Mermaid_Card: 3
+      R_Ep172_1h_Axe: 1
+      R_Ep172_Bh_Huuma: 1
+      R_Ep172_1h_Sword2: 1
+      Delicious_Fish: 250
+      BarMealTicket: 950
+  - Id: 32
+    Items:
+      Papila_Ruba_H_Card: 3
+      Papila_Cae_H_Card: 3
+      Papila_H_Card: 3
+      R_Ep172_Bh_Huuma: 1
+      R_Ep172_Bh_Spear: 1
+      R_Ep172_1h_Spear: 1
+      Withered_Flower: 550
+      BarMealTicket: 950
+  - Id: 33
+    Items:
+      Bookworm_Card: 5
+      Roaming_Splbook_Card: 5
+      R_Ep172_1h_Book: 1
+      R_Ep172_1h_Book2: 1
+      Long_Limb: 150
+      Old_Magic_Book: 75
+      BarMealTicket: 900
+  - Id: 34
+    Items:
+      B_Scissore_Ng_H_Card: 3
+      Beta_Scissore_Ng_Card: 5
+      R_Ep172_Bh_Katar: 1
+      R_Ep172_Bh_knuck: 1
+      BarMealTicket: 850
+  - Id: 35
+    Items:
+      Bellare3_Card: 3
+      Venenum3_Card: 5
+      EP17_2_Cramp_Card: 5
+      Waterfall_Card: 5
+      R_Ep172_1h_Rifle: 1
+      R_Ep172_1h_Wand: 1
+      R_Ep172_1h_Dagger: 1
+      BarMealTicket: 1050
+  - Id: 36
+    Items:
+      Alnoldi_Ex_Card: 3
+      Alnoldi_Ex_H_Card: 1
+      Dry_Rafflesia_Card: 3
+      Dry_Rafflesia_H_Card: 1
+      Elder_Branch: 200
+      R_Ep172_1h_Foxtail: 1
+      BarMealTicket: 950
+  - Id: 37
+    Items:
+      EP17_2_Phen_Card: 3
+      EP17_2_Sword_Fish_Card: 3
+      EP17_2_Piranha_Card: 3
+      EP17_2_Marc_Card: 3
+      R_Ep172_Bh_Bow2: 1
+      R_Ep172_1h_Grenade: 1
+      R_Ep172_Bh_Bow: 1
+      BarMealTicket: 1050
+  - Id: 38
+    Items:
+      Pitaya_R_Card: 3
+      Pitaya_Y_Card: 3
+      Pitaya_B_Card: 3
+      Pitaya_V_Card: 3
+      Pitaya_G_Card: 3
+      R_Ep172_1h_Dagger2: 1
+      R_Ep172_1h_Gatling: 1
+      BarMealTicket: 1050
+  - Id: 39
+    Items:
+      Silva_Papilia_Card: 1
+      Gran_Papilia_Card: 1
+      Verporte_H_Card: 3
+      Verporta_Card: 3
+      Solid_Twig: 125
+      Illusion_Flower: 100
+      BarMealTicket: 950
+  - Id: 40
+    Items:
+      Aries_Card: 3
+      Aries_H_Card: 3
+      R_Ep172_Bh_Bow3: 1
+      Fancy_Fairy_Wing: 100
+      Illusion_Flower: 95
+      BarMealTicket: 850
+  - Id: 41
+    Items:
+      Beta_Guards_Ng_Card: 3
+      O_Cleaner_Ng_Card: 3
+      Burnt_Parts: 450
+      Mystery_Piece: 350
+      BarMealTicket: 950
+  - Id: 42
+    Items:
+      Sweety_Card: 1
+      R_Ep172_1h_Sword: 1
+      R_Ep172_Bh_Sword: 1
+      BarMealTicket: 2000
+  - Id: 43
+    Items:
+      Pitaya_Boss_Card: 1
+      R_Ep172_1h_Rifle: 1
+      R_Ep172_1h_Shotgun: 1
+      R_Ep172_1h_Gatling: 1
+      R_Ep172_1h_Grenade: 1
+      BarMealTicket: 2000
+  - Id: 44
+    Items:
+      Miguel_Card: 1
+      EP17_1_EVT01: 50
+      EP17_1_EVT39: 150
+      EP17_1_EVT02: 150
+      Milk: 50
+      Sweet_Potato: 50
+  - Id: 45
+    Items:
+      Imperfect_Rune: 25
+      EP17_1_EVT01: 1
+      EP17_1_EVT02: 5
+      EP17_1_EVT39: 7
+  - Id: 46
+    Items:
+      Imperfect_Rune: 28
+      EP17_1_EVT01: 2
+      EP17_1_EVT02: 6
+      EP17_1_EVT39: 8
+  - Id: 47
+    Items:
+      Imperfect_Rune: 31
+      EP17_1_EVT01: 3
+      EP17_1_EVT02: 7
+      EP17_1_EVT39: 9
+  - Id: 48
+    Items:
+      Imperfect_Rune: 34
+      EP17_1_EVT01: 4
+      EP17_1_EVT02: 8
+      EP17_1_EVT39: 10
+  - Id: 49
+    Items:
+      Imperfect_Rune: 37
+      EP17_1_EVT01: 5
+      EP17_1_EVT02: 9
+      EP17_1_EVT39: 11
+  - Id: 50
+    Items:
+      Imperfect_Rune: 40
+      EP17_1_EVT01: 6
+      EP17_1_EVT02: 10
+      EP17_1_EVT39: 12
+  - Id: 51
+    Items:
+      Imperfect_Rune: 44
+      Perfect_Rune: 1
+      EP17_1_EVT01: 7
+      EP17_1_EVT02: 12
+      EP17_1_EVT39: 14
+  - Id: 52
+    Items:
+      Imperfect_Rune: 48
+      Perfect_Rune: 1
+      EP17_1_EVT01: 8
+      EP17_1_EVT02: 14
+      EP17_1_EVT39: 16
+  - Id: 53
+    Items:
+      Imperfect_Rune: 52
+      Perfect_Rune: 1
+      EP17_1_EVT01: 9
+      EP17_1_EVT02: 16
+      EP17_1_EVT39: 18
+  - Id: 54
+    Items:
+      Imperfect_Rune: 56
+      Perfect_Rune: 1
+      EP17_1_EVT01: 10
+      EP17_1_EVT02: 18
+      EP17_1_EVT39: 20
+  - Id: 55
+    Items:
+      Imperfect_Rune: 60
+      Perfect_Rune: 1
+      EP17_1_EVT01: 11
+      EP17_1_EVT02: 20
+      EP17_1_EVT39: 22
+  - Id: 56
+    Items:
+      Imperfect_Rune: 65
+      Perfect_Rune: 2
+      EP17_1_EVT01: 12
+      EP17_1_EVT02: 23
+      EP17_1_EVT39: 25
+  - Id: 57
+    Items:
+      Imperfect_Rune: 70
+      Perfect_Rune: 2
+      EP17_1_EVT01: 13
+      EP17_1_EVT02: 26
+      EP17_1_EVT39: 28
+  - Id: 58
+    Items:
+      Imperfect_Rune: 75
+      Perfect_Rune: 2
+      EP17_1_EVT01: 14
+      EP17_1_EVT02: 29
+      EP17_1_EVT39: 31
+  - Id: 59
+    Items:
+      Imperfect_Rune: 75
+      Perfect_Rune: 3
+      EP17_1_EVT01: 15
+      EP17_1_EVT02: 30
+      EP17_1_EVT39: 31
+  - Id: 60
+    Items:
+      Imperfect_Rune: 25
+      BarMealTicket: 10
+      Magical_Igni_Stone: 1
+  - Id: 61
+    Items:
+      Imperfect_Rune: 28
+      BarMealTicket: 11
+      Magical_Igni_Stone: 1
+  - Id: 62
+    Items:
+      Imperfect_Rune: 31
+      BarMealTicket: 12
+      Magical_Igni_Stone: 1
+  - Id: 63
+    Items:
+      Imperfect_Rune: 34
+      BarMealTicket: 13
+      Magical_Igni_Stone: 1
+  - Id: 64
+    Items:
+      Imperfect_Rune: 37
+      BarMealTicket: 14
+      Magical_Igni_Stone: 1
+  - Id: 65
+    Items:
+      Imperfect_Rune: 40
+      BarMealTicket: 15
+      Magical_Igni_Stone: 1
+  - Id: 66
+    Items:
+      Imperfect_Rune: 44
+      Perfect_Rune: 1
+      BarMealTicket: 17
+      Magical_Igni_Stone: 2
+  - Id: 67
+    Items:
+      Imperfect_Rune: 48
+      Perfect_Rune: 1
+      BarMealTicket: 19
+      Magical_Igni_Stone: 2
+  - Id: 68
+    Items:
+      Imperfect_Rune: 52
+      Perfect_Rune: 1
+      BarMealTicket: 21
+      Magical_Igni_Stone: 2
+  - Id: 69
+    Items:
+      Imperfect_Rune: 56
+      Perfect_Rune: 1
+      BarMealTicket: 23
+      Magical_Igni_Stone: 2
+  - Id: 70
+    Items:
+      Imperfect_Rune: 60
+      Perfect_Rune: 1
+      BarMealTicket: 25
+      Magical_Igni_Stone: 2
+  - Id: 71
+    Items:
+      Imperfect_Rune: 65
+      Perfect_Rune: 2
+      BarMealTicket: 28
+      Magical_Igni_Stone: 3
+  - Id: 72
+    Items:
+      Imperfect_Rune: 70
+      Perfect_Rune: 2
+      BarMealTicket: 31
+      Magical_Igni_Stone: 3
+  - Id: 73
+    Items:
+      Imperfect_Rune: 75
+      Perfect_Rune: 2
+      BarMealTicket: 34
+      Magical_Igni_Stone: 3
+  - Id: 74
+    Items:
+      Imperfect_Rune: 75
+      Perfect_Rune: 3
+      BarMealTicket: 35
+      Magical_Igni_Stone: 3
+  - Id: 75
+    Items:
+      Imperfect_Rune: 21
+  - Id: 76
+    Items:
+      Jellopy: 100
+      Sticky_Mucus: 35
+      Apple: 5
+      Unripe_Apple: 3
+      Poring_Card: 3
+  - Id: 77
+    Items:
+      Clover: 100
+      Feather: 35
+      Carrot: 5
+      Rainbow_Carrot: 3
+      Lunatic_Card: 3
+  - Id: 78
+    Items:
+      Fluff: 100
+      Feather: 35
+      Clover: 5
+      Green_Herb: 3
+      Fabre_Card: 3
+  - Id: 79
+    Items:
+      South_Pork_Ricebowl: 5
+      Poring_Kombucha: 5
+      Monster_Bread: 5
+      Monster_Bread_: 5
+  - Id: 80
+    Items:
+      Imperfect_Rune: 2
+      Clover: 5
+      Jellopy: 5
+      Feather: 5
+      Tree_Of_Archer_2: 1
+  - Id: 81
+    Items:
+      Imperfect_Rune: 2
+      Clover: 5
+      Jellopy: 5
+      Feather: 5
+      Tree_Of_Archer_2: 1
+  - Id: 82
+    Items:
+      Imperfect_Rune: 2
+      Clover: 5
+      Jellopy: 5
+      Feather: 5
+      Tree_Of_Archer_2: 1
+  - Id: 83
+    Items:
+      Imperfect_Rune: 3
+      Clover: 6
+      Jellopy: 6
+      Feather: 6
+      Tree_Of_Archer_2: 2
+  - Id: 84
+    Items:
+      Imperfect_Rune: 3
+      Clover: 6
+      Jellopy: 6
+      Feather: 6
+      Tree_Of_Archer_2: 2
+  - Id: 85
+    Items:
+      Imperfect_Rune: 3
+      Clover: 6
+      Jellopy: 6
+      Feather: 6
+      Tree_Of_Archer_2: 2
+  - Id: 86
+    Items:
+      Imperfect_Rune: 4
+      Clover: 7
+      Jellopy: 7
+      Feather: 7
+      Tree_Of_Archer_2: 3
+  - Id: 87
+    Items:
+      Imperfect_Rune: 4
+      Clover: 7
+      Jellopy: 7
+      Feather: 7
+      Tree_Of_Archer_2: 3
+  - Id: 88
+    Items:
+      Imperfect_Rune: 4
+      Clover: 7
+      Jellopy: 7
+      Feather: 7
+      Tree_Of_Archer_2: 3
+  - Id: 89
+    Items:
+      Imperfect_Rune: 5
+      Clover: 8
+      Jellopy: 8
+      Feather: 8
+      Tree_Of_Archer_2: 4
+  - Id: 90
+    Items:
+      Imperfect_Rune: 5
+      Clover: 8
+      Jellopy: 8
+      Feather: 8
+      Tree_Of_Archer_2: 4
+  - Id: 91
+    Items:
+      Imperfect_Rune: 5
+      Clover: 8
+      Jellopy: 8
+      Feather: 8
+      Tree_Of_Archer_2: 4
+  - Id: 92
+    Items:
+      Imperfect_Rune: 5
+      Clover: 9
+      Jellopy: 9
+      Feather: 9
+      Tree_Of_Archer_2: 5
+  - Id: 93
+    Items:
+      Imperfect_Rune: 5
+      Clover: 9
+      Jellopy: 9
+      Feather: 9
+      Tree_Of_Archer_2: 5
+  - Id: 94
+    Items:
+      Perfect_Rune: 1
+      Clover: 10
+      Jellopy: 10
+      Feather: 10
+      Tree_Of_Archer_2: 5
+#EP18
+  - Id: 95
+    Items:
+      Ep18_Amethyst_Fragment: 650
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 96
+    Items:
+      Ep18_Amethyst_Fragment: 950
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 97
+    Items:
+      Ep18_Amethyst_Fragment: 950
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 98
+    Items:
+      Ep18_Amethyst_Fragment: 950
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 99
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 100
+    Items:
+      Ep18_Amethyst_Fragment: 850
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 101
+    Items:
+      Ep18_Amethyst_Fragment: 650
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 102
+    Items:
+      Ep18_Amethyst_Fragment: 1250
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 103
+    Items:
+      Ep18_Amethyst_Fragment: 1250
+      Imperfect_Rune: 150
+      Perfect_Rune: 2
+  - Id: 104
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      R_Gray_W_Robe: 1
+      R_Gray_W_Muffler: 1
+      R_Gray_W_Shoes: 1
+      R_Gray_W_Earing: 1
+      R_Gray_W_Necklace: 1
+  - Id: 105
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      R_Gray_W_Suits: 1
+      R_Gray_W_Manteau: 1
+      R_Gray_W_Boots: 1
+      R_Gray_W_Ring: 1
+      R_Gray_W_Pendant: 1
+  - Id: 106
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_T_Sword: 1
+      R_Adulter_F_G_Sword: 1
+      R_Adulter_F_Lapier: 1
+      R_Adulter_F_Dagger: 1
+  - Id: 107
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      R_Adulter_F_Lance: 1
+      R_Adulter_F_G_Spear: 1
+      R_Adulter_F_Axe: 1
+      R_Adulter_F_Mace: 1
+      R_Adulter_F_Hall: 1
+  - Id: 108
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_C_Bow: 1
+      R_Adulter_F_Ballista: 1
+      R_Adulter_F_A_Bow: 1
+      R_Adulter_F_Rifle: 1
+  - Id: 109
+    Items:
+      Ep18_Amethyst_Fragment: 450
+      R_Adulter_F_M_Book: 1
+      R_Adulter_F_Bible: 1
+      R_Adulter_F_Star_B: 1
+      R_Adulter_F_Moon_B: 1
+      R_Adulter_F_P_Book: 1
+  - Id: 110
+    Items:
+      Ep18_Amethyst_Fragment: 450
+      R_Adulter_F_S_Stick: 1
+      R_Adulter_F_Rod: 1
+      R_Adulter_F_D_Wand: 1
+      R_Adulter_F_T_Staff: 1
+      R_Adulter_F_Wand: 1
+  - Id: 111
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_Humma: 1
+      R_Adulter_F_F_Wand: 1
+      R_Adulter_F_F_model: 1
+      R_Adulter_F_C_Humma: 1
+  - Id: 112
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_Revolver: 1
+      R_Adulter_F_Shotgun: 1
+      R_Adulter_F_Gatling: 1
+      R_Adulter_F_Launcher: 1
+  - Id: 113
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_Claw: 1
+      R_Adulter_F_Cakram: 1
+      R_Adulter_F_Katar: 1
+      R_Adulter_F_Knuckle: 1
+  - Id: 114
+    Items:
+      Ep18_Amethyst_Fragment: 750
+      R_Adulter_F_Ribbon: 1
+      R_Adulter_F_Violin: 1
+      R_Adulter_F_Harp: 1
+      R_Adulter_F_C_Rope: 1
+  - Id: 115
+    Items:
+      Ep18_Amethyst_Fragment: 450
+      EP18_Spark_Card: 3
+      EP18_Rakehand_Card: 3
+      Live_Coal: 150
+      Burning_Heart: 30
+  - Id: 116
+    Items:
+      Ep18_Amethyst_Fragment: 350
+      EP18_Ashhopper_Card: 3
+      EP18_Ashring_Card: 5
+      EP18_Tumble_Ring_Card: 5
+      Grasshopper_Doll: 30
+      Sticky_Mucus: 150
+  - Id: 117
+    Items:
+      Ep18_Amethyst_Fragment: 450
+      EP18_Firewind_Kite_Card: 3
+      EP18_Phantom_Wolf_Card: 3
+      Transparent_Cloth: 150
+      BurningFeather: 50
+  - Id: 117
+    Items:
+      Ep18_Amethyst_Fragment: 450
+      EP18_Firewind_Kite_Card: 3
+      EP18_Phantom_Wolf_Card: 3
+      Transparent_Cloth: 150
+      BurningFeather: 50
+  - Id: 118
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Grey_Wolf_Card: 1
+      Claw_Of_Wolves: 75
+  - Id: 119
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Lava_Toad_Card: 3
+      EP18_Ash_Toad_Card: 3
+      Spawn: 150
+      Burning_Heart: 45
+      Sticky_Webfoot: 55
+  - Id: 119
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Lava_Toad_Card: 3
+      EP18_Ash_Toad_Card: 3
+      Spawn: 150
+      Burning_Heart: 45
+      Sticky_Webfoot: 55
+  - Id: 120
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Hot_Molar_Card: 3
+      EP18_Volcaring_Card: 3
+      Live_Coal: 150
+      Burning_Heart: 45
+  - Id: 121
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Burning_Fang_Card: 1
+      Live_Coal: 250
+      Burning_Heart: 45
+      Claw_Of_Wolves: 150
+  - Id: 122
+    Items:
+      Ep18_Amethyst_Fragment: 550
+      EP18_Demi_Freyja_Card: 1
+      EP18_Schulang_Card: 1
+      Purificatory_Holy_O: 100
+      Purificatory_Holy_W: 100
+  - Id: 123
+    Items:
+      Imperfect_Rune: 20
+      Ep18_Amethyst_Fragment: 7
+  - Id: 124
+    Items:
+      Imperfect_Rune: 20
+      Ep18_Amethyst_Fragment: 8
+  - Id: 125
+    Items:
+      Imperfect_Rune: 20
+      Ep18_Amethyst_Fragment: 9
+  - Id: 126
+    Items:
+      Imperfect_Rune: 20
+      Ep18_Amethyst_Fragment: 10
+  - Id: 127
+    Items:
+      Imperfect_Rune: 22
+      Ep18_Amethyst_Fragment: 11
+  - Id: 128
+    Items:
+      Imperfect_Rune: 24
+      Ep18_Amethyst_Fragment: 12
+  - Id: 129
+    Items:
+      Imperfect_Rune: 26
+      Ep18_Amethyst_Fragment: 14
+  - Id: 130
+    Items:
+      Imperfect_Rune: 28
+      Ep18_Amethyst_Fragment: 16
+  - Id: 131
+    Items:
+      Imperfect_Rune: 30
+      Ep18_Amethyst_Fragment: 18
+  - Id: 132
+    Items:
+      Imperfect_Rune: 33
+      Ep18_Amethyst_Fragment: 20
+  - Id: 132
+    Items:
+      Imperfect_Rune: 33
+      Ep18_Amethyst_Fragment: 20
+  - Id: 133
+    Items:
+      Imperfect_Rune: 36
+      Ep18_Amethyst_Fragment: 22
+  - Id: 134
+    Items:
+      Imperfect_Rune: 39
+      Ep18_Amethyst_Fragment: 25
+  - Id: 135
+    Items:
+      Imperfect_Rune: 42
+      Perfect_Rune: 1
+      Ep18_Amethyst_Fragment: 28
+  - Id: 136
+    Items:
+      Imperfect_Rune: 45
+      Perfect_Rune: 1
+      Ep18_Amethyst_Fragment: 33
+  - Id: 137
+    Items:
+      Imperfect_Rune: 45
+      Perfect_Rune: 2
+      Ep18_Amethyst_Fragment: 33
+#EP19
+  - Id: 138
+    Items:
+      Ep19_Snow_Flower: 750
+      Imperfect_Rune: 125
+      Perfect_Rune: 1
+  - Id: 139
+    Items:
+      Ep19_Snow_Flower: 450
+      Imperfect_Rune: 75
+      Perfect_Rune: 1
+  - Id: 140
+    Items:
+      Ep19_Snow_Flower: 1550
+      Imperfect_Rune: 200
+      Perfect_Rune: 1
+  - Id: 141
+    Items:
+      Ep19_Snow_Flower: 1550
+      Imperfect_Rune: 200
+      Perfect_Rune: 1
+  - Id: 142
+    Items:
+      Ep19_Snow_Flower: 850
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 143
+    Items:
+      Ep19_Snow_Flower: 850
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 144
+    Items:
+      Ep19_Snow_Flower: 850
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 145
+    Items:
+      Ep19_Snow_Flower: 850
+      Imperfect_Rune: 150
+      Perfect_Rune: 1
+  - Id: 146
+    Items:
+      Ep19_Snow_Flower: 1050
+      Imperfect_Rune: 175
+      Perfect_Rune: 1
+  - Id: 147
+    Items:
+      Ep19_Snow_Flower: 450
+      Imperfect_Rune: 75
+      Perfect_Rune: 1
+  - Id: 148
+    Items:
+      Ep19_Snow_Flower: 450
+      R_Snowflower_Armor: 1
+      R_Snowflower_Manteau: 1
+      R_Snowflower_Boots: 1
+      R_Snowflower_Pendant: 1
+      R_Snowflower_Necklace: 1
+  - Id: 149
+    Items:
+      Ep19_Snow_Flower: 650
+      R_Snowflower_Robe: 1
+      R_Snowflower_Muffler: 1
+      R_Snowflower_Shoes: 1
+      R_Snowflower_Ring: 1
+      R_Snowflower_Earring: 1
+  - Id: 150
+    Items:
+      Ep19_Snow_Flower: 650
+      R_Glacier_T_Sword: 1
+      R_Glacier_Lance: 1
+      R_Glacier_Sword: 1
+      R_Glacier_B_Sword: 1
+      R_Glacier_Spear: 1
+  - Id: 151
+    Items:
+      Ep19_Snow_Flower: 700
+      R_Glacier_T_Axe: 1
+      R_Glacier_Axe: 1
+      R_Glacier_Mace: 1
+      R_Glacier_M_Mace: 1
+  - Id: 152
+    Items:
+      Ep19_Snow_Flower: 750
+      R_Glacier_R_Knife: 1
+      R_Glacier_B_Knife: 1
+      R_Glacier_Knuckle: 1
+      R_Glacier_Katar: 1
+  - Id: 153
+    Items:
+      Ep19_Snow_Flower: 750
+      R_Glacier_Bow: 1
+      R_Glacier_Violin: 1
+      R_Glacier_Whip: 1
+      R_Glacier_Humma: 1
+  - Id: 154
+    Items:
+      Ep19_Snow_Flower: 750
+      R_Glacier_Book: 1
+      R_Glacier_Wand: 1
+      R_Glacier_Staff: 1
+      R_Glacier_Foxtail: 1
+  - Id: 154
+    Items:
+      Ep19_Snow_Flower: 750
+      R_Glacier_Book: 1
+      R_Glacier_Wand: 1
+      R_Glacier_Staff: 1
+      R_Glacier_Foxtail: 1
+  - Id: 155
+    Items:
+      Ep19_Snow_Flower: 700
+      R_Glacier_Revolver: 1
+      R_Glacier_Rifle: 1
+      R_Glacier_Shotgun: 1
+      R_Glacier_Gatling: 1
+      R_Glacier_Launcher: 1
+  - Id: 156
+    Items:
+      Ep19_Snow_Flower: 1050
+      Ultra_Limacina_Card: 1
+      Limacina_Card: 3
+      Snow_F_Stone1: 150
+      EP19_Unknown_Cell: 250
+      EP19_Luminant: 15
+  - Id: 157
+    Items:
+      Ep19_Snow_Flower: 950
+      Simulation_Juncea_Card: 1
+      Aquila_Card: 1
+      Snow_F_Stone1: 150
+      EP19_Unknown_Cell: 150
+      EP19_Luminant: 50
+  - Id: 158
+    Items:
+      Ep19_Snow_Flower: 450
+      Unfrost_Flower_card: 3
+      Shining_Seaweed_Card: 3
+      Ice_Straw_Card: 3
+      EP19_Bell_Flower: 100
+      EP19_Shiny_Seaweed: 100
+      EP19_Thin_Shell: 100
+  - Id: 159
+    Items:
+      Ep19_Snow_Flower: 550
+      Limacina_Card: 3
+      Calmaring_Card: 3
+      Ice_Gangu_Card: 3
+      EP19_Transparency_Shell: 100
+      EP19_Calapy: 150
+      EP19_Frozen_Shell: 150
+  - Id: 160
+    Items:
+      Ep19_Snow_Flower: 450
+      Cave_Un_Flower_Card: 3
+      Eyes_Dollocaris_Card: 3
+      One_E_Dollocaris_Card: 3
+      EP19_Unknown_Cell: 150
+      EP19_Thin_Nipper: 150
+  - Id: 161
+    Items:
+      Ep19_Snow_Flower: 450
+      Cave_Calmaring_Card: 3
+      Hallucigenia_Card: 3
+      B_Hallucigenia_Card: 3
+      EP19_CaCalapy: 150
+      EP19_Prickle_Shell: 150
+  - Id: 162
+    Items:
+      Ep19_Snow_Flower: 750
+      Primitive_Rgan_Card: 3
+      Lowest_Rgan_Card: 3
+      Junior_Rgan_Card: 3
+      EP19_Unknown_Cell: 150
+      Ep19_Rgan_Core_F: 50
+      EP19_Shell_Of_Rgan: 150
+  - Id: 163
+    Items:
+      Ep19_Snow_Flower: 750
+      Heart_Hunter_AT_Card: 3
+      Middle_G_Rgan_Card: 3
+      Vroken_Sword: 30
+      EP19_Unknown_Cell: 100
+      Ep19_Rgan_Core_F: 70
+      EP19_Shell_Of_Rgan: 100
+  - Id: 164
+    Items:
+      Ep19_Snow_Flower: 750
+      R_Superior_Rgan_Card: 1
+      E_Inter_Rgan_Card: 3
+      Discarded_P_R_Card: 3
+      Discarded_L_R_Card: 3
+      EP19_Unknown_Cell: 200
+      Ep19_Rgan_Core_F: 100
+      EP19_Shell_Of_Rgan: 250
+  - Id: 165
+    Items:
+      Imperfect_Rune: 15
+      Ep19_Snow_Flower: 3
+  - Id: 166
+    Items:
+      Imperfect_Rune: 15
+      Ep19_Snow_Flower: 3
+  - Id: 167
+    Items:
+      Imperfect_Rune: 15
+      Ep19_Snow_Flower: 3
+  - Id: 168
+    Items:
+      Imperfect_Rune: 15
+      Ep19_Snow_Flower: 3
+  - Id: 169
+    Items:
+      Imperfect_Rune: 17
+      Ep19_Snow_Flower: 4
+  - Id: 170
+    Items:
+      Imperfect_Rune: 19
+      Ep19_Snow_Flower: 5
+  - Id: 171
+    Items:
+      Imperfect_Rune: 21
+      Ep19_Snow_Flower: 6
+  - Id: 172
+    Items:
+      Imperfect_Rune: 23
+      Ep19_Snow_Flower: 7
+  - Id: 173
+    Items:
+      Imperfect_Rune: 25
+      Ep19_Snow_Flower: 8
+  - Id: 174
+    Items:
+      Imperfect_Rune: 27
+      Ep19_Snow_Flower: 9
+  - Id: 175
+    Items:
+      Imperfect_Rune: 30
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 10
+  - Id: 176
+    Items:
+      Imperfect_Rune: 33
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 12
+  - Id: 177
+    Items:
+      Imperfect_Rune: 36
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 14
+  - Id: 178
+    Items:
+      Imperfect_Rune: 40
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 16
+  - Id: 179
+    Items:
+      Imperfect_Rune: 45
+      Perfect_Rune: 2
+      Ep19_Snow_Flower: 18
+  - Id: 180
+    Items:
+      Imperfect_Rune: 25
+      Ep19_Snow_Flower: 7
+  - Id: 181
+    Items:
+      Imperfect_Rune: 25
+      Ep19_Snow_Flower: 7
+  - Id: 182
+    Items:
+      Imperfect_Rune: 25
+      Ep19_Snow_Flower: 7
+  - Id: 183
+    Items:
+      Imperfect_Rune: 25
+      Ep19_Snow_Flower: 7
+  - Id: 184
+    Items:
+      Imperfect_Rune: 28
+      Ep19_Snow_Flower: 8
+  - Id: 185
+    Items:
+      Imperfect_Rune: 31
+      Ep19_Snow_Flower: 9
+  - Id: 186
+    Items:
+      Imperfect_Rune: 34
+      Ep19_Snow_Flower: 10
+  - Id: 187
+    Items:
+      Imperfect_Rune: 37
+      Ep19_Snow_Flower: 11
+  - Id: 188
+    Items:
+      Imperfect_Rune: 40
+      Ep19_Snow_Flower: 12
+  - Id: 189
+    Items:
+      Imperfect_Rune: 43
+      Ep19_Snow_Flower: 13
+  - Id: 190
+    Items:
+      Imperfect_Rune: 47
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 15
+  - Id: 191
+    Items:
+      Imperfect_Rune: 51
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 18
+  - Id: 192
+    Items:
+      Imperfect_Rune: 55
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 21
+  - Id: 193
+    Items:
+      Imperfect_Rune: 59
+      Perfect_Rune: 1
+      Ep19_Snow_Flower: 24
+  - Id: 194
+    Items:
+      Imperfect_Rune: 63
+      Perfect_Rune: 2
+      Ep19_Snow_Flower: 27
+
+
+

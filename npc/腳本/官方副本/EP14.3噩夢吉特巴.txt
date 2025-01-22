@@ -1,0 +1,994 @@
+vdistrict1,6,93,4	script	噩夢吉特巴管理者	10039,{
+
+	//副本任務獎勵
+	if(checkquest(32047,HUNTING)==2 ) { 
+	dispbottom "噩夢吉特巴任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32047; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_17 < gettime(8) ){
+	set Instance_Bout_17,10;
+	set day_Instance_Bout_17,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_17 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[魯那茵]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "噩夢吉特巴";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[魯那茵]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_17+"^000000 ]";
+	mes "副本獎勵：";
+	mes "吉特巴牙齒";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[魯那茵]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[魯那茵]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[魯那茵]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 130) {
+			mes "[魯那茵]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_17,Instance_Bout_17-1;
+
+			//副本任務
+			if(checkquest(32047,HUNTING)<0 ){setquest 32047;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "噩夢吉特巴",0;
+	end;
+}
+
+
+
+//------------------------------噩夢吉特巴事件
+1@jtb,0,0,0	script	噩夢吉特巴事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@jtb");
+	//------1F
+	disablenpc instance_npcname("紐奧茲#jtb01");
+	disablenpc instance_npcname("銘銘#jtb01");
+	disablenpc instance_npcname("洛德爾特#jtb01");
+	disablenpc instance_npcname("卡卡#jtb01");
+	disablenpc instance_npcname("魯那茵#jtb01");
+	disablenpc instance_npcname("小可#jtb01");
+	disablenpc instance_npcname("小愛#jtb01");
+	disablenpc instance_npcname("萊奇#jtb01");
+	disablenpc instance_npcname("羅艾爾#jtb01");
+	disablenpc instance_npcname("小麥-傑克#jtb01");
+	//------2F
+	disablenpc instance_npcname("小可#jtb02");
+	disablenpc instance_npcname("魯那茵#jtb02");
+	disablenpc instance_npcname("???#jtb01");
+	//------4F
+	disablenpc instance_npcname("???#jtb02");
+	//------8F
+	disablenpc instance_npcname("紐奧茲#jtb02");
+	disablenpc instance_npcname("萊奇#jtb02");
+	disablenpc instance_npcname("莎樂希#jtb01");
+	//------12F
+	disablenpc instance_npcname("銘銘#jtb02");
+	disablenpc instance_npcname("紐奧茲#jtb03");
+	disablenpc instance_npcname("萊奇#jtb03");
+	//------領獎
+	disablenpc instance_npcname("紐奧茲#jtb04");
+	disablenpc instance_npcname("莎樂希#jtb02");
+	disablenpc instance_npcname("洛德爾特#jtb02");
+	//------傳送門
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_1");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_2");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_3");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_4");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_5");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_6");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_7");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_8");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_9");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_10");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_11");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_12");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_13");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_14");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_15");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_16");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_17");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_18");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_19");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_20");
+	disablenpc instance_npcname("噩夢吉特巴傳送門1_21");
+	//------開啟NPC
+	enablenpc instance_npcname("紐奧茲#jtb01");
+	enablenpc instance_npcname("銘銘#jtb01");
+	enablenpc instance_npcname("洛德爾特#jtb01");
+	enablenpc instance_npcname("卡卡#jtb01");
+	enablenpc instance_npcname("魯那茵#jtb01");
+	enablenpc instance_npcname("小可#jtb01");
+	enablenpc instance_npcname("小愛#jtb01");
+	enablenpc instance_npcname("萊奇#jtb01");
+	enablenpc instance_npcname("羅艾爾#jtb01");
+	enablenpc instance_npcname("小麥-傑克#jtb01");
+	//------副本標籤
+	setd "$@CD_jtb_1"+instance_id(1),0;
+	setd "$@CD_jtb_2"+instance_id(1),0;
+	setd "$@CD_jtb_3"+instance_id(1),0;
+	setd "$@CD_jtb_4"+instance_id(1),0;
+	setd "$@CD_jtb_5"+instance_id(1),0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("魯那茵#jtb02");
+	enablenpc instance_npcname("小可#jtb02");
+	end;
+
+	OnCcdd2:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_3");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],271,44,302,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],271,44,302,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd3";
+	instance_announce instance_id(1),"【副本公告】：地圖右下出現了傳送點..",16;
+	end;
+
+	OnCcdd3:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("???#jtb02");
+	end;
+
+	OnCcdd4:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_5");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],99,128,125,100,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],99,128,125,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd5";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	end;
+
+	OnCcdd5:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_6");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],187,129,215,100,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],187,129,215,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd6";
+	instance_announce instance_id(1),"【副本公告】：地圖右下出現了傳送點..",16;
+	end;
+
+	OnCcdd6:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_7");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],273,129,300,100,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],273,129,300,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd7";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	end;
+
+	OnCcdd7:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("紐奧茲#jtb02");
+	enablenpc instance_npcname("萊奇#jtb02");
+	enablenpc instance_npcname("莎樂希#jtb01");
+	end;
+
+	OnCcdd8:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_9");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],15,214,42,186,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],15,214,42,186,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd9";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	end;
+
+	OnCcdd9:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_10");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],99,214,128,186,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],99,214,128,186,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd10";
+	instance_announce instance_id(1),"【副本公告】：地圖右邊出現了傳送點..",16;
+	end;
+
+	OnCcdd10:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_11");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],185,214,212,186,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],185,214,212,186,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd11";
+	instance_announce instance_id(1),"【副本公告】：地圖右邊出現了傳送點..",16;
+	end;
+
+	OnCcdd11:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_12");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],272,214,300,186,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],272,214,300,186,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd12";
+	instance_announce instance_id(1),"【副本公告】：地圖右邊出現了傳送點..",16;
+	end;
+
+	OnCcdd12:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("銘銘#jtb02");
+	enablenpc instance_npcname("紐奧茲#jtb03");
+	enablenpc instance_npcname("萊奇#jtb03");
+	end;
+
+	OnCcdd13:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_14");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],15,300,41,273,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],15,300,41,273,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd14";
+	instance_announce instance_id(1),"【副本公告】：地圖右下出現了傳送點..",16;
+	end;
+
+	OnCcdd14:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_15");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],100,300,124,273,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],100,300,124,273,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd15";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	end;
+
+	OnCcdd15:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_16");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],185,300,213,273,"--ja--",3108,1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],185,300,213,273,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],185,300,213,273,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd16";
+	instance_announce instance_id(1),"【副本公告】：地圖右下出現了傳送點..",16;
+	end;
+
+	OnCcdd16:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_17");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],17,386,40,361,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],17,386,40,361,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd17";
+	instance_announce instance_id(1),"【副本公告】：地圖北邊出現了傳送點..",16;
+	end;
+
+	OnCcdd17:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_18");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],100,386,124,363,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],100,386,124,363,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd18";
+	instance_announce instance_id(1),"【副本公告】：地圖右下出現了傳送點..",16;
+	end;
+
+	OnCcdd18:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_19");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],186,386,213,360,"--ja--",3109,1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd19";
+	areamonster 'map_name$[0],186,386,213,360,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd19";
+	areamonster 'map_name$[0],186,386,213,360,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd19";
+	instance_announce instance_id(1),"【副本公告】：地圖下方出現了傳送點..",16;
+	end;
+
+	OnCcdd19:
+	setd "$@jtb_mob_01"+instance_id(1),getd("$@jtb_mob_01"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@jtb_mob_01"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@jtb_mob_01"+instance_id(1))>0) end;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_20");
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_21");
+	areamonster 'map_name$[0],315,335,328,317,"--ja--",3069,3;
+	areamonster 'map_name$[0],315,335,328,317,"--ja--",3070,3;
+	areamonster 'map_name$[0],315,335,328,317,"--ja--",3071,3;
+	areamonster 'map_name$[0],315,335,328,317,"--ja--",3072,3;
+	areamonster 'map_name$[0],287,357,287,295,"--ja--",3069,8;
+	areamonster 'map_name$[0],287,295,355,295,"--ja--",3070,8;
+	areamonster 'map_name$[0],357,299,357,356,"--ja--",3071,8;
+	areamonster 'map_name$[0],357,356,315,356,"--ja--",3072,5;
+	instance_announce instance_id(1),"【副本公告】：地圖深處好像傳來了奇異的音樂!?",16;
+	end;
+
+	OnCcdd20:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【噩夢吉特巴】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+
+	enablenpc instance_npcname("紐奧茲#jtb04");
+	enablenpc instance_npcname("莎樂希#jtb02");
+	enablenpc instance_npcname("洛德爾特#jtb02");
+	instance_announce instance_id(1),"【副本公告】：成功打倒覺醒的貝爾了!!",16;
+	sleep 1000;
+	instance_announce instance_id(1),"【副本公告】：如果不想觀看劇情，可以直接找紐奧茲傳送出去",16;
+	sleep 1000;
+	end;
+}
+
+
+//------------------------------副本NPC
+//------------------------------1F
+1@jtb,31,25,4	script	紐奧茲#jtb01	625,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_jtb_5"+instance_id(1))==1) {end;}
+	mes"[紐奧茲]";
+	mes "你是新來的冒險家嗎?";
+	next;
+	switch(select("對話:匆忙")){
+
+case 1:
+	close2;
+	setd "$@CD_jtb_5"+instance_id(1),1;
+	npctalk "大家都到齊了吧?";
+	sleep 1000;
+	npctalk "都到齊的話那就先各自分組";
+	sleep 1000;
+	npctalk "分組好的就各自帶開去探險吧!!";
+	sleep 1000;
+	disablenpc instance_npcname("紐奧茲#jtb01");
+	disablenpc instance_npcname("銘銘#jtb01");
+	disablenpc instance_npcname("洛德爾特#jtb01");
+	disablenpc instance_npcname("卡卡#jtb01");
+	disablenpc instance_npcname("魯那茵#jtb01");
+	disablenpc instance_npcname("小可#jtb01");
+	disablenpc instance_npcname("小愛#jtb01");
+	disablenpc instance_npcname("萊奇#jtb01");
+	disablenpc instance_npcname("羅艾爾#jtb01");
+	disablenpc instance_npcname("小麥-傑克#jtb01");
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_1");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],101,45,128,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],101,45,128,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd1";
+	end;
+
+case 2:
+	close;
+
+	}
+}
+
+1@jtb,25,24,6	script	銘銘#jtb01	643,{
+	mes"[銘銘]";
+	mes ".........";
+	close;
+}
+1@jtb,25,28,6	script	洛德爾特#jtb01	630,{
+	mes"[洛德爾特]";
+	mes "...終於見面了紐奧茲你這傢伙!";
+	close;
+}
+1@jtb,22,26,6	script	卡卡#jtb01	629,{
+	mes"[卡卡]";
+	mes "這裡不是一般的地方";
+	close;
+}
+1@jtb,22,22,6	script	魯那茵#jtb01	10039,{
+	mes"[魯那茵]";
+	mes ".........";
+	close;
+}
+1@jtb,31,28,4	script	小可#jtb01	646,{
+	mes"[小可]";
+	mes ".........";
+	close;
+}
+1@jtb,31,24,4	script	小愛#jtb01	644,{
+	mes"[小愛]";
+	mes ".........";
+	close;
+}
+1@jtb,34,26,4	script	萊奇#jtb01	647,{
+	mes"[萊奇]";
+	mes ".........";
+	close;
+}
+1@jtb,35,21,4	script	羅艾爾#jtb01	10040,{
+	mes"[羅艾爾]";
+	mes ".........";
+	close;
+}
+1@jtb,28,18,4	script	小麥-傑克#jtb01	844,{
+	mes"[小麥-傑克]";
+	mes "..好煩，沒看到我在躲藏嗎?";
+	close;
+}
+
+
+//------------------------------2F
+1@jtb,118,45,6	script	小可#jtb02	646,{
+	mes"[小可]";
+	mes "神秘之地";
+	close;
+OnCcdd1:
+	npctalk "怪物出現了!... 不是，是人?";
+	end;
+OnCcdd2:
+	npctalk "...鎮定點，他只是人。";
+	end;
+OnCcdd3:
+	npctalk "我怎進來這裡的嗎?";
+	end;
+OnCcdd4:
+	npctalk "...想起了把我們引到這裡來的某人...";
+	end;
+OnCcdd5:
+	npctalk "好啊!要牽手嗎?";
+	end;
+OnCcdd6:
+	npctalk "我是舞者手有點粗粗慥吧?呵呵!";
+	end;
+}
+
+1@jtb,123,45,4	script	魯那茵#jtb02	10039,{
+
+	if (getd("$@CD_jtb_1"+instance_id(1))==1) {
+	mes"[魯那茵]";
+	mes "不會再有甚麼東西出來吧?";
+	close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes"[魯那茵]";
+	mes "不會再有甚麼東西出來吧?";
+	next; 
+	switch(select("對話:匆忙")){
+
+case 1:
+	close2;
+	setd "$@CD_jtb_1"+instance_id(1),1;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_2");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],188,39,215,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],188,39,215,17,"--ja--",3069,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd2";
+
+	npctalk "恩..不會感到有東突然跑出來嗎?";
+	sleep 100;
+	enablenpc instance_npcname("???#jtb01");
+	sleep 100;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd1";
+	sleep 1000;
+	npctalk "哇啊啊啊啊................";
+	sleep 300;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd1";
+	sleep 1000;
+	npctalk "出現了! 有東西出現了!!!!";
+	sleep 1000;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd2";
+	sleep 1000;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd2";
+	sleep 1000;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd3";
+	sleep 1000;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd3";
+	sleep 1000;
+	npctalk "當迷路時這種時空間的裂縫可以到達哪裡呢?";
+	sleep 1000;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd4";
+	sleep 1000;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd4";
+	sleep 1000;
+	npctalk "你認識紐奧茲嗎?先帶他去好了。";
+	sleep 1000;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd5";
+	sleep 1000;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd5";
+	sleep 1000;
+	donpcevent instance_npcname("小可#jtb02")+"::OnCcdd6";
+	sleep 1000;
+	donpcevent instance_npcname("???#jtb01")+"::OnCcdd6";
+	sleep 1000;
+	npctalk "大家去哪了呢?還以為在這裡會合呢?在去哪裡好了。";
+	end;
+
+case 2:
+	close;
+
+	}
+
+	close;
+}
+
+
+1@jtb,112,47,4	script	???#jtb01	10041,{
+	mes"[???]";
+	mes ".........";
+	close;
+
+OnCcdd1:
+	npctalk "甚麼?";
+	end;
+OnCcdd2:
+	npctalk "是人類的聲音...";
+	end;
+OnCcdd3:
+	npctalk "不知道，你怎近來這裡的?";
+	end;
+OnCcdd4:
+	npctalk "唱歌的人。";
+	end;
+OnCcdd5:
+	npctalk "手...真溫暖。";
+	end;
+OnCcdd6:
+	npctalk "跳舞...";
+	end;
+}
+
+
+//------------------------------4F
+1@jtb,292,22,4	script	???#jtb02	10041,{
+
+	if (getd("$@CD_jtb_2"+instance_id(1))==1) {
+	mes"[???]";
+	mes ".........";
+	close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes"[???]";
+	mes "你是...";
+	next; 
+	switch(select("陪伴她:丟下她")){
+
+case 1:
+	close2;
+	setd "$@CD_jtb_2"+instance_id(1),1;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_4");
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],322,326,322,326,"--ja--",3073,1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd20";
+	areamonster 'map_name$[0],14,129,43,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],14,129,43,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd4";
+	npctalk "不是...一個人。";
+	sleep 1000;
+	npctalk "小可, 魯那茵是好人。";
+	sleep 1000;
+	npctalk "反正不是一個人。";
+	sleep 1000;
+	npctalk "沒關係，習慣了。";
+	end;
+
+case 2:
+	close2;
+	setd "$@CD_jtb_2"+instance_id(1),1;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_4");
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],322,326,322,326,"--ja--",3073,1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd20";
+	areamonster 'map_name$[0],322,326,322,326,"--ja--",rand(3108,3109),1;
+	areamonster 'map_name$[0],322,326,322,326,"--ja--",rand(3108,3109),1;
+	areamonster 'map_name$[0],14,129,43,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],14,129,43,100,"--ja--",3070,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd4";
+	npctalk "沒關係，習慣了一個人。";
+	end;
+	}
+	mes"[???]";
+	mes ".........";
+	close;
+}
+
+
+//------------------------------ 8F
+1@jtb,284,115,6	script	紐奧茲#jtb02	625,{
+
+	if (getd("$@CD_jtb_3"+instance_id(1))==1) {
+	mes"[紐奧茲]";
+	mes "好像又有東西出現了?";
+	close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes"[紐奧茲]";
+	mes ""+strcharinfo(0)+"也有喜歡的歌嗎?";
+	next;
+	switch(select("小可的出道歌 迷路的波利:小可的單曲 就我不知道的收集冊:紐奧茲的紅色藥水:萊奇的創作歌曲 巧然月色")){
+
+case 1:
+	close2;
+	setd "$@CD_jtb_3"+instance_id(1),1;
+	unittalk getcharid(3),"小可的出道歌 迷路的波利";
+	sleep 1000;
+	npctalk "尊重你的嗜好!";
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_8");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	disablenpc instance_npcname("紐奧茲#jtb02");
+	disablenpc instance_npcname("萊奇#jtb02");
+	disablenpc instance_npcname("莎樂希#jtb01");
+	end;
+
+case 2:
+	close2;
+	setd "$@CD_jtb_3"+instance_id(1),1;
+	unittalk getcharid(3),"小可的單曲 就我不知道的收集冊";
+	npctalk "尊重你的嗜好!";
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_8");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	disablenpc instance_npcname("紐奧茲#jtb02");
+	disablenpc instance_npcname("萊奇#jtb02");
+	disablenpc instance_npcname("莎樂希#jtb01");
+	end;
+
+case 3:
+	close2;
+	setd "$@CD_jtb_3"+instance_id(1),1;
+	unittalk getcharid(3),"紐奧茲的紅色藥水";
+	npctalk "你很有品味!";
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_8");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3071,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	disablenpc instance_npcname("紐奧茲#jtb02");
+	disablenpc instance_npcname("萊奇#jtb02");
+	disablenpc instance_npcname("莎樂希#jtb01");
+	end;
+
+case 4:
+	close2;
+	setd "$@CD_jtb_3"+instance_id(1),1;
+	unittalk getcharid(3),"萊奇的創作歌曲 巧然月色";
+	npctalk "尊重你的嗜好!";
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_8");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],356,129,385,100,"--ja--",3071,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd8";
+	instance_announce instance_id(1),"【副本公告】：地圖右上出現了傳送點..",16;
+	disablenpc instance_npcname("紐奧茲#jtb02");
+	disablenpc instance_npcname("萊奇#jtb02");
+	disablenpc instance_npcname("莎樂希#jtb01");
+	end;
+
+	}
+	mes"[紐奧茲]";
+	mes "好像又有東西出現了?";
+	close;
+}
+
+1@jtb,290,113,4	script	萊奇#jtb02	647,{
+	mes"[萊奇]";
+	mes ".........";
+	close;
+}
+1@jtb,286,110,6	script	莎樂希#jtb01	10041,{
+	mes"[莎樂希]";
+	mes ".........";
+	close;
+}
+
+
+//------------------------------ 12F
+1@jtb,281,194,6	script	銘銘#jtb02	643,{
+
+	if (getd("$@CD_jtb_4"+instance_id(1))==1) {
+	mes"[銘銘]";
+	mes "其喀其喀其喀其喀~";
+	close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes"[銘銘]";
+	mes "其喀其喀其喀其喀~";
+	next; 
+	switch(select("是跟某人在對話:匆忙")){
+
+case 1:
+	close2;
+	setd "$@CD_jtb_4"+instance_id(1),1;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_13");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",3071,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	instance_announce instance_id(1),"【副本公告】：地圖右邊出現了傳送點..",16;
+	end;
+
+case 2:
+	close2;
+	setd "$@CD_jtb_4"+instance_id(1),1;
+	enablenpc instance_npcname("噩夢吉特巴傳送門1_13");
+	setd "$@jtb_mob_01"+instance_id(1),30;
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",rand(3108,3109),1,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",3070,14,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],355,215,385,185,"--ja--",3072,15,instance_npcname("噩夢吉特巴事件1")+"::OnCcdd13";
+	instance_announce instance_id(1),"【副本公告】：地圖右邊出現了傳送點..",16;
+	end;
+	}
+	mes"[銘銘]";
+	mes "其喀其喀其喀其喀~";
+	close;
+}
+
+1@jtb,286,196,4	script	萊奇#jtb03	647,{
+	mes"[萊奇]";
+	mes ".........";
+	close;
+}
+
+1@jtb,279,197,6	script	紐奧茲#jtb03	625,{
+	mes"[萊奇]";
+	mes ".........";
+	close;
+}
+
+
+//------------------------------ 最後地圖
+1@jtb,328,325,4	script	洛德爾特#jtb02	630,{end;}
+1@jtb,325,327,4	script	莎樂希#jtb02	10041,{end;}
+
+
+//------------------------------ 離開
+1@jtb,319,323,6	script	紐奧茲#jtb04	625,{
+
+	mes "[紐奧茲]";
+	mes "你想要離開了嗎";
+	next;
+	menu "^228B22請送我離開^000000",-,"^FFA500取消^000000",Ccdd1;
+	//副本任務獎勵
+	if(checkquest(32047,HUNTING)==2 ) { 
+	dispbottom "噩夢吉特巴任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",29;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32047; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	Ccdd1:
+	mes "[紐奧茲]";
+	mes "你想回去的時候在來找我吧";
+	close;
+}
+
+
+//------------------------------傳點資訊
+1@jtb,42,43,0	warp	噩夢吉特巴傳送門1_1	1,1,1@jtb,99,13
+1@jtb,135,17,0	warp	噩夢吉特巴傳送門1_2	1,1,1@jtb,184,17
+1@jtb,221,18,0	warp	噩夢吉特巴傳送門1_3	1,1,1@jtb,270,13
+1@jtb,305,46,0	warp	噩夢吉特巴傳送門1_4	1,1,1@jtb,12,98
+1@jtb,44,130,0	warp	噩夢吉特巴傳送門1_5	1,1,1@jtb,96,99
+1@jtb,132,103,0	warp	噩夢吉特巴傳送門1_6	1,1,1@jtb,186,129
+1@jtb,216,128,0	warp	噩夢吉特巴傳送門1_7	1,1,1@jtb,271,99
+1@jtb,304,130,0	warp	噩夢吉特巴傳送門1_8	1,1,1@jtb,355,98
+1@jtb,386,132,0	warp	噩夢吉特巴傳送門1_9	1,1,1@jtb,13,214
+1@jtb,48,197,0	warp	噩夢吉特巴傳送門1_10	1,1,1@jtb,94,197
+1@jtb,132,197,0	warp	噩夢吉特巴傳送門1_11	1,1,1@jtb,182,197
+1@jtb,217,202,0	warp	噩夢吉特巴傳送門1_12	1,1,1@jtb,270,202
+1@jtb,305,200,0	warp	噩夢吉特巴傳送門1_13	1,1,1@jtb,355,214
+1@jtb,389,187,0	warp	噩夢吉特巴傳送門1_14	1,1,1@jtb,12,273
+1@jtb,46,300,0	warp	噩夢吉特巴傳送門1_15	1,1,1@jtb,99,300
+1@jtb,131,270,0	warp	噩夢吉特巴傳送門1_16	1,1,1@jtb,185,272
+1@jtb,202,303,0	warp	噩夢吉特巴傳送門1_17	1,1,1@jtb,15,386
+1@jtb,48,366,0	warp	噩夢吉特巴傳送門1_18	1,1,1@jtb,100,386
+1@jtb,114,356,0	warp	噩夢吉特巴傳送門1_19	1,1,1@jtb,186,386
+1@jtb,215,357,0	warp	噩夢吉特巴傳送門1_20	1,1,1@jtb,287,355
+1@jtb,312,358,0	warp	噩夢吉特巴傳送門1_21	1,1,1@jtb,334,319
+
+//------------------------------地圖屬性
+1@jtb	mapflag	partylock
+1@jtb	mapflag	noteleport
+1@jtb	mapflag	nosave	SavePoint
+1@jtb	mapflag	nomemo
+1@jtb	mapflag	nobranch
+1@jtb	mapflag	noicewall
+1@jtb	mapflag	restricted	6
+
+
+//------------------------------製作物品
+map02,103,103,6	script	銘銘	643,{
+	mes"[銘銘]";
+	mes "以防萬一我取了幾根沙樂希的頭髮，我要研究看看。";
+	next;
+	switch( select("奇怪的墬子:吉特巴的牙齒:取消")) {
+
+	case 1:
+		mes"[銘銘]";
+		mes "只要拿諧之墜混x1、混沌之墜x1來給我";
+		mes "我就能幫你合成為漩渦之墜";
+		next;
+		mes"[銘銘]";
+		mes "你代齊材料了嗎?";
+		next;
+		switch( select("幫我合成漩渦之墜:取消")) {
+
+		case 1:
+		if (countitem(2990)<1 || countitem(2991)<1 ) {
+		mes"[銘銘]";
+		mes "您身上的物品不足！";
+		close;	}
+		mes"[銘銘]";
+		mes "這件漩渦之墜就給你了";
+		delitem 2990,1;
+		delitem 2991,1;
+		getitem 2992,1;
+		close;
+
+		case 2:
+		close;
+		}
+
+	case 2:
+		mes"[銘銘]";
+		mes "可從吉特巴身上取得的吉特巴牙齒，你有帶在身上嗎?";
+		next;
+		mes"[銘銘]";
+		mes "如果你收集一些帶來的話，我會把紐奧茲所收藏的戰利品跟你兌換!";
+		next;
+		mes"[銘銘]";
+		mes "可兌換的有...";
+		mes "巨弓、風暴之弓，還有其他東西。^0000ff就是在此空間可以獲得的東西啦!^000000";
+		mes "至少要收集50個哦!";
+		next;
+		mes"[銘銘]";
+		mes "若帶來50個的話，我會^0000ff隨機兌換一個給你^000000";
+		next;
+		switch( select("取消:用50個兌換")) {
+
+		case 1:
+		close;
+
+		case 2:
+		if (countitem(6719)<50 ) {
+		mes"[銘銘]";
+		mes "您身上的吉特巴牙齒不足！";
+		close;	}
+		mes"[銘銘]";
+		mes "紐奧茲所收藏的戰利品就給你了";
+		delitem 6719,50;
+		set @jtbItem,rand(0,11); 
+		if (@jtbItem ==0) getitem 1934,1;
+		if (@jtbItem ==1) getitem 1935,1;
+		if (@jtbItem ==2) getitem 1989,1;
+		if (@jtbItem ==3) getitem 1990,1;
+		if (@jtbItem ==4) getitem 18122,1;
+		if (@jtbItem ==5) getitem 18123,1;
+		if (@jtbItem ==6) getitem 2988,1;
+		if (@jtbItem ==7) getitem 2989,1;
+		if (@jtbItem ==8) getitem 2990,1;
+		if (@jtbItem ==9) getitem 2991,1;
+		if (@jtbItem ==10) getitem 15100,1;
+		if (@jtbItem ==11) getitem 15101,1;
+		close;
+		}
+
+	case 3:
+	mes"[羅艾爾]";
+	mes "這裡要研究的地方還不少";
+	close;
+	}
+}
+

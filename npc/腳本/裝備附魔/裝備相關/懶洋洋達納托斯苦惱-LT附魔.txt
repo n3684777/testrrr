@@ -1,0 +1,21 @@
+﻿map03,143,82,4	script	懶洋洋達納托斯苦惱-LT附魔	562,{
+
+	mes "[懶洋洋達納托斯苦惱-LT附魔]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("附魔 將領軍帽-LT:取消")){
+
+	case 1:
+	close2;
+	item_enchant 104;
+	end;
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "懶洋洋達納托斯苦惱-LT附魔",0;
+	end;	
+}
+

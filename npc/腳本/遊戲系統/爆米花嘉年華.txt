@@ -1,0 +1,426 @@
+﻿trinity,97,87,6	script	小鳳#RO	877,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 150)) {
+	mes "[小鳳]";
+	mes "這任務限等級 ^ff0000150以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[小鳳]";
+	mes "你想要開始天晴滿月慶祝活動任務嗎?";
+	next;
+	switch(select("接取任務","回報任務","進行附魔","取消")){
+
+	case 1:
+		mes "[小鳳]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("熱情如火!","黃金蜜玉米","養身藥草","狩獵火屬性怪")){
+
+		case 1:
+			if(Pop_Quest >0){
+			mes "[小鳳]";
+			mes "你已經完成這個任務了";
+			close;
+			}
+			if(checkquest(16772,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 16772;
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(16337,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16338,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16338,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16337;
+			if(checkquest(16338,PLAYTIME)==2){erasequest 16338;}
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(16343,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16343,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16344,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16343;
+			if(checkquest(16344,PLAYTIME)==2){erasequest 16344;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			mes "[小鳳]";
+			mes "你想接取哪個等級的任務呢?";
+			next;
+			switch(select("Lv50↑火屬性怪","Lv100↑火屬性怪","Lv150↑火屬性怪","Lv200↑火屬性怪")){
+
+			case 1:
+			if(checkquest(19088,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19089,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19090,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19091,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16339,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16339,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 19088;
+			if(checkquest(16339,PLAYTIME)==2){erasequest 16339;}
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+
+			case 2:
+			if(checkquest(19089,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16339,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16339,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 19089;
+			if(checkquest(16339,PLAYTIME)==2){erasequest 16339;}
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+
+			case 3:
+			if(checkquest(19088,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19089,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19090,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19091,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16339,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16339,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 19090;
+			if(checkquest(16339,PLAYTIME)==2){erasequest 16339;}
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+
+			case 4:
+			if(checkquest(19088,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19089,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19090,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(19091,HUNTING)>=0){mes "[小鳳]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16339,PLAYTIME)==0){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16339,PLAYTIME)==1){mes "[小鳳]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 19091;
+			if(checkquest(16339,PLAYTIME)==2){erasequest 16339;}
+			mes "[小鳳]";
+			mes "任務接取完成";
+			close;
+			}
+		}
+
+	case 2:
+		mes "[小鳳]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("熱情如火!","黃金蜜玉米","養身藥草","狩獵火屬性怪")){
+
+		case 1:
+		if(checkquest(16772,PLAYTIME)==-1){mes "[小鳳]"; mes "你還未接取這個任務~"; close;}
+		if (countitem(25341)<20 ) {
+		mes "[小鳳]";
+		mes "任務道具不夠啊";
+		close;	}
+		erasequest 16772;
+		set Pop_Quest,1;
+		delitem 25341,20;
+		getitem 400466,1;
+		getitem 420225,1;
+		getitem 100790,1;
+		sc_start SC_ITEMBOOST,900000,200;
+		dispbottom "任務回報完成!!";
+		close;
+
+		case 2:
+		if(checkquest(16337,HUNTING)==2 ) { 
+		dispbottom "黃金蜜玉米任務回報完成!!";
+		erasequest 16337;
+		setquest 16338;
+		getitem 25340,10;
+		sc_start SC_ITEMBOOST,900000,200;
+		}
+
+		case 3:
+		if(checkquest(16343,PLAYTIME)==-1){mes "[小鳳]"; mes "你還未接取這個任務~"; close;}
+		if (countitem(6754)<3 ) {
+		mes "神奇藥草不夠啊";
+		close;	}
+		erasequest 16343;
+		setquest 16344;
+		delitem 6754,3;
+		getitem 25342,10;
+		sc_start SC_ITEMBOOST,900000,200;
+		dispbottom "任務回報完成!!";
+		close;
+
+		case 4:
+		if(checkquest(19088,HUNTING)==2 ) { 
+		dispbottom "狩獵火屬性怪任務回報完成!!";
+		erasequest 19088;
+		setquest 16339;
+		getitem 100790,1;
+		sc_start SC_ITEMBOOST,900000,200;
+		}
+		if(checkquest(19089,HUNTING)==2 ) { 
+		dispbottom "狩獵火屬性怪任務回報完成!!";
+		erasequest 19089;
+		setquest 16339;
+		getitem 100790,1;
+		sc_start SC_ITEMBOOST,900000,200;
+		}
+		if(checkquest(19090,HUNTING)==2 ) { 
+		dispbottom "狩獵火屬性怪任務回報完成!!";
+		erasequest 19090;
+		setquest 16339;
+		getitem 100790,1;
+		sc_start SC_ITEMBOOST,900000,200;
+		}
+		if(checkquest(19091,HUNTING)==2 ) { 
+		dispbottom "狩獵火屬性怪任務回報完成!!";
+		erasequest 19091;
+		setquest 16339;
+		getitem 100790,1;
+		sc_start SC_ITEMBOOST,900000,200;
+		}
+		mes "[小鳳]";
+		mes "已完成的任務處理完畢";
+		close;
+		}
+
+	case 3:
+	item_enchant 14;
+	end;
+
+	case 4:
+	close;
+	}
+OnInit:
+	waitingroom "天晴滿月慶祝活動",0;
+	end;
+}
+
+
+
+//----------------------------------- 野外刷怪1
+ein_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ein_fild10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild00,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild12,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild13,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gef_fild14,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+lhz_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+lhz_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+lhz_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+mjolnir_12,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild12,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild13,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild14,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild15,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild16,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild17,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+moc_fild18,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+pay_fild11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild00,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild10,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+prt_fild11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+xmas_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+cmd_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild06,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild08,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild09,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild11,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+yuno_fild12,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+ama_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+gon_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+um_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+um_fild02,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+um_fild03,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+um_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+nif_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+nif_fild02,0,0,0,0 	monster	火熱炙燄魔	3820,30,0,0,0
+lou_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+hu_fild01,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+hu_fild04,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+hu_fild05,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+hu_fild07,0,0,0,0	monster	火熱炙燄魔	3820,30,0,0,0
+
+//----------------------------------- 野外刷怪2
+ein_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ein_fild10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild00,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild12,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild13,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gef_fild14,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+lhz_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+lhz_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+lhz_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+mjolnir_12,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild12,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild13,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild14,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild15,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild16,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild17,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+moc_fild18,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+pay_fild11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild00,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild10,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+prt_fild11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+xmas_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+cmd_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild06,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild08,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild09,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild11,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+yuno_fild12,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+ama_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+gon_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+um_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+um_fild02,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+um_fild03,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+um_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+nif_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+nif_fild02,0,0,0,0 	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+lou_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+hu_fild01,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+hu_fild04,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+hu_fild05,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0
+hu_fild07,0,0,0,0	monster	火熱爆炎蝙蝠	3821,30,0,0,0

@@ -1,0 +1,56 @@
+//====================================================//
+//====================================================//
+//==製作人 : 陳小修 (SkyTwo) 　　　　　　Eathena　　==//
+//==更新日期 : 西元 2008/06/03　　　　　　　Script　==//
+//==腳本版號 : 繁體中文 v1.0 正式版　　　　　　　　 ==//
+//==腳本名稱 : 製作系統　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==腳本出處 : http://srogm.no-ip.info/forum　　　　==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==資料來源 : 台灣仙境傳說官方網站　　　　　　　　 ==//
+//==　　　　　 天野幻境　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==各位大哥大姐轉載請保留以上，萬分感激。　　　　　==//
+//====================================================//
+//====================================================//
+vdistrict1,80,54,6	script	物品交換製作	110,{
+
+	switch(select("物品交換","物品製作","武器製作")) {
+case 1:
+	switch(select("魔物娃娃","屬性原石","魔力礦石")) {
+	case 1:	callfunc "Quests_Doll";		end;
+	case 2:	callfunc "Quests_Stone";	end;
+	case 3:	callfunc "Quests_Gemstone";	end;
+	case 4:	callfunc "Quests_Gemstone_2";	end;	}
+case 2:
+	switch(select("料理製作","果汁製作","牛奶製作","藥水製作","染料製作","箭矢筒製作","寵物誘餌製作","寵物裝備製作","食品製作")) {
+	case 1:	callfunc "Quests_Dish";	end;
+	case 2:	callfunc "Quests_Juice";	end;
+	case 3:	callfunc "Quests_Milk";		end;
+	case 4:	callfunc "Quests_Potion";	end;
+	case 5:	callfunc "Quests_Dyestuffs";	end;
+	case 6:	callfunc "Quests_Arrow";	end;
+	case 7:	callfunc "Quests_Pet01";	end;
+	case 8:	callfunc "Quests_Pet02";	end;
+	case 9:	callfunc "Quests_Food";	end;	}
+case 3:
+	switch(select("魔劍製作","四級武器製作(1)","四級武器製作(2)","三級武器製作(1)")) {
+	case 1:	callfunc "Quests_Weapon_A";	end;
+	case 2:	callfunc "Quests_Weapon_1L4";	end;
+	case 3:	callfunc "Quests_Weapon_2L4";	end;
+	case 4:	callfunc "Quests_Weapon_3L4";	end;	}
+
+}
+
+OnInit:
+	waitingroom "物品交換製作",0;
+	end;
+
+}
+
+
+
+
+
+
+

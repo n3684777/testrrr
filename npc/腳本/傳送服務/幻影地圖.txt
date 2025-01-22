@@ -1,0 +1,82 @@
+function	script	Illusion_Map	{
+
+	mes "[傳送服務]";
+	mes "選擇你要到達的幻影地圖吧";
+	next;
+	switch (select("幻影月夜貓:幻影吸血鬼:幻影冰洞穴:幻影烏龜島:幻影泰迪熊:幻影盧安達:幻影迷藏森林:幻影海底洞窟:幻影螞蟻洞穴:取消")) {
+
+		case 1:
+		set WarpMap$,"pay_d03_i"; set WarpMapX,152; set WarpMapY,42;
+		warp "pay_d03_i",152,42;
+		close;
+
+		case 2:
+		set WarpMap$,"gef_d01_i"; set WarpMapX,114; set WarpMapY,234;
+		warp "gef_d01_i",114,234;
+		close;
+
+		case 3:
+		set WarpMap$,"ice_d03_i"; set WarpMapX,149; set WarpMapY,34;
+		warp "ice_d03_i",149,34;
+		close;
+
+		case 4:
+		mes "[傳送服務]";
+		mes "選擇你要到達的樓層吧";
+		next;
+		switch (select("寂靜良龜村:寂靜舊良宮")) {
+
+			case 1:
+			set WarpMap$,"tur_d03_i"; set WarpMapX,131; set WarpMapY,188;
+			warp "tur_d03_i",131,188;
+			close;
+
+			case 2:
+			set WarpMap$,"tur_d04_i"; set WarpMapX,100; set WarpMapY,190;
+			warp "tur_d04_i",100,190;
+			close;
+			}
+
+		case 5:
+		set WarpMap$,"ein_d02_i"; set WarpMapX,285; set WarpMapY,285;
+		warp "ein_d02_i",285,285;
+		close;
+
+		case 6:
+		set WarpMap$,"com_d02_i"; set WarpMapX,41; set WarpMapY,215;
+		warp "com_d02_i",41,215;
+		close;
+
+		case 7:
+		set WarpMap$,"prt_mz03_i"; set WarpMapX,0; set WarpMapY,0;
+		warp "prt_mz03_i",0,0;
+		close;
+
+		case 8:
+		mes "[傳送服務]";
+		mes "選擇你要到達的樓層吧";
+		next;
+		switch (select("深淵的海底洞窟上層:深淵的海底洞窟下層")) {
+
+			case 1:
+			set WarpMap$,"iz_d04_i"; set WarpMapX,131; set WarpMapY,188;
+			warp "iz_d04_i",0,0;
+			close;
+
+			case 2:
+			set WarpMap$,"iz_d05_i"; set WarpMapX,100; set WarpMapY,190;
+			warp "iz_d05_i",0,0;
+			close;
+			}
+
+		case 9:
+		set WarpMap$,"ant_d02_i"; set WarpMapX,0; set WarpMapY,0;
+		warp "ant_d02_i",0,0;
+		close;
+
+
+		case 10:
+		close;
+		}
+}
+

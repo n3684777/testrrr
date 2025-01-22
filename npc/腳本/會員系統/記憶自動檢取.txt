@@ -1,0 +1,1662 @@
+function	script	Autoloot	{
+
+	mes "[會員服務]";
+	mes "重登後要重新打撿取指令感到麻煩嗎?";
+	mes "那麼這個功能你一定需要!";
+	next;
+	switch(select("記憶 自動撿取道具","記憶 撿取指定道具","記憶 撿取類別道具")) {
+
+	case 1:
+		mes "[會員服務]";
+		mes "目前自動撿取機率：^ff0000"+autolootS+"%^000000";
+		mes "請輸入你要撿取的掉落道具%數";
+		mes "1~100";
+		mes "想取消記憶請輸入^ff0000 0 ^000000";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input > 100 ) {
+		dispbottom "請輸入1~100";
+		close;	}
+		set autolootS,@input;
+		atcommand "@autoloot "+autolootS;
+		close;
+
+	case 2:
+	mes "[會員服務]";
+	if(alootid_A==1){ mes "＊目前啟用組別: ^0000FF第一組^000000"; }
+	if(alootid_B==1){ mes "＊目前啟用組別: ^0000FF第二組^000000"; }
+	if(alootid_C==1){ mes "＊目前啟用組別: ^0000FF第三組^000000"; }
+	if(alootid_A==0 && alootid_B==0 && alootid_C==0){ mes "＊目前啟用組別: ^FF0000尚未啟動^000000"; }
+	mes "請選擇你要的服務";
+	next;
+	switch(select("選擇啟用組別","設置 第一組","設置 第二組","設置 第三組")) {
+
+		case 1:
+		mes "[會員服務]";
+		if(alootid_A==1){ mes "＊目前啟用組別: ^0000FF第一組^000000"; }
+		if(alootid_B==1){ mes "＊目前啟用組別: ^0000FF第二組^000000"; }
+		if(alootid_C==1){ mes "＊目前啟用組別: ^0000FF第三組^000000"; }
+		if(alootid_A==0 && alootid_B==0 && alootid_C==0){ mes "＊目前啟用組別: ^FF0000尚未啟動^000000"; }
+		mes "請選擇你要啟用的組別";
+		next;
+		switch(select("第一組","第二組","第三組")) {
+
+			case 1:
+			set alootid_A,1;
+			set alootid_B,0;
+			set alootid_C,0;
+			atcommand "@alootid reset";
+			dispbottom "啟用第一組設置";
+			if ( alootid_A_01 > 0 ) {atcommand "@alootid +"+alootid_A_01+""; }
+			if ( alootid_A_02 > 0 ) {atcommand "@alootid +"+alootid_A_02+""; }
+			if ( alootid_A_03 > 0 ) {atcommand "@alootid +"+alootid_A_03+""; }
+			if ( alootid_A_04 > 0 ) {atcommand "@alootid +"+alootid_A_04+""; }
+			if ( alootid_A_05 > 0 ) {atcommand "@alootid +"+alootid_A_05+""; }
+			if ( alootid_A_06 > 0 ) {atcommand "@alootid +"+alootid_A_06+""; }
+			if ( alootid_A_07 > 0 ) {atcommand "@alootid +"+alootid_A_07+""; }
+			if ( alootid_A_08 > 0 ) {atcommand "@alootid +"+alootid_A_08+""; }
+			if ( alootid_A_09 > 0 ) {atcommand "@alootid +"+alootid_A_09+""; }
+			if ( alootid_A_10 > 0 ) {atcommand "@alootid +"+alootid_A_10+""; }
+			if ( alootid_A_11 > 0 ) {atcommand "@alootid +"+alootid_A_11+""; }
+			if ( alootid_A_12 > 0 ) {atcommand "@alootid +"+alootid_A_12+""; }
+			if ( alootid_A_13 > 0 ) {atcommand "@alootid +"+alootid_A_13+""; }
+			if ( alootid_A_14 > 0 ) {atcommand "@alootid +"+alootid_A_14+""; }
+			if ( alootid_A_15 > 0 ) {atcommand "@alootid +"+alootid_A_15+""; }
+			if ( alootid_A_16 > 0 ) {atcommand "@alootid +"+alootid_A_16+""; }
+			if ( alootid_A_17 > 0 ) {atcommand "@alootid +"+alootid_A_17+""; }
+			if ( alootid_A_18 > 0 ) {atcommand "@alootid +"+alootid_A_18+""; }
+			if ( alootid_A_19 > 0 ) {atcommand "@alootid +"+alootid_A_19+""; }
+			if ( alootid_A_20 > 0 ) {atcommand "@alootid +"+alootid_A_20+""; }
+			if ( alootid_A_21 > 0 ) {atcommand "@alootid +"+alootid_A_21+""; }
+			if ( alootid_A_22 > 0 ) {atcommand "@alootid +"+alootid_A_22+""; }
+			if ( alootid_A_23 > 0 ) {atcommand "@alootid +"+alootid_A_23+""; }
+			if ( alootid_A_24 > 0 ) {atcommand "@alootid +"+alootid_A_24+""; }
+			if ( alootid_A_25 > 0 ) {atcommand "@alootid +"+alootid_A_25+""; }
+			if ( alootid_A_26 > 0 ) {atcommand "@alootid +"+alootid_A_26+""; }
+			if ( alootid_A_27 > 0 ) {atcommand "@alootid +"+alootid_A_27+""; }
+			if ( alootid_A_28 > 0 ) {atcommand "@alootid +"+alootid_A_28+""; }
+			if ( alootid_A_29 > 0 ) {atcommand "@alootid +"+alootid_A_29+""; }
+			if ( alootid_A_30 > 0 ) {atcommand "@alootid +"+alootid_A_30+""; }
+			close; 
+
+			case 2:
+			set alootid_A,0;
+			set alootid_B,1;
+			set alootid_C,0;
+			atcommand "@alootid reset";
+			dispbottom "啟用第二組設置";
+			if ( alootid_B_01 > 0 ) {atcommand "@alootid +"+alootid_B_01+""; }
+			if ( alootid_B_02 > 0 ) {atcommand "@alootid +"+alootid_B_02+""; }
+			if ( alootid_B_03 > 0 ) {atcommand "@alootid +"+alootid_B_03+""; }
+			if ( alootid_B_04 > 0 ) {atcommand "@alootid +"+alootid_B_04+""; }
+			if ( alootid_B_05 > 0 ) {atcommand "@alootid +"+alootid_B_05+""; }
+			if ( alootid_B_06 > 0 ) {atcommand "@alootid +"+alootid_B_06+""; }
+			if ( alootid_B_07 > 0 ) {atcommand "@alootid +"+alootid_B_07+""; }
+			if ( alootid_B_08 > 0 ) {atcommand "@alootid +"+alootid_B_08+""; }
+			if ( alootid_B_09 > 0 ) {atcommand "@alootid +"+alootid_B_09+""; }
+			if ( alootid_B_10 > 0 ) {atcommand "@alootid +"+alootid_B_10+""; }
+			if ( alootid_B_11 > 0 ) {atcommand "@alootid +"+alootid_B_11+""; }
+			if ( alootid_B_12 > 0 ) {atcommand "@alootid +"+alootid_B_12+""; }
+			if ( alootid_B_13 > 0 ) {atcommand "@alootid +"+alootid_B_13+""; }
+			if ( alootid_B_14 > 0 ) {atcommand "@alootid +"+alootid_B_14+""; }
+			if ( alootid_B_15 > 0 ) {atcommand "@alootid +"+alootid_B_15+""; }
+			if ( alootid_B_16 > 0 ) {atcommand "@alootid +"+alootid_B_16+""; }
+			if ( alootid_B_17 > 0 ) {atcommand "@alootid +"+alootid_B_17+""; }
+			if ( alootid_B_18 > 0 ) {atcommand "@alootid +"+alootid_B_18+""; }
+			if ( alootid_B_19 > 0 ) {atcommand "@alootid +"+alootid_B_19+""; }
+			if ( alootid_B_20 > 0 ) {atcommand "@alootid +"+alootid_B_20+""; }
+			if ( alootid_B_21 > 0 ) {atcommand "@alootid +"+alootid_B_21+""; }
+			if ( alootid_B_22 > 0 ) {atcommand "@alootid +"+alootid_B_22+""; }
+			if ( alootid_B_23 > 0 ) {atcommand "@alootid +"+alootid_B_23+""; }
+			if ( alootid_B_24 > 0 ) {atcommand "@alootid +"+alootid_B_24+""; }
+			if ( alootid_B_25 > 0 ) {atcommand "@alootid +"+alootid_B_25+""; }
+			if ( alootid_B_26 > 0 ) {atcommand "@alootid +"+alootid_B_26+""; }
+			if ( alootid_B_27 > 0 ) {atcommand "@alootid +"+alootid_B_27+""; }
+			if ( alootid_B_28 > 0 ) {atcommand "@alootid +"+alootid_B_28+""; }
+			if ( alootid_B_29 > 0 ) {atcommand "@alootid +"+alootid_B_29+""; }
+			if ( alootid_B_30 > 0 ) {atcommand "@alootid +"+alootid_B_30+""; }
+			close;
+
+			case 3:
+			set alootid_A,0;
+			set alootid_B,0;
+			set alootid_C,1;
+			atcommand "@alootid reset";
+			dispbottom "啟用第三組設置";
+			if ( alootid_C_01 > 0 ) {atcommand "@alootid +"+alootid_C_01+""; }
+			if ( alootid_C_02 > 0 ) {atcommand "@alootid +"+alootid_C_02+""; }
+			if ( alootid_C_03 > 0 ) {atcommand "@alootid +"+alootid_C_03+""; }
+			if ( alootid_C_04 > 0 ) {atcommand "@alootid +"+alootid_C_04+""; }
+			if ( alootid_C_05 > 0 ) {atcommand "@alootid +"+alootid_C_05+""; }
+			if ( alootid_C_06 > 0 ) {atcommand "@alootid +"+alootid_C_06+""; }
+			if ( alootid_C_07 > 0 ) {atcommand "@alootid +"+alootid_C_07+""; }
+			if ( alootid_C_08 > 0 ) {atcommand "@alootid +"+alootid_C_08+""; }
+			if ( alootid_C_09 > 0 ) {atcommand "@alootid +"+alootid_C_09+""; }
+			if ( alootid_C_10 > 0 ) {atcommand "@alootid +"+alootid_C_10+""; }
+			if ( alootid_C_11 > 0 ) {atcommand "@alootid +"+alootid_C_11+""; }
+			if ( alootid_C_12 > 0 ) {atcommand "@alootid +"+alootid_C_12+""; }
+			if ( alootid_C_13 > 0 ) {atcommand "@alootid +"+alootid_C_13+""; }
+			if ( alootid_C_14 > 0 ) {atcommand "@alootid +"+alootid_C_14+""; }
+			if ( alootid_C_15 > 0 ) {atcommand "@alootid +"+alootid_C_15+""; }
+			if ( alootid_C_16 > 0 ) {atcommand "@alootid +"+alootid_C_16+""; }
+			if ( alootid_C_17 > 0 ) {atcommand "@alootid +"+alootid_C_17+""; }
+			if ( alootid_C_18 > 0 ) {atcommand "@alootid +"+alootid_C_18+""; }
+			if ( alootid_C_19 > 0 ) {atcommand "@alootid +"+alootid_C_19+""; }
+			if ( alootid_C_20 > 0 ) {atcommand "@alootid +"+alootid_C_20+""; }
+			if ( alootid_C_21 > 0 ) {atcommand "@alootid +"+alootid_C_21+""; }
+			if ( alootid_C_22 > 0 ) {atcommand "@alootid +"+alootid_C_22+""; }
+			if ( alootid_C_23 > 0 ) {atcommand "@alootid +"+alootid_C_23+""; }
+			if ( alootid_C_24 > 0 ) {atcommand "@alootid +"+alootid_C_24+""; }
+			if ( alootid_C_25 > 0 ) {atcommand "@alootid +"+alootid_C_25+""; }
+			if ( alootid_C_26 > 0 ) {atcommand "@alootid +"+alootid_C_26+""; }
+			if ( alootid_C_27 > 0 ) {atcommand "@alootid +"+alootid_C_27+""; }
+			if ( alootid_C_28 > 0 ) {atcommand "@alootid +"+alootid_C_28+""; }
+			if ( alootid_C_29 > 0 ) {atcommand "@alootid +"+alootid_C_29+""; }
+			if ( alootid_C_30 > 0 ) {atcommand "@alootid +"+alootid_C_30+""; }
+			close;
+		}
+
+
+
+		alootid_01:
+		case 2:
+		mes "[會員服務]";
+		mes "＊目前設定組別: 第一組";
+		mes "請輸入想要記憶的道具編號";
+		mes "可使用@whodrops或是幻想廳來查詢編號";
+		mes "不想記憶的話請輸入^ff0000 0^000000";
+		mes "^0000ff最多只能記憶30個道具^000000";
+		next;
+		switch(select("記憶 撿取指定道具(輸入物品編號)",alootid_A_01>0?""+getitemname(alootid_A_01)+" ("+alootid_A_01+")":"",alootid_A_02>0?""+getitemname(alootid_A_02)+" ("+alootid_A_02+")":"",alootid_A_03>0?""+getitemname(alootid_A_03)+" ("+alootid_A_03+")":"",alootid_A_04>0?""+getitemname(alootid_A_04)+" ("+alootid_A_04+")":"",alootid_A_05>0?""+getitemname(alootid_A_05)+" ("+alootid_A_05+")":"",alootid_A_06>0?""+getitemname(alootid_A_06)+" ("+alootid_A_06+")":"",alootid_A_07>0?""+getitemname(alootid_A_07)+" ("+alootid_A_07+")":"",alootid_A_08>0?""+getitemname(alootid_A_08)+" ("+alootid_A_08+")":"",alootid_A_09>0?""+getitemname(alootid_A_09)+" ("+alootid_A_09+")":"",alootid_A_10>0?""+getitemname(alootid_A_10)+" ("+alootid_A_10+")":"",
+		alootid_A_11>0?""+getitemname(alootid_A_11)+" ("+alootid_A_11+")":"",alootid_A_12>0?""+getitemname(alootid_A_12)+" ("+alootid_A_12+")":"",alootid_A_13>0?""+getitemname(alootid_A_13)+" ("+alootid_A_13+")":"",alootid_A_14>0?""+getitemname(alootid_A_14)+" ("+alootid_A_14+")":"",alootid_A_15>0?""+getitemname(alootid_A_15)+" ("+alootid_A_15+")":"",alootid_A_16>0?""+getitemname(alootid_A_16)+" ("+alootid_A_16+")":"",alootid_A_17>0?""+getitemname(alootid_A_17)+" ("+alootid_A_17+")":"",alootid_A_18>0?""+getitemname(alootid_A_18)+" ("+alootid_A_18+")":"",alootid_A_19>0?""+getitemname(alootid_A_19)+" ("+alootid_A_19+")":"",alootid_A_10>0?""+getitemname(alootid_A_10)+" ("+alootid_A_20+")":"",
+		alootid_A_21>0?""+getitemname(alootid_A_21)+" ("+alootid_A_21+")":"",alootid_A_22>0?""+getitemname(alootid_A_22)+" ("+alootid_A_22+")":"",alootid_A_23>0?""+getitemname(alootid_A_23)+" ("+alootid_A_23+")":"",alootid_A_24>0?""+getitemname(alootid_A_24)+" ("+alootid_A_24+")":"",alootid_A_25>0?""+getitemname(alootid_A_25)+" ("+alootid_A_25+")":"",alootid_A_26>0?""+getitemname(alootid_A_26)+" ("+alootid_A_26+")":"",alootid_A_27>0?""+getitemname(alootid_A_27)+" ("+alootid_A_27+")":"",alootid_A_28>0?""+getitemname(alootid_A_28)+" ("+alootid_A_28+")":"",alootid_A_29>0?""+getitemname(alootid_A_29)+" ("+alootid_A_29+")":"",alootid_A_20>0?""+getitemname(alootid_A_20)+" ("+alootid_A_30+")":"",
+		"刪除 所有撿取指定道具記憶")) {
+			case 1:
+			if ( alootid_A_01 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_01,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_02 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_02,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_03 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_03,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_04 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_04,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_05 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_05,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_06 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_06,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_07 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_07,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_08 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_08,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_09 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_09,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_10 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_10,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_11 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_11,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_12 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_12,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_13 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_13,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_14 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_14,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_15 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_15,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_16 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_16,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_17 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_17,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_18 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_18,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_19 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_19,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_20 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_20,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_21 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_21,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_22 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_22,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_23 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_23,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_24 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_24,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_25 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_25,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_26 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_26,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_27 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_27,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_28 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_28,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_29 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_29,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+
+			if ( alootid_A_30 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_01; }
+			set alootid_A_30,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_01; }
+			close;
+
+
+			case 2:
+			set alootid_A_01,0;
+			close;
+			case 3:
+			set alootid_A_02,0;
+			close;
+			case 4:
+			set alootid_A_03,0;
+			close;
+			case 5:
+			set alootid_A_04,0;
+			close;
+			case 6:
+			set alootid_A_05,0;
+			close;
+			case 7:
+			set alootid_A_06,0;
+			close;
+			case 8:
+			set alootid_A_07,0;
+			close;
+			case 9:
+			set alootid_A_08,0;
+			close;
+			case 10:
+			set alootid_A_09,0;
+			close;
+			case 11:
+			set alootid_A_10,0;
+			close;
+			case 12:
+			set alootid_A_11,0;
+			close;
+			case 13:
+			set alootid_A_12,0;
+			close;
+			case 14:
+			set alootid_A_13,0;
+			close;
+			case 15:
+			set alootid_A_14,0;
+			close;
+			case 16:
+			set alootid_A_15,0;
+			close;
+			case 17:
+			set alootid_A_16,0;
+			close;
+			case 18:
+			set alootid_A_17,0;
+			close;
+			case 19:
+			set alootid_A_18,0;
+			close;
+			case 20:
+			set alootid_A_19,0;
+			close;
+			case 21:
+			set alootid_A_20,0;
+			close;
+			case 22:
+			set alootid_A_21,0;
+			close;
+			case 23:
+			set alootid_A_22,0;
+			close;
+			case 24:
+			set alootid_A_23,0;
+			close;
+			case 25:
+			set alootid_A_24,0;
+			close;
+			case 26:
+			set alootid_A_25,0;
+			close;
+			case 27:
+			set alootid_A_26,0;
+			close;
+			case 28:
+			set alootid_A_27,0;
+			close;
+			case 29:
+			set alootid_A_28,0;
+			close;
+			case 30:
+			set alootid_A_29,0;
+			close;
+			case 31:
+			set alootid_A_30,0;
+			close;
+
+			case 32:
+			set alootid_A_01,0;
+			set alootid_A_02,0;
+			set alootid_A_03,0;
+			set alootid_A_04,0;
+			set alootid_A_05,0;
+			set alootid_A_06,0;
+			set alootid_A_07,0;
+			set alootid_A_08,0;
+			set alootid_A_09,0;
+			set alootid_A_10,0;
+			set alootid_A_11,0;
+			set alootid_A_12,0;
+			set alootid_A_13,0;
+			set alootid_A_14,0;
+			set alootid_A_15,0;
+			set alootid_A_16,0;
+			set alootid_A_17,0;
+			set alootid_A_18,0;
+			set alootid_A_19,0;
+			set alootid_A_20,0;
+			set alootid_A_21,0;
+			set alootid_A_22,0;
+			set alootid_A_23,0;
+			set alootid_A_24,0;
+			set alootid_A_25,0;
+			set alootid_A_26,0;
+			set alootid_A_27,0;
+			set alootid_A_28,0;
+			set alootid_A_29,0;
+			set alootid_A_30,0;
+			atcommand "@alootid reset";
+			//dispbottom "刪除 所有撿取指定道具記憶";
+			close;
+		}
+
+
+
+		alootid_02:
+		case 3:
+		mes "[會員服務]";
+		mes "＊目前設定組別: 第二組";
+		mes "請輸入想要記憶的道具編號";
+		mes "可使用@whodrops或是幻想廳來查詢編號";
+		mes "不想記憶的話請輸入^ff0000 0^000000";
+		mes "^0000ff最多只能記憶10個道具^000000";
+		next;
+		switch(select("記憶 撿取指定道具(輸入物品編號)",alootid_B_01>0?""+getitemname(alootid_B_01)+" ("+alootid_B_01+")":"",alootid_B_02>0?""+getitemname(alootid_B_02)+" ("+alootid_B_02+")":"",alootid_B_03>0?""+getitemname(alootid_B_03)+" ("+alootid_B_03+")":"",alootid_B_04>0?""+getitemname(alootid_B_04)+" ("+alootid_B_04+")":"",alootid_B_05>0?""+getitemname(alootid_B_05)+" ("+alootid_B_05+")":"",alootid_B_06>0?""+getitemname(alootid_B_06)+" ("+alootid_B_06+")":"",alootid_B_07>0?""+getitemname(alootid_B_07)+" ("+alootid_B_07+")":"",alootid_B_08>0?""+getitemname(alootid_B_08)+" ("+alootid_B_08+")":"",alootid_B_09>0?""+getitemname(alootid_B_09)+" ("+alootid_B_09+")":"",alootid_B_10>0?""+getitemname(alootid_B_10)+" ("+alootid_B_10+")":"",
+		alootid_B_11>0?""+getitemname(alootid_B_11)+" ("+alootid_B_11+")":"",alootid_B_12>0?""+getitemname(alootid_B_12)+" ("+alootid_B_12+")":"",alootid_B_13>0?""+getitemname(alootid_B_13)+" ("+alootid_B_13+")":"",alootid_B_14>0?""+getitemname(alootid_B_14)+" ("+alootid_B_14+")":"",alootid_B_15>0?""+getitemname(alootid_B_15)+" ("+alootid_B_15+")":"",alootid_B_16>0?""+getitemname(alootid_B_16)+" ("+alootid_B_16+")":"",alootid_B_17>0?""+getitemname(alootid_B_17)+" ("+alootid_B_17+")":"",alootid_B_18>0?""+getitemname(alootid_B_18)+" ("+alootid_B_18+")":"",alootid_B_19>0?""+getitemname(alootid_B_19)+" ("+alootid_B_19+")":"",alootid_B_10>0?""+getitemname(alootid_B_10)+" ("+alootid_B_20+")":"",
+		alootid_B_21>0?""+getitemname(alootid_B_21)+" ("+alootid_B_21+")":"",alootid_B_22>0?""+getitemname(alootid_B_22)+" ("+alootid_B_22+")":"",alootid_B_23>0?""+getitemname(alootid_B_23)+" ("+alootid_B_23+")":"",alootid_B_24>0?""+getitemname(alootid_B_24)+" ("+alootid_B_24+")":"",alootid_B_25>0?""+getitemname(alootid_B_25)+" ("+alootid_B_25+")":"",alootid_B_26>0?""+getitemname(alootid_B_26)+" ("+alootid_B_26+")":"",alootid_B_27>0?""+getitemname(alootid_B_27)+" ("+alootid_B_27+")":"",alootid_B_28>0?""+getitemname(alootid_B_28)+" ("+alootid_B_28+")":"",alootid_B_29>0?""+getitemname(alootid_B_29)+" ("+alootid_B_29+")":"",alootid_B_20>0?""+getitemname(alootid_B_20)+" ("+alootid_B_30+")":"",
+		"刪除 所有撿取指定道具記憶")) {
+			case 1:
+			if ( alootid_B_01 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_01,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_02 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_02,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_03 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_03,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_04 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_04,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_05 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_05,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_06 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_06,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_07 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_07,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_08 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_08,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_09 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_09,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_10 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_10,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_11 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_11,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_12 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_12,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_13 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_13,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_14 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_14,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_15 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_15,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_16 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_16,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_17 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_17,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_18 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_18,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_19 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_19,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_20 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_20,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_21 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_21,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_22 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_22,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_23 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_23,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_24 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_24,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_25 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_25,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_26 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_26,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_27 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_27,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_28 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_28,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_29 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_29,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+
+			if ( alootid_B_30 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_02; }
+			set alootid_B_30,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_02; }
+			close;
+
+
+			case 2:
+			set alootid_B_01,0;
+			close;
+			case 3:
+			set alootid_B_02,0;
+			close;
+			case 4:
+			set alootid_B_03,0;
+			close;
+			case 5:
+			set alootid_B_04,0;
+			close;
+			case 6:
+			set alootid_B_05,0;
+			close;
+			case 7:
+			set alootid_B_06,0;
+			close;
+			case 8:
+			set alootid_B_07,0;
+			close;
+			case 9:
+			set alootid_B_08,0;
+			close;
+			case 10:
+			set alootid_B_09,0;
+			close;
+			case 11:
+			set alootid_B_10,0;
+			close;
+			case 12:
+			set alootid_B_11,0;
+			close;
+			case 13:
+			set alootid_B_12,0;
+			close;
+			case 14:
+			set alootid_B_13,0;
+			close;
+			case 15:
+			set alootid_B_14,0;
+			close;
+			case 16:
+			set alootid_B_15,0;
+			close;
+			case 17:
+			set alootid_B_16,0;
+			close;
+			case 18:
+			set alootid_B_17,0;
+			close;
+			case 19:
+			set alootid_B_18,0;
+			close;
+			case 20:
+			set alootid_B_19,0;
+			close;
+			case 21:
+			set alootid_B_20,0;
+			close;
+			case 22:
+			set alootid_B_21,0;
+			close;
+			case 23:
+			set alootid_B_22,0;
+			close;
+			case 24:
+			set alootid_B_23,0;
+			close;
+			case 25:
+			set alootid_B_24,0;
+			close;
+			case 26:
+			set alootid_B_25,0;
+			close;
+			case 27:
+			set alootid_B_26,0;
+			close;
+			case 28:
+			set alootid_B_27,0;
+			close;
+			case 29:
+			set alootid_B_28,0;
+			close;
+			case 30:
+			set alootid_B_29,0;
+			close;
+			case 31:
+			set alootid_B_30,0;
+			close;
+
+			case 32:
+			set alootid_B_01,0;
+			set alootid_B_02,0;
+			set alootid_B_03,0;
+			set alootid_B_04,0;
+			set alootid_B_05,0;
+			set alootid_B_06,0;
+			set alootid_B_07,0;
+			set alootid_B_08,0;
+			set alootid_B_09,0;
+			set alootid_B_10,0;
+			set alootid_B_11,0;
+			set alootid_B_12,0;
+			set alootid_B_13,0;
+			set alootid_B_14,0;
+			set alootid_B_15,0;
+			set alootid_B_16,0;
+			set alootid_B_17,0;
+			set alootid_B_18,0;
+			set alootid_B_19,0;
+			set alootid_B_20,0;
+			set alootid_B_21,0;
+			set alootid_B_22,0;
+			set alootid_B_23,0;
+			set alootid_B_24,0;
+			set alootid_B_25,0;
+			set alootid_B_26,0;
+			set alootid_B_27,0;
+			set alootid_B_28,0;
+			set alootid_B_29,0;
+			set alootid_B_30,0;
+			atcommand "@alootid reset";
+			//dispbottom "刪除 所有撿取指定道具記憶";
+			close;
+		}
+
+		alootid_03:
+		case 4:
+		mes "[會員服務]";
+		mes "＊目前設定組別: 第三組";
+		mes "請輸入想要記憶的道具編號";
+		mes "可使用@whodrops或是幻想廳來查詢編號";
+		mes "不想記憶的話請輸入^ff0000 0^000000";
+		mes "^0000ff最多只能記憶10個道具^000000";
+		next;
+		switch(select("記憶 撿取指定道具(輸入物品編號)",alootid_C_01>0?""+getitemname(alootid_C_01)+" ("+alootid_C_01+")":"",alootid_C_02>0?""+getitemname(alootid_C_02)+" ("+alootid_C_02+")":"",alootid_C_03>0?""+getitemname(alootid_C_03)+" ("+alootid_C_03+")":"",alootid_C_04>0?""+getitemname(alootid_C_04)+" ("+alootid_C_04+")":"",alootid_C_05>0?""+getitemname(alootid_C_05)+" ("+alootid_C_05+")":"",alootid_C_06>0?""+getitemname(alootid_C_06)+" ("+alootid_C_06+")":"",alootid_C_07>0?""+getitemname(alootid_C_07)+" ("+alootid_C_07+")":"",alootid_C_08>0?""+getitemname(alootid_C_08)+" ("+alootid_C_08+")":"",alootid_C_09>0?""+getitemname(alootid_C_09)+" ("+alootid_C_09+")":"",alootid_C_10>0?""+getitemname(alootid_C_10)+" ("+alootid_C_10+")":"",
+		alootid_C_11>0?""+getitemname(alootid_C_11)+" ("+alootid_C_11+")":"",alootid_C_12>0?""+getitemname(alootid_C_12)+" ("+alootid_C_12+")":"",alootid_C_13>0?""+getitemname(alootid_C_13)+" ("+alootid_C_13+")":"",alootid_C_14>0?""+getitemname(alootid_C_14)+" ("+alootid_C_14+")":"",alootid_C_15>0?""+getitemname(alootid_C_15)+" ("+alootid_C_15+")":"",alootid_C_16>0?""+getitemname(alootid_C_16)+" ("+alootid_C_16+")":"",alootid_C_17>0?""+getitemname(alootid_C_17)+" ("+alootid_C_17+")":"",alootid_C_18>0?""+getitemname(alootid_C_18)+" ("+alootid_C_18+")":"",alootid_C_19>0?""+getitemname(alootid_C_19)+" ("+alootid_C_19+")":"",alootid_C_10>0?""+getitemname(alootid_C_10)+" ("+alootid_C_20+")":"",
+		alootid_C_21>0?""+getitemname(alootid_C_21)+" ("+alootid_C_21+")":"",alootid_C_22>0?""+getitemname(alootid_C_22)+" ("+alootid_C_22+")":"",alootid_C_23>0?""+getitemname(alootid_C_23)+" ("+alootid_C_23+")":"",alootid_C_24>0?""+getitemname(alootid_C_24)+" ("+alootid_C_24+")":"",alootid_C_25>0?""+getitemname(alootid_C_25)+" ("+alootid_C_25+")":"",alootid_C_26>0?""+getitemname(alootid_C_26)+" ("+alootid_C_26+")":"",alootid_C_27>0?""+getitemname(alootid_C_27)+" ("+alootid_C_27+")":"",alootid_C_28>0?""+getitemname(alootid_C_28)+" ("+alootid_C_28+")":"",alootid_C_29>0?""+getitemname(alootid_C_29)+" ("+alootid_C_29+")":"",alootid_C_20>0?""+getitemname(alootid_C_20)+" ("+alootid_C_30+")":"",
+		"刪除 所有撿取指定道具記憶")) {
+			case 1:
+			if ( alootid_C_01 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_01,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_02 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_02,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_03 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_03,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_04 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_04,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_05 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_05,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_06 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_06,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_07 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_07,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_08 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_08,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_09 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_09,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_10 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_10,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_11 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_11,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_12 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_12,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_13 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_13,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_14 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_14,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_15 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_15,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_16 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_16,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_17 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_17,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_18 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_18,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_19 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_19,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_20 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_20,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_21 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_21,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_22 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_22,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_23 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_23,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_24 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_24,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_25 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_25,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_26 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_26,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_27 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_27,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_28 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_28,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_29 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_29,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+
+			if ( alootid_C_30 < 1 ) {
+			set .@id,0;
+			input .@id;
+			if(getitemname(.@id) == "null"){
+			dispbottom "此物品編號無效";
+			goto alootid_03; }
+			set alootid_C_30,.@id;
+			atcommand "@alootid +"+.@id+"";
+			goto alootid_03; }
+			close;
+
+
+			case 2:
+			set alootid_C_01,0;
+			close;
+			case 3:
+			set alootid_C_02,0;
+			close;
+			case 4:
+			set alootid_C_03,0;
+			close;
+			case 5:
+			set alootid_C_04,0;
+			close;
+			case 6:
+			set alootid_C_05,0;
+			close;
+			case 7:
+			set alootid_C_06,0;
+			close;
+			case 8:
+			set alootid_C_07,0;
+			close;
+			case 9:
+			set alootid_C_08,0;
+			close;
+			case 10:
+			set alootid_C_09,0;
+			close;
+			case 11:
+			set alootid_C_10,0;
+			close;
+			case 12:
+			set alootid_C_11,0;
+			close;
+			case 13:
+			set alootid_C_12,0;
+			close;
+			case 14:
+			set alootid_C_13,0;
+			close;
+			case 15:
+			set alootid_C_14,0;
+			close;
+			case 16:
+			set alootid_C_15,0;
+			close;
+			case 17:
+			set alootid_C_16,0;
+			close;
+			case 18:
+			set alootid_C_17,0;
+			close;
+			case 19:
+			set alootid_C_18,0;
+			close;
+			case 20:
+			set alootid_C_19,0;
+			close;
+			case 21:
+			set alootid_C_20,0;
+			close;
+			case 22:
+			set alootid_C_21,0;
+			close;
+			case 23:
+			set alootid_C_22,0;
+			close;
+			case 24:
+			set alootid_C_23,0;
+			close;
+			case 25:
+			set alootid_C_24,0;
+			close;
+			case 26:
+			set alootid_C_25,0;
+			close;
+			case 27:
+			set alootid_C_26,0;
+			close;
+			case 28:
+			set alootid_C_27,0;
+			close;
+			case 29:
+			set alootid_C_28,0;
+			close;
+			case 30:
+			set alootid_C_29,0;
+			close;
+			case 31:
+			set alootid_C_30,0;
+			close;
+
+			case 32:
+			set alootid_C_01,0;
+			set alootid_C_02,0;
+			set alootid_C_03,0;
+			set alootid_C_04,0;
+			set alootid_C_05,0;
+			set alootid_C_06,0;
+			set alootid_C_07,0;
+			set alootid_C_08,0;
+			set alootid_C_09,0;
+			set alootid_C_10,0;
+			set alootid_C_11,0;
+			set alootid_C_12,0;
+			set alootid_C_13,0;
+			set alootid_C_14,0;
+			set alootid_C_15,0;
+			set alootid_C_16,0;
+			set alootid_C_17,0;
+			set alootid_C_18,0;
+			set alootid_C_19,0;
+			set alootid_C_20,0;
+			set alootid_C_21,0;
+			set alootid_C_22,0;
+			set alootid_C_23,0;
+			set alootid_C_24,0;
+			set alootid_C_25,0;
+			set alootid_C_26,0;
+			set alootid_C_27,0;
+			set alootid_C_28,0;
+			set alootid_C_29,0;
+			set alootid_C_30,0;
+			atcommand "@alootid reset";
+			//dispbottom "刪除 所有撿取指定道具記憶";
+			close;
+		}
+	}
+
+
+	case 3:
+		mes "[會員服務]";
+		mes "請選擇你要撿取的物品類別";
+		next;
+		switch(select("記憶 撿取治癒類道具","記憶 撿取其他類道具","記憶 撿取武器類道具","記憶 撿取防具類道具","記憶 撿取卡片類道具","刪除 所有撿取類別道具記憶")) {
+
+		case 1:
+			atcommand "@autoloottype +0";
+			set aloottype_1,1;
+			dispbottom "記憶 撿取治癒類道具";
+			close;
+
+		case 2:
+			atcommand "@autoloottype +3";
+			set aloottype_3,1;
+			dispbottom "記憶 撿取其他類道具";
+			close;
+
+		case 3:
+			atcommand "@autoloottype +4";
+			set aloottype_4,1;
+			dispbottom "記憶 撿取武器類道具";
+			close;
+
+		case 4:
+			atcommand "@autoloottype +5";
+			set aloottype_5,1;
+			dispbottom "記憶 撿取防具類道具";
+			close;
+
+		case 5:
+			atcommand "@autoloottype +6";
+			set aloottype_6,1;
+			dispbottom "記憶 撿取卡片類道具";
+			close;
+
+		case 6:
+			atcommand "@autoloottype reset";
+			set aloottype_1,0;
+			set aloottype_3,0;
+			set aloottype_4,0;
+			set aloottype_5,0;
+			set aloottype_6,0;
+			//dispbottom "已刪除所有撿取類別道具記憶";
+			close;
+		}
+	}
+}
+
+
+//---------------------------------------------
+-	script	記憶自動撿取	-1,{
+
+OnPCLoginEvent:
+	if ( autolootS > 0 ) {atcommand "@autoloot "+autolootS+"";}
+
+	if(alootid_A==1){
+	atcommand "@alootid reset";
+	dispbottom "啟用第一組設置";
+	if ( alootid_A_01 > 0 ) {atcommand "@alootid +"+alootid_A_01+""; }
+	if ( alootid_A_02 > 0 ) {atcommand "@alootid +"+alootid_A_02+""; }
+	if ( alootid_A_03 > 0 ) {atcommand "@alootid +"+alootid_A_03+""; }
+	if ( alootid_A_04 > 0 ) {atcommand "@alootid +"+alootid_A_04+""; }
+	if ( alootid_A_05 > 0 ) {atcommand "@alootid +"+alootid_A_05+""; }
+	if ( alootid_A_06 > 0 ) {atcommand "@alootid +"+alootid_A_06+""; }
+	if ( alootid_A_07 > 0 ) {atcommand "@alootid +"+alootid_A_07+""; }
+	if ( alootid_A_08 > 0 ) {atcommand "@alootid +"+alootid_A_08+""; }
+	if ( alootid_A_09 > 0 ) {atcommand "@alootid +"+alootid_A_09+""; }
+	if ( alootid_A_10 > 0 ) {atcommand "@alootid +"+alootid_A_10+""; }
+	if ( alootid_A_11 > 0 ) {atcommand "@alootid +"+alootid_A_11+""; }
+	if ( alootid_A_12 > 0 ) {atcommand "@alootid +"+alootid_A_12+""; }
+	if ( alootid_A_13 > 0 ) {atcommand "@alootid +"+alootid_A_13+""; }
+	if ( alootid_A_14 > 0 ) {atcommand "@alootid +"+alootid_A_14+""; }
+	if ( alootid_A_15 > 0 ) {atcommand "@alootid +"+alootid_A_15+""; }
+	if ( alootid_A_16 > 0 ) {atcommand "@alootid +"+alootid_A_16+""; }
+	if ( alootid_A_17 > 0 ) {atcommand "@alootid +"+alootid_A_17+""; }
+	if ( alootid_A_18 > 0 ) {atcommand "@alootid +"+alootid_A_18+""; }
+	if ( alootid_A_19 > 0 ) {atcommand "@alootid +"+alootid_A_19+""; }
+	if ( alootid_A_20 > 0 ) {atcommand "@alootid +"+alootid_A_20+""; }
+	if ( alootid_A_21 > 0 ) {atcommand "@alootid +"+alootid_A_21+""; }
+	if ( alootid_A_22 > 0 ) {atcommand "@alootid +"+alootid_A_22+""; }
+	if ( alootid_A_23 > 0 ) {atcommand "@alootid +"+alootid_A_23+""; }
+	if ( alootid_A_24 > 0 ) {atcommand "@alootid +"+alootid_A_24+""; }
+	if ( alootid_A_25 > 0 ) {atcommand "@alootid +"+alootid_A_25+""; }
+	if ( alootid_A_26 > 0 ) {atcommand "@alootid +"+alootid_A_26+""; }
+	if ( alootid_A_27 > 0 ) {atcommand "@alootid +"+alootid_A_27+""; }
+	if ( alootid_A_28 > 0 ) {atcommand "@alootid +"+alootid_A_28+""; }
+	if ( alootid_A_29 > 0 ) {atcommand "@alootid +"+alootid_A_29+""; }
+	if ( alootid_A_30 > 0 ) {atcommand "@alootid +"+alootid_A_30+""; }
+	}
+
+	if(alootid_B==1){
+	atcommand "@alootid reset";
+	dispbottom "啟用第二組設置";
+	if ( alootid_B_01 > 0 ) {atcommand "@alootid +"+alootid_B_01+""; }
+	if ( alootid_B_02 > 0 ) {atcommand "@alootid +"+alootid_B_02+""; }
+	if ( alootid_B_03 > 0 ) {atcommand "@alootid +"+alootid_B_03+""; }
+	if ( alootid_B_04 > 0 ) {atcommand "@alootid +"+alootid_B_04+""; }
+	if ( alootid_B_05 > 0 ) {atcommand "@alootid +"+alootid_B_05+""; }
+	if ( alootid_B_06 > 0 ) {atcommand "@alootid +"+alootid_B_06+""; }
+	if ( alootid_B_07 > 0 ) {atcommand "@alootid +"+alootid_B_07+""; }
+	if ( alootid_B_08 > 0 ) {atcommand "@alootid +"+alootid_B_08+""; }
+	if ( alootid_B_09 > 0 ) {atcommand "@alootid +"+alootid_B_09+""; }
+	if ( alootid_B_10 > 0 ) {atcommand "@alootid +"+alootid_B_10+""; }
+	if ( alootid_B_11 > 0 ) {atcommand "@alootid +"+alootid_B_11+""; }
+	if ( alootid_B_12 > 0 ) {atcommand "@alootid +"+alootid_B_12+""; }
+	if ( alootid_B_13 > 0 ) {atcommand "@alootid +"+alootid_B_13+""; }
+	if ( alootid_B_14 > 0 ) {atcommand "@alootid +"+alootid_B_14+""; }
+	if ( alootid_B_15 > 0 ) {atcommand "@alootid +"+alootid_B_15+""; }
+	if ( alootid_B_16 > 0 ) {atcommand "@alootid +"+alootid_B_16+""; }
+	if ( alootid_B_17 > 0 ) {atcommand "@alootid +"+alootid_B_17+""; }
+	if ( alootid_B_18 > 0 ) {atcommand "@alootid +"+alootid_B_18+""; }
+	if ( alootid_B_19 > 0 ) {atcommand "@alootid +"+alootid_B_19+""; }
+	if ( alootid_B_20 > 0 ) {atcommand "@alootid +"+alootid_B_20+""; }
+	if ( alootid_B_21 > 0 ) {atcommand "@alootid +"+alootid_B_21+""; }
+	if ( alootid_B_22 > 0 ) {atcommand "@alootid +"+alootid_B_22+""; }
+	if ( alootid_B_23 > 0 ) {atcommand "@alootid +"+alootid_B_23+""; }
+	if ( alootid_B_24 > 0 ) {atcommand "@alootid +"+alootid_B_24+""; }
+	if ( alootid_B_25 > 0 ) {atcommand "@alootid +"+alootid_B_25+""; }
+	if ( alootid_B_26 > 0 ) {atcommand "@alootid +"+alootid_B_26+""; }
+	if ( alootid_B_27 > 0 ) {atcommand "@alootid +"+alootid_B_27+""; }
+	if ( alootid_B_28 > 0 ) {atcommand "@alootid +"+alootid_B_28+""; }
+	if ( alootid_B_29 > 0 ) {atcommand "@alootid +"+alootid_B_29+""; }
+	if ( alootid_B_30 > 0 ) {atcommand "@alootid +"+alootid_B_30+""; }
+	}
+
+	if(alootid_C==1){
+	atcommand "@alootid reset";
+	dispbottom "啟用第三組設置";
+	if ( alootid_C_01 > 0 ) {atcommand "@alootid +"+alootid_C_01+""; }
+	if ( alootid_C_02 > 0 ) {atcommand "@alootid +"+alootid_C_02+""; }
+	if ( alootid_C_03 > 0 ) {atcommand "@alootid +"+alootid_C_03+""; }
+	if ( alootid_C_04 > 0 ) {atcommand "@alootid +"+alootid_C_04+""; }
+	if ( alootid_C_05 > 0 ) {atcommand "@alootid +"+alootid_C_05+""; }
+	if ( alootid_C_06 > 0 ) {atcommand "@alootid +"+alootid_C_06+""; }
+	if ( alootid_C_07 > 0 ) {atcommand "@alootid +"+alootid_C_07+""; }
+	if ( alootid_C_08 > 0 ) {atcommand "@alootid +"+alootid_C_08+""; }
+	if ( alootid_C_09 > 0 ) {atcommand "@alootid +"+alootid_C_09+""; }
+	if ( alootid_C_10 > 0 ) {atcommand "@alootid +"+alootid_C_10+""; }
+	if ( alootid_C_11 > 0 ) {atcommand "@alootid +"+alootid_C_11+""; }
+	if ( alootid_C_12 > 0 ) {atcommand "@alootid +"+alootid_C_12+""; }
+	if ( alootid_C_13 > 0 ) {atcommand "@alootid +"+alootid_C_13+""; }
+	if ( alootid_C_14 > 0 ) {atcommand "@alootid +"+alootid_C_14+""; }
+	if ( alootid_C_15 > 0 ) {atcommand "@alootid +"+alootid_C_15+""; }
+	if ( alootid_C_16 > 0 ) {atcommand "@alootid +"+alootid_C_16+""; }
+	if ( alootid_C_17 > 0 ) {atcommand "@alootid +"+alootid_C_17+""; }
+	if ( alootid_C_18 > 0 ) {atcommand "@alootid +"+alootid_C_18+""; }
+	if ( alootid_C_19 > 0 ) {atcommand "@alootid +"+alootid_C_19+""; }
+	if ( alootid_C_20 > 0 ) {atcommand "@alootid +"+alootid_C_20+""; }
+	if ( alootid_C_21 > 0 ) {atcommand "@alootid +"+alootid_C_21+""; }
+	if ( alootid_C_22 > 0 ) {atcommand "@alootid +"+alootid_C_22+""; }
+	if ( alootid_C_23 > 0 ) {atcommand "@alootid +"+alootid_C_23+""; }
+	if ( alootid_C_24 > 0 ) {atcommand "@alootid +"+alootid_C_24+""; }
+	if ( alootid_C_25 > 0 ) {atcommand "@alootid +"+alootid_C_25+""; }
+	if ( alootid_C_26 > 0 ) {atcommand "@alootid +"+alootid_C_26+""; }
+	if ( alootid_C_27 > 0 ) {atcommand "@alootid +"+alootid_C_27+""; }
+	if ( alootid_C_28 > 0 ) {atcommand "@alootid +"+alootid_C_28+""; }
+	if ( alootid_C_29 > 0 ) {atcommand "@alootid +"+alootid_C_29+""; }
+	if ( alootid_C_30 > 0 ) {atcommand "@alootid +"+alootid_C_30+""; }
+	}
+
+	if ( aloottype_1 == 1 ) {atcommand "@autoloottype +0"; dispbottom "記憶 撿取治癒類道具";}
+	if ( aloottype_3 == 1 ) {atcommand "@autoloottype +3"; dispbottom "記憶 撿取其他類道具";}
+	if ( aloottype_4 == 1 ) {atcommand "@autoloottype +4"; dispbottom "記憶 撿取武器類道具";}
+	if ( aloottype_5 == 1 ) {atcommand "@autoloottype +5"; dispbottom "記憶 撿取防具類道具";}
+	if ( aloottype_6 == 1 ) {atcommand "@autoloottype +6"; dispbottom "記憶 撿取卡片類道具";}
+	end;
+}

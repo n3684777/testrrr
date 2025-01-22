@@ -1,0 +1,57 @@
+﻿function	script	每周服飾設定	{
+
+	mes "[每周服飾]";
+	mes "這是每周服飾控制台";
+	next;
+	switch(select("取消","每周服飾")){
+
+	case 1:
+	close;
+
+	case 2:
+		doevent "每周服飾#Server::On1";
+
+	}
+}
+
+
+//prontera,0,0,6	script	每周服飾#Server	-1,{
+-	script	每周服飾#Server	-1,{
+
+OnFri0400:
+	announce "每周服飾已經更新了，趕快來找我吧!",15,0xFF33FF;
+On1:
+	disablenpc "每周服飾#01";	//
+	disablenpc "每周服飾#02";	//
+	disablenpc "每周服飾#03";	//
+	disablenpc "每周服飾#04";	//
+	disablenpc "每周服飾#05";	//1
+	disablenpc "每周服飾#06";	//8
+	disablenpc "每周服飾#07";	//15
+	disablenpc "每周服飾#08";	//22
+	disablenpc "每周服飾#09";	//29
+	disablenpc "每周服飾#10";	//5
+	disablenpc "每周服飾#11";	//12
+	disablenpc "每周服飾#12";	//19
+	disablenpc "每周服飾#13";	//26
+	enablenpc "每周服飾#12";	//29
+	end;
+
+OnInit:
+	disablenpc "每周服飾#01";
+	disablenpc "每周服飾#02";
+	disablenpc "每周服飾#03";
+	disablenpc "每周服飾#04";
+	disablenpc "每周服飾#05";
+	disablenpc "每周服飾#06";
+	disablenpc "每周服飾#08";
+	disablenpc "每周服飾#09";
+	disablenpc "每周服飾#10";
+	disablenpc "每周服飾#11";
+	disablenpc "每周服飾#12";
+	disablenpc "每周服飾#13";
+	enablenpc "每周服飾#01";
+	end;
+}
+
+

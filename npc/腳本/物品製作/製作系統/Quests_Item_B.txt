@@ -1,0 +1,734 @@
+//====================================================//
+//====================================================//
+//==製作人 : 陳小修 (SkyTwo) 　　　　　　Eathena　　==//
+//==更新日期 : 西元 2008/06/03　　　　　　　Script　==//
+//==腳本版號 : 繁體中文 v1.0 正式版　　　　　　　　 ==//
+//==腳本名稱 : 製作系統　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==腳本出處 : http://srogm.no-ip.info/forum　　　　==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==資料來源 : 台灣仙境傳說官方網站　　　　　　　　 ==//
+//==　　　　　 天野幻境　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==各位大哥大姐轉載請保留以上，萬分感激。　　　　　==//
+//====================================================//
+//====================================================//
+function	script	Quests_Dish	{
+
+	mes "[製作系統]";
+	mes "<ITEM>烤野豬x1<INFO>12429</INFO></ITEM>材料：雜燴甕1個、野豬肉1個、燒烤叉子1個、備長炭1個";
+	mes "<ITEM>狼血雞尾酒x1<INFO>12430</INFO></ITEM>材料：雜燴甕1個、沙漠之狼血3個、急凍冰塊2個";
+	mes "<ITEM>米洛斯燒肉x1<INFO>12431</INFO></ITEM>材料：雜燴甕1個、牛頭肉2個、大鍋1個";
+	mes "<ITEM>小雪獸冰茶x1<INFO>12432</INFO></ITEM>材料：雜燴甕1個、碎冰塊3個、冰結晶2個、克魔島熱帶水果1個";
+	mes "<ITEM>捕蟲草藥草煎x1<INFO>12433</INFO></ITEM>材料：雜燴甕1個、捕蟲草觸鬚3個、紅草3個、藍草3個、白草3個、大鍋1個";
+	mes "<ITEM>畢帝特龍尾麵x1<INFO>12434</INFO></ITEM>材料：雜燴甕1個、畢帝特龍尾2個、陽春麵1個、涼麵1個";
+	mes "<ITEM>滿漢全席x1<INFO>14608</INFO></ITEM>材料：烤野豬1個、狼血雞尾酒1個、米洛斯燒肉1個、小雪獸冰茶1個、捕蟲草藥草煎1個、畢帝特龍尾麵1個";
+	mes "<ITEM>終極料理x1<INFO>14886</INFO></ITEM>材料：力量料理1個、敏捷料理1個、智力料理1個、靈巧料理1個、幸運料理1個、體力料理1個";
+	next;
+	menu "製作烤野豬",Ls1,"製作狼血雞尾酒",Ls2,"製作米洛斯燒肉",Ls3,"製作小雪獸冰茶",Ls4,"製作捕蟲草藥草煎",Ls5,"製作畢帝特龍尾麵",Ls6,"製作滿漢全席(手續費30萬)",Ls7,"製作終極料理(手續費20萬)",Ls8,"取消",Leave;
+
+Ls1:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6249)<@input || countitem(6250)<@input || countitem(6251)<@input ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6249,@input;
+	delitem 6250,@input;
+	delitem 6251,@input;
+	getitem 12429,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls2:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6252)<@input*3 || countitem(6253)<@input*2 ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6252,@input*3;
+	delitem 6253,@input*2;
+	getitem 12430,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls3:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6254)<@input*2 || countitem(6255)<@input ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6254,@input*2;
+	delitem 6255,@input;
+	getitem 12431,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls4:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6256)<@input*3 || countitem(6257)<@input*2 || countitem(6258)<@input ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6256,@input*3;
+	delitem 6257,@input*2;
+	delitem 6258,@input;
+	getitem 12432,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls5:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6259)<@input*3 || countitem(507)<@input*3 || countitem(510)<@input*3 || countitem(509)<@input*3 || countitem(6255)<@input ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6259,@input*3;
+	delitem 507,@input*3;
+	delitem 510,@input*3;
+	delitem 509,@input*3;
+	delitem 6255,@input;
+	getitem 12433,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls6:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(6248)<@input || countitem(6260)<@input*2 || countitem(6261)<@input || countitem(6262)<@input ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 6248,@input;
+	delitem 6260,@input*2;
+	delitem 6261,@input;
+	delitem 6262,@input;
+	getitem 12434,@input*1;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls7:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "每製作1個需要30萬手續費";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(12429)<@input || countitem(12430)<@input || countitem(12431)<@input || countitem(12432)<@input || countitem(12433)<@input || countitem(12434)<@input || (Zeny < @input*300000) ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 12429,@input;
+	delitem 12430,@input;
+	delitem 12431,@input;
+	delitem 12432,@input;
+	delitem 12433,@input;
+	delitem 12434,@input;
+	set Zeny,Zeny-@input*300000;
+
+	getitem 14608,@input;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Ls8:
+	mes "[製作系統]";
+	mes "請輸入您想製作的數量。";
+	mes "每製作1個需要20萬手續費";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(12202)<@input || countitem(12203)<@input || countitem(12204)<@input || countitem(12205)<@input || countitem(12206)<@input || countitem(12207)<@input || (Zeny < @input*200000) ) {
+	mes "[製作系統]";
+	mes "您身上的材料不足唷！";
+	close;	}
+	delitem 12202,@input;
+	delitem 12203,@input;
+	delitem 12204,@input;
+	delitem 12205,@input;
+	delitem 12206,@input;
+	delitem 12207,@input;
+	set Zeny,Zeny-@input*200000;
+
+	getitem 14886,@input;
+	mes "[製作系統]";
+	mes "製作作業已完畢！";
+	close;
+
+Leave:
+        close;
+}
+
+
+//====================================================//
+function	script	Quests_Juice	{
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF蘋果果汁^000000 所需材料如下：";
+	mes "^FF0000蘋果 1^000000 個、^FF0000空瓶 1^000000 個、^FF0000金錢 3^000000 z";
+	mes "";
+	mes "製作 ^0000FF香蕉果汁^000000 所需材料如下：";
+	mes "^FF0000香蕉 1^000000 個、^FF0000空瓶 1^000000 個、^FF0000金錢 3^000000 z";
+	mes "";
+	mes "製作 ^0000FF蘿蔔果汁^000000 所需材料如下：";
+	mes "^FF0000蘿蔔 1^000000 個、^FF0000空瓶 1^000000 個、^FF0000金錢 3^000000 z";
+	mes "";
+	mes "製作 ^0000FF葡萄果汁^000000 所需材料如下：";
+	mes "^FF0000葡萄 1^000000 個、^FF0000空瓶 1^000000 個、^FF0000金錢 3^000000 z";
+	mes "　";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	switch (select("製作 ^0000FF蘋果汁^000000","製作 ^0000FF香蕉汁^000000",
+			"製作 ^0000FF蘿蔔汁^000000","製作 ^0000FF葡萄汁^000000")) {
+case 1:
+	set .@DelItem,512;
+	set .@GetItem,531;
+	break;
+case 2:
+	set .@DelItem,513;
+	set .@GetItem,532;
+	break;
+case 3:
+	set .@DelItem,515;
+	set .@GetItem,534;
+	break;
+case 4:
+	set .@DelItem,514;
+	set .@GetItem,533;
+	break;	}
+
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem(.@DelItem) < .@input || countitem(713) < .@input || Zeny < .@input * 3 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	set Zeny, Zeny - .@input * 3;
+	delitem 713,.@input;
+	delitem .@DelItem,.@input;
+	getitem .@GetItem,.@input;
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Milk	{
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF牛奶^000000 所需材料如下：";
+	mes "材料 ^FF0000空瓶  1^000000 個";
+	mes "　和 ^FF0000金錢 20^000000 z";
+	mes "　";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( Zeny < .@input * 20 || countitem (713) < .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	set Zeny, Zeny - .@input * 20;
+	delitem 713,@input;
+	getitem 519,@input;
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Potion	{
+
+	switch(select("製作 ^0000FF紅色藥水^000000","製作 ^0000FF赤色藥水^000000",
+			"製作 ^0000FF黃色藥水^000000","製作 ^0000FF白色藥水^000000",
+			"製作 ^0000FF藍色藥水^000000","製作 ^0000FF綠色藥水^000000")) {
+case 1:
+	setarray .@QI1[1],501,507,713;
+	setarray .@QI2[1],1,2,1;
+	set .@QIZeny,3;
+	break;
+case 2:
+	setarray .@QI1[1],502,507,508,713;
+	setarray .@QI2[1],1,1,1,1;
+	set .@QIZeny,5;
+	break;
+case 3:
+	setarray .@QI1[1],503,508,713;
+	setarray .@QI2[1],1,2,1;
+	set .@QIZeny,10;
+	break;
+case 4:
+	setarray .@QI1[1],504,509,713;
+	setarray .@QI2[1],1,2,1;
+	set .@QIZeny,20;
+	break;
+case 5:
+	setarray .@QI1[1],505,510,713;
+	setarray .@QI2[1],1,2,1;
+	set .@QIZeny,30;
+	break;
+case 6:
+	setarray .@QI1[1],506,511,713;
+	setarray .@QI2[1],1,2,1;
+	set .@QIZeny,3;
+	break;	}
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QI1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QI1[2])+" "+.@QI2[2]+"^000000 個";
+	mes "　和 ^FF0000"+getitemname(.@QI1[3])+" "+.@QI2[3]+"^000000 個";
+	if ( .@QI1[4] != 0 ) mes "　和 ^FF0000"+getitemname(.@QI1[4])+" "+.@QI2[4]+"^000000 個";
+	mes "　和 ^FF0000金錢 "+.@QIZeny+"^000000 z";
+	next;
+	if (select("開始製作:放棄製作") == 2 ) {
+		close;
+	}
+	mes "[製作系統]";
+	mes "數量：Min 1 個，Max 100 個！";
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem(.@QI1[2]) < .@input * .@QI2[2] ) { set .@No_Item,1; }
+	if ( countitem(.@QI1[3]) < .@input * .@QI2[3] ) { set .@No_Item,1; }
+	if ( .@QI1[4] != 0 ) {
+	if ( countitem(.@QI1[4]) < .@input * .@QI2[4] ) {
+	set .@No_Item,1;	}	}
+	if ( Zeny < .@input * .@QIZeny || .@No_Item == 1 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	set Zeny, Zeny - .@input * .@QIZeny;
+	delitem .@QI1[2],.@input * .@QI2[2];
+	delitem .@QI1[3],.@input * .@QI2[3];
+	if ( .@QI1[4] != 0 ) delitem .@QI1[4],.@input * .@QI2[4];
+	getitem .@QI1[1],.@input;
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Dyestuffs	{
+
+	switch(select("製作 ^0000FF紅色染料^000000","製作 ^0000FF黃色染料^000000",
+			"製作 ^0000FF藍色染料^000000","製作 ^0000FF綠色染料^000000",
+			"製作 ^0000FF赤色染料^000000","製作 ^0000FF紫色染料^000000",
+			"製作 ^0000FF白色染料^000000","製作 ^0000FF黑色染料^000000",
+			"製作 ^0000FF中和劑^000000","製作 ^0000FF混合劑^000000")) {
+case 1:
+	setarray .@QI1[1],975,507,713,973;
+	setarray .@QI2[1],1,30,1,1;
+	set .@QIZeny,3000;
+	break;
+case 2:
+	setarray .@QI1[1],976,508,713,973;
+	setarray .@QI2[1],1,30,1,1;
+	set .@QIZeny,3000;
+	break;
+case 3:
+	setarray .@QI1[1],978,510,713,973;
+	setarray .@QI2[1],1,20,1,1;
+	set .@QIZeny,3500;
+	break;
+case 4:
+	setarray .@QI1[1],979,508,510,511,713,973,974;
+	setarray .@QI2[1],1,20,5,20,1,1,1;
+	set .@QIZeny,5000;
+	break;
+case 5:
+	setarray .@QI1[1],980,507,508,713,973,974;
+	setarray .@QI2[1],1,20,20,1,1,1;
+	set .@QIZeny,5000;
+	break;
+case 6:
+	setarray .@QI1[1],981,507,510,713,973,974;
+	setarray .@QI2[1],1,20,10,1,1,1;
+	set .@QIZeny,5000;
+	break;
+case 7:
+	setarray .@QI1[1],982,509,713,973;
+	setarray .@QI2[1],1,30,1,1;
+	set .@QIZeny,3000;
+	break;
+case 8:
+	setarray .@QI1[1],983,507,508,510,511,713,973,974;
+	setarray .@QI2[1],1,30,30,5,30,1,1,1;
+	set .@QIZeny,7000;
+	break;
+case 9:
+	setarray .@QI1[1],973,971,970,713;
+	setarray .@QI2[1],1,1,1,1;
+	set .@QIZeny,3000;
+	break;
+case 10:
+	setarray .@QI1[1],974,972,970,713;
+	setarray .@QI2[1],1,1,1,1;
+	set .@QIZeny,3000;
+	break;
+	}
+
+	mes "[製作系統]";
+	mes "製作^0000FF"+getitemname(.@QI1[1])+"^000000 所需材料如下：";
+	mes "材料1 ^FF0000"+getitemname(.@QI1[2])+" "+.@QI2[2]+"^000000 個";
+	mes "材料2 ^FF0000"+getitemname(.@QI1[3])+" "+.@QI2[3]+"^000000 個";
+	mes "材料3 ^FF0000"+getitemname(.@QI1[4])+" "+.@QI2[4]+"^000000 個";
+	mes "請輸入您想兌換的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	if (select("開始製作:放棄製作") == 2 ) {
+	close;
+	}
+
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[製作系統]";
+	mes "您輸入的數量不正確！";
+	close;	}
+
+	if ( countitem(.@QI1[2]) < .@QI2[2]*@input ) { mes "材料不足"; close; }
+	if ( countitem(.@QI1[3]) < .@QI2[3]*@input ) { mes "材料不足"; close; }
+	if ( countitem(.@QI1[4]) < .@QI2[4]*@input ) { mes "材料不足"; close; }
+	delitem .@QI1[2],.@QI2[2]*@input;
+	delitem .@QI1[3],.@QI2[3]*@input;
+	delitem .@QI1[4],.@QI2[4]*@input;
+	getitem .@QI1[1],.@QI2[1]*@input;
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QI1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+
+//====================================================//
+
+function	script	Quests_Arrow	{
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF箭矢筒^000000 所需材料如下：";
+	mes "材料 ^FF0000箭矢 500^000000 個";
+	mes "　和 ^FF0000金錢 500^000000 z";
+	next;
+	switch(select("製作 ^0000FF箭矢筒^000000","製作 ^0000FF鐵箭矢筒^000000",
+			"製作 ^0000FF鋼鐵箭矢筒^000000","製作 ^0000FF神之金屬箭矢筒^000000",
+			"製作 ^0000FF火箭矢筒^000000","製作 ^0000FF銀箭矢筒^000000",
+			"製作 ^0000FF風靈箭矢筒^000000","製作 ^0000FF地靈箭矢筒^000000",
+			"製作 ^0000FF水靈箭矢筒^000000","製作 ^0000FF影子箭矢筒^000000",
+			"製作 ^0000FF無形箭矢筒^000000","製作 ^0000FF鐵銹箭矢筒^000000")) {
+case 1:
+	set .@DelItem,1750;
+	set .@GetItem,12004;
+	break;
+case 2:
+	set .@DelItem,1770;
+	set .@GetItem,12005;
+	break;
+case 3:
+	set .@DelItem,1753;
+	set .@GetItem,12006;
+	break;
+case 4:
+	set .@DelItem,1765;
+	set .@GetItem,12007;
+	break;
+case 5:
+	set .@DelItem,1752;
+	set .@GetItem,12008;
+	break;
+case 6:
+	set .@DelItem,1751;
+	set .@GetItem,12009;
+	break;
+case 7:
+	set .@DelItem,1755;
+	set .@GetItem,12010;
+	break;
+case 8:
+	set .@DelItem,1756;
+	set .@GetItem,12011;
+	break;
+case 9:
+	set .@DelItem,1754;
+	set .@GetItem,12012;
+	break;
+case 10:
+	set .@DelItem,1767;
+	set .@GetItem,12013;
+	break;
+case 11:
+	set .@DelItem,1757;
+	set .@GetItem,12014;
+	break;
+case 12:
+	set .@DelItem,1762;
+	set .@GetItem,12015;
+	break;	}
+
+	if ( Zeny < 500 || countitem (1762) < 500 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	set Zeny,Zeny - 500;
+	delitem .@DelItem,500;
+	getitem .@GetItem,1;
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Pet01	{
+
+	switch(select("製作 ^0000FF魔物飲料^000000","製作 ^0000FF呢喃花^000000",
+			"製作 ^0000FF惡魔召喚書^000000","製作 ^0000FF魔物之證^000000",
+			"製作 ^0000FF魔物信件^000000","製作 ^0000FF心愛女人之回憶^000000")) {
+case 1:
+	setarray .@QW1[1],626,512,702;
+	setarray .@QW2[1],1,2,1;
+	break;
+case 2:
+	setarray .@QW1[1],629,707;
+	setarray .@QW2[1],1,1;
+	break;
+case 3:
+	setarray .@QW1[1],642,958,1006;
+	setarray .@QW2[1],1,2,1;
+	break;
+case 4:
+	setarray .@QW1[1],635,904,1004;
+	setarray .@QW2[1],1,1,1;
+	break;
+case 5:
+	setarray .@QW1[1],636,7014;
+	setarray .@QW2[1],1,1;
+	break;
+case 6:
+	setarray .@QW1[1],659,901,1558;
+	setarray .@QW2[1],1,1,1;
+	break;	}
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[2])+" "+.@QW2[2]+"^000000 個";
+	if ( .@QW1[3] != 0 ) mes "　和 ^FF0000"+getitemname(.@QW1[3])+" "+.@QW2[3]+"^000000 個";
+	next;
+	if (select("開始製作:放棄製作") == 2 ) {
+		close;
+	}
+	if ( countitem(.@QW1[2]) < .@QW2[2] ) { set .@No_Item,1; }
+	if ( .@QW1[3] != 0 ) {
+	if ( countitem(.@QW1[3]) < .@QW2[3] ) { set .@No_Item,1; }		}
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	delitem .@QW1[2],.@QW2[2];
+	if ( .@QW1[3] != 0 ) delitem .@QW1[3],.@QW2[3];
+	getitem .@QW1[1],.@QW2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Pet02	{
+
+	switch(select("製作 ^0000FF牛角骨盔^000000","製作 ^0000FF寵物防毒面具^000000",
+			"製作 ^0000FF寵物髮帶^000000","製作 ^0000FF野生花^000000",
+			"製作 ^0000FF寵物髮夾^000000","製作 ^0000FF寵物蛋殼帽^000000",
+			"製作 ^0000FF蝗蟲眼鏡^000000")) {
+case 1:
+	setarray .@QW1[1],10001,5017;
+	setarray .@QW2[1],1,1;
+	break;
+case 2:
+	setarray .@QW1[1],10002,5004;
+	setarray .@QW2[1],1,1;
+	break;
+case 3:
+	setarray .@QW1[1],10007,2208;
+	setarray .@QW2[1],1,1;
+	break;
+case 4:
+	setarray .@QW1[1],10009,2207;
+	setarray .@QW2[1],1,1;
+	break;
+case 5:
+	setarray .@QW1[1],10011,2294;
+	setarray .@QW2[1],1,1;
+	break;
+case 6:
+	setarray .@QW1[1],10012,5015;
+	setarray .@QW2[1],1,1;
+	break;
+case 7:
+	setarray .@QW1[1],10014,912,2208;
+	setarray .@QW2[1],1,1,1;
+	set .@QWZeny,400;
+	break;	}
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF"+getitemname(.@QW1[1])+"^000000 所需材料如下：";
+	mes "材料 ^FF0000"+getitemname(.@QW1[2])+" "+.@QW2[2]+"^000000 個";
+	if ( .@QW1[3] != 0 ) mes "　和 ^FF0000"+getitemname(.@QW1[3])+" "+.@QW2[3]+"^000000 個";
+	if ( .@QIZeny != 0 ) mes "　和 ^FF0000金錢 "+.@QIZeny+"^000000 z";
+	next;
+	if (select("開始製作:放棄製作") == 2 ) {
+		close;
+	}
+	if ( countitem(.@QW1[2]) < .@QW2[2] ) { set .@No_Item,1; }
+	if ( .@QW1[3] != 0 ) {
+	if ( countitem(.@QW1[3]) < .@QW2[3] ) { set .@No_Item,1; }		}
+	if ( .@QIZeny != 0 && Zeny < .@QIZeny ) { set .@No_Item,1; } 
+	if ( .@No_Item == 1 ) {	mes "[製作系統]";
+				mes "抱歉您身上的物品不足!!";
+				close;	}
+	if ( .@QIZeny != 0 ) set Zeny,Zeny - .@QIZeny;
+	delitem .@QW1[2],.@QW2[2];
+	if ( .@QW1[3] != 0 ) delitem .@QW1[3],.@QW2[3];
+	getitem .@QW1[1],.@QW2[1];
+	mes "[製作系統]";
+	mes "恭喜 [^0000FF"+getitemname(.@QW1[1])+"^000000] 製作已完成!!";
+	close;
+}
+
+//====================================================//
+
+function	script	Quests_Food	{
+
+	switch(select("製作 ^0000FF盧恩米德加爾特製草莓蛋糕^000000","製作 ^0000FF秀發茲發德製鳳梨果汁^000000","製作 ^0000FF阿盧納貝茲製沙漠三明治^000000")) {
+
+	case 1:
+		mes "[製作大師]";
+		mes "魔力長角5個製作：盧恩米德加爾特製草莓蛋糕1個";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[製作大師]";  
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(6023)<@input*5 ) {
+		mes "[製作大師]";  
+		mes "魔力長角不足5";
+		close;	}
+		delitem 6023,@input*5;
+		getitem 12319,@input;
+		close;
+
+	case 2:
+		mes "[製作大師]";
+		mes "銀光毛皮5個製作：秀發茲發德製鳳梨果汁1個";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[製作大師]";  
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(6020)<@input*5 ) {
+		mes "[製作大師]";  
+		mes "魔力長角不足5";
+		close;	}
+		delitem 6020,@input*5;
+		getitem 12320,@input;
+		close;
+
+	case 3:
+		mes "[製作大師]";
+		mes "小紅高帽5個製作：阿盧納貝茲製沙漠三明治1個";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[製作大師]";  
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(6021)<@input*5 ) {
+		mes "[製作大師]";  
+		mes "魔力長角不足5";
+		close;	}
+		delitem 6021,@input*5;
+		getitem 12321,@input;
+		close;
+
+	}
+}
+

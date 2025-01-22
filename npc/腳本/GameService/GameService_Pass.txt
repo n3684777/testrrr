@@ -1,0 +1,161 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 客服專員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+function	script	GS_PassNPC	{
+
+	if ( getarg(0) ) {
+		if ( getcharid(2) == 0 ) {
+			mes $@GameService_Str$;
+			mes "不好意思！您沒有加入任何公會唷！";
+			close;
+		}
+		if ( getguildmasterid(getcharid(2)) != getcharid(0) ) {
+			mes $@GameService_Str$;
+			mes "不好意思！您不是這個公會的會長！";
+			close;
+		}
+		set @PassNum,@GPass_Num;
+		set @PassType$,"公會倉庫密碼鎖";
+		set @PassTypeN,1;
+	} else {
+		set @PassNum,@Pass_Num;
+		set @PassType$,"倉庫密碼鎖";
+		set @PassTypeN,0;
+	}
+	if ( @PassNum ) {
+		mes $@GameService_Str$;
+		mes "您的帳號有申請^0000FF"+@PassType$+"^000000，";
+		mes "請問您需要什麼服務呢？";
+		next;
+		switch(select("修改"+@PassType$+"！","移除"+@PassType$+"！")) {
+		case 1:
+			if ( @PassTypeN ) {
+				callfunc "GS_PassCheck",1;
+			} else {
+				callfunc "GS_PassCheck",0;
+			}
+			break;
+		case 2:
+			if ( @PassTypeN ) {
+				callfunc "GS_PassCheck",1;
+				setd "$GameServiceG"+getcharid(2)+"Pass$","";
+			} else {
+				callfunc "GS_PassCheck",0;
+				set #GameServicePass$,"";
+			}
+			mes $@GameService_Str$;
+			mes "移除^0000FF"+@PassType$+"^000000申請已通過！";
+			set @PassNum,0;
+			set @PassType,0;
+			set @PassType$,"";
+			close;
+		}
+	} else {
+		mes $@GameService_Str$;
+		mes "歡迎使用^0000FF"+@PassType$+"^000000的功能，";
+		if ( @PassTypeN ) {
+			mes "提供您^FF0000公會倉庫儲存^000000的安全！";
+		} else {
+			mes "提供您^FF0000倉庫儲存^000000的安全，";
+			mes "以及您^FF0000銀行存款^000000的安全！";
+		}
+		next;
+	}
+
+Check:
+	mes $@GameService_Str$;
+	mes "請輸入您想設定的^0000FF"+@PassType$+"^000000，";
+	mes "範圍 4 ～ 16 個^FF0000數字^000000+^FF0000文字^000000。";
+	mes "輸入全部^FF0000數字^000000或全部^FF0000文字^000000也可以！";
+	mes " ";
+	mes "( 輸入^FF0000Exit^000000或^FF0000離開^000000為取消)";
+	input @Pass$;
+	set @PassNum,getstrlen(@Pass$);
+	next;
+	if ( @Pass$ == "Exit" || @Pass$ == "EXIT" || @Pass$ == "exit" || @Pass$ == "離開" ) {
+		mes $@GameService_Str$;
+		mes "您已經取消^0000FF"+@PassType$+"^000000服務！";
+		set @Pass$,"";
+		set @PassNum,0;
+		set @PassType,0;
+		set @PassType$,"";
+		close;
+	}
+	if ( @PassNum < 4 || @PassNum > 16 ) {
+		mes $@GameService_Str$;
+		mes "您設定的密碼長度錯誤！";
+		mes "您設定的密碼長度為["+@PassNum+"]";
+		next;
+		goto Check;
+	}
+	if ( @PassTypeN ) {
+		setd "$GameServiceG"+getcharid(2)+"Pass$",@Pass$;
+	} else {
+		set #GameServicePass$,@Pass$;
+	}
+	mes $@GameService_Str$;
+	mes "您的^0000FF"+@PassType$+"^000000申請已通過，";
+	mes "您設定的^0000FF"+@PassType$+"^000000為：";
+	if ( @PassTypeN ) {
+		mes "[^FF0000"+getd("$GameServiceG"+getcharid(2)+"Pass$")+"^000000]";
+	} else {
+		mes "[^FF0000"+#GameServicePass$+"^000000]";
+	}
+	mes "請牢牢記住您的^0000FF"+@PassType$+"^000000，";
+	if ( @PassTypeN ) {
+		mes "忘記將無法使用公會倉庫！";
+	} else {
+		mes "忘記將無法使用倉庫跟銀行！";
+	}
+	set @Pass$,"";
+	set @PassNum,0;
+	set @PassType,0;
+	set @PassType$,"";
+	close;
+}
+
+//================================================//
+
+function	script	GS_PassCheck	{
+
+	if ( getarg(0) ) {
+		set @CheckType$,"公會倉庫密碼鎖";
+		set @PassCheck$,getd("$GameServiceG"+getcharid(2)+"Pass$");
+	} else {
+		set @CheckType$,"倉庫密碼鎖";
+		set @PassCheck$,#GameServicePass$;
+	}
+Error:
+	mes $@GameService_Str$;
+	mes "您的帳號有申請^0000FF"+@CheckType$+"^000000，";
+	mes "當驗證完後才能夠繼續使用！";
+	mes " ";
+	mes "^FF0000還剩餘 "+(3-@Error)+" 次機會^000000";
+	next;
+	set @Error,@Error+1;
+	input @Pass$;
+	if ( @PassCheck$ != @Pass$ ) {
+		if ( @Error >= 3 ) {
+			logmes "嘗試輸入["+@CheckType$+"]多次失敗，遭伺服器自動踢出！";
+			atcommand "@kick "+strcharinfo(0);
+			end;
+		}
+		mes $@GameService_Str$;
+		mes "您的^0000FF"+@CheckType$+"^000000輸入錯誤唷！";
+		next;
+		goto Error;
+	}
+	set @PassCheck$,"";
+	set @CheckType$,"";
+	set @Error,0;
+	return;
+}
+
+//================================================//

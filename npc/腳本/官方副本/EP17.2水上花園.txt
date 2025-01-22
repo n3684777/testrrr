@@ -1,0 +1,725 @@
+//額外霸肋門德餐券 10%
+function	script	BarMeal_item	{
+	//擊殺小怪獲取機率
+	if(rand(100)<10) getitem 1000103,1;
+	return;
+}
+
+vdistrict1,25,33,4	script	水上花園管理者	10353,{
+
+	//副本任務獎勵
+	if(checkquest(32042,HUNTING)==2 ) { 
+	dispbottom "水上花園(普通)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點金幣
+	erasequest 32042; }
+
+	if(checkquest(32044,HUNTING)==2 ) { 
+	dispbottom "水上花園(困難)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點金幣
+	erasequest 32044; }
+
+	//模式選擇
+	switch(select("水上花園(普通):水上花園(困難)")){
+
+	case 1:
+	//挑戰次數
+	if ( day_Instance_Bout_32 < gettime(8) ){
+	set Instance_Bout_32,10;
+	set day_Instance_Bout_32,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_32 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[賽修]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "水上花園(普通)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建水上花園(普通):進入水上花園(普通)";
+	else
+		set @menu$, ":進入水上花園(普通)";
+		
+	mes "[賽修]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_32+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x4";
+	mes "商城1點金幣x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[賽修]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[賽修]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[賽修]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		//副本難度
+		set GHG_Level,1;
+		close;
+
+	case 1:
+		if(BaseLevel < 130) {
+			mes "[賽修]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_32,Instance_Bout_32-1;
+
+			//副本積分任務
+			if(checkquest(32042,HUNTING)<0 ){setquest 32042;}
+			//副本任務
+			if(checkquest(16431,HUNTING)<0 ){setquest 16431;}
+			if(checkquest(16435,HUNTING)<0 ){setquest 16435;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+			end;
+		}
+	}
+	close;
+	end;
+
+	case 2:
+	//挑戰次數
+	if ( day_Instance_Bout_33 < gettime(8) ){
+	set Instance_Bout_33,10;
+	set day_Instance_Bout_33,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_33 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[賽修]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "水上花園(困難)";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建水上花園(困難):進入水上花園(困難)";
+	else
+		set @menu$, ":進入水上花園(困難)";
+		
+	mes "[賽修]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_33+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x10";
+	mes "商城1點金幣x5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 180) {
+			mes "[賽修]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.180 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[賽修]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[賽修]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		//副本難度
+		set GHG_Level,2;
+		close;
+
+	case 1:
+		if(BaseLevel < 180) {
+			mes "[賽修]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.180 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_33,Instance_Bout_33-1;
+
+			//副本積分任務
+			if(checkquest(32044,HUNTING)<0 ){setquest 32044;}
+			//副本任務
+			if(checkquest(16433,HUNTING)<0 ){setquest 16433;}
+			if(checkquest(16435,HUNTING)<0 ){setquest 16435;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+			end;
+		}
+	}
+	close;
+	end;
+}
+OnInit:
+	waitingroom "水上花園",0;
+	end;
+}
+
+
+//------------------------------水上花園事件
+1@ghg,0,0,0	script	水上花園事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@ghg");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("尤伯切#GHG01");
+	disablenpc instance_npcname("阿迪圖拉#GHG01");
+	disablenpc instance_npcname("園丁#GHG01");
+	disablenpc instance_npcname("園丁#GHG02");
+	disablenpc instance_npcname("園丁#GHG03");
+	disablenpc instance_npcname("園丁#GHG04");
+	disablenpc instance_npcname("貝勒奇納#GHG01");
+	disablenpc instance_npcname("賽修#GHG00");
+	disablenpc instance_npcname("傳送門#GHG01");
+	disablenpc instance_npcname("傳送門#GHG02");
+	disablenpc instance_npcname("傳送門#GHG03");
+	disablenpc instance_npcname("傳送門#GHG04");
+
+	//副本標籤
+	set 'CD_GHG_01,0;
+	set 'CD_GHG_02,0;
+	set 'CD_GHG_03,0;
+	set 'CD_GHG_04,0;
+	set 'CD_GHG_05,0;
+	set 'CD_GHG_01,0;
+	end;
+
+OnCcdd1:
+	callfunc "BarMeal_item";
+	set 'CD_GHG_Mob_01,'CD_GHG_Mob_01-1;
+	if('CD_GHG_Mob_01==5) {
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_GHG_Mob_01+"只怪物",bc_all,0x33CC33;
+	}
+	if('CD_GHG_Mob_01==0) {
+	enablenpc instance_npcname("尤伯切#GHG01");
+	enablenpc instance_npcname("傳送門#GHG01");
+	disablenpc instance_npcname("賽修#GHG01");
+	instance_announce instance_id(1),"清理完畢，請移動至下一區",bc_all,0xD7BA98;
+	}
+	end;
+
+OnCcdd2:
+	callfunc "BarMeal_item";
+	set 'CD_GHG_Mob_01,'CD_GHG_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_GHG_Mob_01+"只怪物",bc_all,0x33CC33;
+	if('CD_GHG_Mob_01>0) end;
+	enablenpc instance_npcname("阿迪圖拉#GHG01");
+	enablenpc instance_npcname("傳送門#GHG02");
+	disablenpc instance_npcname("尤伯切#GHG01");
+	instance_announce instance_id(1),"清理完畢，請移動至下一區",bc_all,0xD7BA98;
+	end;
+
+OnCcdd3:
+	callfunc "BarMeal_item";
+	set 'CD_GHG_Mob_01,'CD_GHG_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_GHG_Mob_01+"只怪物",bc_all,0x33CC33;
+	if('CD_GHG_Mob_01>0) end;
+	enablenpc instance_npcname("園丁#GHG0"+rand(1,4)+"");
+	enablenpc instance_npcname("傳送門#GHG03");
+	disablenpc instance_npcname("阿迪圖拉#GHG01");
+	set 'CD_GHG_Mob_01,2;
+
+	if('GHG_Level==1){
+	areamonster 'map_name$[0],273,308,345,236,"--ja--",20665,12;
+	areamonster 'map_name$[0],273,308,345,236,"--ja--",20677,12;
+	areamonster 'map_name$[0],278,242,278,242,"--ja--",20671,1,instance_npcname("水上花園事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],279,302,279,302,"--ja--",20674,1,instance_npcname("水上花園事件1")+"::OnCcdd4";
+	} else if('GHG_Level==2){
+	areamonster 'map_name$[0],273,308,345,236,"--ja--",20666,12;
+	areamonster 'map_name$[0],273,308,345,236,"--ja--",20678,12;
+	areamonster 'map_name$[0],278,242,278,242,"--ja--",20672,1,instance_npcname("水上花園事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],279,302,279,302,"--ja--",20675,1,instance_npcname("水上花園事件1")+"::OnCcdd4";
+	}
+	instance_announce instance_id(1),"阿迪圖拉：已開啟...下個花園傳點..請往12點鐘方向移動..謝謝..使用...",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"阿迪圖拉：移動後..請你擊殺迷宮花園中..所有帕皮拉..拜託你了",bc_all,0xD7BA98;
+	end;
+
+OnCcdd4:
+	callfunc "BarMeal_item";
+	set 'CD_GHG_Mob_01,'CD_GHG_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_GHG_Mob_01+"只怪物",bc_all,0x33CC33;
+	if('CD_GHG_Mob_01>0) end;
+	enablenpc instance_npcname("貝勒奇納#GHG01");
+	enablenpc instance_npcname("傳送門#GHG04");
+	instance_announce instance_id(1),"清理完畢，請移動至下一區",bc_all,0xD7BA98;
+	end;
+
+
+OnEnd01:
+	'win = 1;
+	//出場公告時間
+	donpcevent instance_npcname("計時器#GHG01")+"::OnEnd";
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【水上花園(普通)】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("賽修#GHG00");
+	instance_announce 0, "賽修：你們動作真是快，來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+
+OnEnd02:
+	'win = 1;
+	//出場公告時間
+	donpcevent instance_npcname("計時器#GHG01")+"::OnEnd";
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【水上花園(困難)】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("賽修#GHG00");
+	instance_announce 0, "賽修：你們動作真是快，來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@ghg,216,59,4	script	賽修#GHG01	10353,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_GHG_01>0) end;
+	set 'CD_GHG_01,1;
+	if(GHG_Level==1 ) { set 'GHG_Level,1; }
+	if(GHG_Level==2 ) { set 'GHG_Level,2; }
+
+	mes ""+'GHG_Level+"";
+	mes "[賽修]";
+	mes "歡迎來到水上花園， 你來看帕皮利亞阿?，帕皮利亞最近因為入侵者很敏感...";
+	npctalk "歡迎來到水上花園， 你來看帕皮利亞阿?，帕皮利亞最近因為入侵者很敏感...";
+	next;
+	mes "[賽修]";
+	mes "帕皮拉到處惡作劇， 利用翅膀中產生的幻覺物質讓人短距離移動，或是在那上面使用危險的魔法!";
+	npctalk "帕皮拉到處惡作劇， 利用翅膀中產生的幻覺物質讓人短距離移動，或是在那上面使用危險的魔法!";
+	next;
+	mes "[賽修]";
+	mes "雖然園丁們已經廣播警告過了，但還是請你小心";
+	npctalk "雖然園丁們已經廣播警告過了，但還是請你小心";
+	next;
+	mes "[賽修]";
+	mes "整頓好所有過度成長的動植物後，3點鐘方向會為你開啟前往下一區的門";
+	npctalk "整頓好所有過度成長的動植物後，3點鐘方向會為你開啟前往下一區的門";
+	next;
+	close2;
+	sleep 6000;
+	instance_warpall 'map_name$[0],239,73, instance_id();
+	set 'CD_GHG_Mob_01,39;
+	if('GHG_Level==1){
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	sleep 20000;
+	instance_warpall 'map_name$[0],239,73, instance_id();
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	sleep 20000;
+	instance_warpall 'map_name$[0],239,73, instance_id();
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20677,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+
+	} else if('GHG_Level==2){
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	sleep 20000;
+	instance_warpall 'map_name$[0],239,73, instance_id();
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	sleep 20000;
+	instance_warpall 'map_name$[0],239,73, instance_id();
+	areamonster 'map_name$[0],225,59,225,59,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],239,54,239,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],261,54,261,54,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],227,79,227,79,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],222,92,222,92,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],253,91,253,91,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],257,76,257,76,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],217,97,264,50,"--ja--",20678,3,instance_npcname("水上花園事件1")+"::OnCcdd1";
+	}
+	end;
+}
+
+
+1@ghg,315,69,4	script	尤伯切#GHG01	10353,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_GHG_02>0) end;
+
+	mes "[尤伯切]";
+	mes "與帕皮利亞走散的帕皮拉好像在附近徘迴，請小心";
+	npctalk "與帕皮利亞走散的帕皮拉好像在附近徘迴，請小心";
+	next;
+	mes "[尤伯切]";
+	mes "每個顏色的帕皮拉攻擊範圍都不同";
+	npctalk "每個顏色的帕皮拉攻擊範圍都不同";
+	next;
+	mes "[尤伯切]";
+	mes "加上布置花園的部分園丁好像被入侵者弄壞了";
+	npctalk "加上布置花園的部分園丁好像被入侵者弄壞了";
+	next;
+	mes "[尤伯切]";
+	mes "如果攻擊你的話全部都是故障的園丁，請你擊敗他們";
+	npctalk "如果攻擊你的話全部都是故障的園丁，請你擊敗他們";
+	next;
+	close2;
+
+	set 'CD_GHG_02,1;
+	set 'CD_GHG_Mob_01,15;
+	instance_announce instance_id(1),"帕皮拉出現了!",bc_all,0xD7BA98;
+
+	if('GHG_Level==1){
+	areamonster 'map_name$[0],320,91,345,66,"--ja--",20631,3,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],320,91,345,66,"--ja--",20677,9,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],330,71,330,71,"--ja--",20669,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],335,86,335,86,"--ja--",20676,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],335,91,335,91,"--ja--",20673,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	sleep 2000;
+
+	} else if('GHG_Level==2){
+	areamonster 'map_name$[0],320,91,345,66,"--ja--",20632,3,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],320,91,345,66,"--ja--",20678,9,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],330,71,330,71,"--ja--",20670,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],335,86,335,86,"--ja--",20676,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],335,91,335,91,"--ja--",20673,1,instance_npcname("水上花園事件1")+"::OnCcdd2";
+	sleep 2000;
+	}
+	end;
+}
+
+
+1@ghg,341,143,4	script	阿迪圖拉#GHG01	10353,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_GHG_03>0) end;
+	set 'CD_GHG_03,1;
+	mes "[阿迪圖拉]";
+	mes "請你一定要好好整頓那些動植物";
+	npctalk "請你一定要好好整頓那些動植物";
+	next;
+	mes "[阿迪圖拉]";
+	mes "他的個性慢吞吞，說不定還要等他...但他一定會幫你開門";
+	npctalk "他的個性慢吞吞，說不定還要等他...但他一定會幫你開門";
+
+	set 'CD_GHG_Mob_01,20;
+	if('GHG_Level==1){
+	areamonster 'map_name$[0],330,150,230,150,"--ja--",20665,9,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],231,150,230,174,"--ja--",20665,2,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],230,174,344,174,"--ja--",20665,9,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	} else if('GHG_Level==2){
+	areamonster 'map_name$[0],330,150,230,150,"--ja--",20666,9,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],231,150,230,174,"--ja--",20666,2,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],230,174,344,174,"--ja--",20666,9,instance_npcname("水上花園事件1")+"::OnCcdd3";
+	}
+	end;
+}
+
+
+1@ghg,345,248,4	script	園丁#GHG01	10353,{
+	if(checkquest(16436,PLAYTIME)==0){ mes "[園丁]"; mes "你今天已經接取過這個任務了"; close; }
+	if(checkquest(16435,HUNTING)==0 ) { 
+	erasequest 16435;
+	setquest 16436;
+	getitem 1000099,1;	//園丁餅乾
+	getitem 1000103,4;	//霸肋門德餐券
+	npctalk "啊!我忘記報平安了!我會連絡你啦!都來了要不要吃塊餅乾?";
+	end;
+	}
+}
+
+1@ghg,293,266,4	script	園丁#GHG02	10353,{
+	if(checkquest(16436,PLAYTIME)==0){ mes "[園丁]"; mes "你今天已經接取過這個任務了"; close; }
+	if(checkquest(16435,HUNTING)==0 ) { 
+	erasequest 16435;
+	setquest 16436;
+	getitem 1000099,1;	//園丁餅乾
+	getitem 1000103,4;	//霸肋門德餐券
+	npctalk "啊!我忘記報平安了!我會連絡你啦!都來了要不要吃塊餅乾?";
+	end;
+	}
+}
+
+1@ghg,337,283,4	script	園丁#GHG03	10353,{
+	if(checkquest(16436,PLAYTIME)==0){ mes "[園丁]"; mes "你今天已經接取過這個任務了"; close; }
+	if(checkquest(16435,HUNTING)==0 ) { 
+	erasequest 16435;
+	setquest 16436;
+	getitem 1000099,1;	//園丁餅乾
+	getitem 1000103,4;	//霸肋門德餐券
+	npctalk "啊!我忘記報平安了!我會連絡你啦!都來了要不要吃塊餅乾?";
+	end;
+	}
+}
+
+1@ghg,96,247,4	script	園丁#GHG04	10353,{
+	if(checkquest(16436,PLAYTIME)==0){ mes "[園丁]"; mes "你今天已經接取過這個任務了"; close; }
+	if(checkquest(16435,HUNTING)==0 ) { 
+	erasequest 16435;
+	setquest 16436;
+	getitem 1000099,1;	//園丁餅乾
+	getitem 1000103,4;	//霸肋門德餐券
+	npctalk "啊!我忘記報平安了!我會連絡你啦!都來了要不要吃塊餅乾?";
+	end;
+	}
+}
+
+
+1@ghg,186,287,4	script	貝勒奇納#GHG01	10353,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_GHG_05>0) end;
+	set 'CD_GHG_05,1;
+	mes "[貝勒奇納]";
+	mes "戰鬥中帕皮拉出現後會出現同色光暈，請移動至柱子";
+	npctalk "戰鬥中帕皮拉出現後會出現同色光暈，請移動至柱子";
+	next;
+	mes "[貝勒奇納]";
+	mes "帕皮拉碰到光暈便會受傷死亡";
+	npctalk "帕皮拉碰到光暈便會受傷死亡";
+	next;
+	mes "[貝勒奇納]";
+	mes "你順利擊殺席瓦帕皮利亞後我們會負責善後";
+	npctalk "你順利擊殺席瓦帕皮利亞後我們會負責善後";
+	next;
+	mes "[貝勒奇納]";
+	mes "那我就來點燃吸引席瓦帕皮利亞的香氣";
+	npctalk "那我就來點燃吸引席瓦帕皮利亞的香氣";
+
+	if('GHG_Level==1){
+	areamonster 'map_name$[0],182,287,182,287,"--ja--",20667,1,instance_npcname("水上花園事件1")+"::OnEnd01";
+	areamonster 'map_name$[0],177,292,187,281,"--ja--",20671,3;
+	areamonster 'map_name$[0],177,292,187,281,"--ja--",20674,1;
+	} else if('GHG_Level==2){
+	areamonster 'map_name$[0],182,287,182,287,"--ja--",20668,1,instance_npcname("水上花園事件1")+"::OnEnd02";
+	areamonster 'map_name$[0],177,292,187,281,"--ja--",20672,3;
+	areamonster 'map_name$[0],177,292,187,281,"--ja--",20675,1;
+	}
+	donpcevent instance_npcname("計時器#GHG01")+"::OnStart";
+	disablenpc instance_npcname("貝勒奇納#GHG01");
+	end;
+}
+
+1@ghg,146,132,4	script	計時器#GHG01	-1,{
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	instance_warpall 'map_name$[0],182,287, instance_id();
+	end;
+
+OnEnd:
+	stopnpctimer;
+	end;
+
+}
+
+
+//------------------------------傳點資訊
+1@ghg,268,67,0	warp	傳送門#GHG01	2,2,1@ghg,307,67
+1@ghg,343,97,0	warp	傳送門#GHG02	2,2,1@ghg,343,139
+1@ghg,343,183,0	warp	傳送門#GHG03	2,2,1@ghg,305,235
+1@ghg,266,309,0	warp	傳送門#GHG04	42,2,1@ghg,189,287
+
+
+//------------------------------領取獎勵
+1@ghg,186,287,4	script	賽修#GHG00	10353,{
+	if(gettimetick(2) < getd("CD2_GHG") ){
+	mes "您還必須等待^FF0000"+(getd("CD2_GHG")-gettimetick(2))+"^000000秒。";
+	mes "時間內無法再次領取獎勵";
+	close;
+	}
+	//副本任務獎勵
+	if(checkquest(32042,HUNTING)==2 ) { 
+	dispbottom "水上花園(普通)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點兌換券
+	erasequest 32042; }
+
+	if(checkquest(32044,HUNTING)==2 ) { 
+	dispbottom "水上花園(困難)討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點兌換券
+	erasequest 32044; }
+
+	mes "[賽修]";
+	mes "讓我把你們送出水上花園吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+	case 1:
+//------------------------------官方副本任務
+	//官方副本獎勵(普通)
+	if(checkquest(16431,HUNTING)==2 ) { 
+	dispbottom "水上花園(普通)任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,4*$EP1702;	//霸肋門德餐券
+	erasequest 16431; }
+	//官方副本獎勵(困難)
+	if(checkquest(16433,HUNTING)==2 ) { 
+	dispbottom "水上花園(困難)任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,10*$EP1702;	//霸肋門德餐券
+	erasequest 16433; }
+	callfunc "offical_instance_finish",44;
+
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@ghg	mapflag	partylock
+1@ghg	mapflag	noteleport
+1@ghg	mapflag	nosave	SavePoint
+1@ghg	mapflag	nomemo
+1@ghg	mapflag	nobranch
+1@ghg	mapflag	noicewall
+1@ghg	mapflag	restricted	6
+
+
+
+

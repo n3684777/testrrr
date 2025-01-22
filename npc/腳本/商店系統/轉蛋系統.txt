@@ -1,0 +1,3597 @@
+﻿
+
+
+
+
+
+
+
+
+//----------------------------- 自創副本轉蛋(一)
+function	script	Unknown_Item_12391	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7901 && @pay<=8900){
+	getitem F_rand(80021,80022,80023),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9400){
+	getitem F_rand(80086,80087,80088),1;
+	end;
+	}
+	if(@pay>=9401 && @pay<=9900){
+	getitem F_rand(80097,80098,80099),1;
+	end;
+	}
+	if(@pay>=9901 && @pay<=9995){
+	setarray Unknown_Item_12391_3[0],102539,410233,420210,420213,420220;
+	set @Unknown_Item_12391,Unknown_Item_12391_3[rand(getarraysize(Unknown_Item_12391_3))];
+	getitem @Unknown_Item_12391,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 自創副本轉蛋(一) 取得 "+getitemname(@Unknown_Item_12391)+"!!",15;
+	end;
+	}
+	setarray Unknown_Item_12391_4[0],7227;
+	set @Unknown_Item_12391,Unknown_Item_12391_4[rand(getarraysize(Unknown_Item_12391_4))];
+	getitem @Unknown_Item_12391,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 自創副本轉蛋(一) 取得 "+getitemname(@Unknown_Item_12391)+"!!",15;
+	end;
+}
+
+//----------------------------- 榮耀狩獵箱
+function	script	Unknown_Item_80115	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7500){
+	getitem 6635,6;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9840){
+	getitem 80116,1;
+	end;
+	}
+
+	if(@pay>=9841 && @pay<=9940){
+	setarray Unknown_Item_80115_2[0],7080,7081;
+	set @Unknown_Item_80115,Unknown_Item_80115_2[rand(getarraysize(Unknown_Item_80115_2))];
+	getitem @Unknown_Item_80115,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 榮耀狩獵箱 取得 "+getitemname(@Unknown_Item_80115)+"!!",15;
+	end;
+	}
+	if(@pay>=9941 && @pay<=9990){
+	setarray Unknown_Item_80115_3[0],7227,22829;
+	set @Unknown_Item_80115,Unknown_Item_80115_3[rand(getarraysize(Unknown_Item_80115_3))];
+	getitem @Unknown_Item_80115,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 榮耀狩獵箱 取得 "+getitemname(@Unknown_Item_80115)+"!!",15;
+	end;
+	}
+	setarray Unknown_Item_80115_4[0],22654;
+	set @Unknown_Item_80115,Unknown_Item_80115_4[rand(getarraysize(Unknown_Item_80115_4))];
+	getitem @Unknown_Item_80115,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 榮耀狩獵箱 取得 "+getitemname(@Unknown_Item_80115)+"!!",15;
+	end;
+}
+
+//----------------------------- 傳說狩獵箱
+function	script	Unknown_Item_80114	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7500){
+	getitem 6635,4;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9840){
+	getitem 80116,1;
+	end;
+	}
+
+	if(@pay>=9841 && @pay<=9940){
+	setarray Unknown_Item_80114_2[0],7082,7084;
+	set @Unknown_Item_80114,Unknown_Item_80114_2[rand(getarraysize(Unknown_Item_80114_2))];
+	getitem @Unknown_Item_80114,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 傳說狩獵箱 取得 "+getitemname(@Unknown_Item_80114)+"!!",15;
+	end;
+	}
+	if(@pay>=9941 && @pay<=9990){
+	setarray Unknown_Item_80114_3[0],22829;
+	set @Unknown_Item_80114,Unknown_Item_80114_3[rand(getarraysize(Unknown_Item_80114_3))];
+	getitem @Unknown_Item_80114,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 傳說狩獵箱 取得 "+getitemname(@Unknown_Item_80114)+"!!",15;
+	end;
+	}
+	setarray Unknown_Item_80114_4[0],22654;
+	set @Unknown_Item_80114,Unknown_Item_80114_4[rand(getarraysize(Unknown_Item_80114_4))];
+	getitem @Unknown_Item_80114,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 傳說狩獵箱 取得 "+getitemname(@Unknown_Item_80114)+"!!",15;
+	end;
+}
+
+//----------------------------- 史詩狩獵箱
+function	script	Unknown_Item_80113	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7500){
+	getitem 6635,3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9840){
+	getitem 80116,1;
+	end;
+	}
+
+	if(@pay>=9841 && @pay<=9940){
+	setarray Unknown_Item_80113_2[0],7085;
+	set @Unknown_Item_80113,Unknown_Item_80113_2[rand(getarraysize(Unknown_Item_80113_2))];
+	getitem @Unknown_Item_80113,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 史詩狩獵箱 取得 "+getitemname(@Unknown_Item_80113)+"!!",15;
+	end;
+	}
+	if(@pay>=9941 && @pay<=9990){
+	setarray Unknown_Item_80113_3[0],22829;
+	set @Unknown_Item_80113,Unknown_Item_80113_3[rand(getarraysize(Unknown_Item_80113_3))];
+	getitem @Unknown_Item_80113,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 史詩狩獵箱 取得 "+getitemname(@Unknown_Item_80113)+"!!",15;
+	end;
+	}
+	setarray Unknown_Item_80113_4[0],22654;
+	set @Unknown_Item_80113,Unknown_Item_80113_4[rand(getarraysize(Unknown_Item_80113_4))];
+	getitem @Unknown_Item_80113,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 史詩狩獵箱 取得 "+getitemname(@Unknown_Item_80113)+"!!",15;
+	end;
+}
+
+//----------------------------- 狩獵服飾禮盒(1)
+function	script	Unknown_Item_80116	{ 
+	getitem F_rand(20300,40675,40269,40275,31473,40198,31045,20175,40430,40431,40434,40375,20214,20191,19729,19723,31937,44100,44022,420103,436010,31531,40311,31252,40173,40194,41408,41553,41503,41502,41501,41500,41499,41498,41497,22916,22917,22918,22919,22920,22921,22922),1;
+	end;
+}
+
+//----------------------------- 時序象限材料皮袋
+function	script	Unknown_Item_80107	{ 
+	getitem F_rand(1001550,1001551,1001554),rand(6,10);
+	end;
+}
+
+//----------------------------- 困難道場寶箱
+function	script	Daoguan_Box03	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=9000){
+	setarray .item_id1,61006,6240,6241,6417,6417,6417;
+	setarray .item_CO1,3,3,3,4,5,6;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=9001 && @pay<=9950){
+	setarray .item_id2,80089,6635;
+	setarray .item_CO2,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9951 && @pay<=10000){
+	setarray .item_id3,28502,32243,420087,490318,490088;
+	setarray .item_CO3,1,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id3));
+	getitem .item_id3[.@index_pc],.item_CO3[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 困難道場寶箱 取得 "+getitemname(.item_id3[.@index_pc])+"x"+.item_CO3[.@index_pc]+" !!",15;
+	end;
+	}
+	end;
+}
+
+
+//----------------------------- 普通道場寶箱
+function	script	Daoguan_Box02	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=9000){
+	setarray .item_id1,61006,7619,7620,6417,6417,6417;
+	setarray .item_CO1,2,3,3,3,4,5;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=9001 && @pay<=9950){
+	setarray .item_id2,80089,14629,14681,14695,22826,22868,61155;
+	setarray .item_CO2,1,1,1,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9951 && @pay<=10000){
+	setarray .item_id3,28955,28951,28916,28921;
+	setarray .item_CO3,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id3));
+	getitem .item_id3[.@index_pc],.item_CO3[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 普通道場寶箱 取得 "+getitemname(.item_id3[.@index_pc])+"x"+.item_CO3[.@index_pc]+" !!",15;
+	end;
+	}
+	end;
+}
+
+
+//----------------------------- 簡單道場寶箱
+function	script	Daoguan_Box01	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=9000){
+	setarray .item_id1,61006,7619,7620,6417,6417;
+	setarray .item_CO1,1,2,2,2,3;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=9001 && @pay<=9950){
+	setarray .item_id2,80089,14629,14681,14695,22826,22868,23115;
+	setarray .item_CO2,1,1,1,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9951 && @pay<=10000){
+	setarray .item_id3,20735,20745,20734,20747;
+	setarray .item_CO3,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id3));
+	getitem .item_id3[.@index_pc],.item_CO3[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 簡單道場寶箱 取得 "+getitemname(.item_id3[.@index_pc])+"x"+.item_CO3[.@index_pc]+" !!",15;
+	end;
+	}
+	end;
+}
+
+//----------------------------- 新春福袋
+function	script	aegis_81016	{ 
+
+	getitem 61028,rand(10,38);
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,rand(10,30);
+	end;
+	}
+	if(@pay>=5001 && @pay<=8500){
+	getitem 7650,rand(5,10);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9500){
+	getitem F_rand(6872,6878),1;
+	end;
+	}
+	if(@pay>=9501 && @pay<=10000){
+	setarray $@aegis_81016_1[0],70045,70055;
+	set @aegis_81016,$@aegis_81016_1[rand(getarraysize($@aegis_81016_1))];
+	getitem @aegis_81016,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 新春福袋 取得 "+getitemname(@aegis_81016)+"!!",15;
+	end;
+	}
+	getitem 6635,rand(10,30);
+	end;
+}
+
+
+//----------------------------- 三月福袋
+function	script	aegis_81021	{ 
+
+	getitem 61028,rand(10,38);
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8500){
+	getitem 6635,rand(10,30);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9600){
+	getitem 70061,1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=10000){
+	setarray $@aegis_81016_1[0],70045,70055;
+	set @aegis_81016,$@aegis_81016_1[rand(getarraysize($@aegis_81016_1))];
+	getitem @aegis_81016,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 新春福袋 取得 "+getitemname(@aegis_81016)+"!!",15;
+	end;
+	}
+	getitem 6635,rand(10,30);
+	end;
+}
+
+
+//----------------------------- 官方副本遺物
+function	script	Relic_102550	{ //格拉斯海姆的神器(詛咒施密特國王)
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 1001478,rand(3,5);
+	end;
+	}
+	if(@pay>=5001 && @pay<=9000){
+	getitem 25739,rand(16,25);
+	end;
+	}
+	if(@pay>=9001 && @pay<=97000){
+	getitem2 F_rand(15388,15389),1,1,rand(7,9),0,0,0,0,0;
+	end;
+	}
+	getitem2 rand(20963,20968),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	end;
+}
+
+function	script	Relic_102551	{ //格拉斯海姆的神器(詛咒施密特國王(困難))
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 1001478,rand(4,7);
+	end;
+	}
+	if(@pay>=5001 && @pay<=9000){
+	getitem 25739,rand(16,25);
+	end;
+	}
+	if(@pay>=9001 && @pay<=97000){
+	getitem2 F_rand(15388,15389),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem rand(32228,32233),1;
+	end;
+}
+
+function	script	Relic_102552	{ //格拉斯海姆的神器(闇答萊屍的幻影)
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 1001478,rand(4,8);
+	end;
+	}
+	if(@pay>=5001 && @pay<=6500){
+	getitem 25865,rand(6,10);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem F_rand(25866,25867),rand(11,15);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(1336,18191,21055,28141,32027,32353,18198,2060,26165,26166,26216,28046,28636,28774,28775,28776,32401,32402,1870,13347,26172,32304),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(4,8);
+	end;
+}
+
+function	script	Relic_102553	{ //格拉斯海姆的神器(希梅爾茲的幻影)
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 1001478,rand(8,12);
+	end;
+	}
+	if(@pay>=5001 && @pay<=6500){
+	getitem 25865,rand(11,15);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem F_rand(25866,25867),rand(16,20);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(1336,18191,21055,28141,32027,32353,18198,2060,26165,26166,26216,28046,28636,28774,28775,28776,32401,32402,1870,13347,26172,32304),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(4,8);
+	end;
+}
+
+function	script	Relic_102554	{ //格拉斯海姆的神器(闇答萊屍)
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=5001 && @pay<=6500){
+	getitem 6607,rand(15,30);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem 6608,rand(10,25);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 rand(22006,22011),1,1,rand(7,9),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102555	{ //格拉斯海姆的神器(覺醒闇答萊屍)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(4,7);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem 6607,rand(20,35);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7500){
+	getitem 6608,rand(30,45);
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem 6755,rand(11,15);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 rand(22006,22011),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(4,7);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102556	{ //柯爾的遺物(米古爾)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 25668,rand(3,5);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem F_rand(25669,25723),rand(11,20);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(13493,21047,26151,28629,28136,16088,18178,18179,18180,28038,1862,28253,28755,32019,16089,26164),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102557	{ //柯爾的遺物(EL-A17T)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 25668,rand(3,5);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem F_rand(25669,25723),rand(11,20);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(13493,21047,26151,28629,28136,16088,18178,18179,18180,28038,1862,28253,28755,32019,16089,26164),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102558	{ //宅邸的遺跡(大王喵喵)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 1000103,rand(11,20);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem 1000104,rand(1,5);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450127,450128,470022,470023,480020,480021),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490024,490025,490026,490027),1;
+	end;
+}
+
+function	script	Relic_102559	{ //宅邸的遺跡(斯威蒂)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 1000103,rand(11,20);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem 1000104,rand(1,5);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(500007,600008,550008,540004,520002,500008,700007,700008,560004,530002,630003,510008,610006,640005,540005,510009,580005,570005,700009,650003,590006,550009,810000,820000,830001,840000),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102560	{ //宅邸的遺跡(紅椒-卡帕)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(4,7);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 1000103,rand(21,25);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem 1000104,rand(3,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9300){
+	getitem2 F_rand(450127,450128,470022,470023,480020,480021),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	if(@pay>=9301 && @pay<=9700){
+	getitem2 F_rand(500007,600008,550008,540004,520002,500008,700007,700008,560004,530002,630003,510008,610006,640005,540005,510009,580005,570005,700009,650003,590006,550009,810000,820000,830001,840000),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490024,490025,490026,490027),1;
+	end;
+}
+
+function	script	Relic_102561	{ //宅邸的遺跡(紅椒-蘭達)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(8,10);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 1000103,rand(31,35);
+	end;
+	}
+	if(@pay>=6501 && @pay<=8500){
+	getitem 1000104,rand(3,7);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9000){
+	getitem2 F_rand(450127,450128,470022,470023,480020,480021),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	if(@pay>=9501 && @pay<=9700){
+	getitem2 F_rand(500007,600008,550008,540004,520002,500008,700007,700008,560004,530002,630003,510008,610006,640005,540005,510009,580005,570005,700009,650003,590006,550009,810000,820000,830001,840000),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490024,490025,490026,490027),1;
+	end;
+}
+
+function	script	Relic_102562	{ //遺跡別墅(扭曲之神菲依婭)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(8,12);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=8500){
+	getitem 1000405,rand(36,53);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9000){
+	getitem2 F_rand(650009,650008,800003,820002,810002,830003,840002,540023,540022,550025,550026,550027,550028,500025,500026,510032,520008,530013,540019,540020,540021,540022,540023,550024,550025,550026,550027,550028,560018,560019,570017,570018,580017,580018,590021,590022,600017,610020,610021,630012,640019,640020,650008,650009,700030,700031,700032,800003,810002,820002,830003,840002,650021,650022,800012,820006,810008,830011,840007,540045,540046,550064,550026,550065,550066,500027,500028,510033,520009,530014,540024,540025,540026,550029,560020,560021,570019,570020,580019,580020,590023,590024,600018,610022,610023,630013,640021,640022,700033,700034,700035),1,1,rand(7,12),0,0,0,0,0;
+	end;
+	}
+	if(@pay>=9501 && @pay<=9700){
+	getitem2 F_rand(470087,470088,480090,480091,450177,450178),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490106,490107,490108,490109),1;
+	end;
+}
+
+function	script	Relic_102563	{ //伊斯加德的神器(朱希婭)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001479,rand(6,10);	//黑色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem F_rand(1000608,1000811),rand(16,20);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7500){
+	getitem 1000812,rand(6,10);
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000813,1000814),rand(4,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=10000){
+	getitem2 F_rand(500054,500055,510075,510076,520021,530034,540056,550089,550090,560037,570032,580033,590047,590048,600030,610041,620019,640034,650028,700059,800015,810015,820011,830015,840010),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001479,rand(6,10);	//黑色鑽石
+	end;
+}
+
+function	script	Relic_102564	{ //伊斯加德的神器(天鷹座-阿奎拉)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001479,rand(4,8);	//黑色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem F_rand(1001029,1001030,1001032,1001031),rand(3,7);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7500){
+	getitem F_rand(1001037,1001034),rand(6,10);
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1001035,1001036),rand(4,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450206,450207,470115,470116,480159,480160),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490176,490177,490178,490179),1;
+	end;
+}
+
+function	script	Relic_102565	{ //伊斯加德的神器(天鷹座-阿奎拉(困難))
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001479,rand(4,8);	//黑色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem F_rand(1001029,1001030,1001032,1001031),rand(3,7);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7500){
+	getitem F_rand(1001037,1001034),rand(6,10);
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1001035,1001036),rand(4,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450206,450207,470115,470116,480159,480160),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490176,490177,490178,490179),1;
+	end;
+}
+
+function	script	Relic_102566	{ //伊斯加德的神器(墮落天使冰蝸牛)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(3,5);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem 1001217,rand(16,20);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7000){
+	getitem F_rand(1001248,1001249,1001250),rand(3,7);
+	end;
+	}
+	if(@pay>=7001 && @pay<=8000){
+	getitem F_rand(1001037,1001034),rand(6,10);
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){
+	getitem F_rand(1001035,1001036),rand(4,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450264,450265,450266,450268,470196,460040),1,1,rand(7,9),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490327,490328,490329,490330),1;
+	end;
+}
+
+
+function	script	Relic_102567	{ //伊斯加德的神器(究極拉斯甘德)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(3,5);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem 1001217,rand(16,20);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7000){
+	getitem F_rand(1001248,1001249,1001250),rand(3,7);
+	end;
+	}
+	if(@pay>=7001 && @pay<=8000){
+	getitem F_rand(1001037,1001034),rand(6,10);
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){
+	getitem F_rand(1001035,1001036),rand(4,7);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450264,450265,450266,450268,470196,460040),1,1,rand(7,9),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490327,490328,490329,490330),1;
+	end;
+}
+
+function	script	Relic_102568	{ //伊斯加德的神器(究極拉斯甘德(困難)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(7,11);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){
+	getitem 1001217,rand(31,35);
+	end;
+	}
+	if(@pay>=6001 && @pay<=7000){
+	getitem F_rand(1001248,1001249,1001250),rand(7,10);
+	end;
+	}
+	if(@pay>=7001 && @pay<=8000){
+	getitem F_rand(1001037,1001034),rand(11,15);
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){
+	getitem F_rand(1001035,1001036),rand(7,9);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450270,450271,480283,480284,470197,470198),1,1,rand(9,11),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(490327,490328,490329,490330),1;
+	end;
+}
+
+function	script	Relic_102569	{ //玩具工廠的遺跡(席琳基米)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,5);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=8500){
+	getitem 7642,rand(31,45);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9300){
+	getitem2 F_rand(18849,450135),1,1,rand(7,12),0,0,0,0,0;
+	end;
+	}
+	getitem F_rand(28513,18849,2980,2978,2977,2976),1;
+	end;
+}
+
+function	script	Relic_102570	{ //悔恨神器(薩克萊)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(5,8);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6500){
+	getitem 1000367,rand(41,55);
+	end;
+	}
+	if(@pay>=6501 && @pay<=9000){
+	getitem F_rand(100480,100486),rand(2,4);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9300){
+	getitem2 F_rand(500019,500020,510027,530010,540014,540015,550019,550020,560012,560013,570013,580013,590016,590017,600014,610016,620006,630009,640014,640015,700022,700023,700025,700024,510028),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001480,rand(5,8);	//金色鑽石
+	end;
+}
+
+function	script	Relic_102571	{ //生物地下城的遺跡(無名劍士)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001478,rand(3,7);	//純淨鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=9000){
+	getitem F_rand(25786,25787),rand(36,40);
+	end;
+	}
+	if(@pay>=9001 && @pay<=1000){
+	getitem2 F_rand(1847,2048,13345,13485,18164,18170,21038,26118,26154,26155,28039,28130,28630,28631,28744,28763,28764,32018,28255,28256,28257,28258,32302,600004,500003,590002,500004,570002,580002,590003,610003,560002,510006,700003,550007,640004,21051,21052,32023,32024,32025,1333,28138,28765,28766,28042,28044,26158,26161,2055,2056,2057,18185,18186,18187,32350,32351,16092,16093,16094,16095,28767,28768,18184,28633,26159,26160,1865,1866,16096,18188,26212,26213,32107,32108),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem 1001478,rand(3,7);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102572	{ //死亡之塔的遺跡(達納托斯的記憶)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001479,rand(3,7);	//黑色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=8500){
+	getitem F_rand(1000257,1000263),rand(10,17);
+	end;
+	}
+	if(@pay>=8501 && @pay<=1000){
+	getitem F_rand(490044,490045,490046,490047,490048,490049,490050,490051,490052,490053,490054,490055,490056,490057,490058,490059,490060,490061,490062,490063,490064,490065,490066,490067),1;
+	end;
+	}
+
+	getitem 1001478,rand(3,7);	//純淨鑽石
+	end;
+}
+
+function	script	Relic_102947	{ //幽靈船的遺物(幽靈船的船長)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(7,11);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){	//魏格納商團交換證
+	getitem 1001618,rand(15,30);
+	end;
+	}
+	if(@pay>=6001 && @pay<=8000){	//閃亮魔法石
+	getitem F_rand(1001654,1001657,1001660,1001663),rand(5,10);
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){	//明亮魔法石
+	getitem F_rand(1001655,1001658,1001661,1001664),rand(1,3);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450350,450351,470260,470261,480415,480416),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem rand(490507,490510),1;
+	end;
+}
+
+
+function	script	Relic_102948	{ //巨大蛇的遺物(被蠶食的坦)
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4000){
+	getitem 1001480,rand(7,11);	//金色鑽石
+	end;
+	}
+	if(@pay>=4001 && @pay<=6000){	//魏格納商團交換證
+	getitem 1001618,rand(15,30);
+	end;
+	}
+	if(@pay>=6001 && @pay<=8000){	//閃亮魔法石
+	getitem F_rand(1001654,1001657,1001660,1001663),rand(5,10);
+	end;
+	}
+	if(@pay>=8001 && @pay<=9000){	//明亮魔法石
+	getitem F_rand(1001655,1001658,1001661,1001664),rand(1,3);
+	end;
+	}
+	if(@pay>=9001 && @pay<=9500){
+	getitem2 F_rand(450350,450351,470260,470261,480415,480416),1,1,rand(7,11),0,0,0,0,0;
+	end;
+	}
+	getitem rand(490507,490510),1;
+	end;
+}
+
+
+//----------------------------- 推廣獎勵箱
+function	script	Promote_Box01	{ 
+
+	getitem 61007,3;
+	getitem 61268,1;
+	getitem 61028,1;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=6000){
+	getitem 61007,rand(1,3);
+	end;
+	}
+	if(@pay>=6001 && @pay<=9600){
+	getitem 61007,rand(1,5);
+	end;
+	}
+	if(@pay>=9601 && @pay<=10000){
+	setarray $@Promote_Box01[0],15838,44317,410029;
+	set @Promote_Box01,$@Promote_Box01[rand(getarraysize($@Promote_Box01))];
+	getitem @Promote_Box01,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 推廣獎勵箱 取得 "+getitemname(@Promote_Box01)+"!!",15;
+	end;
+	}
+	getitem 61007,rand(1,3);
+	end;
+}
+
+//----------------------------- 10000禮包自選箱子
+function	script	Unknown_Item_80042	{ 
+
+	switch( select("取消","(服飾)炫光彩蝶(粉紅)","(服飾)炫光彩蝶(粉藍)","冰雪粉末特效石(頭上)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 40654,1; end;
+	case 3: delitem getarg(0),1; getitem 40655,1; end;
+	case 4: delitem getarg(0),1; getitem 70121,1; end;
+	}
+}
+
+
+//----------------------------- 20000禮包自選箱子
+function	script	Unknown_Item_80078	{ 
+
+	switch( select("取消","(服飾)雪花結晶(粉紅)","(服飾)雪花結晶(粉藍)","(服飾)不死鳥之羽")) {
+
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 44651,1; end;
+	case 3: delitem getarg(0),1; getitem 44652,1; end;
+	case 4: delitem getarg(0),1; getitem 480318,1; end;
+	}
+}
+
+
+//-----------------------------  30000禮包自選箱子
+function	script	Unknown_Item_70006	{ 
+
+	switch( select("取消","國王波利光圈特效石(頭下)","天使波利光圈特效石(頭下)","惡魔波利光圈特效石(頭下)","奇蹟仙境特效石(頭中)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 60148,1; end;
+	case 3: delitem getarg(0),1; getitem 60149,1; end;
+	case 4: delitem getarg(0),1; getitem 60150,1; end;
+	case 5: delitem getarg(0),1; getitem 70123,1; end;
+	}
+}
+
+
+//----------------------------- 道館頭飾禮盒(一)
+function	script	Daoguan_Box_01	{ 
+
+	getitem F_rand(40156,31061,15839,15841,31765,40933,40934,40935,40936,40937,40938,40940,40941,40942,40943,40944,40945,40946,40947,40948,40949,40950,40963,40966,40967,40968,40970,40974,40975,40976,40977,40978,40982,40983,40985,40986,40987,40988,40989,40990,40991,40996,41001,41002,41003,41004,41005,41006,41008,41009,41010,41011,41012,41013,41014,41015,41016,41017,41019,41022,41023,41024,41029,41030,41031,41032,41033,41034,41035,41036,41037,41039,41040,41041,41042),1;
+	end;
+}
+
+
+//----------------------------- 爆米花嘉年華獎勵箱
+function	script	Popcorn_BOX	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=9600){
+	setarray .item_id1,616,25342,11611,11612;
+	setarray .item_CO1,1,5,5,3;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=9601 && @pay<=10000){
+	setarray .item_id4,31518,31736,410069,31690,420074;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 爆米花嘉年華獎勵箱 取得 "+getitemname(.item_id4[.@index_pc])+" !!",15;
+	end;
+	}
+	getitem 616,1;
+	end;
+}
+
+
+//----------------------------- 影子仙境遊玩套裝箱
+function	script	Unknown_Item_100838	{ 
+
+	switch( select("取消","影子仙境盧恩騎士手套","影子仙境皇家禁衛隊手套","影子仙境機械工匠手套","影子仙境基因學者手套","影子仙境十字斬首者手套","影子仙境魅影追蹤者手套","影子仙境咒術士手套","影子仙境妖術師手套","影子仙境大主教手套","影子仙境修羅手套","影子仙境遊俠手套","影子仙境宮廷樂師浪姬舞者手套","影子仙境喵族手套","影子仙境拳皇手套","影子仙境影狼與朧手套","影子仙境反叛者手套","影子仙境獵靈士手套","影子仙境超級初學者手套")) {
+
+	case 1:
+	end;
+
+	case 2:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24589,2592000;
+	end;
+
+	case 3:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24590,2592000;
+	end;
+
+	case 4:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24591,2592000;
+	end;
+
+	case 5:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24592,2592000;
+	end;
+
+	case 6:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24593,2592000;
+	end;
+
+	case 7:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24594,2592000;
+	end;
+
+	case 8:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24595,2592000;
+	end;
+
+	case 9:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24596,2592000;
+	end;
+
+	case 10:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24597,2592000;
+	end;
+
+	case 11:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24598,2592000;
+	end;
+
+	case 12:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24599,2592000;
+	end;
+
+	case 13:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24600,2592000;
+	end;
+
+	case 14:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24739,2592000;
+	end;
+
+	case 15:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24740,2592000;
+	end;
+
+	case 16:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24741,2592000;
+	end;
+
+	case 17:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24742,2592000;
+	end;
+
+	case 18:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24743,2592000;
+	end;
+
+	case 19:
+	delitem getarg(0),1;
+	rentitem 24584,2592000;
+	rentitem 24585,2592000;
+	rentitem 24586,2592000;
+	rentitem 24587,2592000;
+	rentitem 24588,2592000;
+	rentitem 24744,2592000;
+	end;
+
+	}
+}
+
+//----------------------------- 自創副本頭飾禮盒(一)
+function	script	Instance_S_Box_01	{ 
+
+	getitem F_rand(41900,44848,40346,31028,19823,44227,19515,19516,19517,19518,19519,19520,19521,19522,41201,41213,40894,44049,44050,44051,20403,40007,40008,19464,31476,31606,44808,44809,40148,40149,31766,31245,40201,31119,31929,40243,40244,31148,31371,31372,31906,31907,40339,19999,44307,44326,20036,40136,31033,31850,31596,31849,31139,44035,44135,31399,40298,40299,40300,40301,19960,40295,40702,31314,19990,19866,40203,41904,31088,20458,44579,40293,19936,19935,19934,44015,40351,19937,40694,20179,31722,44232,44268,44217,44219,44212,31161,31163,40206,31042,40308,40309,40310),1;
+	end;
+}
+
+//----------------------------- 自創副本頭飾禮盒(二)
+function	script	Instance_S_Box_02	{ 
+
+	getitem F_rand(44644,44646,44645,41745,41551,41555,41556,41138,41139,41150,41151,41153,41414,41667,41668,41665,41461,41462,40540,41320,41335,40664,40665,41315,40697,40355,40361,40362,40363,40364,40365,31433,40229,40261,40268,40276,40280,40207,40164,40165,40183,40188,40061,40082,40085,40106,40109,40110,40012,40013,40014,31506,31507,31526,31697,31711,31713,31043,31044,31185,41132,41133,41134,41135,41143,41147,41148,41149,41157),1;
+	end;
+}
+
+
+//----------------------------- 事前預約活動禮包
+function	script	LeveBox01	{ 
+
+	getitem 20530,1;
+	getitem 61009,10;
+	getitem 61172,100;
+	set Zeny,Zeny+10000000; 
+	dispbottom "獲得了10000000Zeny";
+	end;
+}
+
+//-----------------------------高級影子箱子
+function	script	Shadow_Box_Lv3	{ 
+
+	getitem F_rand(24669,24670,24671,24672,24673,24674,24683,24685,24686,24722,24723,24724,24725,24726,24727,24728,24729,24730,24731,24747,24748,24749,24750,24751,24752,24753,24754,24755,24756,24757,24758,24759,24760,24761,24762),1;
+	end;
+}
+
+//-----------------------------中級影子箱子
+function	script	Shadow_Box_Lv2	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8000){
+	getitem rand(24320,24386),1;
+	end;
+	}
+	if(@pay>=8001 && @pay<=9500){
+	getitem rand(24423,24439),1;
+	end;
+	}
+	getitem rand(24393,24401),1;
+	end;
+}
+
+//-----------------------------初級影子箱子
+function	script	Shadow_Box_Lv1	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8000){
+	getitem rand(24018,24207),1;
+	end;
+	}
+	getitem rand(24214,24245),1;
+	end;
+}
+
+//-----------------------------雪花節禮盒
+function	script	Snow_Festa_CardPac	{ 
+
+
+	getitem 23548,10;
+OnInit:
+	setarray $@DC_Snow_01[0],23549,23550,23551,23552;
+	setarray $@DC_Snow_02[0],6635,23436;
+	setarray $@DC_Snow_03[0],15802,31390,41900,44634,4463520545,20546;
+
+	set @pay07,rand(1,10000);
+	if(@pay07>0 && @pay07<=9199){
+	getitem $@DC_Snow_01[rand(getarraysize($@DC_Snow_01))],3;
+	end;
+	}
+	if(@pay07>=9200 && @pay07<=9699){
+	getitem $@DC_Snow_02[rand(getarraysize($@DC_Snow_02))],1;
+	end;
+	}
+	if(@pay07>=9600 && @pay07<=9900){
+	getitem $@DC_Snow_03[rand(getarraysize($@DC_Snow_03))],1;
+	end;
+	}
+	getitem 9058,1;
+	end;
+}
+
+
+//----------------------------- 10關道場寶箱
+function	script	Daoguan_Box1	{ 
+
+	getitem 61006,5;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	setarray .item_id1,6417,6635;
+	setarray .item_CO1,5,1;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=7901 && @pay<=9900){
+	setarray .item_id2,61112,70101,70101;
+	setarray .item_CO2,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9901 && @pay<=10000){
+	setarray .item_id4,480175;
+	setarray .item_CO4,1;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],.item_CO4[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 10關道場寶箱 取得 "+getitemname(.item_id4[.@index_pc])+"x"+.item_CO4[.@index_pc]+" !!",15;
+	end;
+	}
+	getitem 6417,5;
+	end;
+}
+
+//----------------------------- 20關道場寶箱
+function	script	Daoguan_Box2	{ 
+
+	getitem 61007,1;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	setarray .item_id1,6417,6635;
+	setarray .item_CO1,10,1;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=7901 && @pay<=9900){
+	setarray .item_id2,61113,70102,23436,70102,23436;
+	setarray .item_CO2,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9901 && @pay<=10000){
+	setarray .item_id4,480124,480125,480197;
+	setarray .item_CO4,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],.item_CO4[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 20關道場寶箱 取得 "+getitemname(.item_id4[.@index_pc])+"x"+.item_CO4[.@index_pc]+" !!",15;
+	end;
+	}
+	getitem 6417,10;
+	end;
+}
+
+
+//----------------------------- 30關道場寶箱
+function	script	Daoguan_Box3	{ 
+
+	getitem 61007,2;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	setarray .item_id1,6417,6635;
+	setarray .item_CO1,15,2;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=7901 && @pay<=9930){
+	setarray .item_id2,61114,70103,23436,70103,23436;
+	setarray .item_CO2,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9931 && @pay<=10000){
+	setarray .item_id4,480428,470269;
+	setarray .item_CO4,1,1;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],.item_CO4[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 30關道場寶箱 取得 "+getitemname(.item_id4[.@index_pc])+"x"+.item_CO4[.@index_pc]+" !!",15;
+	end;
+	}
+	getitem 6417,15;
+	end;
+}
+
+
+//----------------------------- 40關道場寶箱
+function	script	Daoguan_Box4	{ 
+
+	getitem 61007,2;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	setarray .item_id1,6417,6635;
+	setarray .item_CO1,15,2;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=7901 && @pay<=9930){
+	setarray .item_id2,61114,23436,70104;
+	setarray .item_CO2,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9931 && @pay<=10000){
+	setarray .item_id4,20802,20803,20804,20805;
+	setarray .item_CO4,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],.item_CO4[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 40關道場寶箱 取得 "+getitemname(.item_id4[.@index_pc])+"x"+.item_CO4[.@index_pc]+" !!",15;
+	end;
+	}
+	getitem 6417,15;
+	end;
+}
+
+
+//----------------------------- 50關道場寶箱
+function	script	Daoguan_Box5	{ 
+
+	getitem 61007,2;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7900){
+	setarray .item_id1,6417,6635;
+	setarray .item_CO1,20,3;
+	.@index_pc = rand(getarraysize(.item_id1));
+	getitem .item_id1[.@index_pc],.item_CO1[.@index_pc];
+	end;
+	}
+	if(@pay>=7901 && @pay<=9930){
+	setarray .item_id2,61114,23436,70105,70106;
+	setarray .item_CO2,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id2));
+	getitem .item_id2[.@index_pc],.item_CO2[.@index_pc];
+	end;
+	}
+	if(@pay>=9931 && @pay<=10000){
+	setarray .item_id4,20806,20807,20808,20809;
+	setarray .item_CO4,1,1,1,1;
+	.@index_pc = rand(getarraysize(.item_id4));
+	getitem .item_id4[.@index_pc],.item_CO4[.@index_pc];
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 50關道場寶箱 取得 "+getitemname(.item_id4[.@index_pc])+"x"+.item_CO4[.@index_pc]+" !!",15;
+	end;
+	}
+	getitem 6417,15;
+	end;
+}
+
+
+//----------------------------- 封印王卡卡冊
+function	script	Sealed_Card_Album	{ 
+
+	setarray $@Sealed_Card_Album_1[0],4480,4481,4482,4483,4484,4485,4486,4487,4488,4489,4490,4491,4492,4493,4494,4495,4497,4498,4499,4500,4501,4502,4503,4504,4535,4536,4537,4538,4539,4540,4541,4542,4543,4544,27209,27210,27211,27212,27213,27214,27215,27216,27217,27218,27219,27220,27221,27222,27224,27225,300194,300195,300196,300197,300198,300199,300200,300201,300202,300203,300204,300205,300206,300207,300208,300209;
+	set @Sealed_Card_Album,$@Sealed_Card_Album_1[rand(getarraysize($@Sealed_Card_Album_1))];
+	getitem @Sealed_Card_Album,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 封印王卡卡冊 取得 "+getitemname(@Sealed_Card_Album)+"!!",15;
+	end;
+}
+
+//----------------------------- 黃金王卡卡冊
+function	script	Golden_Seal_Card	{ 
+
+	setarray $@Golden_Seal_Card_1[0],4399,4137,4121,4123,4131,4132,4134,4135,4142,4143,4144,4145,4146,4147,4148,4168,4236,4263,4276,4302,4305,4318,4324,4330,4342,4352,4359,4361,4363,4365,4367,4372,4374,4376,4386,4403,4407,4408,4419,4425,4430,4441,4456,4457,4507,4520,4525,4526,4527,4528,4529,4534,4652,4673,4671,4672,4681,4682,4674,4675,4676,4677,4678,4679,4680,4683,4574,4576,4578,4580,4590,4591,4592,4601,4603,4604,27081,27104,27113,27119,27126,27150,27162,27180,27287,27294,27298,27319,27334,27346,27362,27363,300007,300013,300014,300021,300079,300107,300145,300151,300217,300239,300248,300262,300281,300297,300377,300445,300450,300473,300474;
+	set @Golden_Seal_Card,$@Golden_Seal_Card_1[rand(getarraysize($@Golden_Seal_Card_1))];
+	getitem @Golden_Seal_Card,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 黃金王卡卡冊 取得 "+getitemname(@Golden_Seal_Card)+"!!",15;
+	end;
+}
+
+//----------------------------- 黃金副本王卡卡冊
+function	script	Golden_Instance_Card	{ 
+
+	setarray $@Golden_Instance_Card_1[0],4456,4457,4526,4527,4528,4529,4560,4561,4562,4563,4564,4565,4566,4590,4591,4592,4601,4602,4603,4604,4610,4647,4648,4649,4650,4651,27025,27151,27152,27164,27305,27318,27381,27383,31026,300080,300099,300100,300192,300193,300266,300280,300378,300382,300472,300471;
+	set @Golden_Instance_Card,$@Golden_Instance_Card_1[rand(getarraysize($@Golden_Instance_Card_1))];
+	getitem @Golden_Instance_Card,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 黃金副本王卡卡冊 取得 "+getitemname(@Golden_Instance_Card)+"!!",15;
+	end;
+}
+
+//----------------------------- 下水道金庫寶箱
+function	script	Instance_Box1	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,1;
+	end;
+	}
+	if(@pay>=5001 && @pay<=8800){
+	getitem F_rand(6438,6439),2;
+	end;
+	}
+	if(@pay>=8801 && @pay<=9860){
+	getitem F_rand(80002,80021,80022,80023),1;
+	end;
+	}
+	if(@pay>=9861 && @pay<=9960){
+	setarray $@Instance_Box1_1[0],9064,9065,9066,9067,9068;
+	set @Instance_Box1,$@Instance_Box1_1[rand(getarraysize($@Instance_Box1_1))];
+	getitem @Instance_Box1,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 下水道金庫寶箱 取得 "+getitemname(@Instance_Box1)+"!!",15;
+	end;
+	}
+	if(@pay>=9961 && @pay<=9995){
+	setarray $@Instance_Box1_2[0],490189,490103,19393;
+	set @Instance_Box1,$@Instance_Box1_2[rand(getarraysize($@Instance_Box1_2))];
+	getitem @Instance_Box1,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 下水道金庫寶箱 取得 "+getitemname(@Instance_Box1)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 下水道金庫寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 魔物要塞寶箱
+function	script	Instance_Box2	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,1;
+	end;
+	}
+	if(@pay>=5001 && @pay<=8800){
+	getitem F_rand(6438,6439),2;
+	end;
+	}
+	if(@pay>=8801 && @pay<=9860){
+	getitem F_rand(80081,80003,80086,80087,80088,80003,80086,80087,80088),1;
+	end;
+	}
+	if(@pay>=9861 && @pay<=9960){
+	setarray $@Instance_Box2_1[0],9301,9302;
+	set @Instance_Box2,$@Instance_Box2_1[rand(getarraysize($@Instance_Box2_1))];
+	getitem @Instance_Box2,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物要塞寶箱 取得 "+getitemname(@Instance_Box2)+"!!",15;
+	end;
+	}
+	if(@pay>=9961 && @pay<=9995){
+	setarray $@Instance_Box2_2[0],40721,40722,40723,40724,40725,40726;
+	set @Instance_Box2,$@Instance_Box2_2[rand(getarraysize($@Instance_Box2_2))];
+	getitem @Instance_Box2,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物要塞寶箱 取得 "+getitemname(@Instance_Box2)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物要塞寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 魔物堡壘寶箱
+function	script	Instance_Box3	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,1;
+	end;
+	}
+	if(@pay>=5001 && @pay<=8800){
+	getitem F_rand(6438,6439),2;
+	end;
+	}
+	if(@pay>=8801 && @pay<=9860){
+	getitem F_rand(80081,80003,80086,80087,80088,80003,80086,80087,80088),1;
+	end;
+	}
+	if(@pay>=9861 && @pay<=9950){
+	setarray $@Instance_Box3_1[0],9303,9337,9338,9339,9340,9341;
+	set @Instance_Box3,$@Instance_Box3_1[rand(getarraysize($@Instance_Box3_1))];
+	getitem @Instance_Box3,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物堡壘寶箱 取得 "+getitemname(@Instance_Box3)+"!!",15;
+	end;
+	}
+	if(@pay>=9951 && @pay<=9995){
+	setarray $@Instance_Box3_2[0],15374,490086,460003,470098,470094;
+	set @Instance_Box3,$@Instance_Box3_2[rand(getarraysize($@Instance_Box3_2))];
+	getitem @Instance_Box3,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物堡壘寶箱 取得 "+getitemname(@Instance_Box3)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔物堡壘寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+//----------------------------- 被奇襲的鬼盜船寶箱
+function	script	Instance_Box4	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,1;
+	end;
+	}
+	if(@pay>=5001 && @pay<=8500){
+	getitem F_rand(6438,6439),2;
+	end;
+	}
+	if(@pay>=8501 && @pay<=9600){
+	getitem F_rand(80081,80003,80086,80087,80088,80003,80086,80087,80088),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9900){
+	setarray $@Instance_Box4_1[0],300500,300501;
+	set @Instance_Box4,$@Instance_Box4_1[rand(getarraysize($@Instance_Box4_1))];
+	getitem @Instance_Box4,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 被奇襲的鬼盜船寶箱 取得 "+getitemname(@Instance_Box4)+"!!",15;
+	end;
+	}
+	if(@pay>=9901 && @pay<=9995){
+	setarray $@Instance_Box4_2[0],9057,9110,9150,9151,9152,9144;
+	set @Instance_Box4,$@Instance_Box4_2[rand(getarraysize($@Instance_Box4_2))];
+	getitem @Instance_Box4,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 被奇襲的鬼盜船寶箱 取得 "+getitemname(@Instance_Box4)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 被奇襲的鬼盜船寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+//----------------------------- 螞蟻洞穴寶箱
+function	script	Instance_Box5	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=5000){
+	getitem 6635,2;
+	end;
+	}
+	if(@pay>=5001 && @pay<=8500){
+	getitem F_rand(6438,6439),3;
+	end;
+	}
+	if(@pay>=8501 && @pay<=9840){
+	getitem F_rand(80003,80086,80087,80088),1;
+	end;
+	}
+	if(@pay>=9841 && @pay<=9940){
+	setarray $@Instance_Box5_1[0],9305,9304;
+	set @Instance_Box5,$@Instance_Box5_1[rand(getarraysize($@Instance_Box5_1))];
+	getitem @Instance_Box5,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 螞蟻洞穴寶箱 取得 "+getitemname(@Instance_Box5)+"!!",15;
+	end;
+	}
+	if(@pay>=9941 && @pay<=9995){
+	setarray $@Instance_Box5_2[0],24734,24735,24736,24737;
+	set @Instance_Box5,$@Instance_Box5_2[rand(getarraysize($@Instance_Box5_2))];
+	getitem @Instance_Box5,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 螞蟻洞穴寶箱 取得 "+getitemname(@Instance_Box5)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 螞蟻洞穴寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 魔Q的祕寶寶箱
+function	script	Instance_Box6	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8500){
+	getitem 6635,rand(3,5);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9850){
+	getitem F_rand(80003,80097,80098,80099),1;
+	end;
+	}
+	if(@pay>=9851 && @pay<=9950){
+	setarray $@Instance_Box6_1[0],9483,9484,9485,9151,9152,9144;
+	set @Instance_Box6,$@Instance_Box6_1[rand(getarraysize($@Instance_Box6_1))];
+	getitem @Instance_Box6,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔Q的祕寶寶箱 取得 "+getitemname(@Instance_Box6)+"!!",15;
+	end;
+	}
+	if(@pay>=9951 && @pay<=9995){
+	setarray $@Instance_Box6_2[0],24745,24738;
+	set @Instance_Box6,$@Instance_Box6_2[rand(getarraysize($@Instance_Box6_2))];
+	getitem @Instance_Box6,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔Q的祕寶寶箱 取得 "+getitemname(@Instance_Box6)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 魔Q的祕寶寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+//----------------------------- 赫拉神殿寶箱
+function	script	Instance_Box7	{ 
+	//固定取得
+	getitem 61007,2;
+	getitem 82001,1;
+	//隨機取得
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=8500){
+	getitem 6635,rand(3,5);
+	end;
+	}
+	if(@pay>=8501 && @pay<=9850){
+	getitem F_rand(80003,80097,80098,80099),1;
+	end;
+	}
+	if(@pay>=9851 && @pay<=9950){
+	setarray $@Instance_Box7_1[0],9329,9330,9331,9332;
+	set @Instance_Box7,$@Instance_Box7_1[rand(getarraysize($@Instance_Box7_1))];
+	getitem @Instance_Box7,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 赫拉神殿寶箱 取得 "+getitemname(@Instance_Box7)+"!!",15;
+	end;
+	}
+	if(@pay>=9951 && @pay<=9995){
+	setarray $@Instance_Box7_2[0],24733,24732;
+	set @Instance_Box7,$@Instance_Box7_2[rand(getarraysize($@Instance_Box7_2))];
+	getitem @Instance_Box7,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 赫拉神殿寶箱 取得 "+getitemname(@Instance_Box7)+"!!",15;
+	end;
+	}
+	getitem 22829,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 赫拉神殿寶箱 取得 "+getitemname(22829)+"!!",15;
+	end;
+}
+
+
+
+//-----------------------------  (服飾)披肩強化石自選箱子
+function	script	Unknown_Item_80043	{ 
+
+	switch( select("取消","ASPD石(披肩)","HP吸收石(披肩)","SP吸收石(披肩)","詠唱石(披肩)","次等詠唱石(披肩)","二刀連擊石(披肩)","暴擊石(披肩)","變動詠唱石(披肩)","法術魔法攻擊石(披肩)","近戰石(披肩)","廣域石(披肩)","POW石(雙重)","抗性防禦石(披肩)","抗性石(雙重)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 6908,1; end;
+	case 3: delitem getarg(0),1; getitem 6963,1; end;
+	case 4: delitem getarg(0),1; getitem 6964,1; end;
+	case 5: delitem getarg(0),1; getitem 25067,1; end;
+	case 6: delitem getarg(0),1; getitem 25170,1; end;
+	case 7: delitem getarg(0),1; getitem 25302,1; end;
+	case 8: delitem getarg(0),1; getitem 25303,1; end;
+	case 9: delitem getarg(0),1; getitem 25306,1; end;
+	case 10: delitem getarg(0),1; getitem 1000922,1; end;
+	case 11: delitem getarg(0),1; getitem 1001053,1; end;
+	case 12: delitem getarg(0),1; getitem 1001054,1; end;
+
+	case 13: delitem getarg(0),1; getitem 1001055,1; end;
+	case 14: delitem getarg(0),1; getitem 1001171,1; end;
+	case 15: delitem getarg(0),1; getitem 1001172,1; end;
+
+	}
+}
+
+//-----------------------------  (服飾)雙重強化石自選箱子
+function	script	Unknown_Item_70005	{ 
+
+	switch( select("取消","ASPD石(雙重)","次等詠唱石(雙重)","變動詠唱石(雙重)","名弓石(雙重)","近距離石(雙重)","SP吸收石(雙重)","HP吸收石(雙重)","魔法屬性石(雙重)","重裝石(雙重)","創意石(雙重)","暴擊石(雙重)","CON石(雙重)","SPL石(雙重)","POW石(雙重)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 1000520,1; end;
+	case 3: delitem getarg(0),1; getitem 1000521,1; end;
+	case 4: delitem getarg(0),1; getitem 1000522,1; end;
+	case 5: delitem getarg(0),1; getitem 1000523,1; end;
+	case 6: delitem getarg(0),1; getitem 1000524,1; end;
+	case 7: delitem getarg(0),1; getitem 1000525,1; end;
+	case 8: delitem getarg(0),1; getitem 1000526,1; end;
+	case 9: delitem getarg(0),1; getitem 1000527,1; end;
+	case 10: delitem getarg(0),1; getitem 1000675,1; end;
+	case 11: delitem getarg(0),1; getitem 1000676,1; end;
+	case 12: delitem getarg(0),1; getitem 1000855,1; end;
+	case 13: delitem getarg(0),1; getitem 1000856,1; end;
+	case 14: delitem getarg(0),1; getitem 1000921,1; end;
+	case 15: delitem getarg(0),1; getitem 1001055,1; end;
+
+
+	}
+}
+
+//-----------------------------  (服飾)頭上職業強化石自選箱子
+function	script	Unknown_Item_80091	{ 
+
+	switch( select("取消","武術宗師石(頭上)","神射手石(頭上)","智者石(頭上)","騎士領主石(頭上)","創造者石(頭上)","超魔導師石(頭上)","神行太保石(頭上)","神工匠石(頭上)","藝人舞姬石(頭上)","神官石(頭上)","聖殿十字軍石(頭上)","十字刺客石(頭上)","武術宗師石II(頭上)","智者石II(頭上)","神行太保石II(頭上)","悟靈士石(頭上)","拳聖石(頭上)","忍者石(頭上)","槍手石(頭上)","杜蘭族石(頭上)","神射手石II(頭上)","神工匠石II(頭上)","神官石II(頭上)","超魔導師石II(頭上)","聖殿十字軍石II(頭上)","十字刺客石II(頭上)","騎士領主石II(頭上)","創造者石III(頭上)","搞笑藝人/冷豔舞姬石II(頭上)","盧恩騎士石(頭上)","咒術士石(頭上)","皇家禁衛軍石(頭上)","宮廷樂師/浪跡舞者石(頭上)","基因學者石(頭上)","妖術師石(頭上)","大主教石(頭上)","遊俠石(頭上)","魅影追蹤者石(頭上)","修羅石(頭上)","機械工匠石(頭上)","十字斬首者石(頭上)","拳皇石(頭上)","叛亂者石(頭上)","獵靈士石(頭上)","日影忍者石(頭上)","月影忍者石(頭上)","召喚師石(頭上)","進階超級初心者石(頭上)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 25409,1; end;
+	case 3: delitem getarg(0),1; getitem 25413,1; end;
+	case 4: delitem getarg(0),1; getitem 25417,1; end;
+	case 5: delitem getarg(0),1; getitem 25445,1; end;
+	case 6: delitem getarg(0),1; getitem 25450,1; end;
+	case 7: delitem getarg(0),1; getitem 25453,1; end;
+	case 8: delitem getarg(0),1; getitem 25490,1; end;
+	case 9: delitem getarg(0),1; getitem 25494,1; end;
+	case 10: delitem getarg(0),1; getitem 25498,1; end;
+	case 11: delitem getarg(0),1; getitem 25706,1; end;
+	case 12: delitem getarg(0),1; getitem 25710,1; end;
+	case 13: delitem getarg(0),1; getitem 25714,1; end;
+	case 14: delitem getarg(0),1; getitem 25800,1; end;
+	case 15: delitem getarg(0),1; getitem 25804,1; end;
+	case 16: delitem getarg(0),1; getitem 25808,1; end;
+	case 17: delitem getarg(0),1; getitem 25843,1; end;
+	case 18: delitem getarg(0),1; getitem 25846,1; end;
+	case 19: delitem getarg(0),1; getitem 25850,1; end;
+	case 20: delitem getarg(0),1; getitem 25855,1; end;
+	case 21: delitem getarg(0),1; getitem 25859,1; end;
+	case 22: delitem getarg(0),1; getitem 1000008,1; end;
+	case 23: delitem getarg(0),1; getitem 1000012,1; end;
+	case 24: delitem getarg(0),1; getitem 1000016,1; end;
+	case 25: delitem getarg(0),1; getitem 1000214,1; end;
+	case 26: delitem getarg(0),1; getitem 1000218,1; end;
+	case 27: delitem getarg(0),1; getitem 1000222,1; end;
+	case 28: delitem getarg(0),1; getitem 1000297,1; end;
+	case 29: delitem getarg(0),1; getitem 1000301,1; end;
+	case 30: delitem getarg(0),1; getitem 1000305,1; end;
+	case 31: delitem getarg(0),1; getitem 1000610,1; end;
+	case 32: delitem getarg(0),1; getitem 1000613,1; end;
+	case 33: delitem getarg(0),1; getitem 1000616,1; end;
+	case 34: delitem getarg(0),1; getitem 1000666,1; end;
+	case 35: delitem getarg(0),1; getitem 1000669,1; end;
+	case 36: delitem getarg(0),1; getitem 1000672,1; end;
+	case 37: delitem getarg(0),1; getitem 1000857,1; end;
+	case 38: delitem getarg(0),1; getitem 1000860,1; end;
+	case 39: delitem getarg(0),1; getitem 1000863,1; end;
+	case 40: delitem getarg(0),1; getitem 1000968,1; end;
+	case 41: delitem getarg(0),1; getitem 1000971,1; end;
+	case 42: delitem getarg(0),1; getitem 1000974,1; end;
+	case 43: delitem getarg(0),1; getitem 1001044,1; end;
+	case 44: delitem getarg(0),1; getitem 1001047,1; end;
+	case 45: delitem getarg(0),1; getitem 1001050,1; end;
+	case 46: delitem getarg(0),1; getitem 1001159,1; end;
+	case 47: delitem getarg(0),1; getitem 1001162,1; end;
+	case 48: delitem getarg(0),1; getitem 1001165,1; end;
+	case 49: delitem getarg(0),1; getitem 1001327,1; end;
+	case 50: delitem getarg(0),1; getitem 1001055,1; end;
+
+	}
+}
+
+
+//-----------------------------  (服飾)頭中職業強化石自選箱子
+function	script	Unknown_Item_80092	{ 
+
+	switch( select("取消","武術宗師石(頭中)","神射手石(頭中)","智者石(頭中)","騎士領主石(頭中)","創造者石(頭中)","超魔導師石(頭中)","神行太保石(頭中)","神工匠石(頭中)","藝人舞姬石(頭中)","神官石(頭中)","聖殿十字軍石(頭中)","十字刺客石(頭中)","武術宗師石II(頭中)","智者石II(頭中)","神行太保石II(頭中)","悟靈士石(頭中)","拳聖石(頭中)","忍者石(頭中)","槍手石(頭中)","杜蘭族石(頭中)","神射手石II(頭中)","神工匠石II(頭中)","神官石II(頭中)","超魔導師石II(頭中)","聖殿十字軍石II(頭中)","十字刺客石II(頭中)","騎士領主石II(頭中)","創造者石II(頭中)","搞笑藝人/冷豔舞姬石II(頭中)","盧恩騎士石(頭中)","咒術士石(頭中)","皇家禁衛軍石(頭中)","宮廷樂師/浪跡舞者石(頭中)","基因學者石(頭中)","妖術師石(頭中)","大主教石(頭中)","遊俠石(頭中)","魅影追蹤者石(頭中)","修羅石(頭中)","機械工匠石(頭中)","十字斬首者石(頭中)","拳皇石(頭中)","叛亂者石(頭中)","獵靈士石(頭中)","日影忍者石(頭中)","月影忍者石(頭中)","召喚師石(頭中)","進階超級初心者石(頭中)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 25410,1; end;
+	case 3: delitem getarg(0),1; getitem 25414,1; end;
+	case 4: delitem getarg(0),1; getitem 25418,1; end;
+	case 5: delitem getarg(0),1; getitem 25446,1; end;
+	case 6: delitem getarg(0),1; getitem 25451,1; end;
+	case 7: delitem getarg(0),1; getitem 25454,1; end;
+	case 8: delitem getarg(0),1; getitem 25491,1; end;
+	case 9: delitem getarg(0),1; getitem 25495,1; end;
+	case 10: delitem getarg(0),1; getitem 25499,1; end;
+	case 11: delitem getarg(0),1; getitem 25707,1; end;
+	case 12: delitem getarg(0),1; getitem 25711,1; end;
+	case 13: delitem getarg(0),1; getitem 25715,1; end;
+	case 14: delitem getarg(0),1; getitem 25799,1; end;
+	case 15: delitem getarg(0),1; getitem 25803,1; end;
+	case 16: delitem getarg(0),1; getitem 25807,1; end;
+	case 17: delitem getarg(0),1; getitem 25844,1; end;
+	case 18: delitem getarg(0),1; getitem 25847,1; end;
+	case 19: delitem getarg(0),1; getitem 25851,1; end;
+	case 20: delitem getarg(0),1; getitem 25856,1; end;
+	case 21: delitem getarg(0),1; getitem 25860,1; end;
+	case 22: delitem getarg(0),1; getitem 1000009,1; end;
+	case 23: delitem getarg(0),1; getitem 1000013,1; end;
+	case 24: delitem getarg(0),1; getitem 1000017,1; end;
+	case 25: delitem getarg(0),1; getitem 1000215,1; end;
+	case 26: delitem getarg(0),1; getitem 1000219,1; end;
+	case 27: delitem getarg(0),1; getitem 1000223,1; end;
+	case 28: delitem getarg(0),1; getitem 1000298,1; end;
+	case 29: delitem getarg(0),1; getitem 1000302,1; end;
+	case 30: delitem getarg(0),1; getitem 1000306,1; end;
+	case 31: delitem getarg(0),1; getitem 1000611,1; end;
+	case 32: delitem getarg(0),1; getitem 1000614,1; end;
+	case 33: delitem getarg(0),1; getitem 1000617,1; end;
+	case 34: delitem getarg(0),1; getitem 1000667,1; end;
+	case 35: delitem getarg(0),1; getitem 1000670,1; end;
+	case 36: delitem getarg(0),1; getitem 1000673,1; end;
+	case 37: delitem getarg(0),1; getitem 1000858,1; end;
+	case 38: delitem getarg(0),1; getitem 1000861,1; end;
+	case 39: delitem getarg(0),1; getitem 1000864,1; end;
+	case 40: delitem getarg(0),1; getitem 1000969,1; end;
+	case 41: delitem getarg(0),1; getitem 1000972,1; end;
+	case 42: delitem getarg(0),1; getitem 1000975,1; end;
+	case 43: delitem getarg(0),1; getitem 1001045,1; end;
+	case 44: delitem getarg(0),1; getitem 1001048,1; end;
+	case 45: delitem getarg(0),1; getitem 1001051,1; end;
+	case 46: delitem getarg(0),1; getitem 1001160,1; end;
+	case 47: delitem getarg(0),1; getitem 1001163,1; end;
+	case 48: delitem getarg(0),1; getitem 1001166,1; end;
+	case 49: delitem getarg(0),1; getitem 1001328,1; end;
+	}
+}
+
+
+//-----------------------------  (服飾)頭下職業強化石自選箱子
+function	script	Unknown_Item_80093	{ 
+
+	switch( select("取消","武術宗師石(頭下)","神射手石(頭下)","智者石(頭下)","騎士領主石(頭下)","創造者石(頭下)","超魔導師石(頭下)","神行太保石(頭下)","神工匠石(頭下)","藝人舞姬石(頭下)","神官石(頭下)","聖殿十字軍石(頭下)","十字刺客石(頭下)","武術宗師石II(頭下)","智者石II(頭下)","神行太保石II(頭下)","悟靈士石(頭下)","拳聖石(頭下)","忍者石(頭下)","槍手石(頭下)","杜蘭族石(頭下)","神射手石II(頭下)","神工匠石II(頭下)","神官石II(頭下)","超魔導師石II(頭下)","聖殿十字軍石II(頭下)","十字刺客石II(頭下)","騎士領主石II(頭下)","創造者石II(頭下)","搞笑藝人/冷豔舞姬石II(頭下)","盧恩騎士石(頭下)","咒術士石(頭下)","皇家禁衛軍石(頭下)","宮廷樂師/浪跡舞者石(頭下)","基因學者石(頭下)","妖術師石(頭下)","大主教石(頭下)","遊俠石(頭下)","魅影追蹤者石(頭下)","修羅石(頭下)","機械工匠石(頭下)","十字斬首者石(頭下)","拳皇石(頭下)","叛亂者石(頭下)","獵靈士石(頭下)","日影忍者石(頭下)","月影忍者石(頭下)","召喚師石(頭下)","進階超級初心者石(頭下)")) {
+
+	case 1: end;
+	case 2: delitem getarg(0),1; getitem 25411,1; end;
+	case 3: delitem getarg(0),1; getitem 25415,1; end;
+	case 4: delitem getarg(0),1; getitem 25419,1; end;
+	case 5: delitem getarg(0),1; getitem 25447,1; end;
+	case 6: delitem getarg(0),1; getitem 25452,1; end;
+	case 7: delitem getarg(0),1; getitem 25455,1; end;
+	case 8: delitem getarg(0),1; getitem 25492,1; end;
+	case 9: delitem getarg(0),1; getitem 25496,1; end;
+	case 10: delitem getarg(0),1; getitem 25500,1; end;
+	case 11: delitem getarg(0),1; getitem 25708,1; end;
+	case 12: delitem getarg(0),1; getitem 25712,1; end;
+	case 13: delitem getarg(0),1; getitem 25716,1; end;
+	case 14: delitem getarg(0),1; getitem 25798,1; end;
+	case 15: delitem getarg(0),1; getitem 25802,1; end;
+	case 16: delitem getarg(0),1; getitem 25806,1; end;
+	case 17: delitem getarg(0),1; getitem 25845,1; end;
+	case 18: delitem getarg(0),1; getitem 25848,1; end;
+	case 19: delitem getarg(0),1; getitem 25852,1; end;
+	case 20: delitem getarg(0),1; getitem 25857,1; end;
+	case 21: delitem getarg(0),1; getitem 25861,1; end;
+	case 22: delitem getarg(0),1; getitem 1000010,1; end;
+	case 23: delitem getarg(0),1; getitem 1000014,1; end;
+	case 24: delitem getarg(0),1; getitem 1000018,1; end;
+	case 25: delitem getarg(0),1; getitem 1000216,1; end;
+	case 26: delitem getarg(0),1; getitem 1000220,1; end;
+	case 27: delitem getarg(0),1; getitem 1000224,1; end;
+	case 28: delitem getarg(0),1; getitem 1000299,1; end;
+	case 29: delitem getarg(0),1; getitem 1000303,1; end;
+	case 30: delitem getarg(0),1; getitem 1000307,1; end;
+	case 31: delitem getarg(0),1; getitem 1000612,1; end;
+	case 32: delitem getarg(0),1; getitem 1000615,1; end;
+	case 33: delitem getarg(0),1; getitem 1000618,1; end;
+	case 34: delitem getarg(0),1; getitem 1000668,1; end;
+	case 35: delitem getarg(0),1; getitem 1000671,1; end;
+	case 36: delitem getarg(0),1; getitem 1000674,1; end;
+	case 37: delitem getarg(0),1; getitem 1000859,1; end;
+	case 38: delitem getarg(0),1; getitem 1000862,1; end;
+	case 39: delitem getarg(0),1; getitem 1000865,1; end;
+	case 40: delitem getarg(0),1; getitem 1000970,1; end;
+	case 41: delitem getarg(0),1; getitem 1000973,1; end;
+	case 42: delitem getarg(0),1; getitem 1000976,1; end;
+	case 43: delitem getarg(0),1; getitem 1001046,1; end;
+	case 44: delitem getarg(0),1; getitem 1001049,1; end;
+	case 45: delitem getarg(0),1; getitem 1001052,1; end;
+	case 46: delitem getarg(0),1; getitem 1001161,1; end;
+	case 47: delitem getarg(0),1; getitem 1001164,1; end;
+	case 48: delitem getarg(0),1; getitem 1001167,1; end;
+	case 49: delitem getarg(0),1; getitem 1001329,1; end;
+	}
+}
+
+//----------------------------- 活體研究頭冠寶箱(可指定)
+function	script	Biological_Research_Box_	{ 
+	switch( select("取消","活體牡羊研究頭冠","活體天秤研究頭冠","活體寶瓶研究頭冠","活體水瓶研究頭冠","活體金牛研究頭冠","活體公牛研究頭冠","活體處女研究頭冠","活體天平研究頭冠","活體巨蟹研究頭冠","活體獅子研究頭冠","活體魔羯研究頭冠","活體雙子研究頭冠")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 400078,1; end;
+	case 3: delitem getarg(0),1; getitem 400079,1; end;
+	case 4: delitem getarg(0),1; getitem 400094,1; end;
+	case 5: delitem getarg(0),1; getitem 400095,1; end;
+	case 6: delitem getarg(0),1; getitem 400098,1; end;
+	case 7: delitem getarg(0),1; getitem 400099,1; end;
+	case 8: delitem getarg(0),1; getitem 400116,1; end;
+	case 9: delitem getarg(0),1; getitem 400117,1; end;
+	case 10: delitem getarg(0),1; getitem 400118,1; end;
+	case 11: delitem getarg(0),1; getitem 400119,1; end;
+	case 12: delitem getarg(0),1; getitem 400120,1; end;
+	case 13: delitem getarg(0),1; getitem 400121,1; end;
+	}
+}
+
+
+//----------------------------- 古代英雄的意志
+function	script	Ancient_Hero_Will	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=8000){
+	getitem callfunc("F_Rand",100023,100025),1;
+	end;
+	}
+	getitem callfunc("F_Rand",100412,100413),1;
+	end;
+}
+
+//----------------------------- 污染的卡片冊
+function	script	airboat_reward	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9500){
+	getitem callfunc("F_Rand",300170,300171,300172,300173,300174),1;
+	end;
+	}
+	if(@pay>=9501 && @pay<=10000){
+	set .@Ccard,rand(300175,300176);
+	getitem .@Ccard,1;
+	announce "恭喜玩家 "+strcharinfo(0)+"，從 "+getitemname(100462)+" 開到 "+getitemname(.@Ccard)+"!!",15;
+	end;
+	}
+	getitem callfunc("F_Rand",300170,300171,300172,300173,300174),1;
+	end;
+}
+
+//----------------------------- 黃金錢袋
+function	script	Gold_Coin_Bag	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9200){
+	getitem callfunc("F_Rand",12619,12620,6423),2;
+	end;
+	}
+	if(@pay>=9201 && @pay<=10000){
+	getitem callfunc("F_Rand",1298,1318,1494,1590,1833,13081,18117,1198,1489,13068,16015,16016,18107,18108),1;
+	end;
+	}
+	getitem callfunc("F_Rand",12619,12620,6423),2;
+	end;
+}
+
+//----------------------------- 影子擴充職業技能套裝
+function	script	Shadow_skill_Box2	{ 
+
+	getitem callfunc("F_Rand",24601,24602,24603,24604,24605,24606,24607,24608,24609,24610,24611,24612,24613,24614,24615,24616,24617,24618,24619,24620,24621,24622,24623,24624,24625,24626,24627,24628,24629,24630,24631,24632,24633,24634,24635,24636,24637,24638,24639,24640,24641,24642,24643,24644,24645,24646,24647,24648,24649,24650,24651,24652,24653,24654,24655,24656,24657,24658,24659,24660),1;
+	end;
+}
+
+//----------------------------- 影子職業技能套裝箱
+function	script	Shadow_skill_Box1	{ 
+
+	getitem callfunc("F_Rand",24524,24525,24526,24527,24528,24529,24530,24531,24532,24533,24534,24535,24536,24537,24538,24539,24540,24541,24542,24543,24544,24545,24546,24547,24440,24441,24442,24443,24444,24445,24446,24447,24448,24449,24450,24451,24572,24573,24574,24575,24576,24577,24578,24579,24580,24581,24582,24583,24452,24453,24454,24456,24457,24458,24459,24460,24461,24462,24463,24500,24501,24502,24503,24504,24505,24506,24507,24508,24509,24510,24511,24464,24465,24466,24467,24468,24469,24470,24471,24472,24473,24474,24475,24560,24561,24562,24563,24564,24565,24566,24567,24568,24569,24570,24571,24476,24477,24478,24479,24480,24481,24482,24483,24484,24485,24486,24487,24488,24489,24490,24491,24492,24493,24494,24495,24496,24497,24498,24499,24512,24513,24514,24515,24516,24517,24518,24519,24520,24521,24522,24523,24548,24549,24550,24551,24552,24553,24554,24555,24556,24557,24558,24559,24601,24602,24603,24604,24605,24606,24607,24608,24609,24610,24611,24612,24613,24614,24615,24616,24617,24618,24619,24620,24621),1;
+	end;
+}
+
+//----------------------------- 影子送信者箱
+function	script	Shadow_Box04	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9000){
+	getitem callfunc("F_Rand",24084,24085,24086,24087,24088,24089),1;
+	end;
+	}
+	getitem 23248,1;
+	end;
+}
+
+//----------------------------- 影子魔力礦石箱
+function	script	Shadow_Box03	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9000){
+	getitem callfunc("F_Rand",24180,24181,24182,24183,24184,24185),1;
+	end;
+	}
+	getitem 23249,1;
+	end;
+}
+
+//----------------------------- 影子全能箱
+function	script	Shadow_Box02	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9000){
+	getitem callfunc("F_Rand",24034,24035,24036,24037,24038,24039,24040,24041,24042,24043,24044,24045),1;
+	end;
+	}
+	getitem 23247,1;
+	end;
+}
+
+//----------------------------- 武器改造裝置箱(物理)
+function	script	OS_Box02	{ 
+OnInit:
+	setarray $@OS_Box02[0],23776;
+	setarray $@OS_Box03[0],23777;
+	setarray $@OS_Box04[0],23778;
+
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>0 && @Box_pay<=6999){
+	getitem $@OS_Box02[rand(getarraysize($@OS_Box02))],1;
+	end;
+	}
+	if(@Box_pay>=7000 && @Box_pay<=9199){
+	getitem $@OS_Box03[rand(getarraysize($@OS_Box03))],1;
+	end;
+	}
+	if(@Box_pay>9200){
+	getitem $@OS_Box04[rand(getarraysize($@OS_Box04))],1;
+	end;
+	}
+}
+
+//----------------------------- 武器改造裝置箱(魔法)
+function	script	OS_Box03	{ 
+OnInit:
+	setarray $@OS_Box05[0],23779;
+	setarray $@OS_Box06[0],23780;
+	setarray $@OS_Box07[0],23781;
+
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>0 && @Box_pay<=6999){
+	getitem $@OS_Box05[rand(getarraysize($@OS_Box05))],1;
+	end;
+	}
+	if(@Box_pay>=7000 && @Box_pay<=9199){
+	getitem $@OS_Box06[rand(getarraysize($@OS_Box06))],1;
+	end;
+	}
+	if(@Box_pay>9200){
+	getitem $@OS_Box07[rand(getarraysize($@OS_Box07))],1;
+	end;
+	}
+}
+
+//----------------------------- 幻象防具改造模組箱
+function	script	OS_Box04	{ 
+OnInit:
+	//普通級
+	setarray $@OS_Box08[0],25670,25671,25672,25673,25674,25675,25676,25677;
+	//罕見級(一)
+	setarray $@OS_Box09[0],25678,25679,25680,25682,25685,25691;
+	//罕見級(二)
+	setarray $@OS_Box10[0],25681,25683,25684,25686,25687,25688,25689,25690,25692;
+	//特殊級
+	setarray $@OS_Box11[0],25693,25694,25695,25696,25697,25698,25699;
+	//傳說級
+	setarray $@OS_Box12[0],25700,25701,25702,25703,25704,25705;
+
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>0 && @Box_pay<=8599){
+	getitem $@OS_Box08[rand(getarraysize($@OS_Box08))],1;
+	end;
+	}
+	if(@Box_pay>=8000 && @Box_pay<=8999){
+	getitem $@OS_Box09[rand(getarraysize($@OS_Box09))],1;
+	end;
+	}
+	if(@Box_pay>=9000 && @Box_pay<=9699){
+	getitem $@OS_Box10[rand(getarraysize($@OS_Box10))],1;
+	end;
+	}
+	if(@Box_pay>=9700 && @Box_pay<=9899){
+	getitem $@OS_Box11[rand(getarraysize($@OS_Box11))],1;
+	end;
+	}
+	if(@Box_pay>9900){
+	getitem $@OS_Box12[rand(getarraysize($@OS_Box12))],1;
+	end;
+	}
+}
+
+//----------------------------- 幻象裝甲模組盒
+function	script	Illusion_Box01	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8500){
+	getitem callfunc("F_Rand",25670,25671),1;
+	end;
+	}
+	if(@Box_pay>=8501 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",25687,25688,25689),1;
+	end;
+	}
+	getitem callfunc("F_Rand",25693),1;
+	end;
+}
+
+//----------------------------- 幻象長鞋模組盒
+function	script	Illusion_Box02	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8400){
+	getitem callfunc("F_Rand",25670,25671),1;
+	end;
+	}
+	if(@Box_pay>=8401 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",25685,25684,25686),1;
+	end;
+	}
+	getitem callfunc("F_Rand",25694),1;
+	end;
+}
+
+//----------------------------- 幻象披肩模組盒
+function	script	Illusion_Box03	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",25670,25671),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",25692,25691,25690),1;
+	end;
+	}
+	getitem callfunc("F_Rand",25695),1;
+	end;
+}
+
+//----------------------------- 幻象飾品模組盒
+function	script	Illusion_Box04	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",25672,25673,25674,25675,25676,25677),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",25678,25679,25680,25682,25681,25683),1;
+	end;
+	}
+	getitem callfunc("F_Rand",25696,25697,25698,25699),1;
+	end;
+}
+
+//----------------------------- 自動飾品模組盒
+function	script	Auto_Box05	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",310084,310085,310086,310087,310088,310089),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",310090,310091,310092,310093,310094,310095),1;
+	end;
+	}
+	getitem callfunc("F_Rand",310113,310114,310115,310116,310120),1;
+	end;
+}
+
+//----------------------------- 自動模組盒
+function	script	Auto_Box01	{ 
+OnInit:
+	//普通級
+	setarray $@Auto_Box01[0],310082,310083,310084,310085,310086,310087,310088,310089;
+	//罕見級
+	setarray $@Auto_Box02[0],310090,310091,310092,310093,310094,310095,310096,310097,310098,310099,310100,310101,310102,310103,310104;
+	//特殊級
+	setarray $@Auto_Box03[0],310105,310106,310107,310108,310109,310110,310111,310112,310113,310114,310115,310116,310117,310118,310119,310120;
+	//技能模組
+	setarray $@Auto_Box04[0],310127,310128,310129,310130,310131,310132,310133,310134,310135,310136,310137,310138,310139,310140,310141,310142,310143,310144,310145,310146,310147,310148,310149,310150,310151,310152,310153,310154,310155,310156,310157,310158,310159,310160,310161,310162,310163,310164,310165,310166,310167,310168,310169,310170,310171,310172,310173,310174,310175,310176,310177;
+	//史詩自動模組盒
+	setarray $@Auto_Box05[0],100161;
+
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=5499){
+	getitem $@Auto_Box01[rand(getarraysize($@Auto_Box01))],1;
+	end;
+	}
+	if(@Box_pay>=5500 && @Box_pay<=6999){
+	getitem $@Auto_Box02[rand(getarraysize($@Auto_Box02))],1;
+	end;
+	}
+	if(@Box_pay>=7000 && @Box_pay<=7499){
+	getitem $@Auto_Box03[rand(getarraysize($@Auto_Box03))],1;
+	end;
+	}
+	if(@Box_pay>=7500 && @Box_pay<=9899){
+	getitem $@Auto_Box04[rand(getarraysize($@Auto_Box04))],1;
+	end;
+	}
+	if(@Box_pay>9900){
+	getitem $@Auto_Box04[rand(getarraysize($@Auto_Box04))],1;
+	end;
+	}
+}
+
+//----------------------------- 自動裝甲模組盒
+function	script	Auto_Box02	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",310082,310083),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9500){
+	getitem callfunc("F_Rand",310099,310100,310101),1;
+	end;
+	}
+	getitem callfunc("F_Rand",310105,310106,310107,310108,310109,310110,310117,310178),1;
+	end;
+}
+
+//----------------------------- 自動長鞋模組盒
+function	script	Auto_Box03	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",310082,310083),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9700){
+	getitem callfunc("F_Rand",310096,310097,310098),1;
+	end;
+	}
+	getitem callfunc("F_Rand",310111,310118),1;
+	end;
+}
+
+//----------------------------- 自動披肩模組盒
+function	script	Auto_Box04	{ 
+OnInit:
+	set @Box_pay,rand(1,10000);
+	if(@Box_pay>=0 && @Box_pay<=8499){
+	getitem callfunc("F_Rand",310082,310083),1;
+	end;
+	}
+	if(@Box_pay>=8500 && @Box_pay<=9700){
+	getitem callfunc("F_Rand",310102,310103,310104),1;
+	end;
+	}
+	getitem callfunc("F_Rand",310112,310119,310179),1;
+	end;
+}
+
+//----------------------------- 甜美側馬尾禮盒
+function	script	Hairstyle_Box12	{ 
+	switch( select("取消","(服飾)甜美側馬尾(青)","(服飾)甜美側馬尾(赤)","(服飾)甜美側馬尾(黃)","(服飾)甜美側馬尾(綠)","(服飾)甜美側馬尾(黑)","(服飾)甜美側馬尾(白)","(服飾)甜美側馬尾(紅)","(服飾)甜美側馬尾(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31645,1; close;
+	case 3: delitem getarg(0),1; getitem 31646,1; close;
+	case 4: delitem getarg(0),1; getitem 31647,1; close;
+	case 5: delitem getarg(0),1; getitem 31648,1; close;
+	case 6: delitem getarg(0),1; getitem 31649,1; close;
+	case 7: delitem getarg(0),1; getitem 31650,1; close;
+	case 8: delitem getarg(0),1; getitem 31651,1; close;
+	case 9: delitem getarg(0),1; getitem 31652,1; close;
+	}
+}
+//----------------------------- 美美長假髮禮盒
+function	script	Hairstyle_Box11	{ 
+	switch( select("取消","(服飾)美美長假髮(青)","(服飾)美美長假髮(赤)","(服飾)美美長假髮(金)","(服飾)美美長假髮(綠)","(服飾)美美長假髮(黑)","(服飾)美美長假髮(薄紫)","(服飾)美美長假髮(紅)","(服飾)美美長假髮(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31637,1; close;
+	case 3: delitem getarg(0),1; getitem 31638,1; close;
+	case 4: delitem getarg(0),1; getitem 31639,1; close;
+	case 5: delitem getarg(0),1; getitem 31640,1; close;
+	case 6: delitem getarg(0),1; getitem 31641,1; close;
+	case 7: delitem getarg(0),1; getitem 31642,1; close;
+	case 8: delitem getarg(0),1; getitem 31643,1; close;
+	case 9: delitem getarg(0),1; getitem 31644,1; close;
+	}
+}
+//----------------------------- 韓系丸子頭禮盒
+function	script	Hairstyle_Box10	{ 
+	switch( select("取消","(服飾)韓系丸子頭(青)","(服飾)韓系丸子頭(赤)","(服飾)韓系丸子頭(黃)","(服飾)韓系丸子頭(綠)","(服飾)韓系丸子頭(黑)","(服飾)韓系丸子頭(白)","(服飾)韓系丸子頭(紅)","(服飾)韓系丸子頭(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31653,1; close;
+	case 3: delitem getarg(0),1; getitem 31654,1; close;
+	case 4: delitem getarg(0),1; getitem 31655,1; close;
+	case 5: delitem getarg(0),1; getitem 31656,1; close;
+	case 6: delitem getarg(0),1; getitem 31657,1; close;
+	case 7: delitem getarg(0),1; getitem 31658,1; close;
+	case 8: delitem getarg(0),1; getitem 31659,1; close;
+	case 9: delitem getarg(0),1; getitem 31660,1; close;
+	}
+}
+//----------------------------- 率性單馬尾禮盒
+function	script	Hairstyle_Box09	{ 
+	switch( select("取消","(服飾)率性單馬尾(藍)","(服飾)率性單馬尾(紅)","(服飾)率性單馬尾(黃)","(服飾)率性單馬尾(綠)","(服飾)率性單馬尾(黑)","(服飾)率性單馬尾(白)","(服飾)率性單馬尾(褐)","(服飾)率性單馬尾(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31218,1; close;
+	case 3: delitem getarg(0),1; getitem 31219,1; close;
+	case 4: delitem getarg(0),1; getitem 31220,1; close;
+	case 5: delitem getarg(0),1; getitem 31221,1; close;
+	case 6: delitem getarg(0),1; getitem 31222,1; close;
+	case 7: delitem getarg(0),1; getitem 31223,1; close;
+	case 8: delitem getarg(0),1; getitem 31224,1; close;
+	case 9: delitem getarg(0),1; getitem 31225,1; close;
+	}
+}
+//----------------------------- 美美直馬尾接髮禮盒
+function	script	Hairstyle_Box08	{ 
+	switch( select("取消","(服飾)美美直馬尾接髮(黑)","(服飾)美美直馬尾接髮(黃)","(服飾)美美直馬尾接髮(綠)","(服飾)美美直馬尾接髮(紫)","(服飾)美美直馬尾接髮(紅)","(服飾)美美直馬尾接髮(橘)","(服飾)美美直馬尾接髮(藍)","(服飾)美美直馬尾接髮(白)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 20340,1; close;
+	case 3: delitem getarg(0),1; getitem 20357,1; close;
+	case 4: delitem getarg(0),1; getitem 20358,1; close;
+	case 5: delitem getarg(0),1; getitem 20359,1; close;
+	case 6: delitem getarg(0),1; getitem 20360,1; close;
+	case 7: delitem getarg(0),1; getitem 20361,1; close;
+	case 8: delitem getarg(0),1; getitem 20362,1; close;
+	case 9: delitem getarg(0),1; getitem 20363,1; close;
+	}
+}
+//----------------------------- 甜心貴族雙髮捲禮盒
+function	script	Hairstyle_Box07	{ 
+	switch( select("取消","(服飾)甜心貴族雙髮捲(藍)","(服飾)甜心貴族雙髮捲(紅)","(服飾)甜心貴族雙髮捲(黃)","(服飾)甜心貴族雙髮捲(綠)","(服飾)甜心貴族雙髮捲(黑)","(服飾)甜心貴族雙髮捲(白)","(服飾)甜心貴族雙髮捲(褐)","(服飾)甜心貴族雙髮捲(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31071,1; close;
+	case 3: delitem getarg(0),1; getitem 31072,1; close;
+	case 4: delitem getarg(0),1; getitem 31073,1; close;
+	case 5: delitem getarg(0),1; getitem 31074,1; close;
+	case 6: delitem getarg(0),1; getitem 31075,1; close;
+	case 7: delitem getarg(0),1; getitem 31076,1; close;
+	case 8: delitem getarg(0),1; getitem 31077,1; close;
+	case 9: delitem getarg(0),1; getitem 31078,1; close;
+	}
+}
+//----------------------------- 浪漫雙馬尾波浪接髮禮盒
+function	script	Hairstyle_Box06	{ 
+	switch( select("取消","(服飾)浪漫雙馬尾波浪接髮(黑)","(服飾)浪漫雙馬尾波浪接髮(黃)","(服飾)浪漫雙馬尾波浪接髮(綠)","(服飾)浪漫雙馬尾波浪接髮(紫)","(服飾)浪漫雙馬尾波浪接髮(紅)","(服飾)浪漫雙馬尾波浪接髮(橘)","(服飾)浪漫雙馬尾波浪接髮(藍)","(服飾)浪漫雙馬尾波浪接髮(白)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 20342,1; close;
+	case 3: delitem getarg(0),1; getitem 20364,1; close;
+	case 4: delitem getarg(0),1; getitem 20365,1; close;
+	case 5: delitem getarg(0),1; getitem 20366,1; close;
+	case 6: delitem getarg(0),1; getitem 20367,1; close;
+	case 7: delitem getarg(0),1; getitem 20368,1; close;
+	case 8: delitem getarg(0),1; getitem 20369,1; close;
+	case 9: delitem getarg(0),1; getitem 20370,1; close;
+	}
+}
+//----------------------------- 俐落俏馬尾禮盒
+function	script	Hairstyle_Box05	{ 
+	switch( select("取消","(服飾)俐落俏馬尾(藍)","(服飾)俐落俏馬尾(紅)","(服飾)俐落俏馬尾(黃)","(服飾)俐落俏馬尾(綠)","(服飾)俐落俏馬尾(黑)","(服飾)俐落俏馬尾(白)","(服飾)俐落俏馬尾(褐)","(服飾)俐落俏馬尾(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31079,1; close;
+	case 3: delitem getarg(0),1; getitem 31080,1; close;
+	case 4: delitem getarg(0),1; getitem 31081,1; close;
+	case 5: delitem getarg(0),1; getitem 31082,1; close;
+	case 6: delitem getarg(0),1; getitem 31083,1; close;
+	case 7: delitem getarg(0),1; getitem 31084,1; close;
+	case 8: delitem getarg(0),1; getitem 31085,1; close;
+	case 9: delitem getarg(0),1; getitem 31086,1; close;
+	}
+}
+//----------------------------- 俏麗雙髮尾禮盒
+function	script	Hairstyle_Box04	{ 
+	switch( select("取消","(服飾)俏麗雙髮尾(藍)","(服飾)俏麗雙髮尾(紅)","(服飾)俏麗雙髮尾(黃)","(服飾)俏麗雙髮尾(綠)","(服飾)俏麗雙髮尾(黑)","(服飾)俏麗雙髮尾(白)","(服飾)俏麗雙髮尾(褐)","(服飾)俏麗雙髮尾(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31226,1; close;
+	case 3: delitem getarg(0),1; getitem 31227,1; close;
+	case 4: delitem getarg(0),1; getitem 31228,1; close;
+	case 5: delitem getarg(0),1; getitem 31229,1; close;
+	case 6: delitem getarg(0),1; getitem 31230,1; close;
+	case 7: delitem getarg(0),1; getitem 31231,1; close;
+	case 8: delitem getarg(0),1; getitem 31232,1; close;
+	case 9: delitem getarg(0),1; getitem 31233,1; close;
+	}
+}
+//----------------------------- 性感麻花側髮捲禮盒
+function	script	Hairstyle_Box03	{ 
+	switch( select("取消","(服飾)性感麻花側髮捲(藍)","(服飾)性感麻花側髮捲(紅)","(服飾)性感麻花側髮捲(黃)","(服飾)性感麻花側髮捲(綠)","(服飾)性感麻花側髮捲(黑)","(服飾)性感麻花側髮捲(白)","(服飾)性感麻花側髮捲(褐)","(服飾)性感麻花側髮捲(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31210,1; close;
+	case 3: delitem getarg(0),1; getitem 31211,1; close;
+	case 4: delitem getarg(0),1; getitem 31212,1; close;
+	case 5: delitem getarg(0),1; getitem 31213,1; close;
+	case 6: delitem getarg(0),1; getitem 31214,1; close;
+	case 7: delitem getarg(0),1; getitem 31215,1; close;
+	case 8: delitem getarg(0),1; getitem 31216,1; close;
+	case 9: delitem getarg(0),1; getitem 31217,1; close;
+	}
+}
+//----------------------------- 帥氣直立髮束禮盒
+function	script	Hairstyle_Box02	{ 
+	switch( select("取消","(服飾)帥氣直立髮束(黃)","(服飾)帥氣直立髮束(綠)","(服飾)帥氣直立髮束(紫)","(服飾)帥氣直立髮束(紅)","(服飾)帥氣直立髮束(褐)","(服飾)帥氣直立髮束(藍)","(服飾)帥氣直立髮束(白)","(服飾)帥氣直立髮束(黑)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 20350,1; close;
+	case 3: delitem getarg(0),1; getitem 20351,1; close;
+	case 4: delitem getarg(0),1; getitem 20352,1; close;
+	case 5: delitem getarg(0),1; getitem 20353,1; close;
+	case 6: delitem getarg(0),1; getitem 20354,1; close;
+	case 7: delitem getarg(0),1; getitem 20355,1; close;
+	case 8: delitem getarg(0),1; getitem 20356,1; close;
+	case 9: delitem getarg(0),1; getitem 20341,1; close;
+	}
+}
+//----------------------------- 古典俏麗髮包禮盒
+function	script	Hairstyle_Box01	{ 
+	switch( select("取消","(服飾)古典俏麗髮包(藍)","(服飾)古典俏麗髮包(紅)","(服飾)古典俏麗髮包(黃)","(服飾)古典俏麗髮包(綠)","(服飾)古典俏麗髮包(黑)","(服飾)古典俏麗髮包(白)","(服飾)古典俏麗髮包(褐)","(服飾)古典俏麗髮包(紫)")) {
+	case 1: close;
+	case 2: delitem getarg(0),1; getitem 31063,1; close;
+	case 3: delitem getarg(0),1; getitem 31064,1; close;
+	case 4: delitem getarg(0),1; getitem 31065,1; close;
+	case 5: delitem getarg(0),1; getitem 31066,1; close;
+	case 6: delitem getarg(0),1; getitem 31067,1; close;
+	case 7: delitem getarg(0),1; getitem 31068,1; close;
+	case 8: delitem getarg(0),1; getitem 31069,1; close;
+	case 9: delitem getarg(0),1; getitem 31070,1; close;
+	}
+}
+
+//----------------------------- 巨龍寶藏
+function	script	Dragenergy_Box	{ 
+OnInit:
+	setarray $@Dragenergy_Box01[0],25759,25760,25761,25762,25763,25764,7123,1035,1036,1037;
+	setarray $@Dragenergy_Box02[0],25765,25766;
+	setarray $@Dragenergy_Box03[0],23981,100144,100145;
+
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=8499){
+	getitem $@Dragenergy_Box01[rand(getarraysize($@Dragenergy_Box01))],1;
+	end;
+	}
+	if(@pay>8500 && @pay<=9499){
+	getitem $@Dragenergy_Box02[rand(getarraysize($@Dragenergy_Box02))],1;
+	end;
+	}
+	if(@pay>9500){
+	getitem $@Dragenergy_Box03[rand(getarraysize($@Dragenergy_Box03))],1;
+	end;
+	}
+}
+
+//----------------------------- 澳丁聖物
+function	script	Odin_Relic	{ 
+OnInit:
+
+	setarray $@Odin_Box01[0],25767,7511,7063,7511,7063,7511,7063;
+	setarray $@Odin_Box02[0],15397,15398,15399,15400,15401,15402,20947,22209;
+
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9599){
+	getitem $@Odin_Box01[rand(getarraysize($@Odin_Box01))],1;
+	end;
+	}
+	if(@pay>9600){
+	getitem $@Odin_Box02[rand(getarraysize($@Odin_Box02))],1;
+	end;
+	}
+}
+
+
+//----------------------------- 受潮的集卡冊
+function	script	Wet_Card_Album_Box	{ 
+	.@r = rand(1,1000);
+	if (.@r < 290) getitem 616,1;	//老舊收集冊
+	else if (.@r < 390) getitem 12246,1;	//具有魔力的卡片冊子
+	else if (.@r < 490) getitem 12690,1;	//頭盔收集冊
+	else if (.@r < 590) getitem 12691,1;	//盔甲收集冊
+	else if (.@r < 690) getitem 12692,1;	//盾牌收集冊
+	else if (.@r < 790) getitem 12693,1;	//披風收集冊
+	else if (.@r < 890) getitem 12694,1;	//鞋靴收集冊
+	else if (.@r < 990) getitem 12695,1;	//飾品收集冊
+	else getitem 22654,1;	//黃金王卡卡冊
+	return;
+}
+
+//----------------------------- 可疑的藍寶箱
+function	script	F_Mysterious_box	{
+	.@r = rand(1,1000);
+	if (.@r < 122) getitem 6919,8;
+	else if (.@r < 321) getitem 6919,16;
+	else if (.@r < 356) getitem 6919,55;
+	else if (.@r < 402) getitem 6936,3;
+	else if (.@r < 453) getitem 6937,3;
+	else if (.@r < 513) getitem 6938,3;
+	else if (.@r < 552) getitem 6939,3;
+	else if (.@r < 606) getitem 6940,3;
+	else if (.@r < 623) getitem 6941,1;
+	else if (.@r < 671) getitem 6942,3;
+	else if (.@r < 705) getitem 11600,2;
+	else if (.@r < 797) getitem 22847,3;
+	else if (.@r < 844) getitem 22848,1;
+	else if (.@r < 887) getitem 22849,1;
+	else getitem 22899,2;
+	return;
+}
+
+//----------------------------- 神秘咒語集
+function	script	Bs_M_S	{ 
+OnInit:
+	//B級
+	setarray $@Bs_M_S_Box01[0],23856,23829,23831,23830,23827,23862,23855,23818,23819,23820,
+                                   23821,23823,23824,23825,23826,23882,23832,23834,23853,23836,
+                                   23838,23843,23844,23870,23847,23848,23849,23850,23866,23851,
+                                   23865;
+	//A級
+	setarray $@Bs_M_S_Box02[0],23828,23857,23858,23859,23860,23861,23864,23876,23877,23840,
+                                   23839,23822,23845,23846,23880;
+	//S級
+	setarray $@Bs_M_S_Box03[0],23854,23871,23872,23873,23874,23875,23833,23894,23852,23881,
+                                   23841,23867,23868,23869,101340,101341,101342,101343,101344;
+	//SS級
+	setarray $@Bs_M_S_Box04[0],23888,23889,23890,23891,23892,23893,23835,23887,23879,
+                                   23883,23883,23884,23885,23886,23837,23842;
+	//SSS級
+	setarray $@Bs_M_S_Box05[0],100250,101345,101346,101347,102295,102308,102310,102311;
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=6499){
+	getitem $@Bs_M_S_Box01[rand(getarraysize($@Bs_M_S_Box01))],1;
+	end; }
+	if(@pay>=6500 && @pay<=8799){
+	getitem $@Bs_M_S_Box02[rand(getarraysize($@Bs_M_S_Box02))],1;
+	end; }
+	if(@pay>=8800 && @pay<=9799){
+	getitem $@Bs_M_S_Box03[rand(getarraysize($@Bs_M_S_Box03))],1;
+	end; }
+	if(@pay>=9800 && @pay<=9979){
+	getitem $@Bs_M_S_Box04[rand(getarraysize($@Bs_M_S_Box04))],1;
+	end; }
+	if(@pay>=9980){
+	getitem $@Bs_M_S_Box05[rand(getarraysize($@Bs_M_S_Box05))],1;
+	end; }
+}
+
+//----------------------------- 生體試驗研究所反應盒
+function	script	Gol1_Box03	{ 
+OnInit:
+	setarray $@Gol1_Box04[0],23016,22687,6820;
+	setarray $@Gol1_Box05[0],6814,6815,6816,6817,6818,6819;
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9099){
+	getitem $@Gol1_Box04[rand(getarraysize($@Gol1_Box04))],1;
+	end;
+	}
+	if(@pay>9500){
+	getitem $@Gol1_Box05[rand(getarraysize($@Gol1_Box05))],1;
+	end;
+	}
+	getitem $@Gol1_Box05[rand(getarraysize($@Gol1_Box05))],1;
+	end;
+}
+
+
+//----------------------------- 生體試驗研究所檔案箱
+function	script	Gol1_Box02	{ 
+OnInit:
+	setarray $@Gol1_Box02[0],25786,25787;
+	setarray $@Gol1_Box03[0],12246,12817;
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9099){
+	getitem $@Gol1_Box02[rand(getarraysize($@Gol1_Box02))],1;
+	end;
+	}
+	if(@pay>9500){
+	getitem $@Gol1_Box03[rand(getarraysize($@Gol1_Box03))],1;
+	end;
+	}
+	getitem $@Gol1_Box03[rand(getarraysize($@Gol1_Box03))],1;
+	end;
+}
+
+
+//----------------------------- 反叛者之箱
+function	script	Rebellion_Box	{ 
+OnInit:
+	setarray $@Re_Box01[0],12016,969,7228,7229,732,714;
+	setarray $@Re_Box02[0],12399,13470,13471,13472,28524,28525,22142;
+	setarray $@Re_Box03[0],20455,20456;
+
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9599){
+	getitem $@Re_Box01[rand(getarraysize($@Re_Box01))],1;
+	end;
+	}
+	if(@pay>=9600 && @pay<=9899){
+	getitem $@Re_Box02[rand(getarraysize($@Re_Box02))],1;
+	end;
+	}
+	if(@pay>9900){
+	getitem $@Re_Box03[rand(getarraysize($@Re_Box03))],1;
+	end;
+	}
+}
+
+//-----------------------------SE神器材料箱子
+function	script	Bo01	{ 
+	set @GetItem,rand(0,8); 
+	if (@GetItem ==0)getitem 7830,1;
+	if (@GetItem ==1)getitem 7831,1;
+	if (@GetItem ==2)getitem 7832,1;
+	if (@GetItem ==3)getitem 7833,1;
+	if (@GetItem ==4)getitem 7834,1;
+	if (@GetItem ==5)getitem 7835,1;
+	if (@GetItem ==6)getitem 7836,1;
+	if (@GetItem ==7)getitem 7837,1;
+	if (@GetItem ==8)getitem 7838,1;
+}
+
+//----------------------------- TE神器材料 珍貴小木箱
+function	script	Bo09	{ 
+	set @GetItem,rand(0,13); 
+	if (@GetItem ==0)getitem 6594,1;
+	if (@GetItem ==1)getitem 6595,1;
+	if (@GetItem ==2)getitem 6596,1;
+	if (@GetItem ==3)getitem 6597,1;
+	if (@GetItem ==4)getitem 6598,1;
+	if (@GetItem ==5)getitem 6599,1;
+	if (@GetItem ==6)getitem 6600,1;
+	if (@GetItem ==7)getitem 6601,1;
+	if (@GetItem ==8)getitem 6602,1;
+	if (@GetItem ==9)getitem 6603,1;
+	if (@GetItem ==10)getitem 6604,1;
+	if (@GetItem ==11)getitem 6605,1;
+	if (@GetItem ==12)getitem 6615,50;
+	if (@GetItem ==13)getitem 6615,100;
+}
+
+//-----------------------------S級錢袋
+function	script	Box02	{ 
+
+OnInit:
+	setarray $@DC_Box_004[0],6419;
+	setarray $@DC_Box_005[0],6418;
+	setarray $@DC_Box_006[0],6423;
+
+	set @pay02,rand(1,10000);
+	if(@pay02>0 && @pay02<=5999){
+	getitem $@DC_Box_004[rand(getarraysize($@DC_Box_004))],1;
+	}
+	if(@pay02>=6000 && @pay02<=9299){
+	getitem $@DC_Box_005[rand(getarraysize($@DC_Box_005))],1;
+	}
+	if(@pay02>=9300 && @pay02<=10000){
+	getitem $@DC_Box_006[rand(getarraysize($@DC_Box_006))],1;
+end;
+	}
+
+}
+
+//-----------------------------A級錢袋
+function	script	Box03	{ 
+
+OnInit:
+	setarray $@DC_Box_007[0],6420,12636;
+	setarray $@DC_Box_008[0],6419;
+	setarray $@DC_Box_009[0],6418;
+
+	set @pay03,rand(1,10000);
+	if(@pay03>0 && @pay03<=5999){
+	getitem $@DC_Box_007[rand(getarraysize($@DC_Box_007))],1;
+	}
+	if(@pay03>=6000 && @pay03<=9299){
+	getitem $@DC_Box_008[rand(getarraysize($@DC_Box_008))],1;
+	}
+	if(@pay03>=9300 && @pay03<=10000){
+	getitem $@DC_Box_009[rand(getarraysize($@DC_Box_009))],1;
+end;
+	}
+
+}
+
+//-----------------------------B級錢袋
+function	script	Box04	{ 
+
+OnInit:
+	setarray $@DC_Box_010[0],6421,12636;
+	setarray $@DC_Box_011[0],6420;
+	setarray $@DC_Box_012[0],6419;
+
+	set @pay04,rand(1,10000);
+	if(@pay04>0 && @pay04<=5999){
+	getitem $@DC_Box_010[rand(getarraysize($@DC_Box_010))],1;
+	}
+	if(@pay04>=6000 && @pay04<=9299){
+	getitem $@DC_Box_011[rand(getarraysize($@DC_Box_011))],1;
+	}
+	if(@pay04>=9300 && @pay04<=10000){
+	getitem $@DC_Box_012[rand(getarraysize($@DC_Box_012))],1;
+end;
+	}
+
+}
+
+//-----------------------------C級錢袋
+function	script	Box05	{ 
+
+OnInit:
+	setarray $@DC_Box_013[0],6422,12636;
+	setarray $@DC_Box_014[0],6421;
+	setarray $@DC_Box_015[0],6420;
+
+	set @pay05,rand(1,10000);
+	if(@pay05>0 && @pay05<=5999){
+	getitem $@DC_Box_013[rand(getarraysize($@DC_Box_013))],1;
+	}
+	if(@pay05>=6000 && @pay05<=9299){
+	getitem $@DC_Box_014[rand(getarraysize($@DC_Box_014))],1;
+	}
+	if(@pay05>=9300 && @pay05<=10000){
+	getitem $@DC_Box_015[rand(getarraysize($@DC_Box_015))],1;
+end;
+	}
+}
+
+//-----------------------------D級錢袋
+function	script	Box06	{ 
+
+OnInit:
+	setarray $@DC_Box_016[0],12636;
+	setarray $@DC_Box_017[0],12621;
+	setarray $@DC_Box_018[0],12620;
+
+	set @pay06,rand(1,10000);
+	if(@pay06>0 && @pay06<=5999){
+	getitem $@DC_Box_016[rand(getarraysize($@DC_Box_016))],1;
+	}
+	if(@pay06>=6000 && @pay06<=9299){
+	getitem $@DC_Box_017[rand(getarraysize($@DC_Box_017))],1;
+	}
+	if(@pay06>=9300 && @pay06<=10000){
+	getitem $@DC_Box_018[rand(getarraysize($@DC_Box_018))],1;
+end;
+	}
+}
+
+//-----------------------------E級錢袋
+function	script	Box07	{ 
+
+OnInit:
+	setarray $@DC_Box_019[0],12636;
+	setarray $@DC_Box_020[0],12621,12636;
+	setarray $@DC_Box_021[0],12621;
+
+	set @pay07,rand(1,10000);
+	if(@pay07>0 && @pay07<=5999){
+	getitem $@DC_Box_019[rand(getarraysize($@DC_Box_019))],1;
+	}
+	if(@pay07>=6000 && @pay07<=9299){
+	getitem $@DC_Box_020[rand(getarraysize($@DC_Box_020))],1;
+	}
+	if(@pay07>=9300 && @pay07<=10000){
+	getitem $@DC_Box_021[rand(getarraysize($@DC_Box_021))],1;
+end;
+	}
+}
+
+//-----------------------------老舊錢袋
+function	script	Box08	{ 
+OnInit:
+
+	setarray $@DC_Box_022[0],12636;
+	setarray $@DC_Box_023[0],6419,6420,6421,6422;
+	setarray $@DC_Box_024[0],6080,6081,6304,6380;
+
+	set @pay08,rand(1,10000);
+	if(@pay08>0 && @pay08<=3999){
+	getitem $@DC_Box_022[rand(getarraysize($@DC_Box_022))],1;
+	}
+	if(@pay08>=4000 && @pay08<=9299){
+	getitem $@DC_Box_023[rand(getarraysize($@DC_Box_023))],1;
+	}
+	if(@pay08>=9300 && @pay08<=10000){
+	getitem $@DC_Box_024[rand(getarraysize($@DC_Box_024))],1;
+end;
+	}
+}
+
+//----------------------------- 補給物資之箱
+function	script	Box51	{ 
+OnInit:
+	setarray $@DC_Box_166[0],7135,7136,678;
+	setarray $@DC_Box_167[0],22915,22916,22917,22918,22919,22920,22921,22922;
+	setarray $@DC_Box_168[0],20741,20742;
+
+	set @pay51,rand(1,10000);
+	if(@pay51>0 && @pay51<8899){
+	getitem $@DC_Box_166[rand(getarraysize($@DC_Box_166))],200;
+	end;
+	}
+	if(@pay51>8900 && @pay51<9799){
+	getitem $@DC_Box_167[rand(getarraysize($@DC_Box_167))],1;
+	end;
+	}
+	if(@pay51>9800 && @pay51<10000){
+	getitem $@DC_Box_168[rand(getarraysize($@DC_Box_168))],1;
+	end;
+	}
+	if(@pay51>0){
+	getitem $@DC_Box_166[rand(getarraysize($@DC_Box_166))],1;
+	end;
+	}
+}
+
+//-----------------------------勇者的戰利品
+function	script	Box80	{ 
+OnInit:
+	setarray $@DC_Box_288[0],607,608,678,12075,12080,12085,12090,12095,12100;
+	setarray $@DC_Box_289[0],12530,12534,12535,12549,12550,12623;
+	setarray $@DC_Box_290[0],15093,15094,15095,15096,15097,15098;
+	setarray $@DC_Box_291[0],22035,22036,22037;
+
+	set @pay80,rand(1,10000);
+	if(@pay80>=0 && @pay80<=5000){
+	getitem $@DC_Box_288[rand(getarraysize($@DC_Box_288))],1;
+	end;
+	}
+	if(@pay80>=5001 && @pay80<=9000){
+	getitem $@DC_Box_289[rand(getarraysize($@DC_Box_289))],1;
+	end;
+	}
+	if(@pay80>=9001 && @pay80<=9500){
+	getitem $@DC_Box_290[rand(getarraysize($@DC_Box_290))],1;
+	end;
+	}
+	if(@pay80>=9501 && @pay80<=10000){
+	getitem $@DC_Box_291[rand(getarraysize($@DC_Box_291))],1;
+	end;
+	}
+	if(@pay80>0){
+	getitem $@DC_Box_288[rand(getarraysize($@DC_Box_288))],1;
+	end;
+	}
+}
+
+//----------------------------- 夢羅克遠征隊獎勵箱
+function	script	Box110	{ 
+OnInit:
+	setarray $@DC_Box_363[0],4908,4911,4914,4917,4920,4923;
+	setarray $@DC_Box_364[0],4909,4912,4915,4918,4921,4924;
+	setarray $@DC_Box_365[0],4910,4913,4916,4919,4922,4925;
+	setarray $@DC_Box_366[0],4910,4913,4916,4919,4922,4925;
+
+	set @pay110,rand(1,10000);
+	if(@pay110>0 && @pay110<6999){
+	getitem $@DC_Box_363[rand(getarraysize($@DC_Box_363))],1;
+	end;
+	}
+	if(@pay110>7000 && @pay110<9399){
+	getitem $@DC_Box_364[rand(getarraysize($@DC_Box_364))],1;
+	end;
+	}
+	if(@pay110>9400 && @pay110<9899){
+	getitem $@DC_Box_365[rand(getarraysize($@DC_Box_365))],1;
+	end;
+	}
+	if(@pay110>9900 && @pay110<10000){
+	getitem $@DC_Box_366[rand(getarraysize($@DC_Box_366))],1;
+	end;
+	}
+	if(@pay110>0){
+	getitem $@DC_Box_363[rand(getarraysize($@DC_Box_363))],1;
+	end;
+	}
+}
+
+//----------------------------- 快樂箱
+function	script	Happy_Box	{ 
+OnInit:
+	setarray $@Happy_Box_1[0],12081,12071,12086,12068,12048,12063;
+	setarray $@Happy_Box_2[0],526,518,748,749,6244,970,972,7135,7136,7139,7137;
+	setarray $@Happy_Box_3[0],644,617,6252,6260,6253,6257,6256,6259,6249,6254;
+	setarray $@Happy_Box_4[0],6444,12623,19704,20176;
+
+	set @pay42,rand(1,10000);
+	if(@pay42>=0 && @pay42<=4000){
+	getitem $@Happy_Box_1[rand(getarraysize($@Happy_Box_1))],1;
+	end;
+	}
+	if(@pay42>=4001 && @pay42<=7000){
+	getitem $@Happy_Box_2[rand(getarraysize($@Happy_Box_2))],1;
+	end;
+	}
+	if(@pay42>=7001 && @pay42<=9500){
+	getitem $@Happy_Box_3[rand(getarraysize($@Happy_Box_3))],1;
+	end;
+	}
+	getitem $@Happy_Box_4[rand(getarraysize($@Happy_Box_4))],1;
+	end;
+}
+
+
+//----------------------------- 炸彈波利箱子
+function	script	Angeling_Box02	{ 
+
+	getitem 61007,3;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7000){
+	getitem callfunc("F_Rand",6438,6439),1;
+	end;
+	}
+	if(@pay>=7001 && @pay<=9700){
+	getitem callfunc("F_Rand",7650,44168,44049,44050,44051,40522,40523,40524,40485,40486),1;
+	end;
+	}
+	getitem 61036,1;
+	end;
+}
+
+//----------------------------- 天使波利箱子
+function	script	Angeling_Box01	{ 
+
+	getitem 61007,3;
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=4500){
+	getitem 61007,3;
+	end;
+	}
+	if(@pay>=4501 && @pay<=9200){
+	getitem callfunc("F_Rand",6438,6439),1;
+	end;
+	}
+	if(@pay>=9201 && @pay<=9700){
+	getitem callfunc("F_Rand",19143,19146,19147,19148,19149,19150,19151,19152,19153,19154),1;
+	end;
+	}
+	getitem callfunc("F_Rand",5451,5452,5453,20521),1;
+	end;
+}
+
+
+//----------------------------- 基礎服飾附魔石箱子
+function	script	Costume_Stone_Box	{ 
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9800){
+	getitem F_rand(6636,6637,6638,6639,6640,6641,6740,6741,6790,6791,6792,6943,6944,6999,25000,6642,6643,6742,6743,6744,6945,6946,6947,6948,6949,6950,25001,25002,25003,25004,25005,25006,25007,25141,25175,6644,6645,6745,6951,25008,25009,25010,25011,25012,25013,25014,25015,25016,25017,25062,25063,25064,25065,25066,25227,25228,25229,25072,25139),1;
+	end;
+	}
+	getitem F_rand(25068,25069,25171,25172,25304,25173,25060,25061,25070,25071,25174,25305,6908,6963,6964,25067,25170,25302,25303,25306),1;
+	end;
+}
+
+
+//----------------------------- 一階服飾附魔石箱子
+function	script	Costume_Stone_Box1	{
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9800){
+	getitem F_rand(25409,25413,25417,25445,25450,25453,25490,25494,25498,25706,25710,25714,25410,25414,25418,25446,25451,25454,25491,25495,25499,25707,25711,25715,25411,25415,25419,25447,25452,25455,25492,25496,25500,25708,25712,25716),1;
+	end;
+	}
+	getitem F_rand(25412,25416,25420,25448,25449,25456,25493,25497,25501,25709,25713,25717),1;
+	end;
+}
+
+//----------------------------- 二階服飾附魔石箱子
+function	script	Costume_Stone_Box2	{
+	set @pay,rand(1,10000);
+	if(@pay>0 && @pay<=9800){
+	getitem F_rand(25800,25804,25808,25843,25846,25850,25855,25859,1000008,1000012,1000016,1000214,1000218,1000222,1000297,1000301,1000305,25799,25803,25807,25844,25847,25851,25856,25860,1000009,1000013,1000017,1000215,1000219,1000223,1000298,1000302,1000306,25798,25802,25806,25845,25848,25852,25857,25861,1000010,1000014,1000018,1000216,1000220,1000224,1000299,1000303,1000307),1;
+	end;
+	}
+	getitem F_rand(25797,25801,25805,25842,25849,25853,25854,25858,25862,1000011,1000015,1000019,1000213,1000217,1000221,1000296,1000300,1000304),1;
+	end;
+}
+
+
+//----------------------------- 紅利轉蛋(1)
+function	script	Dividend_Scroll_01	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7500){
+	getitem F_rand(12412,70036,6635,23436,23044,16772,12412,70036,6635,23436,23044,16772,14312,14313,14314),1;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9100){
+	getitem F_rand(70060),1;
+	end;
+	}
+
+	if(@pay>=9101 && @pay<=9700){
+	setarray Dividend_Scroll_01_2[0],410160,410169,420165,31395,20430,20584,480320;
+	set @Dividend_Scroll_01,Dividend_Scroll_01_2[rand(getarraysize(Dividend_Scroll_01_2))];
+	getitem @Dividend_Scroll_01,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(1) 取得 "+getitemname(@Dividend_Scroll_01)+"!!",15;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9980){
+	setarray Dividend_Scroll_01_3[0],70055,70045,420236,410254;
+	set @Dividend_Scroll_01,Dividend_Scroll_01_3[rand(getarraysize(Dividend_Scroll_01_3))];
+	getitem @Dividend_Scroll_01,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(1) 取得 "+getitemname(@Dividend_Scroll_01)+"!!",15;
+	end;
+	}
+	setarray Dividend_Scroll_01_4[0],70039,4148;
+	set @Dividend_Scroll_01,Dividend_Scroll_01_4[rand(getarraysize(Dividend_Scroll_01_4))];
+	getitem @Dividend_Scroll_01,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(1) 取得 "+getitemname(@Dividend_Scroll_01)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 紅利轉蛋(2)
+function	script	Dividend_Scroll_02	{ 
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=7500){
+	getitem F_rand(12412,70036,6635,23436,23044,16772,12412,70036,6635,23436,23044,16772,14312,14313,14314),1;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(70060),1;
+	end;
+	}
+
+	if(@pay>=9001 && @pay<=9770){
+	setarray Dividend_Scroll_02_2[0],420234,40374,40396,20317,410055,480393,480408;
+	set @Dividend_Scroll_02,Dividend_Scroll_02_2[rand(getarraysize(Dividend_Scroll_02_2))];
+	getitem @Dividend_Scroll_02,1;
+	//announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(2) 取得 "+getitemname(@Dividend_Scroll_02)+"!!",15;
+	end;
+	}
+	if(@pay>=9771 && @pay<=9970){
+	setarray Dividend_Scroll_02_3[0],24882,470247;
+	set @Dividend_Scroll_02,Dividend_Scroll_02_3[rand(getarraysize(Dividend_Scroll_02_3))];
+	getitem @Dividend_Scroll_02,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(2) 取得 "+getitemname(@Dividend_Scroll_02)+"!!",15;
+	end;
+	}
+	setarray Dividend_Scroll_02_4[0],31978,31979;
+	set @Dividend_Scroll_02,Dividend_Scroll_02_4[rand(getarraysize(Dividend_Scroll_02_4))];
+	getitem @Dividend_Scroll_02,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 紅利轉蛋(2) 取得 "+getitemname(@Dividend_Scroll_02)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 光輝天翼轉蛋
+function	script	Lunatic_Scroll_01	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+	if(#Luck_Scroll==100){ goto Scroll_01; }
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(410081,410123,410126,410128,410133,480315,480316),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9900){
+	setarray $@Scroll_01_3[0],28430,28434,28437,28438;
+	set @Scroll_01,$@Scroll_01_3[rand(getarraysize($@Scroll_01_3))];
+	getitem @Scroll_01,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 光輝天翼轉蛋 取得 "+getitemname(@Scroll_01)+"!!",15;
+	end;
+	}
+	Scroll_01:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_01_4[0],1001256,22654,22202,450175,420106,480076,490030,490097;
+	set @Scroll_01,$@Scroll_01_4[rand(getarraysize($@Scroll_01_4))];
+	getitem @Scroll_01,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 光輝天翼轉蛋 取得 "+getitemname(@Scroll_01)+"!!",15;
+	end;
+}
+
+//----------------------------- 天佑祈福轉蛋
+function	script	Lunatic_Scroll_02	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+	if(#Luck_Scroll==100){  goto Scroll_02; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(410005,410103,420054,420071,420073,480310,480311),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9900){
+	setarray $@Scroll_02_3[0],102102,20859,490100,490101;
+	set @Scroll_02,$@Scroll_02_3[rand(getarraysize($@Scroll_02_3))];
+	getitem @Scroll_02,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 天佑祈福轉蛋 取得 "+getitemname(@Scroll_02)+"!!",15;
+	end;
+	}
+	Scroll_02:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_02_4[0],1001256,22654,400401,480136,480291,480292;
+	set @Scroll_02,$@Scroll_02_4[rand(getarraysize($@Scroll_02_4))];
+	getitem @Scroll_02,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 天佑祈福轉蛋 取得 "+getitemname(@Scroll_02)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 熾天之花轉蛋
+function	script	Lunatic_Scroll_03	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+	if(#Luck_Scroll==100){ goto Scroll_03; }
+
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(420015,420026,420044,420211,420209,480280,480297),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9900){
+	setarray $@Scroll_03_3[0],480088,28436,28573,28536;
+	set @Scroll_03,$@Scroll_03_3[rand(getarraysize($@Scroll_03_3))];
+	getitem @Scroll_03,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 熾天之花轉蛋 取得 "+getitemname(@Scroll_03)+"!!",15;
+	end;
+	}
+	Scroll_03:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_03_4[0],1001256,22654,410235,420194,22191,470127,22071;
+	set @Scroll_03,$@Scroll_03_4[rand(getarraysize($@Scroll_03_4))];
+	getitem @Scroll_03,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 熾天之花轉蛋 取得 "+getitemname(@Scroll_03)+"!!",15;
+	end;
+}
+
+//----------------------------- 強殖裝甲轉蛋
+function	script	Lunatic_Scroll_04	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_04; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(420191,420192,410182,430005,400232,480279,480282),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9940){
+	setarray $@Scroll_04_3[0],490218,32259,420032,490208;
+	set @Scroll_04,$@Scroll_04_3[rand(getarraysize($@Scroll_04_3))];
+	getitem @Scroll_04,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 強殖裝甲轉蛋 取得 "+getitemname(@Scroll_04)+"!!",15;
+	end;
+	}
+	Scroll_04:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_04_4[0],1001256,22654,460030,470120,460027,490089,28429;
+	set @Scroll_04,$@Scroll_04_4[rand(getarraysize($@Scroll_04_4))];
+	getitem @Scroll_04,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 強殖裝甲轉蛋 取得 "+getitemname(@Scroll_04)+"!!",15;
+	end;
+}
+
+//----------------------------- 神之追隨者轉蛋
+function	script	Lunatic_Scroll_05	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_05; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(420152,420132,20257,410144,44247,480121,480189),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9940){
+	setarray $@Scroll_05_3[0],480242,480153,480154,32270;
+	set @Scroll_05,$@Scroll_05_3[rand(getarraysize($@Scroll_05_3))];
+	getitem @Scroll_05,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 神之追隨者轉蛋 取得 "+getitemname(@Scroll_05)+"!!",15;
+	end;
+	}
+	Scroll_05:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_05_4[0],1001256,22654,420199,470129,470114,22222,490245;
+	set @Scroll_05,$@Scroll_05_4[rand(getarraysize($@Scroll_05_4))];
+	getitem @Scroll_05,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 神之追隨者轉蛋 取得 "+getitemname(@Scroll_05)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 寶石轉蛋
+function	script	Lunatic_Scroll_06	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_06; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(19824,20290,31930,44314,20487,480395),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9950){
+	setarray $@Scroll_06_3[0],480087,490405,470033,470095;
+	set @Scroll_06,$@Scroll_06_3[rand(getarraysize($@Scroll_06_3))];
+	getitem @Scroll_06,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 寶石轉蛋 取得 "+getitemname(@Scroll_06)+"!!",15;
+	end;
+	}
+	Scroll_06:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_06_4[0],22654,490472,400511,480149;
+	set @Scroll_06,$@Scroll_06_4[rand(getarraysize($@Scroll_06_4))];
+	getitem @Scroll_06,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 寶石轉蛋 取得 "+getitemname(@Scroll_06)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 風神轉蛋
+function	script	Lunatic_Scroll_07	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_07; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3400){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3401 && @pay<=7400){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7401 && @pay<=8900){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=8901 && @pay<=9600){
+	getitem F_rand(19291,410108,31456,31735,31513,480394),1;
+	end;
+	}
+	if(@pay>=9601 && @pay<=9950){
+	setarray $@Scroll_07_3[0],410213,410215,410216,480276;
+	set @Scroll_07,$@Scroll_07_3[rand(getarraysize($@Scroll_07_3))];
+	getitem @Scroll_07,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 風神轉蛋 取得 "+getitemname(@Scroll_07)+"!!",15;
+	end;
+	}
+	Scroll_07:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_07_4[0],22654,490491,470187,480192;
+	set @Scroll_07,$@Scroll_07_4[rand(getarraysize($@Scroll_07_4))];
+	getitem @Scroll_07,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 風神轉蛋 取得 "+getitemname(@Scroll_07)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 啟海伊洛轉蛋
+function	script	Lunatic_Scroll_08	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_08; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3500){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3501 && @pay<=7500){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=9001 && @pay<=9700){
+	getitem F_rand(44194,420088,44570,31481,40340,480376),1;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9950){
+	setarray $@Scroll_08_3[0],32278,28595,28517,32245;
+	set @Scroll_08,$@Scroll_08_3[rand(getarraysize($@Scroll_08_3))];
+	getitem @Scroll_08,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 啟海伊洛轉蛋 取得 "+getitemname(@Scroll_08)+"!!",15;
+	end;
+	}
+	Scroll_08:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_08_4[0],22654,480341,450357,450358,480341,450357,450358;
+	set @Scroll_08,$@Scroll_08_4[rand(getarraysize($@Scroll_08_4))];
+	getitem @Scroll_08,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 啟海伊洛轉蛋 取得 "+getitemname(@Scroll_08)+"!!",15;
+	end;
+}
+
+//----------------------------- 幻之魔法轉蛋
+function	script	Lunatic_Scroll_09	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_09; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3500){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3501 && @pay<=7500){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=9001 && @pay<=9700){
+	getitem F_rand(44000,31905,31616,40191,31515,20535),1;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9950){
+	setarray $@Scroll_09_3[0],490450,460038,420064,420173,400328,400291;
+	set @Scroll_09,$@Scroll_09_3[rand(getarraysize($@Scroll_09_3))];
+	getitem @Scroll_09,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 幻之魔法轉蛋 取得 "+getitemname(@Scroll_09)+"!!",15;
+	end;
+	}
+	Scroll_09:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_09_4[0],19095,480372,490482,490466,490535,490536;
+	set @Scroll_09,$@Scroll_09_4[rand(getarraysize($@Scroll_09_4))];
+	getitem @Scroll_09,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 幻之魔法轉蛋 取得 "+getitemname(@Scroll_09)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 超新星轉蛋
+function	script	Lunatic_Scroll_10	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_10; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3500){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3501 && @pay<=7500){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=9001 && @pay<=9700){
+	getitem F_rand(31916,420133,420083,420070,410267,480093),1;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9950){
+	setarray $@Scroll_10_3[0],420186,400368,490389,480024;
+	set @Scroll_10,$@Scroll_10_3[rand(getarraysize($@Scroll_10_3))];
+	getitem @Scroll_10,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 超新星轉蛋 取得 "+getitemname(@Scroll_10)+"!!",15;
+	end;
+	}
+	Scroll_10:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_10_4[0],400547,400548,400549,400550,400551;
+	set @Scroll_10,$@Scroll_10_4[rand(getarraysize($@Scroll_10_4))];
+	getitem @Scroll_10,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 超新星轉蛋 取得 "+getitemname(@Scroll_10)+"!!",15;
+	end;
+}
+
+
+//----------------------------- 伊斯加爾特轉蛋
+function	script	Lunatic_Scroll_11	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_11; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3500){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3501 && @pay<=7500){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=9001 && @pay<=9700){
+	getitem F_rand(420263,400596,420306,420242,410252,480204),1;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9950){
+	setarray $@Scroll_11_3[0],28505,28515,470177,20866;
+	set @Scroll_11,$@Scroll_11_3[rand(getarraysize($@Scroll_11_3))];
+	getitem @Scroll_11,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 伊斯加爾特轉蛋 取得 "+getitemname(@Scroll_11)+"!!",15;
+	end;
+	}
+	Scroll_11:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_11_4[0],400105,400106,400107,410211;
+	set @Scroll_11,$@Scroll_11_4[rand(getarraysize($@Scroll_11_4))];
+	getitem @Scroll_11,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 伊斯加爾特轉蛋 取得 "+getitemname(@Scroll_11)+"!!",15;
+	end;
+}
+
+//----------------------------- 星雲轉蛋
+function	script	Lunatic_Scroll_12	{ 
+
+	set #Luck_Scroll,#Luck_Scroll+1; 
+	dispbottom "轉蛋幸運值累積"+#Luck_Scroll+"";
+	getitem 14522,10;
+
+	if(#Luck_Scroll==100){ goto Scroll_12; }
+	set @pay,rand(1,10000);
+	if(@pay>=0 && @pay<=3500){
+	getitem F_rand(12767,12768,12794,12794),1;
+	end;
+	}
+	if(@pay>=3501 && @pay<=7500){
+	getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+	end;
+	}
+	if(@pay>=7501 && @pay<=9000){
+	getitem F_rand(1000620,25375),1;
+	end;
+	}
+	if(@pay>=9001 && @pay<=9700){
+	getitem F_rand(410316,400431,480200,44716,480296),1;
+	end;
+	}
+	if(@pay>=9701 && @pay<=9950){
+	setarray $@Scroll_12_3[0],480245,460027,490208,460038;
+	set @Scroll_12,$@Scroll_12_3[rand(getarraysize($@Scroll_12_3))];
+	getitem @Scroll_12,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 星雲轉蛋 取得 "+getitemname(@Scroll_12)+"!!",15;
+	end;
+	}
+	Scroll_12:
+	set #Luck_Scroll,0; dispbottom "轉蛋幸運值歸零";
+	setarray $@Scroll_12_4[0],22654,70107,490552,420328,420330,420331,490552,420328,420330,420331,420332;
+	set @Scroll_12,$@Scroll_12_4[rand(getarraysize($@Scroll_12_4))];
+	getitem @Scroll_12,1;
+	announce "恭喜玩家 " + strcharinfo(0) + "，從 星雲轉蛋 取得 "+getitemname(@Scroll_12)+"!!",15;
+	end;
+}
+
+
+
+
+
+
+
+
+

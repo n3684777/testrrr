@@ -1,0 +1,1485 @@
+﻿vdistrict1,56,21,6	script	戰死者之墓頭具附魔機器人	563,{
+
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "在戰死者之墓取得的頭飾";
+	mes "只要給我對應的報酬";
+	mes "我就能幫你進行強化";
+	next;
+	switch(select("請幫我附魔:取消")){
+
+case 1:
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你想要要付魔哪個頭盔?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Killed_S_Slots,getequipcardid(.@is,0);
+	set @Killed_S_Slots2,getequipcardid(.@is,1);
+	set @Killed_S_Slots3,getequipcardid(.@is,2);
+	set @Killed_S_Slots4,getequipcardid(.@is,3);
+	set @Killed_S_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 18971) goto Killed_S_Slots_net;
+	if(@abd == 18972) goto Killed_S_Slots_net;
+	if(@abd == 18973) goto Killed_S_Slots_net;
+	if(@abd == 18974) goto Killed_S_Slots_net;
+	if(@abd == 18975) goto Killed_S_Slots_net;
+	if(@abd == 18976) goto Killed_S_Slots_net;
+	if(@abd == 18977) goto Killed_S_Slots_net;
+	if(@abd == 18978) goto Killed_S_Slots_net;
+	if(@abd == 18979) goto Killed_S_Slots_net;
+	if(@abd == 18980) goto Killed_S_Slots_net;
+	if(@abd == 18981) goto Killed_S_Slots_net;
+	if(@abd == 18982) goto Killed_S_Slots_net;
+	if(@abd == 18983) goto Killed_S_Slots_net;
+	if(@abd == 18984) goto Killed_S_Slots_net;
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Killed_S_Slots_net:
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "我只能對第二洞進行強化";
+	mes "你想要進行哪種附魔操作";
+	next;
+	switch(select("第二洞特殊附魔:第二洞特殊附魔升階:取消")){
+
+	case 1:
+		if(@Killed_S_Slots4 == 0){
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "第四洞尚未附魔";
+		close;
+		}
+		if(@Killed_S_Slots3 == 0){
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "第三洞尚未附魔";
+		close;
+		}
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "需求材料：";
+		mes "咒怨碎片x200";
+		mes "5,000,000Zeny";
+		mes "選擇你要強化的能力";
+		next;
+		switch(select("不屈:霸氣:魔精:銳氣:精弓:金剛:博愛:取消")){
+
+		case 1:
+		callfunc "fumoKilled_S2",23016,200,5000000,29706;
+		close;
+
+		case 2:
+		callfunc "fumoKilled_S2",23016,200,5000000,29061;
+		close;
+
+		case 3:
+		callfunc "fumoKilled_S2",23016,200,5000000,29071;
+		close;
+
+		case 4:
+		callfunc "fumoKilled_S2",23016,200,5000000,29081;
+		close;
+
+		case 5:
+		callfunc "fumoKilled_S2",23016,200,5000000,29091;
+		close;
+
+		case 6:
+		callfunc "fumoKilled_S2",23016,200,5000000,29101;
+		close;
+
+		case 7:
+		callfunc "fumoKilled_S2",23016,200,5000000,29111;
+		close;
+
+		case 8:
+		close;
+		}
+
+	case 2:
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "LV1->LV2需求材料：";
+		mes "咒怨碎片x100";
+		mes "3,500,000Zeny";
+		mes " ";
+		mes "LV2->LV3需求材料：";
+		mes "咒怨碎片x200";
+		mes "5,000,000Zeny";
+		mes " ";
+		mes "LV3->LV4需求材料：";
+		mes "咒怨碎片x250";
+		mes "8,000,000Zeny";
+		mes " ";
+		mes "LV4->LV5需求材料：";
+		mes "咒怨碎片x350";
+		mes "14,000,000Zeny";
+		mes " ";
+		mes "LV5->LV6需求材料：";
+		mes "咒怨碎片x450";
+		mes "20,000,000Zeny";
+		mes " ";
+		mes "LV6->LV7需求材料：";
+		mes "咒怨碎片x550";
+		mes "25,000,000Zeny";
+		mes " ";
+		mes "LV7->LV8需求材料：";
+		mes "咒怨碎片x650";
+		mes "30,000,000Zeny";
+		mes " ";
+		mes "LV8->LV9需求材料：";
+		mes "咒怨碎片x900";
+		mes "50,000,000Zeny";
+		mes " ";
+		mes "LV9->LV10需求材料：";
+		mes "咒怨碎片x1800";
+		mes "100,000,000Zeny";
+		mes " ";
+		mes "你要繼續附魔升階嗎?";
+		next;
+		switch(select("取消:繼續附魔升階")){
+		case 1:
+		close;
+
+		case 2:
+		if(@Killed_S_Slots2 == 0){
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "第二洞尚未附魔";
+		close;
+		}
+
+		//附魔Lv2
+		if(@Killed_S_Slots2 == 29061) goto Killed_S_net1_2;
+		if(@Killed_S_Slots2 == 29071) goto Killed_S_net2_2;
+		if(@Killed_S_Slots2 == 29081) goto Killed_S_net3_2;
+		if(@Killed_S_Slots2 == 29091) goto Killed_S_net4_2;
+		if(@Killed_S_Slots2 == 29101) goto Killed_S_net5_2;
+		if(@Killed_S_Slots2 == 29111) goto Killed_S_net6_2;
+		if(@Killed_S_Slots2 == 29706) goto Killed_S_net7_2;
+		//附魔Lv3
+		if(@Killed_S_Slots2 == 29062) goto Killed_S_net1_3;
+		if(@Killed_S_Slots2 == 29072) goto Killed_S_net2_3;
+		if(@Killed_S_Slots2 == 29082) goto Killed_S_net3_3;
+		if(@Killed_S_Slots2 == 29092) goto Killed_S_net4_3;
+		if(@Killed_S_Slots2 == 29102) goto Killed_S_net5_3;
+		if(@Killed_S_Slots2 == 29112) goto Killed_S_net6_3;
+		if(@Killed_S_Slots2 == 29707) goto Killed_S_net7_3;
+		//附魔Lv4
+		if(@Killed_S_Slots2 == 29063) goto Killed_S_net1_4;
+		if(@Killed_S_Slots2 == 29073) goto Killed_S_net2_4;
+		if(@Killed_S_Slots2 == 29083) goto Killed_S_net3_4;
+		if(@Killed_S_Slots2 == 29093) goto Killed_S_net4_4;
+		if(@Killed_S_Slots2 == 29103) goto Killed_S_net5_4;
+		if(@Killed_S_Slots2 == 29113) goto Killed_S_net6_4;
+		if(@Killed_S_Slots2 == 29708) goto Killed_S_net7_4;
+		//附魔Lv5
+		if(@Killed_S_Slots2 == 29064) goto Killed_S_net1_5;
+		if(@Killed_S_Slots2 == 29074) goto Killed_S_net2_5;
+		if(@Killed_S_Slots2 == 29084) goto Killed_S_net3_5;
+		if(@Killed_S_Slots2 == 29094) goto Killed_S_net4_5;
+		if(@Killed_S_Slots2 == 29104) goto Killed_S_net5_5;
+		if(@Killed_S_Slots2 == 29114) goto Killed_S_net6_5;
+		if(@Killed_S_Slots2 == 29709) goto Killed_S_net7_5;
+
+	//附魔Lv6
+	if(@Killed_S_Slots2 == 29065) goto Killed_S_net1_6;
+	if(@Killed_S_Slots2 == 29075) goto Killed_S_net2_6;
+	if(@Killed_S_Slots2 == 29085) goto Killed_S_net3_6;
+	if(@Killed_S_Slots2 == 29095) goto Killed_S_net4_6;
+	if(@Killed_S_Slots2 == 29105) goto Killed_S_net5_6;
+	if(@Killed_S_Slots2 == 29115) goto Killed_S_net6_6;
+	if(@Killed_S_Slots2 == 29710) goto Killed_S_net7_6;
+	//附魔Lv7
+	if(@Killed_S_Slots2 == 29066) goto Killed_S_net1_7;
+	if(@Killed_S_Slots2 == 29076) goto Killed_S_net2_7;
+	if(@Killed_S_Slots2 == 29086) goto Killed_S_net3_7;
+	if(@Killed_S_Slots2 == 29096) goto Killed_S_net4_7;
+	if(@Killed_S_Slots2 == 29106) goto Killed_S_net5_7;
+	if(@Killed_S_Slots2 == 29116) goto Killed_S_net6_7;
+	if(@Killed_S_Slots2 == 29711) goto Killed_S_net7_7;
+	//附魔Lv8
+	if(@Killed_S_Slots2 == 29067) goto Killed_S_net1_8;
+	if(@Killed_S_Slots2 == 29077) goto Killed_S_net2_8;
+	if(@Killed_S_Slots2 == 29087) goto Killed_S_net3_8;
+	if(@Killed_S_Slots2 == 29097) goto Killed_S_net4_8;
+	if(@Killed_S_Slots2 == 29107) goto Killed_S_net5_8;
+	if(@Killed_S_Slots2 == 29117) goto Killed_S_net6_8;
+	if(@Killed_S_Slots2 == 29712) goto Killed_S_net7_8;
+	//附魔Lv9
+	if(@Killed_S_Slots2 == 29068) goto Killed_S_net1_9;
+	if(@Killed_S_Slots2 == 29078) goto Killed_S_net2_9;
+	if(@Killed_S_Slots2 == 29088) goto Killed_S_net3_9;
+	if(@Killed_S_Slots2 == 29098) goto Killed_S_net4_9;
+	if(@Killed_S_Slots2 == 29108) goto Killed_S_net5_9;
+	if(@Killed_S_Slots2 == 29118) goto Killed_S_net6_9;
+	if(@Killed_S_Slots2 == 29713) goto Killed_S_net7_9;
+	//附魔Lv10
+	if(@Killed_S_Slots2 == 29069) goto Killed_S_net1_10;
+	if(@Killed_S_Slots2 == 29079) goto Killed_S_net2_10;
+	if(@Killed_S_Slots2 == 29089) goto Killed_S_net3_10;
+	if(@Killed_S_Slots2 == 29099) goto Killed_S_net4_10;
+	if(@Killed_S_Slots2 == 29109) goto Killed_S_net5_10;
+	if(@Killed_S_Slots2 == 29119) goto Killed_S_net6_10;
+	if(@Killed_S_Slots2 == 29714) goto Killed_S_net7_10;
+		mes "[戰死者之墓頭具附魔機器人]";
+		mes "其他階段尚未開放付魔!!";
+		close;
+		}
+
+
+	case 3:
+	close;
+	}
+
+
+
+Killed_S_net1_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29062,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29072,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29082,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29092,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29102,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29112,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_2:
+	if(countitem(23016)<100){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<3500000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,100;
+	set zeny,zeny-3500000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29707,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+Killed_S_net1_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29063,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29073,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29083,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29093,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29103,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29113,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_3:
+	if(countitem(23016)<200){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,200;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29708,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+Killed_S_net1_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29064,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29074,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29084,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29094,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29104,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29114,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_4:
+	if(countitem(23016)<250){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,250;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29709,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+Killed_S_net1_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29065,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29075,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29085,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29095,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29105,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29115,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_5:
+	if(countitem(23016)<350){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<14000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,350;
+	set zeny,zeny-14000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29710,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+
+Killed_S_net1_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29066,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29076,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29086,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29096,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29106,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29116,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_6:
+	if(countitem(23016)<450){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,450;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29711,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+Killed_S_net1_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29067,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29077,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29087,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29097,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29107,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29117,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_7:
+	if(countitem(23016)<550){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,550;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29712,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+Killed_S_net1_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29068,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29078,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29088,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29098,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29108,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29118,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_8:
+	if(countitem(23016)<650){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,650;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29713,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net1_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29069,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29079,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29089,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29099,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29109,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29119,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_9:
+	if(countitem(23016)<900){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<50000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,900;
+	set zeny,zeny-50000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29714,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+
+Killed_S_net1_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29070,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net2_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29080,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net3_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29090,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net4_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29100,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net5_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29110,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net6_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29120,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+Killed_S_net7_10:
+	if(countitem(23016)<1800){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem 23016,1800;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,29715,@Killed_S_Slots3,@Killed_S_Slots4;
+	specialeffect 154;
+	close;
+
+
+
+case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "<戰死者之墓頭具>附魔機器人",0;
+	end;
+}
+
+
+//------------------------------------ 第二洞特殊附魔
+function	script	fumoKilled_S2	{
+	if(countitem(getarg(0)) < getarg(1)){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上咒怨碎片不夠。";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[戰死者之墓頭具附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem getarg(0),getarg(1);
+	set zeny,zeny-getarg(2);
+	getitem2 @abd,1,1,@Killed_S_Refine,0,@Killed_S_Slots,getarg(3),@Killed_S_Slots3,@Killed_S_Slots4;
+	close;
+}
+
+
+

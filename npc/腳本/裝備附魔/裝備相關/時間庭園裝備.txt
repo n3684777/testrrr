@@ -1,0 +1,84 @@
+﻿vdistrict1,84,33,6	script	時間庭園兌換商店#Dimen01	21866,{
+
+	mes "[時間庭園兌換商店]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("裝備製作:物品兌換:進行附魔:前往被遺忘的時間的水晶")){
+
+	case 1:
+	close2;
+	callshop "時間庭園兌換商店#裝備";
+	end;
+
+	case 2:
+	close2;
+	callshop "時間庭園兌換商店#物品";
+	end;
+
+	case 3:
+		mes "[時間庭園兌換商店]";
+		mes "請選擇你要附魔的裝備";
+		next;
+		switch(select("神獸斗篷：春天:生命循環斗篷：春天:神獸斗篷：夏天:生命循環斗篷：夏天:神獸斗篷：秋天:生命循環斗篷：秋天:神獸斗篷：冬天:生命循環斗篷：冬天:循環的印記")){
+
+		case 1:
+		close2;
+		item_enchant 117;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 118;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 119;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 120;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 121;
+		end;
+
+		case 6:
+		close2;
+		item_enchant 122;
+		end;
+
+		case 7:
+		close2;
+		item_enchant 123;
+		end;
+
+		case 8:
+		close2;
+		item_enchant 124;
+		end;
+
+		case 9:
+		close2;
+		item_enchant 142;
+		end;
+		}
+
+	case 4:
+
+		switch(select("被遺忘的時間的水晶(1區域)【for_dun01】","被遺忘的時間的水晶(2區域)【for_dun02】")) {
+		case 1: set WarpMap$,"for_dun01"; set WarpMapX,0; set WarpMapY,0; warp "for_dun01",0,0;	close;
+		case 2: set WarpMap$,"for_dun02"; set WarpMapX,0; set WarpMapY,0; warp "for_dun02",0,0;	close;
+
+		}
+	}
+
+OnInit:
+	waitingroom "時間庭園兌換商店",0;
+	end;
+}
+
+

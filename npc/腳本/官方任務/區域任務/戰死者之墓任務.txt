@@ -1,0 +1,278 @@
+trinity,100,127,6	script	戰死者之墓任務管理員	402,{
+
+	mes "[戰死者之墓任務管理員]";
+	mes "選擇你想要教接取的戰死者狩獵任務";
+	mes "完成任務後會自動取得獎勵";
+	mes "已接取任務：";
+	if(question1==1){ mes "闇●十字斬首者-完成數量["+mobnum1+"/200]"; }
+	if(question2==1){ mes "闇●大主教-完成數量["+mobnum2+"/200]"; }
+	if(question3==1){ mes "闇●咒術士-完成數量["+mobnum3+"/200]"; }
+	if(question4==1){ mes "闇●遊俠-成數量["+mobnum4+"/200]"; }
+	if(question5==1){ mes "闇●機械工匠-完成數量["+mobnum5+"/200]"; }
+	if(question6==1){ mes "闇●盧恩騎士-完成數量["+mobnum6+"/200]"; }
+	if(question7==1){ mes "闇●皇家禁衛隊-完成數量["+mobnum7+"/200]"; }
+	if(question8==1){ mes "闇●基因學者-完成數量["+mobnum8+"/200]"; }
+	if(question9==1){ mes "闇●妖術師-完成數量["+mobnum9+"/200]"; }
+	if(question10==1){ mes "闇●修羅-完成數量["+mobnum10+"/200]"; }
+	if(question11==1){ mes "闇●魅影追蹤者-完成數量["+mobnum11+"/200]"; }
+	if(question12==1){ mes "闇●宮廷樂師-完成數量["+mobnum12+"/200]"; }
+	if(question13==1){ mes "闇●浪姬舞者-完成數量["+mobnum13+"/200]"; }
+	next;
+	switch(select("接取任務:取消")) {
+
+	case 1:
+		mes "[戰死者之墓任務管理員]";
+		mes "請選擇你要狩獵的目標怪物";
+		next;
+		switch(select("闇●十字斬首者狩獵任務:闇●大主教狩獵任務:闇●咒術士狩獵任務:闇●遊俠狩獵任務:闇●機械工匠狩獵任務:闇●盧恩騎士狩獵任務:闇●皇家禁衛隊狩獵任務:闇●基因學者狩獵任務:闇●妖術師狩獵任務:闇●修羅狩獵任務:闇●魅影追蹤者狩獵任務:闇●宮廷樂師狩獵任務:闇●浪姬舞者狩獵任務")) {
+
+		case 1:
+		if (CD_Quest_lhz01 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz01")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●十字斬首者狩獵任務";
+		close;}
+		if(question1==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz01",gettimetick(2)+43200;
+		set question1,1;
+		set mobnum1,0;
+		dispbottom "任務提示：已接取狩獵闇●十字斬首者狩獵任務";
+		close;
+
+		case 2:
+		if (CD_Quest_lhz02 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz02")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●大主教狩獵任務";
+		close;}
+		if(question2==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz02",gettimetick(2)+43200;
+		set question2,1;
+		set mobnum2,0;
+		dispbottom "任務提示：已接取狩獵 闇●大主教 狩獵任務";
+		close;
+
+		case 3:
+		if (CD_Quest_lhz03 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz03")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●咒術士狩獵任務";
+		close;}
+		if(question3==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz03",gettimetick(2)+43200;
+		set question3,1;
+		set mobnum3,0;
+		dispbottom "任務提示：已接取狩獵 闇●咒術士 狩獵任務";
+		close;
+
+		case 4:
+		if (CD_Quest_lhz04 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz04")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●遊俠狩獵任務";
+		close;}
+		if(question4==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz04",gettimetick(2)+43200;
+		set question4,1;
+		set mobnum4,0;
+		dispbottom "任務提示：已接取狩獵 闇●遊俠 狩獵任務";
+		close;
+
+		case 5:
+		if (CD_Quest_lhz05 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz05")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●機械工匠狩獵任務";
+		close;}
+		if(question5==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz05",gettimetick(2)+43200;
+		set question5,1;
+		set mobnum5,0;
+		dispbottom "任務提示：已接取狩獵 闇●機械工匠 狩獵任務";
+		close;
+
+		case 6:
+		if (CD_Quest_lhz06 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz06")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●盧恩騎士狩獵任務";
+		close;}
+		if(question6==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz06",gettimetick(2)+43200;
+		set question6,1;
+		set mobnum6,0;
+		dispbottom "任務提示：已接取狩獵 闇●盧恩騎士 狩獵任務";
+		close;
+
+		case 7:
+		if (CD_Quest_lhz07 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz07")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●皇家禁衛隊狩獵任務";
+		close;}
+		if(question7==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz07",gettimetick(2)+43200;
+		set question7,1;
+		set mobnum7,0;
+		dispbottom "任務提示：已接取狩獵 闇●皇家禁衛隊 狩獵任務";
+		close;
+
+		case 8:
+		if (CD_Quest_lhz08 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz08")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●基因學者狩獵任務";
+		close;}
+		if(question8==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz08",gettimetick(2)+43200;
+		set question8,1;
+		set mobnum8,0;
+		dispbottom "任務提示：已接取狩獵 闇●基因學者 狩獵任務";
+		close;
+
+		case 9:
+		if (CD_Quest_lhz09 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz09")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●妖術師狩獵任務";
+		close;}
+		if(question9==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz09",gettimetick(2)+43200;
+		set question9,1;
+		set mobnum9,0;
+		dispbottom "任務提示：已接取狩獵 闇●妖術師 狩獵任務";
+		close;
+
+		case 10:
+		if (CD_Quest_lhz10 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz10")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●修羅狩獵任務";
+		close;}
+		if(question10==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz10",gettimetick(2)+43200;
+		set question10,1;
+		set mobnum10,0;
+		dispbottom "任務提示：已接取狩獵 闇●修羅 狩獵任務";
+		close;
+
+		case 11:
+		if (CD_Quest_lhz11 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz11")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●魅影追蹤者狩獵任務";
+		close;}
+		if(question11==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz11",gettimetick(2)+43200;
+		set question11,1;
+		set mobnum11,0;
+		dispbottom "任務提示：已接取狩獵 闇●魅影追蹤者 狩獵任務";
+		close;
+
+		case 12:
+		if (CD_Quest_lhz12 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz12")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●宮廷樂師狩獵任務";
+		close;}
+		if(question12==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz12",gettimetick(2)+43200;
+		set question12,1;
+		set mobnum12,0;
+		dispbottom "任務提示：已接取狩獵 闇●宮廷樂師 狩獵任務";
+		close;
+
+		case 13:
+		if (CD_Quest_lhz13 > gettimetick(2)) {
+		mes "需要在 ^FF0000"+(getd("CD_Quest_lhz13")-gettimetick(2))/60+"^000000 分鐘後";
+		mes "才能再次接取闇●浪姬舞狩獵任務";
+		close;}
+		if(question13==1){
+		mes "你已經接取了這個任務";
+		close; }
+		setd "CD_Quest_lhz13",gettimetick(2)+43200;
+		set question13,1;
+		set mobnum13,0;
+		dispbottom "任務提示：已接取狩獵 闇●浪姬舞 狩獵任務";
+		close;
+		}
+
+	case 2:
+	close;
+	}
+
+
+OnNPCKillEvent:
+	if(question1==1){
+	if( killedrid == 3208 ){ set mobnum1,mobnum1+1; dispbottom "任務提示：已獵殺 ["+mobnum1+"/200] 闇●十字斬首者"; }
+	if( mobnum1 >= 200 ){ set question1,0; set mobnum1,0; getitem 51081,1; dispbottom "任務提示：已完成狩獵 闇●十字斬首者 狩獵任務"; end; }
+	}
+	if(question2==1){
+	if( killedrid == 3209 ){ set mobnum2,mobnum2+1; dispbottom "任務提示：已獵殺 ["+mobnum2+"/200] 闇●大主教"; }
+	if( mobnum2 >= 200 ){ set question2,0; set mobnum2,0; getitem 51082,1; dispbottom "任務提示：已完成狩獵 闇●大主教 狩獵任務"; end; }
+	}
+	if(question3==1){
+	if( killedrid == 3210 ){ set mobnum3,mobnum3+1; dispbottom "任務提示：已獵殺 ["+mobnum3+"/200] 闇●咒術士"; }
+	if( mobnum3 >= 200 ){ set question3,0; set mobnum3,0; getitem 51085,1; dispbottom "任務提示：已完成狩獵 闇●咒術士 狩獵任務"; end; }
+	}
+	if(question4==1){
+	if( killedrid == 3211 ){ set mobnum4,mobnum4+1; dispbottom "任務提示：已獵殺 ["+mobnum4+"/200] 闇●遊俠"; }
+	if( mobnum4 >= 200 ){ set question4,0; set mobnum4,0; getitem 51083,1; dispbottom "任務提示：已完成狩獵 闇●遊俠 狩獵任務"; end; }
+	}
+	if(question5==1){
+	if( killedrid == 3212 ){ set mobnum5,mobnum5+1; dispbottom "任務提示：已獵殺 ["+mobnum5+"/200] 闇●機械工匠"; }
+	if( mobnum5 >= 200 ){ set question5,0; set mobnum5,0; getitem 51084,1; dispbottom "任務提示：已完成狩獵 闇●機械工匠 狩獵任務"; end; }
+	}
+	if(question6==1){
+	if( killedrid == 3213 ){ set mobnum6,mobnum6+1; dispbottom "任務提示：已獵殺 ["+mobnum6+"/200] 闇●盧恩騎士"; }
+	if( mobnum6 >= 200 ){ set question6,0; set mobnum6,0; getitem 51086,1; dispbottom "任務提示：已完成狩獵 闇●盧恩騎士 狩獵任務"; end; }
+	}
+	if(question7==1){
+	if( killedrid == 3226 ){ set mobnum7,mobnum7+1; dispbottom "任務提示：已獵殺 ["+mobnum7+"/200] 闇●皇家禁衛隊"; }
+	if( mobnum7 >= 200 ){ set question7,0; set mobnum7,0; getitem 51087,1; dispbottom "任務提示：已完成狩獵 闇●皇家禁衛隊 狩獵任務"; end; }
+	}
+	if(question8==1){
+	if( killedrid == 3227 ){ set mobnum8,mobnum8+1; dispbottom "任務提示：已獵殺 ["+mobnum8+"/200] 闇●基因學者"; }
+	if( mobnum8 >= 200 ){ set question8,0; set mobnum8,0; getitem 51088,1; dispbottom "任務提示：已完成狩獵 闇●基因學者 狩獵任務"; end; }
+	}
+	if(question9==1){
+	if( killedrid == 3228){ set mobnum9,mobnum9+1; dispbottom "任務提示：已獵殺 ["+mobnum9+"/200] 闇●妖術師"; }
+	if( mobnum9 >= 200 ){ set question9,0; set mobnum9,0; getitem 51089,1; dispbottom "任務提示：已完成狩獵 闇●妖術師 狩獵任務"; end; }
+	}
+	if(question10==1){
+	if( killedrid == 3229){ set mobnum10,mobnum10+1; dispbottom "任務提示：已獵殺 ["+mobnum10+"/200] 闇●修羅"; }
+	if( mobnum10 >= 200 ){ set question10,0; set mobnum10,0; getitem 51090,1; dispbottom "任務提示：已完成狩獵 闇●修羅 狩獵任務"; end; }
+	}
+	if(question11==1){
+	if( killedrid == 3230){ set mobnum11,mobnum11+1; dispbottom "任務提示：已獵殺 ["+mobnum11+"/200] 闇●魅影追蹤者"; }
+	if( mobnum11 >= 200 ){ set question11,0; set mobnum11,0; getitem 51091,1; dispbottom "任務提示：已完成狩獵 闇●魅影追蹤者 狩獵任務"; end; }
+	}
+	if(question12==1){
+	if( killedrid == 3231){ set mobnum12,mobnum12+1; dispbottom "任務提示：已獵殺 ["+mobnum12+"/200] 闇●宮廷樂師"; }
+	if( mobnum12 >= 200 ){ set question12,0; set mobnum12,0; getitem 51092,1; dispbottom "任務提示：已完成狩獵 闇●宮廷樂師 狩獵任務"; end; }
+	}
+	if(question13==1){
+	if( killedrid == 3232){ set mobnum13,mobnum13+1; dispbottom "任務提示：已獵殺 ["+mobnum13+"/200] 闇●浪姬舞者"; }
+	if( mobnum13 >= 200 ){ set question13,0; set mobnum13,0; getitem 51093,1; dispbottom "任務提示：已完成狩獵 闇●浪姬舞者 狩獵任務"; end; }
+	}
+end;
+
+OnInit:
+	waitingroom "戰死者之墓每日任務",0;
+	end;
+}
+
+
+

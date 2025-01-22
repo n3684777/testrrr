@@ -1,0 +1,34 @@
+﻿
+vdistrict1,62,39,6	script	塔諾斯武器製作	10202,{
+
+	mes "[塔諾斯武器製作]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "國王#03";
+	end;
+
+	case 2:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "塔諾斯武器製作",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+

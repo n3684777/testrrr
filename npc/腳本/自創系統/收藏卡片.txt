@@ -1,0 +1,553 @@
+/*
+= 腳本名:	<<卡片收藏倉庫版>>
+= 適用範圍:	熊貓RA
+= 作者:		人魚姬的思念 
+= QQ:		327945477
+conf\import\inter_server.yml
+   - ID: 3
+     Name: "時裝倉庫"
+     Table: Carde_storage
+     Max: 600
+
+導入數據庫表	 
+Carde_storage.sql	 
+*/
+
+
+function	script	Turn_page_Card	{
+	copyarray .@menuitemID[0],getarg(0),getarraysize(getarg(0));
+	.@menu_next$ = "^ff0000 - 下一頁^000000";
+	.@menu_return$ = "^ff0000 - 上一頁^000000";
+	//取傳入菜單列表數組長度
+	.@menuitemID_len=getarraysize(.@menuitemID);	
+	//取數組10的倍數
+	.@multiple=.@menuitemID_len/10;
+	//取數組除10的餘數
+	.@remainder=.@menuitemID_len%10;
+	//計算最大頁數
+	if(.@remainder>0){
+		.@pagescountmax=.@multiple+1;
+	}
+	else {
+		.@pagescountmax=.@multiple;	
+		}
+	.@pagescount++;
+	
+headpage:	
+	.@menu$="";
+	if(.@pagescount!=1){
+		.@menu$=.@menu$+.@menu_return$;
+	}	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+		debugmes "2222";
+	
+	.@sel = select(.@menu$);
+		
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+	}	
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];
+	end;
+nextpage:
+	.@menu$="";
+	if(.@pagescount){
+		.@menu$=.@menu$+.@menu_return$;
+	}
+	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+	
+	.@sel = select(.@menu$);
+	
+	if(.@sel == 1){
+		.@pagescount--;
+		if(.@pagescount!=1)goto nextpage;
+		goto headpage;
+		
+	}
+	
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+		
+	}
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];	
+	end;
+	
+}
+
+trinity,102,77,6	script	卡片收藏倉庫	4_STAR_BOX_SCORE,{
+	disable_items;
+
+L_Menu:
+	mes "[卡片收藏人員]";
+	mes "我正在搜集一些卡片..";
+	mes "只要你給我指定的MVP卡片";
+	mes "我可以賦予你一些能力加成唷~";
+	next;
+	mes "[卡片收藏人員]";
+	mes "你目前已收藏了 ^FF0000"+getarraysize(#pc_Card)+"^000000 個卡片";
+	mes "每收藏一張卡片負重增加 ^0000CC20^000000";
+	mes "總負重增加 ^0000CC"+(getarraysize(#pc_Card)*20)+"^000000";
+	next;
+		switch(select("卡片倉庫:王片共鳴")) {
+	case 1:
+		openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+	case 2:
+		// 設定查看可獲得能力說明
+		mes "[卡片收藏人員]";
+		mes "^0000CC共鳴套卡(1)^000000：";
+		if ((inarray(#pc_Card,4135) > 1)) {mes "^33cc33獸人酋長卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33獸人酋長卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4143) > 1)) {mes "^33cc33獸人英雄卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33獸人英雄卡片^000000 [^CECECE未持有]^000000";}
+		mes "近距離/遠距離物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(2)^000000：";
+		if ((inarray(#pc_Card,4507) > 1)) {mes "^33cc33女王甲蟲卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33女王甲蟲卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4509) > 1)) {mes "^33cc33黃金女王甲蟲卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33黃金女王甲蟲卡片^000000 [^CECECE未持有]^000000";}
+		mes "對全階級的物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(3)^000000：";
+		if ((inarray(#pc_Card,4305) > 1)) {mes "^33cc33烏龜將軍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33烏龜將軍卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27119) > 1)) {mes "^33cc33不祥烏龜將軍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33不祥烏龜將軍卡片^000000 [^CECECE未持有]^000000";}
+		mes "對小、中、大型敵人的物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(4)^000000：";
+		if ((inarray(#pc_Card,4408) > 1)) {mes "^33cc33幽暗夢魘卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33幽暗夢魘卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300262) > 1)) {mes "^33cc33嵌合體幽暗夢魘卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33嵌合體幽暗夢魘卡片^000000 [^CECECE未持有]^000000";}
+		mes "對小、中、大型敵人的魔法傷害 ^FF0000+3%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(5)^000000：";
+		if ((inarray(#pc_Card,4525) > 1)) {mes "^33cc33魔鬼大烏賊卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33魔鬼大烏賊卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300151) > 1)) {mes "^33cc33深海魔鬼大烏賊卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33深海魔鬼大烏賊卡片^000000 [^CECECE未持有]^000000";}
+		mes "誘導攻擊 ^FF0000+5%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(6)^000000：";
+		if ((inarray(#pc_Card,4601) > 1)) {mes "^33cc33闇答萊屍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇答萊屍卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4603) > 1)) {mes "^33cc33墮落根莖卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33墮落根莖卡片^000000 [^CECECE未持有]^000000";}
+		mes "對全階級的物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(7)^000000：";
+		if ((inarray(#pc_Card,4602) > 1)) {mes "^33cc33覺醒闇答萊屍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33覺醒闇答萊屍卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4604) > 1)) {mes "^33cc33覺醒的墮落根莖卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33覺醒的墮落根莖卡片^000000 [^CECECE未持有]^000000";}
+		mes "Matk ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(8)^000000：";
+		if ((inarray(#pc_Card,300013) > 1)) {mes "^33cc33雷吉麗芙卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33雷吉麗芙卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300014) > 1)) {mes "^33cc33英格麗卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33英格麗卡片^000000 [^CECECE未持有]^000000";}
+		mes "對全階級的物理傷害 ^FF0000+4%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(9)^000000：";
+		if ((inarray(#pc_Card,27381) > 1)) {mes "^33cc33希梅爾茲幻影卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33希梅爾茲幻影卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300382) > 1)) {mes "^33cc33天鷹座卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33天鷹座卡片^000000 [^CECECE未持有]^000000";}
+		mes "所有屬性魔法傷害 ^FF0000+4%^000000";
+		mes "----------------------------------------";
+		next;
+		mes "^0000CC共鳴套卡(10)^000000：";
+		if ((inarray(#pc_Card,4142) > 1)) {mes "^33cc33死靈卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33死靈卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4263) > 1)) {mes "^33cc33元靈武士卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33元靈武士卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4276) > 1)) {mes "^33cc33死靈騎士卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33死靈騎士卡片^000000 [^CECECE未持有]^000000";}
+		mes "近距離/遠距離/魔法傷害 ^FF0000+3%^000000";
+		mes "全體型抗性 ^FF0000+1%^000000";
+		mes "----------------------------------------";
+
+		next;
+		mes "^0000CC共鳴套卡(11)^000000：";
+		if ((inarray(#pc_Card,4132) > 1)) {mes "^33cc33蜂后卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33蜂后卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4145) > 1)) {mes "^33cc33貝雷傑卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33貝雷傑卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4374) > 1)) {mes "^33cc33貝思波卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33貝思波卡片^000000 [^CECECE未持有]^000000";}
+		mes "固定詠唱時間 ^FF0000-0.1秒^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(12)^000000：";
+		if ((inarray(#pc_Card,4147) > 1)) {mes "^33cc33巴風特卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33巴風特卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4168) > 1)) {mes "^33cc33黑暗之王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33黑暗之王卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4144) > 1)) {mes "^33cc33俄塞里斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33俄塞里斯卡片^000000 [^CECECE未持有]^000000";}
+		mes "近距離/遠距離物理傷害 ^FF0000+3%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(13)^000000：";
+		if ((inarray(#pc_Card,4121) > 1)) {mes "^33cc33皮里恩卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33皮里恩卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4123) > 1)) {mes "^33cc33虎王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33虎王卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4131) > 1)) {mes "^33cc33月夜貓卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33月夜貓卡片^000000 [^CECECE未持有]^000000";}
+		mes "誘導攻擊 ^FF0000+5%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(14)^000000：";
+		if ((inarray(#pc_Card,4386) > 1)) {mes "^33cc33迪塔勒泰晤勒斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33迪塔勒泰晤勒斯卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4419) > 1)) {mes "^33cc33水晶龍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33水晶龍卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27162) > 1)) {mes "^33cc33青冠龍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33青冠龍卡片^000000 [^CECECE未持有]^000000";}
+		mes "技能延遲時間 ^FF0000-3%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(15)^000000：";
+		if ((inarray(#pc_Card,4590) > 1)) {mes "^33cc33噩夢死神卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33噩夢死神卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4591) > 1)) {mes "^33cc33食月暴龍卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33食月暴龍卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4592) > 1)) {mes "^33cc33寶箱巨鱷卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33寶箱巨鱷卡片^000000 [^CECECE未持有]^000000";}
+		mes "技能延遲時間 ^FF0000-3%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(16)^000000：";
+		if ((inarray(#pc_Card,4526) > 1)) {mes "^33cc33古怪腔棘魚卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33古怪腔棘魚卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4527) > 1)) {mes "^33cc33黑暗腔棘魚卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33黑暗腔棘魚卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4528) > 1)) {mes "^33cc33變種腔棘魚卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33變種腔棘魚卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4529) > 1)) {mes "^33cc33暴力腔棘魚卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33暴力腔棘魚卡片^000000 [^CECECE未持有]^000000";}
+		mes "對全階級的物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(17)^000000：";
+		if ((inarray(#pc_Card,4574) > 1)) {mes "^33cc33將軍大賢卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33將軍大賢卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4578) > 1)) {mes "^33cc33憤怒的淘汰者傅立葉卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33憤怒的淘汰者傅立葉卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4580) > 1)) {mes "^33cc33亡靈的守護者卡德斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33亡靈的守護者卡德斯卡片^000000 [^CECECE未持有]^000000";}
+		mes "P.Atk ^FF0000+5^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(18)^000000：";
+		if ((inarray(#pc_Card,4576) > 1)) {mes "^33cc33喬伊亞卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33喬伊亞卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27362) > 1)) {mes "^33cc33汙染蜘蛛女王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33汙染蜘蛛女王卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300145) > 1)) {mes "^33cc33深海魔女卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33深海魔女卡片^000000 [^CECECE未持有]^000000";}
+		mes "所有屬性魔法傷害 ^FF0000+3%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(19)^000000：";
+		if ((inarray(#pc_Card,4357) > 1)) {mes "^33cc33闇●騎士領主 賽依連卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●騎士領主 賽依連卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4565) > 1)) {mes "^33cc33闇●聖殿十字軍 蘭達卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●聖殿十字軍 蘭達卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxHP+2%、POW+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(20)^000000：";
+		if ((inarray(#pc_Card,4359) > 1)) {mes "^33cc33闇●十字刺客 艾勒梅斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●十字刺客 艾勒梅斯卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4564) > 1)) {mes "^33cc33闇●神行太保 科迪卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●神行太保 科迪卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxAP+2%、CON+3";
+		mes "----------------------------------------";
+
+		next;
+		mes "^0000CC共鳴套卡(21)^000000：";
+		if ((inarray(#pc_Card,4361) > 1)) {mes "^33cc33闇●神工匠 哈沃得卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●神工匠 哈沃得卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4563) > 1)) {mes "^33cc33闇●創造者 普拉梅姆卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●創造者 普拉梅姆卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxHP+2%、STA+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(22)^000000：";
+		if ((inarray(#pc_Card,4363) > 1)) {mes "^33cc33闇●神官 瑪嘉雷特卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●神官 瑪嘉雷特卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4562) > 1)) {mes "^33cc33闇●武術宗師 陳理歐卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●武術宗師 陳理歐卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxAP+2%、CRT+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(23)^000000：";
+		if ((inarray(#pc_Card,4365) > 1)) {mes "^33cc33闇●超魔導師 凱特莉娜卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●超魔導師 凱特莉娜卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4561) > 1)) {mes "^33cc33闇●智者 西里亞卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●智者 西里亞卡片^000000 [^CECECE未持有]^000000";}
+		mes "S.Matk+3、SPL+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(24)^000000：";
+		if ((inarray(#pc_Card,4367) > 1)) {mes "^33cc33闇●神射手 迪文卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●神射手 迪文卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4566) > 1)) {mes "^33cc33闇●冷豔舞姬 特蘭提尼卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●冷豔舞姬 特蘭提尼卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4560) > 1)) {mes "^33cc33闇●搞笑藝人 雅歐帕奇爾卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33●搞笑藝人 雅歐帕奇爾卡片^000000 [^CECECE未持有]^000000";}
+		mes "P.Atk+3、遠距離攻擊傷害+3%";
+		mes "----------------------------------------";
+
+		mes "^0000CC共鳴套卡(25)^000000：";
+		if ((inarray(#pc_Card,4679) > 1)) {mes "^33cc33闇●盧恩騎士 賽依連卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●盧恩騎士 賽依連卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4680) > 1)) {mes "^33cc33闇●皇家禁衛隊 蘭達卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●皇家禁衛隊 蘭達卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxHP+2%、POW+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(26)^000000：";
+		if ((inarray(#pc_Card,4674) > 1)) {mes "^33cc33闇●十字刺客 艾勒梅斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●十字刺客 艾勒梅斯卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4682) > 1)) {mes "^33cc33闇●魅影追蹤者 科迪卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●魅影追蹤者 科迪卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxAP+2%、CON+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(27)^000000：";
+		if ((inarray(#pc_Card,4677) > 1)) {mes "^33cc33闇●機械工匠 哈沃得卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●機械工匠 哈沃得卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4681) > 1)) {mes "^33cc33闇●基因學者 普拉梅姆卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●基因學者 普拉梅姆卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxHP+2%、STA+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(28)^000000：";
+		if ((inarray(#pc_Card,4675) > 1)) {mes "^33cc33●大主教 瑪嘉雷特卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33●大主教 瑪嘉雷特卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4672) > 1)) {mes "^33cc33闇●修羅 陳理歐卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●修羅 陳理歐卡片^000000 [^CECECE未持有]^000000";}
+		mes "MaxAP+2%、CRT+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(28)^000000：";
+		if ((inarray(#pc_Card,4671) > 1)) {mes "^33cc33闇●咒術士 凱特莉娜卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●咒術士 凱特莉娜卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4678) > 1)) {mes "^33cc33闇●妖術師 西里亞卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●妖術師 西里亞卡片^000000 [^CECECE未持有]^000000";}
+		mes "S.Matk+3、SPL+3";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(30)^000000：";
+		if ((inarray(#pc_Card,4676) > 1)) {mes "^33cc33闇●遊俠 迪文卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●遊俠 迪文卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4683) > 1)) {mes "^33cc33闇●浪姬舞者 特蘭提尼卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●浪姬舞者 特蘭提尼卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4673) > 1)) {mes "^33cc33闇●宮廷樂師 雅歐帕奇爾卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33闇●宮廷樂師 雅歐帕奇爾卡片^000000 [^CECECE未持有]^000000";}
+		mes "P.Atk+3、遠距離攻擊傷害+3%";
+		mes "----------------------------------------";
+
+		next;
+		mes "^0000CC共鳴套卡(31)^000000：";
+		if ((inarray(#pc_Card,27294) > 1)) {mes "^33cc33古代塔奧群卡卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33古代塔奧群卡卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27298) > 1)) {mes "^33cc33古代伍坦防禦者卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33古代伍坦防禦者卡片^000000 [^CECECE未持有]^000000";}
+		mes "近距離/遠距離物理傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(32)^000000：";
+		if ((inarray(#pc_Card,4318) > 1)) {mes "^33cc33冰暴騎士卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33冰暴騎士卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4324) > 1)) {mes "^33cc33卡崙卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33卡崙卡片^000000 [^CECECE未持有]^000000";}
+		mes "誘導攻擊 ^FF0000+4%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(33)^000000：";
+		if ((inarray(#pc_Card,4652) > 1)) {mes "^33cc33滅絕古埃及王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33滅絕古埃及王卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4236) > 1)) {mes "^33cc33古埃及王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33古埃及王卡片^000000 [^CECECE未持有]^000000";}
+		mes "誘導攻擊 ^FF0000+4%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(34)^000000：";
+		if ((inarray(#pc_Card,27305) > 1)) {mes "^33cc33EL-A17T卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33EL-A17T卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27318) > 1)) {mes "^33cc33米古爾卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33米古爾卡片^000000 [^CECECE未持有]^000000";}
+		mes "Matk ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(35)^000000：";
+		if ((inarray(#pc_Card,27346) > 1)) {mes "^33cc33堅硬穆希貝斯寇卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33堅硬穆希貝斯寇卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,300007) > 1)) {mes "^33cc33珠寶溫古力安特卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33珠寶溫古力安特卡片^000000 [^CECECE未持有]^000000";}
+		mes "技能延遲時間 ^FF0000-2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(36)^000000：";
+		if ((inarray(#pc_Card,4134) > 1)) {mes "^33cc33德古拉伯爵卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33德古拉伯爵卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4425) > 1)) {mes "^33cc334425阿特羅斯卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc334425阿特羅斯卡片^000000 [^CECECE未持有]^000000";}
+		mes "對小、中、大型敵人的魔法傷害 ^FF0000+2%^000000";
+		mes "^0000CC共鳴套卡(37)^000000：";
+		if ((inarray(#pc_Card,4302) > 1)) {mes "^33cc33塔奧群卡卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33塔奧群卡卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4376) > 1)) {mes "^33cc33嗒妮小姐卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33嗒妮小姐卡片^000000 [^CECECE未持有]^000000";}
+		mes "對小、中、大型敵人的魔法傷害 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(38)^000000：";
+		if ((inarray(#pc_Card,4148) > 1)) {mes "^33cc33法老王卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33法老王卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4403) > 1)) {mes "^33cc33齊爾-D-01卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33齊爾-D-01卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4520) > 1)) {mes "^33cc33讓特卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33讓特卡片^000000 [^CECECE未持有]^000000";}
+		mes "固定詠唱時間 ^FF0000-0.1秒^000000";
+		mes "----------------------------------------";
+		mes "^0000CC共鳴套卡(39)^000000：";
+		if ((inarray(#pc_Card,27150) > 1)) {mes "^33cc33劇毒凱美拉卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33劇毒凱美拉卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,27180) > 1)) {mes "^33cc33蜘蛛戰車卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33蜘蛛戰車卡片^000000 [^CECECE未持有]^000000";}
+		if ((inarray(#pc_Card,4625) > 1)) {mes "^33cc33時間支配者卡片^000000 [^0000FF已持有^000000]";} else {mes "^33cc33時間支配者卡片^000000 [^CECECE未持有]^000000";}
+		mes "固定詠唱時間 ^FF0000-0.1秒^000000";
+		mes "----------------------------------------";
+		next;
+		goto L_Menu;
+
+	}
+	end;
+
+
+OnPCStorageAddFilter:
+if(@storeitem_dst_storeid == 4){
+
+	/*.@amount = @storeitem_src_amount;
+	if(.@amount > 1){
+		processhalt;
+		dispbottom "一樣卡片一次只能存入一張";
+		end;
+	} */
+	// 不確認卡片數量
+
+	.@selectId = @storeitem_src_nameid;
+	.@selectType = getiteminfo(.@selectId,2);
+
+	if(.@selectType == 6 ){
+
+	if(inarray(#pc_Card,.@selectId) != -1){
+		processhalt;
+		dispbottom "你已經放過了這張卡片";
+		end;
+	}
+
+	#pc_Card[getarraysize(#pc_Card)]=.@selectId;
+
+recalculatestat;
+
+}
+ELSE {
+		processhalt;
+		dispbottom "這個物品無法存放";
+		end;
+
+}
+}
+end;
+
+OnPCStorageDelFilter:
+if(@removeitem_src_storeid == 4){
+
+	.@index = inarray(#pc_Card,@removeitem_src_nameid);
+	deletearray #pc_Card[.@index],1;
+
+recalculatestat;
+}
+end;
+
+
+OnPCStatCalcEvent:
+	if(getmapflag(strcharinfo(3),mf_gvg)) { end; }
+
+	// 決定各個裝備收藏的能力語法
+	// 套卡能力
+	if( (inarray(#pc_Card,4143) > 1) && (inarray(#pc_Card,4135) > 1)){
+	bonus bLongAtkRate,2;
+	bonus bShortAtkRate,2;
+	}
+	if( (inarray(#pc_Card,4507) > 1) && (inarray(#pc_Card,4509) > 1)){
+	bonus2 bAddClass,Class_Boss,2;
+	}
+	if( (inarray(#pc_Card,4305) > 1) && (inarray(#pc_Card,27119) > 1)){
+	bonus2 bWeaponSubSize,Size_All,2;
+	}
+	if( (inarray(#pc_Card,4408) > 1) && (inarray(#pc_Card,300262) > 1)){
+	bonus2 bMagicSubSize,Size_All,3;
+	bonus bInt,1;
+	}
+	if( (inarray(#pc_Card,4525) > 1) && (inarray(#pc_Card,300151) > 1)){
+	bonus bPerfectHitRate,5;
+	}
+	if( (inarray(#pc_Card,4601) > 1) && (inarray(#pc_Card,4603) > 1)){
+	bonus2 bAddClass,Class_Boss,2;
+	}
+	if( (inarray(#pc_Card,4602) > 1) && (inarray(#pc_Card,4604) > 1)){
+	bonus bMatkRate,2;
+	}
+	if( (inarray(#pc_Card,300013) > 1) && (inarray(#pc_Card,300014) > 1)){
+	bonus2 bAddClass,Class_Boss,4;
+	}
+	if( (inarray(#pc_Card,27381) > 1) && (inarray(#pc_Card,300382) > 1)){
+	bonus2 bMagicAtkEle,Ele_All,4;
+	}
+
+	if( (inarray(#pc_Card,4142) > 1) && (inarray(#pc_Card,4263) > 1)  && (inarray(#pc_Card,4276) > 1)){
+	bonus bLongAtkRate,3;
+	bonus bShortAtkRate,3;
+	bonus2 bMagicAtkEle,Ele_All,3;
+	bonus2 bWeaponSubSize,Size_All,1;
+	bonus2 bMagicSubSize,Size_All,1;
+	}
+	if( (inarray(#pc_Card,4132) > 1) && (inarray(#pc_Card,4145) > 1)  && (inarray(#pc_Card,4374) > 1)){
+	bonus bFixedCast,-100;
+	}
+	if( (inarray(#pc_Card,4147) > 1) && (inarray(#pc_Card,4168) > 1)  && (inarray(#pc_Card,4144) > 1)){
+	bonus bLongAtkRate,3;
+	bonus bShortAtkRate,3;
+	}
+	if( (inarray(#pc_Card,4121) > 1) && (inarray(#pc_Card,4123) > 1)  && (inarray(#pc_Card,4131) > 1)){
+	bonus bPerfectHitRate,5;
+	}
+	if( (inarray(#pc_Card,4386) > 1) && (inarray(#pc_Card,4419) > 1)  && (inarray(#pc_Card,27162) > 1)){
+	bonus bDelayrate,-3;
+	}
+	if( (inarray(#pc_Card,4590) > 1) && (inarray(#pc_Card,4591) > 1)  && (inarray(#pc_Card,4592) > 1)){
+	bonus bDelayrate,-3;
+	}
+	if( (inarray(#pc_Card,4526) > 1) && (inarray(#pc_Card,4527) > 1)  && (inarray(#pc_Card,4528) > 1) && (inarray(#pc_Card,4529) > 1)){
+	bonus2 bAddClass,Class_Boss,2;
+	}
+	if( (inarray(#pc_Card,4574) > 1) && (inarray(#pc_Card,4578) > 1)  && (inarray(#pc_Card,4580) > 1)){
+	bonus bPAtk,5;
+	}
+	if( (inarray(#pc_Card,4576) > 1) && (inarray(#pc_Card,27362) > 1)  && (inarray(#pc_Card,300145) > 1)){
+	bonus2 bMagicAtkEle,Ele_All,3;
+	}
+
+	if( (inarray(#pc_Card,4357) > 1) && (inarray(#pc_Card,4565) > 1)){
+	bonus bMaxHPrate,2;
+	bonus bPow,3;
+	}
+	if( (inarray(#pc_Card,4359) > 1) && (inarray(#pc_Card,4564) > 1)){
+	bonus bMaxAPrate,2;
+	bonus bCon,3;
+	}
+	if( (inarray(#pc_Card,4361) > 1) && (inarray(#pc_Card,4563) > 1)){
+	bonus bMaxHPrate,2;
+	bonus bSta,3;
+	}
+	if( (inarray(#pc_Card,4363) > 1) && (inarray(#pc_Card,4562) > 1)){
+	bonus bMaxAPrate,2;
+	bonus bCrt,3;
+	}
+	if( (inarray(#pc_Card,4365) > 1) && (inarray(#pc_Card,4561) > 1)){
+	bonus bSMatk,3;
+	bonus bSpl,3;
+	}
+	if( (inarray(#pc_Card,4367) > 1) && (inarray(#pc_Card,4566) > 1)  && (inarray(#pc_Card,560) > 1)){
+	bonus bPAtk,3;
+	bonus bLongAtkRate,3;
+	}
+
+	if( (inarray(#pc_Card,4679) > 1) && (inarray(#pc_Card,4680) > 1)){
+	bonus bMaxHPrate,2;
+	bonus bPow,3;
+	}
+	if( (inarray(#pc_Card,4674) > 1) && (inarray(#pc_Card,4682) > 1)){
+	bonus bMaxAPrate,2;
+	bonus bCon,3;
+	}
+	if( (inarray(#pc_Card,4677) > 1) && (inarray(#pc_Card,4681) > 1)){
+	bonus bMaxHPrate,2;
+	bonus bSta,3;
+	}
+	if( (inarray(#pc_Card,4675) > 1) && (inarray(#pc_Card,4672) > 1)){
+	bonus bMaxAPrate,2;
+	bonus bCrt,3;
+	}
+	if( (inarray(#pc_Card,4671) > 1) && (inarray(#pc_Card,4678) > 1)){
+	bonus bSMatk,3;
+	bonus bSpl,3;
+	}
+	if( (inarray(#pc_Card,4676) > 1) && (inarray(#pc_Card,4683) > 1)  && (inarray(#pc_Card,4673) > 1)){
+	bonus bPAtk,3;
+	bonus bLongAtkRate,3;
+	}
+
+	if( (inarray(#pc_Card,27294) > 1) && (inarray(#pc_Card,27298) > 1)){
+	bonus bLongAtkRate,2;
+	bonus bShortAtkRate,2;
+	}
+	if( (inarray(#pc_Card,4318) > 1) && (inarray(#pc_Card,4324) > 1)){
+	bonus bPerfectHitRate,4;
+	}
+	if( (inarray(#pc_Card,4652) > 1) && (inarray(#pc_Card,4236) > 1)){
+	bonus bPerfectHitRate,4;
+	}
+	if( (inarray(#pc_Card,27305) > 1) && (inarray(#pc_Card,27318) > 1)){
+	bonus bMatkRate,2;
+	}
+	if( (inarray(#pc_Card,27346) > 1) && (inarray(#pc_Card,300007) > 1)){
+	bonus bDelayrate,-2;
+	}
+	if( (inarray(#pc_Card,4302) > 1) && (inarray(#pc_Card,4376) > 1)){
+	bonus2 bMagicSubSize,Size_All,3;
+	}
+	if( (inarray(#pc_Card,4134) > 1) && (inarray(#pc_Card,4425) > 1)){
+	bonus2 bMagicSubSize,Size_All,3;
+	}
+	if( (inarray(#pc_Card,4148) > 1) && (inarray(#pc_Card,4403) > 1)  && (inarray(#pc_Card,4520) > 1)){
+	bonus bFixedCast,-100;
+	}
+	if( (inarray(#pc_Card,27150) > 1) && (inarray(#pc_Card,27180) > 1)  && (inarray(#pc_Card,4625) > 1)){
+	bonus bFixedCast,-100;
+	}
+
+
+	// 單獨卡片能力
+		freeloop(1);
+	for(.@i=0; .@i<getarraysize(#pc_Card); .@i++) {
+		switch(#pc_Card[.@i]) {
+		//MVP卡片額外附加能力
+
+		case 27182:	//
+		break;
+
+		}
+	}
+		freeloop(0);
+	// 收藏幾件卡片的能力 負重+20
+	.@max = getarraysize(#pc_Card);
+	bonus bAddMaxWeight,.@max*200;
+	end;
+
+
+Oninit:
+	waitingroom "卡片收藏倉庫",0;
+	end;
+}
+

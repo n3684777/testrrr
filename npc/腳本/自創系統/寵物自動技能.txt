@@ -1,0 +1,84 @@
+/* -------------------------------
+ * Author : HongShin
+ * 嚴禁分享轉載
+ *
+ * 2024/07/21 00:30
+ * - 玩家BUFF消失寵物可幫玩家施放
+ * - 自行定義可施放的清單
+ * - 血量太低自動對玩家使用治癒術
+ * - 雛形概念 可客製化修改
+ *
+ * -----------------------------*/
+
+-	script	PetBuff	-1,{
+
+OnPCHarmedExpress:
+	
+	if ( @harmed_target_type != BL_PC )
+		end;
+		
+	if ( !getpetinfo(PETINFO_BLOCKID) )
+		end;
+		
+	if ( getpetinfo(PETINFO_INTIMATE) < .pet_intimacy )
+		end;
+		
+	.@Heal = (BaseLevel + readparam(bInt) / 8) * (4 + ((getskilllv(28) ? getskilllv(28) : 1) * 8));
+	if ( (Hp * 100 / MaxHp) < 80 ) {
+		showscript "治癒術 !!",getpetinfo(PETINFO_BLOCKID);
+		skilleffect 28,.@Heal;
+		itemheal .@Heal,0,convertpcinfo(@harmed_target_gid,CPC_CHAR);
+	}
+		
+	end;
+		
+OnPCBuffEndExpress:
+	if ( inarray ( .sc_id , @ended_sc_id ) == -1 )
+		end;
+	
+	if ( !getpetinfo(PETINFO_BLOCKID) )
+		end;
+		
+	if ( getpetinfo(PETINFO_INTIMATE) < .pet_intimacy )
+		end;
+	
+	.@skill = callfunc("ScToSkill",@ended_sc_id);
+	if ( .@skill == 0 )
+		end;
+	.@maxlv = getskillinfo(SKI_MAXLEVEL,.@skill);
+	
+	unitskilluseid(getpetinfo(PETINFO_BLOCKID),.@skill,.@maxlv,getcharid(3),0,0,0,0);
+	end;
+	
+OnInit:
+
+	// 寵物親密達多少以上才會動作
+	.pet_intimacy = 200;
+	
+	// 開放的狀態編號[需要詠唱的建議不放入]
+	setarray .sc_id,29,30,32,35,36,37,38,39,41,115;
+	
+	end;
+}
+
+
+function	script	ScToSkill	{
+
+	.@sc = getarg(0);
+	switch(.@sc)
+	{
+		default: return 0;
+		case 32:	.@skill = 29;	break;		// 加速術
+		case 29:	.@skill = 33;	break;		// 天使之障壁
+		case 30:	.@skill = 34;	break;		// 天使之賜福
+		//case 35:	.@skill = 66;	break;		// 神威祈福
+		case 36:	.@skill = 67;	break;		// 犧牲祈福
+		case 37:	.@skill = 68;	break;		// 撒水祈福
+		case 38:	.@skill = 69;	break;		// 聖之祈福
+		case 39:	.@skill = 73;	break;		// 霸邪之陣
+		case 41:	.@skill = 75;	break;		// 幸運之頌歌
+		case 115:	.@skill = 361;	break;		// 聖母之祈福
+	}
+	return .@skill;
+	
+}

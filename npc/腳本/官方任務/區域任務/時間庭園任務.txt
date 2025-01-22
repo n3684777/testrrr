@@ -1,0 +1,444 @@
+﻿
+
+//--------- 回報任務
+t_garden,124,122,6	script	次元終端機#t	10375,{
+
+	if ((BaseLevel < 240)) {
+	mes "[次元終端機]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[次元終端機]";
+	mes "你想要回報任務嗎?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("回報任務","取消")){
+
+	case 1:
+		if(checkquest(12621,HUNTING)==2 ) { 
+		erasequest 12621;
+		//getitem 1001464,3;	//地之能量
+		getexp 10000000,10000000;
+		dispbottom "泰雷莫圖斯的委託 1 任務回報完成!!";
+		}
+		if(checkquest(12622,HUNTING)==2 ) { 
+		erasequest 12622;
+		//getitem 1001464,3;	//地之能量
+		getexp 10000000,10000000;
+		dispbottom "泰雷莫圖斯的委託 2 任務回報完成!!";
+		}
+		if(checkquest(12623,HUNTING)==2 ) { 
+		erasequest 12623;
+		//getitem 1001464,3;	//地之能量
+		getexp 10000000,10000000;
+		dispbottom "泰雷莫圖斯的委託 3 任務回報完成!!";
+		}
+		if(checkquest(12624,HUNTING)==2 ) { 
+		erasequest 12624;
+		//getitem 1001464,3;	//地之能量
+		getexp 10000000,10000000;
+		dispbottom "泰雷莫圖斯的委託 4 任務回報完成!!";
+		}
+
+		if(checkquest(12625,HUNTING)==2 ) { 
+		erasequest 12625;
+		//getitem 1001461,3;	//火之能量
+		getexp 10000000,10000000;
+		dispbottom "阿爾多雷的委託 1 任務回報完成!!";
+		}
+		if(checkquest(12626,HUNTING)==2 ) { 
+		erasequest 12626;
+		//getitem 1001461,3;	//火之能量
+		getexp 10000000,10000000;
+		dispbottom "阿爾多雷的委託 2 任務回報完成!!";
+		}
+		if(checkquest(12627,HUNTING)==2 ) { 
+		erasequest 12627;
+		//getitem 1001461,3;	//火之能量
+		getexp 10000000,10000000;
+		dispbottom "阿爾多雷的委託 3 任務回報完成!!";
+		}
+		if(checkquest(12628,HUNTING)==2 ) { 
+		erasequest 12628;
+		//getitem 1001461,3;	//火之能量
+		getexp 10000000,10000000;
+		dispbottom "阿爾多雷的委託 4 任務回報完成!!";
+		}
+
+		if(checkquest(12629,HUNTING)==2 ) { 
+		erasequest 12629;
+		//getitem 1001463,3;	//風之能量
+		getexp 10000000,10000000;
+		dispbottom "普羅賽拉的委託 1 任務回報完成!!";
+		}
+		if(checkquest(12630,HUNTING)==2 ) { 
+		erasequest 12630;
+		//getitem 1001463,3;	//風之能量
+		getexp 10000000,10000000;
+		dispbottom "普羅賽拉的委託 2 任務回報完成!!";
+		}
+		if(checkquest(12631,HUNTING)==2 ) { 
+		erasequest 12631;
+		//getitem 1001463,3;	//風之能量
+		getexp 10000000,10000000;
+		dispbottom "普羅賽拉的委託 3 任務回報完成!!";
+		}
+		if(checkquest(12632,HUNTING)==2 ) { 
+		erasequest 12632;
+		//getitem 1001463,3;	//風之能量
+		getexp 10000000,10000000;
+		dispbottom "普羅賽拉的委託 4 任務回報完成!!";
+		}
+
+		if(checkquest(12633,HUNTING)==2 ) { 
+		erasequest 12633;
+		//getitem 1001462,3;	//水之能量
+		getexp 10000000,10000000;
+		dispbottom "迪盧比奧的委託 1 任務回報完成!!";
+		}
+		if(checkquest(12634,HUNTING)==2 ) { 
+		erasequest 12634;
+		//getitem 1001462,3;	//水之能量
+		getexp 10000000,10000000;
+		dispbottom "迪盧比奧的委託 2 任務回報完成!!";
+		}
+		if(checkquest(12635,HUNTING)==2 ) { 
+		erasequest 12635;
+		//getitem 1001462,3;	//水之能量
+		getexp 10000000,10000000;
+		dispbottom "迪盧比奧的委託 3 任務回報完成!!";
+		}
+		if(checkquest(12636,HUNTING)==2 ) { 
+		erasequest 12636;
+		//getitem 1001462,3;	//水之能量
+		getexp 10000000,10000000;
+		dispbottom "迪盧比奧的委託 4 任務回報完成!!";
+		}
+
+		if(checkquest(12637,HUNTING)==2 ) { 
+		erasequest 12637;
+		//getitem 1001465,1;	//精靈庇護
+		getexp 15000000,15000000;
+		dispbottom "塞爾彭斯的委託 1 任務回報完成!!";
+		}
+		if(checkquest(12638,HUNTING)==2 ) { 
+		erasequest 12638;
+		//getitem 1001465,1;	//精靈庇護
+		getexp 15000000,15000000;
+		dispbottom "塞爾彭斯的委託 2 任務回報完成!!";
+		}
+		
+		mes "[次元終端機]";
+		mes "已完成的任務處理完畢";
+		close;
+
+	case 2:
+		close;
+		}
+}
+
+//--------- 接取任務
+t_garden,100,117,6	script	泰雷莫圖斯#t	10551,{
+
+	if ((BaseLevel < 240)) {
+	mes "[泰雷莫圖斯]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[泰雷莫圖斯]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","取消")){
+
+	case 1:
+		mes "[泰雷莫圖斯]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("泰雷莫圖斯的委託 1","泰雷莫圖斯的委託 2","泰雷莫圖斯的委託 3","泰雷莫圖斯的委託 4","取消")){
+
+		case 1:
+			if(checkquest(12621,HUNTING)>=0){mes "[泰雷莫圖斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12621;
+			mes "[泰雷莫圖斯]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12622,HUNTING)>=0){mes "[泰雷莫圖斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12622;
+			mes "[泰雷莫圖斯]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(12623,HUNTING)>=0){mes "[泰雷莫圖斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12623;
+			mes "[泰雷莫圖斯]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(12624,HUNTING)>=0){mes "[泰雷莫圖斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12624;
+			mes "[泰雷莫圖斯]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			close;
+		}
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "-每日任務-泰雷莫圖斯的委託",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 240" );
+	end;
+}
+
+
+t_garden,109,126,6	script	阿爾多雷#t	10548,{
+
+	if ((BaseLevel < 240)) {
+	mes "[阿爾多雷]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[阿爾多雷]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","取消")){
+
+	case 1:
+		mes "[阿爾多雷]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("阿爾多雷的委託 1","阿爾多雷的委託 2","阿爾多雷的委託 3","阿爾多雷的委託 4","取消")){
+
+		case 1:
+			if(checkquest(12625,HUNTING)>=0){mes "[阿爾多雷]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12625;
+			mes "[阿爾多雷]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12626,HUNTING)>=0){mes "[阿爾多雷]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12626;
+			mes "[阿爾多雷]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(12627,HUNTING)>=0){mes "[阿爾多雷]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12627;
+			mes "[阿爾多雷]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(12628,HUNTING)>=0){mes "[阿爾多雷]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12628;
+			mes "[阿爾多雷]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			close;
+		}
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "-每日任務-阿爾多雷的委託",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 240" );
+	end;
+}
+
+
+
+t_garden,106,123,6	script	普羅賽拉#t	10550,{
+
+	if ((BaseLevel < 240)) {
+	mes "[普羅賽拉]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[普羅賽拉]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","取消")){
+
+	case 1:
+		mes "[普羅賽拉]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("普羅賽拉的委託 1","普羅賽拉的委託 2","普羅賽拉的委託 3","普羅賽拉的委託 4","取消")){
+
+		case 1:
+			if(checkquest(12629,HUNTING)>=0){mes "[普羅賽拉]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12629;
+			mes "[普羅賽拉]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12630,HUNTING)>=0){mes "[普羅賽拉]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12630;
+			mes "[普羅賽拉]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(12631,HUNTING)>=0){mes "[普羅賽拉]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12631;
+			mes "[普羅賽拉]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(12632,HUNTING)>=0){mes "[普羅賽拉]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12632;
+			mes "[普羅賽拉]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			close;
+		}
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "-每日任務-普羅賽拉的委託",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 240" );
+	end;
+}
+
+
+t_garden,97,114,6	script	迪盧比奧#t	10549,{
+
+	if ((BaseLevel < 240)) {
+	mes "[迪盧比奧]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[迪盧比奧]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","取消")){
+
+	case 1:
+		mes "[迪盧比奧]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("迪盧比奧的委託 1","迪盧比奧的委託 2","迪盧比奧的委託 3","迪盧比奧的委託 4","取消")){
+
+		case 1:
+			if(checkquest(12633,HUNTING)>=0){mes "[迪盧比奧]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12633;
+			mes "[迪盧比奧]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12634,HUNTING)>=0){mes "[迪盧比奧]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12634;
+			mes "[迪盧比奧]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(12635,HUNTING)>=0){mes "[迪盧比奧]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12635;
+			mes "[迪盧比奧]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(12636,HUNTING)>=0){mes "[迪盧比奧]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12636;
+			mes "[迪盧比奧]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			close;
+		}
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "-每日任務-迪盧比奧的委託",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 240" );
+	end;
+}
+
+
+
+t_garden,103,120,6	script	塞爾彭斯#t	10552,{
+
+	if ((BaseLevel < 240)) {
+	mes "[塞爾彭斯]";
+	mes "這任務限等級 ^ff0000240以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[塞爾彭斯]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","取消")){
+
+	case 1:
+		mes "[塞爾彭斯]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("塞爾彭斯的委託 1","塞爾彭斯的委託 2","取消")){
+
+		case 1:
+			if(checkquest(12637,HUNTING)>=0){mes "[塞爾彭斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12637;
+			mes "[塞爾彭斯]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(12638,HUNTING)>=0){mes "[塞爾彭斯]"; mes "您已經接了這個任務了唷~!"; close;}
+			setquest 12638;
+			mes "[塞爾彭斯]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			close;
+		}
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "-每日任務-塞爾彭斯的委託",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 240" );
+	end;
+}
+
+

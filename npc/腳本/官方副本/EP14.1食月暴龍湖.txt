@@ -1,0 +1,236 @@
+vdistrict1,12,79,4	script	食月暴龍湖管理者	541,{
+
+
+	//副本任務獎勵
+	if(checkquest(32019,HUNTING)==2 ) { 
+	dispbottom "食月暴龍湖任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	getitem 6497,3;	//平安符(小)
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32019; }
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_05 < gettime(8) ){
+	set Instance_Bout_05,10;
+	set day_Instance_Bout_05,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_05 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[紹紹]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "食月暴龍湖";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[紹紹]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_05+"^000000 ]";
+	mes "副本獎勵：";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[紹紹]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[紹紹]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[紹紹]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[紹紹]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_05,Instance_Bout_05-1;
+
+			//副本任務
+			if(checkquest(32019,HUNTING)<0 ){setquest 32019;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "食月暴龍湖",0;
+	end;
+}
+
+//------------------------------食月暴龍湖副本事件
+1@ma_b,0,0,0	script	食月暴龍湖事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@ma_b");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("紹紹#02");
+	//副本標籤
+	setd "$@CD_Bakonawa_1"+instance_id(1),0;
+	setd "$@CD_Bakonawa_2"+instance_id(1),4;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	monster 'map_name$[0],58,103,"--ja--",2337,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd2";
+	monster 'map_name$[0],97,103,"--ja--",2337,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd2";
+	monster 'map_name$[0],60,97,"--ja--",2328,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd2";
+	monster 'map_name$[0],95,97,"--ja--",2328,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd2";
+	sleep2 3000;
+	instance_announce 0, "紹紹：食月暴龍湖又潛入水面下了",bc_map,"0x00cc66";
+	sleep2 6000;
+	instance_announce 0, "紹紹：為了不讓他專心於月亮，必須敲鑼打鍋來吵他!",bc_map,"0x00cc66";
+	sleep2 9000;
+	instance_announce 0, "紹紹：即使他浮出水面也不要攻擊他，只要專心敲鑼打鍋即可!",bc_map,"0x00cc66";
+	end;
+
+	OnCcdd2:
+	setd "$@CD_Bakonawa_2"+instance_id(1),getd("$@CD_Bakonawa_2"+instance_id(1))-1;
+	instance_announce 0, "紹紹：很好只剩"+getd("$@CD_Bakonawa_2"+instance_id(1))+"個了!",bc_map,"0x00cc66";
+	if (getd("$@CD_Bakonawa_2"+instance_id(1))>0) end;
+	killmonsterall instance_mapname("1@ma_b");
+	sleep2 3000;
+	instance_announce 0, "紹紹：食月暴龍湖再次躲至水底了，難道都結束了嗎?",bc_map,"0x00cc66";
+	sleep2 6000;
+	instance_announce 0, "紹紹：阿! 從水理快速冒出東西來，那是食月暴龍湖!!",bc_map,"0x00cc66";
+	monster 'map_name$[0],78,81,"--ja--",2320,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd3";
+	sleep2 8000;
+	instance_announce 0, "目標 - 消滅變更加兇猛的食月暴龍湖",bc_map,"0x990000";
+	end;
+
+	OnCcdd3:
+	announce "【食月暴龍湖】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，挑戰成功",bc_all,0xD7BA98;
+	instance_announce 0, "紹紹：消滅了食月暴龍湖，並吐出了遺物箱",bc_map,"0x00cc66";
+	instance_announce 0, "紹紹：來找我領取獎勵吧!",bc_map,"0x00cc66";
+	monster 'map_name$[0],79,75,"--ja--",2335,1;
+	disablenpc instance_npcname("紹紹#01");
+	enablenpc instance_npcname("紹紹#02");
+	setd "$@CD_Bakonawa_1"+instance_id(1),2;
+	end;
+}
+
+//------------------------------ 食月暴龍湖NPC
+1@ma_b,62,53,4	script	紹紹#01	541,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+	mes "[紹紹]";
+	mes "你並不是隊長!!";
+	mes "有時食月暴龍湖變打不死的狀態，此時要照我的話去做就可以了";
+	close; }
+
+	if (getd("$@CD_Bakonawa_1"+instance_id(1))==0) {
+	mes "[紹紹]";
+	mes "你要開始挑戰食月暴龍湖了?";
+	next;
+	menu "^228B22是的^000000",-;
+	mes "[紹紹]";
+	mes "有時食月暴龍湖變打不死的狀態，此時要照我的話去做就可以了好了";
+	setd "$@CD_Bakonawa_1"+instance_id(1),1;
+	areamonster 'map_name$[0],78,81,78,81,"--ja--",2321,1,instance_npcname("食月暴龍湖事件1")+"::OnCcdd1";
+	instance_announce 0, "紹紹：食月暴龍湖已經浮出水面了趕快進行攻擊!",bc_map,"0x00cc66";
+	close;
+	}
+
+	if (getd("$@CD_Bakonawa_1"+instance_id(1))==1) {
+	mes "[紹紹";
+	mes "有時食月暴龍湖變打不死的狀態，此時要照我的話去做就可以了";
+	close;
+	}
+}
+
+
+1@ma_b,62,53,4	script	紹紹#02	541,{
+	mes "[紹紹";
+	mes "恭喜你成功打倒了食月暴龍湖";
+	mes "你現在想要回去了嗎?";
+	next;
+	menu "^228B22是的^000000",-;
+	//副本任務獎勵
+	if(checkquest(32019,HUNTING)==2 ) { 
+	dispbottom "食月暴龍湖 任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",17;
+	getitem 6497,3;	//平安符(小)
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32019; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+}
+
+
+//地圖屬性
+1@ma_b	mapflag	nomemo
+1@ma_b	mapflag	nosave	SavePoint
+1@ma_b	mapflag	monster_noteleport
+1@ma_b	mapflag	noteleport
+

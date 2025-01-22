@@ -1,0 +1,66 @@
+﻿vdistrict1,88,21,6	script	凱渥寶樂格兌換商店#01	123,{
+
+	mes "[凱渥寶樂格兌換商店]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("魔石兌換:一般物品:特殊物品:進行附魔:前往相關地圖")){
+
+	case 1:
+	close2;
+	callshop "凱渥寶樂格兌換商店#魔石兌換";
+	end;
+
+	case 2:
+	close2;
+	callshop "凱渥寶樂格兌換商店#一般物品";
+	end;
+
+	case 3:
+	close2;
+	callshop "凱渥寶樂格兌換商店#特殊物品";
+	end;
+
+	case 4:
+		mes "[凱渥寶樂格兌換商店]";
+		mes "請選擇你要附魔的裝備";
+		next;
+		switch(select("凱渥寶樂格鎧甲:凱渥寶樂格斗篷:凱渥寶樂格戰鞋:凱渥寶樂格戒指")){
+
+		case 1:
+		close2;
+		item_enchant 143;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 144;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 145;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 146;
+		end;
+
+		}
+
+	case 5:
+		switch(select("耶夢加德教團村莊【jor_base】","崛起的大地 南部【jor_raise2】","崛起的大地 北部【jor_raise1】","耶夢加德教團神殿津利1樓【jor_tmple1】","耶夢加德教團神殿津利2樓【jor_tmple2】")) {
+		case 1: set WarpMap$,"jor_base"; set WarpMapX,0; set WarpMapY,0; warp "jor_base",0,0;	close;
+		case 2: set WarpMap$,"jor_raise2"; set WarpMapX,0; set WarpMapY,0; warp "jor_raise2",0,0;	close;
+		case 3: set WarpMap$,"jor_raise1"; set WarpMapX,0; set WarpMapY,0; warp "jor_raise1",0,0;	close;
+		case 4: set WarpMap$,"jor_tmple1"; set WarpMapX,0; set WarpMapY,0; warp "jor_tmple1",0,0;	close;
+		case 5: set WarpMap$,"jor_tmple2"; set WarpMapX,0; set WarpMapY,0; warp "jor_tmple2",0,0;	close;
+		}
+	}
+
+OnInit:
+	waitingroom "凱渥寶樂格兌換商店",0;
+	end;
+}
+
+

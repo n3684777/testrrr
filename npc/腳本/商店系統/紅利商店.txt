@@ -1,0 +1,84 @@
+﻿//自定義變量商城腳本版
+//腳本編寫：靈巧兒
+//腳本版本：V1.0 Bate
+//腳本版權：靈巧兒
+//技術支持QQ：429704119
+-	shop	Gym_Points_Shop	-1,512:-1 //生成商店，腳本名字需要和下面腳本中名字叫對應
+//腳本開始
+trinity,134,65,4	script	紅利商店	564,{
+
+On001:
+	message strcharinfo(0),"此商店只能使用[紅利]進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在還有紅利 [ "+#Dividend_Points+" ] 點"; //有多少點數
+	callshop "Gym_Points_Shop",1; //開啟商店
+	npcshopattach "Gym_Points_Shop"; //關聯腳本
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; //初始化購買個數為0
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > #Dividend_Points) dispbottom "你沒用足夠的[ 紅利 ]點.";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買[ "+@bought_quantity[.@i]+" ]個[ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除點數
+		set #Dividend_Points,#Dividend_Points - @totalcost; 
+		dispbottom "您消費了[ "+@totalcost+" ]點.還剩[ "+#Dividend_Points+" ]點";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+//---------------------------------------------------
+	waitingroom "紅利商店",0;
+	//設置商品的ID
+	setarray .Commodity[0],61028,61029,61030,61009,61031,80103,70002,81017,80064,	7227,12412,61036,70041,70051,70043,70053,6238,6239,6872,6878,23926,80003,80043,70005,7650,70060,70061,1000620,7925,1001253
+	,70131,70117,70107,70108,70116,70110,1001174,1001256,1001437,1001438,1001255,1001413,1001472,1001473,1001558,1001573,1001602,40292	//物品&轉蛋
+	,80055	//裝備
+	,47083,47084,47085,47086,47087,47088,44694,44562,40871,31568,44760,44761,44762,44763,44764,51279,51280,47091,47092,47093,47094,47095,47096,47097,47098,480423,480429,480419,480420,480421	//服飾
+	,45197,45198,45199,45200,45201,45202,45203,45204,45205,45206,45207,45208,45209,45210,45211;	//原神服飾
+
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],10,100,1000,25,250,500,500,30,30,	300,10,50,500,500,800,800,200,200,1000,1000,3000,40,500,500,10,20,100,60,30,20
+	,100,500,500,500,500,1000,2000,500,1000,1000,1000,1000,1000,1000,1000,1000,1000,300	//物品&轉蛋
+	,1000	//裝備
+	,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000	//服飾
+	,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000;	//原神服飾
+
+//---------------------------------------------------
+//初始化商店中物品
+	debugmes "紅利商城加載中...";
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "Gym_Points_Shop",512;
+		npcshopadditem "Gym_Points_Shop",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	debugmes "【紅利商城】商品"+getarraysize(.Commodity)+"個";
+	end;
+}
+

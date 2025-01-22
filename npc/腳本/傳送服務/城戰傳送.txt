@@ -1,0 +1,182 @@
+prontera,10,10,4	script	城戰傳送	105,{
+
+	mes "[城戰傳送]";
+	mes "選擇你要到達的區域吧";
+	next;
+	switch (select("舊式城戰區域:SE城戰區域")) {
+
+	case 1:
+	if($City_Battle01 == 0){
+		mes "[城戰傳送]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("娜易修番斯塔引(新城左下):培勒格(吉芬中上):眉撒絲達刺(吉芬右下))")) {
+
+		case 1:
+			warp "alde_gld",48,87;
+			close;
+
+		case 2:
+			warp "gef_fild13",190,279;
+			close;
+
+		case 3:
+			warp "gef_fild13",311,90;
+			close;
+		}
+	}
+
+
+	if($City_Battle01 == 1){
+		mes "[城戰傳送]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("娜易修番斯塔引(新城左下) [特殊]:培勒格(吉芬中上) [普通]:眉撒絲達刺(吉芬右下) [普通])")) {
+
+		case 1:
+			warp "alde_gld",48,87;
+			close;
+
+		case 2:
+			warp "gef_fild13",190,279;
+			close;
+
+		case 3:
+			warp "gef_fild13",311,90;
+			close;
+		}
+	}
+
+	if($City_Battle01 == 2){
+		mes "[城戰傳送]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("娜易修番斯塔引(新城左下) [普通]:培勒格(吉芬中上) [特殊]:眉撒絲達刺(吉芬右下) [普通])")) {
+
+		case 1:
+			warp "alde_gld",48,87;
+			close;
+
+		case 2:
+			warp "gef_fild13",190,279;
+			close;
+
+		case 3:
+			warp "gef_fild13",311,90;
+			close;
+		}
+	}
+
+	if($City_Battle01 == 3){
+		mes "[城戰傳送]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("娜易修番斯塔引(新城左下) [普通]:培勒格(吉芬中上) [普通]:眉撒絲達刺(吉芬右下) [特殊])")) {
+
+		case 1:
+			warp "alde_gld",48,87;
+			close;
+
+		case 2:
+			warp "gef_fild13",190,279;
+			close;
+
+		case 3:
+			warp "gef_fild13",311,90;
+			close;
+		}
+	}
+
+
+	case 2:
+	if($City_Battle02 == 0){
+		mes "[區域傳送員]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("喜民(朱諾右下):安得郎克(朱諾右上):畢得布萊因(朱諾左中))")) {
+		case 1:
+			warp "sch_gld",293,102;
+			close;
+		case 2:
+			warp "sch_gld",288,246;
+			close;
+		case 3:
+			warp "sch_gld",97,193;
+			close;
+		}
+	}
+
+	if($City_Battle02 == 1){
+		mes "[區域傳送員]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("喜民(朱諾右下) [特殊]:安得郎克(朱諾右上) [普通]:畢得布萊因(朱諾左中) [普通])")) {
+		case 1:
+			warp "sch_gld",293,102;
+			close;
+		case 2:
+			warp "sch_gld",288,246;
+			close;
+		case 3:
+			warp "sch_gld",97,193;
+			close;
+		}
+	}
+
+	if($City_Battle02 == 2){
+		mes "[區域傳送員]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("喜民(朱諾右下) [普通]:安得郎克(朱諾右上) [特殊]:畢得布萊因(朱諾左中) [普通])")) {
+		case 1:
+			warp "sch_gld",293,102;
+			close;
+		case 2:
+			warp "sch_gld",288,246;
+			close;
+		case 3:
+			warp "sch_gld",97,193;
+			close;
+		}
+	}
+
+	if($City_Battle02 == 3){
+		mes "[區域傳送員]";
+		mes "選擇你要到達的區域吧";
+		next;
+		switch (select("喜民(朱諾右下) [普通]:安得郎克(朱諾右上) [普通]:畢得布萊因(朱諾左中) [特殊])")) {
+		case 1:
+			warp "sch_gld",293,102;
+			close;
+		case 2:
+			warp "sch_gld",288,246;
+			close;
+		case 3:
+			warp "sch_gld",97,193;
+			close;
+		}
+	}
+
+	}
+}
+
+
+
+//---------------------------------------
+rentinc1,21,12,4	duplicate(城戰傳送)	城戰傳送#ren01	105	//小屋
+rentinc2,21,12,4	duplicate(城戰傳送)	城戰傳送#ren02	105	//小屋
+rentinc3,21,12,4	duplicate(城戰傳送)	城戰傳送#ren03	105	//小屋
+rentinc4,21,12,4	duplicate(城戰傳送)	城戰傳送#ren04	105	//小屋
+rentinc5,21,12,4	duplicate(城戰傳送)	城戰傳送#ren05	105	//小屋
+rentinc6,21,12,4	duplicate(城戰傳送)	城戰傳送#ren06	105	//小屋
+rentinc7,21,12,4	duplicate(城戰傳送)	城戰傳送#ren07	105	//小屋
+rentinc8,21,12,4	duplicate(城戰傳送)	城戰傳送#ren08	105	//小屋
+rentinc9,21,12,4	duplicate(城戰傳送)	城戰傳送#ren09	105	//小屋
+rentinc10,21,12,4	duplicate(城戰傳送)	城戰傳送#ren10	105	//小屋
+
+prontera,267,195,4	duplicate(城戰傳送)	城戰傳送#ren11	105	//東門
+prontera,40,196,4	duplicate(城戰傳送)	城戰傳送#ren12	105	//西門
+prontera,164,38,4	duplicate(城戰傳送)	城戰傳送#ren13	105	//南門
+prontera,168,327,4	duplicate(城戰傳送)	城戰傳送#ren14	105	//北門
+
+

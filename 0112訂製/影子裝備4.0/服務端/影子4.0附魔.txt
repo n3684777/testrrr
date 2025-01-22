@@ -1,0 +1,64 @@
+﻿
+itemmall,41,63,6	script	暗影魔法書#01	10372,{
+
+	mes "[暗影魔法書]";
+	mes "可以對四轉技能影子裝備使用並獲得附加能力。";
+	mes "所需材料：影子精髓x2";
+
+	next;
+	switch(select("強化 四轉技能影子裝備","查看 可以附加能力","取消")) {
+
+	case 1:
+		close2;
+		item_reform 103309;
+		end;
+
+	case 2:
+		mes "[暗影魔法書]";
+		mes "固定獲得第一欄隨附加能力";
+		mes "MHP + 100 ~ 500";
+		mes "MSP + 20 ~ 100";
+		mes "MHP + 1~2%";
+		mes "MSP + 1~2%";
+		mes "ATK + 1 ~ 15";
+		mes "MATK + 1 ~ 15";
+		mes "ATK + 1 ~ 3%";
+		mes "MATK + 1 ~ 3%";
+		mes "ASPD + 1";
+		mes "ASPD + 1~5%";
+		mes "HIT + 5 ~ 15";
+		mes "FLEE + 5 ~ 15";
+		mes "DEF + 10 ~ 25";
+		mes "MDEF + 1 ~ 3";
+		mes "CRI + 1 ~ 5";
+		mes "爆擊傷害 + 1~5%";
+		mes "全屬性魔法傷害 + 1~5%";
+		mes "遠距離物理傷害 + 1~5%";
+		mes "近距離物理傷害 + 1~5%";
+		mes "治癒量 + 3~5%";
+		mes "被治癒量 + 3~5%";
+		mes "變動詠唱 - 1~3%";
+		mes "─────────────";
+		mes "33%機率獲得第二欄隨附加能力";
+		mes "C.Rate + 1~5";
+		mes "H.PLUS + 3~10";
+		mes "POW + 1~5";
+		mes "CON + 1~5";
+		mes "WIS + 1~5";
+		mes "SPL + 1~5";
+		mes "CRT + 1~5";
+		mes "STA + 1~5";
+		mes "P.ATK + 1~2";
+		mes "S.MATK + 1~2";
+		mes "RES + 5~15";
+		mes "MRES + 5~15";
+		mes "─────────────";
+		mes "^ff0000※附加能力後卡片和精煉不會初始化!^000000";
+		close;
+
+	case 3:
+	end;
+	}
+}
+
+

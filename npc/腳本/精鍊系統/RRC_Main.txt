@@ -1,0 +1,228 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)　　　　　　SeAr
+//==更新日期 : 西元 2012/05/10　　　　　　　　Script
+//==腳本版號 : Renewal Beta 1.2
+//==腳本名稱 : 忽克連
+//==腳本出處 : http://www.srogm.com/
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+//================================================//
+function	script	Rrc_Main_0	{
+
+	mes "[修理工]";
+	mes "請選擇您要修理的物品選項。";
+	next;
+	if ( getbrokenid(1) == NULL ) {
+		mes "[修理工]";
+		mes "您沒有任何受損的物品唷！";
+		close;
+	}
+	set @RRC,select("^0000FF修理全部的物品^000000",getitemname(getbrokenid(1)),getitemname(getbrokenid(2)),getitemname(getbrokenid(3)),getitemname(getbrokenid(4)),getitemname(getbrokenid(5)),getitemname(getbrokenid(6)),getitemname(getbrokenid(7)),getitemname(getbrokenid(8)),getitemname(getbrokenid(9)),getitemname(getbrokenid(10)))-1;
+	if ( getbrokenid(@RRC) == NULL && @RRC != 0 ) {
+		callfunc "Rrc_Main_2";
+	}
+	mes "[修理工]";
+	if ( @RRC == 0 ) {
+		for ( set @i,1; @i < 128; set @i,@i+1 ) {
+			if ( getbrokenid(@i) == NULL ) {
+				set @e,@i-1;
+				set @i,127;
+			}
+		}
+		mes "修理 ^0000FF全部的物品^000000";
+	} else {
+		set @e,1;
+		mes "修理 ^0000FF"+getitemname(getbrokenid(@RRC))+"^000000 這項物品";
+	}
+	mes "需要 ^FF0000金錢 "+(100000*@e)+"^000000 z";
+	//mes "和 ^FF0000"+getitemname(999)+" "+@e+"^000000 個";
+	next;
+	if (select("是的！","不了！")==1) {
+		if ( Zeny < (10000*@e) ) {
+			mes "[修理工]";
+			mes "抱歉您身上的金錢不足！";
+			close;
+		}
+		mes "[修理工]";
+		mes "鏘！鏘！鏘！";
+		next;
+		mes "[修理工]";
+		mes "恭喜您物品已修理完成了！";
+		set Zeny,Zeny - (100000*@e);
+		//delitem 999,1*@e;
+		for ( set @i,1; @i <= @e; set @i,@i+1 ) {
+			if ( @RRC ) {
+				repair(@RRC);
+			} else {
+				repair(1);
+			}
+		}
+	}
+	close;
+}
+
+
+//================================================//
+function	script	Rrc_Main_2	{
+
+	//拆除卡片的初始成功機率 ( 預設：30% )
+	setarray .@CardRand1,30;
+
+	//拆除卡片需要的初始費用 ( 預設：50萬 Zeny )
+	setarray .@CardZeny1,500000;
+
+//================================================//
+	mes "[理查德]";
+	mes "請選擇您要拆除的物品選項。";
+	next;
+	setarray .@Equip$[0],"0","1","2","3","4","5","6","7","8","9";
+
+	for ( set @i,9; @i <= 9; set @i,@i+1 ) {
+		if ( getequipname(@i) ) {
+			setd "@EquipName"+@i+"$",.@Equip$[@i]+"–^FF0000沒有裝備物品^000000";
+		} else {
+			if ( getequipcardcnt(@i) ) {
+				setd "@EquipName"+@i+"$",.@Equip$[@i]+"–^0000FF"+getequipname(@i)+"^000000["+getitemslots(getequipid(@i))+"S]";
+			} else {
+				setd "@EquipName"+@i+"$",.@Equip$[@i]+"–^FF0000沒有插上卡片^000000";
+			}
+		}
+	}
+	set @CItem,select(@EquipName0$,@EquipName1$,@EquipName2$,@EquipName3$,@EquipName4$,@EquipName5$,@EquipName6$,@EquipName7$,@EquipName8$,@EquipName9$);
+	set @CardCount,getequipcardcnt(@CItem);
+	for ( set @i,0; @i <= 9; set @i,@i+1 ) {
+		setd "@EquipName"+@i+"$","";
+	}
+	if ( @CardCount == 0 )	{
+	mes "[理查德]";
+	mes "這個物品並沒有插上卡片唷！";
+	close;
+	}
+	mes "[理查德]";
+	mes "請選作業費用";
+	next;
+	switch(select("使用50萬Zeny (30%)","新式高級潤滑油 (70%)","新式普通潤滑油 (50%)")) {
+
+	case 1:
+	mes "[理查德][機率：^FF000030%^000000]";
+	mes "拆除 ^0000FF"+getequipname(@CItem)+"^000000["+getitemslots(getequipid(@CItem))+"S] 上的卡片";
+	mes "需要 ^FF0000金錢 "+.@CardZeny1+"^000000 z";
+	next;
+	if (select("是的！","不了！")==2) {
+	close;
+	}
+
+Rrc_net01:
+	if ( Zeny < .@CardZeny1 ) {
+	mes "[理查德]";
+	mes "抱歉您身上的金錢不足！";
+	close;
+	}
+
+	set Zeny,Zeny - .@CardZeny1;
+	set @pay,rand(1,100);
+	if(@pay>=0 && @pay<=30){
+	successremovecards @CItem;
+	specialeffect2 EF_SANCTUARY;
+	mes "[理查德]";
+	mes "恭喜您物品已拆除成功了！";
+	close;
+	} else {
+	specialeffect2 EF_SUI_EXPLOSION;
+	mes "[理查德]";
+	mes "抱歉您的物品拆除失敗了！";
+	next;
+	mes "[理查德]";
+	mes "你要在再次拆卡嗎?";
+	next;
+	switch(select("繼續拆卡:取消")){
+	case 1:
+	goto Rrc_net01;
+	case 2:
+	close;
+	}
+	}
+
+	case 2:
+	mes "[理查德][機率：^FF000070%^000000]";
+	mes "拆除 ^0000FF"+getequipname(@CItem)+"^000000["+getitemslots(getequipid(@CItem))+"S] 上的卡片";
+	mes "需要 新式高級潤滑油x1";
+	next;
+	if (select("是的！","不了！")==2) {
+	close;
+	}
+
+Rrc_net02:
+	if ( countitem(25239) < 1 ) {
+	mes "[理查德]";
+	mes "抱歉您身上的物品不足！";
+	close;
+	}
+
+	delitem 25239,1;
+	set @pay,rand(1,100);
+	if(@pay>=0 && @pay<=70){
+	successremovecards @CItem;
+	specialeffect2 EF_SANCTUARY;
+	mes "[理查德]";
+	mes "恭喜您物品已拆除成功了！";
+	close;
+	} else {
+	specialeffect2 EF_SUI_EXPLOSION;
+	mes "[理查德]";
+	mes "抱歉您的物品拆除失敗了！";
+	next;
+	mes "[理查德]";
+	mes "你要在再次拆卡嗎?";
+	next;
+	switch(select("繼續拆卡:取消")){
+	case 1:
+	goto Rrc_net02;
+	case 2:
+	close;
+	}
+	}
+
+	case 3:
+	mes "[理查德][機率：^FF000050%^000000]";
+	mes "拆除 ^0000FF"+getequipname(@CItem)+"^000000["+getitemslots(getequipid(@CItem))+"S] 上的卡片";
+	mes "需要 新式普通潤滑油x1";
+	next;
+	if (select("是的！","不了！")==2) {
+	close;
+	}
+
+Rrc_net03:
+	if ( countitem(25238) < 1 ) {
+	mes "[理查德]";
+	mes "抱歉您身上的物品不足！";
+	close;
+	}
+
+	delitem 25238,1;
+	set @pay,rand(1,100);
+	if(@pay>=0 && @pay<=50){
+	successremovecards @CItem;
+	specialeffect2 EF_SANCTUARY;
+	mes "[理查德]";
+	mes "恭喜您物品已拆除成功了！";
+	close;
+	} else {
+	specialeffect2 EF_SUI_EXPLOSION;
+	mes "[理查德]";
+	mes "抱歉您的物品拆除失敗了！";
+	next;
+	mes "[理查德]";
+	mes "你要在再次拆卡嗎?";
+	next;
+	switch(select("繼續拆卡:取消")){
+	case 1:
+	goto Rrc_net03;
+	case 2:
+	close;
+	}
+	}
+
+}
+}

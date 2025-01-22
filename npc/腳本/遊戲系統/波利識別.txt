@@ -1,0 +1,278 @@
+
+trinity,0,0,0	script	Poring_event	-1,{
+
+OnClock1457:
+OnClock2157:
+OnClock0117:
+	set $@Poring_kai,1;
+	killmonsterall "poring_w01";
+	announce "【波利識別】將在3分鐘後開始，要參加的請找傳送到小遊戲區找波利識別報名!!",bc_all,0x00FF00;
+	end;
+
+OnClock1459:
+OnClock2159:
+OnClock0119:
+	set $@Poring_kai,1;
+	announce "【波利識別】將在1分鐘後開始，要參加的請找傳送到小遊戲區找波利識別報名!!",bc_all,0x00FF00;
+	end;
+
+OnClock1500:
+OnClock2200:
+OnClock0120:
+	set $@Poring_kai,2;
+	donpcevent "Poringmob::OnSummon1";
+	announce "【波利識別】活動開始了，已經無法在報名入場!!",bc_all,0x00FF00;
+	end;
+}
+
+
+trinity,37,123,6	script	波利識別	508,{
+
+	mes "[波利識別]";
+	mes "波利識別活動說明";
+	mes "你必須在眾多波利中找到公告中指名要你打倒的波利，請注意是看怪物名稱而非怪物外觀!!";
+	mes "限制條件：負重必須為0、人物必須為初學者";
+	mes "遊戲獎勵：商城10點兌換券x1、小遊戲積分10點";
+	next;
+	menu "參加活動",-;
+	if ($@Poring_kai==0) goto Ccdd01;
+	if ($@Poring_kai==2) goto Ccdd02;
+	if (Weight!=0) goto Ccdd03;
+	if (class!=4001 && class!=0) goto Ccdd04;
+	if (getmapusers("poring_w01")>=50) goto Ccdd05;
+	sc_end SC_All;	//消除狀態
+	warp "poring_w01",105,124;
+	close;
+Ccdd01:
+	mes "[波利識別]";
+	mes "還沒有到活動報名時間，活動開始前5分鐘才可以報名。";
+	close;
+Ccdd02:
+	mes "[波利識別]";
+	mes "活動報名時間結束了，活動開始前5分鐘才可以報名。";
+	close;
+Ccdd03:
+	mes "[波利識別]";
+	mes "人物必須^FF0000負重為0^000000才可以參加。";
+	close;
+Ccdd04:
+	mes "[波利識別]";
+	mes "人物直接必須^FF0000初學者^000000才可以參加。";
+	close;
+Ccdd05:
+	mes "[波利識別]";
+	mes "報名人數已經滿了，限制^FF000050^000000人。";
+	close;
+
+OnInit:
+	waitingroom "波利識別",0;
+	end;
+
+}
+
+
+-	script	Poringmob	-1,{
+	end;
+OnSummon1:
+	mapannounce "poring_w01","請找到名稱為『波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"月夜貓",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"躲貓貓",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"利利波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"你點到我了",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"你在找我嗎",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"別亂點我",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"打我阿笨蛋",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"搓搓看",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"打我是笨蛋",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波 利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"GM01",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"GM02",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"GM03",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,1,"Poringwin::OnMobKilled1";
+	end;
+
+OnSummon2:
+	mapannounce "poring_w01","請找到名稱為『土波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"虎王",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"貝思波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"狸貓",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"你點到我了",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"別亂點我",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"土波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"搓搓看",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"小可愛",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"打我就出局",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"土波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"土波利",1725,1,"Poringwin::OnMobKilled2";
+	end;
+
+OnSummon3:
+	mapannounce "poring_w01","請找到名稱為『冰波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"波多野結衣",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"綠眠蟲",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"馬英九",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"水波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波利之王",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰_波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"真冰波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波莉",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波力",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利冰",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"冰 波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波利",1725,1,"Poringwin::OnMobKilled3";
+	end;
+
+OnSummon4:
+	mapannounce "poring_w01","請找到名稱為『波波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"烏龜將軍",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"盜蟲",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"蟲蛹",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"你在找我嗎",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"波波莉",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波 波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"坡坡利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"潑潑利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波力",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波_波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"GM01",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,1,"Poringwin::OnMobKilled4";
+	end;
+
+OnSummon5:
+	mapannounce "poring_w01","請找到名稱為『聖誕波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"聖蛋波利",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"聖彈波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"聖但波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖誕波波",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖誕波立",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖誕波力",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"坡利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"冰波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"剩蛋波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"聖誕 波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖誕利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"聖誕波利",1725,1,"Poringwin::OnMobKilled5";
+	end;
+
+OnSummon6:
+	mapannounce "poring_w01","請找到名稱為『天使波利』的怪物並打倒他!!",15,0xFFFF00;
+	areamonster "poring_w01",73,94,130,94,"惡魔波利",1725,15,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"天天波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"使者波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天使波波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天天波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"史萊姆",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天史波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"天使波莉",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",88,122,114,114,"大使波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天使波力",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天使_波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天空波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天之波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天使 波利",1725,10,"Poringwin::OnMobKilled0";
+	areamonster "poring_w01",80,116,123,100,"天使波利",1725,1,"Poringwin::OnMobKilled6";
+	end;
+}
+
+
+
+-	script	Poringwin	-1,{
+	end;
+
+OnMobKilled0:
+	dispbottom "你攻擊到錯誤的波利啦，下次要看清楚啊!!";
+	warp "trinity",50,120;
+	end;
+
+OnMobKilled1:
+	killmonsterall "poring_w01";
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	mapannounce "poring_w01","波利識別，第二回合開始!!",15,0xFFFF00;
+	donpcevent "Poringmob::OnSummon2";
+  	end;
+
+OnMobKilled2:
+	killmonsterall "poring_w01";;
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	mapannounce "poring_w01","波利識別，第三回合開始!!",15,0xFFFF00;
+	donpcevent "Poringmob::OnSummon3";
+  	end;
+
+OnMobKilled3:
+	killmonsterall "poring_w01";
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	mapannounce "poring_w01","波利識別，第四回合開始!!",15,0xFFFF00;
+	donpcevent "Poringmob::OnSummon4";
+  	end;
+
+OnMobKilled4:
+	killmonsterall "poring_w01";
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	donpcevent "Poringmob::OnSummon5";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	mapannounce "poring_w01","波利識別，第五回合開始!!",15,0xFFFF00;
+  	end;
+
+OnMobKilled5:
+	killmonsterall "poring_w01";
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	donpcevent "Poringmob::OnSummon6";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	mapannounce "poring_w01","波利識別，最後回合開始!!",15,0xFFFF00;
+  	end;
+
+OnMobKilled6:
+	set $@Poring_kai,0;
+	killmonsterall "poring_w01";
+	getitem 61007,3;
+	set #Game_Points,#Game_Points+10; dispbottom "目前小遊戲積分 ^0000ff"+#Game_Points+"^000000 點";
+	mapannounce "poring_w01","恭喜 "+strcharinfo(0)+" 找到了正確的波利~~!",15,0x6699FF;
+	announce "【波利識別】活動結束了，開放時間：12:30、16:30、21:00、01:00、05:00、09:000",bc_all,0x00FF00;
+	areawarp "poring_w01",0,0,300,300,"trinity",50,120;
+  	end;
+}
+
+
+
+//-------------------地圖屬性
+poring_w01	mapflag	nowarp
+poring_w01	mapflag	nowarpto
+poring_w01	mapflag	nomemo
+poring_w01	mapflag	nosave
+poring_w01	mapflag	nopenalty
+poring_w01	mapflag	nobranch
+poring_w01	mapflag	monster_noteleport
+poring_w01	mapflag	noteleport
+poring_w01	mapflag	noloot
+poring_w01	mapflag	nodrop
+poring_w01	mapflag	notrade
+poring_w01	mapflag	noskill
+

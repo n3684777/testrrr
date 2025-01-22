@@ -1,0 +1,115 @@
+﻿// Enchant
+vdistrict1,59,42,6	script	素食魔法師#0	4_F_02,{
+	mes "[素食魔法師]";
+	mes "我可以幫你附魔波利村大蔥或是波利村紅蘿蔔";
+	mes "但是附魔跟重置都有30%機率失敗";
+	next;
+	switch( select("附魔材料","進行附魔","重置附魔") ) {
+	case 1:
+		mes "[素食魔法師]";
+		mes "附魔需要20000Zeny跟50個傑勒比結晶";
+		close;
+	case 2:
+		.@equip_id = getequipid(EQI_HEAD_LOW);
+
+		switch( .@equip_id ) {
+		case -1:
+			mes "[素食魔法師]";
+			mes "請先穿上你想附魔的裝備。";
+			close;
+		case 19238:	// PoringTownOnion
+		case 19239:	// PoringTownCarrot
+			break;
+		default:
+			mes "[素食魔法師]";
+			mes "這不是蔬菜!?";
+			close;
+		}
+		if (getequipcardid(EQI_HEAD_LOW,3) > 0) {
+			mes "[素食魔法師]";
+			mes "這種蔬菜不能再被附魔了.";
+			close;
+		}
+		if (countitem(909) < 50 || Zeny < 20000) {
+			mes "[素食魔法師]";
+			mes "材料不足";
+			close;
+		}
+		delequip EQI_HEAD_LOW;
+		delitem 909,50;	// Jellopy
+		Zeny -= 20000;
+
+		if (rand(100) < 70) {
+			.@r = rand(5356);
+			if (.@r < 160) .@card = 4795;	// HP100
+			else if (.@r < 200) .@card = 4796;	// HP200
+			else if (.@r < 1000) .@card = 4928;	// SP10
+			else if (.@r < 1400) .@card = 4870;	// SP25
+			else if (.@r < 1480) .@card = 4800;	// SP50
+			else if (.@r < 1880) .@card = 4700;	// Strength1
+			else if (.@r < 2280) .@card = 4730;	// Agility1
+			else if (.@r < 3410) .@card = 4740;	// Vitality1
+			else if (.@r < 3810) .@card = 4710;	// Inteligence1
+			else if (.@r < 4210) .@card = 4720;	// Dexterity1
+			else if (.@r < 5340) .@card = 4750;	// Luck1
+			else if (.@r < 5348) .@card = 4992;	// HPdrain1
+			else if (.@r < 5356) .@card = 4993;	// SPdrain1
+
+			getitem2 .@equip_id,1,1,0,0,0,0,0,.@card;
+			mes "[素食魔法師]";
+			mes "附魔完成！";
+			specialeffect2 EF_REPAIRWEAPON;
+			close;
+		}
+		mes "[素食魔法師]";
+		mes "很遺憾的附魔失敗,物品消失了...";
+		specialeffect2 EF_LORD;
+		close;
+	case 3:
+		.@equip_id = getequipid(EQI_HEAD_LOW);
+
+		switch( .@equip_id ) {
+		case -1:
+			mes "[素食魔法師]";
+			mes "請先穿上你想重置的裝備.";
+			close;
+		case 19238:	// PoringTownOnion
+		case 19239:	// PoringTownCarrot
+			break;
+		default:
+			mes "[素食魔法師]";
+			mes "這不是蔬菜!?";
+			close;
+		}
+		if (getequipcardid(EQI_HEAD_LOW,3) == 0) {
+			mes "[素食魔法師]";
+			mes "這是一種從未強化過的蔬菜...";
+			close;
+		}
+		if (countitem(909) < 50 || Zeny < 20000) {
+			mes "[素食魔法師]";
+			mes "材料不足";
+			close;
+		}
+		delequip EQI_HEAD_LOW;
+		delitem 909,50;	// Jellopy
+		Zeny -= 20000;
+
+		if (rand(100) < 70) {
+			getitem .@equip_id,1;
+			mes "[素食魔法師]";
+			mes "重置完成！";
+			specialeffect2 EF_REPAIRWEAPON;
+			close;
+		}
+		mes "[素食魔法師]";
+		mes "很遺憾的重置失敗,物品消失了...";
+		specialeffect2 EF_LORD;
+		close;
+	}
+	end;
+
+OnInit:
+	waitingroom "波利村裝備附魔",0;
+	end;
+}

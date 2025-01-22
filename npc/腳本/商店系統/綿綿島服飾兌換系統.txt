@@ -1,0 +1,367 @@
+trinity,88,65,4	script	海丹_斐羅	561,{
+
+	mes "[海丹_斐羅]";
+	mes "擁有世界最多時尚服飾經驗的我海丹_斐羅，";
+	mes "如果有獼猴桃的話，就馬上交給我海丹_斐羅吧!!";
+	next;
+	mes "[海丹_斐羅]";
+	mes "消耗獼猴桃果實50個可以隨機抽取一次綿綿島硬幣";
+	mes "^ff0000穿身上也會被回收^000000，我會用一個(服飾)強化石箱子做代價回收";
+	mes "我會用一個(服飾)強化石箱子做代價回收";
+	next;
+	switch(select("取消","回收 轉蛋服飾","兌換 強化石箱子","觀看 各期服飾","抽取 第一期服飾","抽取 第二期服飾","抽取 第三期服飾")){
+
+	case 1:
+	close;
+
+	case 2:
+	menu 
+	//二期綿綿島服飾
+	countitem(20597)>=1?"(服飾)伊芙戰技巨型之鐮":"",son20597,
+	countitem(20598)>=1?"(服飾)超大貓咪後背包(黑)":"",son20598,
+	countitem(44822)>=1?"(服飾)棕色小熊氣球":"",son44822,
+	countitem(44823)>=1?"(服飾)白色小熊氣球":"",son44823,
+	countitem(31667)>=1?"(服飾)波利貝雷帽":"",son31667,
+	countitem(31489)>=1?"(服飾)花束帽":"",son31489,
+	countitem(31459)>=1?"(服飾)繽紛糖果帽":"",son31459,
+	countitem(31195)>=1?"(服飾)小巧巧克力帽":"",son31195,
+	countitem(20470)>=1?"(服飾)甜蜜巧克力帽":"",son20470,
+	countitem(40176)>=1?"(服飾)泰迪帽子":"",son40176,
+	//第二期綿綿島服飾
+	countitem(480181)>=1?"(服飾)頑皮火龍果養殖背包":"",son480181,
+	countitem(480190)>=1?"(服飾)2022RTC紀念勝利大衣":"",son480190,
+	countitem(40303)>=1?"(服飾)地球":"",son40303,
+	countitem(40684)>=1?"(服飾)黑貓":"",son40684,
+	countitem(40010)>=1?"(服飾)太極耳飾":"",son40010,
+	countitem(40333)>=1?"(服飾)聖潔神聖遊行者帽":"",son40333,
+	countitem(40341)>=1?"(服飾)獅鷲獸羽毛耳飾":"",son40341,
+	countitem(44302)>=1?"(服飾)熊貓寶貝":"",son44302,
+	countitem(40700)>=1?"(服飾)蝙蝠耳朵":"",son40700,
+	countitem(19806)>=1?"(服飾)浮華浪漫髮簪":"",son19806,
+	//第三期綿綿島服飾
+	countitem(20594)>=1?"(服飾)超大蝴蝶結披風":"",son20594,
+	countitem(480377)>=1?"(服飾)白色布偶貓玩偶":"",son480377,
+	countitem(410212)>=1?"(服飾)深淵之龍":"",son410212,
+	countitem(420181)>=1?"(服飾)冰晶披肩":"",son420181,
+	countitem(420068)>=1?"(服飾)施密特國王披風":"",son420068,
+	countitem(20242)>=1?"(服飾)冰雪毛帽":"",son20242,
+	countitem(40332)>=1?"(服飾)魔術電路":"",son40332,
+	countitem(420029)>=1?"(服飾)皇軍禁衛盔甲":"",son420029,
+	countitem(31954)>=1?"(服飾)束縛的項鍊":"",son31954,
+	countitem(20406)>=1?"(服飾)封印的鎖鏈":"",son20406,
+
+	countitem(410081)>=1?"(服飾)解放後的大地":"",son410081,
+	countitem(410123)>=1?"(服飾)大熊熊頭罩":"",son410123,
+	countitem(410126)>=1?"(服飾)迷你教授眼鏡":"",son410126,
+	countitem(410128)>=1?"(服飾)動力耳機":"",son410128,
+	countitem(410133)>=1?"(服飾)小松鼠與小箭頭":"",son410133,
+	countitem(410005)>=1?"(服飾)魔法繼承者":"",son410005,
+	countitem(410103)>=1?"(服飾)鬼魅綢緞":"",son410103,
+	countitem(420054)>=1?"(服飾)狸貓圍巾":"",son420054,
+	countitem(420071)>=1?"(服飾)貴族聖之羽翼披巾":"",son420071,
+	countitem(420073)>=1?"(服飾)2021RTC應援之羽翼":"",son420073,
+	countitem(420015)>=1?"(服飾)鬼魅山茶花髮簪":"",son420015,
+	countitem(420026)>=1?"(服飾)匹阿漫特大蝴蝶結":"",son420026,
+	countitem(420044)>=1?"(服飾)夏日水手服":"",son420044,
+	countitem(420211)>=1?"(服飾)數數羊(紅)":"",son420211,
+	countitem(420209)>=1?"(服飾)餅乾粉紅蝴蝶結":"",son420209,
+	countitem(420191)>=1?"(服飾)雪白兔耳假髮":"",son420191,
+	countitem(420192)>=1?"(服飾)白狐狸圍巾":"",son420192,
+	countitem(410182)>=1?"(服飾)野營煤油燈":"",son410182,
+	countitem(430005)>=1?"(服飾)白色虎王時尚眼鏡":"",son430005,
+	countitem(400232)>=1?"(服飾)愁眉苦臉雪人":"",son400232,
+	countitem(420152)>=1?"(服飾)光闇支配者":"",son420152,
+	countitem(420132)>=1?"(服飾)魅力大地靈氣":"",son420132,
+	countitem(20257)>=1?"(服飾)黑兔耳蘇格蘭帽":"",son20257,
+	countitem(410144)>=1?"(服飾)高爾夫球機器人":"",son410144,
+	countitem(44247)>=1?"(服飾)定位追蹤系統":"",son44247,
+
+	countitem(480315)>=1?"(服飾)銀河劍":"",son480315,
+	countitem(480316)>=1?"(服飾)雙頭巨斧":"",son480316,
+	countitem(480310)>=1?"(服飾)瘋狂兔寶寶後背包":"",son480310,
+	countitem(480311)>=1?"(服飾)幸福鑰匙":"",son480311,
+	countitem(480280)>=1?"(服飾)超大白色蝴蝶款式":"",son480280,
+	countitem(480297)>=1?"(服飾)垂耳兔斗篷":"",son480297,
+	countitem(480279)>=1?"(服飾)波利注射器":"",son480279,
+	countitem(480282)>=1?"(服飾)遠古龍矛":"",son480282,
+	countitem(480121)>=1?"(服飾)無雙神輿":"",son480121,
+	countitem(480189)>=1?"(服飾)巴基力詛咒荒劫之力":"",son480189,
+
+	countitem(19824)>=1?"(服飾)闇神官帽":"",son19824,
+	countitem(20290)>=1?"(服飾)闇神官帽(黑)":"",son20290,
+	countitem(31930)>=1?"(服飾)明星演唱會":"",son31930,
+	countitem(44314)>=1?"(服飾)波利肩飾":"",son44314,
+	countitem(20487)>=1?"(服飾)花之圓舞曲":"",son20487,
+	countitem(480395)>=1?"(服飾)超大P助":"",son480395,
+	countitem(19291)>=1?"(服飾)柴犬":"",son19291,
+	countitem(410108)>=1?"(服飾)黑柴犬":"",son410108,
+	countitem(31456)>=1?"(服飾)石虎娃娃":"",son31456,
+	countitem(31735)>=1?"(服飾)八卦封印":"",son31735,
+	countitem(31513)>=1?"(服飾)跳跳兔耳帽(黑)":"",son31513,
+	countitem(480394)>=1?"(服飾)超大粉紅兔兔":"",son480394,
+
+	countitem(44194)>=1?"(服飾)心型紅暈耳罩":"",son44194,
+	countitem(420088)>=1?"(服飾)愛心小天使":"",son420088,
+	countitem(44570)>=1?"(服飾)奇異蛋提籃":"",son44570,
+	countitem(31481)>=1?"(服飾)三花貓咖啡杯":"",son31481,
+	countitem(40340)>=1?"(服飾)沉睡的瘋兔家族":"",son40340,
+	countitem(480376)>=1?"(服飾)拉塔托斯克尾巴":"",son480376,
+
+	countitem(44000)>=1?"(服飾)艾勒梅斯的圍巾":"",son44000,
+	countitem(31905)>=1?"(服飾)冰雪公主假髮":"",son31905,
+	countitem(31616)>=1?"(服飾)數數羊":"",son31616,
+	countitem(40191)>=1?"(服飾)純白指揮帽子":"",son40191,
+	countitem(31515)>=1?"(服飾)豹貓":"",son31515,
+	countitem(20535)>=1?"(服飾)魔幻數位空間":"",son20535,
+	countitem(31916)>=1?"(服飾)服務生摺領":"",son31916,
+	countitem(420133)>=1?"(服飾)夢幻玫瑰長假髮":"",son420133,
+	countitem(420083)>=1?"(服飾巨型蝴蝶結圍巾(白)":"",son420083,
+	countitem(420070)>=1?"(服飾)盲目的兜帽":"",son420070,
+	countitem(410267)>=1?"(服飾)大耳狗喜拿":"",son410267,
+	countitem(480093)>=1?"(服飾)謳歌引導權杖":"",son480093,
+
+	countitem(420263)>=1?"(服飾)會抓人的貓咪(下)":"",son420263,
+	countitem(400596)>=1?"(服飾)嬌小巧克力帽":"",son400596,
+	countitem(420306)>=1?"(服飾)日式被爐":"",son420306,
+	countitem(420242)>=1?"(服飾)飄動之嵐":"",son420242,
+	countitem(410252)>=1?"(服飾)外星人太陽眼鏡(紅)":"",son410252,
+	countitem(480204)>=1?"(服飾)聖誕鈴噹蝴蝶結(藍)":"",son480204,
+
+	countitem(410316)>=1?"(服飾)熊熊糖果車":"",son410316,
+	countitem(400431)>=1?"(服飾)櫻花女巫帽":"",son400431,
+	countitem(480200)>=1?"(服飾)守護翅膀裝飾":"",son480200,
+	countitem(44716)>=1?"(服飾)魔法護士帽":"",son44716,
+	countitem(480296)>=1?"(服飾)櫻吹雪":"",son480296,
+
+
+	//公式檢查
+	"取消",no;
+	son20597:	set @Dcard,20597;goto land;
+	son20598:	set @Dcard,20598;goto land;
+	son44822:	set @Dcard,44822;goto land;
+	son44823:	set @Dcard,44823;goto land;
+	son31667:	set @Dcard,31667;goto land;
+	son31489:	set @Dcard,31489;goto land;
+	son31459:	set @Dcard,31459;goto land;
+	son31195:	set @Dcard,31195;goto land;
+	son20470:	set @Dcard,20470;goto land;
+	son40176:	set @Dcard,40176;goto land;
+
+	son480181:	set @Dcard,480181;goto land;
+	son480190:	set @Dcard,480190;goto land;
+	son40303:	set @Dcard,40303;goto land;
+	son40684:	set @Dcard,40684;goto land;
+	son40010:	set @Dcard,40010;goto land;
+	son40333:	set @Dcard,40333;goto land;
+	son40341:	set @Dcard,40341;goto land;
+	son44302:	set @Dcard,44302;goto land;
+	son40700:	set @Dcard,40700;goto land;
+	son19806:	set @Dcard,19806;goto land;
+
+	son20594:	set @Dcard,20594;goto land;
+	son480377:	set @Dcard,480377;goto land;
+	son410212:	set @Dcard,410212;goto land;
+	son420181:	set @Dcard,420181;goto land;
+	son420068:	set @Dcard,420068;goto land;
+	son20242:	set @Dcard,20242;goto land;
+	son40332:	set @Dcard,40332;goto land;
+	son420029:	set @Dcard,420029;goto land;
+	son31954:	set @Dcard,31954;goto land;
+	son20406:	set @Dcard,20406;goto land;
+
+	son410081:	set @Dcard,410081;goto land;
+	son410123:	set @Dcard,410123;goto land;
+	son410126:	set @Dcard,410126;goto land;
+	son410128:	set @Dcard,410128;goto land;
+	son410133:	set @Dcard,410133;goto land;
+	son410005:	set @Dcard,410005;goto land;
+	son410103:	set @Dcard,410103;goto land;
+	son420054:	set @Dcard,420054;goto land;
+	son420071:	set @Dcard,420071;goto land;
+	son420073:	set @Dcard,420073;goto land;
+	son420015:	set @Dcard,420015;goto land;
+	son420026:	set @Dcard,420026;goto land;
+	son420044:	set @Dcard,420044;goto land;
+	son420211:	set @Dcard,420211;goto land;
+	son420209:	set @Dcard,420209;goto land;
+	son420191:	set @Dcard,420191;goto land;
+	son420192:	set @Dcard,420192;goto land;
+	son410182:	set @Dcard,410182;goto land;
+	son430005:	set @Dcard,430005;goto land;
+	son400232:	set @Dcard,400232;goto land;
+	son420152:	set @Dcard,420152;goto land;
+	son420132:	set @Dcard,420132;goto land;
+	son20257:	set @Dcard,20257;goto land;
+	son410144:	set @Dcard,410144;goto land;
+	son44247:	set @Dcard,44247;goto land;
+
+	son480315:	set @Dcard,480315;goto land;
+	son480316:	set @Dcard,480316;goto land;
+	son480310:	set @Dcard,480310;goto land;
+	son480311:	set @Dcard,480311;goto land;
+	son480280:	set @Dcard,480280;goto land;
+
+	son480297:	set @Dcard,480297;goto land;
+	son480279:	set @Dcard,480279;goto land;
+	son480282:	set @Dcard,480282;goto land;
+	son480121:	set @Dcard,480121;goto land;
+	son480189:	set @Dcard,480189;goto land;
+
+	son19824:	set @Dcard,19824;goto land;
+	son20290:	set @Dcard,20290;goto land;
+	son31930:	set @Dcard,31930;goto land;
+	son44314:	set @Dcard,44314;goto land;
+	son20487:	set @Dcard,20487;goto land;
+	son480395:	set @Dcard,480395;goto land;
+	son19291:	set @Dcard,19291;goto land;
+	son410108:	set @Dcard,410108;goto land;
+	son31456:	set @Dcard,31456;goto land;
+	son31735:	set @Dcard,31735;goto land;
+	son31513:	set @Dcard,31513;goto land;
+	son480394:	set @Dcard,480394;goto land;
+
+	son44194:	set @Dcard,44194;goto land;
+	son420088:	set @Dcard,420088;goto land;
+	son44570:	set @Dcard,44570;goto land;
+	son31481:	set @Dcard,31481;goto land;
+	son40340:	set @Dcard,40340;goto land;
+	son480376:	set @Dcard,480376;goto land;
+
+	son44000:	set @Dcard,44000;goto land;
+	son31905:	set @Dcard,31905;goto land;
+	son31616:	set @Dcard,31616;goto land;
+	son40191:	set @Dcard,40191;goto land;
+	son31515:	set @Dcard,31515;goto land;
+	son20535:	set @Dcard,20535;goto land;
+	son31916:	set @Dcard,31916;goto land;
+	son420133:	set @Dcard,420133;goto land;
+	son420083:	set @Dcard,420083;goto land;
+	son420070:	set @Dcard,420070;goto land;
+	son410267:	set @Dcard,410267;goto land;
+	son480093:	set @Dcard,480093;goto land;
+
+	son420263:	set @Dcard,420263;goto land;
+	son400596:	set @Dcard,400596;goto land;
+	son420306:	set @Dcard,420306;goto land;
+	son420242:	set @Dcard,420242;goto land;
+	son410252:	set @Dcard,410252;goto land;
+	son480204:	set @Dcard,480204;goto land;
+
+	son410316:	set @Dcard,410316;goto land;
+	son400431:	set @Dcard,400431;goto land;
+	son480200:	set @Dcard,480200;goto land;
+	son44716:	set @Dcard,44716;goto land;
+	son480296:	set @Dcard,480296;goto land;
+
+no:
+	close;
+
+land:
+	if(countitem(@Dcard)<1){
+	mes"[海丹_斐羅]";
+	mes"你少於1個不能兌換";
+	close;
+	}
+	mes"[海丹_斐羅]";
+	mes "你現在可以兌換"+(countitem(80082))+"個綿綿島硬幣";
+	mes"^ff0000取消請數量輸入0^000000";
+	next;
+	set @Cnum,0;
+	input @Cnum,0,100;
+	if(@Cnum == 0){ close; }
+	if(countitem(@Dcard) <@Cnum){
+	mes"[海丹_斐羅]";
+	mes"你少於輸入的物品不能兌換";
+	close;
+	}
+	getitem 80082,@Cnum;
+	delitem @Dcard,(@Cnum*1);
+	mes""+getitemname(@Dcard)+"個綿綿島硬幣兌換已完成";
+	close;
+	end;
+
+	case 3:
+	close2;
+	callshop "綿綿島硬幣";
+	end;
+
+	case 4:
+		mes "[海丹_斐羅]";
+		mes "你想預覽哪一期的服飾?";
+		next;
+		switch(select("觀看 第一期服飾","觀看 第二期服飾","觀看 第三期服飾")){
+
+		case 1:
+		callshop "第一期服飾";
+		end;
+
+		case 2:
+		callshop "第二期服飾";
+		end;
+
+		case 3:
+		callshop "第三期服飾";
+		end;
+		}
+
+	case 5:
+		if ( countitem(6417) < 50 ) {
+		mes "[海丹_斐羅]";
+		mes "獼猴桃果實數量不足";
+		close; }
+		delitem 6417,50;
+		set @pay,rand(1,10000);
+		if(@pay>0 && @pay<=9600){
+		getitem F_rand(40303,40684,40010,40333,40341,44302,40700,19806),1;
+		end;
+		}
+		if(@pay>=9601 && @pay<=10000){
+		getitem F_rand(480181,480190),1;
+		announce "[海丹_斐羅] 恭喜玩家 " + strcharinfo(0) + "，抽到第一期披肩服飾!!",15;
+		end;
+		}
+		end;
+
+	case 6:
+		if ( countitem(6417) < 50 ) {
+		mes "[海丹_斐羅]";
+		mes "獼猴桃果實數量不足";
+		close; }
+		delitem 6417,50;
+		set @pay,rand(1,10000);
+		if(@pay>0 && @pay<=9600){
+		getitem F_rand(44822,44823,31667,31489,31459,31195,20470,40176),1;
+		end;
+		}
+		if(@pay>=9601 && @pay<=10000){
+		getitem F_rand(20597,20598),1;
+		announce "[海丹_斐羅] 恭喜玩家 " + strcharinfo(0) + "，抽到第二期披肩服飾!!",15;
+		end;
+		}
+		end;
+
+	case 7:
+		if ( countitem(6417) < 50 ) {
+		mes "[海丹_斐羅]";
+		mes "獼猴桃果實數量不足";
+		close; }
+		delitem 6417,50;
+		set @pay,rand(1,10000);
+		if(@pay>0 && @pay<=9600){
+		getitem F_rand(410212,420181,420068,20242,40332,420029,31954,20406),1;
+		end;
+		}
+		if(@pay>=9601 && @pay<=10000){
+		getitem F_rand(20594,480377),1;
+		announce "[海丹_斐羅] 恭喜玩家 " + strcharinfo(0) + "，抽到第三期披肩服飾!!",15;
+		end;
+		}
+		end;
+
+	}
+
+OnInit:
+	waitingroom "綿綿島服飾兌換",0;
+	end;
+}
+

@@ -1,0 +1,78 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#馬來港符紋
+   - Name: 馬來港符紋兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_NOVICE2
+     Items:
+       - Index: 1
+         Item: Bayani_Bakunawa_Scale_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ancient_Talisman
+             Amount: 20
+           - Index: 2
+             Item: Bakunawa_Scale_Armor
+             Amount: 1
+             Refine: 8
+       - Index: 2
+         Item: Bayani_Kalasak
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ancient_Talisman
+             Amount: 20
+           - Index: 2
+             Item: Kalasak
+             Amount: 1
+             Refine: 8
+       - Index: 3
+         Item: Bayani_Buwaya_Skin_Clothes
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ancient_Talisman
+             Amount: 20
+           - Index: 2
+             Item: Buwaya_Skin_Clothes
+             Amount: 1
+             Refine: 8
+       - Index: 4
+         Item: Bayani_Nightmare_Bangungot_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ancient_Talisman
+             Amount: 20
+           - Index: 2
+             Item: Nightmare_Bangungot_Boots
+             Amount: 1
+             Refine: 8
+
+       - Index: 5
+         Item: Tikbalang_Pet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Small_Amulet
+             Amount: 5
+           - Index: 2
+             Item: Tikbalang_Thick_Spine
+             Amount: 3
+
+
+
+

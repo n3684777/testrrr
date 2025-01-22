@@ -1,0 +1,19 @@
+﻿
+//------------官方副本
+-	script	Instance_MAP	-1,{
+OnInit:
+	//地圖名稱
+	set $Instance_MA$,"vdistrict1";
+	//座標X
+	set $Instance_MAP_X,18;
+	//座標Y
+	set $Instance_MAP_Y,49;
+	end;
+}
+
+
+
+
+
+
+

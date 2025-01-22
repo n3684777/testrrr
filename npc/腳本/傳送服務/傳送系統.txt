@@ -1,0 +1,148 @@
+prontera,1,1,6	script	地圖傳送	-1,{
+
+	mes "[地圖傳送]";
+	mes "我可以傳送你到任何地方";
+	mes "請選擇你要到達的地方吧";
+	next;
+	switch (select("記憶地圖 ["+WarpMap$+"]:搜尋傳送:城鎮地圖:洞穴及原野地圖:夢饜地圖:幻影地圖:MVP地圖:BOSS地圖:取消")) {
+
+	case 1:
+	warp WarpMap$,WarpMapX,WarpMapY;
+	close;
+
+	case 2:
+	callfunc "搜尋傳送";
+	close;
+
+	case 3:
+	callfunc "Town_Map";
+	close;
+
+	case 4:
+	callfunc "Cave_Map";
+	close;
+
+	case 5:
+	callfunc "Nightmare_Map";
+	close;
+
+	case 6:
+	callfunc "Illusion_Map";
+	close;
+
+	case 7:
+	callfunc "MVP_Map";
+	close;
+
+	case 8:
+	callfunc "BOSS_Map";
+	close;
+
+	case 9:
+		mes "[地圖傳送]";
+		mes "沒關係";
+		mes "有需要的話，請記得找我";
+		mes "我會在此為你服務";
+		close;
+	}
+
+
+//------------------------------
+OnInit:
+	.display = 20;
+	waitingroom "地圖傳送",0;
+	end;
+}
+
+//-----------------------------地圖屬性
+prontera	mapflag	town
+izlude	mapflag	town
+moc_ruins	mapflag	town
+geffen	mapflag	town
+payon	mapflag	town
+pay_arche	mapflag	town
+alberta	mapflag	town
+aldebaran	mapflag	town
+yuno	mapflag	town
+lighthalzen	mapflag	town
+einbroch	mapflag	town
+einbech	mapflag	town
+comodo	mapflag	town
+umbala	mapflag	town
+amatsu	mapflag	town
+gonryun	mapflag	town
+ayothaya	mapflag	town
+louyang	mapflag	town
+hugel	mapflag	town
+rachel	mapflag	town
+veins	mapflag	town
+ra_temple	mapflag	town
+
+
+//-----------------------------複製NPC
+trinity,107,96,4	duplicate(地圖傳送)	地圖傳送#tr1	889	//重生點
+trinity,45,131,4	duplicate(地圖傳送)	地圖傳送#tr2	889	//小遊戲
+trinity,102,45,6	duplicate(地圖傳送)	地圖傳送#tr3	889	//中間
+trinity,1,1,6	duplicate(地圖傳送)	地圖傳送#tr4	889	//
+
+
+
+verus04,128,243,4	duplicate(地圖傳送)	地圖傳送#ver01	889
+geffen,124,65,4	duplicate(地圖傳送)	地圖傳送#gef	889
+moc_para01,37,22,4	duplicate(地圖傳送)	地圖傳送#moc01	889	//伊甸園
+niflheim,204,180,3	duplicate(地圖傳送)	地圖傳送#nif1	889
+umbala,85,160,3	duplicate(地圖傳送)	地圖傳送#umb1	889
+alberta,27,238,3	duplicate(地圖傳送)	地圖傳送#alb1	889
+ayothaya,213,192,4	duplicate(地圖傳送)	地圖傳送#ayo01	889
+ayothaya,61,148,6	duplicate(地圖傳送)	地圖傳送#ayo02	889
+aldebaran,147,122,4	duplicate(地圖傳送)	地圖傳送#alde	889
+amatsu,102,153,5	duplicate(地圖傳送)	地圖傳送#ama1	889
+izlude,123,149,4	duplicate(地圖傳送)	地圖傳送#izl	889
+jawaii,122,184,4	duplicate(地圖傳送)	地圖傳送#jawa	889
+morocc,149,104,6	duplicate(地圖傳送)	地圖傳送#moc1	889
+morocc,150,267,6	duplicate(地圖傳送)	地圖傳送#moc2	889
+payon,183,104,5	duplicate(地圖傳送)	地圖傳送#pay	889
+payon,142,230,6	duplicate(地圖傳送)	地圖傳送#pay2	889
+yuno,146,187,4	duplicate(地圖傳送)	地圖傳送#yuno02	889
+gonryun,154,14,5	duplicate(地圖傳送)	地圖傳送#gon	889
+gonryun,154,122,5	duplicate(地圖傳送)	地圖傳送#gon1	889
+xmas,155,126,4	duplicate(地圖傳送)	地圖傳送#xmas	889
+louyang,222,49,5	duplicate(地圖傳送)	地圖傳送#lou	889
+louyang,208,104,5	duplicate(地圖傳送)	地圖傳送#lou1	889
+niflheim,19,159,5	duplicate(地圖傳送)	地圖傳送#nif	889
+hugel,88,151,6	duplicate(地圖傳送)	地圖傳送#nf	889
+brasilis,334,247,4	duplicate(地圖傳送)	地圖傳送#nwe	889
+mora,42,127,4	duplicate(地圖傳送)	地圖傳送#mor	889
+malangdo,219,97,4	duplicate(地圖傳送)	地圖傳送#mal	889
+dewata,202,185,4	duplicate(地圖傳送)	地圖傳送#dew	889
+eclage,284,288,4	duplicate(地圖傳送)	地圖傳送#ec1	889
+mid_camp,217,286,4	duplicate(地圖傳送)	地圖傳送#mid	889
+malaya,222,204,4	duplicate(地圖傳送)	地圖傳送#mal1	889
+rachel,102,141,6	duplicate(地圖傳送)	地圖傳送#ra1	889
+moscovia,217,199,6	duplicate(地圖傳送)	地圖傳送#mos1	889
+//pay_arche,55,120,4	duplicate(地圖傳送)	地圖傳送#pay1	889
+comodo,185,158,4	duplicate(地圖傳送)	地圖傳送#com1	889
+alberta,120,60,4	duplicate(地圖傳送)	地圖傳送#alb2	889
+pud_land,112,116,6	duplicate(地圖傳送)	地圖傳送#pud1	889
+lighthalzen,163,84,4	duplicate(地圖傳送)	地圖傳送#lig1	889
+splendide,247,315,4	duplicate(地圖傳送)	地圖傳送#spl1	889
+moscovia,172,69,4	duplicate(地圖傳送)	地圖傳送#mos2	889
+lasagna,140,257,4	duplicate(地圖傳送)	地圖傳送#las1	889
+ra_temple,102,95,4	duplicate(地圖傳送)	地圖傳送#ra2	889
+harboro1,291,207,6	duplicate(地圖傳送)	地圖傳送#har1	889
+sp_cor,95,133,4	duplicate(地圖傳送)	地圖傳送#sp1	889
+que_swat,149,60,4	duplicate(地圖傳送)	地圖傳送#swat1	889
+rebel_in,64,46,6	duplicate(地圖傳送)	地圖傳送#swat2	889
+prt_cas,220,167,4	duplicate(地圖傳送)	地圖傳送#prt1	889
+ba_maison,203,253,4	duplicate(地圖傳送)	地圖傳送#ba1	889
+wolfvill,138,149,6	duplicate(地圖傳送)	地圖傳送#wo1	889
+icecastle,54,123,6	duplicate(地圖傳送)	地圖傳送#ice1	889
+icas_in,145,266,4	duplicate(地圖傳送)	地圖傳送#ice2	889
+
+amatsu,200,79,4	duplicate(地圖傳送)	地圖傳送#am01	889
+prontera,271,212,4	duplicate(地圖傳送)	地圖傳送#pro1	889	//東
+prontera,35,211,6	duplicate(地圖傳送)	地圖傳送#pro2	889	//西
+prontera,147,42,6	duplicate(地圖傳送)	地圖傳送#pro3	889	//南
+prontera,164,327,4	duplicate(地圖傳送)	地圖傳送#pro4	889	//北
+
+

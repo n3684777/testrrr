@@ -1,0 +1,19 @@
+﻿
+//--------------------- 官方初級寶箱
+prontera,0,0,0	script	官方副本寶箱	10404,{
+	setarray .@gain[0],1001478,1001478,1001478,7228,7642,7642,7642,7642;
+	setarray .@rate[0],800,    500,    300,    300, 800, 400, 200, 100;
+	getmapxy(.@map$, .@x, .@y, BL_PC);
+	misceffect 10;
+	hideonnpc instance_npcname(strnpcinfo(0));
+	for(set .@i,0; .@i<getarraysize(.@gain); set .@i,.@i+1) {
+		set .@xs,.@x+rand(5)-2;
+		set .@ys,.@y+rand(5)-2;
+		if(rand(1000) < .@rate[.@i])
+		makeitem .@gain[.@i],1,instance_mapname(strcharinfo(3)),.@xs,.@ys;
+	}
+	end;
+}
+
+
+

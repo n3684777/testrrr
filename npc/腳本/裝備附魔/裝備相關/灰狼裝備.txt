@@ -1,0 +1,52 @@
+﻿vdistrict1,82,72,6	script	灰狼裝備#Con12	4_EP18_GW_WOMAN01,{
+	
+	mes "[灰狼裝備]";
+	mes "請選擇你要的服務";
+	mes "(每次附魔需要100w zeny)";
+	next;
+	switch(select("裝備製作:進行附魔(活動版本):取消")){
+
+	case 1:
+		close2;
+		callshop "灰狼裝備兌換";
+		end;
+
+	case 2:
+		mes "[灰狼裝備附魔]";
+		mes "請選擇你要附魔的灰狼裝備位置";
+		next;
+		switch(select("身體:斗篷:鞋子:飾品右:飾品左:取消")){
+
+		case 1:
+		close2;
+		item_enchant 137;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 138;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 139;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 140;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 141;
+		end;
+
+		case 6:
+		close;
+		}
+	}
+OnInit:	
+	waitingroom "灰狼裝備",0;
+	end;
+}

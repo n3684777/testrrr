@@ -1,0 +1,132 @@
+dew_fild01,127,240,4	script	卡提	813,{
+
+	//附魔狀態
+	set $@LndEnc1,rand(0,48);
+	set $@LndEnc2,rand(0,48);
+	setarray $@LndEnchanting1[0],4700,4701,4702,4703,4704,4710,4711,4712,4713,4714,4720,4721,4722,4723,4724,4730,4731,4732,4733,4734,4740,4741,4742,4743,4744,4750,4751,4752,4753,4754,4795,4796,4797,4798,4800,4801,4760,4761,4767,4766,4791,4792,4793,4786,4787,4788,4789,4764,4765;
+	setarray $@LndEnchanting2[0],4700,4701,4702,4703,4704,4710,4711,4712,4713,4714,4720,4721,4722,4723,4724,4730,4731,4732,4733,4734,4740,4741,4742,4743,4744,4750,4751,4752,4753,4754,4795,4796,4797,4798,4800,4801,4760,4761,4767,4766,4791,4792,4793,4786,4787,4788,4789,4764,4765;
+
+	mes "[卡提]";
+	mes "我是印尼短劍製作專家";
+	mes "你需要甚麼服務呢?";
+	next;
+	switch( select("強化印尼短劍:製作印尼短劍:取消")) {
+
+	case 1:
+	mes "[卡提]";
+	mes "請裝備好你要強化的印尼短劍";
+
+	if (getequipisequiped(3) == 0) set .@strRetPart3$,"武器左-[無法裝置]";
+	else set .@strRetPart3$,getequipname(3);
+	if (getequipisequiped(4) == 0) set .@strRetPart4$,"武器右-[無法裝置]";
+	else set .@strRetPart4$,getequipname(4);
+
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$);
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyoub,getequipcardid(.@is,0);
+	set @fakeyoub2,getequipcardid(.@is,1);
+	set @fakeyoub3,getequipcardid(.@is,2);
+	set @fakeyoub4,getequipcardid(.@is,3);
+	set @Lnd_100,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[卡提]";
+	mes"你身上有同樣的物品，為了防止發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[卡提]";
+	mes "你沒物品怎麼強化";
+	close;
+	}
+
+	if(@abd == 13067) goto Lnd_net;
+	mes "[卡提]";
+	mes "我只懂得強化印尼短劍";
+	close;
+
+Lnd_net:
+	mes "[卡提]";
+	mes "強化的費用是100,000RO幣";
+	mes "你想清楚要進行強化了嗎?";
+	next;
+	switch(select("我想清楚了:我在想想")){
+	case 1:
+	callfunc "fumoLnd",0,100000,rand(1,100);
+
+	case 2:
+	close;
+	}
+
+	case 2:
+		mes "[卡提]";
+		mes "^0000ff印尼短劍^00000是";
+		mes "物理攻擊時有機率將造成敵人傷害的 10%吸收為自己的HP";
+		mes "MATK + 70";
+		mes "重量 : ^77777770^000000";
+		mes "武器等級 : ^7777773^000000";
+		mes "要求等級 : ^77777730^000000";
+		mes "洞數 : ^7777771^000000";
+		next;
+		mes "[卡提]";
+		mes "代價是200個科摩多龍皮、鋼鐵20個、神之金屬10個";
+		mes "你確定要製作嗎?";
+		next;
+		switch( select("請幫我製作:我在想想")) {
+
+		case 1:
+		if (countitem(6403)<200 || countitem(999)<20 || countitem(984)<10 ) {
+		mes "[卡提]";
+		mes "材料不夠哦喔?";
+		close;
+		}
+		mes "[卡提]";
+		mes "這是你的印尼短劍";
+		delitem 6403,200;
+		delitem 999,20;
+		delitem 984,10;
+		getitem 13067,1;
+		close;
+
+		case 3:
+		close;
+		}
+
+	case 3:
+	close;
+	}
+}
+
+
+//----------------------------附魔區
+
+function	script	fumoLnd	{
+
+	if(zeny<getarg(1)){
+	mes "[卡提]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+
+	unequip (.@is);
+	if(getarg(2)<=90){
+	mes "[卡提]";
+	mes "對第三跟第四插槽賦予了能力值!";
+	delitem @abd,1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Lnd_100,0,@fakeyoub,@fakeyoub2,$@LndEnchanting1[$@LndEnc1],$@LndEnchanting2[$@LndEnc2];
+	close;
+	} else {
+	mes "[卡提]";
+	mes "對第四插槽賦予了能力值!";
+	delitem @abd,1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@Lnd_100,0,@fakeyoub,@fakeyoub2,@fakeyoub3,$@LndEnchanting2[$@LndEnc2];
+	close;
+	}
+}
+
+
+

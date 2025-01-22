@@ -1,0 +1,115 @@
+map03,94,124,6	script	黑暗的換錢商 	554,{
+
+		mes "[換錢商 K]";
+		mes "感謝您的交易。";
+		mes "每^0000FFC級代幣10個^000000可幫您換成^FF0000穆拉村硬幣1個^000000。那麼，要開始進行交易了嗎?";
+		next;
+		switch(select("取消",
+		countitem(6420)>10?"換成1個":"換成^CECECE1個(數量不足)^000000",
+		countitem(6420)>100?"換成10個":"換成^CECECE10個(數量不足)^000000",
+		countitem(6420)>500?"換成50個":"換成^CECECE50個(數量不足)^000000",
+		countitem(6420)>1000?"換成100個":"換成^CECECE100個(數量不足)^000000"
+		)) {
+
+		case 1:
+		close;
+
+		case 2:
+		mes "[換錢商 K]";
+		mes "C級代幣10個可兌換1個穆拉村硬幣";
+		next;
+		switch(select("取消",
+		countitem(6420)>=10?"C級代幣("+countitem(6417)+"持有)換穆拉村硬幣":"^CECECEC級代幣("+(10-countitem(6420))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6420;
+	if (countitem(@Coin)<10) { mes "[換錢商 K]"; mes "你身上"+getitemname(@Coin)+"不足10個"; close; }
+	set @input,1;
+	delitem @Coin,10;
+	getitem 6380,@input;
+	mes "[換錢商 K]";
+	mes "您獲得 "+@input+" ^0000FF個穆拉村硬幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+	}
+
+		case 3:
+		mes "[換錢商 K]";
+		mes "C級代幣100個可兌換10個穆拉村硬幣";
+		next;
+		switch(select("取消",
+		countitem(6420)>=100?"C級代幣("+countitem(6417)+"持有)換穆拉村硬幣":"^CECECEC級代幣("+(100-countitem(6420))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6420;
+	if (countitem(@Coin)<100) { mes "[換錢商 K]"; mes "你身上"+getitemname(@Coin)+"不足100個"; close; }
+	set @input,10;
+	delitem @Coin,100;
+	getitem 6380,@input;
+	mes "[換錢商 K]";
+	mes "您獲得 "+@input+" ^0000FF個穆拉村硬幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+	}
+
+		case 4:
+		mes "[換錢商 K]";
+		mes "C級代幣500個可兌換50個穆拉村硬幣";
+		next;
+		switch(select("取消",
+		countitem(6420)>=500?"C級代幣("+countitem(6417)+"持有)換穆拉村硬幣":"^CECECEC級代幣("+(500-countitem(6420))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6420;
+	if (countitem(@Coin)<500) { mes "[換錢商 K]"; mes "你身上"+getitemname(@Coin)+"不足500個"; close; }
+	set @input,50;
+	delitem @Coin,500;
+	getitem 6380,@input;
+	mes "[換錢商 K]";
+	mes "您獲得 "+@input+" ^0000FF個穆拉村硬幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+	}
+
+		case 5:
+		mes "[換錢商 K]";
+		mes "C級代幣1000個可兌換100個穆拉村硬幣";
+		next;
+		switch(select("取消",
+		countitem(6420)>=1000?"C級代幣("+countitem(6417)+"持有)換穆拉村硬幣":"^CECECEC級代幣("+(1000-countitem(6420))+"不足)^000000"
+		)) {
+
+	case 1:
+	close;
+
+	case 2:
+	set @Coin,6420;
+	if (countitem(@Coin)<1000) { mes "[換錢商 K]"; mes "你身上"+getitemname(@Coin)+"不足100個"; close; }
+	set @input,100;
+	delitem @Coin,1000;
+	getitem 6380,@input;
+	mes "[換錢商 K]";
+	mes "您獲得 "+@input+" ^0000FF個穆拉村硬幣^000000。";
+	mes "您剩餘 "+countitem(@Coin)+" 個^0000FFC級代幣^000000。";
+	close;
+	}
+
+
+		}
+//OnInit:
+//	waitingroom "黑暗的換錢商",0;
+//	end;
+}
+

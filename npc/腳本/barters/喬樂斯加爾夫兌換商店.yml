@@ -1,0 +1,199 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#喬樂斯加爾夫兌換商店
+   - Name: 喬樂斯加爾夫兌換商店#兌換裝備
+     Map: mbase_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP18_MARAM
+     Items:
+       - Index: 1
+         Item: Yorscalp_P_Circlet
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Poizen_Apple
+             Amount: 10
+           - Index: 2
+             Item: Yorscalp_Spirit
+             Amount: 100
+           - Index: 3
+             Item: Yorscalp_Symbol
+             Amount: 30
+       - Index: 2
+         Item: Yorscalp_M_Circlet
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 1
+             Item: Poizen_Apple
+             Amount: 10
+           - Index: 2
+             Item: Yorscalp_Spirit
+             Amount: 100
+           - Index: 3
+             Item: Yorscalp_Symbol
+             Amount: 30
+
+#兌換卡片
+   - Name: 喬樂斯加爾夫兌換商店#兌換卡片
+     Map: mbase_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP18_MARAM
+     Items:
+       - Index: 1
+         Item: Tris_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Tris_Card_P
+             Amount: 30
+       - Index: 2
+         Item: Tan_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Tan_Card_P
+             Amount: 30
+       - Index: 3
+         Item: Wilhelm_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Wilhelm_Card_P
+             Amount: 30
+       - Index: 4
+         Item: Reinhardt_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Reinhardt_Card_P
+             Amount: 30
+       - Index: 5
+         Item: Ivan_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ivan_Card_P
+             Amount: 30
+       - Index: 6
+         Item: Lalaila_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Lalaila_Card_P
+             Amount: 30
+       - Index: 7
+         Item: Richard_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Richard_Card_P
+             Amount: 30
+       - Index: 8
+         Item: Valdaris_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Valdaris_Card_P
+             Amount: 30
+       - Index: 9
+         Item: Aurelie_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Aurelie_Card_P
+             Amount: 30
+       - Index: 10
+         Item: Ilse_Heine_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Ilse_Heine_Card_P
+             Amount: 30
+       - Index: 11
+         Item: Epesto_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Epesto_Card_P
+             Amount: 30
+       - Index: 12
+         Item: Maristella_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Maristella_Card_P
+             Amount: 30
+       - Index: 13
+         Item: Yohan_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Yohan_Card_P
+             Amount: 30
+       - Index: 14
+         Item: Gunter_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Gunter_Card_P
+             Amount: 30
+       - Index: 15
+         Item: Galaxia_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Galaxia_Card_P
+             Amount: 30
+       - Index: 16
+         Item: Iana_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Iana_Card_P
+             Amount: 30
+       - Index: 17
+         Item: Lee_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Lee_Card_P
+             Amount: 30
+       - Index: 18
+         Item: Nadoyo_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 1
+             Item: Nadoyo_Card_P
+             Amount: 30
+
+
+
+

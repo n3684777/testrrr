@@ -1,0 +1,2442 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+#每日服飾
+   - Name: 每日服飾#01
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22961
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Suspicious_Hat
+             Amount: 50
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Train
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22428
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lantern
+             Amount: 50
+           - Index: 1
+             Item: Petite_DiablOfs_Horn
+             Amount: 50
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_hat122
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Short_Leg
+             Amount: 50
+           - Index: 1
+             Item: Nail_Of_Orc
+             Amount: 50
+           - Index: 2
+             Item: Tooth_Of_
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22714
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: White_Mask
+             Amount: 50
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23695
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Rune
+             Amount: 50
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 50
+
+   - Name: 每日服飾#02
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22962
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: White_Mask
+             Amount: 50
+           - Index: 1
+             Item: Ogre_Tooth
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Scale
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23696
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sacred_Masque
+             Amount: 50
+           - Index: 1
+             Item: Slender_Snake
+             Amount: 50
+           - Index: 2
+             Item: Head_Of_Medusa
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23015
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Slender_Snake
+             Amount: 50
+           - Index: 1
+             Item: Skirt_Of_Virgin
+             Amount: 50
+           - Index: 2
+             Item: Tendon
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23017
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lip_Of_Ancient_Fish
+             Amount: 50
+           - Index: 1
+             Item: Dragon_Canine
+             Amount: 50
+           - Index: 2
+             Item: Tendon
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22937
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Worm_Peelings
+             Amount: 50
+           - Index: 1
+             Item: Gill
+             Amount: 50
+           - Index: 2
+             Item: Decayed_Nail
+             Amount: 50
+
+   - Name: 每日服飾#03
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22583
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Rune
+             Amount: 50
+           - Index: 1
+             Item: Mould_Powder
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Canine
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22585
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Detonator
+             Amount: 50
+           - Index: 1
+             Item: Single_Cell
+             Amount: 50
+           - Index: 2
+             Item: Tooth_Of_Ancient_Fish
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22735
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lip_Of_Ancient_Fish
+             Amount: 50
+           - Index: 1
+             Item: Earthworm_Peeling
+             Amount: 50
+           - Index: 2
+             Item: Grit
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22480
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Horrendous_Mouth
+             Amount: 50
+           - Index: 1
+             Item: Nipper
+             Amount: 50
+           - Index: 2
+             Item: Rotten_Scale
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22875
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tentacle
+             Amount: 50
+           - Index: 1
+             Item: Sharp_Scale
+             Amount: 50
+           - Index: 2
+             Item: Crap_Shell
+             Amount: 50
+
+   - Name: 每日服飾#04
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22741
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Rotten_Meat
+             Amount: 50
+           - Index: 1
+             Item: Thin_Stem
+             Amount: 50
+           - Index: 2
+             Item: Cobold_Hair
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22743
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Suspicious_Hat
+             Amount: 50
+           - Index: 1
+             Item: Moth_Dust
+             Amount: 50
+           - Index: 2
+             Item: Wing_Of_Moth
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22744
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Golden_Hair
+             Amount: 50
+           - Index: 1
+             Item: Transparent_Cloth
+             Amount: 50
+           - Index: 2
+             Item: Starsand_Of_Witch
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23057
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Flesh_Of_Clam
+             Amount: 50
+           - Index: 1
+             Item: Clam_Shell
+             Amount: 50
+           - Index: 2
+             Item: Turtle_Shell
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_44144
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Flesh_Of_Clam
+             Amount: 50
+           - Index: 1
+             Item: Sparkling_Dust
+             Amount: 50
+           - Index: 2
+             Item: Nail_Of_Mole
+             Amount: 50
+
+   - Name: 每日服飾#05
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22106
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Rune
+             Amount: 50
+           - Index: 1
+             Item: Festival_Mask
+             Amount: 50
+           - Index: 2
+             Item: Root_Of_Maneater
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22110
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Pumpkin_Head
+             Amount: 50
+           - Index: 1
+             Item: Sharpened_Cuspid
+             Amount: 50
+           - Index: 2
+             Item: Tree_Of_Archer_2
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22218
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tree_Of_Archer_3
+             Amount: 50
+           - Index: 1
+             Item: Dokkaebi_Horn
+             Amount: 50
+           - Index: 2
+             Item: Nail_Of_Mole
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22220
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Rat_Tail
+             Amount: 50
+           - Index: 1
+             Item: Moustache_Of_Mole
+             Amount: 50
+           - Index: 2
+             Item: Nail_Of_Mole
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23351
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Long_Hair
+             Amount: 50
+           - Index: 1
+             Item: Dokkaebi_Horn
+             Amount: 50
+           - Index: 2
+             Item: Fox_Tail
+             Amount: 50
+
+   - Name: 每日服飾#06
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23793
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: White_Mask
+             Amount: 50
+           - Index: 1
+             Item: Browny_Root
+             Amount: 50
+           - Index: 2
+             Item: Blossom_Of_Maneater
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_44780
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Mementos
+             Amount: 50
+           - Index: 1
+             Item: Shell
+             Amount: 50
+           - Index: 2
+             Item: Scales_Shell
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22859
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Posionous_Canine
+             Amount: 50
+           - Index: 1
+             Item: Sticky_Mucus
+             Amount: 50
+           - Index: 2
+             Item: Bee_Sting
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23699
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragon_Scale
+             Amount: 50
+           - Index: 1
+             Item: Dragon_Train
+             Amount: 50
+           - Index: 2
+             Item: Root_Of_Maneater
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23700
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Petite_DiablOfs_Horn
+             Amount: 50
+           - Index: 1
+             Item: Slender_Snake
+             Amount: 50
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 50
+
+#--------------------------- 4/7更新
+   - Name: 每日服飾#07
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23823
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragonball_Green
+             Amount: 50
+           - Index: 1
+             Item: Thin_Stem
+             Amount: 50
+           - Index: 2
+             Item: Limb_Of_Mantis
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23735
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Grasshopper's_Leg
+             Amount: 50
+           - Index: 1
+             Item: Nose_Ring
+             Amount: 50
+           - Index: 2
+             Item: Yoyo_Tail
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_44695
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Solid_Shell
+             Amount: 50
+           - Index: 1
+             Item: Horseshoe
+             Amount: 50
+           - Index: 2
+             Item: Snail's_Shell
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_44837
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Great_Wing
+             Amount: 50
+           - Index: 1
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+           - Index: 2
+             Item: Mystery_Iron_Bit
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_24080
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Limpid_Celestial_Robe
+             Amount: 50
+           - Index: 1
+             Item: Soft_Silk_Cloth
+             Amount: 50
+           - Index: 2
+             Item: Hard_Peach
+             Amount: 50
+
+   - Name: 每日服飾#08
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23820
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Dragonball_Blue
+             Amount: 50
+           - Index: 1
+             Item: Solid_Peeling
+             Amount: 50
+           - Index: 2
+             Item: Wild_Boar's_Mane
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_44696
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Horn
+             Amount: 50
+           - Index: 1
+             Item: Bear's_Foot
+             Amount: 50
+           - Index: 2
+             Item: Feather
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23736
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Heart_Of_Mermaid
+             Amount: 50
+           - Index: 1
+             Item: Fin
+             Amount: 50
+           - Index: 2
+             Item: Cactus_Needle
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22872
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Feather
+             Amount: 50
+           - Index: 1
+             Item: Fin
+             Amount: 50
+           - Index: 2
+             Item: Cactus_Needle
+             Amount: 50
+       - Index: 5
+         Item: C_FlutterButterfly_BL
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fin
+             Amount: 50
+           - Index: 1
+             Item: Rotten_Scale
+             Amount: 50
+           - Index: 2
+             Item: Horrendous_Mouth
+             Amount: 50
+
+   - Name: 每日服飾#09
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22039
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragonball_Red
+             Amount: 50
+           - Index: 1
+             Item: Lamplight
+             Amount: 50
+           - Index: 2
+             Item: Porcupine_Spike
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22052
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Stone_Heart
+             Amount: 50
+           - Index: 1
+             Item: Shining_Scales
+             Amount: 50
+           - Index: 2
+             Item: Worm_Peelings
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22054
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Gill
+             Amount: 50
+           - Index: 1
+             Item: Decayed_Nail
+             Amount: 50
+           - Index: 2
+             Item: Horrendous_Mouth
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_44704
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Conch
+             Amount: 50
+           - Index: 1
+             Item: Fin
+             Amount: 50
+           - Index: 2
+             Item: Tentacle
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_44707
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fin
+             Amount: 50
+           - Index: 1
+             Item: Crap_Shell
+             Amount: 50
+           - Index: 2
+             Item: Turtle_Shell
+             Amount: 50
+
+
+   - Name: 每日服飾#10
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44703
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Dragonball_Yellow
+             Amount: 50
+           - Index: 1
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+           - Index: 2
+             Item: Acorn
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22040
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Rotten_Scale
+             Amount: 50
+           - Index: 1
+             Item: Conch
+             Amount: 50
+           - Index: 2
+             Item: Nipper
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_44708
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sharp_Scale
+             Amount: 50
+           - Index: 1
+             Item: Tentacle
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Train
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_44709
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Nail_Of_Mole
+             Amount: 50
+           - Index: 1
+             Item: Fin
+             Amount: 50
+           - Index: 2
+             Item: Moustache_Of_Mole
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22731
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fin
+             Amount: 50
+           - Index: 1
+             Item: Lizard_Scruff
+             Amount: 50
+           - Index: 2
+             Item: Sparkling_Dust
+             Amount: 50
+
+   - Name: 每日服飾#11
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23821
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Page
+             Amount: 50
+           - Index: 1
+             Item: Germinating_Sprout
+             Amount: 50
+           - Index: 2
+             Item: Spiderweb
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_44700
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Suspicious_Hat
+             Amount: 50
+           - Index: 1
+             Item: Crap_Shell
+             Amount: 50
+           - Index: 2
+             Item: Clam_Shell
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22296
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Turtle_Shell
+             Amount: 50
+           - Index: 1
+             Item: Detrimindexta
+             Amount: 50
+           - Index: 2
+             Item: Karvodailnirol
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22756
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Long_Hair
+             Amount: 50
+           - Index: 1
+             Item: Fin
+             Amount: 50
+           - Index: 2
+             Item: Dokkaebi_Horn
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22766
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fin
+             Amount: 50
+           - Index: 1
+             Item: Fox_Tail
+             Amount: 50
+           - Index: 2
+             Item: Fish_Tail
+             Amount: 50
+
+   - Name: 每日服飾#12
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_hat131
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Soft_Silk_Cloth
+             Amount: 50
+           - Index: 1
+             Item: Soft_Leaf
+             Amount: 50
+           - Index: 2
+             Item: Chinese_Ink
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22473
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Skel_Bone
+             Amount: 50
+           - Index: 1
+             Item: Orcish_Voucher
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Train
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_chopper
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Insect_Feeler
+             Amount: 50
+           - Index: 1
+             Item: Immortal_Heart
+             Amount: 50
+           - Index: 2
+             Item: Rotten_Bandage
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22474
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Chinese_Ink
+             Amount: 50
+           - Index: 1
+             Item: Spiderweb
+             Amount: 50
+           - Index: 2
+             Item: Dokkaebi_Horn
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22475
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Porcupine_Spike
+             Amount: 50
+           - Index: 1
+             Item: Acorn
+             Amount: 50
+           - Index: 2
+             Item: Wild_Boar's_Mane
+             Amount: 50
+
+   - Name: 每日服飾#13
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44701
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dark_Crystal_Fragment
+             Amount: 50
+           - Index: 1
+             Item: Air_Rifle
+             Amount: 50
+           - Index: 2
+             Item: Fish_Tail
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22863
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Scale_Of_Snakes
+             Amount: 50
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 50
+           - Index: 2
+             Item: Powder_Of_Butterfly
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22652
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Mushroom_Spore
+             Amount: 50
+           - Index: 1
+             Item: Evil_Horn
+             Amount: 50
+           - Index: 2
+             Item: Orcish_Cuspid
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23722
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Chinese_Ink
+             Amount: 50
+           - Index: 1
+             Item: Spiderweb
+             Amount: 50
+           - Index: 2
+             Item: Dokkaebi_Horn
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22191
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Porcupine_Spike
+             Amount: 50
+           - Index: 1
+             Item: Acorn
+             Amount: 50
+           - Index: 2
+             Item: Wild_Boar's_Mane
+             Amount: 50
+
+
+   - Name: 每日服飾#14
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44702
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Evil_Horn
+             Amount: 50
+           - Index: 1
+             Item: Shoulder_Protection
+             Amount: 50
+           - Index: 2
+             Item: Fox_Tail
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22555
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Claw_Of_Wolves
+             Amount: 50
+           - Index: 1
+             Item: Sticky_Webfoot
+             Amount: 50
+           - Index: 2
+             Item: Animal's_Skin
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22221
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Talon
+             Amount: 50
+           - Index: 1
+             Item: Feather_Of_Birds
+             Amount: 50
+           - Index: 2
+             Item: Fluff
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22443
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Limb_Of_Mantis
+             Amount: 50
+           - Index: 1
+             Item: Spiderweb
+             Amount: 50
+           - Index: 2
+             Item: Root_Of_Maneater
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22187
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragon_Canine
+             Amount: 50
+           - Index: 1
+             Item: Blossom_Of_Maneater
+             Amount: 50
+           - Index: 2
+             Item: Cobold_Hair
+             Amount: 50
+
+   - Name: 每日服飾#15
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22556
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Screw
+             Amount: 50
+           - Index: 1
+             Item: Tough_Vines
+             Amount: 50
+           - Index: 2
+             Item: Dokkaebi_Horn
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22214
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tooth_Of_Bat
+             Amount: 50
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 50
+           - Index: 2
+             Item: Zargon
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22983
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Garlet
+             Amount: 50
+           - Index: 1
+             Item: Scell
+             Amount: 50
+           - Index: 2
+             Item: Jellopy
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22281
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragon_Scale
+             Amount: 50
+           - Index: 1
+             Item: Dragon_Train
+             Amount: 50
+           - Index: 2
+             Item: Root_Of_Maneater
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22224
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Petite_DiablOfs_Horn
+             Amount: 50
+           - Index: 1
+             Item: Slender_Snake
+             Amount: 50
+           - Index: 2
+             Item: Petite_DiablOfs_Wing
+             Amount: 50
+
+   - Name: 每日服飾#16
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22557
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Old_Pick
+             Amount: 50
+           - Index: 1
+             Item: Great_Leaf
+             Amount: 50
+           - Index: 2
+             Item: Wooden_Block
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22225
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Resin
+             Amount: 50
+           - Index: 1
+             Item: Pointed_Scale
+             Amount: 50
+           - Index: 2
+             Item: Stem
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22227
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Scorpion's_Tail
+             Amount: 50
+           - Index: 1
+             Item: Tree_Root
+             Amount: 50
+           - Index: 2
+             Item: Danggie
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22228
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Short_Leg
+             Amount: 50
+           - Index: 1
+             Item: Dragon_Train
+             Amount: 50
+           - Index: 2
+             Item: Lantern
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_24034
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Nail_Of_Orc
+             Amount: 50
+           - Index: 1
+             Item: Tooth_Of_
+             Amount: 50
+           - Index: 2
+             Item: Sacred_Masque
+             Amount: 50
+
+   - Name: 每日服飾#17
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22558
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Old_Steel_Plate
+             Amount: 50
+           - Index: 1
+             Item: Flexible_String
+             Amount: 50
+           - Index: 2
+             Item: Long_Hair
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_at895
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Oridecon_Stone
+             Amount: 50
+           - Index: 1
+             Item: Crystal_Mirror
+             Amount: 50
+           - Index: 2
+             Item: Aloe
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22654
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Elunium_Stone
+             Amount: 50
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 50
+           - Index: 2
+             Item: Short_Daenggie
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22971
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Head_Of_Medusa
+             Amount: 50
+           - Index: 1
+             Item: Slender_Snake
+             Amount: 50
+           - Index: 2
+             Item: Lantern
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22972
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Detonator
+             Amount: 50
+           - Index: 1
+             Item: Single_Cell
+             Amount: 50
+           - Index: 2
+             Item: Tooth_Of_Ancient_Fish
+             Amount: 50
+
+   - Name: 每日服飾#18
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22559
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Air_Pollutant
+             Amount: 50
+           - Index: 1
+             Item: Log
+             Amount: 50
+           - Index: 2
+             Item: Nail_Of_Mole
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23759
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Needle_Of_Alarm
+             Amount: 50
+           - Index: 1
+             Item: Short_Daenggie
+             Amount: 50
+           - Index: 2
+             Item: Claw_Of_Desert_Wolf
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_44894
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Suspicious_Hat
+             Amount: 50
+           - Index: 1
+             Item: Old_Frying_Pan
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Train
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_44625
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lip_Of_Ancient_Fish
+             Amount: 50
+           - Index: 1
+             Item: Earthworm_Peeling
+             Amount: 50
+           - Index: 2
+             Item: Moth_Dust
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_44627
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Grit
+             Amount: 50
+           - Index: 1
+             Item: Golden_Hair
+             Amount: 50
+           - Index: 2
+             Item: Starsand_Of_Witch
+             Amount: 50
+ 
+   - Name: 每日服飾#19
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22560
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fragment_Of_Crystal
+             Amount: 50
+           - Index: 1
+             Item: Beetle_Nipper
+             Amount: 50
+           - Index: 2
+             Item: Moustache_Of_Mole
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_44639
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Piece_Of_Egg_Shell
+             Amount: 50
+           - Index: 1
+             Item: Poison_Spore
+             Amount: 50
+           - Index: 2
+             Item: Fine_Grit
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22269
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fine_Sand
+             Amount: 50
+           - Index: 1
+             Item: Cyfar
+             Amount: 50
+           - Index: 2
+             Item: Brigan
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22381
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Manacles
+             Amount: 50
+           - Index: 1
+             Item: Worn_Out_Page
+             Amount: 50
+           - Index: 2
+             Item: Worn_Out_Prison_Uniform
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22382
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Grit
+             Amount: 50
+           - Index: 1
+             Item: White_Spider_Limb
+             Amount: 50
+           - Index: 2
+             Item: Yoyo_Tail
+             Amount: 50
+
+   - Name: 每日服飾#20
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44640
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Poisonous_Gas
+             Amount: 50
+           - Index: 1
+             Item: Solid_Twig
+             Amount: 50
+           - Index: 2
+             Item: Rat_Tail
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22383
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Broken_Turtle_Shell
+             Amount: 50
+           - Index: 1
+             Item: Soft_Feather
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Fly_Wing
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22388
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sea_Otter_Leather
+             Amount: 50
+           - Index: 1
+             Item: Stone_Piece
+             Amount: 50
+           - Index: 2
+             Item: Burn_Tree
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22389
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Manacles
+             Amount: 50
+           - Index: 1
+             Item: Soft_Silk_Cloth
+             Amount: 50
+           - Index: 2
+             Item: Red_Feather
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22390
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Blue_Feather
+             Amount: 50
+           - Index: 1
+             Item: White_Spider_Limb
+             Amount: 50
+           - Index: 2
+             Item: Dragonball_Green
+             Amount: 50
+
+   - Name: 每日服飾#21
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44641
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fluorescent_Liquid
+             Amount: 50
+           - Index: 1
+             Item: Gunpowder
+             Amount: 50
+           - Index: 2
+             Item: Colorful_Shell
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23396
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Broken_Armor_Piece
+             Amount: 50
+           - Index: 1
+             Item: Broken_Shell
+             Amount: 50
+           - Index: 2
+             Item: Tatters_Clothes
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23549
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Rust_Suriken
+             Amount: 50
+           - Index: 1
+             Item: Wheel
+             Amount: 50
+           - Index: 2
+             Item: Broken_Steel_Piece
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22404
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Broken_Armor_Piece
+             Amount: 50
+           - Index: 1
+             Item: Wheel
+             Amount: 50
+           - Index: 2
+             Item: Burning_Heart
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22571
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tatters_Clothes
+             Amount: 50
+           - Index: 1
+             Item: Wheel
+             Amount: 50
+           - Index: 2
+             Item: Cold_Magma
+             Amount: 50
+
+   - Name: 每日服飾#22
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22572
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Distorted_Portrait
+             Amount: 50
+           - Index: 1
+             Item: Piece_Of_Black_Cloth
+             Amount: 50
+           - Index: 2
+             Item: Lizard_Scruff
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22573
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Mystery_Piece
+             Amount: 50
+           - Index: 1
+             Item: Cold_Magma
+             Amount: 50
+           - Index: 2
+             Item: Burning_Heart
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22574
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Peco_Wing_Feather
+             Amount: 50
+           - Index: 1
+             Item: Smooth_Paper
+             Amount: 50
+           - Index: 2
+             Item: Goat's_Horn
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22067
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Live_Coal
+             Amount: 50
+           - Index: 1
+             Item: Old_Magic_Circle
+             Amount: 50
+           - Index: 2
+             Item: Sharp_Leaf
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22270
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Live_Coal
+             Amount: 50
+           - Index: 1
+             Item: Gaoat's_Skin
+             Amount: 50
+           - Index: 2
+             Item: Dragon's_Skin
+             Amount: 50
+
+   - Name: 每日服飾#23
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22337
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tree_Knot
+             Amount: 50
+           - Index: 1
+             Item: Black_Kitty_Doll
+             Amount: 50
+           - Index: 2
+             Item: Coral_Reef
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22338
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Peco_Wing_Feather
+             Amount: 50
+           - Index: 1
+             Item: Goat's_Horn
+             Amount: 50
+           - Index: 2
+             Item: Gaoat's_Skin
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22360
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Vroken_Sword
+             Amount: 50
+           - Index: 1
+             Item: Smooth_Paper
+             Amount: 50
+           - Index: 2
+             Item: Fright_Paper_Blade
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22069
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hot_Hair
+             Amount: 50
+           - Index: 1
+             Item: Harpy's_Claw
+             Amount: 50
+           - Index: 2
+             Item: Harpy's_Feather
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22386
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Black_Bear's_Skin
+             Amount: 50
+           - Index: 1
+             Item: Cloud_Piece
+             Amount: 50
+           - Index: 2
+             Item: Soft_Silk_Cloth
+             Amount: 50
+
+   - Name: 每日服飾#24
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22405
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Hot_Hair
+             Amount: 50
+           - Index: 1
+             Item: Old_Manteau
+             Amount: 50
+           - Index: 2
+             Item: Tough_Scalelike_Stem
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_22406
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Harpy's_Feather
+             Amount: 50
+           - Index: 1
+             Item: Harpy's_Claw
+             Amount: 50
+           - Index: 2
+             Item: Rent_Spell_Book
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22728
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Rent_Scroll
+             Amount: 50
+           - Index: 1
+             Item: Spawns
+             Amount: 50
+           - Index: 2
+             Item: Burning_Horse_Shoe
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22729
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Great_Wing
+             Amount: 50
+           - Index: 1
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+           - Index: 2
+             Item: Mystery_Iron_Bit
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22730
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Limpid_Celestial_Robe
+             Amount: 50
+           - Index: 1
+             Item: Soft_Silk_Cloth
+             Amount: 50
+           - Index: 2
+             Item: Hard_Peach
+             Amount: 50
+
+#---------------------------重複
+   - Name: 每日服飾#25
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23237
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Tangled_Chain
+             Amount: 50
+           - Index: 1
+             Item: Rusty_Cleaver
+             Amount: 50
+           - Index: 2
+             Item: Claw_Of_Wolves
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23238
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Honey_Jar
+             Amount: 50
+           - Index: 1
+             Item: Hot_Hair
+             Amount: 50
+           - Index: 2
+             Item: Dragon's_Skin
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22811
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sand_Lump
+             Amount: 50
+           - Index: 1
+             Item: Scropion's_Nipper
+             Amount: 50
+           - Index: 2
+             Item: Large_Jellopy
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23647
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Sand_Lump
+             Amount: 50
+           - Index: 1
+             Item: Scropion's_Nipper
+             Amount: 50
+           - Index: 2
+             Item: Large_Jellopy
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23195
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Great_Leaf
+             Amount: 50
+           - Index: 1
+             Item: Tough_Vines
+             Amount: 50
+           - Index: 2
+             Item: Shoulder_Protection
+             Amount: 50
+
+
+   - Name: 每日服飾#26
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23239
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Transparent_Cloth
+             Amount: 50
+           - Index: 1
+             Item: Claw_Of_Wolves
+             Amount: 50
+           - Index: 2
+             Item: Tail_Of_Steel_Scorpion
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23240
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Yellow_Plate
+             Amount: 50
+           - Index: 1
+             Item: Bamboo_Cut
+             Amount: 50
+           - Index: 2
+             Item: Oil_Paper
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23047
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Glossy_Hair
+             Amount: 50
+           - Index: 1
+             Item: Old_Japaness_Clothes
+             Amount: 50
+           - Index: 2
+             Item: Poison_Powder
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22688
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Burnt_Parts
+             Amount: 50
+           - Index: 1
+             Item: White_Mask
+             Amount: 50
+           - Index: 2
+             Item: Ice_Heart
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22689
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Bloody_Rune
+             Amount: 50
+           - Index: 1
+             Item: Suspicious_Hat
+             Amount: 50
+           - Index: 2
+             Item: White_Mask
+             Amount: 50
+
+   - Name: 每日服飾#27
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23241
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Ectoplasm
+             Amount: 50
+           - Index: 1
+             Item: Dullahan_Armor
+             Amount: 50
+           - Index: 2
+             Item: Glitter_Shell
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23242
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poison_Toad's_Skin
+             Amount: 50
+           - Index: 1
+             Item: Broken_Shuriken
+             Amount: 50
+           - Index: 2
+             Item: Black_Mask
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22580
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Broken_Wine_Vessel
+             Amount: 50
+           - Index: 1
+             Item: Tengu's_Nose
+             Amount: 50
+           - Index: 2
+             Item: Black_Bear's_Skin
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22581
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Air_Rifle
+             Amount: 50
+           - Index: 1
+             Item: Soft_Leaf
+             Amount: 50
+           - Index: 2
+             Item: Black_Bear's_Skin
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23285
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Solid_Peeling
+             Amount: 50
+           - Index: 1
+             Item: Thin_Stem
+             Amount: 50
+           - Index: 2
+             Item: Striped_Socks
+             Amount: 50
+
+   - Name: 每日服飾#28
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23243
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Striped_Socks
+             Amount: 50
+           - Index: 1
+             Item: Hanging_Doll
+             Amount: 50
+           - Index: 2
+             Item: Stiff_Horn
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23244
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Cloud_Piece
+             Amount: 50
+           - Index: 1
+             Item: Sharp_Feeler
+             Amount: 50
+           - Index: 2
+             Item: Dragon_Train
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23594
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Hard_Peach
+             Amount: 50
+           - Index: 1
+             Item: Limpid_Celestial_Robe
+             Amount: 50
+           - Index: 2
+             Item: Soft_Silk_Cloth
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_23595
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Cloud_Piece
+             Amount: 50
+           - Index: 1
+             Item: Sharp_Feeler
+             Amount: 50
+           - Index: 2
+             Item: Hard_Peach
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23592
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+           - Index: 1
+             Item: Leopard_Skin
+             Amount: 50
+           - Index: 2
+             Item: Mystery_Iron_Bit
+             Amount: 50
+
+
+   - Name: 每日服飾#29
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22958
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Rotten_Rope
+             Amount: 50
+           - Index: 1
+             Item: Needle_Pouch
+             Amount: 50
+           - Index: 2
+             Item: Claw_Of_Rat
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23364
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Mystery_Iron_Bit
+             Amount: 50
+           - Index: 1
+             Item: Great_Wing
+             Amount: 50
+           - Index: 2
+             Item: Leopard_Skin
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23365
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+           - Index: 1
+             Item: Thin_Stem
+             Amount: 50
+           - Index: 2
+             Item: Festival_Mask
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22925
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Black_Bear's_Skin
+             Amount: 50
+           - Index: 1
+             Item: Black_Mask
+             Amount: 50
+           - Index: 2
+             Item: Broken_Shuriken
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22926
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Poison_Toad's_Skin
+             Amount: 50
+           - Index: 1
+             Item: Old_Japaness_Clothes
+             Amount: 50
+           - Index: 2
+             Item: Glossy_Hair
+             Amount: 50
+
+   - Name: 每日服飾#30
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22959
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Spool
+             Amount: 50
+           - Index: 1
+             Item: Bat_Cage
+             Amount: 50
+           - Index: 2
+             Item: Wing_Of_Red_Bat
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23693
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Browny_Root
+             Amount: 50
+           - Index: 1
+             Item: Thin_Stem
+             Amount: 50
+           - Index: 2
+             Item: Solid_Peeling
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_23694
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Lamplight
+             Amount: 50
+           - Index: 1
+             Item: Anolian_Skin
+             Amount: 50
+           - Index: 2
+             Item: Blade_Of_Pinwheel
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22687
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Oil_Paper
+             Amount: 50
+           - Index: 1
+             Item: Hot_Hair
+             Amount: 50
+           - Index: 2
+             Item: Sand_Lump
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_23391
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Dragon's_Skin
+             Amount: 50
+           - Index: 1
+             Item: Burning_Horse_Shoe
+             Amount: 50
+           - Index: 2
+             Item: Spawns
+             Amount: 50
+
+   - Name: 每日服飾#31
+     Map: trinity
+     X: 117
+     Y: 44
+     Direction: SouthWest
+     Sprite: 4_M_DANGDANG
+     Items:
+       - Index: 1
+         Item: C_Head_Item_22960
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Red_Scarf
+             Amount: 50
+           - Index: 1
+             Item: Broken_Needle
+             Amount: 50
+           - Index: 2
+             Item: Skull
+             Amount: 50
+       - Index: 2
+         Item: C_Head_Item_23397
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Germinating_Sprout
+             Amount: 50
+           - Index: 1
+             Item: Soft_Leaf
+             Amount: 50
+           - Index: 2
+             Item: Air_Rifle
+             Amount: 50
+       - Index: 3
+         Item: C_Head_Item_22530
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Shoulder_Protection
+             Amount: 50
+           - Index: 1
+             Item: Tough_Vines
+             Amount: 50
+           - Index: 2
+             Item: Great_Leaf
+             Amount: 50
+       - Index: 4
+         Item: C_Head_Item_22403
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Fluorescent_Liquid
+             Amount: 50
+           - Index: 1
+             Item: Gunpowder
+             Amount: 50
+           - Index: 2
+             Item: Colorful_Shell
+             Amount: 50
+       - Index: 5
+         Item: C_Head_Item_22409
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: Broken_Armor_Piece
+             Amount: 50
+           - Index: 1
+             Item: Broken_Shell
+             Amount: 50
+           - Index: 2
+             Item: Tatters_Clothes
+             Amount: 50
+
+
+
+
+
+
+
+
+
+
+
+

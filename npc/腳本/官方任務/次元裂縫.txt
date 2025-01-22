@@ -1,0 +1,654 @@
+﻿
+// 處決根源任務
+prt_fild08,165,363,4	script	弗里德里希#20th	10120,{
+
+	mes "[理查]";
+	mes "您現在功勳分數 [ "+#20TH_Points+" ] 點";
+	mes "你想執行哪個任務呢?";
+	next;
+	switch(select("接斬斷根源任務","取消")){
+
+	case 1:
+		if(checkquest(12575,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12580,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12580,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12575;
+		if(checkquest(12580,PLAYTIME)>=0){erasequest 12580;}
+		mes "[理查]";
+		mes "任務接取完成";
+		close;
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "斬斷根源任務",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 100" );
+	end;
+}
+
+
+// 地區淨化(危險)任務1種
+prt_fild08,165,360,4	script	理查#20th	993,{
+
+	mes "[理查]";
+	mes "你願意到次元裂縫中打倒希梅爾茲嗎?";
+	next;
+	switch(select("接取區域淨化(危險)任務","取消")){
+
+	case 1:
+		if(checkquest(12574,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12579,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12579,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12574;
+		if(checkquest(12579,PLAYTIME)>=0){erasequest 12579;}
+		mes "[理查]";
+		mes "任務接取完成";
+		close;
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "區域淨化(危險)任務",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 100" );
+	end;
+}
+
+
+
+// 裂淨化縫任務
+prt_fild08,165,357,4	script	海茉特#20th	10127,{
+
+	mes "[海茉特]";
+	mes "你願意到次元裂縫中執行淨化嗎?";
+	next;
+	switch(select("接取裂縫淨化任務","取消")){
+
+	case 1:
+		if(checkquest(12573,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12578,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12578,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12573;
+		if(checkquest(12578,PLAYTIME)>=0){erasequest 12578;}
+		mes "[海茉特]";
+		mes "任務接取完成";
+		close;
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "裂縫淨化任務",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 60" );
+	end;
+}
+
+
+
+// 區域淨化任務
+prt_fild08,165,354,4	script	史皮卡#20th	10115,{
+
+	mes "[史皮卡]";
+	mes "您願意到被汙染的區務進行淨化嗎?";
+	next;
+	switch(select("接取區域淨化任務","取消")){
+
+	case 1:
+	switch(rand(1,4)){
+
+		case 1:
+		if(checkquest(12569,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12570,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12571,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12572,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12577,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12577,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12569;
+		if(checkquest(12577,PLAYTIME)>=0){erasequest 12577;}
+		mes "[史皮卡]";
+		mes "任務接取完成";
+		close;
+
+		case 2:
+		if(checkquest(12569,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12570,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12571,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12572,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12577,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12577,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12570;
+		if(checkquest(12577,PLAYTIME)>=0){erasequest 12577;}
+		mes "[史皮卡]";
+		mes "任務接取完成";
+		close;
+
+		case 3:
+		if(checkquest(12569,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12570,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12571,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12572,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12577,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12577,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12571;
+		if(checkquest(12577,PLAYTIME)>=0){erasequest 12577;}
+		mes "[史皮卡]";
+		mes "任務接取完成";
+		close;
+
+		case 4:
+		if(checkquest(12569,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12570,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12571,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12572,HUNTING)>=0){mes "[史皮卡]";mes "您已經接了這個任務了唷~!"; close;}
+		if(checkquest(12577,PLAYTIME)==0){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		if(checkquest(12577,PLAYTIME)==1){mes "[史皮卡]"; mes "你今天已經接取過這個任務了"; close;}
+		setquest 12572;
+		if(checkquest(12577,PLAYTIME)>=0){erasequest 12577;}
+		mes "[史皮卡]";
+		mes "任務接取完成";
+		close;
+		}
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "區域淨化任務",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 60" );
+	end;
+}
+
+
+// 主動捐獻任務
+//prt_fild08,141,361,5	script	愛子#20th	10126,{}
+// ---------------------------------------------------------------------------------
+prt_fild08,156,367,6	script	<次元流浪者>霸勒門德#20th	654,{end;}
+
+prt_fild08,160,367,4	script	克羅內克#20th	10119,{
+	mes "[克羅內克]";
+	mes "年經的冒險家，你的臉色看起來不太好，要不要建立你會滿意的功勳再回來呢?";
+	next;
+	switch(select("我沒有要報告的事項","我要報告作戰結果","我想知道我的功勳分數")){
+	case 1:
+	close;
+
+	case 2:
+		if(checkquest(12573,HUNTING)==2 ) { 
+		dispbottom "裂縫淨化任務回報完成!!";
+		erasequest 12573;
+		setquest 12578;
+		set #20TH_Points,#20TH_Points+5;
+		dispbottom "功勳分數+5";
+		getitem 1001007,1;	//侵略防禦憑證
+		getitem 25376,2;	//寵物硬幣
+		getexp 600000,600000;
+		}
+
+		if(checkquest(12574,HUNTING)==2 ) { 
+		dispbottom "區域淨化(危險)任務回報完成!!";
+		erasequest 12574;
+		setquest 12579;
+		set #20TH_Points,#20TH_Points+15;
+		dispbottom "功勳分數+15";
+		getitem 1001007,3;	//侵略防禦憑證
+		getitem 25376,3;	//寵物硬幣
+		getexp 600000,600000;
+		}
+
+		if(checkquest(12575,HUNTING)==2 ) { 
+		dispbottom "斬斷根源任務回報完成!!";
+		erasequest 12575;
+		setquest 12580;
+		set #20TH_Points,#20TH_Points+20;
+		dispbottom "功勳分數+20";
+		getitem 1001007,4;	//侵略防禦憑證
+		getitem 25376,4;	//寵物硬幣
+		getexp 600000,600000;
+		}
+
+		if(checkquest(12569,HUNTING)==2 ) { 
+		dispbottom "區域淨化任務回報完成!!";
+		erasequest 12569;
+		setquest 12577;
+		set #20TH_Points,#20TH_Points+5;
+		dispbottom "功勳分數+5";
+		getitem 1001007,1;	//侵略防禦憑證
+		getitem 25376,2;	//寵物硬幣
+		getexp 600000,600000;
+		}
+		if(checkquest(12570,HUNTING)==2 ) { 
+		dispbottom "區域淨化任務回報完成!!";
+		erasequest 12570;
+		setquest 12577;
+		set #20TH_Points,#20TH_Points+5;
+		dispbottom "功勳分數+5";
+		getitem 1001007,1;	//侵略防禦憑證
+		getitem 25376,2;	//寵物硬幣
+		getexp 600000,600000;
+		}
+		if(checkquest(12571,HUNTING)==2 ) { 
+		dispbottom "區域淨化任務回報完成!!";
+		erasequest 12571;
+		setquest 12577;
+		set #20TH_Points,#20TH_Points+5;
+		dispbottom "功勳分數+5";
+		getitem 1001007,1;	//侵略防禦憑證
+		getitem 25376,2;	//寵物硬幣
+		getexp 600000,600000;
+		}
+		if(checkquest(12572,HUNTING)==2 ) { 
+		dispbottom "區域淨化任務回報完成!!";
+		erasequest 12572;
+		setquest 12577;
+		set #20TH_Points,#20TH_Points+5;
+		dispbottom "功勳分數+5";
+		getitem 1001007,1;	//侵略防禦憑證
+		getitem 25376,2;	//寵物硬幣
+		getexp 600000,600000;
+		}
+		mes "[克羅內克]";
+		mes "你沒有完成的任務";
+		close;
+
+	case 3:
+	mes "[克羅內克]";
+	mes "您現在功勳分數 [ ^00cc33"+#20TH_Points+"^000000 ] 點";
+	close;
+	}
+
+OnInit:
+	waitingroom "回報任務",0;
+	questinfo( QTYPE_QUEST, QMARK_PURPLE, "BaseLevel >= 60" );
+	end;
+}
+
+
+// ---------------------------------------------------------------------------------
+//-	script	E_oro_open_map_limit	-1,{
+//- 一排
+prt_fild08,150,363,6	script	指揮狀態板#1	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "mjolnir_07",0,0;
+	close;
+	}
+}
+
+prt_fild08,150,360,6	script	指揮狀態板#2	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild00",0,0;
+	close;
+	}
+}
+
+prt_fild08,150,357,6	script	指揮狀態板#3	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild04",0,0;
+	close;
+	}
+}
+
+prt_fild08,150,354,6	script	指揮狀態板#4	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "gef_fild02",0,0;
+	close;
+	}
+}
+
+prt_fild08,150,351,6	script	指揮狀態板#5	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild10",0,0;
+	close;
+	}
+}
+
+
+//- 二排
+prt_fild08,153,363,6	script	指揮狀態板#6	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "mjolnir_08",0,0;
+	close;
+	}
+}
+
+prt_fild08,153,360,6	script	指揮狀態板#7	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "mjolnir_09",0,0;
+	close;
+	}
+}
+
+prt_fild08,153,357,6	script	指揮狀態板#8	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild05",0,0;
+	close;
+	}
+}
+
+prt_fild08,153,354,6	script	指揮狀態板#9	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild07",0,0;
+	close;
+	}
+}
+
+prt_fild08,153,351,6	script	指揮狀態板#10	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild09",0,0;
+	close;
+	}
+}
+
+
+//- 三排
+prt_fild08,156,363,6	script	指揮狀態板#11	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "mjolnir_10",0,0;
+	close;
+	}
+}
+
+prt_fild08,156,360,6	script	指揮狀態板#12	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild01",0,0;
+	close;
+	}
+}
+
+prt_fild08,156,354,6	script	指揮狀態板#13	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild08",0,0;
+	close;
+	}
+}
+
+prt_fild08,156,351,6	script	指揮狀態板#14	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "moc_fild01",0,0;
+	close;
+	}
+}
+
+
+//- 四排
+prt_fild08,159,363,6	script	指揮狀態板#15	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "mjolnir_11",0,0;
+	close;
+	}
+}
+
+prt_fild08,159,360,6	script	指揮狀態板#16	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild02",0,0;
+	close;
+	}
+}
+
+
+prt_fild08,159,357,6	script	指揮狀態板#17	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild06",0,0;
+	close;
+	}
+}
+
+prt_fild08,159,351,6	script	指揮狀態板#18	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "pay_fild04",0,0;
+	close;
+	}
+}
+
+
+//- 五排
+prt_fild08,162,360,6	script	指揮狀態板#19	857,{
+	mes "次元劊子手之危險度 - ^00cc33普通^000000";
+	mes "裝備齊全時建議交戰";
+	next;
+	switch(select("下次再拜訪","前往此地現場支援")){
+	case 1:
+	close;
+	case 2:
+	warp "prt_fild03",0,0;
+	close;
+	}
+}
+
+//-------------------------------
+trinity,123,123,4	script	20周年活動現場傳送員	874,{
+
+	mes "[20周年活動現場傳送員]";
+	mes "選擇你要到達的區域吧";
+	next;
+	switch (select("20周年活動現場:取消")) {
+
+	case 1:
+		warp "prt_fild08",170,369;
+		close;
+	case 2:
+		close;
+	}
+
+OnInit:
+	waitingroom "20周年活動現場傳送",0;
+	end;
+}
+
+
+
+//- 野怪重生
+mjolnir_07,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild00,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild04,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+gef_fild02,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild10,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+mjolnir_08,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+mjolnir_09,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild05,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild07,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild09,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+mjolnir_10,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild01,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+//prt_fild08,0,0,0,0	monster	次元銀月魔女	23003,10,0,0,0
+moc_fild01,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+mjolnir_11,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild02,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild06,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+pay_fild04,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+prt_fild03,0,0,0,0	monster	次元銀月魔女	23003,20,0,0,0
+
+mjolnir_07,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild00,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild04,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+gef_fild02,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild10,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+mjolnir_08,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+mjolnir_09,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild05,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild07,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild09,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+mjolnir_10,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild01,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+//prt_fild08,0,0,0,0	monster	次元鬼娃樹	23004,10,0,0,0
+moc_fild01,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+mjolnir_11,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild02,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild06,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+pay_fild04,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+prt_fild03,0,0,0,0	monster	次元鬼娃樹	23004,20,0,0,0
+
+mjolnir_07,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild00,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild04,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+gef_fild02,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild10,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+mjolnir_08,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+mjolnir_09,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild05,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild07,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild09,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+mjolnir_10,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild01,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+//prt_fild08,0,0,0,0	monster	次元兔斯拉	23005,10,0,0,0
+moc_fild01,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+mjolnir_11,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild02,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild06,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+pay_fild04,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+prt_fild03,0,0,0,0	monster	次元兔斯拉	23005,20,0,0,0
+
+mjolnir_07,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild00,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild04,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+gef_fild02,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild10,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+mjolnir_08,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+mjolnir_09,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild05,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild07,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild09,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+mjolnir_10,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild01,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+//prt_fild08,0,0,0,0	monster	次元噩夢嗜血怪人	23006,10,0,0,0
+moc_fild01,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+mjolnir_11,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild02,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild06,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+pay_fild04,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+prt_fild03,0,0,0,0	monster	次元噩夢嗜血怪人	23006,20,0,0,0
+
+mjolnir_07,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild00,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild04,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+gef_fild02,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild10,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+mjolnir_08,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+mjolnir_09,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild05,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild07,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild09,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+mjolnir_10,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild01,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+//prt_fild08,0,0,0,0	monster	次元劊子手	23008,10,0,0,0
+moc_fild01,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+mjolnir_11,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild02,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild06,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+pay_fild04,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+prt_fild03,0,0,0,0	monster	次元劊子手	23008,20,0,0,0
+
+
+

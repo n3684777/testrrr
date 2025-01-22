@@ -1,0 +1,685 @@
+
+vdistrict1,16,24,4	script	被遺忘的飼育場管理者	10357,{
+
+	//副本討伐任務獎勵
+	if(checkquest(32050,HUNTING)==2 ) { 
+	dispbottom "被遺忘的飼育場討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點金幣
+	erasequest 32050; }
+
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_36 < gettime(8) ){
+	set Instance_Bout_36,10;
+	set day_Instance_Bout_36,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_36 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[路易南]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "被遺忘的飼育場";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[路易南]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1702+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_36+"^000000 ]";
+	mes "副本獎勵：";
+	mes "霸肋門德餐券x4";
+	mes "商城1點金幣x5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[路易南]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[路易南]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[路易南]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 130) {
+			mes "[路易南]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_36,Instance_Bout_36-1;
+
+			//副本任務
+			if(checkquest(32155,HUNTING)<0 ){setquest 32155;}
+			//副本積分任務
+			if(checkquest(32050,HUNTING)<0 ){setquest 32050;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "被遺忘的飼育場",0;
+	end;
+}
+
+
+//------------------------------被遺忘的飼育場事件
+1@lost,0,0,0	script	被遺忘的飼育場事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@lost");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("席克#lost02");
+	disablenpc instance_npcname("席克#lost03");
+	disablenpc instance_npcname("席克#lost04");
+	disablenpc instance_npcname("席克#lost05");
+	disablenpc instance_npcname("席克#lost06");
+	disablenpc instance_npcname("席克#lost07");
+	disablenpc instance_npcname("席克#lost08");
+	disablenpc instance_npcname("席克#lost09");
+	disablenpc instance_npcname("席克#lost10");
+	disablenpc instance_npcname("席克#lost11");
+	disablenpc instance_npcname("席克#lost12");
+	disablenpc instance_npcname("席克#lost13");
+	disablenpc instance_npcname("席克#lost00");
+	disablenpc instance_npcname("席克#lost002");
+	disablenpc instance_npcname("席克#lost003");
+	disablenpc instance_npcname("席克#lost004");
+	disablenpc instance_npcname("席克#lost005");
+	disablenpc instance_npcname("席克#lost006");
+	disablenpc instance_npcname("席克#lost007");
+	disablenpc instance_npcname("席克#lost008");
+	//副本標籤
+	set 'CD_lost_01,0;
+	set 'CD_lost_02,0;
+	set 'CD_lost_03,0;
+	set 'CD_lost_04,0;
+	set 'CD_lost_05,0;
+	set 'CD_lost_06,0;
+	set 'CD_lost_07,0;
+	set 'CD_lost_08,0;
+	set 'CD_lost_09,0;
+	end;
+
+	OnCcdd1:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost001");
+	enablenpc instance_npcname("席克#lost01");
+	sleep 200;
+	donpcevent instance_npcname("席克#lost01")+"::OnEffect1";
+	sleep 200;
+	enablenpc instance_npcname("席克#lost02");
+	end;
+
+	OnCcdd2:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost002");
+	enablenpc instance_npcname("席克#lost04");
+	donpcevent instance_npcname("席克#lost04")+"::OnTalk1";
+	end;
+
+	OnCcdd3:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost003");
+	enablenpc instance_npcname("席克#lost06");
+	end;
+
+	OnCcdd4:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost004");
+	enablenpc instance_npcname("席克#lost08");
+	end;
+
+	OnCcdd5:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost005");
+	enablenpc instance_npcname("席克#lost10");
+	end;
+
+	OnCcdd6:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost006");
+	enablenpc instance_npcname("席克#lost12");
+	end;
+
+	OnCcdd7:
+	callfunc "BarMeal_item";
+	set 'CD_lost_Mob_01,'CD_lost_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_lost_Mob_01+"只食人火龍果",bc_all,0xD7BA98;
+	if ('CD_lost_Mob_01>0) end;
+	disablenpc instance_npcname("席克#lost006");
+	enablenpc instance_npcname("席克#lost007");
+	areamonster 'map_name$[0],37,212,40,319,"--ja--",20660,6;
+	areamonster 'map_name$[0],37,212,40,319,"--ja--",20661,6;
+	areamonster 'map_name$[0],37,212,40,319,"--ja--",20662,6;
+	areamonster 'map_name$[0],37,212,40,319,"--ja--",20663,6;
+	areamonster 'map_name$[0],37,212,40,319,"--ja--",20664,6;
+	areamonster 'map_name$[0],40,319,285,315,"--ja--",20660,6;
+	areamonster 'map_name$[0],40,319,285,315,"--ja--",20661,6;
+	areamonster 'map_name$[0],40,319,285,315,"--ja--",20662,6;
+	areamonster 'map_name$[0],40,319,285,315,"--ja--",20663,6;
+	areamonster 'map_name$[0],40,319,285,315,"--ja--",20664,6;
+	instance_announce instance_id(1),"席克：啊啊啊!救救機器人!!",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"席克：我成功了!!!!!",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"席克：大王喵喵在前面等你!",bc_all,0xD7BA98;
+	end;
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【被遺忘的飼育場】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	disablenpc instance_npcname("席克#lost008");
+	enablenpc instance_npcname("席克#lost00");
+	instance_announce 0, "席克：結束了來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@lost,163,47,4	script	席克#lost001	10250,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_01>0) end;
+	set 'CD_lost_01,1;
+	npctalk "救命啊!";
+	set 'CD_lost_Mob_01,7;
+	sleep 300;
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],156,49,167,42,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd1";
+	end;
+}
+
+1@lost,163,47,0	script	席克#lost01	139,6,6,{end;
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+OnTouch:
+	sleep 500;
+	npctalk "歡迎來到飼育場，我是負責收集的席克";
+	disablenpc instance_npcname("席克#lost01");
+	end;
+
+OnEffect1:
+	npctalk "!!";
+	specialeffect 16;
+	end;
+}
+1@lost,163,47,4	script	席克#lost02	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_02>0) end;
+	set 'CD_lost_02,1;
+
+	mes "[席克]";
+	mes "謝謝你救了我!根據路易南的情報，食人火龍果明明很溫馴!";
+	npctalk "謝謝你救了我!根據路易南的情報，食人火龍果明明很溫馴!";
+	next;
+	mes "[席克]";
+	mes "你看到了吧!好可怕!";
+	npctalk "你看到了吧!好可怕!";
+	next;
+	mes "[席克]";
+	mes "說什麼餵食後摸牠5分鐘? 結果張牙舞爪走向我，要怎麼摸牠們啦!";
+	npctalk "說什麼餵食後摸牠5分鐘? 結果張牙舞爪走向我，要怎麼摸牠們啦!";
+	next;
+	mes "[席克]";
+	mes "5分鐘又是哪來的!";
+	npctalk "5分鐘又是哪來的!";
+	next;
+	mes "[席克]";
+	mes "客人...";
+	npctalk "客人...";
+	next;
+	mes "[席克]";
+	mes "我現在終於知道路易南說無法快速採收，要增加人手的原因了";
+	npctalk "我現在終於知道路易南說無法快速採收，要增加人手的原因了";
+	next;
+	mes "[席克]";
+	mes "但不管怎麼說，像剛剛陪牠門玩比抓住他們摸5分鐘要快多了";
+	npctalk "但不管怎麼說，像剛剛陪牠門玩比抓住他們摸5分鐘要快多了";
+	next;
+	mes "[席克]";
+	mes "...雖然也抓不住牠們";
+	npctalk "...雖然也抓不住牠們";
+	next;
+	mes "[席克]";
+	mes "現在不是在這裡說話的時候了，先前往棲息地吧!準備好了嗎?出發!";
+	npctalk "現在不是在這裡說話的時候了，先前往棲息地吧!準備好了嗎?出發!";
+	close2;
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost02");
+	enablenpc instance_npcname("席克#lost03");
+	sleep 1000;
+	instance_warpall 'map_name$[0],215,153, instance_id();
+	end;
+}
+
+
+
+1@lost,215,156,4	script	席克#lost03	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_03>0) end;
+	set 'CD_lost_03,1;
+
+	mes "[席克]";
+	mes "無論動植物， 總是維持一定的溫度與濕度";
+	npctalk "無論動植物， 總是維持一定的溫度與濕度";
+	next;
+	mes "[席克]";
+	mes "我聽說人會感覺不太舒服，你呼吸還順暢嗎?";
+	npctalk "我聽說人會感覺不太舒服，你呼吸還順暢嗎?";
+	next;
+	mes "[席克]";
+	mes "那我也在這裡撒上飼料，趕快結束...出去吧!";
+	npctalk "那我也在這裡撒上飼料，趕快結束...出去吧!";
+	next;
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost03");
+	enablenpc instance_npcname("席克#lost002");
+	sleep 1000;
+	donpcevent instance_npcname("席克#lost002")+"::OnEffect1";
+	sleep 300;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],210,159,219,153,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd2";
+	end;
+}
+
+1@lost,215,156,4	script	席克#lost002	10250,{end;
+OnEffect1:
+	npctalk "我已經撒飼料了，馬上就會出現了!";
+	end;
+}
+1@lost,215,156,4	script	席克#lost04	10357,{
+
+	mes "[席克]";
+	mes "我們移動到下個地點吧?還有工作呢...";
+	npctalk "我們移動到下個地點吧?還有工作呢...";
+	close2;
+	disablenpc instance_npcname("席克#lost04");
+	enablenpc instance_npcname("席克#lost05");
+	instance_warpall 'map_name$[0],92,110, instance_id();
+	end;
+
+OnTalk1:
+	npctalk "...都好了嗎?";
+	end;
+}
+
+
+
+1@lost,92,114,4	script	席克#lost05	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_04>0) end;
+	set 'CD_lost_04,1;
+
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost05");
+	enablenpc instance_npcname("席克#lost003");
+	sleep 1000;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],87,117,96,110,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd3";
+	end;
+}
+
+1@lost,92,114,4	script	席克#lost003	10250,{end;}
+1@lost,92,114,4	script	席克#lost06	10357,{
+
+	mes "[席克]";
+	mes "我們移動到下個地點吧?還有工作呢...";
+	npctalk "我們移動到下個地點吧?還有工作呢...";
+	close2;
+	disablenpc instance_npcname("席克#lost06");
+	enablenpc instance_npcname("席克#lost07");
+	instance_warpall 'map_name$[0],224,264, instance_id();
+	end;
+}
+
+
+
+1@lost,224,269,4	script	席克#lost07	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_05>0) end;
+	set 'CD_lost_05,1;
+
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost07");
+	enablenpc instance_npcname("席克#lost004");
+	sleep 1000;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],220,272,226,261,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd4";
+	end;
+}
+
+1@lost,224,269,4	script	席克#lost004	10250,{end;}
+1@lost,224,269,4	script	席克#lost08	10357,{
+
+	mes "[席克]";
+	mes "我們移動到下個地點吧?還有工作呢...";
+	npctalk "我們移動到下個地點吧?還有工作呢...";
+	close2;
+	disablenpc instance_npcname("席克#lost08");
+	enablenpc instance_npcname("席克#lost09");
+	instance_warpall 'map_name$[0],251,151, instance_id();
+	end;
+}
+
+
+
+1@lost,251,155,4	script	席克#lost09	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_06>0) end;
+	set 'CD_lost_06,1;
+
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost09");
+	enablenpc instance_npcname("席克#lost005");
+	sleep 1000;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],246,158,255,152,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd5";
+	end;
+}
+
+1@lost,251,155,4	script	席克#lost005	10250,{end;}
+1@lost,251,155,4	script	席克#lost10	10357,{
+
+	mes "[席克]";
+	mes "我們移動到下個地點吧?還有工作呢...";
+	npctalk "我們移動到下個地點吧?還有工作呢...";
+	close2;
+	disablenpc instance_npcname("席克#lost10");
+	enablenpc instance_npcname("席克#lost11");
+	instance_warpall 'map_name$[0],96,156, instance_id();
+	end;
+}
+
+
+
+1@lost,96,160,4	script	席克#lost11	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_07>0) end;
+	set 'CD_lost_07,1;
+
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost11");
+	enablenpc instance_npcname("席克#lost006");
+	sleep 1000;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],94,164,100,152,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd6";
+	end;
+}
+
+1@lost,96,160,4	script	席克#lost006	10250,{end;}
+1@lost,96,160,4	script	席克#lost12	10357,{
+
+	mes "[席克]";
+	mes "我們移動到下個地點吧?還有工作呢...";
+	npctalk "我們移動到下個地點吧?還有工作呢...";
+	close2;
+	disablenpc instance_npcname("席克#lost12");
+	enablenpc instance_npcname("席克#lost13");
+	instance_warpall 'map_name$[0],38,202, instance_id();
+	end;
+}
+
+
+1@lost,38,206,4	script	席克#lost13	10357,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_08>0) end;
+	set 'CD_lost_08,1;
+
+	mes "[席克]";
+	mes "大...家，吃..吃飯時間到囉~";
+	npctalk "大...家，吃..吃飯時間到囉~";
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname("席克#lost13");
+	enablenpc instance_npcname("席克#lost006");
+	sleep 1000;
+	set 'CD_lost_Mob_01,7;
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20660,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20661,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20662,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20663,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],36,210,41,200,"--ja--",20664,1,instance_npcname("被遺忘的飼育場事件1")+"::OnCcdd7";
+	end;
+}
+
+
+
+1@lost,161,315,4	script	席克#lost007	10250,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_lost_09>0) end;
+	set 'CD_lost_09,1;
+
+	mes "[席克]";
+	mes "...來這邊";
+	npctalk "...來這邊";
+	next;
+	mes "[席克]";
+	mes "大王喵喵牠!";
+	npctalk "大王喵喵牠!";
+	close2;
+	disablenpc instance_npcname("席克#lost007");
+	enablenpc instance_npcname("席克#lost008");
+	sleep 1000;
+	areamonster 'map_name$[0],154,317,171,314,"--ja--",20659,1,instance_npcname("被遺忘的飼育場事件1")+"::OnEnd01";
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20660,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20661,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20662,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20663,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20664,1;
+	sleep 20000;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20660,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20661,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20662,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20663,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20664,1;
+	sleep 20000;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20660,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20661,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20662,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20663,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20664,1;
+	sleep 20000;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20660,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20661,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20662,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20663,1;
+	areamonster 'map_name$[0],152,329,173,314,"--ja--",20664,1;
+	end;
+}
+
+1@lost,96,160,4	script	席克#lost008	10250,{end;}
+
+
+//------------------------------ 傳點資訊 162,316
+//------------------------------ 領獎
+1@lost,162,316,4	script	席克#lost00	10357,{
+
+	//副本任務獎勵
+	if(checkquest(32050,HUNTING)==2 ) { 
+	dispbottom "被遺忘的飼育場討伐任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,5;	//商城1點金幣
+	erasequest 32050; }
+
+	mes "[席克]";
+	mes "讓我把你們送出被遺忘的飼育場吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+
+	case 1:
+//------------------------------------------------官方副本任務
+	//官方副本獎勵
+	if(checkquest(32155,HUNTING)==2 ) { 
+	dispbottom "被遺忘的飼育場任務完成，以下是你的獎勵!!"; 
+	getitem 1000103,4*$EP1702;	//霸肋門德餐券
+	erasequest 32155; }
+	if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+	callfunc "offical_instance_finish",48;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------地圖屬性
+1@lost	mapflag	partylock
+1@lost	mapflag	noteleport
+1@lost	mapflag	nosave	SavePoint
+1@lost	mapflag	nomemo
+1@lost	mapflag	nobranch
+1@lost	mapflag	noicewall
+1@lost	mapflag	restricted	6
+

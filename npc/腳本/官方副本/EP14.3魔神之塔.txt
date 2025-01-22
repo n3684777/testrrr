@@ -1,0 +1,1138 @@
+vdistrict1,31,68,4	script	魔神之塔管理者	512,{
+
+	//副本任務獎勵
+	if(checkquest(32049,HUNTING)==2 ) { 
+	dispbottom "魔神之塔任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32049; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_18 < gettime(8) ){
+	set Instance_Bout_18,10;
+	set day_Instance_Bout_18,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_18 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "魔神之塔";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_18+"^000000 ]";
+	mes "副本獎勵：";
+	mes "魔神系列武器";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_18,Instance_Bout_18-1;
+
+			//副本任務
+			if(checkquest(32049,HUNTING)<0 ){setquest 32049;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "魔神之塔",0;
+	end;
+}
+
+
+//------------------------------魔神之塔事件
+1@tnm1,0,0,0	script	魔神之塔事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@tnm1");
+	'map_name$[1] = instance_mapname("1@tnm2");
+	'map_name$[2] = instance_mapname("1@tnm3");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("副隊長_哈因#02");
+	disablenpc instance_npcname("治療師_佩瑪#01");
+	disablenpc instance_npcname("受傷的劍士#02");
+	disablenpc instance_npcname("受傷的武道家#02");
+	disablenpc instance_npcname("受傷的武道家#04");
+	disablenpc instance_npcname("受傷的賢者#02");
+	disablenpc instance_npcname("受傷的弓箭手#02");
+	disablenpc instance_npcname("受傷的刺客#02");
+	disablenpc instance_npcname("露詩#01");
+	disablenpc instance_npcname("露詩#02");
+	disablenpc instance_npcname("露詩#03");
+	disablenpc instance_npcname("夏英特#01");
+	disablenpc instance_npcname("刺客#01");
+	disablenpc instance_npcname("刺客#02");
+	disablenpc instance_npcname("刺客#03");
+	disablenpc instance_npcname("刺客#04");
+	disablenpc instance_npcname("刺客#05");
+	disablenpc instance_npcname("達納托斯#01");
+	disablenpc instance_npcname("魔王夢羅克#01");
+	disablenpc instance_npcname("小女孩#tnm101");
+	disablenpc instance_npcname("小女孩#tnm102");
+	disablenpc instance_npcname("小女孩#tnm103");
+	disablenpc instance_npcname("夢羅克領主#01");
+	disablenpc instance_npcname("洛奇#01");
+	disablenpc instance_npcname("洛奇#02");
+	disablenpc instance_npcname("洛奇#03");
+	disablenpc instance_npcname("夢羅克之影#01");
+	disablenpc instance_npcname("夢羅克之影#02");
+	disablenpc instance_npcname("寶物箱子#tnm");
+	disablenpc instance_npcname("觸發點#tnm01");
+	disablenpc instance_npcname("觸發點#tnm02");
+	disablenpc instance_npcname("魔神之塔傳送門1_1");
+	disablenpc instance_npcname("魔神之塔傳送門1_2");
+	disablenpc instance_npcname("魔神之塔傳送門1_3");
+	//副本標籤
+	setd "$@CD_tnm_1"+instance_id(1),0;
+	setd "$@CD_tnm_2"+instance_id(1),0;
+	setd "$@CD_tnm_3"+instance_id(1),0;
+	setd "$@CD_tnm_4"+instance_id(1),0;
+	setd "$@CD_tnm_5"+instance_id(1),0;
+	setd "$@CD_tnm_6"+instance_id(1),0;
+	setd "$@CD_tnm_7"+instance_id(1),0;
+	setd "$@CD_tnm_8"+instance_id(1),0;
+	setd "$@CD_tnm_9"+instance_id(1),0;
+	setd "$@CD_tnm_10"+instance_id(1),0;
+	setd "$@CD_tnm_11"+instance_id(1),0;
+	setd "$@CD_tnm_12"+instance_id(1),0;
+	setd "$@CD_tnm_13"+instance_id(1),0;
+	setd "$@CD_tnm_14"+instance_id(1),0;
+	setd "$@CD_tnm1_1"+instance_id(1),4;
+	setd "$@CD_tnm1_2"+instance_id(1),14;
+	setd "$@CD_tnm1_3"+instance_id(1),8;
+	setd "$@CD_tnm1_4"+instance_id(1),8;
+	setd "$@CD_tnm1_5"+instance_id(1),5;
+	setd "$@CD_tnm1_6"+instance_id(1),10;
+	setd "$@CD_tnm1_7"+instance_id(1),10;
+	setd "$@CD_tnm1_8"+instance_id(1),30;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	setd "$@CD_tnm1_1"+instance_id(1),getd("$@CD_tnm1_1"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_1"+instance_id(1))==0){
+	instance_announce 0, "感謝你們的幫忙，所有傷患都被治療好了!!",bc_map,"0xFFFF33";
+	donpcevent instance_npcname("治療師_佩瑪#01")+"::OnCcdd4";
+	enablenpc instance_npcname("露詩#01");
+	enablenpc instance_npcname("夏英特#01");
+	enablenpc instance_npcname("刺客#01");
+	enablenpc instance_npcname("刺客#02");
+	end;
+	}
+	end;
+
+	OnCcdd2:
+	setd "$@CD_tnm1_2"+instance_id(1),getd("$@CD_tnm1_2"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_2"+instance_id(1))>0) end;
+	enablenpc instance_npcname("刺客#04");
+	enablenpc instance_npcname("刺客#05");
+	enablenpc instance_npcname("露詩#02");
+	end;
+
+	OnCcdd3:
+	setd "$@CD_tnm1_3"+instance_id(1),getd("$@CD_tnm1_3"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_3"+instance_id(1))>0) end;
+
+	areamonster 'map_name$[0],132,109,149,96,"--ja--",2940,4,instance_npcname("魔神之塔事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],132,109,149,96,"--ja--",2941,4,instance_npcname("魔神之塔事件1")+"::OnCcdd4";
+	donpcevent instance_npcname("露詩#02")+"::OnCcdd1";
+	sleep 300;
+	disablenpc instance_npcname("露詩#02");
+	end;
+
+	OnCcdd4:
+	setd "$@CD_tnm1_4"+instance_id(1),getd("$@CD_tnm1_4"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_4"+instance_id(1))>0) end;
+	donpcevent instance_npcname("刺客#05")+"::OnCcdd1";
+	setd "$@CD_tnm_5"+instance_id(1),1;
+	enablenpc instance_npcname("露詩#03");
+	enablenpc instance_npcname("達納托斯#01");
+	enablenpc instance_npcname("魔王夢羅克#01");
+	enablenpc instance_npcname("觸發點#tnm02");
+	monster 'map_name$[1],205,161,"--ja--",2938,1,instance_npcname("魔神之塔事件1")+"::OnCcdd5";
+	monster 'map_name$[1],141,213,"--ja--",2938,1,instance_npcname("魔神之塔事件1")+"::OnCcdd5";
+	monster 'map_name$[1],68,167,"--ja--",2938,1,instance_npcname("魔神之塔事件1")+"::OnCcdd5";
+	monster 'map_name$[1],89,85,"--ja--",2938,1,instance_npcname("魔神之塔事件1")+"::OnCcdd5";
+	monster 'map_name$[1],191,85,"--ja--",2938,1,instance_npcname("魔神之塔事件1")+"::OnCcdd5";
+	monster 'map_name$[1],0,0,"--ja--",2939,5;
+	monster 'map_name$[1],0,0,"--ja--",2941,5;
+	monster 'map_name$[1],0,0,"--ja--",2940,5;
+	areamonster 'map_name$[1],198,170,210,152,"--ja--",2939,3;
+	areamonster 'map_name$[1],134,220,146,205,"--ja--",2940,3;
+	areamonster 'map_name$[1],61,174,73,160,"--ja--",2941,3;
+	areamonster 'map_name$[1],83,90,96,77,"--ja--",2940,3;
+	areamonster 'map_name$[1],187,90,195,80,"--ja--",2940,3;
+	end;
+
+	OnCcdd5:
+	setd "$@CD_tnm1_5"+instance_id(1),getd("$@CD_tnm1_5"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_5"+instance_id(1))>0) end;
+	setd "$@CD_tnm_6"+instance_id(1),1;
+	enablenpc instance_npcname("小女孩#tnm101");
+	areamonster 'map_name$[2],17,181,33,162,"--ja--",2941,5,instance_npcname("魔神之塔事件1")+"::OnCcdd6";
+	areamonster 'map_name$[2],31,179,49,164,"--ja--",2940,5,instance_npcname("魔神之塔事件1")+"::OnCcdd6";
+	instance_announce 0, "露詩：所有魔法柱都成功破壞了，來找我前往下個地區吧",bc_map,"0xFFFF33";
+	end;
+
+	OnCcdd6:
+	setd "$@CD_tnm1_6"+instance_id(1),getd("$@CD_tnm1_6"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_6"+instance_id(1))>0) end;
+	enablenpc instance_npcname("魔神之塔傳送門1_1");
+	areamonster 'map_name$[2],91,178,125,166,"--ja--",2941,5,instance_npcname("魔神之塔事件1")+"::OnCcdd7";
+	areamonster 'map_name$[2],91,178,125,166,"--ja--",2941,5,instance_npcname("魔神之塔事件1")+"::OnCcdd7";
+	end;
+
+	OnCcdd7:
+	setd "$@CD_tnm1_7"+instance_id(1),getd("$@CD_tnm1_7"+instance_id(1))-1;
+	if (getd("$@CD_tnm1_7"+instance_id(1))>0) end;
+	enablenpc instance_npcname("小女孩#tnm102");
+	enablenpc instance_npcname("夢羅克之影#01");
+	sleep 1000;
+	enablenpc instance_npcname("魔神之塔傳送門1_2");
+	end;
+
+	OnCcdd8:
+	enablenpc instance_npcname("夢羅克之影#02");
+	enablenpc instance_npcname("魔神之塔傳送門1_3");
+	end;
+
+	OnCcdd9:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【魔神之塔】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+	disablenpc instance_npcname("洛奇#02");
+	enablenpc instance_npcname("洛奇#03");
+	enablenpc instance_npcname("寶物箱子#tnm");
+	instance_announce 0, "你們這些臭蟲竟然能打倒我...不過夢羅克大人總有一天會在次降臨的!!",bc_map,"0xFFFF33";
+	sleep 500;
+	instance_announce 0, "洛奇：來左上找我吧!我會傳送你們出去並給予報酬",bc_map,"0x669900";
+	sleep 500;
+	killmonsterall "1@tnm3";
+	end;
+}
+
+
+//------------------------------副本NPC
+1@tnm1,57,112,6	script	副隊長_哈因#01	691,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_1"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_1"+instance_id(1),1;
+	sleep 500;
+	npctalk "這邊發生什麼事情了?";
+	sleep 2000;
+	donpcevent instance_npcname("遠征隊員#01")+"::OnCcdd1";
+	sleep 2000;
+	npctalk "魔物!?";
+	sleep 2000;
+	donpcevent instance_npcname("遠征隊員#01")+"::OnCcdd2";
+	sleep 2000;
+	donpcevent instance_npcname("遠征隊員#02")+"::OnCcdd1";
+	sleep 2000;
+	npctalk "刺客集團!?他們來這裡做啥...";
+	sleep 2000;
+	npctalk "真是事情都擠在一起發生";
+	sleep 2000;
+	npctalk "還是先集中人力先把受傷的人都送到左邊醫療區";
+	sleep 2000;
+	donpcevent instance_npcname("遠征隊員#02")+"::OnCcdd2";
+	sleep 2000;
+	disablenpc instance_npcname("副隊長_哈因#01");
+	enablenpc instance_npcname("副隊長_哈因#02");
+	sleep 100;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd1";
+	sleep 100;
+	enablenpc instance_npcname("治療師_佩瑪#01");
+	sleep 100;
+	donpcevent instance_npcname("治療師_佩瑪#01")+"::OnCcdd1";
+	sleep 2000;
+	donpcevent instance_npcname("治療師_佩瑪#01")+"::OnCcdd2";
+	sleep 2000;
+	donpcevent instance_npcname("治療師_佩瑪#01")+"::OnCcdd3";
+	setd "$@CD_tnm_2"+instance_id(1),1;
+	end;
+}
+
+1@tnm1,56,110,4	script	副隊長_哈因#02	691,{ end;
+OnCcdd1:
+	npctalk "治療師_佩瑪?治療師_佩瑪跑到哪去了!?趕快叫治療師_佩瑪到左邊醫療區救治傷患";
+	sleep 2000;
+	npctalk "人手....阿站在那邊的人，可以麻煩你們幫忙治療師_佩瑪救治傷患嗎?";
+	end;
+OnCcdd2:
+	npctalk "刺客集團!?你們到這裡有什麼企圖?";
+	end;
+OnCcdd3:
+	npctalk "夢羅克復活?你在胡說什麼!";
+	end;
+OnCcdd4:
+	npctalk "魔氣!?難道跟異常出現的這些魔物有關...";
+	end;
+OnCcdd5:
+	npctalk "如果你說的是真的，那是什麼人想讓夢羅克復活?";
+	end;
+OnCcdd6:
+	npctalk "好吧我會請守衛們別阻擋你們，讓你們可以進入調查";
+	end;
+OnCcdd7:
+	npctalk "那邊的勇者，如果可以請你們也跟者前去調查嗎?";
+	end;
+OnCcdd8:
+	npctalk "對於刺客集團我也無法完全信任他們，找右邊的刺客就可前往";
+	end;
+}
+
+
+1@tnm1,61,111,4	script	遠征隊員#01	997,{
+	// GM控制
+	if(getgmlevel()>=10){
+	mes ""+getd("$@CD_tnm1_1"+instance_id(1))+"";
+	next;
+	menu "啟動",-;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	close;
+	}
+	end;
+
+OnCcdd1:
+	npctalk "報告隊長!!不知道從哪出現了許多魔物";
+	end;
+OnCcdd2:
+	npctalk "這些魔物看到人就攻擊，已經有很多人都受傷了";
+	end;
+}
+1@tnm1,61,113,4	script	遠征隊員#02	998,{ end;
+OnCcdd1:
+	npctalk "隊長!接到回報發現刺客集團的蹤跡";
+	end;
+OnCcdd2:
+	npctalk "是的隊長!!我現在就把受傷的人都集中到左邊醫療區";
+	end;
+}
+
+1@tnm1,47,110,4	script	治療師_佩瑪#01	696,{ end;
+OnCcdd1:
+	npctalk "我已經在治療區了!!";
+	end;
+OnCcdd2:
+	npctalk "太多傷患了!隊長我需要更多的人手幫忙阿";
+	end;
+OnCcdd3:
+	npctalk "總算有人來幫忙了，請你們把這些藥給左邊這些傷患服用";
+	end;
+OnCcdd4:
+	npctalk "你們是誰!?到這邊想作什麼?";
+	end;
+}
+
+
+1@tnm1,46,106,6	script	露詩#01	667,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_14"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_14"+instance_id(1),1;
+	sleep 500;
+	npctalk "我們是刺客集團!!";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd2";
+	sleep 2000;
+	npctalk "企圖?我們是來阻止夢羅克復活的";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd3";
+	sleep 2000;
+	npctalk "胡說..難道你們都沒察覺到這邊隱藏的魔氣嗎?";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd4";
+	sleep 3000;
+	donpcevent instance_npcname("夏英特#01")+"::OnCcdd1";
+	sleep 1000;
+	disablenpc instance_npcname("夏英特#01");
+	sleep 1000;
+	npctalk "夏英特!真是個急性子的人...";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd5";
+	sleep 2000;
+	npctalk "這點就是我們來的目的，這個魔氣是從地下層那邊發出的";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd6";
+	sleep 2000;
+	npctalk "恩...我就先去調查了";
+	sleep 2000;
+	disablenpc instance_npcname("露詩#01");
+	disablenpc instance_npcname("刺客#01");
+	disablenpc instance_npcname("刺客#02");
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd7";
+	sleep 2000;
+	donpcevent instance_npcname("副隊長_哈因#02")+"::OnCcdd8";
+	enablenpc instance_npcname("刺客#03");
+	enablenpc instance_npcname("觸發點#tnm01");
+	end;
+}
+
+1@tnm1,138,96,4	script	露詩#02	667,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_4"+instance_id(1))==1) {end;}
+	mes "[露詩]";
+	mes "要到達頂層必須打開這個魔法陣";
+	mes "在我打開魔法陣時，你可以在旁邊守護我嗎?";
+	next;
+	menu "沒問題,我不會讓怪物傷害你",-,"我先準備一下",Ccdd1;
+	areamonster 'map_name$[0],132,109,149,96,"--ja--",2939,8,instance_npcname("魔神之塔事件1")+"::OnCcdd3";
+	setd "$@CD_tnm_4"+instance_id(1),1;
+	close;
+
+	Ccdd1:
+	close;
+
+OnCcdd1:
+	npctalk "我先走一步了，你們消滅掉這些魔物也跟者上來吧";
+	end;
+}
+
+1@tnm2,144,137,4	script	露詩#03	667,{
+	if (getd("$@CD_tnm_6"+instance_id(1))==0) {end;}
+	mes "[露詩]";
+	mes "感謝你的幫忙";
+	mes "準備好前往下個地區了嗎?";
+	next;
+	menu "準備好了",-,"我先準備一下",Ccdd1;
+	warp 'map_name$[2],10,171;
+	close;
+
+	Ccdd1:
+	close;
+
+OnCcdd1:
+	npctalk "請破壞五個角落的魔法柱，他們會減弱封印魔王夢羅克的結界!!";
+	instance_announce 0, "請破壞五個角落的魔法柱，他們會減弱封印魔王夢羅克的結界!!",bc_map,"0xFFFF33";
+	end;
+}
+
+
+1@tnm1,52,104,1	script	夏英特#01	494,{ end;
+OnCcdd1:
+	npctalk "露詩..我先走一步了";
+	end;
+}
+
+1@tnm1,42,102,4	script	刺客#01	884,{ end;
+}
+1@tnm1,44,99,6	script	刺客#02	885,{ end;
+}
+1@tnm1,72,108,4	script	刺客#03	884,{
+	mes "[刺客]";
+	mes "你想要去走道嗎?";
+	mes "進去時請小心有許多的魔物埋伏在那";
+	next;
+	menu "我要去",-,"我先準備一下",Ccdd1;
+	warp 'map_name$[0],91,23;
+	close;
+
+	Ccdd1:
+	close;
+}
+
+1@tnm1,158,24,4	script	刺客#04	884,{
+
+	mes "[刺客]";
+	mes "你想要去傳送區嗎?";
+	mes "露詩在那邊等你了";
+	next;
+	menu "我要去",-,"我先準備一下",Ccdd1;
+	warp 'map_name$[0],124,86;
+	close;
+
+	Ccdd1:
+	close;
+}
+
+1@tnm1,135,98,4	script	刺客#05	884,{
+	if (getd("$@CD_tnm_5"+instance_id(1))==0) {end;}
+	mes "[刺客]";
+	mes "你想要去頂層嗎?";
+	mes "露詩已經先過去了";
+	next;
+	menu "我要去",-,"我先準備一下",Ccdd1;
+	warp 'map_name$[1],149,126;
+	close;
+
+	Ccdd1:
+	close;
+
+OnCcdd1:
+	npctalk "魔物都消滅了，我會送你們到頂層去";
+	end;
+}
+
+
+1@tnm2,137,139,4	script	達納托斯#01	10009,{ end;
+OnCcdd1:
+	npctalk "我叫達納托斯，現在就讓你見識一下...";
+	end;
+OnCcdd2:
+	npctalk "你所謂的渺小吧!";
+	end;
+}
+1@tnm2,134,139,6	script	魔王夢羅克#01	1917,{ end;
+OnCcdd0:
+	specialeffect 90;
+	end;
+OnCcdd1:
+	npctalk "無知的人類阿，你知道我是魔王夢羅克嗎?你的能力太渺小啦..";
+	end;
+OnCcdd2:
+	npctalk "達納托斯你很快就無法阻止我復活了，我的屬下很快就會破壞這個封印";
+	end;
+}
+
+1@tnm3,43,175,4	script	小女孩#tnm101	668,6,6,{ end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_8"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_8"+instance_id(1),1;
+	sleep 1000;
+	npctalk "自從那些怪叔叔們來了之後...";
+	sleep 3000;
+	npctalk "爸爸就只去黑黑的地下室...再也不跟我玩了..";
+	sleep 3000;
+	disablenpc instance_npcname("小女孩#tnm101");
+	end;
+}
+
+
+1@tnm3,128,164,4	script	小女孩#tnm102	668,6,6,{ end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_9"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_9"+instance_id(1),1;
+	sleep 1000;
+	npctalk "這裡就是禁止進入的地方";
+	sleep 3000;
+	npctalk "爸爸到底在這裡面做什麼呢?";
+	sleep 1000;
+	disablenpc instance_npcname("小女孩#tnm102");
+	end;
+}
+
+
+1@tnm3,179,172,4	script	夢羅克之影#01	2939,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_10"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_10"+instance_id(1),1;
+	npctalk "你們這些偷跑近來的老鼠";
+	sleep 3000;
+	npctalk "不要妄想阻止夢羅克大人復活";
+	sleep 1000;
+	disablenpc instance_npcname("夢羅克之影#01");
+	specialeffect 16;
+	sleep 100;
+	monster 'map_name$[2],179,172,"--ja--",2939,1,instance_npcname("魔神之塔事件1")+"::OnCcdd8";
+	end;
+}
+
+1@tnm3,97,20,4	script	夢羅克之影#02	2941,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_11"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_11"+instance_id(1),1;
+	enablenpc instance_npcname("洛奇#01");
+	enablenpc instance_npcname("夢羅克領主#01");
+	npctalk "你們這些老鼠竟然跑到這邊";
+	sleep 3000;
+	npctalk "外面那些守衛是在做啥的!就由我來解決你們!!";
+	sleep 1000;
+	disablenpc instance_npcname("夢羅克之影#02");
+	specialeffect 16;
+	sleep 100;
+	monster 'map_name$[2],97,20,"--ja--",2941,1;
+	areamonster 'map_name$[2],48,23,147,17,"--ja--",2941,10;
+	areamonster 'map_name$[2],48,23,147,17,"--ja--",2940,10;
+	areamonster 'map_name$[2],50,78,143,38,"--ja--",2939,10;
+	areamonster 'map_name$[2],50,78,143,38,"--ja--",2941,10;
+	areamonster 'map_name$[2],50,78,143,38,"--ja--",2940,10;
+	end;
+}
+
+
+1@tnm3,94,51,4	script	小女孩#tnm103	668,{ end;
+OnCcdd1:
+	npctalk "不要!不要殺我爸爸!";
+	end;
+OnCcdd2:
+	specialeffect 51;
+	end;
+OnCcdd3:
+	specialeffect 135;
+	end;
+OnCcdd4:
+	npctalk "一定是搞錯了...";
+	end;
+OnCcdd5:
+	npctalk "大哥哥...我爸爸不可能做這種事的!!";
+	end;
+}
+
+
+1@tnm3,93,52,6	script	夢羅克領主#01	106,{ end;
+OnCcdd1:
+	npctalk "喲..我還以為是誰呢...";
+	end;
+OnCcdd2:
+	npctalk "原來是刺客集團的傢伙";
+	end;
+OnCcdd3:
+	npctalk "刺客...這是幹什麼?你們的存在不就是為了維持「力的平衡」嗎?";
+	end;
+OnCcdd4:
+	npctalk "就是這個!你們沒考慮的就是這點!";
+	end;
+OnCcdd5:
+	npctalk "巨人族已經失去了自我，這個世界已經成了神族的玩具";
+	end;
+OnCcdd6:
+	npctalk "為了維持「力的平衡」就絕對需要夢羅克的復活";
+	end;
+OnCcdd7:
+	npctalk "哼...夢羅克大人的確需要很多人類的鮮血，不過，這根本不算什麼";
+	end;
+OnCcdd8:
+	npctalk "你知道神族的目的是什麼嗎?";
+	end;
+OnCcdd9:
+	npctalk "他們假借光明、秩序、正義的美名使人類...不!使整個世界...";
+	end;
+OnCcdd10:
+	npctalk "你想要完成你所謂的任務是不是?";
+	end;
+OnCcdd11:
+	npctalk "嘿嘿...那就盡管來試試看好了";
+	end;
+OnCcdd12:
+	npctalk "哎呀...真是的...";
+	end;
+OnCcdd13:
+	npctalk "你應該瞄準點的麻...";
+	end;
+OnCcdd14:
+	npctalk "小朋友，人類常會作一種叫做犧牲的蠢事...";
+	end;
+OnCcdd15:
+	npctalk "不過事實上...那根本沒有什麼用處!";
+	end;
+}
+
+1@tnm3,97,49,4	script	洛奇#01	512,8,8,{ end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_12"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_12"+instance_id(1),1;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd1";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd2";
+	sleep 2000;
+	npctalk "你為什麼要喚醒已經被歲月埋葬的夢羅克?";
+	sleep 2000;
+	npctalk "就是你害我們必須來再度埋葬他!";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd3";
+	sleep 2000;
+	npctalk "沒錯我們就是要來清除魔王復活所帶來的亂象";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd4";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd5";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd6";
+	sleep 2000;
+	npctalk "神族與魔族的平衡不是我的職責，我只針對人類世界的平衡";
+	sleep 2000;
+	npctalk "魔王夢羅克復活一定會引起人類世界的血之風暴";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd7";
+	sleep 2000;
+	npctalk "你不是人類，莫非夢羅克領主的靈魂已經被你吃掉了!";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd8";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd9";
+	sleep 3000;
+	npctalk "廢話少說!";
+	sleep 2000;
+	npctalk "不管神族或魔族想怎麼樣...反正你都得死在這裡";
+	sleep 2000;
+	npctalk "這就是我的任務!";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd10";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd11";
+	sleep 2000;
+	npctalk "當然!";
+	sleep 300;
+	specialeffect 175;
+	sleep 300;
+	enablenpc instance_npcname("小女孩#tnm103");
+	sleep 300;
+	donpcevent instance_npcname("小女孩#tnm103")+"::OnCcdd1";
+	sleep 500;
+	donpcevent instance_npcname("小女孩#tnm103")+"::OnCcdd2";
+	sleep 500;
+	donpcevent instance_npcname("小女孩#tnm103")+"::OnCcdd3";
+	npctalk "!?";
+	sleep 2000;
+	donpcevent instance_npcname("小女孩#tnm103")+"::OnCcdd4";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd12";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd13";
+	sleep 2000;
+	donpcevent instance_npcname("小女孩#tnm103")+"::OnCcdd5";
+	sleep 2000;
+	disablenpc instance_npcname("小女孩#tnm103");
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd14";
+	sleep 2000;
+	donpcevent instance_npcname("夢羅克領主#01")+"::OnCcdd15";
+	sleep 2000;
+	instance_warpall "1@tnm3",143,64;
+	sleep 100;
+	disablenpc instance_npcname("洛奇#01");
+	enablenpc instance_npcname("洛奇#02");
+	disablenpc instance_npcname("夢羅克領主#01");
+	monster 'map_name$[2],97,51,"--ja--",2942,1,instance_npcname("魔神之塔事件1")+"::OnCcdd9";
+	sleep 500;
+	instance_announce 0, "你們這些臭蟲是...無法阻止夢羅克大人復活的!!!",bc_map,"0xFFFF33";
+}
+
+1@tnm3,138,65,4	script	洛奇#02	512,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_13"+instance_id(1))==1) {end;}
+
+	mes "[洛奇]";
+	mes "你需要我的幫忙嗎?";
+	next;
+	menu "請幫助我",-,"不需要",Ccdd1;
+	setd "$@CD_tnm_13"+instance_id(1),1;
+	mercenary_create 2937,180000;
+	disablenpc instance_npcname("洛奇#02");
+	close;
+
+	Ccdd1:
+	close;
+}
+
+1@tnm3,55,70,4	script	洛奇#03	512,{
+	mes "[洛奇]";
+	mes "你想要離開了嗎?";
+	mes "記得先打開下面的寶物箱子";
+	next;
+	menu "我要離開了",-,"我還想四處看看",Ccdd1;
+	mercenary_create 2937,0;
+	//副本任務獎勵
+	if(checkquest(32049,HUNTING)==2 ) { 
+	dispbottom "魔神之塔任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",30;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32049; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	Ccdd1:
+	close;
+}
+
+
+1@tnm3,69,70,3	script	寶物箱子#tnm	10005,{
+//	if ('devil_tower != 15)
+//		end;
+	specialeffect EF_COIN;
+	disablenpc instance_npcname("寶物箱子#tnm");
+	makeitem 7293,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5));	// Rose Quartz
+	makeitem 749,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5));	// Frozen Rose
+	makeitem 7511,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5));	// Rune of Darkness
+	if (rand(100) < 75)
+		makeitem 616,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5));	// Old Card Album
+	if (rand(100) < 50)
+		makeitem 748,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5));	// Witherless_Rose
+
+	setarray .@item_id_list[0],
+		1671,	// 戰勝魔神法杖
+		13094,	// 殲滅魔神短劍
+		16027,	// 毀滅魔神鋼斧
+		18120, 	// 射穿魔神弩弓
+		21010, 	// 擊砍魔神巨劍
+		28001; 	// 擊爆魔神拳刃
+	setarray .@bonus_list1[0],
+		4800,	// SP50
+		4811,	// Fighting_Spirit1
+		4810,	// Fighting_Spirit2
+		4809,	// Fighting_Spirit3
+		4808,	// Fighting_Spirit4
+		4820,	// Fighting_Spirit5
+		4821,	// Fighting_Spirit6
+		4815,	// Spell1
+		4814,	// Spell2
+		4813,	// Spell3
+		4812,	// Spell4
+		4786;	// Mdef2
+	setarray .@bonus_list2[0],
+		4815,	// Spell1
+		4814,	// Spell2
+		4813,	// Spell3
+		4812,	// Spell4
+		4826,	// Spell5
+		4811,	// Fighting_Spirit1
+		4810,	// Fighting_Spirit2
+		4809,	// Fighting_Spirit3
+		4808,	// Fighting_Spirit4
+		4820,	// Fighting_Spirit5
+		4786;	// Mdef2
+	setarray .@bonus_list3[0],
+		4815,	// Spell1
+		4814,	// Spell2
+		4813,	// Spell3
+		4812,	// Spell4
+		4811,	// Fighting_Spirit1
+		4810,	// Fighting_Spirit2
+		4809,	// Fighting_Spirit3
+		4808,	// Fighting_Spirit4
+		4820,	// Fighting_Spirit5
+		4821,	// Fighting_Spirit6
+		4791,	// DEF+3
+		4786;	// Mdef2
+	.@item_id = .@item_id_list[ rand( getarraysize(.@item_id_list) ) ];
+	.@refine = rand(1,6);
+	.@bonus1 = .@bonus_list1[ rand( getarraysize(.@bonus_list1) ) ];
+	.@bonus2 = .@bonus_list1[ rand( getarraysize(.@bonus_list2) ) ];
+	.@bonus3 = .@bonus_list1[ rand( getarraysize(.@bonus_list3) ) ];
+
+	makeitem2 .@item_id,1, 'map_tnm3$, (69 + rand(-5,5)), (70 + rand(-5,5)), 0, .@refine,0, 0,.@bonus1,.@bonus2,.@bonus3;
+	end;
+}
+
+
+//-----------------治療傷患
+1@tnm1,38,113,4	script	受傷的劍士#01	687,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的劍士#01");
+	enablenpc instance_npcname("受傷的劍士#02");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的劍士#02")+"::OnCcdd1";
+	end;
+}
+1@tnm1,38,113,4	script	受傷的劍士#02	688,{ end;
+OnCcdd1:
+	npctalk "感謝你們...我身體舒服多了...";
+	end;
+}
+
+1@tnm1,29,120,4	script	受傷的武道家#01	689,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的武道家#01");
+	enablenpc instance_npcname("受傷的武道家#02");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的武道家#02")+"::OnCcdd1";
+	end;
+}
+1@tnm1,29,120,4	script	受傷的武道家#02	690,{ end;
+OnCcdd1:
+	npctalk "發生什麼事了...";
+	end;
+}
+
+1@tnm1,31,110,4	script	受傷的武道家#03	689,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的武道家#03");
+	enablenpc instance_npcname("受傷的武道家#04");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的武道家#04")+"::OnCcdd1";
+	end;
+}
+1@tnm1,31,110,4	script	受傷的武道家#04	690,{end;
+OnCcdd1:
+	npctalk "嗚阿阿...";
+	end;
+}
+
+1@tnm1,25,117,4	script	受傷的賢者#01	692,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的賢者#01");
+	enablenpc instance_npcname("受傷的賢者#02");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的賢者#02")+"::OnCcdd1";
+	end;
+}
+1@tnm1,25,117,4	script	受傷的賢者#02	693,{end;
+OnCcdd1:
+	npctalk "感謝...";
+	end;
+}
+
+1@tnm1,19,118,4	script	受傷的弓箭手#01	694,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的弓箭手#01");
+	enablenpc instance_npcname("受傷的弓箭手#02");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的弓箭手#02")+"::OnCcdd1";
+	end;
+}
+1@tnm1,19,118,4	script	受傷的弓箭手#02	695,{end;
+OnCcdd1:
+	npctalk "嗚嗯...";
+	end;
+}
+
+1@tnm1,18,110,4	script	受傷的刺客#01	697,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_2"+instance_id(1))==0) {end;}
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",5;
+	specialeffect 72;
+	sleep 2000;
+	specialeffect 6;
+	disablenpc instance_npcname("受傷的刺客#01");
+	enablenpc instance_npcname("受傷的刺客#02");
+	sleep 100;
+	donpcevent instance_npcname("魔神之塔事件1")+"::OnCcdd1";
+	donpcevent instance_npcname("受傷的刺客#02")+"::OnCcdd1";
+	end;
+}
+1@tnm1,18,110,4	script	受傷的刺客#02	698,{end;
+OnCcdd1:
+	npctalk "咳咳咳...";
+	end;
+}
+
+
+//------------------------------觸發點
+1@tnm1,102,24,0	script	觸發點#tnm01	-1,5,10,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_3"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_3"+instance_id(1),1;
+	monster 'map_name$[0],100,25,"--ja--",2939,1,instance_npcname("魔神之塔事件1")+"::OnCcdd2";
+	monster 'map_name$[0],100,22,"--ja--",2939,1,instance_npcname("魔神之塔事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],100,26,152,21,"--ja--",2939,4,instance_npcname("魔神之塔事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],100,26,152,21,"--ja--",2940,4,instance_npcname("魔神之塔事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],100,26,152,21,"--ja--",2941,4,instance_npcname("魔神之塔事件1")+"::OnCcdd2";
+	disablenpc instance_npcname("觸發點#tnm01", instance_id());
+	end;
+}
+
+1@tnm2,135,139,0	script	觸發點#tnm02	-1,12,12,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_tnm_7"+instance_id(1))==1) {end;}
+	setd "$@CD_tnm_7"+instance_id(1),1;
+	disablenpc instance_npcname("觸發點#tnm02", instance_id());
+	donpcevent instance_npcname("魔王夢羅克#01")+"::OnCcdd1";
+	sleep 2000;
+	donpcevent instance_npcname("魔王夢羅克#01")+"::OnCcdd0";
+	sleep 3000;
+	donpcevent instance_npcname("魔王夢羅克#01")+"::OnCcdd1";
+	sleep 4000;
+	donpcevent instance_npcname("達納托斯#01")+"::OnCcdd1";
+	sleep 4000;
+	donpcevent instance_npcname("魔王夢羅克#01")+"::OnCcdd2";
+	sleep 4000;
+	donpcevent instance_npcname("達納托斯#01")+"::OnCcdd2";
+	sleep 4000;
+	donpcevent instance_npcname("露詩#03")+"::OnCcdd1";
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@tnm3,50,176,0	warp	魔神之塔傳送門1_1	1,1,1@tnm3,84,177
+1@tnm3,134,156,0	warp	魔神之塔傳送門1_2	1,1,1@tnm3,169,165
+1@tnm3,183,177,0	warp	魔神之塔傳送門1_3	1,1,1@tnm3,98,5
+
+
+//------------------------------地圖屬性
+1@tnm1	mapflag	partylock
+1@tnm1	mapflag	noteleport
+1@tnm1	mapflag	nosave	SavePoint
+1@tnm1	mapflag	nomemo
+1@tnm1	mapflag	nobranch
+1@tnm1	mapflag	noicewall
+1@tnm1	mapflag	restricted	6
+
+1@tnm2	mapflag	partylock
+1@tnm2	mapflag	noteleport
+1@tnm2	mapflag	nosave	SavePoint
+1@tnm2	mapflag	nomemo
+1@tnm2	mapflag	nobranch
+1@tnm2	mapflag	noicewall
+1@tnm2	mapflag	restricted	6
+
+1@tnm3	mapflag	partylock
+1@tnm3	mapflag	noteleport
+1@tnm3	mapflag	nosave	SavePoint
+1@tnm3	mapflag	nomemo
+1@tnm3	mapflag	nobranch
+1@tnm3	mapflag	noicewall
+1@tnm3	mapflag	restricted	6
+
+
+//------------------------------相關任務NPC
+vdistrict1,32,67,4	script	歷史學家	620,{
+	mes "[歷史學家]";
+	mes "你願意到過去的魔神之塔中";
+	mes "打倒一些魔物取回他的細胞嗎?";
+	next;
+	switch(select("我願意","取消委託","回報委託","不願意")){
+
+	case 1:
+		if(checkquest(30031,HUNTING)>0 ) { 
+		mes "[歷史學家]";
+		mes "你已經接取這個任務了";
+		mes "請先去完成他吧!";
+		}
+		setquest 30031;
+		close;
+
+	case 2:
+		mes "[歷史學家]";
+		mes "已經取消您的任務了~";
+		erasequest 30031;
+		close;
+
+	case 3:
+		if(checkquest(30031,HUNTING)==2 ) { 
+		getitem 6081,10;
+		getitem 31321,3;
+		set Zeny,Zeny+3000000; dispbottom "獲得了3000000Zeny";
+		erasequest 30031; 
+		}
+		mes "[歷史學家]";
+		mes "以處理完畢，已經沒有任務了唷";
+		close;
+
+	case 4:
+		close;
+	}
+}
+

@@ -1,0 +1,826 @@
+
+vdistrict1,28,71,4	script	幽靈皇宮管理者	686,{
+	//副本任務獎勵
+	if(checkquest(32033,HUNTING)==2 ) { 
+	dispbottom "幽靈皇宮任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32033; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_11 < gettime(8) ){
+	set Instance_Bout_11,10;
+	set day_Instance_Bout_11,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_11 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "幽靈皇宮";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_11+"^000000 ]";
+	mes "副本獎勵：";
+	mes "黃土的碎片";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_11,Instance_Bout_11-1;
+
+			//副本任務
+			if(checkquest(32033,HUNTING)<0 ){setquest 32033;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "幽靈皇宮",0;
+	end;
+}
+
+
+//------------------------------幽靈皇宮事件
+1@spa,0,0,0	script	幽靈皇宮事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@spa");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("黃土皇家禁衛軍#02");
+	disablenpc instance_npcname("黃土皇家禁衛軍#03");
+	disablenpc instance_npcname("黃土皇家禁衛軍#04");
+	disablenpc instance_npcname("黃土皇家禁衛軍#05");
+	disablenpc instance_npcname("黃土皇家禁衛軍#06");
+	disablenpc instance_npcname("國王#02");
+	disablenpc instance_npcname("提亞拉公主#01");
+	disablenpc instance_npcname("提亞拉公主#02");
+	disablenpc instance_npcname("國王的屍體#01");
+	disablenpc instance_npcname("貴族的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#02");
+	disablenpc instance_npcname("士兵的屍體#03");
+	disablenpc instance_npcname("士兵的屍體#04");
+	disablenpc instance_npcname("魔劍 塔諾斯#01");
+	disablenpc instance_npcname("魔劍 塔諾斯#02");
+	disablenpc instance_npcname("白銀爵士#01");
+	disablenpc instance_npcname("士兵#01");
+	disablenpc instance_npcname("士兵#02");
+	disablenpc instance_npcname("士兵#03");
+	disablenpc instance_npcname("貴族#01");
+	disablenpc instance_npcname("國王的屍體#01");
+	disablenpc instance_npcname("貴族的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#02");
+	disablenpc instance_npcname("士兵的屍體#03");
+	disablenpc instance_npcname("士兵的屍體#04");
+	disablenpc instance_npcname("觸發點#spa01");
+	disablenpc instance_npcname("幽靈皇宮傳送門1_1");
+	disablenpc instance_npcname("幽靈皇宮傳送門1_2");
+	disablenpc instance_npcname("幽靈皇宮傳送門1_3");
+	disablenpc instance_npcname("幽靈皇宮傳送門1_4");
+	disablenpc instance_npcname("幽靈皇宮傳送門1_5");
+	//副本標籤
+	set 'CD_SAKRAY_1,0;
+	set 'CD_SAKRAY_2,0;
+	set 'CD_SAKRAY_3,0;
+	set 'CD_SAKRAY_4,0;
+	set 'CD_SAKRAY_5,0;
+	set 'CD_SAKRAY_6,0;
+	set 'CD_SAKRAY_7,0;
+	set 'CD_SAKRAY_8,0;
+	set 'CD_SAKRAY_9,0;
+	set 'CD_SAKRAY_10,0;
+	set 'CD_SAKRAY_11,0;
+	set 'CD_SAKRAY_12,0;
+
+	set 'CD_SAKRAY1_1,5;
+	set 'CD_SAKRAY1_2,8;
+	set 'CD_SAKRAY1_3,11;
+	set 'CD_SAKRAY1_4,9;
+	set 'CD_SAKRAY1_5,8;
+	set 'CD_SAKRAY1_6,2;
+	set 'CD_SAKRAY1_7,2;
+	set 'CD_SAKRAY1_8,2;
+	set 'CD_SAKRAY1_9,4;
+	set 'CD_SAKRAY1_10,6;
+	set 'CD_SAKRAY1_11,7;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	areamonster 'map_name$[0],49,208,49,208,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],33,197,33,197,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],34,209,34,209,"--ja--",2948,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],33,184,50,177,"--ja--",2948,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	set 'CD_SAKRAY1_1,'CD_SAKRAY1_1-1;
+	if ('CD_SAKRAY1_1>0) end;
+	sleep 500;
+	areamonster 'map_name$[0],37,191,46,172,"--ja--",2949,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],37,191,46,172,"--ja--",2948,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],28,217,56,198,"--ja--",2949,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],28,217,56,198,"--ja--",2948,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'CD_SAKRAY1_2,'CD_SAKRAY1_2-1;
+	if ('CD_SAKRAY1_2>0) end;
+	sleep 500;
+	instance_announce 0, "出現了通往第二場景的傳點了!!",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("幽靈皇宮傳送門1_1");
+	end;
+
+	OnCcdd4:
+	areamonster 'map_name$[0],130,125,139,112,"--ja--",2951,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],130,125,139,112,"--ja--",2950,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],130,125,139,112,"--ja--",2952,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],96,111,107,107,"--ja--",2951,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],96,111,107,107,"--ja--",2950,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	sleep 20000;
+	areamonster 'map_name$[0],104,131,125,108,"--ja--",2952,3,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],104,131,125,108,"--ja--",2950,3,instance_npcname("幽靈皇宮事件1")+"::OnCcdd5";
+	end;
+
+	OnCcdd5:
+	set 'CD_SAKRAY1_3,'CD_SAKRAY1_3-1;
+	if ('CD_SAKRAY1_3>0) end;
+	instance_announce 0, "出現了通往第三場景的傳點了!!",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("幽靈皇宮傳送門1_2");
+	end;
+
+	OnCcdd6:
+	areamonster 'map_name$[0],30,58,30,58,"--ja--",2953,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],19,41,19,41,"--ja--",2955,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],54,57,54,57,"--ja--",2955,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],57,43,57,43,"--ja--",2954,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],21,23,21,23,"--ja--",2954,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],61,24,61,24,"--ja--",2954,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd7";
+	end;
+
+	OnCcdd7:
+	set 'CD_SAKRAY1_4,'CD_SAKRAY1_4-1;
+	if ('CD_SAKRAY1_4>0) end;
+	instance_announce 0, "出現了通往第四場景的傳點了!!",bc_map,"0xFFFF33";
+	sleep 200;
+	instance_announce 0, "出現了大量不死系魔物!!趕快從右下傳點逃跑吧!",bc_map,"0xFF0033";
+	enablenpc instance_npcname("幽靈皇宮傳送門1_3");
+	areamonster 'map_name$[0],46,66,66,53,"--ja--",2953,8;
+	areamonster 'map_name$[0],46,66,66,53,"--ja--",2954,8;
+	areamonster 'map_name$[0],46,66,66,53,"--ja--",2955,3;
+	areamonster 'map_name$[0],26,62,33,50,"--ja--",2953,8;
+	areamonster 'map_name$[0],26,62,33,50,"--ja--",2954,8;
+	areamonster 'map_name$[0],26,62,33,50,"--ja--",2955,3;
+	areamonster 'map_name$[0],18,45,24,38,"--ja--",2953,8;
+	areamonster 'map_name$[0],18,45,24,38,"--ja--",2954,8;
+	areamonster 'map_name$[0],18,45,24,38,"--ja--",2955,3;
+	areamonster 'map_name$[0],16,29,25,17,"--ja--",2953,8;
+	areamonster 'map_name$[0],16,29,25,17,"--ja--",2954,8;
+	areamonster 'map_name$[0],16,29,25,17,"--ja--",2955,3;
+	end;
+
+	OnCcdd8:
+	set 'CD_SAKRAY1_5,'CD_SAKRAY1_5-1;
+	if ('CD_SAKRAY1_5>0) end;
+	enablenpc instance_npcname("觸發點#spa01");
+	end;
+
+	OnCcdd9:
+	set 'CD_SAKRAY1_6,'CD_SAKRAY1_6-1;
+	if ('CD_SAKRAY1_6>0) end;
+	areamonster 'map_name$[0],208,219,187,219,"--ja--",2956,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd10";
+	end;
+
+	OnCcdd10:
+	set 'CD_SAKRAY1_7,'CD_SAKRAY1_7-1;
+	if ('CD_SAKRAY1_7>0) end;
+	areamonster 'map_name$[0],186,214,186,214,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],186,200,186,200,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd11";
+	end;
+
+	OnCcdd11:
+	set 'CD_SAKRAY1_8,'CD_SAKRAY1_8-1;
+	if ('CD_SAKRAY1_8>0) end;
+	enablenpc instance_npcname("黃土皇家禁衛軍#04");
+	enablenpc instance_npcname("白銀爵士#01");
+	enablenpc instance_npcname("國王的屍體#01");
+	enablenpc instance_npcname("貴族的屍體#01");
+	enablenpc instance_npcname("士兵的屍體#01");
+	enablenpc instance_npcname("士兵的屍體#02");
+	enablenpc instance_npcname("士兵的屍體#03");
+	enablenpc instance_npcname("士兵的屍體#04");
+	end;
+
+	OnCcdd12:
+	instance_announce 0, "出現了通往第五場景的傳點了!!",bc_map,"0xFFFF33";
+	enablenpc instance_npcname("幽靈皇宮傳送門1_4");
+	end;
+
+	OnCcdd13:
+	set 'CD_SAKRAY1_9,'CD_SAKRAY1_9-1;
+	if ('CD_SAKRAY1_9>0) end;
+	areamonster 'map_name$[0],182,55,185,54,"--ja--",2957,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],182,55,185,54,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],178,36,178,36,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],205,25,205,25,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],197,23,197,23,"--ja--",2957,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],174,18,174,18,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd14";
+	end;
+
+	OnCcdd14:
+	set 'CD_SAKRAY1_10,'CD_SAKRAY1_10-1;
+	if ('CD_SAKRAY1_10>0) end;
+	areamonster 'map_name$[0],215,61,215,61,"--ja--",2957,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],217,42,217,42,"--ja--",2957,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],205,65,205,65,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],193,42,193,42,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],184,61,184,61,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],203,20,203,20,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],199,50,199,50,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd15";
+	end;
+
+	OnCcdd15:
+	set 'CD_SAKRAY1_11,'CD_SAKRAY1_11-1;
+	if ('CD_SAKRAY1_11>0) end;
+	enablenpc instance_npcname("黃土皇家禁衛軍#06");
+	areamonster 'map_name$[0],196,43,196,43,"--ja--",2959,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd16";
+	end;
+
+	OnCcdd16:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【幽靈皇宮】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("魔劍 塔諾斯#02");
+	set 'CD_SAKRAY_12,1;
+	end;
+}
+
+
+//------------------------------副本NPC
+1@spa,42,201,8	script	黃土皇家禁衛軍#01	686,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_1==1) {end;}
+	set 'CD_SAKRAY_1,1;
+	sleep 500;
+	donpcevent instance_npcname("國王#01")+"::OnCcdd";
+	sleep 4000;
+	npctalk "公..公主的護衛?";
+	sleep 9000;
+	npctalk "是的!在下一定不會讓公主受到任何傷害!!";
+	sleep 1000;
+	donpcevent instance_npcname("幽靈皇宮事件1")+"::OnCcdd1";
+	disablenpc instance_npcname("黃土皇家禁衛軍#01");
+	disablenpc instance_npcname("國王#01");
+	end;
+}
+
+1@spa,132,123,8	script	黃土皇家禁衛軍#02	686,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_3==1) {end;}
+	set 'CD_SAKRAY_3,1;
+
+	cutin "npc-tiara",2;
+	mes "[黃土皇家禁衛軍]";
+	mes "公主這麼晚了你還不休息嗎";
+	npctalk "公主這麼晚了你還不休息嗎";
+	next;
+	mes "[提亞拉公主]";
+	mes "黃土皇家禁衛軍你知道嗎?父王要把我嫁給鄰國的王子了..";
+	donpcevent instance_npcname("提亞拉公主#01")+"::OnCcdd1";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "恩...我從禁衛隊長那邊聽說了..";
+	npctalk "恩...我從禁衛隊長那邊聽說了..";
+	next;
+	mes "[提亞拉公主]";
+	mes "那你...沒有什麼想法嗎?";
+	donpcevent instance_npcname("提亞拉公主#01")+"::OnCcdd2";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "提亞..我相信他會對你很好的，他會給你幸福..";
+	npctalk "提亞..我相信他會對你很好的，他會給你幸福..";
+	next;
+	mes "[提亞拉公主]";
+	mes "你在說什麼!?";
+	mes "你難道不知道我心裡對你的想法嗎?";
+	donpcevent instance_npcname("提亞拉公主#01")+"::OnCcdd3";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "我知道...但我只是一個小小的護衛..我無法給你富裕安穩的生活";
+	npctalk "我知道...但我只是一個小小的護衛..我無法給你富裕安穩的生活";
+	next;
+	mes "[提亞拉公主]";
+	mes "我並不在乎那些..我們走你帶我走吧..";
+	mes "去遙遠的地方，沒有任何人的地方";
+	mes "只要那裡有我們追求的幸福...";
+	mes "黃土皇家禁衛軍你可以帶我去吧...?";
+	donpcevent instance_npcname("提亞拉公主#01")+"::OnCcdd4";
+	next;
+	cutin "npc-tiara",255;
+	mes "[黃土皇家禁衛軍]";
+	mes "對不起..提亞..對不起...";
+	npctalk "對不起..提亞..對不起...";
+	close2;
+	donpcevent instance_npcname("幽靈皇宮事件1")+"::OnCcdd4";
+	disablenpc instance_npcname("黃土皇家禁衛軍#02");
+	disablenpc instance_npcname("提亞拉公主#01");
+	end;
+}
+
+1@spa,30,58,6	script	黃土皇家禁衛軍#03	686,{ end;
+
+OnCcdd1:
+	npctalk "國王陛下你聽我說，鄰國的王子他是魔物假冒的!!";
+	end;
+
+OnCcdd2:
+	sleep 7000;
+	npctalk "你是誰?";
+	sleep 9000;
+	npctalk "很抱歉，我沒興趣和一個不露臉的人講話...";
+	sleep 9000;
+	npctalk "契約!?你要什麼?";
+	sleep 7000;
+	npctalk "靈魂? ";
+	sleep 2000;
+	npctalk "如果用我微不足道的靈魂可以再見她一面的話... ";
+	sleep 2000;
+	npctalk "好";
+	sleep 2000;
+	npctalk "我願意把我的靈魂交給你!! ";
+	end;
+}
+
+
+1@spa,199,214,1	script	黃土皇家禁衛軍#04	686,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_7==1) {end;}
+	set 'CD_SAKRAY_7,1;
+
+	mes "[黃土皇家禁衛軍]";
+	mes "公主在哪裡?";
+	npctalk "公主在哪裡?";
+	next;
+	mes "[白銀爵士]";
+	mes "哦?這位是誰阿?你應該被關在監牢不是嗎?前任公主直屬護衛";
+	donpcevent instance_npcname("白銀爵士#01")+"::OnCcdd1";
+	next;
+	mes "[白銀爵士]";
+	mes "不過，你來有何貴幹?牢飯不合胃口嗎?";
+	donpcevent instance_npcname("白銀爵士#01")+"::OnCcdd2";
+	next;
+	cutin "tartanos",4;
+	mes "[黃土皇家禁衛軍]";
+	mes "我問你公主在哪裡?";
+	npctalk "我問你公主在哪裡?";
+	next;
+	cutin "tartanos",255;
+	mes "[黃土皇家禁衛軍]";
+	mes "白銀爵士";
+	npctalk "白銀爵士";
+	close2;
+	sleep 500;
+	disablenpc instance_npcname("黃土皇家禁衛軍#04");
+	disablenpc instance_npcname("白銀爵士#01");
+	disablenpc instance_npcname("國王的屍體#01");
+	disablenpc instance_npcname("貴族的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#01");
+	disablenpc instance_npcname("士兵的屍體#02");
+	disablenpc instance_npcname("士兵的屍體#03");
+	disablenpc instance_npcname("士兵的屍體#04");
+	areamonster 'map_name$[0],197,218,197,218,"--ja--",2961,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd12";
+	end;
+}
+
+1@spa,213,42,7	script	黃土皇家禁衛軍#05	686,{ end;
+OnCcdd1:
+	npctalk "提亞!";
+	end;
+OnCcdd2:
+	npctalk "提亞..你振作點..我馬上帶你去找祭司治療..";
+	end;
+OnCcdd3:
+	npctalk "你不要亂說話了..撐住你一定可以恢復的，我們還要一起到沒有任何人的地方..";
+	end;
+OnCcdd4:
+	npctalk "阿阿阿阿阿阿阿.....提亞拉拉拉拉拉....";
+	end;
+}
+
+
+1@spa,196,42,6	script	黃土皇家禁衛軍#06	685,{
+
+	if ('CD_SAKRAY_12==0) {end;}
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_11==1) {end;}
+	set 'CD_SAKRAY_11,1;
+	cutin "cry-b",2;
+	mes "[黃土皇家禁衛軍]";
+	mes "塔諾斯你為什麼會被封印在這裡?";
+	npctalk "塔諾斯你為什麼會被封印在這裡?";
+	next;
+	mes "[魔劍 塔諾斯]";
+	mes "我被鑄造的同時，『他們』開始互相猜疑，妒忌，最後立下詛咒，把我關在這裡直到今天遇到你!!";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd1";
+	next;
+	mes "[魔劍 塔諾斯]";
+	mes "你選擇的沒錯，這也是你必然的選擇..因為一切都是『他們』設定的";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd2";
+	next;
+	mes "[魔劍 塔諾斯]";
+	mes "包括你遇到公主，陷入愛情然後又因身分地位的差異而陷入絕望..";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd3";
+	next;
+	mes "[魔劍 塔諾斯]";
+	mes "都是『他們』預設的，但這只是過程，你和我的相遇，進而立下契約，這才是『他們』的最終計畫!!";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd4";
+	next;
+	cutin "cry-b",255;
+	cutin "sakray",2;
+	mes "[魔劍 塔諾斯]";
+	mes "憤怒!!燃燒吧!!";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd5";
+	next;
+	mes "[魔劍 塔諾斯]";
+	mes "沒錯..你和我原先就是共同體，只不過藉由這個少女的死，再次確認這個事實而已";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd6";
+	next;
+	cutin "sakray",255;
+	mes "[魔劍 塔諾斯]";
+	mes "把你壓抑在心底的憎恨盡情的燃燒吧!";
+	donpcevent instance_npcname("魔劍 塔諾斯#02")+"::OnCcdd7";
+	close2;
+	sleep 1000;
+	instance_announce 0, "幽靈皇宮的故事到此結束，請從右下傳點離開吧...",bc_map,"0xFFFF33";
+	disablenpc instance_npcname("黃土皇家禁衛軍#06");
+	disablenpc instance_npcname("魔劍 塔諾斯#02");
+	enablenpc instance_npcname("幽靈皇宮傳送門1_5");
+	end;
+}
+
+
+1@spa,135,125,4	script	提亞拉公主#01	640,{ end;
+OnCcdd1:
+	npctalk "黃土皇家禁衛軍你知道嗎?父王要把我嫁給鄰國的王子了..";
+	end;
+OnCcdd2:
+	npctalk "那你...沒有什麼想法嗎?";
+	end;
+OnCcdd3:
+	npctalk "你在說什麼!? 你難道不知道我心裡對你的想法嗎?";
+	end;
+OnCcdd4:
+	npctalk "我並不在乎那些..我們走你帶我走吧..";
+	npctalk "去遙遠的地方，沒有任何人的地方";
+	npctalk "只要那裡有我們追求的幸福...";
+	npctalk "黃土皇家禁衛軍你可以帶我去吧...?";
+	end;
+}
+
+
+1@spa,216,43,4	script	提亞拉公主#02	640,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_10==1) {end;}
+	set 'CD_SAKRAY_10,1;
+
+	mes "[提亞拉公主]";
+	mes "黃土皇家禁衛軍..能在看到你真好..我好怕死之前都無法在看到你";
+	npctalk "黃土皇家禁衛軍..能在看到你真好..我好怕死之前都無法在看到你";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "提亞!";
+	donpcevent instance_npcname("黃土皇家禁衛軍#05")+"::OnCcdd1";
+	next;
+	cutin "npc-tiara",2;
+	mes "[提亞拉公主]";
+	mes "黃土皇家禁衛軍..很抱歉我可能沒辦法陪你一起去了..";
+	npctalk "黃土皇家禁衛軍..很抱歉我可能沒辦法陪你一起去了..";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "提亞..你振作點..我馬上帶你去找祭司治療..";
+	donpcevent instance_npcname("黃土皇家禁衛軍#05")+"::OnCcdd2";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "你不要亂說話了..撐住你一定可以恢復的，我們還要一起到沒有任何人的地方..";
+	donpcevent instance_npcname("黃土皇家禁衛軍#05")+"::OnCcdd3";
+	next;
+	cutin "npc-tiara",255;
+	cutin "b-tiara",2;
+	mes "[提亞拉公主]";
+	mes "黃土皇家禁衛軍..很抱歉我可能沒辦法陪你一起去了..";
+	npctalk "黃土皇家禁衛軍..很抱歉我可能沒辦法陪你一起去了..";
+	next;
+	cutin "b-tiara",255;
+	mes "[黃土皇家禁衛軍]";
+	mes "阿阿阿阿阿阿阿.....提亞拉拉拉拉拉....";
+	donpcevent instance_npcname("黃土皇家禁衛軍#05")+"::OnCcdd4";
+	close2;
+	areamonster 'map_name$[0],192,66,192,66,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],207,54,207,54,"--ja--",2954,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],198,49,198,49,"--ja--",2949,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],195,42,195,42,"--ja--",2957,1,instance_npcname("幽靈皇宮事件1")+"::OnCcdd13";
+	disablenpc instance_npcname("黃土皇家禁衛軍#05");
+	disablenpc instance_npcname("提亞拉公主#02");
+}
+
+
+1@spa,41,204,4	script	國王#01	965,{ end;
+OnCcdd:
+	sleep 1000;
+	npctalk "黃土皇家禁衛軍你從明天開始你就轉任為公主的直屬護衛吧";
+	sleep 7000;
+	npctalk "是的..這是禁衛隊長特別推薦你的";
+	sleep 2000;
+	npctalk "你就回去好好準備吧，明天開始就開始擔任公主的直屬護衛";
+	end;
+}
+
+1@spa,32,54,1	script	國王#02	965,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_4==1) {end;}
+	set 'CD_SAKRAY_4,1;
+	mes "[國王]";
+	mes "黃土皇家禁衛軍你要為你汙衊鄰國的王子的行為向他道歉嗎";
+	npctalk "黃土皇家禁衛軍你要為你汙衊鄰國的王子的行為向他道歉嗎";
+	next;
+	mes "[黃土皇家禁衛軍]";
+	mes "國王陛下你聽我說，鄰國的王子他是魔物假冒的!!";
+	donpcevent instance_npcname("黃土皇家禁衛軍#03")+"::OnCcdd1";
+	next;
+	mes "[國王]";
+	mes "哼!枉費我這麼看重你，你卻為了記忌妒鄰國的王子編造出這種謊言";
+	npctalk "哼!枉費我這麼看重你，你卻為了記忌妒鄰國的王子編造出這種謊言";
+	next;
+	mes "[國王]";
+	mes "你就在這邊好好的反省吧";
+	npctalk "你就在這邊好好的反省吧";
+	close2;
+	disablenpc instance_npcname("國王#02");
+	disablenpc instance_npcname("士兵#01");
+	disablenpc instance_npcname("士兵#02");
+	disablenpc instance_npcname("士兵#03");
+	disablenpc instance_npcname("貴族#01");
+	donpcevent instance_npcname("黃土皇家禁衛軍#03")+"::OnCcdd2";
+	donpcevent instance_npcname("魔劍 塔諾斯#01")+"::OnCcdd1";
+	sleep 41000;
+	disablenpc instance_npcname("魔劍 塔諾斯#01");
+	disablenpc instance_npcname("黃土皇家禁衛軍#03");
+	donpcevent instance_npcname("幽靈皇宮事件1")+"::OnCcdd6";
+	end;
+}
+
+
+1@spa,35,58,4	script	魔劍 塔諾斯#01	844,{ end;
+OnCcdd1:
+	sleep 1000;
+	npctalk "好久沒人來這裡了，讓我看看..";
+	sleep 2000;
+	npctalk "你的心理充滿強烈的渴望，那是種複雜的感情，包含愛、背叛、忠誠...";
+	sleep 2000;
+	npctalk "看來是令人暈眩又無法掌握的感情炫渦";
+	sleep 5000;
+	npctalk "呼呼..你聽得到我的聲音嗎?";
+	sleep 2000;
+	npctalk "喔..實在令人驚訝..";
+	sleep 2000;
+	npctalk "我知道了，你渴望得到的就是公主，她是個高貴又楚楚可憐的公主..";
+	sleep 5000;
+	npctalk "我的名字是塔諾斯，我是一柄為了統治世界而誕生的劍";
+	sleep 2000;
+	npctalk "你要不要和我訂立契約?";
+	sleep 2000;
+	npctalk "我可以給你所要的力量!!";
+	sleep 5000;
+	npctalk "我要的是自由，可以擺脫一切的自由!";
+	sleep 2000;
+	npctalk "你的靈魂可以帶給我自由!";
+	sleep 8000;
+	npctalk "呵呵呵...";
+	sleep 2000;
+	npctalk "好，這樣就對了";
+	sleep 2000;
+	npctalk "契約成立!!";
+	sleep 1000;
+	end;
+}
+
+1@spa,196,39,4	script	魔劍 塔諾斯#02	844,{ end;
+OnCcdd1:
+	npctalk "我被鑄造的同時，『他們』開始互相猜疑，妒忌，最後立下詛咒，把我關在這裡直到今天遇到你!!";
+	end;
+OnCcdd2:
+	npctalk "你選擇的沒錯，這也是你必然的選擇..因為一切都是『他們』設定的";
+	end;
+OnCcdd3:
+	npctalk "包括你遇到公主，陷入愛情然後又因身分地位的差異而陷入絕望..";
+	end;
+OnCcdd4:
+	npctalk "都是『他們』預設的，但這只是過程，你和我的相遇，進而立下契約，這才是『他們』的最終計畫!!";
+	end;
+OnCcdd5:
+	npctalk "憤怒!!燃燒吧!!";
+	end;
+OnCcdd6:
+	npctalk "沒錯..你和我原先就是共同體，只不過藉由這個少女的死，再次確認這個事實而已";
+	end;
+OnCcdd7:
+	npctalk "把你壓抑在心底的憎恨盡情的燃燒吧!";
+	end;
+}
+
+
+1@spa,197,218,6	script	白銀爵士#01	470,{ end;
+OnCcdd1:
+	npctalk "哦?這位是誰阿?你應該被關在監牢不是嗎?前任公主直屬護衛";
+	end;
+OnCcdd2:
+	npctalk "不過，你來有何貴幹?牢飯不合胃口嗎?";
+	end;
+}
+
+1@spa,25,53,8	script	士兵#01	413,{ end;}
+1@spa,34,53,1	script	士兵#02	413,{ end;}
+1@spa,30,52,8	script	士兵#03	417,{ end;}
+1@spa,28,52,8	script	貴族#01	418,{ end;}
+1@spa,194,217,4	script	國王的屍體#01	956,{ end;}
+1@spa,211,194,2	script	貴族的屍體#01	697,{ end;}
+1@spa,206,209,6	script	士兵的屍體#01	694,{ end;}
+1@spa,193,207,6	script	士兵的屍體#02	687,{ end;}
+1@spa,201,198,2	script	士兵的屍體#03	692,{ end;}
+1@spa,189,195,2	script	士兵的屍體#04	585,{ end;}
+
+
+//------------------------------觸發點
+1@spa,197,204,0	script	觸發點#spa01	-1,20,3,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_6==1) {end;}
+	set 'CD_SAKRAY_6,1;
+	areamonster 'map_name$[0],187,219,187,219,"--ja--",2949,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd9";
+	disablenpc instance_npcname("觸發點#spa01", instance_id());
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@spa,41,217,0	script	幽靈皇宮傳送門1_1	45,1,1,{
+	warp 'map_name$[0],114,120;
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_2==1) {end;}
+	set 'CD_SAKRAY_2,1;
+	enablenpc instance_npcname("黃土皇家禁衛軍#02");
+	enablenpc instance_npcname("提亞拉公主#01");
+	end;
+}
+
+1@spa,117,133,0	script	幽靈皇宮傳送門1_2	45,1,1,{
+	warp 'map_name$[0],61,42;
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_5==1) {end;}
+	set 'CD_SAKRAY_5,1;
+	enablenpc instance_npcname("黃土皇家禁衛軍#03");
+	enablenpc instance_npcname("國王#02");
+	enablenpc instance_npcname("士兵#01");
+	enablenpc instance_npcname("士兵#02");
+	enablenpc instance_npcname("士兵#03");
+	enablenpc instance_npcname("貴族#01");
+	enablenpc instance_npcname("魔劍 塔諾斯#01");
+	end;
+}
+
+1@spa,54,28,0	script	幽靈皇宮傳送門1_3	45,1,1,{
+	warp 'map_name$[0],218,186;
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_8==1) {end;}
+	set 'CD_SAKRAY_8,1;
+	areamonster 'map_name$[0],210,197,220,188,"--ja--",2956,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],184,217,188,212,"--ja--",2956,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],213,217,210,210,"--ja--",2949,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],193,177,202,177,"--ja--",2956,2,instance_npcname("幽靈皇宮事件1")+"::OnCcdd8";
+	end;
+}
+
+1@spa,178,186,0	script	幽靈皇宮傳送門1_4	45,1,1,{
+	warp 'map_name$[0],187,55;
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_SAKRAY_9==1) {end;}
+	set 'CD_SAKRAY_9,1;
+	enablenpc instance_npcname("黃土皇家禁衛軍#05");
+	enablenpc instance_npcname("提亞拉公主#02");
+	end;
+}
+
+1@spa,211,28,0	script	幽靈皇宮傳送門1_5	45,1,1,{
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	if(checkquest(32033,HUNTING)==2 ) { 
+	dispbottom "幽靈皇宮任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",23;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32033; }
+	end;
+}
+
+
+//------------------------------地圖屬性
+1@spa	mapflag	partylock
+1@spa	mapflag	noteleport
+1@spa	mapflag	nosave	SavePoint
+1@spa	mapflag	nomemo
+1@spa	mapflag	nobranch
+1@spa	mapflag	noicewall
+1@spa	mapflag	restricted	6

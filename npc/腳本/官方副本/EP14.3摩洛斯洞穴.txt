@@ -1,0 +1,597 @@
+vdistrict1,15,84,4	script	摩洛斯洞穴管理者	730,{
+
+	//檢查任務是否完成
+	if(checkquest(9318,HUNTING)==2 ) {
+	mes "[夢羅克追擊隊員]";
+	mes "這些物品就是要給你的獎勵!";
+	getitem 22537,1*$EP1501;	//勇士的戰利品
+	getitem 6684,1*$EP1501;	//勇士之證
+	erasequest 9318;
+	close; }
+	//副本任務獎勵
+	if(checkquest(32043,HUNTING)==2 ) { 
+	dispbottom "摩洛斯洞穴任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32043; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_15 < gettime(8) ){
+	set Instance_Bout_15,10;
+	set day_Instance_Bout_15,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_15 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[夢羅克追擊隊員]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "摩洛斯洞穴";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[夢羅克追擊隊員]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_15+"^000000 ]";
+	mes "副本獎勵：";
+	mes "勇士的戰利品x1";
+	mes "勇士之證x1";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[夢羅克追擊隊員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[夢羅克追擊隊員]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[夢羅克追擊隊員]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[夢羅克追擊隊員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_15,Instance_Bout_15-1;
+
+			//副本任務
+			if(checkquest(32043,HUNTING)<0 ){setquest 32043;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "摩洛斯洞穴",0;
+	end;
+}
+
+
+//------------------------------摩洛斯洞穴事件
+1@rev,0,0,0	script	摩洛斯洞穴事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@rev");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("死神路克#01");
+	disablenpc instance_npcname("負傷的夢羅克#01");
+	disablenpc instance_npcname("負傷的夢羅克#02");
+	disablenpc instance_npcname("夢羅克的手下#01");
+	disablenpc instance_npcname("夢羅克的手下#02");
+	disablenpc instance_npcname("夢羅克的手下#03");
+	disablenpc instance_npcname("觸發點#rev01");
+	disablenpc instance_npcname("摩洛斯洞穴傳送門1_1");
+	disablenpc instance_npcname("摩洛斯洞穴傳送門1_2");
+	disablenpc instance_npcname("摩洛斯洞穴傳送門1_3");
+	disablenpc instance_npcname("摩洛斯洞穴傳送門1_4");
+	disablenpc instance_npcname("摩洛斯洞穴傳送門1_5");
+	//副本標籤
+	setd "$@CD_rev_1"+instance_id(1),0;
+	setd "$@CD_rev_2"+instance_id(1),0;
+	setd "$@CD_rev_3"+instance_id(1),0;
+	setd "$@CD_rev_4"+instance_id(1),0;
+	setd "$@CD_rev1_1"+instance_id(1),9;
+	//自動出怪
+	areamonster 'map_name$[0],32,182,32,182,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],32,181,32,181,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],32,180,32,180,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],43,182,43,182,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],43,181,43,181,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],43,180,43,180,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],70,182,43,182,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],70,181,43,181,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],70,180,43,180,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd1";
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),4;
+	enablenpc instance_npcname("死神路克#01");
+	enablenpc instance_npcname("負傷的夢羅克#01");
+	sleep 3000;
+	donpcevent instance_npcname("死神路克#01")+"::OnCcdd1";
+	sleep 3000;
+	donpcevent instance_npcname("死神路克#01")+"::OnCcdd2";
+	sleep 3000;
+	donpcevent instance_npcname("死神路克#01")+"::OnCcdd3";
+	sleep 3000;
+	donpcevent instance_npcname("死神路克#01")+"::OnCcdd4";
+	sleep 3000;
+	enablenpc instance_npcname("摩洛斯洞穴傳送門1_1");
+	enablenpc instance_npcname("觸發點#rev01");
+	disablenpc instance_npcname("死神路克#01");
+	end;
+
+	OnCcdd2:
+	enablenpc instance_npcname("負傷的夢羅克#02");
+	sleep 500;
+	donpcevent instance_npcname("負傷的夢羅克#02")+"::OnCcdd1";
+	sleep 3000;
+	donpcevent instance_npcname("負傷的夢羅克#02")+"::OnCcdd2";
+	sleep 3000;
+	donpcevent instance_npcname("負傷的夢羅克#02")+"::OnCcdd3";
+	sleep 3000;
+	donpcevent instance_npcname("負傷的夢羅克#02")+"::OnCcdd4";
+	sleep 3000;
+	disablenpc instance_npcname("負傷的夢羅克#02");
+	enablenpc instance_npcname("夢羅克的手下#01");
+	enablenpc instance_npcname("摩洛斯洞穴傳送門1_2");
+	end;
+
+	OnCcdd3:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),4;
+	areamonster 'map_name$[0],25,119,25,119,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],33,128,33,128,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],42,120,42,120,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],34,111,34,111,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd4:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),4;
+	areamonster 'map_name$[0],25,119,25,119,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],33,128,33,128,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],42,120,42,120,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],34,111,34,111,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd5";
+	end;
+
+	OnCcdd5:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],25,119,25,119,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],33,128,33,128,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],42,120,42,120,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],34,111,34,111,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],28,124,28,124,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],39,114,34,114,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd6";
+	end;
+
+	OnCcdd6:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],25,119,25,119,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],33,128,33,128,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],42,120,42,120,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],34,111,34,111,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],28,124,28,124,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	areamonster 'map_name$[0],39,114,34,114,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd7";
+	end;
+
+	OnCcdd7:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	instance_announce 0, "夢羅克的手下：哼..我就到下個地區等你們!",bc_map,"0x3399FF";
+	disablenpc instance_npcname("夢羅克的手下#01");
+	enablenpc instance_npcname("摩洛斯洞穴傳送門1_3");
+	enablenpc instance_npcname("夢羅克的手下#02");
+	end;
+
+	OnCcdd8:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],25,48,25,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],33,55,33,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],42,48,42,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],34,39,34,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],40,41,40,41,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	areamonster 'map_name$[0],40,54,40,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd9";
+	end;
+
+	OnCcdd9:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),7;
+	areamonster 'map_name$[0],25,48,25,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],33,55,33,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],42,48,42,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],34,39,34,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],40,41,40,41,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],40,54,40,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	areamonster 'map_name$[0],27,53,27,53,"--ja--",3005,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd10";
+	end;
+
+	OnCcdd10:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),8;
+	areamonster 'map_name$[0],25,48,25,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],33,55,33,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],42,48,42,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],34,39,34,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],40,41,40,41,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],40,54,40,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],27,43,27,43,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],38,43,38,43,"--ja--",3005,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd11";
+	end;
+
+	OnCcdd11:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),8;
+	areamonster 'map_name$[0],25,48,25,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],33,55,33,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],42,48,42,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],34,39,34,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],44,48,44,48,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],27,54,27,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],27,43,27,43,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],40,41,40,41,"--ja--",3005,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd12";
+	end;
+
+	OnCcdd12:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	instance_announce 0, "夢羅克的手下：有本事就再繼續跟者來吧!",bc_map,"0x3399FF";
+	disablenpc instance_npcname("夢羅克的手下#02");
+	enablenpc instance_npcname("摩洛斯洞穴傳送門1_4");
+	enablenpc instance_npcname("夢羅克的手下#03");
+	end;
+
+	OnCcdd13:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3006,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd14";
+	end;
+
+	OnCcdd14:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3006,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd15";
+	end;
+
+	OnCcdd15:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),7;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],103,54,103,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd16";
+	end;
+
+	OnCcdd16:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),7;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3004,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],103,54,103,54,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd17";
+	end;
+
+	OnCcdd17:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	setd "$@CD_rev1_1"+instance_id(1),7;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],103,54,103,54,"--ja--",3002,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3000,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3002,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd18";
+	end;
+
+	OnCcdd18:
+	setd "$@CD_rev1_1"+instance_id(1),getd("$@CD_rev1_1"+instance_id(1))-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+getd("$@CD_rev1_1"+instance_id(1))+"隻怪物",bc_all,0xD7BA98;
+	if (getd("$@CD_rev1_1"+instance_id(1))>0) end;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【摩洛斯洞穴】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	disablenpc instance_npcname("夢羅克的手下#03");
+	enablenpc instance_npcname("摩洛斯洞穴傳送門1_5");
+	instance_announce 0, "夢羅克追擊隊員：感謝你們..看來躲藏在這邊的夢羅克的手下都被你們清除了",bc_map,"0xFFFF33";
+	sleep 1000;
+	instance_announce 0, "夢羅克追擊隊員：請進入傳點後來找我領取獎勵吧!",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------副本NPC
+1@rev,64,181,4	script	死神路克#01	3029,{ end;
+OnCcdd1:
+	npctalk "想不到你們能追蹤到這邊..";
+	end;
+OnCcdd2:
+	npctalk "不過就憑你們幾個又能做些什麼?";
+	end;
+OnCcdd3:
+	npctalk "如果你們真的不怕死，就繼續跟來吧";
+	end;
+OnCcdd4:
+	npctalk "洞穴的最深處就是你們的墓穴...";
+	end;
+}
+
+1@rev,111,178,4	script	負傷的夢羅克#01	2998,{ end;
+OnCcdd1:
+	npctalk "你們還真是死纏不休...";
+	end;
+OnCcdd2:
+	npctalk "連我這個秘密巢穴都能找到";
+	end;
+OnCcdd3:
+	npctalk "就算我現在受傷了，但就憑你們幾個也趕來挑戰我";
+	end;
+OnCcdd4:
+	npctalk "來吧!!讓我好好教訓你們";
+	end;
+	specialeffect EF_VOLCANO;
+}
+
+1@rev,111,178,4	script	負傷的夢羅克#02	2998,{ end;
+OnCcdd1:
+	npctalk "真想不到你們有本事打倒我";
+	end;
+OnCcdd2:
+	npctalk "不過也不需要太得意";
+	end;
+OnCcdd3:
+	npctalk "我只是夢羅克大人的幻影罷了";
+	end;
+OnCcdd4:
+	npctalk "就讓下個地區的守護者來解決你們吧!!";
+	end;
+}
+
+1@rev,34,120,4	script	夢羅克的手下#01	3007,3,3,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_rev_2"+instance_id(1))==1) {end;}
+	setd "$@CD_rev_2"+instance_id(1),1;
+	specialeffect EF_STORMGUST;
+	sleep 2000;
+	instance_announce 0, "夢羅克的手下：已經很久沒人到達這裡了..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：我到底在這邊沉睡了多久，連我自己都忘了..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：就讓我的手下陪你們玩玩吧..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：出來吧!埋藏在地底深處的怨靈吧!!",bc_map,"0x3399FF";
+	sleep 1000;
+	setd "$@CD_rev1_1"+instance_id(1),4;
+	areamonster 'map_name$[0],25,119,25,119,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],33,128,33,128,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],42,120,42,120,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],34,111,34,111,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd3";
+	end;
+}
+
+1@rev,34,48,4	script	夢羅克的手下#02	3007,3,3,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_rev_3"+instance_id(1))==1) {end;}
+	setd "$@CD_rev_3"+instance_id(1),1;
+	specialeffect EF_STORMGUST;
+	sleep 2000;
+	instance_announce 0, "夢羅克的手下：你們又追上來了..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：廢話不多說了..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：出來吧!埋藏在地底深處的怨靈吧!!",bc_map,"0x3399FF";
+	sleep 1000;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],25,48,25,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],33,55,33,55,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],42,48,42,48,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],34,39,34,39,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],28,52,28,52,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	areamonster 'map_name$[0],28,42,28,42,"--ja--",3003,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd8";
+	end;
+}
+
+1@rev,112,49,4	script	夢羅克的手下#03	3007,3,3,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_rev_4"+instance_id(1))==1) {end;}
+	setd "$@CD_rev_4"+instance_id(1),1;
+	specialeffect EF_STORMGUST;
+	sleep 2000;
+	instance_announce 0, "夢羅克的手下：想不到你們能追到這邊..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：不過你們中計了，這裡沉睡者許多夢羅克大人直屬的部下..",bc_map,"0x3399FF";
+	sleep 3000;
+	instance_announce 0, "夢羅克的手下：出來吧!埋藏在地底深處的怨靈吧!!",bc_map,"0x3399FF";
+	sleep 1000;
+	setd "$@CD_rev1_1"+instance_id(1),6;
+	areamonster 'map_name$[0],103,48,103,48,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],111,55,111,55,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],120,48,120,48,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],112,39,112,39,"--ja--",3008,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],104,41,104,41,"--ja--",3001,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],119,54,119,54,"--ja--",3006,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd13";
+	end;
+}
+
+
+//------------------------------觸發點
+1@rev,111,178,0	script	觸發點#rev01	-1,5,5,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if (getd("$@CD_rev_1"+instance_id(1))==1) {end;}
+	setd "$@CD_rev_1"+instance_id(1),1;
+	donpcevent instance_npcname("負傷的夢羅克#01")+"::OnCcdd1";
+	sleep 2000;
+	donpcevent instance_npcname("負傷的夢羅克#01")+"::OnCcdd2";
+	sleep 2000;
+	donpcevent instance_npcname("負傷的夢羅克#01")+"::OnCcdd3";
+	sleep 2000;
+	donpcevent instance_npcname("負傷的夢羅克#01")+"::OnCcdd4";
+	sleep 2000;
+	disablenpc instance_npcname("觸發點#rev01");
+	disablenpc instance_npcname("負傷的夢羅克#01");
+	areamonster 'map_name$[0],111,178,111,178,"--ja--",2998,1,instance_npcname("摩洛斯洞穴事件1")+"::OnCcdd2";
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@rev,70,181,0	warp	摩洛斯洞穴傳送門1_1	1,1,1@rev,103,177
+1@rev,111,178,0	warp	摩洛斯洞穴傳送門1_2	1,1,1@rev,33,117
+1@rev,33,119,0	warp	摩洛斯洞穴傳送門1_3	1,1,1@rev,31,50
+1@rev,33,47,0	warp	摩洛斯洞穴傳送門1_4	1,1,1@rev,104,48
+1@rev,111,47,29,56,0	script	摩洛斯洞穴傳送門1_5	45,1,1,{
+	//檢查任務是否完成
+	if(checkquest(9318,HUNTING)==2 ) {
+	mes "[夢羅克追擊隊員]";
+	mes "這些物品就是要給你的獎勵!";
+	getitem 22537,1*$EP1501;	//勇士的戰利品
+	getitem 6684,1*$EP1501;	//勇士之證
+	erasequest 9318;
+	close; }
+	//副本任務獎勵
+	if(checkquest(32043,HUNTING)==2 ) { 
+	dispbottom "摩洛斯洞穴任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",27;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32043; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+
+//------------------------------地圖屬性
+1@rev	mapflag	partylock
+1@rev	mapflag	noteleport
+1@rev	mapflag	nosave	SavePoint
+1@rev	mapflag	nomemo
+1@rev	mapflag	nobranch
+1@rev	mapflag	noicewall
+1@rev	mapflag	restricted	6
+
+

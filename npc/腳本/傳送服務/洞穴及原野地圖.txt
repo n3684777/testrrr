@@ -1,0 +1,492 @@
+function	script	Cave_Map	{
+
+	mes "[傳送服務]";
+	mes "請選擇您要到達的地區";
+	next;
+	switch(select("公會密穴","EP16之前地圖","EP16之後地圖")) {
+
+	case 1:
+		mes "[傳送服務]";
+		mes "請選擇您要到達的地圖";
+		next;
+		switch(select("【1】地下工會 密穴","【2】地下工會 密穴2F","【3】深淵迴廊","【4】SE地下工會秘穴","【5】TE公會密穴")) {
+
+		case 1:
+			switch(select("斐楊 工會密穴【gld_dun01】","艾爾帕蘭 工會密穴【gld_dun02】","普隆德拉 工會密穴【gld_dun03】","吉芬 工會密穴【gld_dun04】",
+			"斐楊 工會密穴二樓【gld_dun01_2】","艾爾帕蘭 工會密穴二樓【gld_dun02_2】","普隆德拉 工會密穴二樓【gld_dun03_2】","吉芬 工會密穴二樓【gld_dun04_2】")) {
+			case 1: set WarpMap$,"gld_dun01"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun01",120,20;	close;
+			case 2: set WarpMap$,"gld_dun02"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun02",30,160;	close;
+			case 3: set WarpMap$,"gld_dun03"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun03",240,265;	close;
+			case 4: set WarpMap$,"gld_dun04"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun04",52,124;	close;
+			case 5: set WarpMap$,"gld_dun01_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun01_2",120,20;	close;
+			case 6: set WarpMap$,"gld_dun02_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun02_2",30,160;	close;
+			case 7: set WarpMap$,"gld_dun03_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun03_2",240,265;	close;
+			case 8: set WarpMap$,"gld_dun04_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun04_2",52,124;	close;	}
+
+		case 2:
+			switch(select("地下公會密穴(斐揚)-2【gld_dun01_2】","地下公會密穴(艾爾帕蘭)-2【gld_dun02_2】","地下公會密穴(普隆德拉)-2【gld_dun03_2】","地下公會密穴(吉芬)-2【gld_dun04_2】")) {
+			case 1: set WarpMap$,"gld_dun01_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun01_2",0,0;	close;
+			case 2: set WarpMap$,"gld_dun02_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun02_2",0,0;	close;
+			case 3: set WarpMap$,"gld_dun03_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun03_2",0,0;	close;
+			case 4: set WarpMap$,"gld_dun04_2"; set WarpMapX,0; set WarpMapY,0; warp "gld_dun04_2",0,0;	close;
+			}
+
+		case 3:
+			switch(select("亡者之丘【gld2_gef】","戰士之路【gld2_prt】","英雄之淚【gld2_ald】","遠古之風【gld2_pay】")) {
+			case 1: set WarpMap$,"gld2_gef"; set WarpMapX,0; set WarpMapY,0; warp "gld2_gef",0,0;	close;
+			case 2: set WarpMap$,"gld2_prt"; set WarpMapX,0; set WarpMapY,0; warp "gld2_prt",0,0;	close;
+			case 3: set WarpMap$,"gld2_ald"; set WarpMapX,0; set WarpMapY,0; warp "gld2_ald",0,0;	close;
+			case 4: set WarpMap$,"gld2_pay"; set WarpMapX,0; set WarpMapY,0; warp "gld2_pay",0,0;	close;
+			}
+
+
+		case 4:
+			switch(select("發菲依雅 工會地下密穴【arug_dun01】","尼它堆 公會地下密穴【schg_dun01】")) {
+			case 1: set WarpMap$,"arug_dun01"; set WarpMapX,0; set WarpMapY,0; warp "arug_dun01",199,355;	close;
+			case 2: set WarpMap$,"schg_dun01"; set WarpMapX,0; set WarpMapY,0; warp "schg_dun01",200,168;	close;	}
+
+
+
+		case 5:
+			switch(select("葛洛麗雅 公會地下密穴1【teg_dun01】","卡普拉賈登 公會地下密穴【teg_dun02】")) {
+			case 1: set WarpMap$,"teg_dun01"; set WarpMapX,0; set WarpMapY,0; warp "teg_dun01",0,0;	close;
+			case 2: set WarpMap$,"teg_dun02"; set WarpMapX,0; set WarpMapY,0; warp "teg_dun02",0,0;	close;
+			}
+		}
+
+
+	case 2:
+		mes "[傳送服務]";
+		mes "請選擇您要到達的地圖";
+		next;
+		switch(select("【1】克魔島 區域","【2】古代神殿 迷宮","【3】天津町 迷宮","【4】崑崙 區域","【5】螞蟻地獄密穴",
+		"【6】克魔島 洞窟","【7】海底 洞窟","【8】愛爾帕蘭 鐘塔","【9】妙勒尼 廢棄礦場","【10】普隆德拉 地下水道",
+		"【11】吉芬 地下 密穴","【12】克雷斯特漢姆區域","【13】迷藏森林","【14】諾可羅德 火洞","【15】獸人村落 區域",
+		"【16】斐揚 迷宮","【17】金字塔 迷宮","【18】史芬克斯 密穴","【19】沉沒之船","【20】玩具工廠倉庫","【21】烏龜島",
+		"【22】優沛雷斯","【23】葛帔尼亞","【24】龍之城 區域","【25】汶巴拉 區域","【26】尼芙菲姆 區域","【27】礦山洞穴",
+		"【28】生體試驗 研究所","【29】深淵湖水 地下洞穴","【30】達納托斯塔","【31】奧丁神殿","【32】機械娃娃工廠",
+		"【33】莫斯科 區域","【34】巴西","【35】冰洞窟","【36】神殿 聖域",
+		"【37】托爾火山 洞穴","【38】無名島地區","【39】史波浪壯麗地區","【40】魔怒克原野","【41】德瓦他","【42】綿綿島地區",
+		"【43】粗暴者的傷口","【44】艾爾迪卡斯特","【45】彩虹橋地區","【46】馬來港地區","【47】艾可拉珠地區","【48】夢羅克 魔王覺醒地區",
+		"【49】夢幻秘境地區","【50】羅札納 區域(喵族)")) {
+
+		case 1:
+			switch(select("巴不其卡 森林【cmd_fild01】","克魔島 海邊【cmd_fild02】","基乃依 沼澤地【cmd_fild03】",
+			"克魔島 海【cmd_fild04】","巴不其卡 森林邊界【cmd_fild05】","發樂斯 燈塔島【cmd_fild07】",
+			"山特樂曼 東邊【cmd_fild08】","山特樂曼 西邊【cmd_fild06】","山特樂曼 南邊【cmd_fild09】")) {
+			case 1: set WarpMap$,"cmd_fild01"; set WarpMapX,200; set WarpMapY,200; warp "cmd_fild01",200,200;	close;
+			case 2: set WarpMap$,"cmd_fild02"; set WarpMapX,200; set WarpMapY,200; warp "cmd_fild02",200,200;	close;
+			case 3: set WarpMap$,"cmd_fild03"; set WarpMapX,200; set WarpMapY,200; warp "cmd_fild03",200,200;	close;
+			case 4: set WarpMap$,"cmd_fild04"; set WarpMapX,200; set WarpMapY,200; warp "cmd_fild04",200,200;	close;
+			case 5: set WarpMap$,"cmd_fild05"; set WarpMapX,200; set WarpMapY,200; warp "cmd_fild05",200,200;	close;
+			case 6: set WarpMap$,"cmd_fild06"; set WarpMapX,97; set WarpMapY,135; warp "cmd_fild07",97,135;	close;
+			case 7: set WarpMap$,"cmd_fild07"; set WarpMapX,332; set WarpMapY,250; warp "cmd_fild08",332,250;	close;
+			case 8: set WarpMap$,"cmd_fild08"; set WarpMapX,83; set WarpMapY,373; warp "cmd_fild06",83,373;	close;
+			case 9: set WarpMap$,"cmd_fild09"; set WarpMapX,326; set WarpMapY,166; warp "cmd_fild09",326,166;	close;	}
+		case 2:
+			switch(select("古代神殿迷宮1F【ayo_dun01】","古代神殿迷宮2F【ayo_dun02】")) {
+			case 1: set WarpMap$,"ayo_dun01"; set WarpMapX,0; set WarpMapY,0; warp "ayo_dun01",10,150;	close;
+			case 2: set WarpMap$,"ayo_dun02"; set WarpMapX,0; set WarpMapY,0; warp "ayo_dun02",149,19;	close;	}
+		case 3:
+			switch(select("榻榻米迷宮【ama_dun01】","地下森 戰場【ama_dun02】","天津町 地下神舍【ama_dun03】")) {
+			case 1: set WarpMap$,"ama_dun01"; set WarpMapX,0; set WarpMapY,0; warp "ama_dun01",25,10;	close;
+			case 2: set WarpMap$,"ama_dun02"; set WarpMapX,0; set WarpMapY,0; warp "ama_dun02",196,114;	close;
+			case 3: set WarpMap$,"ama_dun03"; set WarpMapX,0; set WarpMapY,0; warp "ama_dun03",120,15;	close;	}
+		case 4:
+			switch(select("西王母神殿【gon_dun01】","神仙的圍棋臺【gon_dun02】","武陵道院【gon_dun03】")) {
+			case 1: set WarpMap$,"gon_dun01"; set WarpMapX,0; set WarpMapY,0; warp "gon_dun01",140,45;	close;
+			case 2: set WarpMap$,"gon_dun02"; set WarpMapX,0; set WarpMapY,0; warp "gon_dun02",38,112;	close;
+			case 3: set WarpMap$,"gon_dun03"; set WarpMapX,0; set WarpMapY,0; warp "gon_dun03",70,33;	close;	}
+		case 5:
+			switch(select("螞蟻地獄密穴1F【anthell01】","螞蟻地獄密穴2F【anthell02】")) {
+			case 1: set WarpMap$,"anthell01"; set WarpMapX,0; set WarpMapY,0; warp "anthell01",42,255;	close;
+			case 2: set WarpMap$,"anthell02"; set WarpMapX,0; set WarpMapY,0; warp "anthell02",160,170;	close;	}
+		case 6:
+			switch(select("西邊 洞穴 加露【beach_dun】","北邊 洞穴 盧安達【beach_dun2】","東邊 洞穴 馬吾【beach_dun3】")) {
+			case 1: set WarpMap$,"beach_dun"; set WarpMapX,0; set WarpMapY,0; warp "beach_dun",265,67;	close;
+			case 2: set WarpMap$,"beach_dun2"; set WarpMapX,0; set WarpMapY,0; warp "beach_dun2",154,26;	close;
+			case 3: set WarpMap$,"beach_dun3"; set WarpMapX,0; set WarpMapY,0; warp "beach_dun3",25,260;	close;	}
+		case 7:
+			switch(select("海底 洞窟1F【iz_dun00】","海底 洞窟2F【iz_dun01】","海底 洞窟3F【iz_dun02】","海底 洞窟4F【iz_dun03】","海底 洞窟5F【iz_dun04】","海底 洞窟6F【iz_dun05】")) {
+			case 1: set WarpMap$,"iz_dun00"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun00",351,334;	close;
+			case 2: set WarpMap$,"iz_dun01"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun01",118,161;	close;
+			case 3: set WarpMap$,"iz_dun02"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun02",340,326;	close;
+			case 4: set WarpMap$,"iz_dun03"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun03",36,64;	close;
+			case 5: set WarpMap$,"iz_dun04"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun04",130,227;	close;
+			case 6: set WarpMap$,"iz_dun05"; set WarpMapX,0; set WarpMapY,0; warp "iz_dun05",142,169;	close;	}
+		case 8:
+			switch(select("鐘塔地上1F【c_tower1】","鐘塔地上2F【c_tower2】","鐘塔地上3F【c_tower3】","鐘塔地上4F【c_tower4】",
+			"鐘塔地下1F【alde_dun01】","鐘塔地下2F【alde_dun02】","鐘塔地下3F【alde_dun03】","鐘塔地下4F【alde_dun04】")) {
+			case 1: set WarpMap$,"c_tower1"; set WarpMapX,0; set WarpMapY,0; warp "c_tower1",200,200;	close;
+			case 2: set WarpMap$,"c_tower2"; set WarpMapX,0; set WarpMapY,0; warp "c_tower2",150,283;	close;
+			case 3: set WarpMap$,"c_tower3"; set WarpMapX,0; set WarpMapY,0; warp "c_tower3",52,42;	close;
+			case 4: set WarpMap$,"c_tower4"; set WarpMapX,0; set WarpMapY,0; warp "c_tower4",94,74;	close;
+			case 5: set WarpMap$,"alde_dun01"; set WarpMapX,0; set WarpMapY,0; warp "alde_dun01",176,158;	close;
+			case 6: set WarpMap$,"alde_dun02"; set WarpMapX,0; set WarpMapY,0; warp "alde_dun02",129,169;	close;
+			case 7: set WarpMap$,"alde_dun03"; set WarpMapX,0; set WarpMapY,0; warp "alde_dun03",264,21;	close;
+			case 8: set WarpMap$,"alde_dun04"; set WarpMapX,0; set WarpMapY,0; warp "alde_dun04",152,167;	close;	}
+		case 9:
+			switch(select("妙勒尼廢棄礦場1F【mjo_dun01】","妙勒尼廢棄礦場2F【mjo_dun02】","妙勒尼廢棄礦場3F【mjo_dun03】")) {
+			case 1: set WarpMap$,"mjo_dun01"; set WarpMapX,0; set WarpMapY,0; warp "mjo_dun01",0,0;	close;
+			case 2: set WarpMap$,"mjo_dun02"; set WarpMapX,0; set WarpMapY,0; warp "mjo_dun02",0,0;	close;
+			case 3: set WarpMap$,"mjo_dun03"; set WarpMapX,0; set WarpMapY,0; warp "mjo_dun03",0,0;	close;	}
+		case 10:
+			switch(select("普隆德拉地下水道1F【prt_sewb1】","普隆德拉地下水道2F【prt_sewb2】","普隆德拉地下水道3F【prt_sewb3】","普隆德拉地下水道4F【prt_sewb4】")) {
+			case 1: set WarpMap$,"prt_sewb1"; set WarpMapX,0; set WarpMapY,0; warp "prt_sewb1",0,0;	close;
+			case 2: set WarpMap$,"prt_sewb2"; set WarpMapX,0; set WarpMapY,0; warp "prt_sewb2",0,0;	close;
+			case 3: set WarpMap$,"prt_sewb3"; set WarpMapX,0; set WarpMapY,0; warp "prt_sewb3",0,0;	close;
+			case 4: set WarpMap$,"prt_sewb4"; set WarpMapX,0; set WarpMapY,0; warp "prt_sewb4",0,0;	close;	}
+		case 11:
+			switch(select("吉芬地下密穴1F【gef_dun00】","吉芬地下密穴2F【gef_dun01】","吉芬地下密穴3F【gef_dun02】","吉芬地下密穴4F【gef_dun03】")) {
+			case 1: set WarpMap$,"gef_dun00"; set WarpMapX,0; set WarpMapY,0; warp "gef_dun00",107,161;	close;
+			case 2: set WarpMap$,"gef_dun01"; set WarpMapX,0; set WarpMapY,0; warp "gef_dun01",197,43;	close;
+			case 3: set WarpMap$,"gef_dun02"; set WarpMapX,0; set WarpMapY,0; warp "gef_dun02",106,126;	close;
+			case 4: set WarpMap$,"gef_dun03"; set WarpMapX,0; set WarpMapY,0; warp "gef_dun03",50,200;	close;	}
+		case 12:
+			switch(select("克雷斯特漢姆古城【glast_01】","古城地上1F【gl_cas01】","古城地上2F【gl_cas02】",
+			"古城騎士團1F【gl_knt01】","古城騎士團2F【gl_knt02】","古城地下公墓【gl_chyard】",
+			"古城地下水道1F【gl_sew01】","古城地下水道2F【gl_sew02】","古城地下水道3F【gl_sew03】",
+			"古城地下水道4F【gl_sew04】","古城修道院【gl_church】","古城樓梯密穴【gl_step】",
+			"古城地下洞窟1F【gl_dun01】","古城地下洞窟2F【gl_dun02】",
+			"古城地下監獄1F【gl_prison】","古城地下監獄2F【gl_prison1】")) {
+			case 1: set WarpMap$,"glast_01"; set WarpMapX,0; set WarpMapY,0; warp "glast_01",200,287;	close;
+			case 2: set WarpMap$,"gl_cas01"; set WarpMapX,0; set WarpMapY,0; warp "gl_cas01",200,135;	close;
+			case 3: set WarpMap$,"gl_cas02"; set WarpMapX,0; set WarpMapY,0; warp "gl_cas02",104,173;	close;
+			case 4: set WarpMap$,"gl_knt01"; set WarpMapX,0; set WarpMapY,0; warp "gl_knt01",150,20;	close;
+			case 5: set WarpMap$,"gl_knt02"; set WarpMapX,0; set WarpMapY,0; warp "gl_knt02",157,251;	close;
+			case 6: set WarpMap$,"gl_chyard"; set WarpMapX,0; set WarpMapY,0; warp "gl_chyard",147,148;	close;
+			case 7: set WarpMap$,"gl_sew01"; set WarpMapX,0; set WarpMapY,0; warp "gl_sew01",257,250;	close;
+			case 8: set WarpMap$,"gl_sew02"; set WarpMapX,0; set WarpMapY,0; warp "gl_sew02",290,29;	close;
+			case 9: set WarpMap$,"gl_sew03"; set WarpMapX,0; set WarpMapY,0; warp "gl_sew03",172,279;	close;
+			case 10: set WarpMap$,"gl_sew04"; set WarpMapX,0; set WarpMapY,0; warp "gl_sew04",89,79;	close;
+			case 11: set WarpMap$,"gl_church"; set WarpMapX,0; set WarpMapY,0; warp "gl_church",156,14;	close;
+			case 12: set WarpMap$,"gl_step"; set WarpMapX,0; set WarpMapY,0; warp "gl_step",132,230;	close;
+			case 13: set WarpMap$,"gl_dun01"; set WarpMapX,0; set WarpMapY,0; warp "gl_dun01",133,268;	close;
+			case 14: set WarpMap$,"gl_dun02"; set WarpMapX,0; set WarpMapY,0; warp "gl_dun02",140,144;	close;
+			case 15: set WarpMap$,"gl_prison"; set WarpMapX,0; set WarpMapY,0; warp "gl_prison",18,70;	close;
+			case 16: set WarpMap$,"gl_prison1"; set WarpMapX,0; set WarpMapY,0; warp "gl_prison1",52,185;	close;	}
+		case 13:
+			switch(select("迷藏森林1F【prt_maze01】","迷藏森林2F【prt_maze02】","迷藏森林3F【prt_maze03】")) {
+			case 1: set WarpMap$,"prt_maze01"; set WarpMapX,0; set WarpMapY,0; warp "prt_maze01",100,54;	close;
+			case 2: set WarpMap$,"prt_maze02"; set WarpMapX,0; set WarpMapY,0; warp "prt_maze02",100,176;	close;
+			case 3: set WarpMap$,"prt_maze03"; set WarpMapX,0; set WarpMapY,0; warp "prt_maze03",182,88;	close;	}
+		case 14:
+			switch(select("諾可羅德(火洞1F)【mag_dun01】","諾可羅德(火洞2F)【mag_dun02】","諾可羅德(火洞3F)【mag_dun03】")) {	
+			case 1: set WarpMap$,"mag_dun01"; set WarpMapX,0; set WarpMapY,0; warp "mag_dun01",233,57;	close;
+			case 2: set WarpMap$,"mag_dun02"; set WarpMapX,0; set WarpMapY,0; warp "mag_dun02",0,0;	close;
+			case 3: set WarpMap$,"mag_dun03"; set WarpMapX,0; set WarpMapY,0; warp "mag_dun03",0,0;	close;	}
+		case 15:
+			switch(select("東邊 獸人村落【gef_fild10】","西邊 獸人村落【gef_fild14】",
+			"獸人地下洞窟1F","獸人地下洞窟2F")) {
+			case 1: set WarpMap$,"gef_fild10"; set WarpMapX,0; set WarpMapY,0; warp "gef_fild10",0,0;	close;
+			case 2: set WarpMap$,"gef_fild14"; set WarpMapX,0; set WarpMapY,0; warp "gef_fild14",0,0;	close;
+			case 3: set WarpMap$,"orcsdun01"; set WarpMapX,0; set WarpMapY,0; warp "orcsdun01",0,0;	close;
+			case 4: set WarpMap$,"orcsdun02"; set WarpMapX,0; set WarpMapY,0; warp "orcsdun02",0,0;	close;	}
+		case 16:
+			switch(select("斐揚地下1F【pay_dun00】","斐揚地下2F【pay_dun01】","斐揚地下3F【pay_dun02】","斐揚地下4F【pay_dun03】","斐揚地下5F【pay_dun04】")) {
+			case 1: set WarpMap$,"pay_dun00"; set WarpMapX,0; set WarpMapY,0; warp "pay_dun00",0,0;	close;
+			case 2: set WarpMap$,"pay_dun01"; set WarpMapX,0; set WarpMapY,0; warp "pay_dun01",0,0;	close;
+			case 3: set WarpMap$,"pay_dun02"; set WarpMapX,0; set WarpMapY,0; warp "pay_dun02",0,0;	close;
+			case 4: set WarpMap$,"pay_dun03"; set WarpMapX,0; set WarpMapY,0; warp "pay_dun03",0,0;	close;
+			case 5: set WarpMap$,"pay_dun04"; set WarpMapX,0; set WarpMapY,0; warp "pay_dun04",0,0;	close;	}
+		case 17:
+			switch(select("金字塔迷宮1F【moc_pryd01】","金字塔迷宮2F【moc_pryd02】","金字塔迷宮3F【moc_pryd03】","金字塔迷宮4F【moc_pryd04】",
+			"金字塔迷宮地下2F【moc_pryd05】","金字塔迷宮地下3F【moc_pryd06】")) {
+			case 1: set WarpMap$,"moc_pryd01"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd01",0,0;	close;
+			case 2: set WarpMap$,"moc_pryd02"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd02",0,0;	close;
+			case 3: set WarpMap$,"moc_pryd03"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd03",0,0;	close;
+			case 4: set WarpMap$,"moc_pryd04"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd04",0,0;	close;
+			case 5: set WarpMap$,"moc_pryd05"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd05",94,88;	close;
+			case 6: set WarpMap$,"moc_pryd06"; set WarpMapX,0; set WarpMapY,0; warp "moc_pryd06",187,12;	close;	}
+		case 18:
+			switch(select("史芬克斯密穴1F【in_sphinx1】","史芬克斯密穴2F【in_sphinx2】","史芬克斯密穴3F【in_sphinx3】","史芬克斯密穴4F【in_sphinx4】",
+			"史芬克斯密穴5F【in_sphinx5】")) {
+			case 1: set WarpMap$,"in_sphinx1"; set WarpMapX,0; set WarpMapY,0; warp "in_sphinx1",0,0;	close;
+			case 2: set WarpMap$,"in_sphinx2"; set WarpMapX,0; set WarpMapY,0; warp "in_sphinx2",0,0;	close;
+			case 3: set WarpMap$,"in_sphinx3"; set WarpMapX,0; set WarpMapY,0; warp "in_sphinx3",0,0;	close;
+			case 4: set WarpMap$,"in_sphinx4"; set WarpMapX,0; set WarpMapY,0; warp "in_sphinx4",0,0;	close;
+			case 5: set WarpMap$,"in_sphinx5"; set WarpMapX,0; set WarpMapY,0; warp "in_sphinx5",0,0;	close;	}
+		case 19:
+			switch(select("沉沒之船1F【treasure01】","沉沒之船2F【treasure02】")) {
+			case 1: set WarpMap$,"treasure01"; set WarpMapX,0; set WarpMapY,0; warp "treasure01",0,0;	close;
+			case 2: set WarpMap$,"treasure02"; set WarpMapX,0; set WarpMapY,0; warp "treasure02",0,0;	close;	}
+		case 20:
+			switch(select("玩具分類場1F【xmas_dun01】","玩具分類場2F【xmas_dun02】")) {
+			case 1: set WarpMap$,"xmas_dun01"; set WarpMapX,0; set WarpMapY,0; warp "xmas_dun01",0,0;	close;
+			case 2: set WarpMap$,"xmas_dun02"; set WarpMapX,0; set WarpMapY,0; warp "xmas_dun02",0,0;	close;	}
+		case 21:
+			switch(select("烏龜島【tur_dun01】","烏龜島 密穴【tur_dun02】","良龜村【tur_dun03】","舊良宮【tur_dun04】",
+			"烏龜島密穴4F【tur_dun05】","烏龜島密穴5F【tur_dun06】")) {
+			case 1: set WarpMap$,"tur_dun01"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun01",155,235;	close;
+			case 2: set WarpMap$,"tur_dun02"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun02",148,262;	close;
+			case 3: set WarpMap$,"tur_dun03"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun03",132,187;	close;
+			case 4: set WarpMap$,"tur_dun04"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun04",100,188;	close;
+			case 5: set WarpMap$,"tur_dun05"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun05",0,0;	close;
+			case 6: set WarpMap$,"tur_dun06"; set WarpMapX,0; set WarpMapY,0; warp "tur_dun06",0,0;	close;	}
+		case 22:
+			switch(select("優配擂斯廢墟1F【juperos_01】","優配擂斯廢墟2F【juperos_02】","優配擂斯保安區域【jupe_core】")) {
+			case 1: set WarpMap$,"juperos_01"; set WarpMapX,0; set WarpMapY,0; warp "juperos_01",0,0;	close;
+			case 2: set WarpMap$,"juperos_02"; set WarpMapX,0; set WarpMapY,0; warp "juperos_02",0,0;	close;
+			case 3: set WarpMap$,"jupe_core"; set WarpMapX,0; set WarpMapY,0; warp "jupe_core",0,0;	close;	}
+		case 23:
+			switch(select("葛帔尼亞(右下)【gefenia01】","葛帔尼亞(右上)【gefenia02】","葛帔尼亞(左上)【gefenia03】","葛帔尼亞(左下)【gefenia04】")) {
+			case 1: set WarpMap$,"gefenia01"; set WarpMapX,0; set WarpMapY,0; warp "gefenia01",55,115;	close;
+			case 2: set WarpMap$,"gefenia02"; set WarpMapX,0; set WarpMapY,0; warp "gefenia02",247,25;	close;
+			case 3: set WarpMap$,"gefenia03"; set WarpMapX,0; set WarpMapY,0; warp "gefenia03",58,34;	close;
+			case 4: set WarpMap$,"gefenia04"; set WarpMapX,0; set WarpMapY,0; warp "gefenia04",32,266;	close;	}
+		case 24:
+			switch(select("洛陽地下1F(外王陵)【lou_dun01】","王陵 內部【lou_dun02】","洛陽地下3F(審良宮)【lou_dun03】")) {
+			case 1: set WarpMap$,"lou_dun01"; set WarpMapX,0; set WarpMapY,0; warp "lou_dun01",85,197;	close;
+			case 2: set WarpMap$,"lou_dun02"; set WarpMapX,0; set WarpMapY,0; warp "lou_dun02",165,257;	close;
+			case 3: set WarpMap$,"lou_dun03"; set WarpMapX,0; set WarpMapY,0; warp "lou_dun03",165,38;	close;	}
+		case 25:
+			switch(select("木工所【um_dun01】","異界通路【um_dun02】")) {
+			case 1: set WarpMap$,"um_dun01"; set WarpMapX,0; set WarpMapY,0; warp "um_dun01",0,0;	close;
+			case 2: set WarpMap$,"um_dun02"; set WarpMapX,0; set WarpMapY,0; warp "um_dun02",0,0;	close;	}
+		case 26:
+			switch(select("斯凱領頓(尼芙菲姆 偏遠村落)【nif_fild01】","鬼的峽谷(尼芙菲姆外)【nif_fild02】","尼芙菲姆密穴 亡者宴會廳【nif_dun01】","尼芙菲姆密穴 崩塌的歌劇院【nif_dun02】")) {
+			case 1: set WarpMap$,"nif_fild01"; set WarpMapX,0; set WarpMapY,0; warp "nif_fild01",337,322;	close;
+			case 2: set WarpMap$,"nif_fild02"; set WarpMapX,0; set WarpMapY,0; warp "nif_fild02",28,312;	close;
+			case 3: set WarpMap$,"nif_dun01"; set WarpMapX,0; set WarpMapY,0; warp "nif_dun01",0,0;	close;
+			case 4: set WarpMap$,"nif_dun02"; set WarpMapX,0; set WarpMapY,0; warp "nif_dun02",0,0;	close;	}
+		case 27:
+			switch(select("礦山洞穴1F","礦山洞穴2F","礦山洞穴3F")) {
+			case 1: set WarpMap$,"ein_dun01"; set WarpMapX,0; set WarpMapY,0; warp "ein_dun01",261,266;	close;
+			case 2: set WarpMap$,"ein_dun02"; set WarpMapX,0; set WarpMapY,0; warp "ein_dun02",25,253;	close;
+			case 3: set WarpMap$,"ein_dun03"; set WarpMapX,0; set WarpMapY,0; warp "ein_dun03",0,0;	close;	}
+
+		case 28:
+			switch(select("生體試驗 研究所1F【lhz_dun01】","生體試驗 研究所2F【lhz_dun02】","生體試驗 研究所3F【lhz_dun03】","生體試驗 研究所4F【lhz_dun04】")) {
+			case 1: set WarpMap$,"lhz_dun01"; set WarpMapX,0; set WarpMapY,0; warp "lhz_dun01",150,285;	close;
+			case 2: set WarpMap$,"lhz_dun02"; set WarpMapX,0; set WarpMapY,0; warp "lhz_dun02",153,150;	close;
+			case 3: set WarpMap$,"lhz_dun03"; set WarpMapX,0; set WarpMapY,0; warp "lhz_dun03",140,133;	close;
+			case 4: set WarpMap$,"lhz_dun04"; set WarpMapX,0; set WarpMapY,0; warp "lhz_dun04",0,00;	close;	}
+		case 29:
+			switch(select("深淵湖水地下洞穴1F【abyss_01】","深淵湖水地下洞穴2F【abyss_02】","深淵湖水地下洞穴3F【abyss_03】","深淵湖水地下洞穴4F【abyss_04】")) {
+			case 1: set WarpMap$,"abyss_01"; set WarpMapX,0; set WarpMapY,0; warp "abyss_01",260,270;	close;
+			case 2: set WarpMap$,"abyss_02"; set WarpMapX,0; set WarpMapY,0; warp "abyss_02",145,278;	close;
+			case 3: set WarpMap$,"abyss_03"; set WarpMapX,0; set WarpMapY,0; warp "abyss_03",116,31;	close;
+			case 4: set WarpMap$,"abyss_04"; set WarpMapX,0; set WarpMapY,0; warp "abyss_04",0,0;	close;	}
+
+		case 30:
+			switch(select("達納托斯塔台1F【tha_t01】","達納托斯塔台2F【tha_t02】","達納托斯塔台3F【tha_t03】","達納托斯塔台4F【tha_t04】",
+			"達納托斯塔台5F【tha_t05】","達納托斯塔台6F【tha_t06】","達納托斯塔台7F【tha_t07】","達納托斯塔台8F【tha_t08】",
+			"達納托斯塔台9F【tha_t09】","達納托斯塔台10F【tha_t10】","達納托斯塔台11F【tha_t11】","達納托斯塔台12F【tha_t12】")) {
+			case 1: set WarpMap$,"tha_t01"; set WarpMapX,0; set WarpMapY,0; warp "tha_t01",0,0;	close;
+			case 2: set WarpMap$,"tha_t02"; set WarpMapX,0; set WarpMapY,0; warp "tha_t02",0,0;	close;
+			case 3: set WarpMap$,"tha_t03"; set WarpMapX,0; set WarpMapY,0; warp "tha_t03",0,0;	close;
+			case 4: set WarpMap$,"tha_t04"; set WarpMapX,0; set WarpMapY,0; warp "tha_t04",0,0;	close;
+			case 5: set WarpMap$,"tha_t05"; set WarpMapX,0; set WarpMapY,0; warp "tha_t05",0,0;	close;
+			case 6: set WarpMap$,"tha_t06"; set WarpMapX,0; set WarpMapY,0; warp "tha_t06",0,0;	close;
+			case 7: set WarpMap$,"tha_t07"; set WarpMapX,0; set WarpMapY,0; warp "tha_t07",0,0;	close;
+			case 8: set WarpMap$,"tha_t08"; set WarpMapX,0; set WarpMapY,0; warp "tha_t08",0,0;	close;
+			case 9: set WarpMap$,"tha_t09"; set WarpMapX,0; set WarpMapY,0; warp "tha_t09",0,0;	close;
+			case 10: set WarpMap$,"tha_t10"; set WarpMapX,0; set WarpMapY,0; warp "tha_t10",0,0;	close;
+			case 11: set WarpMap$,"tha_t11"; set WarpMapX,0; set WarpMapY,0; warp "tha_t11",0,0;	close;
+			case 12: set WarpMap$,"tha_t12"; set WarpMapX,0; set WarpMapY,0; warp "tha_t12",0,0;	close;	}
+
+		case 31:
+			switch(select("奧丁神殿1F【odin_tem01】","奧丁神殿2F【odin_tem02】","奧丁神殿3F【odin_tem03】","古代奧丁神殿【odin_past】")) {
+			case 1: set WarpMap$,"odin_tem01"; set WarpMapX,0; set WarpMapY,0; warp "odin_tem01",377,334;	close;
+			case 2: set WarpMap$,"odin_tem02"; set WarpMapX,0; set WarpMapY,0; warp "odin_tem02",31,334;	close;
+			case 3: set WarpMap$,"odin_tem03"; set WarpMapX,0; set WarpMapY,0; warp "odin_tem03",240,40;	close;
+			case 4: set WarpMap$,"odin_past"; set WarpMapX,0; set WarpMapY,0; warp "odin_past",0,0;	close;	}
+		case 32:
+			switch(select("機械人型工廠1F【kh_dun01】","機械人型工廠2F【kh_dun02】")) {
+			case 1: set WarpMap$,"kh_dun01"; set WarpMapX,0; set WarpMapY,0; warp "kh_dun01",0,0;	close;
+			case 2: set WarpMap$,"kh_dun02"; set WarpMapX,0; set WarpMapY,0; warp "kh_dun02",0,0;	close;	}
+		case 33:
+			switch(select("森林洞穴1F【mosk_dun01】","森林洞穴2F【mosk_dun02】","森林洞穴3F【mosk_dun03】")) {
+			case 1: set WarpMap$,"mosk_dun01"; set WarpMapX,0; set WarpMapY,0; warp "mosk_dun01",275,85;		close;
+			case 2: set WarpMap$,"mosk_dun02"; set WarpMapX,0; set WarpMapY,0; warp "mosk_dun02",131,154;		close;
+			case 3: set WarpMap$,"mosk_dun03"; set WarpMapX,0; set WarpMapY,0; warp "mosk_dun03",207,210;		close;	}
+
+		case 34:
+			switch(select("巴西【brasilis】","巴西原野【bra_fild01】","瀑布內的洞窟1F【bra_dun01】","瀑布內的洞窟2F【bra_dun02】")) {
+			case 1: set WarpMap$,"brasilis"; set WarpMapX,0; set WarpMapY,0; warp "brasilis",196,303;	close;
+			case 2: set WarpMap$,"bra_fild01"; set WarpMapX,0; set WarpMapY,0; warp "bra_fild01",78,32;	close;
+			case 3: set WarpMap$,"bra_dun01"; set WarpMapX,0; set WarpMapY,0; warp "bra_dun01",199,39;	close;
+			case 4: set WarpMap$,"bra_dun02"; set WarpMapX,0; set WarpMapY,0; warp "bra_dun02",262,261;	close;	}
+		case 35:
+			switch(select("冰洞穴1F【ice_dun01】","冰洞穴2F【ice_dun02】","冰洞穴3F【ice_dun03】")) {
+			case 1: set WarpMap$,"ice_dun01"; set WarpMapX,0; set WarpMapY,0; warp "ice_dun01",158,19;	close;
+			case 2: set WarpMap$,"ice_dun02"; set WarpMapX,0; set WarpMapY,0; warp "ice_dun02",151,152;	close;
+			case 3: set WarpMap$,"ice_dun03"; set WarpMapX,0; set WarpMapY,0; warp "ice_dun03",149,112;	close;	}
+		case 36:
+			switch(select("神殿聖域1F【ra_san01】","神殿聖域2F【ra_san02】","神殿聖域3F【ra_san03】","神殿聖域4F【ra_san04】","神殿聖域5F【ra_san05】")) {
+			case 1: set WarpMap$,"ra_san01"; set WarpMapX,0; set WarpMapY,0; warp "ra_san01",140,130;	close;
+			case 2: set WarpMap$,"ra_san02"; set WarpMapX,0; set WarpMapY,0; warp "ra_san02",214,10;	close;
+			case 3: set WarpMap$,"ra_san03"; set WarpMapX,0; set WarpMapY,0; warp "ra_san03",266,21;	close;
+			case 4: set WarpMap$,"ra_san04"; set WarpMapX,0; set WarpMapY,0; warp "ra_san04",120,15;	close;
+			case 5: set WarpMap$,"ra_san05"; set WarpMapX,0; set WarpMapY,0; warp "ra_san05",149,15;	close;	}
+
+		case 37:
+			switch(select("索爾火山洞穴1F【thor_v01】","索爾火山洞穴2F【thor_v02】","索爾火山洞穴3F【thor_v03】")) {
+			case 1: set WarpMap$,"thor_v01"; set WarpMapX,0; set WarpMapY,0; warp "thor_v01",21,231;	close;
+			case 2: set WarpMap$,"thor_v02"; set WarpMapX,0; set WarpMapY,0; warp "thor_v02",176,60;	close;
+			case 3: set WarpMap$,"thor_v03"; set WarpMapX,0; set WarpMapY,0; warp "thor_v03",35,262;	close;	}
+
+		case 38:
+			switch(select("無名島(夜晚)【nameless_n】","無名島修道院1F【abbey01】","無名島修道院2F【abbey02】","無名島修道院3F【abbey03】")) {
+			case 1: set WarpMap$,"nameless_n"; set WarpMapX,0; set WarpMapY,0; warp "nameless_n",167,185;	close;
+			case 2: set WarpMap$,"abbey01"; set WarpMapX,0; set WarpMapY,0; warp "abbey01",51,12;		close;
+			case 3: set WarpMap$,"abbey02"; set WarpMapX,0; set WarpMapY,0; warp "abbey02",149,280;		close;
+			case 4: set WarpMap$,"abbey03"; set WarpMapX,0; set WarpMapY,0; warp "abbey03",120,15;		close;	}
+		case 39:
+			switch(select("史波浪壯麗原野01【spl_fild01】","史波浪壯麗原野02【spl_fild02】","史波浪壯麗原野03【spl_fild03】")) {
+			case 1: set WarpMap$,"spl_fild01"; set WarpMapX,0; set WarpMapY,0; warp "spl_fild01",328,366;	close;
+			case 2: set WarpMap$,"spl_fild02"; set WarpMapX,0; set WarpMapY,0; warp "spl_fild02",179,371;	close;
+			case 3: set WarpMap$,"spl_fild03"; set WarpMapX,0; set WarpMapY,0; warp "spl_fild03",200,200;	close;	}
+		case 40:
+			switch(select("魔怒克原野01【man_fild01】","魔怒克原野02【man_fild02】","魔怒克原野03【man_fild03】")) {
+			case 1: set WarpMap$,"man_fild01"; set WarpMapX,0; set WarpMapY,0; warp "man_fild01",212,359;	close;
+			case 2: set WarpMap$,"man_fild02"; set WarpMapX,0; set WarpMapY,0; warp "man_fild02",329,56;	close;
+			case 3: set WarpMap$,"man_fild03"; set WarpMapX,0; set WarpMapY,0; warp "man_fild03",79,359;	close;	}
+
+		case 41:
+			switch(select("德瓦他原野(賈提族部落)【dew_fild01】","德瓦他密穴1F(喀拉喀托火山島)【dew_dun01】","德瓦他密穴2F(伊斯坦納洞穴)【dew_dun02】")) {
+			case 1: set WarpMap$,"dew_fild01"; set WarpMapX,0; set WarpMapY,0; warp "dew_fild01",191,300;	close;
+			case 2: set WarpMap$,"dew_dun01"; set WarpMapX,0; set WarpMapY,0; warp "dew_dun01",286,161;	close;
+			case 3: set WarpMap$,"dew_dun02"; set WarpMapX,0; set WarpMapY,0; warp "dew_dun02",296,30;	close;	}
+
+		case 42:
+			switch(select("星光珊瑚地帶【mal_dun01】")) {
+			case 1: set WarpMap$,"mal_dun01"; set WarpMapX,0; set WarpMapY,0; warp "mal_dun01",149,223;	close;	}
+
+		case 43:
+			switch(select("粗暴者的傷口1F【nyd_dun01】","粗暴者的傷口2F【nyd_dun02】")) {
+			case 1: set WarpMap$,"nyd_dun01"; set WarpMapX,0; set WarpMapY,0; warp "nyd_dun01",59,221;	close;
+			case 2: set WarpMap$,"nyd_dun02"; set WarpMapX,0; set WarpMapY,0; warp "nyd_dun02",78,275;	close;	}
+		case 44:
+			switch(select("卡米達山麓01【dic_fild01】","卡米達山麓02【dic_fild02】","甲蟲密穴1F(卡米達隧道)【dic_dun01】",
+			"甲蟲密穴2F(斯卡勒伯熔岩洞穴)【dic_dun02】")) {
+			case 1: set WarpMap$,"dic_fild01"; set WarpMapX,0; set WarpMapY,0; warp "dic_fild01",149,274;	close;
+			case 2: set WarpMap$,"dic_fild02"; set WarpMapX,0; set WarpMapY,0; warp "dic_fild02",71,362;	close;
+			case 3: set WarpMap$,"dic_dun01"; set WarpMapX,0; set WarpMapY,0; warp "dic_dun01",362,44;	close;
+			case 4: set WarpMap$,"dic_dun02"; set WarpMapX,0; set WarpMapY,0; warp "dic_dun02",102,141;	close;	}
+
+		case 45:
+			switch(select("彩虹橋原野01【bif_fild01】","彩虹橋原野02【bif_fild02】")) {
+			case 1: set WarpMap$,"bif_fild01"; set WarpMapX,0; set WarpMapY,0; warp "bif_fild01",162,350;	close;
+			case 2: set WarpMap$,"bif_fild02"; set WarpMapX,0; set WarpMapY,0; warp "bif_fild02",285,330;	close; }
+
+		case 46:
+			switch(select("巴勒攸 馬西瓦哥【ma_fild01】","普勒斯特【ma_fild02】","噩夢醫院1樓【ma_dun01】")) {
+			case 1: set WarpMap$,"ma_fild01"; set WarpMapX,0; set WarpMapY,0; warp "ma_fild01",196,116;	close;
+			case 2: set WarpMap$,"ma_fild02"; set WarpMapX,0; set WarpMapY,0; warp "ma_fild02",263,235;	close;
+			case 3: set WarpMap$,"ma_dun01"; set WarpMapX,0; set WarpMapY,0; warp "ma_dun01",0,0;	close;	}
+
+		case 47:
+			switch(select("開枝散葉的大地【ecl_fild01】","彩虹橋高塔1F【ecl_tdun01】","彩虹橋高塔2F【ecl_tdun02】","彩虹橋高塔3F【ecl_tdun03】")) {
+			case 1: set WarpMap$,"ecl_fild01"; set WarpMapX,0; set WarpMapY,0; warp "ecl_fild01",0,0;	close;
+			case 2: set WarpMap$,"ecl_tdun01"; set WarpMapX,0; set WarpMapY,0; warp "ecl_tdun01",0,0;	close;
+			case 3: set WarpMap$,"ecl_tdun02"; set WarpMapX,0; set WarpMapY,0; warp "ecl_tdun02",0,0;	close;
+			case 4: set WarpMap$,"ecl_tdun03"; set WarpMapX,0; set WarpMapY,0; warp "ecl_tdun03",0,0;	close;	}
+
+		case 48:
+			switch(select("火焰盆地【moro_vol】")) {
+			case 1: set WarpMap$,"moro_vol"; set WarpMapX,0; set WarpMapY,0; warp "moro_vol",0,0;	close;	}
+
+		case 49:
+			switch(select("貝魯茲 中央廣場【verus03】","優配擂斯東邊廢墟【ver_eju】","貝魯茲外圍隧道【ver_tunn】",
+			"實驗大樓-OPTATIO【verus01】","研究大樓-WISH【verus02】","地下掩體(現在)【un_bunker】")) {
+			case 1: set WarpMap$,"verus03"; set WarpMapX,0; set WarpMapY,0; warp "verus03",0,0;	close;
+			case 2: set WarpMap$,"ver_eju"; set WarpMapX,0; set WarpMapY,0; warp "ver_eju",120,42;	close;
+			case 3: set WarpMap$,"ver_tunn"; set WarpMapX,0; set WarpMapY,0; warp "ver_tunn",0,0;	close;
+			case 4: set WarpMap$,"verus01"; set WarpMapX,0; set WarpMapY,0; warp "verus01",0,0;	close;
+			case 5: set WarpMap$,"verus02"; set WarpMapX,0; set WarpMapY,0; warp "verus02",0,0;	close;
+			case 6: set WarpMap$,"un_bunker"; set WarpMapX,0; set WarpMapY,0; warp "un_bunker",97,140;	close;	}
+
+		case 50:
+			switch(select("羅比奧平原崗亭【lasa_fild01】","羅比奧森林【lasa_fild02】","龍巢穴1【lasa_dun01】","龍巢穴2【lasa_dun02】","龍巢穴3【lasa_dun03】","龍巢穴【lasa_dun_q】")) {
+			case 1: set WarpMap$,"lasa_fild01"; set WarpMapX,0; set WarpMapY,0; warp "lasa_fild01",0,0;	close;
+			case 2: set WarpMap$,"lasa_fild02"; set WarpMapX,0; set WarpMapY,0; warp "lasa_fild02",0,0;	close;
+			case 3: set WarpMap$,"lasa_dun01"; set WarpMapX,0; set WarpMapY,0; warp "lasa_dun01",0,0;	close;
+			case 4: set WarpMap$,"lasa_dun02"; set WarpMapX,0; set WarpMapY,0; warp "lasa_dun02",0,0;	close;
+			case 5: set WarpMap$,"lasa_dun03"; set WarpMapX,0; set WarpMapY,0; warp "lasa_dun03",0,0;	close;
+			case 6: set WarpMap$,"asa_dun_q"; set WarpMapX,0; set WarpMapY,0; warp "lasa_dun_q",0,0;	close;	}
+		}
+
+	case 3:
+		mes "[傳送服務]";
+		mes "請選擇您要到達的地圖";
+		next;
+		switch(select("【1】洛克理奇岩嶺","【2】幻色童話","【3】幻覺顯現","【4】賢者的遺產","【5】祈禱的方向",
+		"【6】雪花之地","【7】不死之人")) {
+
+
+		case 1:
+			switch(select("契瓦瓦沙漠1【rockrdg1】","契瓦瓦沙漠2【rockrdg2 】","地下水道【 harboro2】","克理奇岩嶺礦山1【rockmi1】","洛克理奇岩嶺礦山2【rockmi2】")) {
+			case 1: set WarpMap$,"rockrdg1"; set WarpMapX,0; set WarpMapY,0; warp "rockrdg1",0,0;	close;
+			case 2: set WarpMap$,"rockrdg2"; set WarpMapX,0; set WarpMapY,0; warp "rockrdg2",0,0;	close;
+			case 3: set WarpMap$,"harboro2"; set WarpMapX,0; set WarpMapY,0; warp "harboro2",0,0;	close;
+			case 4: set WarpMap$,"rockmi1"; set WarpMapX,0; set WarpMapY,0; warp "rockmi1",0,0;	close;
+			case 5: set WarpMap$,"rockmi2"; set WarpMapX,0; set WarpMapY,0; warp "rockmi2",0,0;	close;
+			}
+
+		case 2:
+			switch(select("普隆德拉地下監獄【prt_prison】","被入侵的普隆德拉【prt_q】")) {
+			case 1: set WarpMap$,"prt_prison"; set WarpMapX,0; set WarpMapY,0; warp "prt_prison",0,0;	close;
+			case 2: set WarpMap$,"prt_q"; set WarpMapX,0; set WarpMapY,0; warp "prt_q",0,0;	close;	}
+
+		case 3:
+			switch(select("特殊地域 奧斯【sp_os】","廢棄實驗場 陸陶斯1F【sp_rudus】","廢棄實驗場 陸陶斯2F【sp_rudus2】","廢棄實驗場 陸陶斯3F【sp_rudus3】","實驗體廢棄場魯杜斯四樓【sp_rudus4】","維爾納研究所【slabw01】")) {
+			case 1: set WarpMap$,"sp_os"; set WarpMapX,0; set WarpMapY,0; warp "sp_os",0,0;	close;
+			case 2: set WarpMap$,"sp_rudus"; set WarpMapX,0; set WarpMapY,0; warp "sp_rudus",0,0;	close;
+			case 3: set WarpMap$,"sp_rudus2"; set WarpMapX,0; set WarpMapY,0; warp "sp_rudus2",0,0;	close;
+			case 4: set WarpMap$,"sp_rudus3"; set WarpMapX,0; set WarpMapY,0; warp "sp_rudus3",0,0;	close;
+			case 5: set WarpMap$,"sp_rudus4"; set WarpMapX,0; set WarpMapY,0; warp "sp_rudus4",0,0;	close;
+			case 6: set WarpMap$,"slabw01"; set WarpMapX,0; set WarpMapY,0; warp "slabw01",0,0;	close;	
+			}
+
+		case 4:
+			switch(select("第一魔力發電廠【ba_pw01】","第二魔力發電廠【ba_pw03】","汙水處理廠【ba_pw02】","冥想大浴池【ba_bath】","塔耳塔羅斯儲藏室上層【ba_2whs01】","塔耳塔羅斯儲藏室下層【ba_2whs02】","失落的山谷飼養【ba_lost】","圖書館記憶迴廊【ba_lib】","霸肋門德大宅內部【ba_in01】")) {
+			case 1: set WarpMap$,"ba_pw01"; set WarpMapX,0; set WarpMapY,0; warp "ba_pw01",0,0;	close;
+			case 2: set WarpMap$,"ba_pw03"; set WarpMapX,0; set WarpMapY,0; warp "ba_pw03",0,0;	close;
+			case 3: set WarpMap$,"ba_pw02"; set WarpMapX,0; set WarpMapY,0; warp "ba_pw02",0,0;	close;
+			case 4: set WarpMap$,"ba_bath"; set WarpMapX,0; set WarpMapY,0; warp "ba_bath",0,0;	close;
+			case 5: set WarpMap$,"ba_2whs01"; set WarpMapX,0; set WarpMapY,0; warp "ba_2whs01",0,0;	close;
+			case 6: set WarpMap$,"ba_2whs02"; set WarpMapX,0; set WarpMapY,0; warp "ba_2whs02",0,0;	close;
+			case 7: set WarpMap$,"ba_lost"; set WarpMapX,0; set WarpMapY,0; warp "ba_lost",0,0;	close;
+			case 8: set WarpMap$,"ba_lib"; set WarpMapX,0; set WarpMapY,0; warp "ba_lib",0,0;	close;
+			case 9: set WarpMap$,"ba_maison"; set WarpMapX,0; set WarpMapY,0; warp "ba_maison",0,0;	close;
+			}
+
+		case 5:
+			switch(select("灰狼森林01【gw_fild01】","灰狼森林02【gw_fild02】","奧茲 迷宮1樓【oz_dun01】","奧茲 迷宮2樓【oz_dun02】")) {
+			case 1: set WarpMap$,"gw_fild01"; set WarpMapX,0; set WarpMapY,0; warp "gw_fild01",0,0;	close;
+			case 2: set WarpMap$,"gw_fild02"; set WarpMapX,0; set WarpMapY,0; warp "gw_fild02",0,0;	close;
+			case 3: set WarpMap$,"oz_dun01"; set WarpMapX,0; set WarpMapY,0; warp "oz_dun01",0,0;	close;
+			case 4: set WarpMap$,"oz_dun02"; set WarpMapX,0; set WarpMapY,0; warp "oz_dun02",0,0;	close;
+			}
+
+		case 6:
+			switch(select("被冰凍的鱗片丘陵【jor_back1】","被冰凍的鱗片平原【jor_back2】","被冰凍的鱗片冰河【jor_back3】","冰凍的尾巴【jor_tail】","蛇神的餘溫 1層【jor_dun01】","蛇神的餘溫 2層【jor_dun02】","被捨棄的坑洞 1層【jor_ab01】","被捨棄的坑洞 2層【jor_ab01】")) {
+			case 1: set WarpMap$,"jor_back1"; set WarpMapX,0; set WarpMapY,0; warp "jor_back1",0,0;	close;
+			case 2: set WarpMap$,"jor_back2"; set WarpMapX,0; set WarpMapY,0; warp "jor_back2",0,0;	close;
+			case 3: set WarpMap$,"jor_back3"; set WarpMapX,0; set WarpMapY,0; warp "jor_back3",0,0;	close;
+			case 4: set WarpMap$,"jor_tail"; set WarpMapX,0; set WarpMapY,0; warp "jor_tail",0,0;	close;
+			case 5: set WarpMap$,"jor_dun01"; set WarpMapX,0; set WarpMapY,0; warp "jor_dun01",0,0;	close;
+			case 6: set WarpMap$,"jor_dun02"; set WarpMapX,0; set WarpMapY,0; warp "jor_dun02",0,0;	close;
+			case 7: set WarpMap$,"jor_ab01"; set WarpMapX,0; set WarpMapY,0; warp "jor_ab01",0,0;	close;
+			case 8: set WarpMap$,"jor_ab02"; set WarpMapX,0; set WarpMapY,0; warp "jor_ab02",0,0;	close;
+			}
+
+		case 7:
+			switch(select("冰鱗冰川海【jor_back4】","古代冰峽谷東部【jor_back5】","古代冰峽谷西部【jor_back6】","流冰地帶【jor_twice】","神聖的根【jor_sanct】","蛇神的根 1F【jor_root1】","蛇神的根 2F【jor_root2】","深根洞窟【jor_root3】","蛇的迷宮【jor_maze】")) {
+
+			case 1: set WarpMap$,"jor_back4"; set WarpMapX,0; set WarpMapY,0; warp "jor_back4",0,0;	close;
+			case 2: set WarpMap$,"jor_back5"; set WarpMapX,0; set WarpMapY,0; warp "jor_back5",0,0;	close;
+			case 3: set WarpMap$,"jor_back6"; set WarpMapX,0; set WarpMapY,0; warp "jor_back6",0,0;	close;
+			case 4: set WarpMap$,"jor_twice"; set WarpMapX,0; set WarpMapY,0; warp "jor_twice",0,0;	close;
+			case 5: set WarpMap$,"jor_sanct"; set WarpMapX,0; set WarpMapY,0; warp "jor_sanct",0,0;	close;
+			case 6: set WarpMap$,"jor_root1"; set WarpMapX,0; set WarpMapY,0; warp "jor_root1",0,0;	close;
+			case 7: set WarpMap$,"jor_root2"; set WarpMapX,0; set WarpMapY,0; warp "jor_root2",0,0;	close;
+			case 8: set WarpMap$,"jor_root3"; set WarpMapX,0; set WarpMapY,0; warp "jor_root3",0,0;	close;
+			case 9: set WarpMap$,"jor_maze"; set WarpMapX,0; set WarpMapY,0; warp "jor_maze",0,0;	close;
+			}
+
+		}
+	}
+}
+

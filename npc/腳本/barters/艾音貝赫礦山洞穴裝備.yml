@@ -1,0 +1,211 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#艾音貝赫礦山洞穴裝備
+   - Name: 現場管理員艾曼
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_EINMINER
+     Items:
+       - Index: 0
+         Item: Ein_DYNITE
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_REDIUM
+             Amount: 1
+           - Index: 1
+             Item: Ein_RINDIUM
+             Amount: 1
+           - Index: 2
+             Item: Ein_ODIUM
+             Amount: 1
+           - Index: 3
+             Item: Ein_PURDIUM
+             Amount: 1
+           - Index: 4
+             Item: Ein_WHIDIUM
+             Amount: 1
+       - Index: 1
+         Item: Ein_Weapons_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 50
+       - Index: 2
+         Item: Ein_Accessories_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 75
+       - Index: 3
+         Item: Ein_Ddbox
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 30
+       - Index: 4
+         Item: Ein_Ddbox2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 30
+       - Index: 5
+         Item: Ein_BHSWORD
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 6
+         Item: Ein_1HSPEAR
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 7
+         Item: Ein_1HHAMMER
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 8
+         Item: Ein_1HKNUCK
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 9
+         Item: Ein_BHSTAFF
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 10
+         Item: Ein_1HWAND
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 11
+         Item: Ein_BHKATAR
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 12
+         Item: Ein_1HDAGGER
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 13
+         Item: Ein_1HMAGGER
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 14
+         Item: Ein_BHBOW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 15
+         Item: Ein_1HWHIP
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 16
+         Item: Ein_1HLUTE
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 17
+         Item: Ein_1HSWORD
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 18
+         Item: Ein_BHAXE
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 19
+         Item: Ein_1HBOOK
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 20
+         Item: Ein_1HGUN
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 21
+         Item: Ein_BHHuuma
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+       - Index: 22
+         Item: Ein_1H_Foxtail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Ein_DYNITE
+             Amount: 300
+

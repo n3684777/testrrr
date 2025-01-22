@@ -1,0 +1,984 @@
+
+vdistrict1,12,71,4	script	無限空間管理者	643,{
+
+	//副本任務獎勵
+	if(checkquest(32059,HUNTING)==2 ) { 
+	dispbottom "無限空間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32059; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_25 < gettime(8) ){
+	set Instance_Bout_25,10;
+	set day_Instance_Bout_25,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_25 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "無限空間";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_25+"^000000 ]";
+	mes "副本獎勵：";
+	mes "損壞的魔法石";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_25,Instance_Bout_25-1;
+
+			//副本任務
+			if(checkquest(32059,HUNTING)<0 ){setquest 32059;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "無限空間",0;
+	end;
+}
+
+
+//------------------------------無限空間事件
+1@infi,0,0,0	script	無限空間事件	-1,{
+
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@infi");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("寶物箱子#Infi01");
+	disablenpc instance_npcname("寶物箱子#Infi02");
+	disablenpc instance_npcname("寶物箱子#Infi03");
+	disablenpc instance_npcname("寶物箱子#Infi04");
+	disablenpc instance_npcname("寶物箱子#Infi05");
+	disablenpc instance_npcname("無限空間傳送門#1");
+	disablenpc instance_npcname("無限空間傳送門#2");
+	disablenpc instance_npcname("無限空間傳送門#3");
+	disablenpc instance_npcname("無限空間傳送門#4");
+	disablenpc instance_npcname("無限空間傳送門#5");
+	disablenpc instance_npcname("無限空間傳送門#6");
+	disablenpc instance_npcname("無限空間傳送門#7");
+	disablenpc instance_npcname("無限空間傳送門#8");
+	disablenpc instance_npcname("無限空間傳送門#9");
+	disablenpc instance_npcname("無限空間傳送門#10");
+	disablenpc instance_npcname("無限空間傳送門#11");
+	disablenpc instance_npcname("無限空間傳送門#12");
+	disablenpc instance_npcname("無限空間傳送門#13");
+	disablenpc instance_npcname("無限空間傳送門#14");
+	disablenpc instance_npcname("無限空間傳送門#15");
+	disablenpc instance_npcname("無限空間傳送門#16");
+	disablenpc instance_npcname("無限空間傳送門#17");
+	disablenpc instance_npcname("無限空間傳送門#18");
+	disablenpc instance_npcname("無限空間傳送門#19");
+	disablenpc instance_npcname("無限空間傳送門#20");
+	disablenpc instance_npcname("無限空間傳送門#21");
+	disablenpc instance_npcname("無限空間傳送門#22");
+	disablenpc instance_npcname("無限空間傳送門#23");
+	disablenpc instance_npcname("無限空間傳送門#24");
+	disablenpc instance_npcname("無限空間傳送門#25");
+	disablenpc instance_npcname("無限空間傳送門#26");
+	disablenpc instance_npcname("無限空間傳送門#27");
+	disablenpc instance_npcname("無限空間傳送門#28");
+	disablenpc instance_npcname("無限空間傳送門#29");
+	disablenpc instance_npcname("無限空間傳送門#30");
+	disablenpc instance_npcname("無限空間傳送門#31");
+	disablenpc instance_npcname("無限空間傳送門#32");
+	disablenpc instance_npcname("無限空間傳送門#33");
+	disablenpc instance_npcname("無限空間傳送門#34");
+	disablenpc instance_npcname("無限空間傳送門#35");
+	disablenpc instance_npcname("無限空間傳送門#36");
+	disablenpc instance_npcname("無限空間傳送門#37");
+	disablenpc instance_npcname("無限空間傳送門#38");
+	disablenpc instance_npcname("無限空間傳送門#39");
+	disablenpc instance_npcname("無限空間傳送門#40");
+	disablenpc instance_npcname("無限空間傳送門#41");
+	disablenpc instance_npcname("無限空間傳送門#42");
+	disablenpc instance_npcname("無限空間傳送門#43");
+	disablenpc instance_npcname("無限空間傳送門#44");
+	disablenpc instance_npcname("無限空間傳送門#45");
+	disablenpc instance_npcname("無限空間傳送門#46");
+	disablenpc instance_npcname("無限空間傳送門#47");
+	disablenpc instance_npcname("無限空間傳送門#48");
+	disablenpc instance_npcname("無限空間傳送門#49");
+	disablenpc instance_npcname("無限空間傳送門#50");
+	//副本標籤
+	set 'CD_Infi_1,0;
+	//刷出怪物
+	set 'Infi_mob_,10;
+	areamonster 'map_name$[0],17,30,42,5,"--ja--",3384,5,instance_npcname("無限空間事件")+"::OnCcdd1";
+	areamonster 'map_name$[0],17,30,42,5,"--ja--",3386,5,instance_npcname("無限空間事件")+"::OnCcdd1";
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],17,62,42,37,"--ja--",3384,5,instance_npcname("無限空間事件")+"::OnCcdd2";
+	areamonster 'map_name$[0],17,62,42,37,"--ja--",3386,5,instance_npcname("無限空間事件")+"::OnCcdd2";
+	areamonster 'map_name$[0],17,62,42,37,"--ja--",3387,5,instance_npcname("無限空間事件")+"::OnCcdd2";
+	enablenpc instance_npcname("無限空間傳送門#1");
+	instance_announce instance_id(1),"【副本公告】：第1樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd2:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],17,94,42,69,"--ja--",3386,5,instance_npcname("無限空間事件")+"::OnCcdd3";
+	areamonster 'map_name$[0],17,94,42,69,"--ja--",3387,5,instance_npcname("無限空間事件")+"::OnCcdd3";
+	areamonster 'map_name$[0],17,94,42,69,"--ja--",3388,5,instance_npcname("無限空間事件")+"::OnCcdd3";
+	areamonster 'map_name$[0],17,94,42,69,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#2");
+	instance_announce instance_id(1),"【副本公告】：第2樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd3:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],17,126,42,101,"--ja--",3386,5,instance_npcname("無限空間事件")+"::OnCcdd4";
+	areamonster 'map_name$[0],17,126,42,101,"--ja--",3387,5,instance_npcname("無限空間事件")+"::OnCcdd4";
+	areamonster 'map_name$[0],17,126,42,101,"--ja--",3388,5,instance_npcname("無限空間事件")+"::OnCcdd4";
+	areamonster 'map_name$[0],17,126,42,101,"--ja--",3389,5,instance_npcname("無限空間事件")+"::OnCcdd4";
+	enablenpc instance_npcname("無限空間傳送門#3");
+	instance_announce instance_id(1),"【副本公告】：第3樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd4:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,35;
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3385,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3386,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3387,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3388,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3389,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3390,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3392,5,instance_npcname("無限空間事件")+"::OnCcdd5";
+	areamonster 'map_name$[0],11,170,48,133,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#4");
+	instance_announce instance_id(1),"【副本公告】：第4樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd5:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],29,234,29,234,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd6";
+	enablenpc instance_npcname("無限空間傳送門#5");
+	instance_announce instance_id(1),"【副本公告】：第5樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd6:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],17,274,42,249,"--ja--",3388,7,instance_npcname("無限空間事件")+"::OnCcdd7";
+	areamonster 'map_name$[0],17,274,42,249,"--ja--",3389,8,instance_npcname("無限空間事件")+"::OnCcdd7";
+	enablenpc instance_npcname("無限空間傳送門#6");
+	instance_announce instance_id(1),"【副本公告】：第6樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd7:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],29,296,29,296,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd8";
+	areamonster 'map_name$[0],29,296,29,296,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#7");
+	instance_announce instance_id(1),"【副本公告】：第7樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd8:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],29,333,29,333,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd9";
+	enablenpc instance_npcname("無限空間傳送門#8");
+	instance_announce instance_id(1),"【副本公告】：第8樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd9:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],29,370,29,370,"--ja--",3426,1,instance_npcname("無限空間事件")+"::OnCcdd10";
+	enablenpc instance_npcname("無限空間傳送門#9");
+	instance_announce instance_id(1),"【副本公告】：第9樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd10:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],99,30,124,5,"--ja--",3391,10,instance_npcname("無限空間事件")+"::OnCcdd11";
+	areamonster 'map_name$[0],99,30,124,5,"--ja--",3392,10,instance_npcname("無限空間事件")+"::OnCcdd11";
+	areamonster 'map_name$[0],99,30,124,5,"--ja--",3206,1;
+	enablenpc instance_npcname("寶物箱子#Infi01");
+	enablenpc instance_npcname("無限空間傳送門#10");
+	instance_announce instance_id(1),"【副本公告】：第10樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現了寶物箱子，隊長趕快過去看看吧!",16;
+	end;
+
+	OnCcdd11:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],112,53,112,53,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd12";
+	enablenpc instance_npcname("無限空間傳送門#11");
+	instance_announce instance_id(1),"【副本公告】：第11樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd12:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],99,94,124,69,"--ja--",3393,5,instance_npcname("無限空間事件")+"::OnCcdd13";
+	areamonster 'map_name$[0],99,94,124,69,"--ja--",3394,10,instance_npcname("無限空間事件")+"::OnCcdd13";
+	areamonster 'map_name$[0],99,94,124,69,"--ja--",3395,5,instance_npcname("無限空間事件")+"::OnCcdd13";
+	areamonster 'map_name$[0],99,94,124,69,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#12");
+	instance_announce instance_id(1),"【副本公告】：第12樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd13:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],99,126,124,101,"--ja--",3394,10,instance_npcname("無限空間事件")+"::OnCcdd14";
+	areamonster 'map_name$[0],99,126,124,101,"--ja--",3395,10,instance_npcname("無限空間事件")+"::OnCcdd14";
+	enablenpc instance_npcname("無限空間傳送門#13");
+	instance_announce instance_id(1),"【副本公告】：第13樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd14:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,35;
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3393,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3394,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3395,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3396,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3397,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3398,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3400,5,instance_npcname("無限空間事件")+"::OnCcdd15";
+	areamonster 'map_name$[0],99,168,124,136,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#14");
+	instance_announce instance_id(1),"【副本公告】：第14樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd15:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],99,242,124,217,"--ja--",3395,5,instance_npcname("無限空間事件")+"::OnCcdd16";
+	areamonster 'map_name$[0],99,242,124,217,"--ja--",3396,5,instance_npcname("無限空間事件")+"::OnCcdd16";
+	areamonster 'map_name$[0],99,242,124,217,"--ja--",3397,5,instance_npcname("無限空間事件")+"::OnCcdd16";
+	enablenpc instance_npcname("無限空間傳送門#15");
+	instance_announce instance_id(1),"【副本公告】：第15樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd16:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],99,274,124,249,"--ja--",3396,5,instance_npcname("無限空間事件")+"::OnCcdd17";
+	areamonster 'map_name$[0],99,274,124,249,"--ja--",3397,5,instance_npcname("無限空間事件")+"::OnCcdd17";
+	areamonster 'map_name$[0],99,274,124,249,"--ja--",3398,5,instance_npcname("無限空間事件")+"::OnCcdd17";
+	areamonster 'map_name$[0],99,274,124,249,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#16");
+	instance_announce instance_id(1),"【副本公告】：第16樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd17:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],99,306,124,281,"--ja--",3397,5,instance_npcname("無限空間事件")+"::OnCcdd18";
+	areamonster 'map_name$[0],99,306,124,281,"--ja--",3398,5,instance_npcname("無限空間事件")+"::OnCcdd18";
+	areamonster 'map_name$[0],99,306,124,281,"--ja--",3399,5,instance_npcname("無限空間事件")+"::OnCcdd18";
+	enablenpc instance_npcname("無限空間傳送門#17");
+	instance_announce instance_id(1),"【副本公告】：第17樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd18:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],99,337,124,313,"--ja--",3398,5,instance_npcname("無限空間事件")+"::OnCcdd19";
+	areamonster 'map_name$[0],99,337,124,313,"--ja--",3399,5,instance_npcname("無限空間事件")+"::OnCcdd19";
+	areamonster 'map_name$[0],99,337,124,313,"--ja--",3400,5,instance_npcname("無限空間事件")+"::OnCcdd19";
+	enablenpc instance_npcname("無限空間傳送門#18");
+	instance_announce instance_id(1),"【副本公告】：第18樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd19:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],112,370,112,370,"--ja--",3427,1,instance_npcname("無限空間事件")+"::OnCcdd20";
+	areamonster 'map_name$[0],112,370,112,370,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#19");
+	instance_announce instance_id(1),"【副本公告】：第19樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd20:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],185,30,210,5,"--ja--",3400,10,instance_npcname("無限空間事件")+"::OnCcdd21";
+	areamonster 'map_name$[0],185,30,210,5,"--ja--",3401,10,instance_npcname("無限空間事件")+"::OnCcdd21";
+	enablenpc instance_npcname("寶物箱子#Infi02");
+	enablenpc instance_npcname("無限空間傳送門#20");
+	instance_announce instance_id(1),"【副本公告】：第20樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現了寶物箱子，隊長趕快過去看看吧!",16;
+	end;
+
+	OnCcdd21:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],198,55,198,55,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd22";
+	enablenpc instance_npcname("無限空間傳送門#21");
+	instance_announce instance_id(1),"【副本公告】：第21樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd22:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],198,85,198,85,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd23";
+	areamonster 'map_name$[0],198,85,198,85,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#22");
+	instance_announce instance_id(1),"【副本公告】：第22樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd23:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],185,126,210,103,"--ja--",3400,5,instance_npcname("無限空間事件")+"::OnCcdd24";
+	areamonster 'map_name$[0],185,126,210,103,"--ja--",3401,5,instance_npcname("無限空間事件")+"::OnCcdd24";
+	areamonster 'map_name$[0],185,126,210,103,"--ja--",3402,5,instance_npcname("無限空間事件")+"::OnCcdd24";
+	enablenpc instance_npcname("無限空間傳送門#23");
+	instance_announce instance_id(1),"【副本公告】：第23樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd24:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],198,151,198,151,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd25";
+	areamonster 'map_name$[0],198,151,198,151,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#24");
+	instance_announce instance_id(1),"【副本公告】：第24樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd25:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],181,234,206,209,"--ja--",3401,10,instance_npcname("無限空間事件")+"::OnCcdd26";
+	areamonster 'map_name$[0],181,234,206,209,"--ja--",3402,10,instance_npcname("無限空間事件")+"::OnCcdd26";
+	enablenpc instance_npcname("無限空間傳送門#25");
+	instance_announce instance_id(1),"【副本公告】：第25樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd26:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],181,266,206,241,"--ja--",3403,10,instance_npcname("無限空間事件")+"::OnCcdd27";
+	areamonster 'map_name$[0],181,266,206,241,"--ja--",3404,10,instance_npcname("無限空間事件")+"::OnCcdd27";
+	areamonster 'map_name$[0],181,266,206,241,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#26");
+	instance_announce instance_id(1),"【副本公告】：第26樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd27:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],181,298,206,273,"--ja--",3404,10,instance_npcname("無限空間事件")+"::OnCcdd28";
+	areamonster 'map_name$[0],181,298,206,273,"--ja--",3405,10,instance_npcname("無限空間事件")+"::OnCcdd28";
+	enablenpc instance_npcname("無限空間傳送門#27");
+	instance_announce instance_id(1),"【副本公告】：第27樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd28:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],194,320,194,320,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd29";
+	areamonster 'map_name$[0],194,320,194,320,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#28");
+	instance_announce instance_id(1),"【副本公告】：第28樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd29:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],194,372,194,372,"--ja--",3428,1,instance_npcname("無限空間事件")+"::OnCcdd30";
+	enablenpc instance_npcname("無限空間傳送門#29");
+	instance_announce instance_id(1),"【副本公告】：第29樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd30:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],267,30,292,5,"--ja--",3402,5,instance_npcname("無限空間事件")+"::OnCcdd31";
+	areamonster 'map_name$[0],267,30,292,5,"--ja--",3403,5,instance_npcname("無限空間事件")+"::OnCcdd31";
+	areamonster 'map_name$[0],267,30,292,5,"--ja--",3404,5,instance_npcname("無限空間事件")+"::OnCcdd31";
+	areamonster 'map_name$[0],267,30,292,5,"--ja--",3206,1;
+	enablenpc instance_npcname("寶物箱子#Infi03");
+	enablenpc instance_npcname("無限空間傳送門#30");
+	instance_announce instance_id(1),"【副本公告】：第30樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現了寶物箱子，隊長趕快過去看看吧!",16;
+	end;
+
+	OnCcdd31:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],267,62,292,37,"--ja--",3403,5,instance_npcname("無限空間事件")+"::OnCcdd32";
+	areamonster 'map_name$[0],267,62,292,37,"--ja--",3404,5,instance_npcname("無限空間事件")+"::OnCcdd32";
+	areamonster 'map_name$[0],267,62,292,37,"--ja--",3405,5,instance_npcname("無限空間事件")+"::OnCcdd32";
+	enablenpc instance_npcname("無限空間傳送門#31");
+	instance_announce instance_id(1),"【副本公告】：第31樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd32:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,15;
+	areamonster 'map_name$[0],267,94,292,69,"--ja--",3404,5,instance_npcname("無限空間事件")+"::OnCcdd33";
+	areamonster 'map_name$[0],267,94,292,69,"--ja--",3405,5,instance_npcname("無限空間事件")+"::OnCcdd33";
+	areamonster 'map_name$[0],267,94,292,69,"--ja--",3406,5,instance_npcname("無限空間事件")+"::OnCcdd33";
+	areamonster 'map_name$[0],267,94,292,69,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#32");
+	instance_announce instance_id(1),"【副本公告】：第32樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd33:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],280,115,280,115,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd34";
+	enablenpc instance_npcname("無限空間傳送門#33");
+	instance_announce instance_id(1),"【副本公告】：第33樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd34:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],280,155,280,155,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd35";
+	areamonster 'map_name$[0],280,155,280,155,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#34");
+	instance_announce instance_id(1),"【副本公告】：第34樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd35:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],267,234,292,209,"--ja--",3405,10,instance_npcname("無限空間事件")+"::OnCcdd36";
+	areamonster 'map_name$[0],267,234,292,209,"--ja--",3406,10,instance_npcname("無限空間事件")+"::OnCcdd36";
+	enablenpc instance_npcname("無限空間傳送門#35");
+	instance_announce instance_id(1),"【副本公告】：第35樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd36:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],267,266,292,241,"--ja--",3406,10,instance_npcname("無限空間事件")+"::OnCcdd37";
+	areamonster 'map_name$[0],267,266,292,241,"--ja--",3407,10,instance_npcname("無限空間事件")+"::OnCcdd37";
+	enablenpc instance_npcname("無限空間傳送門#36");
+	instance_announce instance_id(1),"【副本公告】：第36樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd37:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,20;
+	areamonster 'map_name$[0],267,298,292,273,"--ja--",3407,10,instance_npcname("無限空間事件")+"::OnCcdd38";
+	areamonster 'map_name$[0],267,298,292,273,"--ja--",3408,10,instance_npcname("無限空間事件")+"::OnCcdd38";
+	areamonster 'map_name$[0],267,298,292,273,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#37");
+	instance_announce instance_id(1),"【副本公告】：第37樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd38:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],280,320,280,320,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd39";
+	enablenpc instance_npcname("無限空間傳送門#38");
+	instance_announce instance_id(1),"【副本公告】：第38樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd39:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,1;
+	areamonster 'map_name$[0],280,368,280,368,"--ja--",3429,1,instance_npcname("無限空間事件")+"::OnCcdd40";
+	enablenpc instance_npcname("無限空間傳送門#39");
+	instance_announce instance_id(1),"【副本公告】：第39樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd40:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,30;
+	areamonster 'map_name$[0],349,30,374,5,"--ja--",3409,7,instance_npcname("無限空間事件")+"::OnCcdd41";
+	areamonster 'map_name$[0],349,30,374,5,"--ja--",3410,7,instance_npcname("無限空間事件")+"::OnCcdd41";
+	areamonster 'map_name$[0],349,30,374,5,"--ja--",3411,8,instance_npcname("無限空間事件")+"::OnCcdd41";
+	areamonster 'map_name$[0],349,30,374,5,"--ja--",3412,8,instance_npcname("無限空間事件")+"::OnCcdd41";
+	areamonster 'map_name$[0],349,30,374,5,"--ja--",3206,1;
+	enablenpc instance_npcname("寶物箱子#Infi04");
+	enablenpc instance_npcname("無限空間傳送門#40");
+	instance_announce instance_id(1),"【副本公告】：第40樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現了寶物箱子，隊長趕快過去看看吧!",16;
+	end;
+
+	OnCcdd41:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,30;
+	areamonster 'map_name$[0],349,62,374,37,"--ja--",3413,7,instance_npcname("無限空間事件")+"::OnCcdd42";
+	areamonster 'map_name$[0],349,62,374,37,"--ja--",3414,7,instance_npcname("無限空間事件")+"::OnCcdd42";
+	areamonster 'map_name$[0],349,62,374,37,"--ja--",3415,8,instance_npcname("無限空間事件")+"::OnCcdd42";
+	areamonster 'map_name$[0],349,62,374,37,"--ja--",3416,8,instance_npcname("無限空間事件")+"::OnCcdd42";
+	enablenpc instance_npcname("無限空間傳送門#41");
+	instance_announce instance_id(1),"【副本公告】：第41樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd42:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,30;
+	areamonster 'map_name$[0],349,94,374,69,"--ja--",3415,7,instance_npcname("無限空間事件")+"::OnCcdd43";
+	areamonster 'map_name$[0],349,94,374,69,"--ja--",3416,7,instance_npcname("無限空間事件")+"::OnCcdd43";
+	areamonster 'map_name$[0],349,94,374,69,"--ja--",3417,8,instance_npcname("無限空間事件")+"::OnCcdd43";
+	areamonster 'map_name$[0],349,94,374,69,"--ja--",3418,8,instance_npcname("無限空間事件")+"::OnCcdd43";
+	areamonster 'map_name$[0],349,94,374,69,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#42");
+	instance_announce instance_id(1),"【副本公告】：第42樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd43:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,30;
+	areamonster 'map_name$[0],349,126,374,102,"--ja--",3417,7,instance_npcname("無限空間事件")+"::OnCcdd44";
+	areamonster 'map_name$[0],349,126,374,102,"--ja--",3418,7,instance_npcname("無限空間事件")+"::OnCcdd44";
+	areamonster 'map_name$[0],349,126,374,102,"--ja--",3419,8,instance_npcname("無限空間事件")+"::OnCcdd44";
+	areamonster 'map_name$[0],349,126,374,102,"--ja--",3420,8,instance_npcname("無限空間事件")+"::OnCcdd44";
+	enablenpc instance_npcname("無限空間傳送門#43");
+	instance_announce instance_id(1),"【副本公告】：第43樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd44:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,2;
+	areamonster 'map_name$[0],358,158,366,153,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd45";
+	areamonster 'map_name$[0],358,158,366,153,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd45";
+	areamonster 'map_name$[0],358,158,366,153,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#44");
+	instance_announce instance_id(1),"【副本公告】：第44樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd45:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,16;
+	areamonster 'map_name$[0],354,233,378,209,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd46";
+	areamonster 'map_name$[0],354,233,378,209,"--ja--",3415,5,instance_npcname("無限空間事件")+"::OnCcdd46";
+	areamonster 'map_name$[0],354,233,378,209,"--ja--",3416,5,instance_npcname("無限空間事件")+"::OnCcdd46";
+	areamonster 'map_name$[0],354,233,378,209,"--ja--",3417,5,instance_npcname("無限空間事件")+"::OnCcdd46";
+	enablenpc instance_npcname("無限空間傳送門#45");
+	instance_announce instance_id(1),"【副本公告】：第45樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd46:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,16;
+	areamonster 'map_name$[0],353,266,378,241,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd47";
+	areamonster 'map_name$[0],353,266,378,241,"--ja--",3417,5,instance_npcname("無限空間事件")+"::OnCcdd47";
+	areamonster 'map_name$[0],353,266,378,241,"--ja--",3418,5,instance_npcname("無限空間事件")+"::OnCcdd47";
+	areamonster 'map_name$[0],353,266,378,241,"--ja--",3419,5,instance_npcname("無限空間事件")+"::OnCcdd47";
+	enablenpc instance_npcname("無限空間傳送門#46");
+	instance_announce instance_id(1),"【副本公告】：第46樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd47:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,17;
+	areamonster 'map_name$[0],353,299,378,273,"--ja--",rand(3421,3424),2,instance_npcname("無限空間事件")+"::OnCcdd48";
+	areamonster 'map_name$[0],353,299,378,273,"--ja--",3418,5,instance_npcname("無限空間事件")+"::OnCcdd48";
+	areamonster 'map_name$[0],353,299,378,273,"--ja--",3419,5,instance_npcname("無限空間事件")+"::OnCcdd48";
+	areamonster 'map_name$[0],353,299,378,273,"--ja--",3420,5,instance_npcname("無限空間事件")+"::OnCcdd48";
+	areamonster 'map_name$[0],353,299,378,273,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#47");
+	instance_announce instance_id(1),"【副本公告】：第47樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd48:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,17;
+	areamonster 'map_name$[0],353,330,378,305,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd49";
+	areamonster 'map_name$[0],353,330,378,305,"--ja--",3425,1,instance_npcname("無限空間事件")+"::OnCcdd49";
+	areamonster 'map_name$[0],353,330,378,305,"--ja--",3415,5,instance_npcname("無限空間事件")+"::OnCcdd49";
+	areamonster 'map_name$[0],353,330,378,305,"--ja--",3416,5,instance_npcname("無限空間事件")+"::OnCcdd49";
+	areamonster 'map_name$[0],353,330,378,305,"--ja--",3420,5,instance_npcname("無限空間事件")+"::OnCcdd49";
+	enablenpc instance_npcname("無限空間傳送門#48");
+	instance_announce instance_id(1),"【副本公告】：第48樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd49:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	set 'Infi_mob_,24;
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",rand(3421,3424),1,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",3430,1,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",3419,10,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",3420,10,instance_npcname("無限空間事件")+"::OnCcdd50";
+	areamonster 'map_name$[0],337,394,394,337,"--ja--",3206,1;
+	enablenpc instance_npcname("無限空間傳送門#49");
+	instance_announce instance_id(1),"【副本公告】：第49樓層魔物清除完畢，通往下樓層的通道已經出現了",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd50:
+	set 'Infi_mob_,'Infi_mob_-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'Infi_mob_+"只魔物",bc_all,0xD7BA98;
+	if ('Infi_mob_>0) end;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【無限空間】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("寶物箱子#Infi05");
+	enablenpc instance_npcname("無限空間傳送門#50");
+	instance_announce instance_id(1),"【副本公告】：第50樓層魔物清除完畢，從上方傳點就可以離開副本了",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現了寶物箱子，隊長趕快過去看看吧!",16;
+	end;
+}
+
+
+//------------------------------副本NPC	損壞的魔法石
+1@infi,31,370,4	script	寶物箱子#Infi01	991,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Tnm01,rand(1,100);
+	set .@Tnm02,rand(1,100);
+	set .@Tnm03,rand(1,100);
+	if (.@Tnm01 <= 30) {makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);}
+	if (.@Tnm02 <= 60) {makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);}
+	if (.@Tnm03 <= 90) {makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);}
+	makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);
+	makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);
+	makeitem 6905,1*$EP1501,.@map$,rand(29,33),rand(368,372);
+	disablenpc instance_npcname("寶物箱子#Infi01");
+	end;
+}
+
+1@infi,113,362,4	script	寶物箱子#Infi02	991,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Tnm01,rand(1,100);
+	set .@Tnm02,rand(1,100);
+	set .@Tnm03,rand(1,100);
+	if (.@Tnm01 <= 30) {makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);}
+	if (.@Tnm02 <= 60) {makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);}
+	if (.@Tnm03 <= 90) {makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);}
+	makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);
+	makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);
+	makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(360,364);
+	disablenpc instance_npcname("寶物箱子#Infi02");
+	end;
+}
+
+1@infi,194,372,4	script	寶物箱子#Infi03	991,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Tnm01,rand(1,100);
+	set .@Tnm02,rand(1,100);
+	set .@Tnm03,rand(1,100);
+	if (.@Tnm01 <= 30) {makeitem 6905*$EP1501,1,.@map$,rand(192,196),rand(370,374);}
+	if (.@Tnm02 <= 60) {makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(370,374);}
+	if (.@Tnm03 <= 90) {makeitem 6905*$EP1501,1,.@map$,rand(111,115),rand(370,374);}
+	makeitem 6905*$EP1501,1,.@map$,rand(192,196),rand(370,374);
+	makeitem 6905*$EP1501,1,.@map$,rand(192,196),rand(370,374);
+	makeitem 6905*$EP1501,1,.@map$,rand(192,196),rand(370,374);
+	disablenpc instance_npcname("寶物箱子#Infi03");
+	end;
+}
+
+1@infi,280,368,4	script	寶物箱子#Infi04	991,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Tnm01,rand(1,100);
+	set .@Tnm02,rand(1,100);
+	set .@Tnm03,rand(1,100);
+	if (.@Tnm01 <= 30) {makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);}
+	if (.@Tnm02 <= 60) {makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);}
+	if (.@Tnm03 <= 90) {makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);}
+	makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);
+	makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);
+	makeitem 6905*$EP1501,1,.@map$,rand(278,282),rand(366,370);
+	disablenpc instance_npcname("寶物箱子#Infi04");
+	end;
+}
+
+1@infi,366,371,4	script	寶物箱子#Infi05	991,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@map$, strnpcinfo(4);
+	set .@Tnm01,rand(1,100);
+	set .@Tnm02,rand(1,100);
+	set .@Tnm03,rand(1,100);
+	if (.@Tnm01 <= 30) {makeitem 6905*$EP1501,1,.@map$,rand(364,368),rand(369,373);}
+	if (.@Tnm02 <= 60) {makeitem 6905*$EP1501,1,.@map$,rand(364,368),rand(369,373);}
+	if (.@Tnm03 <= 90) {makeitem 6905*$EP1501,1,.@map$,rand(364,368),rand(369,373);}
+	makeitem 6905*$EP1501,1,.@map$,rand(364,368),rand(369,373);
+	makeitem 6905*$EP1501,1,.@map$,rand(3364,368),rand(369,373);
+	makeitem 6905*$EP1501,1,.@map$,rand(364,368),rand(369,373);
+	disablenpc instance_npcname("寶物箱子#Infi05");
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@infi,30,31,0	warp	無限空間傳送門#1	2,2,1@infi,30,38
+1@infi,30,63,0	warp	無限空間傳送門#2	2,2,1@infi,30,70
+1@infi,30,95,0	warp	無限空間傳送門#3	2,2,1@infi,30,102
+1@infi,30,127,0	warp	無限空間傳送門#4	2,2,1@infi,30,134
+1@infi,30,168,0	warp	無限空間傳送門#5	2,2,1@infi,30,220
+1@infi,30,243,0	warp	無限空間傳送門#6	2,2,1@infi,30,250
+1@infi,30,275,0	warp	無限空間傳送門#7	2,2,1@infi,30,282
+1@infi,30,307,0	warp	無限空間傳送門#8	2,2,1@infi,30,315
+1@infi,30,339,0	warp	無限空間傳送門#9	2,2,1@infi,30,348
+1@infi,30,380,0	warp	無限空間傳送門#10	2,2,1@infi,112,7
+
+1@infi,112,31,0	warp	無限空間傳送門#11	2,2,1@infi,112,38
+1@infi,112,63,0	warp	無限空間傳送門#12	2,2,1@infi,112,70
+1@infi,112,95,0	warp	無限空間傳送門#13	2,2,1@infi,112,102
+1@infi,112,127,0	warp	無限空間傳送門#14	2,2,1@infi,112,134
+1@infi,112,168,0	warp	無限空間傳送門#15	2,2,1@infi,112,220
+1@infi,112,243,0	warp	無限空間傳送門#16	2,2,1@infi,112,250
+1@infi,112,275,0	warp	無限空間傳送門#17	2,2,1@infi,112,282
+1@infi,112,307,0	warp	無限空間傳送門#18	2,2,1@infi,112,315
+1@infi,112,339,0	warp	無限空間傳送門#19	2,2,1@infi,112,348
+1@infi,112,380,0	warp	無限空間傳送門#20	2,2,1@infi,198,7
+
+1@infi,198,31,0	warp	無限空間傳送門#21	2,2,1@infi,198,38
+1@infi,198,63,0	warp	無限空間傳送門#22	2,2,1@infi,198,70
+1@infi,198,95,0	warp	無限空間傳送門#23	2,2,1@infi,198,102
+1@infi,198,127,0	warp	無限空間傳送門#24	2,2,1@infi,198,134
+1@infi,198,167,0	warp	無限空間傳送門#25	2,2,1@infi,198,220
+1@infi,194,235,0	warp	無限空間傳送門#26	2,2,1@infi,194,242
+1@infi,194,267,0	warp	無限空間傳送門#27	2,2,1@infi,194,274
+1@infi,194,299,0	warp	無限空間傳送門#28	2,2,1@infi,194,306
+1@infi,194,331,0	warp	無限空間傳送門#29	2,2,1@infi,194,338
+1@infi,194,392,0	warp	無限空間傳送門#30	2,2,1@infi,280,7
+
+1@infi,280,31,0	warp	無限空間傳送門#31	2,2,1@infi,280,38
+1@infi,280,63,0	warp	無限空間傳送門#32	2,2,1@infi,280,70
+1@infi,280,95,0	warp	無限空間傳送門#33	2,2,1@infi,280,102
+1@infi,280,127,0	warp	無限空間傳送門#34	2,2,1@infi,280,134
+1@infi,280,167,0	warp	無限空間傳送門#35	2,2,1@infi,280,220
+1@infi,280,235,0	warp	無限空間傳送門#36	2,2,1@infi,280,242
+1@infi,280,267,0	warp	無限空間傳送門#37	2,2,1@infi,280,274
+1@infi,280,299,0	warp	無限空間傳送門#38	2,2,1@infi,280,306
+1@infi,280,331,0	warp	無限空間傳送門#39	2,2,1@infi,280,338
+1@infi,280,392,0	warp	無限空間傳送門#40	2,2,1@infi,362,7
+
+1@infi,362,31,0	warp	無限空間傳送門#41	2,2,1@infi,362,38
+1@infi,362,63,0	warp	無限空間傳送門#42	2,2,1@infi,362,70
+1@infi,362,95,0	warp	無限空間傳送門#43	2,2,1@infi,362,102
+1@infi,362,127,0	warp	無限空間傳送門#44	2,2,1@infi,362,134
+1@infi,362,167,0	warp	無限空間傳送門#45	2,2,1@infi,366,212
+1@infi,366,235,0	warp	無限空間傳送門#46	2,2,1@infi,366,242
+1@infi,366,267,0	warp	無限空間傳送門#47	2,2,1@infi,366,274
+1@infi,366,299,0	warp	無限空間傳送門#48	2,2,1@infi,366,306
+1@infi,366,331,0	warp	無限空間傳送門#49	2,2,1@infi,366,338
+
+//1@infi,366,392,0	warp	無限空間傳送門#50	2,2,map02,99,136
+
+1@infi,366,392,0	script	無限空間傳送門#50	45,2,2,{
+	end;
+OnTouch:
+	if(checkquest(32059,HUNTING)==2 ) { 
+	dispbottom "無限空間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	callfunc "offical_instance_finish",37;
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32059; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+//------------------------------地圖屬性
+1@infi	mapflag	partylock
+1@infi	mapflag	noteleport
+1@infi	mapflag	nosave	SavePoint
+1@infi	mapflag	nomemo
+1@infi	mapflag	nobranch
+1@infi	mapflag	noicewall
+1@infi	mapflag	restricted	6
+
+
+
+

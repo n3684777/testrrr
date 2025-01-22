@@ -1,0 +1,679 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+
+#物品互換服務員
+   - Name: 物品互換服務員
+     Map: rgsr_in
+     X: 119
+     Y: 185
+     Direction: SouthEast
+     Sprite: 4_EP18_HAZAR
+     Items:
+       - Index: 0
+         Item: Enriched_Elunium
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Enriched_Oridecon
+             Amount: 2
+       - Index: 1
+         Item: Enriched_Oridecon
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Enriched_Elunium
+             Amount: 2
+       - Index: 2
+         Item: HD_Oridecon
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: HD_Elunium
+             Amount: 2
+       - Index: 3
+         Item: HD_Elunium
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: HD_Oridecon
+             Amount: 2
+       - Index: 4
+         Item: Unbreakable_Weap
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Unbreakable_Def
+             Amount: 2
+       - Index: 5
+         Item: Unbreakable_Def
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Unbreakable_Weap
+             Amount: 2
+       - Index: 6
+         Item: Zelunium
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Shadowdecon
+             Amount: 2
+       - Index: 7
+         Item: Shadowdecon
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Zelunium
+             Amount: 2
+             
+       - Index: 8
+         Item: Oridecon
+         Stock: 0
+         Zeny: 100
+         RequiredItems:
+           - Index: 0
+             Item: Oridecon_Stone
+             Amount: 5
+       - Index: 9
+         Item: Elunium
+         Stock: 0
+         Zeny: 100
+         RequiredItems:
+           - Index: 0
+             Item: Elunium_Stone
+             Amount: 5
+       - Index: 10
+         Item: Carnium
+         Stock: 0
+         Zeny: 500
+         RequiredItems:
+           - Index: 0
+             Item: Elunium
+             Amount: 3
+       - Index: 11
+         Item: Bradium
+         Stock: 0
+         Zeny: 500
+         RequiredItems:
+           - Index: 0
+             Item: Oridecon
+             Amount: 3
+       - Index: 12
+         Item: Zelunium
+         Stock: 0
+         Zeny: 1000
+         RequiredItems:
+           - Index: 0
+             Item: Zelunium_Ore
+             Amount: 10
+       - Index: 13
+         Item: Shadowdecon
+         Stock: 0
+         Zeny: 1000
+         RequiredItems:
+           - Index: 0
+             Item: Shadowdecon_Ore
+             Amount: 10
+
+       - Index: 14
+         Item: ethernium
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 1
+           - Index: 1
+             Item: Elunium
+             Amount: 1
+       - Index: 15
+         Item: etherdeocon
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 1
+           - Index: 1
+             Item: Oridecon
+             Amount: 1
+       - Index: 16
+         Item: Etel_Bradium
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: Bradium
+             Amount: 1
+       - Index: 17
+         Item: Etel_Carnium
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: Carnium
+             Amount: 1
+       - Index: 18
+         Item: enriched_ethernium
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 2
+           - Index: 1
+             Item: Enriched_Elunium
+             Amount: 1
+       - Index: 19
+         Item: enriched_etherdeocon
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 2
+           - Index: 1
+             Item: Enriched_Oridecon
+             Amount: 1
+       - Index: 20
+         Item: hd_ethernium
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: HD_Elunium
+             Amount: 1
+       - Index: 21
+         Item: hd_etherdeocon
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: HD_Oridecon
+             Amount: 1
+       - Index: 22
+         Item: HD_Etel_Carnium
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: HD_Carnium
+             Amount: 1
+       - Index: 23
+         Item: HD_Etel_Bradium
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 3
+           - Index: 1
+             Item: HD_Bradium
+             Amount: 1
+
+       - Index: 24
+         Item: etel_stone
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: etel_dust
+             Amount: 5
+       - Index: 25
+         Item: blessed_etel_dust
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Blacksmith_Blessing
+             Amount: 1
+       - Index: 26
+         Item: etel_skyblue_jewel
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: etel_stone
+             Amount: 3
+           - Index: 1
+             Item: Skyblue_Jewel
+             Amount: 1
+       - Index: 27
+         Item: etel_topaz
+         Stock: 0
+         Zeny: 200000
+         RequiredItems:
+           - Index: 0
+             Item: etel_stone
+             Amount: 6
+           - Index: 1
+             Item: Golden_Jewel
+             Amount: 1
+       - Index: 28
+         Item: etel_violet_jewel
+         Stock: 0
+         Zeny: 300000
+         RequiredItems:
+           - Index: 0
+             Item: etel_stone
+             Amount: 10
+           - Index: 1
+             Item: Violet_Jewel
+             Amount: 1
+       - Index: 29
+         Item: etel_amber
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: etel_stone
+             Amount: 15
+           - Index: 1
+             Item: amber
+             Amount: 1
+
+       - Index: 30
+         Item: Ymir_Heart_TW
+         Stock: 0
+         Zeny: 10000000
+         RequiredItems:
+           - Index: 0
+             Item: Ymir_Heart_P_TW
+             Amount: 5
+
+
+
+
+#改良裝備材料兌換
+   - Name: 改良裝備材料兌換#1
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_SCIENCE
+     Items:
+       - Index: 1
+         Item: weapon_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Shadowdecon
+             Amount: 1
+       - Index: 2
+         Item: Armor_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Shadowdecon
+             Amount: 1
+       - Index: 3
+         Item: acc_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Shadowdecon
+             Amount: 1
+       - Index: 4
+         Item: weapon_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Zelunium
+             Amount: 1
+       - Index: 5
+         Item: Armor_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Zelunium
+             Amount: 1
+       - Index: 6
+         Item: acc_stone_1
+         Stock: 0
+         Zeny: 2000
+         RequiredItems:
+           - Index: 0
+             Item: Zelunium
+             Amount: 1
+
+
+
+   - Name: 改良裝備材料兌換#2
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_SCIENCE
+     Items:
+       - Index: 0
+         Item: weapon_stone_2
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_stone_1
+             Amount: 3
+       - Index: 1
+         Item: Armor_stone_2
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_stone_1
+             Amount: 3
+       - Index: 2
+         Item: acc_stone_2
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: acc_stone_1
+             Amount: 3
+       - Index: 3
+         Item: weapon_stone_3
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_stone_2
+             Amount: 3
+       - Index: 4
+         Item: Armor_stone_3
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_stone_2
+             Amount: 3
+       - Index: 5
+         Item: acc_stone_3
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: acc_stone_2
+             Amount: 3
+       - Index: 6
+         Item: weapon_stone_4
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_stone_3
+             Amount: 3
+       - Index: 7
+         Item: Armor_stone_4
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_stone_3
+             Amount: 3
+       - Index: 8
+         Item: acc_stone_4
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: acc_stone_3
+             Amount: 3
+
+   - Name: 改良裝備材料兌換#3
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_SCIENCE
+     Items:
+       - Index: 0
+         Item: weapon_stone_1
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_ore_1
+             Amount: 5
+       - Index: 1
+         Item: Armor_stone_1
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_ore_1
+             Amount: 5
+       - Index: 2
+         Item: acc_stone_1
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: acc_ore_1
+             Amount: 5
+       - Index: 3
+         Item: weapon_stone_2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_ore_2
+             Amount: 5
+       - Index: 4
+         Item: Armor_stone_2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_ore_2
+             Amount: 5
+       - Index: 5
+         Item: acc_stone_2
+         Stock: 0
+         Zeny: 20000
+         RequiredItems:
+           - Index: 0
+             Item: acc_ore_2
+             Amount: 5
+       - Index: 6
+         Item: weapon_stone_3
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_ore_3
+             Amount: 5
+       - Index: 7
+         Item: Armor_stone_3
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_ore_3
+             Amount: 5
+       - Index: 8
+         Item: acc_stone_3
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: acc_ore_3
+             Amount: 5
+       - Index: 9
+         Item: weapon_stone_4
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: weapon_ore_4
+             Amount: 5
+       - Index: 10
+         Item: Armor_stone_4
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Armor_ore_4
+             Amount: 5
+       - Index: 11
+         Item: acc_stone_4
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: acc_ore_4
+             Amount: 5
+
+   - Name: 次元礦石兌換
+     Map: rgsr_in
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_M_SCIENCE
+     Items:
+       - Index: 1
+         Item: Heros_Copper_Bar
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Iron_Bar
+             Amount: 3
+       - Index: 2
+         Item: Heros_Silver_Bar
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Copper_Bar
+             Amount: 3
+       - Index: 3
+         Item: Heros_Gold_Bar
+         Stock: 0
+         Zeny: 10000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Silver_Bar
+             Amount: 3
+
+       - Index: 4
+         Item: Heros_Ruby_1
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Ruby
+             Amount: 3
+       - Index: 5
+         Item: Heros_Topaz_1
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Topaz
+             Amount: 3
+       - Index: 6
+         Item: Heros_Sapphire_1
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Sapphire
+             Amount: 3
+       - Index: 7
+         Item: Heros_Emerald_1
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Emerald
+             Amount: 3
+       - Index: 8
+         Item: Heros_Diamond_1
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Diamond
+             Amount: 3
+
+       - Index: 9
+         Item: Heros_Ruby_2
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Ruby_1
+             Amount: 3
+       - Index: 10
+         Item: Heros_Topaz_2
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Topaz_1
+             Amount: 3
+       - Index: 11
+         Item: Heros_Sapphire_2
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Sapphire_1
+             Amount: 3
+       - Index: 12
+         Item: Heros_Emerald_2
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Emerald_1
+             Amount: 3
+       - Index: 13
+         Item: Heros_Diamond_2
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Heros_Diamond_1
+             Amount: 3
+
+
+
+
+
+
+
+
+
+

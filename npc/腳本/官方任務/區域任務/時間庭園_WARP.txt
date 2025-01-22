@@ -1,0 +1,101 @@
+﻿
+t_garden,111,36,0	script	次元屏障#t01	10527,{
+
+	mes "[次元屏障]";
+	mes "請選擇你移動的區域";
+	next;
+	switch(select("薑餅城原野","時間庭園","時間庭園")) {
+
+	case 1: 
+	warp "xmas_fild01",150,240;
+	close;
+
+	case 2:
+	warp "t_garden",118,79;
+	close;
+
+	case 3:
+	warp "t_garden",118,61;
+	close;
+	}
+}
+
+
+t_garden,78,89,0	script	時間的流逝#t01	10527,{
+
+	mes "[次元屏障]";
+	mes "請選擇你移動的區域";
+	next;
+	switch(select("被遺忘的時間的水晶(1區域)","被遺忘的時間的水晶(1區域)","被遺忘的時間的水晶(1區域)")) {
+
+	case 1:
+	warp "for_dun01",159,35;
+	close;
+
+	case 2:
+	warp "for_dun01",101,136;
+	close;
+
+	case 3: 
+	warp "for_dun01",62,266;
+	close;
+
+	}
+}
+
+
+t_garden,157,89,0	script	時間的流逝#t02	10527,{
+
+	mes "[次元屏障]";
+	mes "請選擇你移動的區域";
+	next;
+	switch(select("被遺忘的時間的水晶(2區域)","被遺忘的時間的水晶(2區域)","被遺忘的時間的水晶(2區域)")) {
+
+	case 1:
+	warp "for_dun01",33,75;
+	close;
+
+	case 2:
+	warp "for_dun01",231,269;
+	close;
+
+	case 3: 
+	warp "for_dun01",261,38;
+	close;
+
+	}
+}
+
+
+//= t_garden 時間庭園
+xmas_fild01,158,246,0	warp	got1	1,1,t_garden,116,47
+t_garden,118,66,0	warp	wp01	1,1,t_garden,118,79
+t_garden,118,72,0	warp	wp02	1,1,t_garden,118,61
+
+//= for_dun01 時間庭園-被遺忘的時間的水晶(1區域)
+for_dun01,100,146,0	warp	for_1	1,1,t_garden,83,92
+for_dun01,128,282,0	warp	for_2	1,1,t_garden,83,92
+for_dun01,55,142,0	warp	for_3	1,1,t_garden,83,92
+for_dun01,262,167,0	warp	for_4	1,1,t_garden,83,92
+for_dun01,204,67,0	warp	for_5	1,1,t_garden,83,92
+for_dun01,57,270,0	warp	for_6	1,1,t_garden,83,92
+for_dun01,65,34,0	warp	for_7	1,1,t_garden,83,92
+for_dun01,146,27,0	warp	for_8	1,1,t_garden,83,92
+for_dun01,154,139,0	warp	for_9	1,1,t_garden,83,92
+for_dun01,124,203,0	warp	for_10	1,1,t_garden,83,92
+for_dun01,267,265,0	warp	for_11	1,1,t_garden,83,92
+
+//= for_dun02 時間庭園-被遺忘的時間的水晶(2區域)
+for_dun02,190,147,0	warp	for_12	1,1,t_garden,152,92
+for_dun02,143,149,0	warp	for_13	1,1,t_garden,152,92
+for_dun02,276,29,0	warp	for_14	1,1,t_garden,152,92
+for_dun02,106,34,0	warp	for_15	1,1,t_garden,152,92
+for_dun02,216,271,0	warp	for_16	1,1,t_garden,152,92
+for_dun02,64,268,0	warp	for_17	1,1,t_garden,152,92
+for_dun02,18,170,0	warp	for_18	1,1,t_garden,152,92
+for_dun02,16,92,0	warp	for_19	1,1,t_garden,152,92
+for_dun02,29,52,0	warp	for_20	1,1,t_garden,152,92
+for_dun02,276,255,0	warp	for_21	1,1,t_garden,152,92
+for_dun02,283,197,0	warp	for_22	1,1,t_garden,152,92
+
+

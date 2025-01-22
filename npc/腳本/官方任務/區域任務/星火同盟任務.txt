@@ -1,0 +1,223 @@
+trinity,90,117,6	script	任務委托管理員#reb	10202,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("(1)修理水管所需的材料","(2)回收槍枝","(3)勘探礦山洞穴","(4)狄恩的高級茶","(5)莉德希的老舊信件","(6)柯特蕾絲的閃亮戒指",
+		"(7)掃蕩餘孽","(8)讓凱美拉安息","取消")){
+
+		case 1:
+			if(checkquest(14603,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14609,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14609,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14603;
+			if(checkquest(14609,PLAYTIME)==2){erasequest 14609;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(14611,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(14612,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(14612,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 14611;
+			if(checkquest(14612,PLAYTIME)==2){erasequest 14612;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(16025,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16026,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16026,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16025;
+			if(checkquest(16026,PLAYTIME)==2){erasequest 16026;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(11465,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11466,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11466,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11465;
+			if(checkquest(11466,PLAYTIME)==2){erasequest 11466;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(11467,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11468,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11468,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11467;
+			if(checkquest(11468,PLAYTIME)==2){erasequest 11468;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(11469,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11470,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11470,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11469;
+			if(checkquest(11470,PLAYTIME)==2){erasequest 11470;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			if(checkquest(7742,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7743,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7743,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7742;
+			if(checkquest(7743,PLAYTIME)==2){erasequest 7743;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 8:
+			if(checkquest(7761,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7762,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7762,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7761;
+			if(checkquest(7762,PLAYTIME)==2){erasequest 7762;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 9:
+			close;
+		}
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("(1)修理水管所需的材料","(2)回收槍枝","(3)勘探礦山洞穴","(4)狄恩的高級茶","(5)莉德希的老舊信件","(6)柯特蕾絲的閃亮戒指",
+		"(7)掃蕩餘孽","(8)讓凱美拉安息","取消")){
+
+		case 1:
+			if(checkquest(14603,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 14603;
+			setquest 14609;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(14611,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 14611;
+			setquest 14612;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if(checkquest(16025,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 16025;
+			setquest 16026;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(11465,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 11465;
+			setquest 11466;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 5:
+			if(checkquest(11467,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 11467;
+			setquest 11468;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 6:
+			if(checkquest(11469,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 11469;
+			setquest 11470;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 7:
+			if(checkquest(7742,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 7742;
+			setquest 7743;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 8:
+			if(checkquest(7761,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 7761;
+			setquest 7762;
+			getitem 25155,3;
+			getexp 200000,200000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 9:
+			close;
+		}
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "星火同盟每日任務",0;
+	end;
+}
+
+

@@ -1,0 +1,24 @@
+﻿
+vdistrict1,53,59,6	script	RO企劃社裝備	1_M_SIGN1,{
+
+	mes "[RO企劃社裝備]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "小山教授";
+	end;
+
+	case 2:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "RO企劃社裝備",0;
+	end;
+}
+
+

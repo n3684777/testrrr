@@ -1,0 +1,61 @@
+//========================
+// [冥] The PlutoEA Project [王]
+// http://opensvn.csie.org/PlutoEA
+// -----------------------------------------
+// - 輔助人員 -4_f_son
+//========================
+prontera,1,1,4	script	輔助人員	10243,30,30,{
+
+OnTouch:
+	percentheal 100,100;
+	sc_start SC_SPEEDUP1,1200000,40;
+	sc_start SC_INCREASEAGI,1200000,10;
+	sc_start SC_BLESSING,1200000,10;
+	//healap 500;
+	end;
+
+OnInit:
+	waitingroom "自動輔助狀態",0;
+	end;
+}
+
+//===================================
+trinity,117,96,6	duplicate(輔助人員)	輔助人員#tr1	10243,25,25	//重生點
+trinity,54,131,6	duplicate(輔助人員)	輔助人員#tr2	10243,25,25	//小遊戲
+trinity,109,60,4	duplicate(輔助人員)	輔助人員#tr3	10243,25,25	//中間
+trinity,93,33,4	duplicate(輔助人員)	輔助人員#tr4	10243,25,25	//自創副本
+trinity,1,1,4	duplicate(輔助人員)	輔助人員#tr5	10243,25,25	//
+
+
+vdistrict,41,53,4	duplicate(輔助人員)	輔助人員#map1	10243	//露天商店
+vdistrict,52,53,6	duplicate(輔助人員)	輔助人員#map2	10243	//露天商店
+vdistrict1,41,53,4	duplicate(輔助人員)	輔助人員#map3	10243	//官方副本&裝備製作
+vdistrict1,7,50,4	duplicate(輔助人員)	輔助人員#map4	10243	//官方副本&裝備製作
+vdistrict1,52,53,6	duplicate(輔助人員)	輔助人員#map5	10243	//官方副本&裝備製作
+bago_01,50,67,6	duplicate(輔助人員)	輔助人員#map6	10243	//測試傷害
+
+
+ba_maison,191,253,4	duplicate(輔助人員)	輔助人員#14	10243,25,25
+wolfvill,144,143,4	duplicate(輔助人員)	輔助人員#16	10243,25,25
+prt_in,45,113,4	duplicate(輔助人員)	輔助人員#19	10243,25,25
+prt_in,247,133,4	duplicate(輔助人員)	輔助人員#20	10243,25,25
+//icas_in,127,267,4	duplicate(輔助人員)	輔助人員#22	10243,25,25
+//icecastle,62,123,4	duplicate(輔助人員)	輔助人員#21	10243,25,25
+amatsu,102,156,6	duplicate(輔助人員)	輔助人員#ama01	10243,25,25
+comodo,189,158,4	duplicate(輔助人員)	輔助人員#com01	10243,25,25
+gonryun,167,112,4	duplicate(輔助人員)	輔助人員#gon01	10243,25,25
+izlude,127,149,4	duplicate(輔助人員)	輔助人員#izl01	10243,25,25
+
+prontera,147,33,4	duplicate(輔助人員)	輔助人員#00	10243,25,25	//東門
+prontera,43,211,6	duplicate(輔助人員)	輔助人員#01	10243,25,25	//西門
+prontera,274,212,6	duplicate(輔助人員)	輔助人員#02	10243,25,25	//南門
+prontera,159,330,4	duplicate(輔助人員)	輔助人員#03	10243,25,25	//北門
+
+
+
+
+
+
+
+
+

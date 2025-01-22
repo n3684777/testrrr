@@ -1,0 +1,594 @@
+
+vdistrict1,15,60,4	script	中樞室管理者	10181,{
+
+	//副本任務獎勵
+	if(checkquest(32028,HUNTING)==2 ) { 
+	dispbottom "中樞室任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,rand(3,5);	//商城1點金幣
+	erasequest 32028; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_29 < gettime(8) ){
+	set Instance_Bout_29,10;
+	set day_Instance_Bout_29,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_29 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[小蟲]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "中樞室";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[小蟲]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_29+"^000000 ]";
+	mes "副本獎勵：";
+	mes "商城1點金幣x3~5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[小蟲]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[小蟲]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[小蟲]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[小蟲]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_29,Instance_Bout_29-1;
+
+			//副本任務
+			if(checkquest(32028,HUNTING)<0 ){setquest 32028;}
+			if(checkquest(32030,HUNTING)<0 ){setquest 32030;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "中樞室",0;
+	end;
+}
+
+
+//------------------------------中樞室事件
+1@slw,0,0,0	script	中樞室事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@slw");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("阿伊健_維爾納#slw02");
+	disablenpc instance_npcname("阿伊健_維爾納#slw03");
+	disablenpc instance_npcname("阿伊健_維爾納#slw04");
+	disablenpc instance_npcname("阿伊健_維爾納#slw05");
+	disablenpc instance_npcname("阿伊健_維爾納#slw06");
+	disablenpc instance_npcname("保全裝置#slw01");
+	disablenpc instance_npcname("保全裝置#slw02");
+	disablenpc instance_npcname("保全裝置#slw03");
+	disablenpc instance_npcname("保全裝置#slw04");
+	disablenpc instance_npcname("魔力能量#1");
+	disablenpc instance_npcname("中樞室傳送門#1");
+	disablenpc instance_npcname("中樞室傳送門#2");
+	disablenpc instance_npcname("中樞室傳送門#3");
+	//副本標籤
+	set 'CD_slw_1,0;
+	set 'CD_slw_2,0;
+	set 'CD_slw_3,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【維爾納研究所中樞室】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("阿伊健_維爾納#slw06");
+	instance_announce instance_id(1),"阿伊健 維爾納：一切都結束了，來找我離開這裡吧,,,",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------ 副本NPC
+
+1@slw,187,41,4	script	阿伊健_維爾納#slw01	10189,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_slw_1==1) {end;}
+	cutin "ep16_eisen01",2;
+	mes "[阿伊健 維爾納]";
+	mes "主角終於登場了";
+	mes "我挺佩服的，沒想到你會一路來到這裡";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "無所謂";
+	mes "歡迎你";
+	mes "歡迎來到我阿伊健 維爾納的世界";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我完全沒料到會被偷襲";
+	mes "但是，又有什麼關係呢?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "反正我也早就不指望拯救這個研究所了，要去參觀參觀嗎?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "這裡像次元的裂縫一樣有不少東西";
+	mes "甚至還有致命的時間流向";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "那是平行世界嗎?";
+	mes "還是穿越過去的某個時間點嗎?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "所謂的時間...你有想過嗎?";
+	mes "流向其實是一樣相對的概念";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "要去裡面參關嗎?";
+	mes "沿者走道參觀一下吧!";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我會跟你解說的";
+	close2;
+	cutin "ep16_eisen01",255;
+	set 'CD_slw_1,1;
+	specialeffect 16;
+	enablenpc instance_npcname("阿伊健_維爾納#slw02");
+	disablenpc instance_npcname("阿伊健_維爾納#slw01");
+	end;
+}
+
+
+1@slw,189,165,4	script	阿伊健_維爾納#slw02	10189,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_slw_2==1) {end;}
+	cutin "ep16_eisen01",2;
+	mes "[阿伊健 維爾納]";
+	mes "好好欣賞過我的作品了嗎?";
+	mes "為了讓愚蠢的人重新開始，所以決定回顧一下";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "但那不太容易";
+	mes "[阿伊健 維爾納]";
+	mes "如果能夠回到過去，那孩子也不至於變成那樣子了...";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "就算只是能夠停住時間，也是...";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "會長...不知何原因牠也非常執著於過去";
+	mes "多虧這樣我才能隨心所欲地做研究";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "你不好奇嗎?";
+	mes "他為什麼對過去如此執著";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "對了，如果要穿越必須操作這左右的機具...";
+	mes "你做得來嗎?";
+	close2;
+	cutin "ep16_eisen01",255;
+	set 'CD_slw_2,1;
+	set 'slw1_mob,2;
+	specialeffect 16;
+	areamonster 'map_name$[0],146,173,160,167,"--ja--",3622,3;
+	areamonster 'map_name$[0],229,170,214,167,"--ja--",3622,3;
+	enablenpc instance_npcname("保全裝置#slw01");
+	enablenpc instance_npcname("保全裝置#slw02");
+	disablenpc instance_npcname("阿伊健_維爾納#slw02");
+	end;
+}
+
+
+1@slw,155,191,4	script	保全裝置#slw01	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "發現啟動機關的紅色按鈕";
+	next;
+	switch( select("取消:按下去")) {
+
+	case 1:
+	close;
+
+	case 2:
+	set 'slw1_mob,'slw1_mob-1;
+	disablenpc instance_npcname("保全裝置#slw01");
+	instance_announce instance_id(1),"【副本公告】：啟動了1個保全裝置",bc_all,0xD7BA98;
+	if ('slw1_mob>0) end;
+	instance_announce 0, "打開了所有保全裝置，中間出現了傳送點",bc_map,"ff0000";
+	specialeffect 16;
+	enablenpc instance_npcname("阿伊健_維爾納#slw03");
+	enablenpc instance_npcname("中樞室傳送門#1");
+	end;
+	}
+}
+
+
+1@slw,220,191,4	script	保全裝置#slw02	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "發現啟動機關的紅色按鈕";
+	next;
+	switch( select("取消:按下去")) {
+
+	case 1:
+	close;
+
+	case 2:
+	set 'slw1_mob,'slw1_mob-1;
+	disablenpc instance_npcname("保全裝置#slw02");
+	instance_announce instance_id(1),"【副本公告】：啟動了1個保全裝置",bc_all,0xD7BA98;
+	if ('slw1_mob>0) end;
+	instance_announce 0, "打開了所有保全裝置，中間出現了傳送點",bc_map,"ff0000";
+	enablenpc instance_npcname("阿伊健_維爾納#slw03");
+	specialeffect 16;
+	enablenpc instance_npcname("中樞室傳送門#1");
+	end;
+	}
+}
+
+
+1@slw,72,70,4	script	阿伊健_維爾納#slw03	10189,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	cutin "ep16_eisen01",2;
+	mes "[阿伊健 維爾納]";
+	mes "什麼，比我想像中還要簡單?";
+	mes "往後的保全裝置也都是類似型態，不用在重複說明吧!";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "參觀之後的心得如何?";
+	mes "不覺得很驚人嗎?";
+	mes "你去過^0000ff貝魯茲^000000嗎?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我參考了那裏建構了研究室";
+	mes "完全是我喜愛的模樣";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "當時的技術合現在真是天差地別";
+	mes "我把我能用的技術都用上了";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "在你眼中看來如何?";
+	mes "還行嗎?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "反正你也會死在這裡";
+	mes "想告訴你我的成就罷了";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我早知道你是為了盧恩 米德加茲王國的事才跑來這裡，所以好好準備了一番";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "你會隨者極大的感動一起死去的";
+	mes "葬身在此處";
+	close2;
+	cutin "ep16_eisen01",255;
+	set 'slw1_mob,2;
+	areamonster 'map_name$[0],16,54,29,50,"--ja--",3622,3;
+	areamonster 'map_name$[0],114,54,126,50,"--ja--",3622,3;
+	enablenpc instance_npcname("保全裝置#slw03");
+	enablenpc instance_npcname("保全裝置#slw04");
+	specialeffect 16;
+	disablenpc instance_npcname("阿伊健_維爾納#slw03");
+	end;
+}
+
+1@slw,22,61,4	script	保全裝置#slw03	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "發現啟動機關的紅色按鈕";
+	next;
+	switch( select("取消:按下去")) {
+
+	case 1:
+	close;
+
+	case 2:
+	set 'slw1_mob,'slw1_mob-1;
+	disablenpc instance_npcname("保全裝置#slw03");
+	instance_announce instance_id(1),"【副本公告】：啟動了1個保全裝置",bc_all,0xD7BA98;
+	if ('slw1_mob>0) end;
+	instance_announce 0, "打開了所有保全裝置，中間出現了傳送點",bc_map,"ff0000";
+	specialeffect 16;
+	enablenpc instance_npcname("阿伊健_維爾納#slw04");
+	enablenpc instance_npcname("中樞室傳送門#2");
+	end;
+	}
+}
+
+
+1@slw,122,61,4	script	保全裝置#slw04	111,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	mes "發現啟動機關的紅色按鈕";
+	next;
+	switch( select("取消:按下去")) {
+
+	case 1:
+	close;
+
+	case 2:
+	set 'slw1_mob,'slw1_mob-1;
+	disablenpc instance_npcname("保全裝置#slw04");
+	instance_announce instance_id(1),"【副本公告】：啟動了1個保全裝置",bc_all,0xD7BA98;
+	if ('slw1_mob>0) end;
+	instance_announce 0, "打開了所有保全裝置，中間出現了傳送點",bc_map,"ff0000";
+	specialeffect 16;
+	enablenpc instance_npcname("阿伊健_維爾納#slw04");
+	enablenpc instance_npcname("中樞室傳送門#2");
+	end;
+	}
+}
+
+
+1@slw,57,141,4	script	阿伊健_維爾納#slw04	10189,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	cutin "ep16_eisen01",2;
+	mes "[阿伊健 維爾納]";
+	mes "這通道後方";
+	mes "就有你想要找的東西";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "沒錯，就是那個雕刻成寶石裝飾王冠的東西";
+	mes "你知道那是什麼嗎?";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "雖然只剩殘渣，但它依舊是伊美樂的心臟碎片";
+	mes "可不是粗制濫造的仿冒品可以比擬的";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "王國中那些傻子們不懂得使用擁有的力量";
+	mes "真是叫人惋惜傷心";
+	mes "所以我才決定拿來使用...";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "是否將那東西帶回去，完全取決於你個人的能力";
+	mes "但我也不是兩手空空等你來取";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我再說一便，你可以別嚇到了";
+	mes "不對，被嚇到會更好吧?";
+	mes "呵呵呵呵......";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "來見見我為你準備的禮物吧!";
+	close2;
+	cutin "ep16_eisen01",255;
+	enablenpc instance_npcname("中樞室傳送門#3");
+	enablenpc instance_npcname("阿伊健_維爾納#slw05");
+	specialeffect 16;
+	disablenpc instance_npcname("阿伊健_維爾納#slw04");
+	end;
+}
+
+
+
+1@slw,52,171,4	script	阿伊健_維爾納#slw05	10189,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	cutin "ep16_eisen01",2;
+	mes "[阿伊健 維爾納]";
+	mes "這裡就是研究室的總結，可以看到我所有的研究";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "生命的根源，世界的構成，擁有根源力量的物品，就是伊美樂的心臟碎片";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "看好了";
+	mes "你找尋的東西，正在進行者多麼驚人之事";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "在此處萃取的能量會對設置在地面上的魔法陣...";
+	mes "哈哈，雖說是以魔導學重新詮釋的魔法陣";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "總之，能量會供應給實驗體...";
+	mes "而我利用這個力量，來調整他們的時間";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "當然，在過程中，也有可能引發細胞爆炸而死亡，哈哈!";
+	next;
+	mes "[阿伊健 維爾納]";
+	mes "我已經為你準備好非常驚人的禮物喔";
+	close2;
+	cutin "ep16_eisen01",255;
+	enablenpc instance_npcname("魔力能量#1");
+	specialeffect 16;
+	disablenpc instance_npcname("阿伊健_維爾納#slw05");
+	end;
+}
+
+
+1@slw,57,171,4	script	魔力能量#1	10043,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_slw_3==1) {end;}
+	mes "在賽依連散去的位子上聚集者奇特的魔力能量";
+	next;
+	mes "^0000ff該活動為追加戰鬥建議LV170以上 再決定是否要進行戰鬥^000000";
+	next;
+	mes "選擇結束：挑戰小可愛";
+	mes "選擇進行：挑戰賽依連";
+	next;
+	switch( select("結束:進行")) {
+
+	case 1:
+	close2;
+	set 'CD_slw_3,1;
+	sleep2 2000;
+	instance_announce 0, "回歸.....5%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....15%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....45%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....60%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....80%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....90%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....95%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "小可愛 的實體 還原 結束",bc_map,"ff0000";
+	specialeffect 16;
+	disablenpc instance_npcname("魔力能量#1");
+	areamonster 'map_name$[0],57,171,57,171,"--ja--",3621,1,instance_npcname("中樞室事件1")+"::OnCcdd1";
+	end;
+
+	case 2:
+	close2;
+	set 'CD_slw_3,1;
+	sleep2 2000;
+	instance_announce 0, "回歸.....5%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....15%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....45%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....60%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....80%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....90%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "回歸.....95%",bc_map,"ff0000";
+	sleep2 2000;
+	instance_announce 0, "賽依連 YSF01 的實體 還原 結束",bc_map,"ff0000";
+	specialeffect 16;
+	disablenpc instance_npcname("魔力能量#1");
+	areamonster 'map_name$[0],57,171,57,171,"--ja--",3826,1,instance_npcname("中樞室事件1")+"::OnCcdd1";
+	end;
+	}
+}
+
+
+//------------------------------ 獎勵
+1@slw,52,171,4	script	阿伊健_維爾納#slw06	10189,{
+
+	mes "[阿伊健 維爾納]";
+	mes "讓我把你們送出中樞室吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32028,HUNTING)==2 ) { 
+	dispbottom "維爾納研究所中樞室任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",41;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25155,5*$EP1602;	//秀發茲榮譽之證
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	erasequest 32028; }
+
+	//副本任務獎勵
+	if(checkquest(32030,HUNTING)==2 ) { 
+	dispbottom "維爾納研究所中樞室任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25155,5*$EP1602;	//秀發茲榮譽之證
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	erasequest 32030; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------ 傳點資訊
+1@slw,187,169,0	warp	中樞室傳送門#1	2,2,1@slw,71,34
+1@slw,71,76,0	warp	中樞室傳送門#2	2,2,1@slw,54,133
+1@slw,54,145,0	warp	中樞室傳送門#3	2,2,1@slw,54,154
+
+
+//------------------------------ 地圖屬性
+1@slw	mapflag	partylock
+1@slw	mapflag	noteleport
+1@slw	mapflag	nosave	SavePoint
+1@slw	mapflag	nomemo
+1@slw	mapflag	nobranch
+1@slw	mapflag	noicewall
+1@slw	mapflag	restricted	6
+
+
+

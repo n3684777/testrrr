@@ -1,0 +1,424 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#星座之塔裝備
+   - Name: 星座之塔裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_DROP_MACHINE
+     Items:
+       - Index: 1
+         Item: Vague_Star_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Naght_Sieger_Soul
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+       - Index: 2
+         Item: Vague_Star_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Naght_Sieger_Soul
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+       - Index: 3
+         Item: Vague_Star_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Naght_Sieger_Soul
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+       - Index: 4
+         Item: Star_Armor_Of_Pow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Armor
+             Amount: 1
+           - Index: 3
+             Item: Pow_Meteorite_Dust
+             Amount: 30
+       - Index: 5
+         Item: Star_Armor_Of_Sta
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Armor
+             Amount: 1
+           - Index: 3
+             Item: Sta_Meteorite_Dust
+             Amount: 30
+       - Index: 6
+         Item: Star_Suit_Of_Con
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Suit
+             Amount: 1
+           - Index: 3
+             Item: Con_Meteorite_Dust
+             Amount: 30
+       - Index: 7
+         Item: Star_Suit_Of_Crt
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Suit
+             Amount: 1
+           - Index: 3
+             Item: Crt_Meteorite_Dust
+             Amount: 30
+       - Index: 8
+         Item: Star_Robe_Of_Spl
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Robe
+             Amount: 1
+           - Index: 3
+             Item: Spl_Meteorite_Dust
+             Amount: 30
+       - Index: 9
+         Item: Star_Robe_Of_Wis
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Betelgeuse_Soul
+             Amount: 10
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 50
+           - Index: 2
+             Item: Vague_Star_Robe
+             Amount: 1
+           - Index: 3
+             Item: Wis_Meteorite_Dust
+             Amount: 30
+
+       - Index: 10
+         Item: Signet_Of_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Meteorite_Fragment
+             Amount: 100
+           - Index: 1
+             Item: Naght_Sieger_Soul
+             Amount: 10
+       - Index: 11
+         Item: Signet_Of_Pow_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Pow_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+       - Index: 12
+         Item: Signet_Of_Sta_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Sta_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+       - Index: 13
+         Item: Signet_Of_Con_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Con_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+       - Index: 14
+         Item: Signet_Of_Crt_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Crt_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+       - Index: 15
+         Item: Signet_Of_Spl_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Spl_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+       - Index: 16
+         Item: Signet_Of_Wis_Star
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Signet_Of_Star
+             Amount: 1
+           - Index: 1
+             Item: Meteorite_Fragment
+             Amount: 250
+           - Index: 2
+             Item: Wis_Meteorite_Dust
+             Amount: 50
+           - Index: 3
+             Item: Betelgeuse_Soul
+             Amount: 20
+
+    #星座之塔物品
+   - Name: 星座之塔物品
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 2_DROP_MACHINE
+     Items:
+       - Index: 0
+         Item: Meteorite_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Meteorite_Dust
+             Amount: 50
+       - Index: 1
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Pow_Meteorite_Dust
+             Amount: 3
+       - Index: 2
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Sta_Meteorite_Dust
+             Amount: 3
+       - Index: 3
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Con_Meteorite_Dust
+             Amount: 3
+       - Index: 4
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Crt_Meteorite_Dust
+             Amount: 3
+       - Index: 5
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Spl_Meteorite_Dust
+             Amount: 3
+       - Index: 6
+         Item: Unknown_Item_80051
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Wis_Meteorite_Dust
+             Amount: 3
+       - Index: 7
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Pow_Meteorite_Fragment
+             Amount: 3
+       - Index: 8
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Sta_Meteorite_Fragment
+             Amount: 3
+       - Index: 9
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Con_Meteorite_Fragment
+             Amount: 3
+       - Index: 10
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Crt_Meteorite_Fragment
+             Amount: 3
+       - Index: 11
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Spl_Meteorite_Fragment
+             Amount: 3
+       - Index: 12
+         Item: Unknown_Item_80052
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Wis_Meteorite_Fragment
+             Amount: 3
+       - Index: 13
+         Item: Unknown_Item_80045
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Pow_Meteorite_Fragment
+             Amount: 3
+       - Index: 14
+         Item: Unknown_Item_80046
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Sta_Meteorite_Fragment
+             Amount: 3
+       - Index: 15
+         Item: Unknown_Item_80047
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Con_Meteorite_Fragment
+             Amount: 3
+       - Index: 16
+         Item: Unknown_Item_80048
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Crt_Meteorite_Fragment
+             Amount: 3
+       - Index: 17
+         Item: Unknown_Item_80049
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Spl_Meteorite_Fragment
+             Amount: 3
+       - Index: 18
+         Item: Unknown_Item_80050
+         Stock: 0
+         Zeny: 500000
+         RequiredItems:
+           - Index: 0
+             Item: Wis_Meteorite_Fragment
+             Amount: 3

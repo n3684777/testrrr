@@ -1,0 +1,245 @@
+﻿//===== rAthena Script =============================================
+//= Punching Bag NPC
+//===== By: ========================================================
+//= Secretdataz
+//===== Current Version: ===========================================
+//= 0.1
+//===== Changelog: =================================================
+//= 0.1 Initial commit
+//===== Compatible With: ===========================================
+//= rAthena Project
+//===== Additional Comments: =======================================
+//= When duplicating this NPC. Only use NUMBER after the # [secret]
+//==================================================================
+bago_01,42,57,6	script	DPS傷害檢測員#0	833,{
+
+	function	switch_size	{
+        .@str$ = "";
+        switch(getarg(0)){
+			case 0: .@str$ = "小型"; break;
+			case 1: .@str$ = "中型"; break;
+			case 2: .@str$ = "大型"; break;
+			default: .@str$ = "錯誤"; break;
+		}
+        return .@str$;
+    }
+
+	function	switch_race	{
+        .@str$ = "";
+        switch(getarg(0)){
+			case 0: .@str$ = "無形"; break;
+			case 1: .@str$ = "不死"; break;
+			case 2: .@str$ = "動物"; break;
+			case 3: .@str$ = "植物"; break;
+			case 4: .@str$ = "昆蟲"; break;
+			case 5: .@str$ = "魚貝"; break;
+			case 6: .@str$ = "惡魔"; break;
+			case 7: .@str$ = "人形"; break;
+			case 8: .@str$ = "天使"; break;
+			case 9: .@str$ = "龍族"; break;
+			default: .@str$ = "錯誤"; break;
+		}
+        return .@str$;
+    }
+
+	function	switch_ele	{
+        .@str$ = "";
+        switch(getarg(0)){
+			case 0: .@str$ = "無"; break;
+			case 1: .@str$ = "水"; break;
+			case 2: .@str$ = "地"; break;
+			case 3: .@str$ = "火"; break;
+			case 4: .@str$ = "風"; break;
+			case 5: .@str$ = "毒"; break;
+			case 6: .@str$ = "聖"; break;
+			case 7: .@str$ = "暗"; break;
+			case 8: .@str$ = "念"; break;
+			case 9: .@str$ = "不死"; break;
+			default: .@str$ = "錯誤"; break;
+		}
+        return .@str$;
+    }
+
+	mes "[DPS傷害檢測員]";
+	mes "請選擇你要調整的參數：";
+	mes "【按下完成後才會刷新】";
+
+FirstPage:
+	switch(select("> 體型 [^B5495B" + switch_size(.size) + "^000000]","> 種族 [^B5495B" + switch_race(.race) + "^000000]","> 屬性 [^B5495B" + switch_ele(.ele)+.elelv + "^000000]","> 傷害承受率 [^B5495B" + .dmgtaken + "^000000]","> Def [^B5495B" + .def + "^000000]","> Mdef [^B5495B" + .mdef + "^000000]","> Res [^B5495B" + .res + "^000000]","> MRes [^B5495B" + .mres + "^000000]","> 完成")){
+		case 1:
+			switch(select("- 小型","- 中型","- 大型")){
+				case 1: set .size,0; break;
+				case 2: set .size,1; break;
+				case 3: set .size,2; break;	
+			}
+			goto FirstPage;
+			break;
+		case 2:
+			switch(select("- 無形","- 不死","- 動物","- 植物","- 昆蟲","- 魚貝","- 惡魔","- 人形","- 天使","- 龍族")){
+				case 1: set .race,0; break;
+				case 2: set .race,1; break;
+				case 3: set .race,2; break;
+				case 4: set .race,3; break;	
+				case 5: set .race,4; break;	
+				case 6: set .race,5; break;	
+				case 7: set .race,6; break;	
+				case 8: set .race,7; break;	
+				case 9: set .race,8; break;	
+				case 10: set .race,9; break;
+			}
+			goto FirstPage;
+			break;
+		case 3:
+			switch(select("- 無","- 水","- 地","- 火","- 風","- 毒","- 聖","- 暗","- 念","- 不死")){
+				case 1: set .ele,0; break;
+				case 2: set .ele,1; break;
+				case 3: set .ele,2; break;
+				case 4: set .ele,3; break;	
+				case 5: set .ele,4; break;	
+				case 6: set .ele,5; break;	
+				case 7: set .ele,6; break;	
+				case 8: set .ele,7; break;	
+				case 9: set .ele,8; break;	
+				case 10: set .ele,9; break;
+			}
+			switch(select("- 等級1","- 等級2","- 等級3","- 等級4")){
+				case 1: set .elelv,1; break;
+				case 2: set .elelv,2; break;
+				case 3: set .elelv,3; break;
+				case 4: set .elelv,4; break;
+			}
+			goto FirstPage;
+			break;
+		case 4:
+			.@input1 = 0;
+			input .@input1;
+			if(.@input1 < 0 || .@input1 > 1000) {
+				mes "[DPS傷害檢測員]";
+				mes "請勿設定超過1000倍的承傷率。";
+				close;
+				end;
+			}
+			set .dmgtaken,.@input1;
+			goto FirstPage;
+			break;
+
+		case 5:
+			.@input1 = 0;
+			input .@input1;
+			if(.@input1 < 0 || .@input1 > 10000) {
+				mes "[DPS傷害檢測員]";
+				mes "請勿設定超過10000的數值。";
+				close;
+				end;
+			}
+			set .def,.@input1;
+			goto FirstPage;
+			break;
+		
+		case 6:
+			.@input1 = 0;
+			input .@input1;
+			if(.@input1 < 0 || .@input1 > 10000) {
+				mes "[DPS傷害檢測員]";
+				mes "請勿設定超過10000的數值。";
+				close;
+				end;
+			}
+			set .mdef,.@input1;
+			goto FirstPage;
+			break;
+		
+		case 7:
+			.@input1 = 0;
+			input .@input1;
+			if(.@input1 < 0 || .@input1 > 10000) {
+				mes "[DPS傷害檢測員]";
+				mes "請勿設定超過10000的數值。";
+				close;
+				end;
+			}
+			set .res,.@input1;
+			goto FirstPage;
+			break;
+		
+		case 8:
+			.@input1 = 0;
+			input .@input1;
+			if(.@input1 < 0 || .@input1 > 10000) {
+				mes "[DPS傷害檢測員]";
+				mes "請勿設定超過10000的數值。";
+				close;
+				end;
+			}
+			set .mres,.@input1;
+			goto FirstPage;
+			break;
+
+		case 9:
+			unitkill .gid[.@dupid];
+			break;
+
+		default: end; break;
+	}
+
+	end;
+
+
+OnInit:
+	.race = 0;
+	.size = 1;
+	.ele = 0;
+	.elelv = 1;
+	.dmgtaken = 100;
+	.def = 120;
+	.mdef = 120;
+	.res = 10;
+	.mres = 10;
+	getunitdata(getnpcid(0), .@d);
+	monster strnpcinfo(4),.@d[UNPC_X],.@d[UNPC_Y]-4,"DPS檢測蛋",2411,1,strnpcinfo(0)+"::OnMyMobDead";
+	.@dupid = atoi(strnpcinfo(2));  //String轉Integer
+	.gid[.@dupid] = $@mobid[0];       
+	.mhp[.@dupid] = strmobinfo(4,2411);  //取得最大HP
+	setunitdata .gid[.@dupid],UMOB_MODE,.@d[UMOB_MODE]|0x4000000|0x0200000|0x0080000|0x6200000; // Set MD_STATUS_IMMUNE (0x4000000) because EDP/burn/%MHP based status can skew the DPS counter so much.
+	initnpctimer;
+	end;
+
+	
+OnMyMobDead:
+	getunitdata(getnpcid(0), .@d);
+	monster strnpcinfo(4),.@d[UNPC_X],.@d[UNPC_Y]-4,"DPS檢測蛋",2411,1,strnpcinfo(0)+"::OnMyMobDead";
+	.@dupid = atoi(strnpcinfo(2));  //String轉Integer
+	.gid[.@dupid] = $@mobid[0];       
+	.mhp[.@dupid] = strmobinfo(4,2411);  //取得最大HP
+	setunitdata .gid[.@dupid],UMOB_MODE,.@d[UMOB_MODE]|0x4000000|0x0200000|0x0080000|0x6200000; // Set MD_STATUS_IMMUNE (0x4000000) because EDP/burn/%MHP based status can skew the DPS counter so much.
+	setunitdata .gid[.@dupid],UMOB_SIZE,.size;
+	setunitdata .gid[.@dupid],UMOB_RACE,.race;
+	setunitdata .gid[.@dupid],UMOB_ELETYPE,.ele;
+	setunitdata .gid[.@dupid],UMOB_ELELEVEL,.elelv;
+	setunitdata .gid[.@dupid],UMOB_DAMAGETAKEN,.dmgtaken;
+	setunitdata .gid[.@dupid],UMOB_DEF,.def;
+	setunitdata .gid[.@dupid],UMOB_MDEF,.mdef;
+	setunitdata .gid[.@dupid],UMOB_RES,.res;
+	setunitdata .gid[.@dupid],UMOB_MRES,.mres;
+	initnpctimer;
+	end;
+	
+OnTimer2000:
+	.@dupid = atoi(strnpcinfo(2));
+	if(unitexists(.gid[.@dupid])){
+		getunitdata(.gid[.@dupid],.@d);
+		.@diff = (.mhp[.@dupid] - .@d[UMOB_HP]);
+		if(.@diff > 0){
+			//npctalk "Punching Bag : I've taken " + (.@diff/5) + " DPS in last 5 seconds.";
+			.@dps = (.@diff/2);
+			if(.dmgtaken > 0) .@dps = .@dps*(100/.dmgtaken);
+			if(.@dps > 10000) .@dps_num$ = .@dps/1000 + "K";
+			if(.@dps > 10000000) .@dps_num$ = .@dps/1000000 + "M";
+			if(.@dps > 10000000000) .@dps_num$ = .@dps/1000000000 + "B";
+			showscript "DPS： " + .@dps_num$;
+			setunitdata .gid[.@dupid],UMOB_HP,.mhp[.@dupid];
+			//specialeffect EF_HEAL;
+		}
+	}
+	initnpctimer;
+}

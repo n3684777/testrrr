@@ -1,0 +1,437 @@
+﻿/*
+= 腳本名:	<<寵物倉庫版>>
+= 適用範圍:	熊貓RA
+= 作者:		人魚姬的思念 
+= QQ:		327945477
+conf\import\inter_server.yml
+   - ID: 3
+     Name: "寵物倉庫"
+     Table: petegg_storage
+     Max: 600
+	 
+導入數據庫表	 
+costume_storage.sql
+*/
+
+function	script	Turn_pet_costum	{
+	copyarray .@menuitemID[0],getarg(0),getarraysize(getarg(0));
+	.@menu_next$ = "^ff0000 - 下一頁^000000";
+	.@menu_return$ = "^ff0000 - 上一頁^000000";
+	//取傳入菜單列表數組長度
+	.@menuitemID_len=getarraysize(.@menuitemID);	
+	//取數組10的倍數
+	.@multiple=.@menuitemID_len/10;
+	//取數組除10的餘數
+	.@remainder=.@menuitemID_len%10;
+	//計算最大頁數
+	if(.@remainder>0){
+		.@pagescountmax=.@multiple+1;
+	}
+	else {
+		.@pagescountmax=.@multiple;	
+		}
+	.@pagescount++;
+	
+headpage:	
+	.@menu$="";
+	if(.@pagescount!=1){
+		.@menu$=.@menu$+.@menu_return$;
+	}	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+		//debugmes "2222";
+	
+	.@sel = select(.@menu$);
+		
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+	}	
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];
+	end;
+nextpage:
+	.@menu$="";
+	if(.@pagescount){
+		.@menu$=.@menu$+.@menu_return$;
+	}
+	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+	
+	.@sel = select(.@menu$);
+	
+	if(.@sel == 1){
+		.@pagescount--;
+		if(.@pagescount!=1)goto nextpage;
+		goto headpage;
+	}
+	
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+	}
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];	
+	end;
+}
+
+
+trinity,102,69,6	script	寵物收集倉庫#	4_STAR_BOX_SCORE,{
+	disable_items;
+	
+L_Menu:
+	mes "[寵物收藏人員]";
+	mes "我正在搜集一些寵物..";
+	mes "只要你給我指定的寵物";
+	mes "我可以賦予你一些能力加成唷~";
+	mes "必須召喚出寵物才會有有能力加成";
+	mes "^0000CC你目前已收藏了^FF0000"+getarraysize(#pc_pet_egg)+"^0000CC個寵物^000000";
+	next;
+		switch(select("開啟 寵物倉庫:查看獲得能力:MVP寵物額外能力:提取 寵物外觀:取消 寵物外觀")) {
+		case 1:
+		openstorage2 .storeid,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+	case 2:
+		// 設定查看可獲得能力說明
+		mes "[寵物收藏人員]";
+		mes "^0000CC收藏每^FF0000 10 ^0000CC個寵物蛋可獲得^000000：";
+		mes "^CC0000所有屬性+1、特性素質屬性+1、^000000";
+		next;
+		goto L_Menu;
+	case 3:
+		mes "皮里恩";
+		mes "^00CC99收藏能力:HIT+5、以5%機率觸發誘導攻擊^000000";
+		mes "月夜貓";
+		mes "^00CC99收藏能力:CRI+3、C.Rate+2^000000";
+		mes "白素貞";
+		mes "^00CC99收藏能力:MSP+2%，技能後延遲-2%^000000";
+		mes "獸人英雄";
+		mes "^00CC99收藏能力:ATK+2%，暴擊傷害+2%^000000";
+		mes "齊爾-D-01";
+		mes "^00CC99收藏能力:近距離物理傷害+2%^000000";
+		mes "巴風特";
+		mes "^00CC99收藏能力:MSP+2% 且遠距離物理傷害+2%^000000";
+		mes "深淵騎士";
+		mes "^00CC99收藏能力:P.ATK+2，對Boss型魔物物理攻擊+2%^000000";
+		mes "白色騎士";
+		mes "^00CC99收藏能力:S.MATK+2，對Boss型魔物魔法傷害+2%^000000";
+		mes "虎王";
+		mes "^00CC99收藏能力:CRI+3，C.Rate+2^000000";
+		mes "黑暗之王";
+		mes "^00CC99收藏能力:暗屬性魔法傷害+5%^000000";
+		next;
+		goto L_Menu;
+	case 4:
+	mes "請選擇你要提取寵物外觀";
+
+			if(!getarraysize(#pc_pet_egg)){
+			mes "你沒有收藏";
+			close;
+			}
+				disable_items;
+		if(!getpetinfo(PETINFO_ID)){
+		mes "你沒有孵化任何寵物帶在身上呢";
+		close;
+		}
+			.@selecid = Turn_pet_costum(#pc_pet_egg);
+			
+			//.@selectView = #pc_pet_egg_mobid[inarray(#pc_pet_egg,.@selecid)];
+			
+			//setunitdata getpetinfo(PETINFO_BLOCKID),UPET_CLASS,.@selectView;
+			setunitdata getpetinfo(PETINFO_BLOCKID),UPET_VIEW_CLASS,getpetidfromegg(.@selecid);
+			debugmes getpetidfromegg(.@selecid)+"--"+.@selecid;
+			my_pet_view = getpetidfromegg(.@selecid);
+			recalculatestat;
+			end;
+	case 5:
+		my_pet_view = 0;
+		recalculatestat;
+		dispbottom "需要重登一次才能恢復正常寵物外觀";
+		end;
+	}
+	
+
+	end;
+
+end;
+OnPCStorageAddFilter:
+if(@storeitem_dst_storeid == .storeid){
+
+	.@selectId = @storeitem_src_nameid;
+	//debugmes ""+.@selectId;
+	.@selecttype = getiteminfo(.@selectId,ITEMINFO_TYPE);
+
+	if(.@selecttype == 7){//是一個寵物蛋
+	if(inarray(#pc_pet_egg,.@selectId) != -1){
+		processhalt;
+		dispbottom "你已經放過了";
+		end;
+		
+	}	
+	.@mob_id = getpetidfromegg(.@selectId);
+	#pc_pet_egg_mobid[getarraysize(#pc_pet_egg_mobid)]=.@mob_id;
+	
+	#pc_pet_egg[getarraysize(#pc_pet_egg)]=.@selectId;
+
+
+recalculatestat;
+
+}
+ELSE {
+		processhalt;
+		dispbottom "這個無法存放";
+		end;
+}
+}
+end;
+OnPCStorageDelFilter:
+if(@removeitem_src_storeid == .storeid){
+
+	.@index = inarray(#pc_pet_egg,@removeitem_src_nameid);
+	deletearray #pc_pet_egg[.@index],1;
+	deletearray #pc_pet_egg_mobid[.@index],1;	
+	
+recalculatestat;
+}
+end;
+
+//-----------------------------附加能力
+OnPCStatCalcEvent:
+	if(getmapflag(strcharinfo(3),mf_gvg)) { end; }
+	if(!getpetinfo(PETINFO_ID)){
+		end;
+	}
+	if(my_pet_view)
+	setunitdata getpetinfo(PETINFO_BLOCKID),UPET_VIEW_CLASS,my_pet_view;			
+		freeloop(1);
+	for(.@i=0; .@i<getarraysize(#pc_pet_egg); .@i++) {
+		switch(#pc_pet_egg[.@i]) {
+		//特別蛋的ID 增加能力
+
+		//皮里恩寵物蛋
+		case 9111:
+			bonus bHit,5;
+			bonus bPerfectHitAddRate,5;
+			break;
+
+		//月夜貓寵物蛋
+		case 9112:
+			bonus bCritical,3;
+			bonus bCRate,2;
+			break;
+
+		//白素貞寵物蛋
+		case 9115:
+			bonus bMaxSPRate,2;
+			bonus bDelayrate,-2;
+			break;
+		//獸人英雄寵物蛋
+		case 9121:
+			bonus bMaxSPRate,2;
+			bonus bAtkRate,2;
+			bonus bCritAtkRate,2;
+			break;
+
+		//幽暗夢魘寵物蛋
+		case 9122:
+			bonus2 bMagicAtkEle,Ele_All,2;
+			break;
+
+		//齊爾-D-01寵物蛋
+		case 9126:
+			bonus bShortAtkRate,2;
+			break;
+
+		//巴風特寵物蛋
+		case 9137:
+			bonus bMaxSPrate,2;
+			bonus bLongAtkRate,2;
+			break;
+
+		//深淵騎士寵物蛋
+		case 9132:
+			bonus bPAtk,2;
+			bonus2 bAddClass,Class_Boss,2;
+			break;
+
+		//白色騎士寵物蛋
+		case 9134:
+			bonus bSMatk,2;
+			bonus2 bMagicAddClass,Class_Boss,2;
+			break;
+
+		//虎王寵物蛋
+		case 9142:
+			bonus bCritical,3;
+			bonus bCRate,2;
+			break;
+		//黑暗之王
+		case 9148:
+			bonus2 bMagicAtkEle,Ele_All,3;
+			break;
+
+
+		//火狐寵物蛋
+		case 9301:
+			bonus bPerfectHitAddRate,4;
+			break;
+		//重生的半魔神
+		case 9302:
+			bonus2 bMagicAddClass,Class_Boss,2;
+			break;
+		//絕望之神夢羅克
+		case 9303:
+			bonus2 bAddClass,Class_Boss,2;
+			break;
+		//皮亞密特
+		case 9304:
+			bonus bMaxHPrate,2;
+			break;
+		//祈願女神
+		case 9305:
+			bonus bCrt,1;
+			bonus bCRate,2;
+			break;
+		//金屬龍
+		case 9333:
+			bonus bCritical,2;
+			bonus bCritAtkRate,3;
+			break;
+
+		//水手小鴨
+		case 9110:
+			bonus bPerfectHitAddRate,3;
+			break;
+		//長鼻象
+		case 9064:
+			bonus bUseSPrate,-5;
+			bonus bHPlus,3;
+			break;
+		//金剛猿
+		case 9065:
+			bonus2 bSubEle,Ele_All,2;
+			break;
+		//QQ獅
+		case 9066:
+			bonus bCritical,2;
+			bonus bCRate,2;
+			break;
+		//肥肥犀牛
+		case 9067:
+			bonus bDelayrate,-1;
+			bonus2 bMagicAddSize,Size_All,2;
+			break;
+		//藍獨角仙
+		case 9068:
+			bonus bPAtk,2;
+			bonus2 bAddSize,Size_All,2;
+			break;
+		//紅蓮女帝
+		case 9329:
+			bonus bCrt,1;
+			bonus bCRate,2;
+			break;
+		//大海之歌姬
+		case 9330:
+			bonus bSpl,1;
+			bonus bDelayrate,-2;
+			break;
+		//永夜魔女
+		case 9331:
+			bonus bSMatk,2;
+			bonus2 bMagicAddEle,Ele_All,1;
+			break;
+		//赫拉
+		case 9332:
+			bonus bPAtk,2;
+			bonus2 bAddEle,Ele_All,2;
+			break;
+		//贊助寵物
+		case 9317:	//叮噹喵寵物蛋
+		case 9318:	//特種喵寵物蛋
+		case 9319:	//海盜喵寵物蛋
+		case 9320:	//忍者喵寵物蛋
+		case 9321:	//機器喵寵物蛋
+		case 9322:	//布偶貓寵物蛋
+		case 9323:	//公主喵寵物蛋
+		case 9324:	//閃電喵寵物蛋
+		case 9488:	//小九尾寵物蛋
+		case 9489:	//芬里爾寵物蛋
+		case 9490:	//小阿飄寵物蛋
+		case 9491:	//狐妞妞寵物蛋
+		case 9492:	//皮亞密特-闇寵物蛋
+			bonus bPAtk,5;
+			bonus bSMatk,5;
+			bonus2 bAddClass,Class_Boss,3;
+			bonus2 bMagicAddClass,Class_Boss,3;
+			break;
+
+		case 9483:	//鯊魚人
+			bonus bPAtk,2;
+			bonus2 bAddEle,Ele_All,2;
+			break;
+
+		case 9484:	//燈籠魚人
+			bonus bSMatk,2;
+			bonus2 bMagicAddEle,Ele_All,2;
+			break;
+		case 9485:	//兔斯拉
+			bonus2 bAddSize,Size_All,5;
+			bonus2 bMagicAddSize,Size_All,5;
+			break;
+
+
+		case 9311:	//參宿七
+    			bonus bSMatk,5;
+  			bonus2 bMagicAddEle,Ele_All,3;
+			break;
+
+
+		case 9312:	//參宿四
+     			bonus bCritical,5;
+     			bonus bCRate,3;
+    			bonus bCritAtkRate,3;
+			break;
+
+
+
+
+
+
+
+			}
+	}
+		freeloop(0);
+
+
+	switch(getpetinfo(PETINFO_CLASS)){
+	//虎王 月夜貓
+	case 1150:
+	break;
+
+	default:
+	break;
+	}
+
+	//累積數量
+	.@max = getarraysize(#pc_pet_egg);
+		bonus bAllStats,.@max/10;
+		bonus bAllTraitStats,.@max/10;
+	end;
+Oninit:
+//倉庫編號
+	.storeid = 5;
+	waitingroom "寵物收藏倉庫",0;
+	//setarray .CollectionEquip[0],31717,31720;
+	end;
+}
+

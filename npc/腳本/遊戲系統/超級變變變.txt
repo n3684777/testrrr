@@ -1,0 +1,237 @@
+/*================================================
+- 腳本名稱：超級變變變
+- 腳本作者：瘋兔工作組
+- 測試環境：rAthenaCN
+- 更新內容：
+- Ver 1.0 完成架構
+- 備註：
+1. 一次只能有一個GM變身，否則會以最後一個變身的GM為最終答案
+2. 密語npc:超級變變變 輸入1則開啟後台輸入獎品 輸入2則把在線玩家恢復原始外觀
+3. 獎品由mail郵件方式發送，該活動同IP無法重複選擇變身(雙視窗無法重複選擇)
+================================================*/
+function	script	get_ip	{
+	query_sql("SELECT `last_ip` FROM `login` WHERE `account_id` = '"+getarg(0,getcharid(3))+"'", .@last_ip$);
+	return .@last_ip$;
+}
+
+trinity,50,113,6	script	超級變變變	100,{
+	.@index = inarray($@Turned$,""+get_ip());
+	if(.@index > -1 || @DISGUISE)
+	{
+
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			goto Start1;}}
+
+		mes "["+strnpcinfo(0)+"]";
+		mes "你的IP已經有帳號參加活動了!";
+		mes "無法重新選擇1";
+		close;
+	}
+Start1:
+	switch($@Random_Disguise)
+	{
+		case 1:	setarray .@mob_id[1],1276,1275,1268,1404,1232,1243,1229,1221,1214,1212;	break;
+		case 2:	setarray .@mob_id[1],1107,1111,1113,1116,1121,1122,1128,1138,1141,1142;	break;
+		case 3:	setarray .@mob_id[1],1244,1245,1246,1247,1248,1249,1265,1062,1096,1388;	break;
+		case 4:	setarray .@mob_id[1],1391,1392,1400,1402,1403,1404,1406,1409,1415,1493;	break;
+		case 5: setarray .@mob_id[1],1062,1244,1245,1588,2210,2379,1247,2380,1249,1246;	break;
+	}
+	mes "["+strnpcinfo(0)+"]";
+	mes "您可以選擇變身成為下列外觀";
+	mes "只有變身與^FF0000GM^000000相同外觀者才會獲得勝利";
+	mes "來吧！選擇你心目中的那隻魔物！";
+	next;
+
+
+	for(.@i=1; .@i<getarraysize(.@mob_id); .@i++)
+		.@menu$ += (getmonsterinfo(.@mob_id[.@i],MOB_NAME))+":";
+	.@j = select(.@menu$);
+
+	.@index = inarray($@Turned$,""+get_ip());
+	if(.@index > -1 || @DISGUISE)
+	{
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			goto Start2;}}
+		mes "["+strnpcinfo(0)+"]";
+		mes "你的IP已經有帳號參加活動了!";
+		mes "無法重新選擇2";
+		close;
+	}
+
+Start2:
+	@DISGUISE = .@mob_id[.@j];
+	$@Turned$[getarraysize($@Turned$)] = ""+get_ip();
+	if(getgmlevel())
+	{
+		$@GM_DISGUISE = @DISGUISE;
+		mes "["+strnpcinfo(0)+"]";
+		mes "GM你好 你選擇變身成為^0000FF"+getmonsterinfo(.@mob_id[.@j],MOB_NAME)+"^000000";
+		mes "只有變身與您相同魔物的玩家才可以獲得獎勵！";
+		close;
+	}
+	mes "["+strnpcinfo(0)+"]";
+	mes "^0000FF"+getmonsterinfo(.@mob_id[.@j],MOB_NAME)+"^000000.. 似乎是個不錯的選擇呢！";
+	mes "那就聽天由命了哈哈哈!";
+	dispbottom "你選擇變身成為 "+getmonsterinfo(.@mob_id[.@j],MOB_NAME)+".";
+	close;
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+
+OnWhisperGlobal:
+	if(!getgmlevel())
+		end;
+	switch(atoi(@whispervar0$))
+	{
+		case 1:
+			deletearray $@disguise_item_list;
+			deletearray $@disguise_item_qty;
+			do
+			{
+				.@incomplete = 0;
+				if( !.@item_size ) .@incomplete |= 1;
+				if( !.@zeny ) .@incomplete |= 2;
+				.@main_option = select( "獎勵道具 "+(( .@incomplete & 1 )?"^FF0000-尚未完成-^000000":( ( .@item_size )?"^0000FF已完成^000000":"" )),
+									"獎勵金錢 "+(( .@incomplete & 2 )?"^FF0000-尚未完成-^000000":"^0000FF"+.@zeny+"^000000" ),
+									( .@incomplete )?"":"^008800開始活動^000000" );
+				switch(.@main_option)
+				{
+					case 1:
+						do{
+							mes "^0055FF[ 超級變變變 ]^000000";
+							mes "郵件道具清單: ";
+							if( .@item_size ){
+								.@item_menu$ = "";
+								.@current_item_list$ = "|";
+								deletearray .@current_item$;
+								for( .@i = 0; .@i < .@item_size; .@i++ ){
+									.@item_name$ = getitemname( .@item_list[.@i] );
+									.@item_menu$ = .@item_menu$ + .@item_qty[.@i] +"x "+.@item_name$ +":";
+									mes "^777777- "+.@item_name$+" x "+.@item_qty[.@i]+"^000000";
+									.@current_item_list$ = .@current_item_list$ + .@item_list[.@i] + "|";
+								}
+
+							}else{
+								mes "^777777- 尚未新增 ^000000";
+							}
+							mes " ";
+							.@option = select( ( .@item_size > 4 )?"":"新增道具",( .@item_size )?"刪除道具":"","返回" );
+							switch( .@option ){
+								case 1:
+									do{
+										input .@item_id;
+										if( !.@item_id ) break;
+										.@item_name$ = getitemname( .@item_id );
+									}while( .@item_name$ == "null" || .@item_name$ == "" );
+									if( .@item_id && .@item_name$ != "null" && .@item_name$ != "" ){
+										mes "請輸入 "+.@item_name$+" 的數量";
+										input .@amount,0,20;
+										if( .@amount ){
+											if( compare( "|"+.@current_item_list$+"|","|"+.@item_id+"|" ) ){
+												for( .@i = 0; .@i < .@item_size; .@i++ )
+													if( .@item_list[.@i] == .@item_id ){
+														.@item_qty[.@i] += .@amount;
+														break;
+													}
+											}else{
+												.@item_list[.@item_size] = .@item_id;
+												.@item_qty[.@item_size] = .@amount;
+												.@item_size++;
+											}
+										}
+									}
+									break;
+								case 2:
+									mes "^0055FF[ 超級變變變 ]^000000";
+									mes "選取要刪除的道具.";
+									.@i = select( .@item_menu$+"返回" ) - 1;
+									if( .@i < .@item_size ){
+										mes "刪除 "+getitemname( .@item_list[.@i] )+" x "+.@item_qty[.@i];
+										deletearray .@item_list[.@i],1;
+										deletearray .@item_qty[.@i],1;
+										.@item_size--;
+									}
+								case 3: break;
+							}
+							if( .@option < 3 ) next;
+						}while( .@option < 3 );
+						break;
+					case 2:
+						mes "^0055FF[ 超級變變變 ]^000000";
+						mes "請輸入金額.";
+						mes "不想給予金額請輸入 0";
+						input .@num;
+						if(.@num == 0)
+							.@zeny = -1;
+						else
+							.@zeny = .@num;
+						break;
+					default:
+						break;
+				}
+				if(.@main_option<3) next;
+			}while(.@main_option<3);
+			if(.@zeny < 0)
+				.@zeny = 0;
+			copyarray $@disguise_item_list[0], .@item_list[0], getarraysize(.@item_list);
+			copyarray $@disguise_item_qty[0], .@item_qty[0], getarraysize(.@item_qty);
+			close2;
+			$@Random_Disguise = rand(1,5);
+			hideoffnpc strnpcinfo(0);
+			.@t = 80;
+			do
+			{
+				waitingroom "　剩餘 "+.@t+" 秒",0;
+				sleep 1000;
+				if(.@t%40 == 0)	unitskilluseid getnpcid(0),"HP_BASILICA",5;
+				.@t--;
+				delwaitingroom strnpcinfo(0);
+			}while(.@t);
+			hideonnpc strnpcinfo(0);
+			addrid(5,0,"trinity");
+			if(@DISGUISE)
+			{
+				disguise @DISGUISE;
+				if(!getgmlevel())
+				{
+					if($@GM_DISGUISE == @DISGUISE)
+					{
+						specialeffect2 131;
+						emotion 11,getcharid(3);
+						dispbottom "恭喜你跟GM01選中相同的魔物, 獎勵以郵件方式發送.",0xffff90;
+						mail getcharid(0),"活動獎勵","超級變變變","恭喜你選擇變身為 "+getmonsterinfo(@DISGUISE, MOB_NAME)+", 與GM變身相同外觀, 心有靈犀獎勵已發～",0,$@disguise_item_list,$@disguise_item_qty;
+					}
+					else
+					{
+						emotion 5,getcharid(3);
+						dispbottom "很抱歉 GM 選擇了 "+getmonsterinfo($@GM_DISGUISE, MOB_NAME)+", 您並沒有與GM選擇相同的魔物變身, 下次請繼續努力～";
+					}
+				}
+				else
+				{
+					specialeffect2 679;
+					specialeffect2 680;
+				}
+			}
+			end;
+			
+		case 2:
+			message strcharinfo(0), "已恢復所有玩家外觀.";
+			deletearray $@Turned$;
+			addrid(0,0,"trinity");
+			if(@DISGUISE)
+			{
+				@DISGUISE = 0;
+				undisguise;
+			}
+			end;
+			
+		default:
+			end;
+	}
+	end;
+}

@@ -1,0 +1,390 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Script Constant Database
+###########################################################################
+#
+# Script Constant Settings
+#
+###########################################################################
+# - Name             Unique name for the constant. Must not have same name as script commands, functions, or variables.
+#   Value            Value assigned to the constant. This value cannot be changed during the runtime of the server.
+#   Parameter        Specifies whether the identifier is a parameter. (Default: false)
+#                    Note: Parameters are special in that they retrieve certain runtime values depending on the specified ID
+#                    in field Value. Depending on the implementation values assigned by scripts the parameters will affect
+#                    runtime values, such as Zeny, as well (see pc_readparam/pc_setparam).
+###########################################################################
+
+Header:
+  Type: CONSTANT_DB
+  Version: 1
+
+Body:
+  - Name: SWORDCLAN
+    Value: 1
+  - Name: ARCWANDCLAN
+    Value: 2
+  - Name: GOLDENMACECLAN
+    Value: 3
+  - Name: CROSSBOWCLAN
+    Value: 4
+  - Name: JUMPINGCLAN
+    Value: 5
+
+  - Name: HAT_EF_Cosmic_Connection
+    Value: 222
+  - Name: HAT_EF_C_Baby_Gloom
+    Value: 223
+  - Name: HAT_EF_WinterNightBells
+    Value: 224
+  - Name: HAT_EF_NightSkyOfRutie
+    Value: 225
+  - Name: FOOTPRINT_EF_BASE
+    Value: 226
+  - Name: FOOTPRINT_EF_STR_BASE
+    Value: 227
+  - Name: FOOTPRINT_EF_purplestar
+    Value: 228
+  - Name: FOOTPRINT_EF_yellowstar
+    Value: 229
+  - Name: FOOTPRINT_EF_redstar
+    Value: 230
+  - Name: HAT_EF_RAINBOW_POISON_MASTER
+    Value: 231
+
+  #自創特效
+  - Name: HAT_EF_BLUE_WAVE2
+    Value: 301
+  - Name: HAT_EF_MAP_MAGICZONE3
+    Value: 302
+  - Name: HAT_EF_MAP_MAGICZONE4
+    Value: 303
+  - Name: HAT_EF_RO_304
+    Value: 304
+  - Name: HAT_EF_RO_305
+    Value: 305
+  - Name: HAT_EF_RO_306
+    Value: 306
+  - Name: HAT_EF_RO_307
+    Value: 307
+  - Name: HAT_EF_RO_308
+    Value: 308
+  - Name: HAT_EF_RO_309
+    Value: 309
+  - Name: HAT_EF_MAGIC_CIRCLE_HUMAN
+    Value: 310
+  - Name: HAT_EF_MAGIC_CIRCLE_INSECT
+    Value: 311
+  - Name: HAT_EF_MAGIC_CIRCLE_NOTHING
+    Value: 312
+  - Name: HAT_EF_MAGIC_CIRCLE_UNDEAD
+    Value: 313
+  - Name: HAT_EF_CUSTOM_011
+    Value: 314
+  - Name: HAT_EF_CUSTOM_031
+    Value: 315
+  - Name: HAT_EF_CUSTOM_032
+    Value: 316
+  - Name: HAT_EF_CUSTOM_040
+    Value: 317
+  - Name: HAT_EF_CUSTOM_012
+    Value: 318
+  - Name: HAT_EF_CUSTOM_018
+    Value: 319
+  - Name: HAT_EF_CUSTOM_019
+    Value: 320
+  - Name: HAT_EF_CUSTOM_033
+    Value: 321
+  - Name: HAT_EF_CUSTOM_059
+    Value: 322
+  - Name: HAT_EF_sy_goldendragonsoul
+    Value: 323
+  - Name: HAT_EF_CUSTOM_017
+    Value: 324
+  - Name: HAT_EF_CUSTOM_023
+    Value: 325
+  - Name: HAT_EF_CUSTOM_024
+    Value: 326
+  - Name: HAT_EF_CUSTOM_038
+    Value: 327
+  - Name: HAT_EF_CUSTOM_064
+    Value: 328
+  - Name: HAT_EF_sy_flowbreath_RD
+    Value: 329
+
+  - Name: HAT_EF_sy_flowbreath
+    Value: 330
+  - Name: HAT_EF_sy_cloudymood
+    Value: 331
+  - Name: HAT_EF_sy_specters
+    Value: 332
+  - Name: HAT_EF_sy_furious
+    Value: 333
+  - Name: HAT_EF_sy_happydog
+    Value: 334
+  - Name: HAT_EF_sy_sweetsnow
+    Value: 335
+  - Name: HAT_EF_sy_starstruck_PP
+    Value: 336
+  - Name: HAT_EF_sy_starstruck_BU
+    Value: 337
+  - Name: HAT_EF_sy_starstruck_GN
+    Value: 338
+  - Name: HAT_EF_sy_starstruck_YL
+    Value: 339
+  - Name: HAT_EF_sy_starstruck_RD
+    Value: 340
+  - Name: HAT_EF_sy_starstruck
+    Value: 341
+  - Name: HAT_EF_sy_qchipmunk
+    Value: 342
+  - Name: HAT_EF_sy_hexagonstar
+    Value: 343
+  - Name: HAT_EF_sy_anpetal
+    Value: 344
+  - Name: HAT_EF_sy_ppbc
+    Value: 345
+  - Name: HAT_EF_sy_snowgentle
+    Value: 346
+  - Name: HAT_EF_sy_bubblebunny
+    Value: 347
+  - Name: HAT_EF_sy_bubblering
+    Value: 348
+  - Name: HAT_EF_sy_spring
+    Value: 349
+  - Name: HAT_EF_sy_springrain
+    Value: 350
+  - Name: HAT_EF_sy_throbbing
+    Value: 351
+  - Name: HAT_EF_sy_neonbubble
+    Value: 352
+  - Name: HAT_EF_sy_rbmelodic
+    Value: 353
+  - Name: HAT_EF_sy_darkfairytale
+    Value: 354
+  - Name: HAT_EF_sy_starry
+    Value: 355
+  - Name: HAT_EF_sy_sunset
+    Value: 356
+  - Name: HAT_EF_sy_lsnowflake
+    Value: 357
+  - Name: HAT_EF_sy_dandelion
+    Value: 358
+  - Name: HAT_EF_sy_dreambutterfly
+    Value: 359
+  - Name: HAT_EF_sy_btfshadow
+    Value: 360
+  - Name: HAT_EF_sy_dancefireflie
+    Value: 361
+  - Name: HAT_EF_sy_cherryscent
+    Value: 362
+  - Name: HAT_EF_sy_lightmirror
+    Value: 363
+  - Name: HAT_EF_sy_starbc
+    Value: 364
+  - Name: HAT_EF_sy_freshlemon
+    Value: 365
+  - Name: HAT_EF_sy_plumbossom
+    Value: 366
+
+  #自創新增
+  - Name: IG_Hair_Ddbox_TW
+    Value: 6
+  - Name: IG_Sprout_Pot_TW
+    Value: 7
+  - Name: 4_M_UNDEAD_NOBLE
+    Value: 11001
+  - Name: 4_F_TIARA
+    Value: 11002
+  - Name: IG_SNOW_EXCHANGE_BOX2
+    Value: 1000
+  - Name: IG_UseItem_Mix_Box_TW
+    Value: 1001
+  - Name: IG_Dark_Stone
+    Value: 1002
+  - Name: IG_Equip_14_Refine
+    Value: 1003
+  - Name: IG_Weapon_14_Refine
+    Value: 1004
+  - Name: IG_Ice_F_Stone_Box1
+    Value: 1005
+  - Name: IG_Ice_F_Stone_Box2
+    Value: 1006
+  - Name: storage2
+    Value: 1007
+  - Name: IG_Bs_Item_S_01
+    Value: 1008
+  - Name: Shadow_Att_Ddbox_TW
+    Value: 1009
+  - Name: IG_Bs_Item_M_S_05_TW
+    Value: 1010
+  - Name: IG_Temporal_Manteau_Box_TW
+    Value: 1011
+  - Name: IG_Temporal_Armor_Box_TW
+    Value: 1012
+  - Name: IG_Adulter_F_Box_TW
+    Value: 1013
+  - Name: IG_Vivatus_F_Box_TW
+    Value: 1014
+  - Name: IG_S_Race_ElementMix
+    Value: 1015
+  - Name: IG_S_MixBox_ATT_ALLM_S
+    Value: 1016
+  - Name: IG_D_Gw_Extractor
+    Value: 1017
+  - Name: storage3
+    Value: 1018
+  - Name: IG_Instance_S_Box
+    Value: 1019
+  - Name: IG_Drooping_Scroll
+    Value: 1020
+  - Name: IG_Mocadas_Slabs1
+    Value: 1021
+  - Name: IG_Mocadas_Slabs2
+    Value: 1022
+  - Name: IG_Mocadas_Slabs3
+    Value: 1023
+  - Name: IG_Mocadas_Slabs4
+    Value: 1024
+  - Name: IG_Mocadas_Slabs5
+    Value: 1025
+  - Name: IG_Mocadas_Slabs6
+    Value: 1026
+  - Name: IG_Mocadas_Slabs7
+    Value: 1027
+  - Name: IG_Mocadas_Slabs8
+    Value: 1028
+  - Name: IG_Mocadas_Slabs9
+    Value: 1029
+  - Name: IG_Mocadas_Slabs10
+    Value: 1030
+  - Name: IG_Mocadas_Slabs11
+    Value: 1031
+  - Name: IG_Mocadas_Slabs12
+    Value: 1032
+  - Name: IG_Mocadas_Slabs13
+    Value: 1033
+  - Name: IG_Mocadas_Slabs14
+    Value: 1034
+  - Name: IG_Mocadas_Slabs15
+    Value: 1035
+  - Name: IG_Mocadas_Slabs16
+    Value: 1036
+  - Name: IG_Mocadas_Slabs17
+    Value: 1037
+  - Name: IG_Mocadas_Slabs18
+    Value: 1038
+  - Name: IG_Mocadas_Slabs19
+    Value: 1039
+  - Name: IG_Mocadas_Slabs20
+    Value: 1040
+  - Name: IG_Mocadas_Slabs21
+    Value: 1041
+  - Name: IG_Mocadas_Slabs22
+    Value: 1042
+  - Name: IG_Mocadas_Slabs23
+    Value: 1043
+
+  #精靈屬性箱
+  - Name: IG_FullTemp_S_Rand_Box_TW
+    Value: 1046
+  - Name: IG_FullPene_S_Rand_Box_TW
+    Value: 1047
+  - Name: IG_S_EXP_S_Box_TW
+    Value: 1048
+  - Name: IG_S_M_Mam_Ran_Box_TW
+    Value: 1049
+  - Name: IG_True_G_S_Rand_Box_TW
+    Value: 1050
+  - Name: IG_Absorb_S_Box_TW
+    Value: 1051
+  - Name: IG_R_B_S_Op_Box
+    Value: 1052
+  #影子進階突擊轉換箱
+  - Name: IG_BlitzShadow_Mix
+    Value: 1053
+  #影子力量天然精靈屬性箱
+  - Name: IG_Du_S_RanOpt_Box_TW
+    Value: 1054
+  #影子智慧魔力精靈屬性箱
+  - Name: IG_Cl_S_RanOpt_Box_TW
+    Value: 1055
+  #影子進階突擊精靈屬性箱
+  - Name: IG_S_Mega_Blitz_Box_TW
+    Value: 1056
+  #鬥魂
+  - Name: IG_Battle_Aura_TW
+    Value: 1057
+  #符文碑刻
+  - Name: R_Ep17_Box
+    Value: 1058
+
+  #舊神器附魔
+  - Name: IG_Mjo_UP_TW
+    Value: 100713
+  - Name: IG_Brysing_UP_TW
+    Value: 100714
+  - Name: IG_Sleip_Up_TW
+    Value: 100715
+  - Name: IG_Magin_Up_TW
+    Value: 100716
+
+  #聖潔石
+  - Name: IG_21_Anni_Stone3_TW
+    Value: 102629
+
+  #新秘笈
+  - Name: IG_Bs_Item_M_S_57
+    Value: 1157
+  - Name: IG_Bs_Item_M_S_58
+    Value: 1158
+  - Name: IG_Bs_Item_M_S_59
+    Value: 1159
+  - Name: IG_Bs_Item_M_S_60
+    Value: 1160
+  - Name: IG_Bs_Item_M_S_61
+    Value: 1161
+  - Name: IG_Bs_Item_M_S_62
+    Value: 1162
+  - Name: IG_Bs_Item_M_S_63
+    Value: 1163
+  - Name: IG_GrayWolf_7_Ticket
+    Value: 100626
+  - Name: IG_GrayWolf_9_Ticket
+    Value: 100627
+
+  #時間裂隙武器精煉鎚
+  - Name: Time_Gap_Refine_Hammer
+    Value: 103308
+
+  #符文碑刻
+  - Name: 4_RUNESTONE
+    Value: 10547
+  #EP18地區怪物標籤
+  - Name: RC2_EP18
+    Value: 10
+  #EP19地區怪物標籤
+  - Name: RC2_EP19
+    Value: 11
+
+  #舊版服飾
+  # - Name: IG_HATBOX_1400
+  #   Value: 950000
+Footer:
+  Imports:
+    - Path: db/import/const.yml

@@ -1,0 +1,122 @@
+﻿//============================================================
+// jor_back1 被冰凍的鱗片丘陵
+// jor_back2 被冰凍的鱗片平原
+// jor_back3 被冰凍的鱗片冰河
+//=========================================================
+jor_back1,0,0,0,0	monster	冰庫克雷	21525,60,0,0
+jor_back1,0,0,0,0	monster	發光海草	21524,60,0,0
+jor_back1,0,0,0,0	monster	冰草	21523,80,0,0
+
+jor_back2,0,0,0,0	monster	冰庫克雷	21525,25,0,0
+jor_back2,0,0,0,0	monster	冰草	21523,35,0,0
+jor_back2,0,0,0,0	monster	不凍花	21521,70,0,0
+jor_back2,0,0,0,0	monster	海蝴蝶	21520,70,0,0
+
+jor_back3,0,0,0,0	monster	冰庫克雷	21525,20,0,0
+jor_back3,0,0,0,0	monster	海蝴蝶	21520,70,0,0
+jor_back3,0,0,0,0	monster	卡拉馬波利	21522,70,0,0
+jor_back3,0,0,0,0	monster	原始蠕管	21526,30,0,0
+jor_back3,0,0,0,0	monster	最下級蠕管	21527,15,0,0
+jor_back3,0,0,0,0	boss_monster	超級海蝴蝶	21537,1,600000,0,MVP_Points::on01
+
+
+//============================================================
+// jor_tail 冰凍的尾巴
+//=========================================================
+jor_tail,0,0,0,0	monster	冰庫克雷	21525,90,0,0
+jor_tail,0,0,0,0	monster	發光海草	21524,80,0,0
+
+//============================================================
+// jor_dun01 蛇神的餘溫 1層
+// jor_dun02 蛇神的餘溫 2層
+//=========================================================
+jor_dun01,0,0,0,0	monster	原始蠕管	21526,80,0,0
+jor_dun01,0,0,0,0	monster	最下級蠕管	21527,60,0,0
+jor_dun01,0,0,0,0	monster	邪心獵人_AT	21599,10,0,0
+jor_dun01,0,0,0,0	monster	下級蠕管	21528,20,0,0
+
+jor_dun02,0,0,0,0	monster	最下級蠕管	21527,120,0,0
+jor_dun02,0,0,0,0	monster	邪心獵人_AT	21599,20,0,0
+jor_dun02,0,0,0,0	monster	下級蠕管	21528,100,0,0
+jor_dun02,0,0,0,0	monster	中級蠕管	21529,50,0,0
+
+//=========================================================
+// jor_ab01 被捨棄的坑洞 1層
+// jor_ab02 被捨棄的坑洞 2層
+//========================================================= D_Glacier
+jor_ab01,0,0,0,0	monster	洞穴卡拉馬波利	21540,70,0,0
+jor_ab01,0,0,0,0	monster	洞穴不凍花	21541,60,0,0
+jor_ab01,0,0,0,0	monster	被遺棄的原始蠕管	21538,70,0,0
+jor_ab01,0,0,0,0	monster	怪誕蟲	21543,60,0,0
+jor_ab01,0,0,0,0	monster	高級蠕管	21530,60,0,0
+
+jor_ab02,0,0,0,0	monster	獨眼袋頭蝦	21544,60,0,0
+jor_ab02,0,0,0,0	monster	怪誕蟲	21542,70,0,0
+jor_ab02,0,0,0,0	monster	糾纏的中級蠕管	21601,10,0,0
+jor_ab02,0,0,0,0	monster	被遺棄的中級蠕管	21539,70,0,0
+jor_ab02,0,0,0,0	monster	雙眼袋頭蝦	21545,70,0,0
+
+
+//----------------------------- 傳點
+jor_tail,135,281,0	warp	#jor_tail_1	1,1,jor_back1,131,13
+jor_back1,131,8,0	warp	#jor_tail_2	1,1,jor_tail,139,281
+
+jor_tail,219,294,0	warp	#jor_tail_3	1,1,jor_back1,222,23
+jor_back1,222,18,0	warp	#jor_tail_4	1,1,jor_tail,219,290
+
+jor_tail,98,288,0	warp	#jor_tail_5	1,1,jor_back1,98,14
+jor_back1,98,10,0	warp	#jor_tail_6	1,1,jor_tail,98,284
+
+jor_back1,387,230,0	warp	#jor_back1_1	1,1,icecastle,9,128
+icecastle,5,128,0	warp	#jor_back1_2	1,1,jor_back1,383,230
+
+jor_back1,221,392,0	warp	#jor_back1_3	1,1,jor_back2,230,11
+jor_back2,230,7,0	warp	#jor_back1_4	1,1,jor_back1,221,388
+
+jor_back2,10,247,0	warp	#jor_back1_5	1,1,jor_back3,360,246
+jor_back3,367,246,0	warp	#jor_back1_6	1,1,jor_back2,15,247
+
+jor_back2,10,247,0	warp	#jor_back1_7	1,1,jor_back3,360,246
+jor_back3,367,246,0	warp	#jor_back1_8	1,1,jor_back2,15,247
+
+icecastle,213,175,0	warp	#icecastle1_1	1,1,icas_in,138,186
+icas_in,138,184,0	warp	#icecastle1_2	1,1,icecastle,210,172
+
+jor_back3,65,327,0	warp	#jor_dun01_1	1,1,jor_dun01,113,11
+jor_dun01,113,7,0	warp	#jor_dun01_2	1,1,jor_back3,65,324
+
+jor_dun01,7,238,0	warp	#jor_dun01_3	1,1,jor_dun02,279,88
+jor_dun02,283,88,0	warp	#jor_dun01_4	1,1,jor_dun01,11,238
+
+jor_dun02,18,31,0	warp	#jor_dun01_5	1,1,jor_nest,278,18
+jor_nest,282,18,0	warp	#jor_dun01_6	1,1,jor_dun02,22,31
+
+jor_nest,66,261,0	warp	#jor_dun01_7	1,1,jor_dun03,57,31
+jor_dun03,57,28,0	warp	#jor_dun01_8	1,1,jor_nest,64,257
+
+//----------------------------- 地圖屬性
+jor_back1	mapflag	nobranch
+jor_back2	mapflag	nobranch
+jor_back3	mapflag	nobranch
+jor_tail	mapflag	nobranch
+jor_dun01	mapflag	nobranch
+jor_dun02	mapflag	nobranch
+jor_ab01	mapflag	nobranch
+jor_ab02	mapflag	nobranch
+
+jor_back1	mapflag	noicewall
+jor_back2	mapflag	noicewall
+jor_back3	mapflag	noicewall
+jor_tail	mapflag	noicewall
+jor_dun01	mapflag	noicewall
+jor_dun02	mapflag	noicewall
+jor_ab01	mapflag	noicewall
+jor_ab02	mapflag	noicewall
+
+jor_back1	mapflag	nomemo
+jor_back2	mapflag	nomemo
+jor_back3	mapflag	nomemo
+jor_tail	mapflag	nomemo
+jor_dun01	mapflag	nomemo
+jor_dun02	mapflag	nomemo
+jor_ab01	mapflag	nomemo

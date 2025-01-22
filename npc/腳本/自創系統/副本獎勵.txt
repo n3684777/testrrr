@@ -1,0 +1,87 @@
+function	script	官方副本獎勵設定	{
+
+	mes "[官方副本獎勵]";
+	mes "這是官方副本獎勵控制台";
+	next;
+	switch(select("取消","官方副本獎勵1倍","官方副本獎勵2倍")){
+
+	case 1:
+	close;
+
+	case 2:
+		doevent "官方副本獎勵::On101";
+
+	case 3:
+		doevent "官方副本獎勵::On201";
+
+	}
+}
+
+
+//------------------------------------------------------
+-	script	官方副本獎勵	-1,{
+
+OnInit:
+	set $EP_S,1;
+	set $EP1501,1;
+	set $EP1601,1;
+	set $EP1602,1;
+	set $EP1701,1;
+	set $EP1702,1;
+	set $EP1801,1;
+	set $EP1901,1;
+	set $EP2001,1;
+	end;
+
+On101:
+	set $EP_S,1;
+	set $EP1501,1;
+	set $EP1601,1;
+	set $EP1602,1;
+	set $EP1701,1;
+	set $EP1702,1;
+	set $EP1801,1;
+	set $EP1901,1;
+	set $EP2001,1;
+	end;
+
+On201:
+	set $EP_S,1;
+	set $EP1501,2;
+	set $EP1601,2;
+	set $EP1602,2;
+	set $EP1701,2;
+	set $EP1702,2;
+	set $EP1801,2;
+	set $EP1901,2;
+	set $EP2001,2;
+	end;
+
+
+OnFri1800:
+	set $EP1501,2;
+	set $EP1601,2;
+	set $EP1602,2;
+	set $EP1701,2;
+	set $EP1702,2;
+	set $EP1801,2;
+	set $EP1901,2;
+	set $EP2001,2;
+	announce "官方副本獎勵加倍已經開始了，將持續到星期日的24:00",0;
+	end;
+
+OnSun2400:
+	set $EP1601,1;
+	set $EP1602,1;
+	set $EP1701,1;
+	set $EP1702,1;
+	set $EP1801,1;
+	set $EP1901,1;
+	set $EP2001,1;
+	announce "官方副本獎勵加倍已經結束了，下次開放時間為星期五的18:00",0;
+	end;
+
+}
+
+
+

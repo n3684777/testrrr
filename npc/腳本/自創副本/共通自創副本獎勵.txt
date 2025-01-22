@@ -1,0 +1,8 @@
+function	script	Custom_instance_reward	{
+    set instance_point,10; // 自創副本點數
+	set #Instance_S_Points,#Instance_S_Points+instance_point;	//自創副本積分
+	//getitem 61007,1*$EP_S;	//商城10點金幣
+	dispbottom "自創副本積分+" + instance_point;
+	dispbottom "目前自創副本積分 "+#Instance_S_Points+" 點";
+return;
+}

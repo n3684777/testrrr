@@ -1,0 +1,53 @@
+luadec v2.1 build18 by viruscamp
+基於 luadec.luaforge.net 和 luadec51.luaforge.net
+
+改進：
+1.完整table支持，NEWTABLE, SETLIST, SETTABLE
+2.改進的各種循環結構支持(循環結構算法徹底改變)
+3.解決部分崩潰
+4.改進的disassemble顯示
+5.直接讀取lua源文件
+6.提供參數用於反編譯部分文件,跳過可能導致崩潰的部分
+7.處理大於255個函數的文件
+
+用法如下： 
+luadec abc.luac 
+
+直接對源文件用，內部會編譯後再反編譯： 
+luadec abc.lua 
+
+生成彙編代碼 
+luadec -dis abc.lua 
+
+顯示代碼結構 
+luadec -pn test.lua 
+0 
+ 1 
+  1_1 
+ 2 
+
+然後可以反編譯一部分(函數 1 包含 1_1) 
+luadec -nf 1 test.lua 
+
+或者反編譯一部分不包括下級函數(函數 1 不包含 1_1) 
+luadec -dn -nf 1 test.lua
+
+已知bug： 
+1. "local a,b = ..., ..." 應該是 "local a,b=..." 
+2. "local ,a" 應該是 "local a" 
+3. if..else 有時會生成 "do return end" , 應該是 "else"， 後續語句應該調整到else裡 
+4. 對複雜的邏輯表達式處理不好，會產生錯誤的結果
+5. 對strip後的文件處理不好 -s 參數主動strip後反編譯用於測試
+
+TODO:
+1.if 與 邏輯表達式處理
+2.strip 後的 local_guess 先關注 setlist
+3.strip 後使用 -a 參數 先關注 setlist
+
+
+ChunkSpy.lua
+基於 chunkspy.luaforge.net
+
+改進：
+1.改進的disassemble顯示
+2.直接讀取lua源文件

@@ -1,0 +1,375 @@
+vdistrict1,12,87,4	script	魔神殿管理者	510,{
+
+
+	//副本任務獎勵
+	if(checkquest(32051,HUNTING)==2 ) { 
+	dispbottom "魔神殿任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32051; }
+	//挑戰次數
+	if ( day_Instance_Bout_19 < gettime(8) ){
+	set Instance_Bout_19,10;
+	set day_Instance_Bout_19,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_19 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[尼德霍格]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "魔神殿";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[尼德霍格]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_19+"^000000 ]";
+	mes "副本獎勵：";
+	mes "遠征隊獎勵箱x2";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 130) {
+			mes "[尼德霍格]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.130 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[尼德霍格]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[尼德霍格]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[尼德霍格]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_19,Instance_Bout_19-1;
+
+			if(checkquest(7593,HUNTING)<0 ){setquest 7593;}
+			//副本任務
+			if(checkquest(32051,HUNTING)<0 ){setquest 32051;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "魔神殿",0;
+	end;
+}
+
+
+//------------------------------魔神殿事件
+1@eom,0,0,0	script	魔神殿事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@eom");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("洛奇#eom01");
+	disablenpc instance_npcname("尼德霍格#eom01");
+	disablenpc instance_npcname("魔王夢羅克#eom01");
+	disablenpc instance_npcname("夢羅克追擊隊長#eom01");
+	disablenpc instance_npcname("觸發點#eom01");
+	disablenpc instance_npcname("魔神殿傳送門1_1");
+	disablenpc instance_npcname("魔神殿傳送門1_2");
+	disablenpc instance_npcname("魔神殿傳送門1_3");
+	disablenpc instance_npcname("魔神殿傳送門1_4");
+	disablenpc instance_npcname("魔神殿傳送門1_5");
+	disablenpc instance_npcname("魔神殿傳送門1_6");
+	//副本標籤
+	set 'CD_eom_1,0;
+	set 'CD_eom_2,0;
+	set 'CD_eom_3,0;
+	set 'CD_eom1_1,2;
+	set 'CD_eom1_2,0;
+	set 'CD_eom1_3,2;
+	//出怪
+	areamonster 'map_name$[0],94,47,109,34,"--ja--",3105,1,instance_npcname("魔神殿事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],94,47,109,34,"--ja--",3106,1,instance_npcname("魔神殿事件1")+"::OnCcdd1";
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'CD_eom1_3,'CD_eom1_3-1;
+	if ('CD_eom1_3>0) end;
+	enablenpc instance_npcname("魔神殿傳送門1_1");
+	enablenpc instance_npcname("魔王夢羅克#eom01");
+	enablenpc instance_npcname("尼德霍格#eom01");
+	enablenpc instance_npcname("洛奇#eom01");
+	enablenpc instance_npcname("觸發點#eom01");
+	instance_announce instance_id(1),"【副本公告】：魔神殿的大門打開了，請所有隊員趕快進入!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd2:
+	instance_announce instance_id(1),"【副本公告】：打倒冰霜蜘蛛了，請由右下方傳點離開吧!!",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],178,130,160,110,"--ja--",3089,5;
+	areamonster 'map_name$[0],178,130,160,110,"--ja--",3090,5;
+	areamonster 'map_name$[0],178,130,160,110,"--ja--",3092,1,instance_npcname("魔神殿事件1")+"::OnCcdd3";
+	enablenpc instance_npcname("魔神殿傳送門1_3");
+	enablenpc instance_npcname("魔神殿傳送門1_4");
+	disablenpc instance_npcname("魔神殿傳送門1_2");
+	end;
+
+	OnCcdd3:
+	instance_announce instance_id(1),"【副本公告】：打倒火焰狼了，請由右下方傳點離開去跟尼德霍格回報任務吧!!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("魔神殿傳送門1_5");
+	enablenpc instance_npcname("魔神殿傳送門1_6");
+	disablenpc instance_npcname("魔神殿傳送門1_4");
+	areamonster 'map_name$[0],92,202,110,184,"--ja--",3093,5;
+	areamonster 'map_name$[0],92,202,110,184,"--ja--",3094,5;
+	areamonster 'map_name$[0],92,202,110,184,"--ja--",3096,1,instance_npcname("魔神殿事件1")+"::OnCcdd4";
+	sleep 3000;
+	instance_announce instance_id(1),"魔王夢羅克：想不到你們能打到冰霜蜘蛛跟火焰狼，我就來陪你們玩玩吧...",16;
+	end;
+
+	OnCcdd4:
+	instance_announce instance_id(1),"魔王夢羅克：憑你們的實力，我看由我過去的幻影對付就足夠了...",16;
+	set 'CD_eom1_2,2;
+	areamonster 'map_name$[0],86,198,86,198,"--ja--",3098,1,instance_npcname("魔神殿事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],117,198,117,198,"--ja--",3099,1,instance_npcname("魔神殿事件1")+"::OnCcdd5";
+	end;
+
+	OnCcdd5:
+	set 'CD_eom1_2,'CD_eom1_2-1;
+	if ('CD_eom1_2>0) end;
+	instance_announce instance_id(1),"魔王夢羅克：在一點時間我就可以恢復成完全體了...",16;
+	areamonster 'map_name$[0],92,202,110,184,"--ja--",3096,1,instance_npcname("魔神殿事件1")+"::OnCcdd6";
+	end;
+
+	OnCcdd6:
+	instance_announce instance_id(1),"魔王夢羅克：愚蠢的人類，你們一直都只是在跟我過去的幻影爭鬥..準備迎接新世界的神吧..",16;
+	sleep 3000;
+	areamonster 'map_name$[0],92,202,110,184,"--ja--",3097,1,instance_npcname("魔神殿事件1")+"::OnCcdd7";
+	instance_announce instance_id(1),"魔王夢羅克：在神的面前你們是多麼的渺小..現在就讓你們見識真正的絕望!!",16;
+	end;
+
+	OnCcdd7:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【魔神殿】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("夢羅克追擊隊長#eom01");
+	instance_announce instance_id(1),"夢羅克追擊隊長：總算打倒了魔王夢羅克，長久以來的追擊終於可以結束了!!",16;
+	sleep 1000;
+	instance_announce instance_id(1),"夢羅克追擊隊長：辛苦你們了，來找我離開這裡吧我會將你們的功勳回報上去!!",16;
+	end;
+}
+
+
+//------------------------------副本NPC
+1@eom,95,120,6	script	洛奇#eom01	512,{end;
+
+OnCcdd1:
+	npctalk "夢羅克我們刺客集團是不會讓你在次重生，破壞現有的世界秩序";
+	end;
+}
+
+
+1@eom,94,119,6	script	尼德霍格#eom01	510,{
+	if(checkquest(7594,HUNTING)==2 ) {
+	mes "[尼德霍格]";
+	mes "這些物品就是要給你的獎勵!";
+	getitem 22567,1*$EP1501;	//遠征隊獎勵箱
+	erasequest 7594;
+	close;
+	}
+
+	if(gettimetick(2) < getd("quests_7594") ){
+	mes "[尼德霍格]";
+	mes "感謝你們的幫忙才能順利消滅冰霜蜘蛛跟火焰狼，上面這扇門後就是魔王夢羅克的最後巢穴了...";
+	close; }
+
+	mes "[尼德霍格]";
+	mes "你願意幫我去消滅冰霜蜘蛛跟火焰狼嗎?";
+	mes "完成任務後我會給你一些報酬的";
+	next;
+	menu "^228B22我願意^000000",-,"^FFA500我想想看^000000",Ccdd1;
+
+	if(checkquest(3135,HUNTING)>0 ) { 
+	mes "[尼德霍格]";
+	mes "你已經接取這個任務了";
+	mes "請先去完成他吧!";
+	}
+	setquest 7594;
+	setd "quests_7594",gettimetick(2)+18000;
+	dispbottom "接取到了冰霜蜘蛛跟火焰狼任務";
+	if (getpartyleader(getcharid(1),2)==getcharid(0)) {
+	if ('CD_eom_2==1) {end;}
+	set 'CD_eom_2,1;
+	getitem 22568,1;	//尼德霍格召喚書
+	dispbottom "尼德霍格：如果你需要我的幫助可以使用這個召喚書，我就會出來幫忙你們";
+	close; }
+	close;
+
+	Ccdd1:
+	close;
+
+OnCcdd1:
+	npctalk "沒錯!!身為世界樹的守護者，我會在這邊徹底的消滅掉你";
+	end;
+}
+
+
+1@eom,100,122,4	script	魔王夢羅克#eom01	3096,{ end;
+
+OnCcdd1:
+	npctalk "就憑你們?，刺客集團死剩下的首領以及曾經墮落的天地樹的守護者";
+	end;
+OnCcdd2:
+	npctalk "可笑的是尼德霍格你現在虛弱的只能化為人形，還想要阻止我重生?";
+	end;
+OnCcdd3:
+	npctalk "我就到魔神殿的深處等待你們，如果你們有能力打倒我最強的二名手下的話";
+	end;
+}
+
+
+1@eom,83,49,3	script	GM開關#01	111,{
+	if(getgmlevel()>=10){
+	mes "GM開關";
+	next;
+	menu "啟動",-;
+	doevent instance_npcname(instance_npcname("魔神殿事件1")+"")+"::OnCcdd1";
+	close;
+	}
+	end;
+}
+
+//------------------------------觸發
+1@eom,98,118,0	script	觸發點#eom01	-1,5,5,{
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_eom_1==1) {end;}
+	set 'CD_eom_1,1;
+	sleep 3000;
+	donpcevent instance_npcname("洛奇#eom01")+"::OnCcdd1";
+	sleep 4000;
+	donpcevent instance_npcname("尼德霍格#eom01")+"::OnCcdd1";
+	sleep 4000;
+	donpcevent instance_npcname("魔王夢羅克#eom01")+"::OnCcdd1";
+	sleep 4000;
+	donpcevent instance_npcname("魔王夢羅克#eom01")+"::OnCcdd2";
+	sleep 4000;
+	donpcevent instance_npcname("魔王夢羅克#eom01")+"::OnCcdd3";
+	sleep 3000;
+	areamonster 'map_name$[0],28,119,44,109,"--ja--",3088,10;
+	areamonster 'map_name$[0],28,119,44,109,"--ja--",3091,1,instance_npcname("魔神殿事件1")+"::OnCcdd2";
+	enablenpc instance_npcname("魔神殿傳送門1_2");
+	disablenpc instance_npcname("觸發點#eom01");
+	disablenpc instance_npcname("魔王夢羅克#eom01");
+	end;
+}
+
+
+1@eom,101,207,4	script	夢羅克追擊隊長#eom01	459,{
+
+	mes "夢羅克追擊隊長]";
+	mes "讓我把你們送出魔物要塞吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請送我出去吧:我還想四處看看")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32051,HUNTING)==2 ) { 
+	dispbottom "魔神殿任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",31;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 22567,1*$EP1501;	//遠征隊獎勵箱
+	erasequest 32051; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------傳點資訊
+1@eom,101,58,0	warp	魔神殿傳送門1_1	1,1,1@eom,98,116
+1@eom,91,120,0	warp	魔神殿傳送門1_2	1,1,1@eom,64,147
+1@eom,61,88,0	warp	魔神殿傳送門1_3	1,1,1@eom,98,116
+1@eom,105,120,0	warp	魔神殿傳送門1_4	1,1,1@eom,148,154
+1@eom,133,93,0	warp	魔神殿傳送門1_5	1,1,1@eom,98,116
+1@eom,98,127,0	warp	魔神殿傳送門1_6	1,1,1@eom,102,177
+
+//------------------------------地圖屬性
+1@eom	mapflag	partylock
+1@eom	mapflag	noteleport
+1@eom	mapflag	nosave	SavePoint
+1@eom	mapflag	nomemo
+1@eom	mapflag	nobranch
+1@eom	mapflag	noicewall
+1@eom	mapflag	restricted	6
+

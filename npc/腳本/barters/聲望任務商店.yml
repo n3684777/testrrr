@@ -1,0 +1,1037 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#EP17.1模組
+   - Name: EP17.1模組#01
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 10
+         Item: M_M_Defense
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 11
+         Item: M_M_Improve_Orb_Mdef
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 12
+         Item: M_M_Vit
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 13
+         Item: M_M_Luk
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 14
+         Item: M_M_Str
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 15
+         Item: M_M_Agi
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 16
+         Item: M_M_Int
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 17
+         Item: M_M_Dex
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 18
+         Item: M_M_HP_recovery
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 19
+         Item: M_M_SP_recovery
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 20
+         Item: M_M_Spell5
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 21
+         Item: M_M_Fatal4
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 22
+         Item: M_M_Mental
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 23
+         Item: M_M_Caster
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 24
+         Item: M_M_Attack_Delay_4
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 25
+         Item: M_M_Expert_Archer5
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 26
+         Item: M_M_Vital
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 27
+         Item: M_M_Heal
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 28
+         Item: M_M_Power
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 29
+         Item: M_M_Magic
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 30
+         Item: M_M_Shooter
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 31
+         Item: M_M_Fast
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 32
+         Item: EP17_2_RA15
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 33
+         Item: M_M_Critical
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 34
+         Item: M_M_Delay_After_skill
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 35
+         Item: M_M_Fixed_Casting
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 36
+         Item: M_M_Above_All
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 37
+         Item: M_M_Drain_Life
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 38
+         Item: M_M_Drain_Soul
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 39
+         Item: M_M_Magic_Healing
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 40
+         Item: M_M_Magic_Soul
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 41
+         Item: M_M_Unlimited_Vital
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 42
+         Item: M_M_Spell_Buster
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 43
+         Item: M_M_Firing_Shot
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 44
+         Item: M_M_Overpower
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 45
+         Item: M_M_Fatal_Flash
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+       - Index: 46
+         Item: M_M_Lucky_Strike
+         RequiredItems:
+           - Index: 0
+             Item: Sp_Cor_Core
+             Amount: 1
+
+#EP17.2模組
+   - Name: EP17.2模組#01
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 10
+         Item: EP17_2_NO1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 11
+         Item: EP17_2_NO2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 12
+         Item: EP17_2_NO3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 13
+         Item: EP17_2_NO4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 14
+         Item: EP17_2_NO5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 15
+         Item: EP17_2_NO6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 16
+         Item: EP17_2_NO7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 17
+         Item: EP17_2_NO8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 18
+         Item: EP17_2_RA1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 19
+         Item: EP17_2_RA2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 20
+         Item: EP17_2_RA3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 21
+         Item: EP17_2_RA4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 22
+         Item: EP17_2_RA5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 23
+         Item: EP17_2_RA6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 24
+         Item: EP17_2_RA7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 25
+         Item: EP17_2_RA8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 26
+         Item: EP17_2_RA9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 27
+         Item: EP17_2_RA10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 28
+         Item: EP17_2_RA11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 29
+         Item: EP17_2_RA12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 30
+         Item: EP17_2_RA13
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 31
+         Item: EP17_2_RA14
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 32
+         Item: EP17_2_RA15
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 33
+         Item: EP17_2_RA16
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 34
+         Item: EP17_2_RA17
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 35
+         Item: EP17_2_RA18
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 36
+         Item: EP17_2_RA19
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 37
+         Item: EP17_2_RA20
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 38
+         Item: EP17_2_RA21
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 39
+         Item: EP17_2_UQ1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 40
+         Item: EP17_2_UQ2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 41
+         Item: EP17_2_UQ3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 42
+         Item: EP17_2_UQ4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 43
+         Item: EP17_2_UQ5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 44
+         Item: EP17_2_UQ6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 45
+         Item: EP17_2_UQ7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 46
+         Item: EP17_2_UQ8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 47
+         Item: EP17_2_UQ9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 48
+         Item: EP17_2_UQ10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 49
+         Item: EP17_2_UQ11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 50
+         Item: EP17_2_UQ12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 51
+         Item: EP17_2_EP1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 52
+         Item: EP17_2_EP2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 53
+         Item: EP17_2_EP3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 54
+         Item: EP17_2_EP4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 55
+         Item: EP17_2_EP5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 56
+         Item: EP17_2_EP6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 57
+         Item: EP17_2_EP7
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 58
+         Item: EP17_2_EP8
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 59
+         Item: EP17_2_EP9
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 60
+         Item: EP17_2_EP10
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 61
+         Item: EP17_2_EP11
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 62
+         Item: EP17_2_EP12
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 63
+         Item: EP17_2_EP13
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 64
+         Item: EP17_2_EP14
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 65
+         Item: EP17_2_EP15
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 66
+         Item: EP17_2_EP16
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 67
+         Item: EP17_2_EP17
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 68
+         Item: EP17_2_EP18
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 69
+         Item: EP17_2_EP19
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 70
+         Item: EP17_2_EP20
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 71
+         Item: EP17_2_EP21
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 72
+         Item: EP17_2_EP22
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 73
+         Item: EP17_2_EP23
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 74
+         Item: EP17_2_EP24
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 75
+         Item: EP17_2_EP25
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 76
+         Item: EP17_2_EP26
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 77
+         Item: EP17_2_EP27
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 78
+         Item: EP17_2_EP28
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 79
+         Item: EP17_2_EP29
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 80
+         Item: EP17_2_EP30
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 81
+         Item: EP17_2_EP31
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 82
+         Item: EP17_2_EP32
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 83
+         Item: EP17_2_EP33
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 84
+         Item: EP17_2_EP34
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 85
+         Item: EP17_2_EP35
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 86
+         Item: EP17_2_EP36
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 87
+         Item: EP17_2_EP37
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 88
+         Item: EP17_2_EP38
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 89
+         Item: EP17_2_EP39
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 90
+         Item: EP17_2_EP40
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 91
+         Item: EP17_2_EP41
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 92
+         Item: EP17_2_EP42
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 93
+         Item: EP17_2_EP43
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 94
+         Item: EP17_2_EP44
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 95
+         Item: EP17_2_EP45
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 96
+         Item: EP17_2_EP46
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 97
+         Item: EP17_2_EP47
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 98
+         Item: EP17_2_EP48
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 99
+         Item: EP17_2_EP49
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 100
+         Item: EP17_2_EP50
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 101
+         Item: EP17_2_EP51
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 102
+         Item: EP17_2_LE1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 103
+         Item: EP17_2_LE2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 104
+         Item: EP17_2_LE3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 105
+         Item: EP17_2_LE4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 106
+         Item: EP17_2_LE5
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+       - Index: 107
+         Item: EP17_2_LE6
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sp_BarMeal_Ticket
+             Amount: 1
+
+
+
+
+
+
+
+

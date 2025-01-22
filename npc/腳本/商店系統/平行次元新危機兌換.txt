@@ -1,0 +1,140 @@
+﻿
+//------------------------------------ 硬幣商店
+-	shop	Pet_Coin_shop	-1,512:-1 //生成商店，腳本名字需要和下面腳本中名字叫對應
+vdistrict1,8,59,4	script	超越者的隨從席維翰#01	755,{
+On001:
+	mes "[超越者的隨從席維翰]";
+	mes "如果你有機會幫助他時，他送你的硬幣不要亂丟喔!";
+	next;
+	mes "[超越者的隨從席維翰]";
+	mes "因這裡次元的一個魔法師對硬幣下詛咒，在霸肋門德眼裡全是黃金";
+	next;
+	mes "[超越者的隨從席維翰]";
+	mes "所以不要丟掉收好硬幣，霸肋門德願意提供獎勵...";
+	next;
+	mes "[超越者的隨從席維翰]";
+	mes "你可以把硬幣投入旁邊的販賣機，就能領取我們準備的物品";
+	next;
+	mes "[超越者的隨從席維翰]";
+	mes "如果帶來25個給我，就能兌換一隻強大的寵物";
+	next;
+
+	message strcharinfo(0),"此商店只能使用 [強烈靈魂精髓] 進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在持有 強烈靈魂精髓 [ "+countitem(25375)+" ] 個"; //有多少物品
+	callshop "Pet_Coin_shop",1; //開啟商店
+	npcshopattach "Pet_Coin_shop"; //關聯腳本
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; //初始化購買個數為0
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > countitem(25375)) dispbottom "你沒用足夠的[強烈靈魂精髓]";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買[ "+@bought_quantity[.@i]+" ]個[ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除物品
+		delitem 25375,@totalcost;
+		dispbottom "您消費了[ "+@totalcost+" ]個強烈靈魂精髓，還剩[ "+countitem(25375)+" ]個強烈靈魂精髓";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+//---------------------------------------------------
+	//設置商品的ID
+	setarray .Commodity[0],9111,9112,9115,9121,9122,9126;
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],25,25,25,25,25,25;
+// --------------------------------------------------
+//初始化商店中物品
+	debugmes "強烈靈魂精髓商店加載中...";
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "Pet_Coin_shop",512;
+		npcshopadditem "Pet_Coin_shop",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	debugmes "【強烈靈魂精髓商店】商品"+getarraysize(.Commodity)+"個";
+	end;
+}
+
+
+// --------------------------------------------------
+vdistrict1,6,61,4	script	席維翰販賣機#01	562,{
+
+	mes"[席維翰販賣機]";
+	mes"投入10個寵物硬幣後，就能獲得一個物品";
+	next;
+	switch(select("投入10個硬幣","取消")){
+
+	case 1:
+		if(countitem(25376)<10){
+		mes"[席維翰販賣機]";
+		mes"你少於10枚硬幣不能兌換，再見!!!";
+		close;
+		}
+
+		delitem 25376,10;
+		set @Crolls,rand(1,10000);
+		if(@Crolls>=1 && @Crolls<=999){
+		getitem $@Pet_s1[rand(getarraysize($@Pet_s1))],1;
+		end;
+		}
+		if(@Crolls>=1000 && @Crolls<=9799){
+		getitem $@Pet_s2[rand(getarraysize($@Pet_s2))],1;
+		end;
+		}
+		if(@Crolls>=9800 && @Crolls<=9900){
+		getitem $@Pet_s3[rand(getarraysize($@Pet_s3))],F_rand(150,50,30,20,15);
+		end;
+		}
+		set $@Pet,$@Pet_s4[rand(getarraysize($@Pet_s4))],1;
+		getitem $@Pet,1;
+		announce "[席維翰販賣機] 恭喜玩家 " + strcharinfo(0) + "，抽到 "+getitemname($@Pet)+"!!!",15;
+		end;
+
+	case 2:
+		close;
+	}
+
+OnInit:
+	setarray $@Pet_s1[0],9096,9130,9133,9099,9024,9119,9055,9047,9105,9118,9054,9002,9009,9010,9013,9012,9019,9128,9018,9025,9015,9005,9016,9014,9004,9041,9042;
+	//寵物蛋列表
+	setarray $@Pet_s2[0],100796,14569,14570,14571,14572,14573,14574,12358,12359,12360,12361,12362,12363,12364,12365,12366,12366,12367,12368,12374,12366,12360,12373,12370,12372,23189,637,23188,12369,14574,12371,642,1000552,23187,25377,628,23257,23256,620,23258,633,622,659,636,623,626,625,537,643,1000889;
+	//寵物用品列表
+	setarray $@Pet_s3[0],25376;
+	//強烈靈魂精髓
+	setarray $@Pet_s4[0],25375,25375,25375,25375,25375,25375,25375,9111;
+	//稀有獎勵
+	end;
+}
+
+
+
+
+
+

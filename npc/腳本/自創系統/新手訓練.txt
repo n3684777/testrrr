@@ -1,0 +1,121 @@
+﻿trinity,117,73,4	script	新手訓練員#01	10352,{
+
+	mes "[新手訓練員]";
+	mes "接取新手任務後可以獲得^33cc33新手硬幣^000000作為獎勵";
+	mes "^33cc33新手硬幣^000000可以兌換各種新手裝備";
+	next;
+	switch(select("接取 新手任務","回報 新手任務","取消 新手任務")){
+
+	case 1:
+		mes "[新手訓練員]";
+		mes "你想要收集哪個等級的魔物數據?";
+		mes "注意一次只能接取一個任務";
+		next;
+		switch(select("取消"," Lv50↑魔物(新手金幣x10)","Lv100↑魔物(新手金幣x20)","Lv150↑魔物(新手金幣x30)","Lv200↑魔物(新手金幣x40)")){
+
+		case 1:
+		close;
+
+		case 2:
+		if(checkquest(19112,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19113,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19114,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19115,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19067,PLAYTIME)==0){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		if(checkquest(19067,PLAYTIME)==1){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		erasequest 19067;
+		setquest 19112;
+		mes "[新手訓練員]";
+		mes "任務接取完成";
+		close;
+
+		case 3:
+		if(checkquest(19112,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19113,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19114,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19115,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19067,PLAYTIME)==0){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		if(checkquest(19067,PLAYTIME)==1){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		erasequest 19067;
+		setquest 19113;
+		mes "[新手訓練員]";
+		mes "任務接取完成";
+		close;
+
+		case 4:
+		if(checkquest(19112,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19113,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19114,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19115,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19067,PLAYTIME)==0){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		if(checkquest(19067,PLAYTIME)==1){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		erasequest 19067;
+		setquest 19114;
+		mes "[新手訓練員]";
+		mes "任務接取完成";
+		close;
+
+		case 5:
+		if(checkquest(19112,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19113,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19114,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19115,HUNTING)>=0){mes "[新手訓練員]"; mes "您已經接了相關任務了唷~!"; close;}
+		if(checkquest(19067,PLAYTIME)==0){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		if(checkquest(19067,PLAYTIME)==1){mes "[新手訓練員]"; mes "還在任務冷卻時間中"; close;}
+		erasequest 19067;
+		setquest 19115;
+		mes "[新手訓練員]";
+		mes "任務接取完成";
+		close;
+
+		}
+
+	case 2:
+		if(checkquest(19112,HUNTING)==2 ) { 
+		erasequest 19112;
+		setquest 19067;
+		getitem 61172,10;
+		}
+		if(checkquest(19113,HUNTING)==2 ) { 
+		erasequest 19113;
+		setquest 19067;
+		getitem 61172,20;
+		}
+		if(checkquest(19114,HUNTING)==2 ) { 
+		erasequest 19114;
+		setquest 19067;
+		getitem 61172,30;
+		}
+		if(checkquest(19115,HUNTING)==2 ) { 
+		erasequest 19115;
+		setquest 19067;
+		getitem 61172,40;
+		}
+		mes "[新手訓練員]";
+		mes "沒有完成的任務!";
+		close;
+
+	case 3:
+		if(checkquest(19112,HUNTING)>0 ) { 
+		erasequest 19112;
+		}
+		if(checkquest(19113,HUNTING)>0 ) { 
+		erasequest 19113;
+		}
+		if(checkquest(19114,HUNTING)>0 ) { 
+		erasequest 19114;
+		}
+		if(checkquest(19115,HUNTING)>0 ) { 
+		erasequest 19115;
+		}
+		mes "[新手訓練員]";
+		mes "任務取消完成";
+		close;
+
+	}
+
+
+OnInit:
+	waitingroom "新手任務",0;
+	end;
+}

@@ -1,0 +1,84 @@
+//自定義變量商城腳本版
+//腳本編寫：靈巧兒
+//腳本版本：V1.0 Bate
+//腳本版權：靈巧兒
+//技術支持QQ：429704119
+-	shop	Instance_S_Points_Shop2	-1,512:-1 //生成商店，腳本名字需要和下面腳本中名字叫對應
+//腳本開始
+trinity,88,33,4	script	自創副本積分商店	564,{
+
+	message strcharinfo(0),"此商店只能使用[自創副本積分]進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在還有自創副本積分 [ "+#Instance_S_Points+" ] 點"; //有多少點數
+	callshop "Instance_S_Points_Shop2",1; //開啟商店
+	npcshopattach "Instance_S_Points_Shop2"; //關聯腳本
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; //初始化購買個數為0
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > #Instance_S_Points) dispbottom "你沒用足夠的[ 自創副本積分 ]點.";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買[ "+@bought_quantity[.@i]+" ]個[ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除點數
+		set #Instance_S_Points,#Instance_S_Points - @totalcost; 
+		dispbottom "您消費了[ "+@totalcost+" ]點.還剩[ "+#Instance_S_Points+" ]點";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+//---------------------------------------------------
+	//waitingroom "自創副本積分商店",0;
+	//設置商品的ID
+	setarray .Commodity[0],61033,61018,61034,12391,1001413,1001786
+	,6417,6607,80031,80032,80001,80002,6635,23436,25793,23299,23524,23629,23682,23770,9510,100019,100052,100202,100314,100502,100721	//消耗物品
+	,22750,22751,22752,22753,22754,22755	//變身卷軸
+	,100572,100596,100620,100621,101257,101258,101181,100784,300500,300501	//影子箱子 卡片
+	,15361,15362,15363,15364,15365,15366,15430,15431,15432,15433,32244,490084,480070,5970;	//裝備
+
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],10,100,1000,60,3000,3000
+	,2,1,30,30,30,90,30,30,30,50,50,50,50,50,50,50,50,50,50,50,50	//消耗物品
+	,5,5,5,5,5,5	//變身卷軸
+	,1000,1000,1500,1500,1500,1500,1500,6000,1500,1500	//影子箱子
+	,300,300,300,300,300,300,300,300,300,300,300,300,800,800;	//裝備
+
+
+// --------------------------------------------------
+//初始化商店中物品
+	debugmes "自創副本積分商城加載中...";
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "Instance_S_Points_Shop2",512;
+		npcshopadditem "Instance_S_Points_Shop2",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	debugmes "【自創副本積分商城】商品"+getarraysize(.Commodity)+"個";
+	end;
+}
+

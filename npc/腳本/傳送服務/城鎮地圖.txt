@@ -1,0 +1,365 @@
+function	script	Town_Map	{
+
+		mes "[傳送服務]";
+		mes "請選擇您要到達的城市";
+		next;
+		switch(select(
+
+		"【1】王國首都",
+		"【2】盧恩 米德加茲王國 普隆德拉",
+		"【3】天水之國 天津町",
+		"【4】衛星都市 依斯魯得島",
+		"【5】神仙之島 崑崙",
+		"【6】山岳之都 斐揚","【7】白雪村落 姜餅城","【8】密月島 爪哇咿","【9】運河之都 艾爾帕蘭","【10】沙漠之都 夢羅克",
+		"【11】馬來港","【12】田園都市 毀葛","【13】泰國 哎喲泰雅","【14】古都 龍之城","【15】港口之都 愛爾貝塔","【16】夢幻之島 克魔島",
+		"【17】魔幻之都 吉芬","【18】雨檀族村落 汶巴拉","【19】死者國家 尼芙菲姆","【20】鋼鐵之都 艾音布羅克","【21】採礦村落 艾音貝赫",
+		"【22】企業之都 里希塔樂鎮","【23】修發茲 共和國 首都 朱諾","【24】阿盧納貝茲 教國首都 拉赫","【25】沙漠之村 維恩斯","【26】莫斯科",
+		"【27】米德加爾特聯合營地","【28】礦村 魔怒克","【29】守護精靈 史波浪壯麗村","【30】邪派國都艾爾迪卡斯特","【31】布魯姆德 姚樂希森林",
+		"【32】巴西","【33】草精族穆拉村","【34】德瓦他","【35】綿綿島","【36】艾可拉珠","【37】貝魯茲考古地","【38】港口都市 羅札納(喵族村)",
+		"【39】EP15.2洛克理奇岩嶺","【40】EP16.1普隆德拉中央宮","【41】EP16.2星火同盟","【42】EP17.1特別邊境地區","【43】EP17.2賢者的遺產",
+		"【44】EP18.1祈禱的方向","【45】EP19.2雪花之地")) {
+
+		case 1:
+			set WarpMap$,"trinity";
+			set WarpMapX,110;
+			set WarpMapY,85;
+			warp "trinity",110,85;
+			close;
+
+		case 2:
+			switch(select("普隆德拉-中央","普隆德拉-南門","普隆德拉-西門","普隆德拉-東門","普隆德拉-北門")) {
+
+			case 1:
+			set WarpMap$,"prontera";
+			set WarpMapX,156;
+			set WarpMapY,168;
+			warp "prontera",156,168;	close;
+			case 2:
+			set WarpMap$,"prontera";
+			set WarpMapX,155;
+			set WarpMapY,41;
+			warp "prontera",155,41;	close;
+			case 3:
+			set WarpMap$,"prontera";
+			set WarpMapX,33;
+			set WarpMapY,208;
+			warp "prontera",33,208;	close;
+			case 4:
+			set WarpMap$,"prontera";
+			set WarpMapX,281;
+			set WarpMapY,203;
+			warp "prontera",274,203;	close;
+			case 5:
+			set WarpMap$,"prontera";
+			set WarpMapX,156;
+			set WarpMapY,320;
+			warp "prontera",156,320;	close;	}
+
+		case 3:
+			set WarpMap$,"amatsu";
+			set WarpMapX,110;
+			set WarpMapY,148;
+			warp "amatsu",110,148;
+			close;
+
+		case 4:
+			set WarpMap$,"izlude";
+			set WarpMapX,128;
+			set WarpMapY,142;
+			warp "izlude",128,142;
+			close;
+
+		case 5:
+			set WarpMap$,"gonryun";
+			set WarpMapX,159;
+			set WarpMapY,114;
+			warp"gonryun",159,114;
+			close;
+		case 6:
+			set WarpMap$,"payon";
+			set WarpMapX,156;
+			set WarpMapY,225;
+			warp "payon",156,225;
+			close;
+		case 7:
+			set WarpMap$,"xmas";
+			set WarpMapX,138;
+			set WarpMapY,106;
+			warp "xmas",138,106;
+			close;
+		case 8:
+			set WarpMap$,"jawaii";
+			set WarpMapX,115;
+			set WarpMapY,114;
+			warp"jawaii",115,175;
+			close;
+		case 9:
+			set WarpMap$,"aldebaran";
+			set WarpMapX,141;
+			set WarpMapY,103;
+			warp "aldebaran",141,103;
+			close;
+		case 10:
+			switch(select("夢羅克南邊","夢羅克北邊")) {
+			case 1:
+			set WarpMap$,"morocc";
+			set WarpMapX,156;
+			set WarpMapY,94;
+			warp "morocc",156,94;
+			close;
+			case 2:
+			set WarpMap$,"morocc";
+			set WarpMapX,159;
+			set WarpMapY,254;
+			warp "morocc",159,254;
+			close;	}
+
+		case 11:
+			set WarpMap$,"malaya";
+			set WarpMapX,207;
+			set WarpMapY,204;
+			warp "malaya",207,204;
+			close;
+		case 12:
+			set WarpMap$,"hugel";
+			set WarpMapX,96;
+			set WarpMapY,155;
+			warp "hugel",96,155;
+			close;
+		case 13:
+			set WarpMap$,"ayothaya";
+			set WarpMapX,208;
+			set WarpMapY,198;
+			warp "ayothaya",208,198;
+			close;
+		case 14:
+			set WarpMap$,"louyang";
+			set WarpMapX,218;
+			set WarpMapY,95;
+			warp "louyang",218,95;
+			close;
+		case 15:
+			set WarpMap$,"alberta";
+			set WarpMapX,117;
+			set WarpMapY,56;
+			warp "alberta",117,56;
+			close;
+		case 16:
+			set WarpMap$,"comodo";
+			set WarpMapX,190;
+			set WarpMapY,145;
+			warp "comodo",190,145;
+			close;
+		case 17:
+			set WarpMap$,"geffen";
+			set WarpMapX,119;
+			set WarpMapY,68;
+			warp "geffen",119,68;
+			close;
+		case 18:
+			set WarpMap$,"umbala";
+			set WarpMapX,126;
+			set WarpMapY,132;
+			warp "umbala",126,132;
+			close;
+		case 19:
+			set WarpMap$,"niflheim";
+			set WarpMapX,202;
+			set WarpMapY,177;
+			warp "niflheim",202,177;
+			close;	
+		case 20:
+			set WarpMap$,"einbroch";
+			set WarpMapX,144;
+			set WarpMapY,48;
+			warp "einbroch",144,48;
+			close;	
+		case 21:
+			set WarpMap$,"einbech";
+			set WarpMapX,103;
+			set WarpMapY,197;
+			warp "einbech",103,197;
+			close;	
+		case 22:
+			set WarpMap$,"lighthalzen";
+			set WarpMapX,158;
+			set WarpMapY,87;
+			warp "lighthalzen",158,87;
+			close;
+		case 23:
+			set WarpMap$,"yuno";
+			set WarpMapX,158;
+			set WarpMapY,187;
+			warp "yuno",158,187;
+			close;	
+		case 24:
+			set WarpMap$,"rachel";
+			set WarpMapX,116;
+			set WarpMapY,135;
+			warp "rachel",116,135;
+			close;
+		case 25:
+			set WarpMap$,"veins";
+			set WarpMapX,197;
+			set WarpMapY,230;
+			warp "veins",197,230;
+			close;
+		case 26:
+			set WarpMap$,"moscovia";
+			set WarpMapX,224;
+			set WarpMapY,184;
+			warp "moscovia",224,184;
+			close;
+		case 27:
+			set WarpMap$,"mid_camp";
+			set WarpMapX,210;
+			set WarpMapY,282;
+			warp "mid_camp",210,282;
+			close;
+		case 28:
+			set WarpMap$,"manuk";
+			set WarpMapX,276;
+			set WarpMapY,221;
+			warp "manuk",276,221;
+			close;
+		case 29:
+			set WarpMap$,"splendide";
+			set WarpMapX,241;
+			set WarpMapY,310;
+			warp "splendide",241,310;
+			close;
+		case 30:
+			set WarpMap$,"dicastes01";
+			set WarpMapX,197;
+			set WarpMapY,184;
+			warp "dicastes01",197,184;
+			close;
+		case 31:
+			set WarpMap$,"dicastes02";
+			set WarpMapX,119;
+			set WarpMapY,158;
+			warp "dicastes02",119,158;
+			close;
+		case 32:
+			set WarpMap$,"brasilis";
+			set WarpMapX,196;
+			set WarpMapY,303;
+			warp "brasilis",196,303;
+			close;
+		case 33:
+			set WarpMap$,"mora";
+			set WarpMapX,121;
+			set WarpMapY,158;
+			warp "mora",121,158;
+			close;
+		case 34:
+			set WarpMap$,"dewata";
+			set WarpMapX,200;
+			set WarpMapY,179;
+			warp "dewata",200,179;
+			close;
+		case 35:
+			set WarpMap$,"malangdo";
+			set WarpMapX,218;
+			set WarpMapY,85;
+			warp "malangdo",218,85;
+			close;
+		case 36:
+			set WarpMap$,"eclage";
+			set WarpMapX,278;
+			set WarpMapY,288;
+			warp "eclage",278,288;
+			close;
+		case 37:
+			set WarpMap$,"verus04";
+			set WarpMapX,121;
+			set WarpMapY,247;
+			warp "verus04",121,247;
+			close;
+		case 38:
+			set WarpMap$,"lasagna";
+			set WarpMapX,135;
+			set WarpMapY,258;
+			warp "lasagna",135,258;
+			close;
+
+		case 39:
+			set WarpMap$,"harboro1";
+			set WarpMapX,296;
+			set WarpMapY,209;
+			warp "harboro1",296,209;
+			close;
+
+		case 40:
+			set WarpMap$,"prt_cas";
+			set WarpMapX,215;
+			set WarpMapY,162;
+			warp "prt_cas",215,162;
+			close;
+
+		case 41:
+			switch(select("克萊納 奈米艾利地下軍營","邪心獵人軍事基地外圍")) {
+			case 1:
+			set WarpMap$,"rebel_in";
+			set WarpMapX,66;
+			set WarpMapY,42;
+			warp "rebel_in",66,42;
+			close;
+			case 2:
+			set WarpMap$,"que_swat";
+			set WarpMapX,148;
+			set WarpMapY,52;
+			warp "que_swat",148,52;
+			close;	}
+
+		case 42:
+			switch(select("特別邊境地區 核心","貓子彈酒吧")) {
+			case 1:
+			set WarpMap$,"sp_cor";
+			set WarpMapX,91;
+			set WarpMapY,128;
+			warp "sp_cor",91,128;
+			close;
+			case 2:
+			set WarpMap$,"pub_cat";
+			set WarpMapX,49;
+			set WarpMapY,27;
+			warp "pub_cat",49,27;
+			close;	}
+
+		case 43:
+			switch(select("霸肋門德大宅庭院")) {
+			case 1:
+			set WarpMap$,"ba_maison";
+			set WarpMapX,197;
+			set WarpMapY,242;
+			warp "ba_maison",197,242;
+			close;	}
+
+		case 44:
+			switch(select("灰狼村")) {
+			case 1:
+			set WarpMap$,"wolfvill";
+			set WarpMapX,141;
+			set WarpMapY,145;
+			warp "wolfvill",141,145;
+			close;	}
+
+		case 45:
+			switch(select("伊斯加爾特-外部","伊斯加爾特-內部")) {
+
+			case 1:
+			set WarpMap$,"icecastle";
+			set WarpMapX,60;
+			set WarpMapY,118;
+			warp "icecastle",60,118; close;
+			case 2:
+			set WarpMap$,"prontera";
+			set WarpMapX,139;
+			set WarpMapY,216;
+			warp "icas_in",139,216;	close;
+			}
+
+
+		}
+}

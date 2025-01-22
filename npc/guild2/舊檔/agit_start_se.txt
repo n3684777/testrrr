@@ -1,0 +1,112 @@
+//===== eAthena Script =======================================
+//= 攻城戰 SE 自動開啟控制
+//===== By: ==================================================
+//= 笨冰
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= RO Episode 11.2 (台灣)
+//===== Description: =========================================
+//= 自動開啟攻城戰 SE
+//= 相關的城戰時間設定可以參考 doc\woe_time_explanation.txt
+//=============================================
+//= gettime(3): 取得時間(小時) (24小時制)
+//= gettime(4): 取得時間(星期) 1=星期一, 2=星期二,
+//= 3=星期三, 4=星期四, 等等
+//===== Additional Comments: =================================
+//= 1.0 複製/貼上攻城戰時間設定 [L0ne_W0lf]
+//= 1.1 台灣伺服器設定增加、開始與結束時公告城堡擁有者 [笨冰]
+//============================================================
+
+// WoE Start/Stop times
+//============================================================
+-	script	Agit2_Event	-1,{
+	end;
+
+OnClock2100:	//start time for Sat(6)
+OnClock2200:	//end time for Sat(6)
+OnAgitInit2:
+	// starting time checks
+	if( (gettime(4)==6) && (gettime(3)>=21 && gettime(3)<22) ) {
+//	if((gettime(4)==3) && (gettime(3)>=21 && gettime(3)<22) || (gettime(4)==6) && (gettime(3)>=20 && gettime(3)<21)) {
+		if (!agitcheck2()) {
+			AgitStart2;
+			callsub S_DisplayOwners_SE1;
+		}
+		end;
+	}
+
+
+	// end time checks
+	if ( (gettime(4)==6) && (gettime(3)==22) ) { 
+//	if ((gettime(4)==3) && (gettime(3)==21) || (gettime(4)==6) && (gettime(3)==21)) {
+		if (agitcheck2()) {
+			AgitEnd2;
+			callsub S_DisplayOwners_SE2;
+		}
+		end;
+	}
+	end;
+
+
+S_DisplayOwners_SE1:
+	switch(rand(1,3)){
+	case 1:
+	set $City_Battle02,1;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+
+	case 2:
+	set $City_Battle02,2;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+
+	case 3:
+	set $City_Battle02,3;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+	}
+	end;
+
+
+S_DisplayOwners_SE2:
+	if($City_Battle02 == 1){
+	set $City_Battle02,0;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+	}
+
+	if($City_Battle02 == 2){
+	set $City_Battle02,0;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+	}
+
+	if($City_Battle02 == 3){
+	set $City_Battle02,0;
+	Announce "SE城戰此次開放城堡：",bc_all;
+	Announce "喜民(朱諾右下) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas01",1)) + "] 公會所佔領了",bc_all;
+	Announce "安得郎克(朱諾右上) [普通] 被 [" + GetGuildName(GetCastleData("schg_cas02",1)) + "] 公會所佔領了",bc_all;
+	Announce "畢得布萊因(朱諾左中) [特殊] 被 [" + GetGuildName(GetCastleData("schg_cas03",1)) + "] 公會所佔領了",bc_all;
+	end;
+	}
+
+	end;
+}
+
+

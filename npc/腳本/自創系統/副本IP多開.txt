@@ -1,0 +1,602 @@
+﻿//---------------------- 允許多開名單
+prontera,1,1,6	script	Partyowcontro	-1,{
+
+On001:
+OnInit:
+	//幾開以上被傳
+	set $Windows,1;
+setarray $@PartyWindowsows$[0],
+			""+$MAP_IP_1_1+"."+$MAP_IP_1_2+"."+$MAP_IP_1_3+"."+$MAP_IP_1_4+"",
+			""+$MAP_IP_2_1+"."+$MAP_IP_2_2+"."+$MAP_IP_2_3+"."+$MAP_IP_2_4+"",
+			""+$MAP_IP_3_1+"."+$MAP_IP_3_2+"."+$MAP_IP_3_3+"."+$MAP_IP_3_4+"",
+			""+$MAP_IP_4_1+"."+$MAP_IP_4_2+"."+$MAP_IP_4_3+"."+$MAP_IP_4_4+"",
+			""+$MAP_IP_5_1+"."+$MAP_IP_5_2+"."+$MAP_IP_5_3+"."+$MAP_IP_5_4+"",
+			""+$MAP_IP_6_1+"."+$MAP_IP_6_2+"."+$MAP_IP_6_3+"."+$MAP_IP_6_4+"",
+			""+$MAP_IP_7_1+"."+$MAP_IP_7_2+"."+$MAP_IP_7_3+"."+$MAP_IP_7_4+"",
+			""+$MAP_IP_8_1+"."+$MAP_IP_8_2+"."+$MAP_IP_8_3+"."+$MAP_IP_8_4+"",
+			""+$MAP_IP_9_1+"."+$MAP_IP_9_2+"."+$MAP_IP_9_3+"."+$MAP_IP_9_4+"",
+			""+$MAP_IP_10_1+"."+$MAP_IP_10_2+"."+$MAP_IP_10_3+"."+$MAP_IP_10_4+"",
+			""+$MAP_IP_11_1+"."+$MAP_IP_11_2+"."+$MAP_IP_11_3+"."+$MAP_IP_11_4+"",
+			""+$MAP_IP_12_1+"."+$MAP_IP_12_2+"."+$MAP_IP_12_3+"."+$MAP_IP_12_4+"",
+			""+$MAP_IP_13_1+"."+$MAP_IP_13_2+"."+$MAP_IP_13_3+"."+$MAP_IP_13_4+"",
+			""+$MAP_IP_14_1+"."+$MAP_IP_14_2+"."+$MAP_IP_14_3+"."+$MAP_IP_14_4+"",
+			""+$MAP_IP_15_1+"."+$MAP_IP_15_2+"."+$MAP_IP_15_3+"."+$MAP_IP_15_4+"",
+			""+$MAP_IP_16_1+"."+$MAP_IP_16_2+"."+$MAP_IP_16_3+"."+$MAP_IP_16_4+"",
+			""+$MAP_IP_17_1+"."+$MAP_IP_17_2+"."+$MAP_IP_17_3+"."+$MAP_IP_17_4+"",
+			""+$MAP_IP_18_1+"."+$MAP_IP_18_2+"."+$MAP_IP_18_3+"."+$MAP_IP_18_4+"",
+			""+$MAP_IP_19_1+"."+$MAP_IP_19_2+"."+$MAP_IP_19_3+"."+$MAP_IP_19_4+"",
+			""+$MAP_IP_20_1+"."+$MAP_IP_20_2+"."+$MAP_IP_20_3+"."+$MAP_IP_20_4+"",
+			"1.162.166.161";
+
+
+//開放給特定客戶幾開，要對應上面特定用戶。
+setarray $@Partyiwsnum[0],99,99,99,99,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
+			,4;
+	end;
+}
+
+
+//------------------------------------------
+function	script	副本IP多開	{
+	mes "[副本IP多開]";
+	mes "IP1："+$MAP_IP_1_1+"."+$MAP_IP_1_2+"."+$MAP_IP_1_3+"."+$MAP_IP_1_4+"";
+	mes "IP2："+$MAP_IP_2_1+"."+$MAP_IP_2_2+"."+$MAP_IP_2_3+"."+$MAP_IP_2_4+"";
+	mes "IP3："+$MAP_IP_3_1+"."+$MAP_IP_3_2+"."+$MAP_IP_3_3+"."+$MAP_IP_3_4+"";
+	mes "IP4："+$MAP_IP_4_1+"."+$MAP_IP_4_2+"."+$MAP_IP_4_3+"."+$MAP_IP_4_4+"";
+	mes "IP5："+$MAP_IP_5_1+"."+$MAP_IP_5_2+"."+$MAP_IP_5_3+"."+$MAP_IP_5_4+"";
+	mes "IP6："+$MAP_IP_6_1+"."+$MAP_IP_6_2+"."+$MAP_IP_6_3+"."+$MAP_IP_6_4+"";
+	mes "IP7："+$MAP_IP_7_1+"."+$MAP_IP_7_2+"."+$MAP_IP_7_3+"."+$MAP_IP_7_4+"";
+	mes "IP8："+$MAP_IP_8_1+"."+$MAP_IP_8_2+"."+$MAP_IP_8_3+"."+$MAP_IP_8_4+"";
+	mes "IP9："+$MAP_IP_9_1+"."+$MAP_IP_9_2+"."+$MAP_IP_9_3+"."+$MAP_IP_9_4+"";
+	mes "IP10："+$MAP_IP_10_1+"."+$MAP_IP_10_2+"."+$MAP_IP_10_3+"."+$MAP_IP_10_4+"";
+	mes "IP11："+$MAP_IP_11_1+"."+$MAP_IP_11_2+"."+$MAP_IP_11_3+"."+$MAP_IP_11_4+"";
+	mes "IP12："+$MAP_IP_12_1+"."+$MAP_IP_12_2+"."+$MAP_IP_12_3+"."+$MAP_IP_12_4+"";
+	mes "IP13："+$MAP_IP_13_1+"."+$MAP_IP_13_2+"."+$MAP_IP_13_3+"."+$MAP_IP_13_4+"";
+	mes "IP14："+$MAP_IP_14_1+"."+$MAP_IP_14_2+"."+$MAP_IP_14_3+"."+$MAP_IP_14_4+"";
+	mes "IP15："+$MAP_IP_15_1+"."+$MAP_IP_15_2+"."+$MAP_IP_15_3+"."+$MAP_IP_15_4+"";
+	mes "IP16："+$MAP_IP_16_1+"."+$MAP_IP_16_2+"."+$MAP_IP_16_3+"."+$MAP_IP_16_4+"";
+	mes "IP17："+$MAP_IP_17_1+"."+$MAP_IP_17_2+"."+$MAP_IP_17_3+"."+$MAP_IP_17_4+"";
+	mes "IP18："+$MAP_IP_18_1+"."+$MAP_IP_18_2+"."+$MAP_IP_18_3+"."+$MAP_IP_18_4+"";
+	mes "IP19："+$MAP_IP_19_1+"."+$MAP_IP_19_2+"."+$MAP_IP_19_3+"."+$MAP_IP_19_4+"";
+	mes "IP20："+$MAP_IP_20_1+"."+$MAP_IP_20_2+"."+$MAP_IP_20_3+"."+$MAP_IP_20_4+"";
+
+	mes "這是副本IP多開控制台";
+	next;
+	switch(select("設定1","設定2","設定3","設定4","設定5","設定6","設定7","設定8","設定9","設定10","設定11","設定12","設定13","設定14","設定15","設定16","設定17","設定18","設定19","設定20","取消")){
+
+	case 1:
+	mes "[副本IP多開]";
+	mes "目前設定的IP";
+	mes "IP1："+$MAP_IP_1_1+"."+$MAP_IP_1_2+"."+$MAP_IP_1_3+"."+$MAP_IP_1_4+".";
+	next;
+
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_1_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_1_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_1_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_1_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_1_1+"."+$MAP_IP_1_2+"."+$MAP_IP_1_3+"."+$MAP_IP_1_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 2:
+	mes "目前設定的IP";
+	mes "IP2："+$MAP_IP_2_1+"."+$MAP_IP_2_2+"."+$MAP_IP_2_3+"."+$MAP_IP_2_4+".";
+	next;
+
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_2_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_2_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_2_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_2_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_2_1+"."+$MAP_IP_2_2+"."+$MAP_IP_2_3+"."+$MAP_IP_2_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 3:
+	mes "目前設定的IP";
+	mes "IP3："+$MAP_IP_3_1+"."+$MAP_IP_3_2+"."+$MAP_IP_3_3+"."+$MAP_IP_3_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_3_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_3_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_3_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_3_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_3_1+"."+$MAP_IP_3_2+"."+$MAP_IP_3_3+"."+$MAP_IP_3_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 4:
+	mes "目前設定的IP";
+	mes "IP4："+$MAP_IP_4_1+"."+$MAP_IP_4_2+"."+$MAP_IP_4_3+"."+$MAP_IP_4_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_4_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_4_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_4_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_4_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_4_1+"."+$MAP_IP_4_2+"."+$MAP_IP_4_3+"."+$MAP_IP_4_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 5:
+	mes "目前設定的IP";
+	mes "IP5："+$MAP_IP_5_1+"."+$MAP_IP_5_2+"."+$MAP_IP_5_3+"."+$MAP_IP_5_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_5_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_5_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_5_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_5_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_5_1+"."+$MAP_IP_5_2+"."+$MAP_IP_5_3+"."+$MAP_IP_5_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 6:
+	mes "目前設定的IP";
+	mes "IP6："+$MAP_IP_6_1+"."+$MAP_IP_6_2+"."+$MAP_IP_6_3+"."+$MAP_IP_6_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_6_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_6_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_6_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_6_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_6_1+"."+$MAP_IP_6_2+"."+$MAP_IP_6_3+"."+$MAP_IP_6_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 7:
+	mes "目前設定的IP";
+	mes "IP7："+$MAP_IP_7_1+"."+$MAP_IP_7_2+"."+$MAP_IP_7_3+"."+$MAP_IP_7_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_7_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_7_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_7_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_7_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_7_1+"."+$MAP_IP_7_2+"."+$MAP_IP_7_3+"."+$MAP_IP_7_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 8:
+	mes "目前設定的IP";
+	mes "IP8："+$MAP_IP_8_1+"."+$MAP_IP_8_2+"."+$MAP_IP_8_3+"."+$MAP_IP_8_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_8_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_8_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_8_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_8_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_8_1+"."+$MAP_IP_8_2+"."+$MAP_IP_8_3+"."+$MAP_IP_8_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 9:
+	mes "目前設定的IP";
+	mes "IP9："+$MAP_IP_9_1+"."+$MAP_IP_9_2+"."+$MAP_IP_9_3+"."+$MAP_IP_9_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_9_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_9_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_9_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_9_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_9_1+"."+$MAP_IP_9_2+"."+$MAP_IP_9_3+"."+$MAP_IP_9_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 10:
+	mes "目前設定的IP";
+	mes "IP10："+$MAP_IP_10_1+"."+$MAP_IP_10_2+"."+$MAP_IP_10_3+"."+$MAP_IP_10_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_10_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_10_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_10_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_10_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_10_1+"."+$MAP_IP_10_2+"."+$MAP_IP_10_3+"."+$MAP_IP_10_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 11:
+	mes "目前設定的IP";
+	mes "IP11："+$MAP_IP_11_1+"."+$MAP_IP_11_2+"."+$MAP_IP_11_3+"."+$MAP_IP_11_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_11_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_11_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_11_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_11_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_11_1+"."+$MAP_IP_11_2+"."+$MAP_IP_11_3+"."+$MAP_IP_11_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 12:
+	mes "目前設定的IP";
+	mes "IP12："+$MAP_IP_12_1+"."+$MAP_IP_12_2+"."+$MAP_IP_12_3+"."+$MAP_IP_12_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_12_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_12_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_12_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_12_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_12_1+"."+$MAP_IP_12_2+"."+$MAP_IP_12_3+"."+$MAP_IP_12_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 13:
+	mes "目前設定的IP";
+	mes "IP13："+$MAP_IP_13_1+"."+$MAP_IP_13_2+"."+$MAP_IP_13_3+"."+$MAP_IP_13_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_13_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_13_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_13_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_13_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_13_1+"."+$MAP_IP_13_2+"."+$MAP_IP_13_3+"."+$MAP_IP_13_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 14:
+	mes "目前設定的IP";
+	mes "IP14："+$MAP_IP_14_1+"."+$MAP_IP_14_2+"."+$MAP_IP_14_3+"."+$MAP_IP_14_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_14_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_14_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_14_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_14_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_14_1+"."+$MAP_IP_14_2+"."+$MAP_IP_14_3+"."+$MAP_IP_14_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 15:
+	mes "目前設定的IP";
+	mes "IP15："+$MAP_IP_15_1+"."+$MAP_IP_15_2+"."+$MAP_IP_15_3+"."+$MAP_IP_15_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_15_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_15_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_15_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_15_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_15_1+"."+$MAP_IP_15_2+"."+$MAP_IP_15_3+"."+$MAP_IP_15_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 16:
+	mes "目前設定的IP";
+	mes "IP16："+$MAP_IP_16_1+"."+$MAP_IP_16_2+"."+$MAP_IP_16_3+"."+$MAP_IP_16_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_16_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_16_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_16_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_16_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_16_1+"."+$MAP_IP_16_2+"."+$MAP_IP_16_3+"."+$MAP_IP_16_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 17:
+	mes "目前設定的IP";
+	mes "IP17："+$MAP_IP_17_1+"."+$MAP_IP_17_2+"."+$MAP_IP_17_3+"."+$MAP_IP_17_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_17_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_17_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_17_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_17_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_17_1+"."+$MAP_IP_17_2+"."+$MAP_IP_17_3+"."+$MAP_IP_17_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 18:
+	mes "目前設定的IP";
+	mes "IP18："+$MAP_IP_18_1+"."+$MAP_IP_18_2+"."+$MAP_IP_18_3+"."+$MAP_IP_18_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_18_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_18_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_18_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_18_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_18_1+"."+$MAP_IP_18_2+"."+$MAP_IP_18_3+"."+$MAP_IP_18_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 19:
+	mes "目前設定的IP";
+	mes "IP19："+$MAP_IP_19_1+"."+$MAP_IP_19_2+"."+$MAP_IP_19_3+"."+$MAP_IP_19_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_19_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_19_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_19_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_19_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_19_1+"."+$MAP_IP_19_2+"."+$MAP_IP_19_3+"."+$MAP_IP_19_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 20:
+	mes "目前設定的IP";
+	mes "IP20："+$MAP_IP_20_1+"."+$MAP_IP_20_2+"."+$MAP_IP_20_3+"."+$MAP_IP_20_4+".";
+	next;
+	mes "請輸入第1個數字";
+	input @New1;
+	set $MAP_IP_20_1,@New1;
+	next;
+	mes "請輸入第2個數字";
+	input @New2;
+	set $MAP_IP_20_2,@New2;
+	next;
+	mes "請輸入第3個數字";
+	input @New3;
+	set $MAP_IP_20_3,@New3;
+	next;
+	mes "請輸入第4個數字";
+	input @New4;
+	set $MAP_IP_20_4,@New4;
+	next;
+	mes "請問您要設定這個IP";
+	mes "IP："+$MAP_IP_20_1+"."+$MAP_IP_20_2+"."+$MAP_IP_20_3+"."+$MAP_IP_20_4+".";
+	menu "是",-;
+	doevent "Partyowcontro::On001";
+	close;
+
+	case 21:
+	close;
+	}
+}
+
+
+
+
+
+
+
+
+

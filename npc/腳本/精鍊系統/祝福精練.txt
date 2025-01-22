@@ -1,0 +1,221 @@
+//===== rAthena Script ======================================= 
+//= Blessed Refiner
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiners that use Blessed ores to refine equipment.
+//= Upon failure, the equipment is not destroyed. The success
+//= rate is identical to that for Enriched ores.
+//= - "鐵匠 迪斯特" only refines from +6~12.
+//= NOTE: This NPC is currently disabled on official servers.
+//===== Changelog: ===========================================
+//= 1.0 First version. [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
+//============================================================
+
+// Main NPC :: new_smelting612
+//============================================================
+-	script	::BlacksmithDister	-1,{
+	disable_items;
+	mes "[鐵匠 迪斯特]";
+	mes "在競爭激烈的社會下，需與眾不同才能生存下去!";
+	mes "我來精練物品的話，會讓^ff0000裝備不會被破壞^000000";
+	next;
+	mes "[鐵匠 迪斯特]";
+	mes "只限精練+6~+12已經練過的裝備，因商道是很重要的~";
+	next;
+	mes "[鐵匠 迪斯特]";
+	mes "還有精練武器需要^cc6666受祝福的武器礦石^000000";
+	mes "防具則需要^cc6666受祝福的防具礦石^000000";
+	mes "且精鍊失敗也^ff0000不會破壞裝備也不會退階^000000";
+	mes "怎麼樣? 要精練嗎?";
+	next;
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[Unequipped]" ) +":";
+	set .@part, .@indices[ select(.@menu$) ];
+	if (!getequipisequiped(.@part)) {
+		mes "[鐵匠 迪斯特]";
+		switch(.@part) {
+		case EQI_HEAD_TOP:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_ARMOR:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_HAND_L:
+		case EQI_HAND_R:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_GARMENT:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_SHOES:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_ACC_L:
+		case EQI_ACC_R:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_HEAD_MID:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		case EQI_HEAD_LOW:
+			mes "^ff0000沒有裝備無法精鍊^000000";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[鐵匠 迪斯特]";
+		mes "^ff0000該部位的裝備無法精鍊^000000";
+		close;
+	}
+
+Un_net01:
+	.@equip_id = getequipid(.@part);
+	.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	if (.@equip_refine < 6 || .@equip_refine > 12) {
+		mes "[鐵匠 迪斯特]";
+		mes "你的裝備精煉度 "+.@equip_refine+" 我只精練+6~+12的裝備";
+		close;
+	}
+	if( .@itemtype == IT_ARMOR ){
+		.@equip_lv = getequiparmorlv( .@part );
+		.@type$ = "防具礦石";
+
+		switch(.@equip_lv) {
+			case 1:
+				set .@price,20000;
+				set .@material,6439; //Unbreakable_Def
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		.@equip_lv = getequipweaponlv( .@part );
+		.@type$ = "武器礦石";
+
+		switch( .@equip_lv ){
+			case 1:
+				set .@price,1000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 2:
+				set .@price,2000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 3:
+				set .@price,20000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			case 4:
+				set .@price,40000;
+				set .@material,6438; //Unbreakable_Weap
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
+	}
+	set .@ore$,"^ff9999受祝福的"+.@type$+"^000000";
+	mes "[鐵匠 迪斯特]";
+	mes "這裝備已精鍊到 +"+.@equip_refine+" 再次精鍊, 需要材料 "+.@ore$+" 和 "+callfunc("F_InsertComma",.@price)+" zeny";
+	mes "你想繼續嗎?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[鐵匠 迪斯特]";
+		mes "我很忙!";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[鐵匠 迪斯特]";
+		if(.@equip_refine == 6){ mes "^ff0000精煉成功率40%^000000"; }
+		if(.@equip_refine == 7){ mes "^ff0000精煉成功率40%^000000"; }
+		if(.@equip_refine == 8){ mes "^ff0000精煉成功率20%^000000"; }
+		if(.@equip_refine == 9){ mes "^ff0000精煉成功率20%^000000"; }
+		if(.@equip_refine == 10){ mes "^ff0000精煉成功率9%^000000"; }
+		if(.@equip_refine == 11){ mes "^ff0000精煉成功率8%^000000"; }
+		if(.@equip_refine == 12){ mes "^ff0000精煉成功率8%^000000"; }
+		mes "這裝備精鍊時有機率失敗, 雖然裝備不會損壞但是 "+.@ore$+" 會消失!";
+		next;
+		mes "[鐵匠 迪斯特]";
+		mes "當然精煉費用是不會退還的! 你想繼續嗎?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[鐵匠 迪斯特]";
+			mes "歡迎下次在使用";
+			close;
+		}
+	}
+
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[鐵匠 迪斯特]";
+		mes "材料不足";
+		mes "精煉等級 +"+.@equip_lv+" "+.@type$+", 我需要 "+.@ore$+" 和 "+callfunc("F_InsertComma",.@price)+" zeny";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+
+	//anti-hack
+	//if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, v))
+	//	close;
+
+		mes "[鐵匠 迪斯特]";
+		mes "Tac! Tac! Tac!";
+		if(.@equip_refine == 6){ set .@pay,40; }
+		if(.@equip_refine == 7){ set .@pay,40; }
+		if(.@equip_refine == 8){ set .@pay,20; }
+		if(.@equip_refine == 9){ set .@pay,20; }
+		if(.@equip_refine == 10){ set .@pay,9; }
+		if(.@equip_refine == 11){ set .@pay,8; }
+		if(.@equip_refine == 12){ set .@pay,8; }
+		if (.@pay > rand(1,100)) {
+		specialeffect EF_BLESSING;
+		successrefitem .@part;
+		next;
+		mes "[鐵匠 迪斯特]";
+		mes "哈哈哈哈哈哈!!!";
+		next;
+		mes "[鐵匠 迪斯特]";
+		mes "精鍊成功了~ 哈哈哈!";
+		next;
+		switch(select("繼續精煉:取消")){
+		case 1:
+		goto Un_net01;
+		case 2:
+		close;
+		}
+	}
+	specialeffect EF_CURSEATTACK;
+	specialeffect2 EF_SUI_EXPLOSION;
+	next;
+	emotion (!rand(5))?ET_ANGER:ET_HUK;
+	mes "[鐵匠 迪斯特]";
+	mes "可惡啊!!!!";
+	next;
+	mes "[鐵匠 迪斯特]";
+	mes "精鍊失敗好險有 "+.@ore$+" 的保護裝備還安整保留...";
+	next;
+	switch(select("繼續精煉:取消")){
+	case 1:
+	goto Un_net01;
+	case 2:
+	close;
+	}
+
+//OnInit:
+//	waitingroom "祝福礦石精鍊師",0;
+//	end;
+}
+//------------------------
+rgsr_in,136,181,4	duplicate(BlacksmithDister)	鐵匠 迪斯特#prt	826
+
+

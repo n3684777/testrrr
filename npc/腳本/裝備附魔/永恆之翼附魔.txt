@@ -1,0 +1,195 @@
+
+vdistrict1,68,66,6	script	墮落天使匠人#mal	403,{
+
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "物品欄空位不足!";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "負重過低!";
+		close;
+	}
+	if (getequipid(EQI_GARMENT) == 2573) {
+		if (Zeny >= 1000000)
+			set .@menu$, "永恆之翼";
+		else
+			set .@menu$, "^999999You do not have enough zeny!^000000";
+	} else
+		set .@menu$, "^999999You have not equipped the Archangel Wing!^000000";
+	mes "[墮落天使匠人]";
+	mes "你要是持有永恆之翼，我就能將我的能力";
+	mes "附加至沒什麼作用的第4個插洞如何?";
+	mes "^ff0000除了要附魔的永恆以外，請勿攜帶其它永恆之翼^000000。";
+	next;
+	switch(select("那是什麼?:"+.@menu$+":強化能力值重置")) {
+	case 1:
+		switch(select("我瞭解了:詢問可以附魔的種類?")) {
+		case 1:
+			mes "[墮落天使匠人]";
+			mes "What did you say?";
+			close;
+		case 2:
+			mes "[附魔列表]";
+			mes "^0000ff===高機率===^000000";
+			mes "^0000ffSTR+1^000000";
+			mes "^0000ffAGI+1^000000";
+			mes "^0000ffVIT+1^000000";
+			mes "^0000ffINT+1^000000";
+			mes "^0000ffDEX+1^000000";
+			mes "^0000ffLUK+1^000000";
+			mes "^0000ffMatk+1%^000000";
+			mes "^0000ffMatk+2%^000000";
+			mes "^0000ff名弓 Lv2^000000";
+			mes "^0000ff鬥志 Lv2^000000";
+			mes "^0000ff尖銳 Lv2^000000";
+			mes "^0000ff魔力 Lv2^000000";
+			mes "^006600===中機率===^000000";
+			mes "^006600名弓 Lv 3^000000";
+			mes "^006600鬥志 Lv 3^000000";
+			mes "^006600尖銳 Lv 3^000000";
+			mes "^006600魔力 Lv 3^000000";
+			mes "^006600大主教 Lv 2^000000";
+			mes "^660066===中低機率===^000000";
+			mes "^660066特級 STR^000000";
+			mes "^660066特級 AGI^000000";
+			mes "^660066特級 VIT^000000";
+			mes "^660066特級 INT^000000";
+			mes "^660066特級 DEX^000000";
+			mes "^660066特級 LUK^000000";
+			mes "^660066大主教 Lv3^000000";
+			mes "^660000===低機率===^000000";
+			mes "^660000堅韌 Lv1^000000";
+			mes "^660000大主教 Lv4^000000";
+			mes "^660000頭蓋骨 Lv1^000000";
+			close;
+		}
+	case 2:
+		if (Zeny < 1000000) {
+			mes "[墮落天使匠人]";
+			mes "錢不夠!";
+			close;
+		}
+		mes "[墮落天使匠人]";
+		mes "^ff0000雖然機率不高，但永恆之翼有可";
+		mes "能會毀損^000000，但是你使用3顆獼猴桃果實就可以避免毀損的狀態發生";
+		next;
+		if(select("我在考慮看看:這些我都能承受，快幫我強化吧!") == 1) {
+			mes "[墮落天使匠人]";
+			mes "希望以後有機會能替您服務!";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",2;
+		if (getequipisequiped(EQI_GARMENT) == 0) {
+			mes "[墮落天使匠人]";
+			mes "請檢查物品欄內是否擁有此樣道具!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) != 2573) {
+			mes "[墮落天使匠人]";
+			mes "請檢查物品欄內是否擁有此樣道具!";
+			close;
+		}
+		if (getequipcardid(EQI_GARMENT,3)) {
+			mes "[墮落天使匠人]";
+			mes "^ff0000你的永恆之翼已經附魔過^000000";
+			mes "請先重置附魔或裝備未附魔的永恆之翼";
+			close;
+		}
+		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
+		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2);
+
+		set .@i, rand(1,900);
+		     if (.@i < 2)   set .@enchant,4848; //Immuned1
+		else if (.@i < 3)   set .@enchant,4849; //Cranial1
+		else if (.@i < 4)   set .@enchant,4852; //Heal_Amount5
+		else if (.@i < 9)   set .@enchant,4853; //S_Str
+		else if (.@i < 14)  set .@enchant,4854; //S_Agi
+		else if (.@i < 19)  set .@enchant,4855; //S_Vital
+		else if (.@i < 24)  set .@enchant,4856; //S_Int
+		else if (.@i < 29)  set .@enchant,4857; //S_Dex
+		else if (.@i < 34)  set .@enchant,4858; //S_Luck
+		else if (.@i < 39)  set .@enchant,4851; //Heal_Amount4
+		else if (.@i < 49)  set .@enchant,4850; //Heal_Amount3
+		else if (.@i < 74)  set .@enchant,4760; //Matk1
+		else if (.@i < 84)  set .@enchant,4761; //Matk2
+		else if (.@i < 109) set .@enchant,4817; //Sharp2
+		else if (.@i < 119) set .@enchant,4816; //Sharp3
+		else if (.@i < 144) set .@enchant,4814; //Spell2
+		else if (.@i < 154) set .@enchant,4813; //Spell3
+		else if (.@i < 179) set .@enchant,4833; //Expert_Archer2
+		else if (.@i < 189) set .@enchant,4834; //Expert_Archer3
+		else if (.@i < 214) set .@enchant,4810; //Fighting_Spirit2
+		else if (.@i < 224) set .@enchant,4809; //Fighting_Spirit3
+		else if (.@i < 259) set .@enchant,4701; //Strength2
+		else if (.@i < 294) set .@enchant,4731; //Agility2
+		else if (.@i < 329) set .@enchant,4721; //Dexterity2
+		else if (.@i < 364) set .@enchant,4741; //Vitality2
+		else if (.@i < 399) set .@enchant,4751; //Luck2
+		else if (.@i < 434) set .@enchant,4711; //Inteligence2
+		else if (.@i < 504) set .@enchant,4700; //Strength1
+		else if (.@i < 574) set .@enchant,4730; //Agility1
+		else if (.@i < 644) set .@enchant,4720; //Dexterity1
+		else if (.@i < 714) set .@enchant,4740; //Vitality1
+		else if (.@i < 784) set .@enchant,4750; //Luck1
+		else if (.@i < 854) set .@enchant,4710; //Inteligence1
+		else set .@enchant,0;
+
+		set Zeny, Zeny - 1000000;
+		delequip EQI_GARMENT;
+		if (.@enchant == 0) {
+			mes "[墮落天使匠人]";
+			mes "噢, 真是太不幸了.";
+			mes "附魔強化失敗";
+			close;
+		}
+		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant; //Archangel_Wing
+		if (.@i < 4)
+			announce strcharinfo(0)+" 在永恆之翼的附魔中，獲得了稀有能力!",bc_all,0xFF0000,FW_NORMAL,10;
+		mes "[墮落天使匠人]";
+		mes "恭喜!";
+		mes "附魔強化成功";
+		close;
+	case 3:
+		mes "[墮落天使匠人]";
+		mes "我只有一點要提醒你，作業需要^0000ff獼猴桃果實3個^000000，進行重置時裝備不會消失，唯有強化過的能力值會消失";
+		next;
+		if(select("我在考慮看看:好，我要重置") == 1) {
+			mes "[墮落天使匠人]";
+			mes "希望以後有機會能替您服務!";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",2;
+		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2),getequipcardid(EQI_GARMENT,3);
+		if (getequipisequiped(EQI_GARMENT) == 0) {
+			mes "[墮落天使匠人]";
+			mes "你尚未裝備永恆之翼!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) != 2573) {
+			mes "[墮落天使匠人]";
+			mes "你尚未裝備永恆之翼!";
+			close;
+		}
+		if (countitem(6417) < 3) {
+			mes "[墮落天使匠人]";
+			mes "^ff0000你所攜帶的獼猴桃果實不夠^000000";
+			mes "請檢查物品欄內是否擁有3個";
+			close;
+		}
+
+		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
+		delitem 6417,3; //Silvervine
+		delequip EQI_GARMENT;
+		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],0; //Archangel_Wing
+		mes "[墮落天使匠人]";
+		mes "Take it!";
+		close;
+	}
+OnInit:
+	waitingroom "永恆之翼附魔",0;
+	end;
+}
+

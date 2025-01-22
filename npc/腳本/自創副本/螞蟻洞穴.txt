@@ -1,0 +1,647 @@
+﻿trinity,57,33,4	script	螞蟻洞穴管理者	10095,{
+
+
+	//挑戰次數
+	if ( day_Instance_S_Bout_09 < gettime(8) ){
+	set Instance_S_Bout_09,3;
+	set day_Instance_S_Bout_09,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_09 < 1) {
+		mes "[螞蟻洞穴管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[螞蟻洞穴管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "螞蟻洞穴";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[螞蟻洞穴管理者]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_09+"^000000 ]";
+	mes "副本難度：★★★";
+	mes "副本獎勵：^i[34116]x1";
+	mes "自創副本積分x20";
+	mes "6人以上：自創副本積分x10";
+	mes "10人以上：^i[34116]x1、自創副本積分x10";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[螞蟻洞穴管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[螞蟻洞穴管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】副本！",15,0x33ea91;
+		mes "[螞蟻洞穴管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(!instance_id(IM_PARTY)){
+			mes "還未生成副本";
+			close;
+		}
+		if(BaseLevel < 200) {
+			mes "[螞蟻洞穴管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_S_Bout_09,Instance_S_Bout_09-1;
+			
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "螞蟻洞穴",0;
+	end;
+
+}
+
+// Core Functions
+//============================================================
+function	script	Ant_better_Mon1	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,10000000;
+	setunitdata .@MOD,UMOB_ATKMIN,3000;
+	setunitdata .@MOD,UMOB_ATKMAX,8000;
+	setunitdata .@MOD,UMOB_MATKMIN,4000;
+	setunitdata .@MOD,UMOB_MATKMAX,7000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+50;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+50;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(80,150);
+	setunitdata .@MOD,UMOB_AGI,rand(100,160);
+	setunitdata .@MOD,UMOB_VIT,rand(10,120);
+	setunitdata .@MOD,UMOB_INT,rand(100,200);
+	setunitdata .@MOD,UMOB_DEX,rand(100,200);
+	setunitdata .@MOD,UMOB_LUK,rand(60,120);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,250);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,70,90,120);
+	setunitdata .@MOD,UMOB_RES,rand(300,400);
+	setunitdata .@MOD,UMOB_MRES,rand(300,400);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	//end;
+	return;
+}
+
+function	script	Ant_better_Mon2	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,40000000;
+	setunitdata .@MOD,UMOB_ATKMIN,6000;
+	setunitdata .@MOD,UMOB_ATKMAX,15000;
+	setunitdata .@MOD,UMOB_MATKMIN,4000;
+	setunitdata .@MOD,UMOB_MATKMAX,8000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+50;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+50;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(80,200);
+	setunitdata .@MOD,UMOB_AGI,rand(100,180);
+	setunitdata .@MOD,UMOB_VIT,rand(10,130);
+	setunitdata .@MOD,UMOB_INT,rand(100,220);
+	setunitdata .@MOD,UMOB_DEX,rand(100,220);
+	setunitdata .@MOD,UMOB_LUK,rand(60,120);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,250);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(30,100,150);
+	setunitdata .@MOD,UMOB_RES,rand(300,500);
+	setunitdata .@MOD,UMOB_MRES,rand(300,500);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	setunitdata .@MOD,UMOB_AURA,2002;
+	//end;
+	return;
+}
+
+
+//-----------------------------------------------------------
+function	script	Ant_better_Mvp1	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,100000000;
+	setunitdata .@MOD,UMOB_ATKMIN,7000;
+	setunitdata .@MOD,UMOB_ATKMAX,15000;
+	setunitdata .@MOD,UMOB_MATKMIN,6000;
+	setunitdata .@MOD,UMOB_MATKMAX,12000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+100;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+100;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(180,300);
+	setunitdata .@MOD,UMOB_AGI,rand(120,280);
+	setunitdata .@MOD,UMOB_VIT,rand(170,250);
+	setunitdata .@MOD,UMOB_INT,rand(200,320);
+	setunitdata .@MOD,UMOB_DEX,rand(150,300);
+	setunitdata .@MOD,UMOB_LUK,rand(120,200);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(500,800);
+	setunitdata .@MOD,UMOB_MRES,rand(500,800);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+function	script	Ant_better_Mvp2	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,200000000;
+	setunitdata .@MOD,UMOB_ATKMIN,7000;
+	setunitdata .@MOD,UMOB_ATKMAX,18000;
+	setunitdata .@MOD,UMOB_MATKMIN,6000;
+	setunitdata .@MOD,UMOB_MATKMAX,13000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+130;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+200;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(200,300);
+	setunitdata .@MOD,UMOB_AGI,rand(150,300);
+	setunitdata .@MOD,UMOB_VIT,rand(150,250);
+	setunitdata .@MOD,UMOB_INT,rand(200,320);
+	setunitdata .@MOD,UMOB_DEX,rand(150,300);
+	setunitdata .@MOD,UMOB_LUK,rand(150,300);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(800,1500);
+	setunitdata .@MOD,UMOB_MRES,rand(800,1500);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+function	script	Ant_better_Mvp3	{
+	.@label$ = getarg(5);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",getarg(4),1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,300000000;
+	setunitdata .@MOD,UMOB_ATKMIN,10000;
+	setunitdata .@MOD,UMOB_ATKMAX,20000;
+	setunitdata .@MOD,UMOB_MATKMIN,6000;
+	setunitdata .@MOD,UMOB_MATKMAX,15000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+150;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+220;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(200,300);
+	setunitdata .@MOD,UMOB_AGI,rand(200,250);
+	setunitdata .@MOD,UMOB_VIT,rand(150,250);
+	setunitdata .@MOD,UMOB_INT,rand(200,300);
+	setunitdata .@MOD,UMOB_DEX,rand(200,250);
+	setunitdata .@MOD,UMOB_LUK,rand(150,300);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(800,1500);
+	setunitdata .@MOD,UMOB_MRES,rand(800,1500);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+
+//------------------------------螞蟻洞穴事件
+1@ant01,0,0,0	script	Ant_Event1	-1,{
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@ant01");
+
+	//副本MVP資訊
+	setarray 'Ant_MVPmobid1[0],1038,1039,1046,1059,1059,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1689,1719,1734,1751,1768,1779,1785,1832,1871,1874,1890,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+	//副本MOD資訊
+	setarray 'Ant_mobid1[0],20077,20078,20079,20080;
+
+	//防禦線
+	//門口
+	setcell 'map_name$[0],97,202,109,202,cell_walkable,0;
+	//右邊
+	setcell 'map_name$[0],252,215,261,215,cell_walkable,0;
+	//中下
+	setcell 'map_name$[0],173,30,193,30,cell_walkable,0;
+
+	//守護首領
+	set 'CD_Ant_1,3;
+	callfunc "Ant_better_Mvp1",95,263,95,263,1159,instance_npcname("Ant_Event1")+"::OnCcdd01";
+	callfunc "Ant_better_Mvp1",47,179,47,179,1159,instance_npcname("Ant_Event1")+"::OnCcdd01";
+	callfunc "Ant_better_Mvp1",79,217,79,217,2068,instance_npcname("Ant_Event1")+"::OnCcdd01";
+
+	for(.@i=0;.@i<50;.@i++)
+	callfunc "Ant_better_Mon1",0,0,0,0,rand(20077,20080),instance_npcname("Ant_Event1")+"::OnCcdd0";
+	for(.@i=0;.@i<50;.@i++)
+	callfunc "Ant_better_Mon1",0,0,0,0,rand(20077,20080),instance_npcname("Ant_Event1")+"::OnCcdd0";
+
+	sleep 2000;
+	instance_announce instance_id(1),"螞蟻洞穴：打到守護首領來解除魔法障蔽",bc_all,0xD7BA98;
+	//副本開始關閉入場
+	sleep 90000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始，外面的人無法再進入了!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd0:
+	callfunc "Gem_item_Lv1";
+	end;
+
+	OnCcdd01:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Ant_1,'CD_Ant_1-1;
+	instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_1+"個守護首領",bc_all,0xD7BA98;
+	if ('CD_Ant_1>0) end;
+	set 'CD_Ant_1,3;
+	set 'CD_Ant_2,50;
+	set 'CD_Ant_3,50;
+	set 'CD_Ant_4,50;
+	for(.@i=0;.@i<55;.@i++)
+	callfunc "Ant_better_Mon2",89,145,116,114,rand(21394,21386),instance_npcname("Ant_Event1")+"::OnCcdd03";
+	for(.@i=0;.@i<55;.@i++)
+	callfunc "Ant_better_Mon2",142,259,156,233,rand(20077,20080),instance_npcname("Ant_Event1")+"::OnCcdd04";
+	for(.@i=0;.@i<55;.@i++)
+	callfunc "Ant_better_Mon2",44,46,66,32,rand(2083,2086),instance_npcname("Ant_Event1")+"::OnCcdd05";
+
+	viewpoint 1,110,129,1,0xFF0000;
+	viewpoint 1,151,249,3,0xFF0000;
+	viewpoint 1,55,44,2,0xFF0000;
+	//防禦線刪除
+	setcell 'map_name$[0],97,202,109,202,cell_walkable,1;
+	disablenpc instance_npcname("#Ant_Effect01");
+	disablenpc instance_npcname("#Ant_Effect02");
+	instance_announce instance_id(1),"螞蟻軍團：魔法障蔽被入侵者破壞了!?",bc_all,0xD7BA98;
+	sleep2 1000;
+	instance_announce instance_id(1),"螞蟻軍團：各軍團長起來備戰了!!",bc_all,0xD7BA98;
+	sleep2 1000;
+	instance_announce instance_id(1),"【副本公告】請消滅位於各據點的螞蟻軍團士兵來召喚出三位軍團長!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd03:
+	callfunc "Gem_item_Lv1";
+	set 'CD_Ant_2,'CD_Ant_2-1;
+	if ('CD_Ant_2==5){ instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_2+"個幻影螞蟻士兵",bc_all,0xD7BA98; }
+	if ('CD_Ant_2==0){
+	callfunc "Ant_better_Mvp2",89,145,116,114,21395,instance_npcname("Ant_Event1")+"::OnCcdd06";
+	instance_announce instance_id(1),"【副本公告】召喚出了幻影軍團長!!",bc_all,0xD7BA98;
+	}
+	end;
+
+	OnCcdd04:
+	callfunc "Gem_item_Lv1";
+	set 'CD_Ant_3,'CD_Ant_3-1;
+	if ('CD_Ant_3==5){ instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_3+"個變種螞蟻士兵",bc_all,0xD7BA98; }
+	if ('CD_Ant_3==0){
+	callfunc "Ant_better_Mvp2",142,259,156,233,3741,instance_npcname("Ant_Event1")+"::OnCcdd06";
+	instance_announce instance_id(1),"【副本公告】召喚出了蜘蛛軍團長!!",bc_all,0xD7BA98;
+	}
+	end;
+
+	OnCcdd05:
+	callfunc "Gem_item_Lv1";
+	set 'CD_Ant_4,'CD_Ant_4-1;
+	if ('CD_Ant_4==5){ instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_4+"個甲蟲士兵",bc_all,0xD7BA98; }
+	if ('CD_Ant_4==0){
+	callfunc "Ant_better_Mvp2",44,46,66,32,2087,instance_npcname("Ant_Event1")+"::OnCcdd06";
+	instance_announce instance_id(1),"【副本公告】召喚出了甲蟲軍團長!!",bc_all,0xD7BA98;
+	}
+	end;
+
+	OnCcdd06:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Ant_1,'CD_Ant_1-1;
+	instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_1+"個軍團長",bc_all,0xD7BA98;
+	if ('CD_Ant_1==0){
+	callfunc "Ant_better_Mvp2",188,25,203,20,2165,instance_npcname("Ant_Event1")+"::OnCcdd07";
+	viewpoint 2,110,129,1,0xFF0000;
+	viewpoint 2,151,249,3,0xFF0000;
+	viewpoint 2,55,44,2,0xFF0000;
+	//右下
+	setcell 'map_name$[0],173,30,193,30,cell_walkable,1;
+	disablenpc instance_npcname("#Ant_Effect04");
+	disablenpc instance_npcname("#Ant_Effect05");
+	instance_announce instance_id(1),"【副本公告】右下的魔法障蔽消了，趕快去看看吧!!",bc_all,0xD7BA98;
+	}
+	end;
+
+	OnCcdd07:
+	set 'CD_Ant_1,8;
+	callfunc "Ant_better_Mvp1",179,39,179,39,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",104,57,104,57,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",58,53,58,53,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",98,116,98,116,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",178,155,178,155,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",246,239,246,239,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",151,256,151,256,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	callfunc "Ant_better_Mvp1",195,216,195,216,1289,instance_npcname("Ant_Event1")+"::OnCcdd08";
+	instance_announce instance_id(1),"【副本公告】出現了一堆狂暴蟻后，牠們身上都帶有結界的力量!?",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd08:
+	callfunc "Gem_item_Lv2";
+	set 'CD_Ant_1,'CD_Ant_1-1;
+	instance_announce instance_id(1),"【副本公告】還剩下"+'CD_Ant_1+"個狂暴蟻后",bc_all,0xD7BA98;
+	if ('CD_Ant_1>0) end;
+	callfunc "Ant_better_Mvp3",253,32,253,32,20076,instance_npcname("Ant_Event1")+"::OnCcdd09";
+	//右邊
+	setcell 'map_name$[0],252,215,261,215,cell_walkable,1;
+	disablenpc instance_npcname("#Ant_Effect03");
+	instance_announce instance_id(1),"【副本公告】右上的魔法障蔽消失了，這個氣息是變種蟻后!?",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd09:
+	callfunc "Gem_item_Lv2";
+	enablenpc instance_npcname("#次元裂縫01");
+	enablenpc instance_npcname("#次元裂縫02");
+	instance_announce instance_id(1),"【副本公告】這個激烈的次元波動!?",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"【副本公告】小心!有甚麼東西要從次元裂縫中出來了",bc_all,0xD7BA98;
+	sleep2 3000;
+	instance_announce instance_id(1),"【副本公告】是雙生蜘蛛女王!?",bc_all,0xD7BA98;
+
+	set 'CD_Ant_1,2;
+	disablenpc instance_npcname("#次元裂縫01");
+	disablenpc instance_npcname("#次元裂縫02");
+	areamonster 'map_name$[0],247,46,247,46,"--ja--",27100,1, instance_npcname("Ant_Event1") + "::OnCcdd10";
+	areamonster 'map_name$[0],265,46,265,46,"--ja--",27100,1, instance_npcname("Ant_Event1") + "::OnCcdd11";
+	sleep2 2000;
+	instance_announce instance_id(1),"【副本公告】必須在20秒內同時打倒他們，不然他們會無限重生!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd10:
+	set 'CD_Ant_1,'CD_Ant_1-1;
+	donpcevent instance_npcname("#自動重生01")+"::OnKillStart";
+	if ('CD_Ant_1==0){
+	donpcevent instance_npcname("#自動重生01")+"::OnKillEnd";
+	donpcevent instance_npcname("#自動重生02")+"::OnKillEnd";
+	enablenpc instance_npcname("螞蟻洞穴管理者#Ant_01");
+	//判斷過關人數時間
+	set 'Ant_count2,getmapusers('map_name$[0]);
+	set 'Instance_Annal,gettimetick(2)-'Instance_Annal;
+	announce "【螞蟻洞穴】：隊伍 ["+strcharinfo(1)+"] ["+'Ant_count2+"]人 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Annal/60)+"分"+('Instance_Annal%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+	}
+	end;
+
+	OnCcdd11:
+	donpcevent instance_npcname("#自動重生02")+"::OnKillStart";
+	set 'CD_Ant_1,'CD_Ant_1-1;
+	if ('CD_Ant_1==0){
+	donpcevent instance_npcname("#自動重生01")+"::OnKillEnd";
+	donpcevent instance_npcname("#自動重生02")+"::OnKillEnd";
+	enablenpc instance_npcname("螞蟻洞穴管理者#Ant_01");
+	//判斷過關人數時間
+	set 'Ant_count2,getmapusers('map_name$[0]);
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	'win = 1;
+	announce "【螞蟻洞穴】：隊伍 ["+strcharinfo(1)+"] ["+'Ant_count2+"]人 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+	}
+	end;
+}
+
+
+//------------------------------ BOSS重生
+1@ant01,0,0,0	script	#自動重生01	139,10,10,{end;
+
+OnKillStart:
+	initnpctimer;
+	end;
+
+OnTimer20000:
+	areamonster 'map_name$[0],265,46,265,46,"--ja--",27100,1, instance_npcname("Ant_Event1") + "::OnCcdd11";
+	set 'CD_Ant_1,2;
+	instance_announce instance_id(1),"【副本公告】蜘蛛女王再次重生，需要20秒內同時打倒他們!!",bc_all,0xD7BA98;
+OnKillEnd:
+	stopnpctimer;
+	end;
+}
+
+1@ant01,0,0,0	script	#自動重生02	139,10,10,{end;
+
+OnKillStart:
+	initnpctimer;
+	end;
+
+OnTimer20000:
+	areamonster 'map_name$[0],247,46,247,46,"--ja--",27100,1, instance_npcname("Ant_Event1") + "::OnCcdd10";
+	set 'CD_Ant_1,2;
+	instance_announce instance_id(1),"【副本公告】蜘蛛女王再次重生，需要20秒內同時打倒他們!!",bc_all,0xD7BA98;
+OnKillEnd:
+	stopnpctimer;
+	end;
+}
+
+//------------------------------特效牆
+1@ant01,101,202,0	script	#Ant_Effect01	139,10,10,{end;
+OnTouch:
+	if(!'Effect01){
+	'Effect01 = 1;
+	unitaura getnpcid(0),2003;
+	end;
+	}
+end;
+}
+
+1@ant01,107,202,0	script	#Ant_Effect02	139,10,10,{end;
+OnTouch:
+	if(!'Effect02){
+	'Effect02 = 1;
+	unitaura getnpcid(0),2003;
+	end;
+	}
+end;
+}
+
+1@ant01,257,216,0	script	#Ant_Effect03	139,10,10,{end;
+OnTouch:
+	if(!'Effect03){
+	'Effect03 = 1;
+	unitaura getnpcid(0),2003;
+	end;
+	}
+end;
+}
+
+1@ant01,184,30,0	script	#Ant_Effect04	139,10,10,{end;
+OnTouch:
+	if(!'Effect04){
+	'Effect04 = 1;
+	unitaura getnpcid(0),2003;
+	end;
+	}
+end;
+}
+1@ant01,191,30,0	script	#Ant_Effect05	139,10,10,{end;
+OnTouch:
+	if(!'Effect05){
+	'Effect05 = 1;
+	unitaura getnpcid(0),2003;
+	end;
+	}
+end;
+}
+
+1@ant01,247,46,0	script	#次元裂縫01	21634,{end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@ant01,265,46,0	script	#次元裂縫02	21634,{end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+//------------------------------ 領取獎勵
+1@ant01,254,41,4	script	螞蟻洞穴管理者#Ant_01	10095,{
+
+	mes "[螞蟻洞穴管理者]";
+	mes "讓我把你們送出螞蟻洞穴吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去:我還想四處看看.")) {
+	case 1:
+	if('Ant_count2>=6){
+	dispbottom "達到6人額外獎勵：";
+	callfunc "Custom_instance_reward";
+	}
+	if('Ant_count2>=10){
+	dispbottom "達到10人額外獎勵：";
+	getitem 34116,1;	//螞蟻洞穴寶箱
+	callfunc "Custom_instance_reward";
+	}
+	getitem 34116,1;	//螞蟻洞穴寶箱
+	callfunc "Custom_instance_reward";
+
+	if(checkquest(33022)==1){completequest 33022; dispbottom "自創副本任務 (已完成)";}
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	close;
+
+	case 2:
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@ant01	mapflag	nomemo
+1@ant01	mapflag	nosave	SavePoint
+1@ant01	mapflag	monster_noteleport
+1@ant01	mapflag	noteleport
+1@ant01	mapflag	noicewall
+1@ant01	mapflag	partylock
+1@ant01	mapflag	restricted	6
+
+
+

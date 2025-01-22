@@ -1,0 +1,1689 @@
+//------------------------------回收函數
+function	script	S_Time	{
+	set @D_pay,rand(1,100);
+	if(@D_pay>=0 && @D_pay<=60){getitem 25867,rand(3,12);}
+	if(@D_pay>=61 && @D_pay<=80){getitem 25865,rand(1,3);}
+	if(@D_pay>=81 ){getitem 25866,rand(1,3);}
+	return;
+}
+
+
+vdistrict1,65,12,6	script	OSC0005	563,{
+
+	//附魔狀態
+	//第一階段附魔 第4洞附魔
+	set $@He1,rand(0,11);
+	setarray $@He_ing1[0],4700,4701,4702,4710,4711,4712,4740,4741,4742,4750,4751,4752;
+
+	//第二階段附魔 一般模式 第3洞附魔
+	set $@He2,rand(0,29);
+	setarray $@He_ing2[0],4700,4701,4702,4710,4711,4712,4740,4741,4742,4750,4751,4752,29672,29673,29674,29675,29676,29677,29678,29679,29680,29681,29682,29683,29684,29685,29686,29687,29688,29689;
+	//第二階段附魔 高級模式 第3洞附魔
+	set $@He3,rand(0,17);
+	setarray $@He_ing3[0],29672,29673,29674,29675,29676,29677,29678,29679,29680,29681,29682,29683,29684,29685,29686,29687,29688,29689;
+
+	//第三階段附魔 第2洞附魔
+	set $@He4,rand(0,21);
+	setarray $@He_ing4[0],4818,4817,4816,4843,4832,4833,4834,4835,4869,4872,4873,4881,4815,4814,4813,4812,29061,29071,29081,29091,29101,29111;
+
+	mes "[OSC0005]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("裝備製作:兌換材料:分解材料:進行附魔:重置附魔:取消")){
+
+case 1:
+	close2;
+	callshop "超時空頭冠";
+	end;
+
+case 2:
+	close2;
+	callshop "封印超時空頭冠兌換";
+	end;
+
+case 3:
+	mes "[OSC0005]";
+	mes "你持有 ^0000ff"+(countitem(25864))+"個^000000 封印超時空頭冠";
+	mes "每拆除1個機率取得其中一樣物品：";
+	mes "超時空魔力碎片(^ff000060%^000000)，3~12個";
+	mes "超時空寶石原石(^ff000020%^000000)，1~3個";
+	mes "超時空魔力(^ff000020%^000000)，1~2個";
+	mes "請選擇你要分解的數量 (1~100)";
+	mes "^ff0000取消請數量輸入0^000000";
+	next;
+	set @input,0;
+	input @input,0,100;
+	if(@input == 0){ close; }
+	if(@input > 100 ) {
+	mes"[維爾岡德]";
+	mes "您輸入的數量不正確！";
+	close;
+	end;
+	}
+	if(countitem(25864) <@input){
+	mes "[OSC0005]";
+	mes"你少於輸入的物品不能兌換";
+	close;
+	}
+
+	delitem 25864,(@input);
+	for(set .@i,0; .@i<@input; set .@i,.@i+1)
+	callfunc "S_Time";
+	close;
+	end;
+
+
+case 4:
+	mes "[OSC0005]";
+	mes "你想要要付魔哪個時間頭冠?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @He_Slots,getequipcardid(.@is,0);
+	set @He_Slots2,getequipcardid(.@is,1);
+	set @He_Slots3,getequipcardid(.@is,2);
+	set @He_Slots4,getequipcardid(.@is,3);
+	set @He_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[OSC0005]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[OSC0005]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 19474) goto He_net;	//時間頭冠(盧恩騎士)
+	if(@abd == 19475) goto He_net;	//時間頭冠(皇家禁衛軍)
+	if(@abd == 19476) goto He_net;	//時間頭冠(機械工匠)
+	if(@abd == 19477) goto He_net;	//時間頭冠(基因學者)
+	if(@abd == 19478) goto He_net;	//時間頭冠(十字斬首者)
+	if(@abd == 19479) goto He_net;	//時間頭冠(魅影追蹤者)
+	if(@abd == 19480) goto He_net;	//時間頭冠(大主教)
+	if(@abd == 19481) goto He_net;	//時間頭冠(修羅)
+	if(@abd == 19482) goto He_net;	//時間頭冠(咒術士)
+	if(@abd == 19483) goto He_net;	//時間頭冠(妖術師)
+	if(@abd == 19484) goto He_net;	//時間頭冠(遊俠)
+	if(@abd == 19485) goto He_net;	//時間頭冠(宮廷樂師與浪跡舞者)
+	if(@abd == 19486) goto He_net;	//時間頭冠(拳皇)
+	if(@abd == 19487) goto He_net;	//時間頭冠(獵靈士)
+	if(@abd == 19488) goto He_net;	//時間頭冠(叛亂者)
+	if(@abd == 19489) goto He_net;	//時間頭冠(朧)
+	if(@abd == 19490) goto He_net;	//時間頭冠(影狼)
+	if(@abd == 19491) goto He_net;	//時間頭冠(超級初學者)
+	if(@abd == 19492) goto He_net;	//時間頭冠(召喚師)
+
+	mes "[OSC0005]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+He_net:
+	if(@He_Slots4 == 0) goto He_net1;
+	if(@He_Slots3 == 0) goto He_net2;
+	if(@He_Slots2 == 0) goto He_net3;
+	//附魔Lv2
+	if(@He_Slots2 == 29061) goto He_net1_2;
+	if(@He_Slots2 == 29071) goto He_net2_2;
+	if(@He_Slots2 == 29081) goto He_net3_2;
+	if(@He_Slots2 == 29091) goto He_net4_2;
+	if(@He_Slots2 == 29101) goto He_net5_2;
+	if(@He_Slots2 == 29111) goto He_net6_2;
+	//附魔Lv3
+	if(@He_Slots2 == 29062) goto He_net1_3;
+	if(@He_Slots2 == 29072) goto He_net2_3;
+	if(@He_Slots2 == 29082) goto He_net3_3;
+	if(@He_Slots2 == 29092) goto He_net4_3;
+	if(@He_Slots2 == 29102) goto He_net5_3;
+	if(@He_Slots2 == 29112) goto He_net6_3;
+	//附魔Lv4
+	if(@He_Slots2 == 29063) goto He_net1_4;
+	if(@He_Slots2 == 29073) goto He_net2_4;
+	if(@He_Slots2 == 29083) goto He_net3_4;
+	if(@He_Slots2 == 29093) goto He_net4_4;
+	if(@He_Slots2 == 29103) goto He_net5_4;
+	if(@He_Slots2 == 29113) goto He_net6_4;
+	//附魔Lv5
+	if(@He_Slots2 == 29064) goto He_net1_5;
+	if(@He_Slots2 == 29074) goto He_net2_5;
+	if(@He_Slots2 == 29084) goto He_net3_5;
+	if(@He_Slots2 == 29094) goto He_net4_5;
+	if(@He_Slots2 == 29104) goto He_net5_5;
+	if(@He_Slots2 == 29114) goto He_net6_5;
+	//附魔Lv6
+	if(@He_Slots2 == 29065) goto He_net1_6;
+	if(@He_Slots2 == 29075) goto He_net2_6;
+	if(@He_Slots2 == 29085) goto He_net3_6;
+	if(@He_Slots2 == 29095) goto He_net4_6;
+	if(@He_Slots2 == 29105) goto He_net5_6;
+	if(@He_Slots2 == 29115) goto He_net6_6;
+	//附魔Lv7
+	if(@He_Slots2 == 29066) goto He_net1_7;
+	if(@He_Slots2 == 29076) goto He_net2_7;
+	if(@He_Slots2 == 29086) goto He_net3_7;
+	if(@He_Slots2 == 29096) goto He_net4_7;
+	if(@He_Slots2 == 29106) goto He_net5_7;
+	if(@He_Slots2 == 29116) goto He_net6_7;
+	//附魔Lv8
+	if(@He_Slots2 == 29067) goto He_net1_8;
+	if(@He_Slots2 == 29077) goto He_net2_8;
+	if(@He_Slots2 == 29087) goto He_net3_8;
+	if(@He_Slots2 == 29097) goto He_net4_8;
+	if(@He_Slots2 == 29107) goto He_net5_8;
+	if(@He_Slots2 == 29117) goto He_net6_8;
+	//附魔Lv9
+	if(@He_Slots2 == 29068) goto He_net1_9;
+	if(@He_Slots2 == 29078) goto He_net2_9;
+	if(@He_Slots2 == 29088) goto He_net3_9;
+	if(@He_Slots2 == 29098) goto He_net4_9;
+	if(@He_Slots2 == 29108) goto He_net5_9;
+	if(@He_Slots2 == 29118) goto He_net6_9;
+	//附魔Lv10
+	if(@He_Slots2 == 29069) goto He_net1_10;
+	if(@He_Slots2 == 29079) goto He_net2_10;
+	if(@He_Slots2 == 29089) goto He_net3_10;
+	if(@He_Slots2 == 29099) goto He_net4_10;
+	if(@He_Slots2 == 29109) goto He_net5_10;
+	if(@He_Slots2 == 29119) goto He_net6_10;
+
+	mes "[OSC0005]";
+	mes "已經無法在付魔了!!";
+	close;
+
+He_net1:
+	mes "[OSC0005]";
+	mes "第一階段附魔";
+	mes "附魔插槽：第4洞";
+	mes "附魔材料：2個時間的碎片";
+	next;
+	switch(select("取消:進行附魔")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoHeA1",25867,2,rand(1,100);
+	}
+
+He_net2:
+	mes "[OSC0005]";
+	mes "第二階段附魔";
+	mes "請選擇你要進行的附魔模式";
+	next;
+	switch(select("一般模式:高級模式")){
+
+	case 1:
+		mes "[OSC0005]";
+		mes "第二階段附魔-一般模式";
+		mes "附魔插槽：第3洞";
+		mes "附魔材料：20個時間的碎片";
+		next;
+		switch(select("取消:進行附魔")){
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoHeA2",25867,20,rand(1,100);
+		}
+
+	case 2:
+		mes "[OSC0005]";
+		mes "第二階段附魔-高級模式";
+		mes "附魔插槽：第3洞";
+		mes "附魔材料：2個時間的寶石";
+		next;
+		switch(select("取消:進行附魔")){
+		case 1:
+		close;
+		case 2:
+		callfunc "fumoHeA3",25865,2,rand(1,100);
+		}
+	}
+
+He_net3:
+	mes "[OSC0005]";
+	mes "第三階段附魔";
+	mes "附魔插槽：第2洞";
+	mes "附魔材料：2個時間的魔力";
+	next;
+	switch(select("取消:進行附魔")){
+	case 1:
+	close;
+	case 2:
+	callfunc "fumoHeA4",25866,2,rand(1,100);
+	}
+
+He_net1_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29062,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29061,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29072,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29071,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29082,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29081,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29092,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29091,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29102,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29101,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_2:
+	if(countitem(25866)<4){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 60)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29112,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,4;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29111,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net1_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29063,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29061,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29073,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29071,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29083,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29081,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29093,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29091,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29103,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29101,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_3:
+	if(countitem(25866)<6){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29113,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29111,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net1_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29064,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29062,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29074,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29072,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29084,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29082,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29094,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29092,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29104,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29102,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_4:
+	if(countitem(25866)<8){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 50)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,8;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29114,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,6;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29112,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net1_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29065,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29063,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29075,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29073,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29085,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29083,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29095,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29093,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29105,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29103,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_5:
+	if(countitem(25866)<10){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 40)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29115,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,10;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29113,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net1_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29066,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29064,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29076,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29074,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29086,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29084,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29096,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29094,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29106,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29104,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_6:
+	if(countitem(25866)<12){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29116,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,12;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29114,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net1_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29067,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29065,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29077,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29075,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29087,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29085,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29097,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29095,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29107,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29105,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_7:
+	if(countitem(25866)<16){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 30)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29117,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,16;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29115,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+
+He_net1_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29068,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29066,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29078,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29076,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29088,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29086,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29098,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29096,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29108,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29106,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_8:
+	if(countitem(25866)<20){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29118,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,20;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29116,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+
+He_net1_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29069,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29067,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29079,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29077,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29089,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29087,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29099,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29097,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29109,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29107,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_9:
+	if(countitem(25866)<28){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29119,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,28;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29117,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+
+He_net1_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29070,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29068,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net2_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29080,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29078,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net3_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29090,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29088,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net4_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29100,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29098,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net5_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29110,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29108,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+He_net6_10:
+	if(countitem(25866)<40){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足!";
+	close;
+	}
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= 20)) {
+	mes "[OSC0005]";
+	mes "第四階段附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29120,@He_Slots3,@He_Slots4;
+	specialeffect 154;
+	close; }
+	mes "[OSC0005]";
+	mes "第四階段附魔失敗!";
+	delitem 25866,40;
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,29118,@He_Slots3,@He_Slots4;
+	specialeffect 155;
+	close;
+
+
+//----------------------重置附魔
+case 5:
+	mes "[OSC0005]";
+	mes "附魔任何階段的時間頭冠都能重置";
+	mes "你想要要重置時間頭冠的附魔嗎?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @He_Slots,getequipcardid(.@is,0);
+	set @He_Slots2,getequipcardid(.@is,1);
+	set @He_Slots3,getequipcardid(.@is,2);
+	set @He_Slots4,getequipcardid(.@is,3);
+	set @He_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[OSC0005]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[OSC0005]";
+	mes "你沒物品怎麼洗滌";
+	close;
+	}
+	if(@abd == 19474) goto He_netx;	//時間頭冠(盧恩騎士)
+	if(@abd == 19475) goto He_netx;	//時間頭冠(皇家禁衛軍)
+	if(@abd == 19476) goto He_netx;	//時間頭冠(機械工匠)
+	if(@abd == 19477) goto He_netx;	//時間頭冠(基因學者)
+	if(@abd == 19478) goto He_netx;	//時間頭冠(十字斬首者)
+	if(@abd == 19479) goto He_netx;	//時間頭冠(魅影追蹤者)
+	if(@abd == 19480) goto He_netx;	//時間頭冠(大主教)
+	if(@abd == 19481) goto He_netx;	//時間頭冠(修羅)
+	if(@abd == 19482) goto He_netx;	//時間頭冠(咒術士)
+	if(@abd == 19483) goto He_netx;	//時間頭冠(妖術師)
+	if(@abd == 19484) goto He_netx;	//時間頭冠(遊俠)
+	if(@abd == 19485) goto He_netx;	//時間頭冠(宮廷樂師與浪跡舞者)
+	if(@abd == 19486) goto He_netx;	//時間頭冠(拳皇)
+	if(@abd == 19487) goto He_netx;	//時間頭冠(獵靈士)
+	if(@abd == 19488) goto He_netx;	//時間頭冠(叛亂者)
+	if(@abd == 19489) goto He_netx;	//時間頭冠(朧)
+	if(@abd == 19490) goto He_netx;	//時間頭冠(影狼)
+	if(@abd == 19491) goto He_netx;	//時間頭冠(超級初學者)
+	if(@abd == 19492) goto He_netx;	//時間頭冠(召喚師)
+
+	mes "[OSC0005]";
+	mes "你這個裝備無法重置哦!";
+	close;
+
+He_netx:
+	mes "[OSC0005]";
+	mes "你想要重置時間頭冠上的附魔?";
+	mes "重置失敗僅消耗zeny時間頭冠不會消失";
+	mes "請審慎選擇!";
+	next;
+	switch(select("取消:使用50萬zeny (^ff0000成功率70%^000000):獼猴桃果實5顆使用 (^ff0000成功率100%^000000)")){
+	case 1:
+	close;
+
+	case 2:
+	callfunc "fumoHeA5",6417,500000,rand(1,100);
+
+	case 3:
+	callfunc "fumoHeA6",6417,5,rand(1,100);
+	}
+
+case 6:
+	close;
+	}
+OnInit:
+	waitingroom "超時空頭冠",0;
+	end;
+}
+
+
+//-------------------------- 第一階段附魔
+
+function	script	fumoHeA1	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足";
+	close;
+	}
+	mes "[OSC0005]";
+	mes "第一階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,@He_Slots2,@He_Slots3,$@He_ing1[$@He1];
+	close;
+}
+
+//-------------------------- 第二階段附魔 一般模式
+
+function	script	fumoHeA2	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足";
+	close;
+	}
+	mes "[OSC0005]";
+	mes "第二階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,@He_Slots2,$@He_ing2[$@He2],@He_Slots4;
+	close;
+}
+
+//-------------------------- 第二階段附魔 高級模式
+
+function	script	fumoHeA3	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[OSC0005]";
+	mes "你身上時間的寶石不足";
+	close;
+	}
+	mes "[OSC0005]";
+	mes "第二階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,@He_Slots2,$@He_ing3[$@He3],@He_Slots4;
+	close;
+}
+
+
+//-------------------------- 第三階段附魔
+function	script	fumoHeA4	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[OSC0005]";
+	mes "你身上時間的魔力不足";
+	close;
+	}
+	mes "[OSC0005]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,$@He_ing4[$@He4],@He_Slots3,@He_Slots4;
+	close;
+}
+
+
+//-------------------------- 重置附魔
+function	script	fumoHeA5	{
+
+	if(zeny<getarg(1)){
+	mes "[OSC0005]";
+	mes"你身上的錢不夠。";
+	close;
+	}
+
+	if(getarg(2)<=30){
+	mes"洗滌失敗 但是裝備完好無損";
+	specialeffect 155;
+	set zeny,zeny-getarg(1);
+	close;
+	} else {
+	mes "[OSC0005]";
+	mes "成功洗滌了這個時間頭冠上的附魔!";
+	specialeffect 154;
+	delitem @abd,1;
+	set zeny,zeny-getarg(1);
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,0,0,0;
+	close;
+	}
+}
+
+
+function	script	fumoHeA6	{
+
+	if(countitem(getarg(0))<getarg(1)){
+	mes "[OSC0005]";
+	mes "你身上獼猴桃果實不足";
+	close;
+	}
+	mes "[OSC0005]";
+	mes "成功洗滌了這個時間頭冠上的附魔!";
+	delitem getarg(0),getarg(1);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_Refine,0,@He_Slots,0,0,0;
+	close;
+}
+

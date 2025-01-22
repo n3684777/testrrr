@@ -1,0 +1,614 @@
+﻿vdistrict1,43,40,4	script	火之湖管理者#Con1	10527,{
+
+	.@playtime = checkquest(30002,PLAYTIME);
+	if(.@playtime == 2) erasequest 30002;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[火之湖管理者]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[火之湖管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "火之湖";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[火之湖管理者]";
+	mes "副本獎勵：";
+	mes "^i[1001414] ^i[1001415]";
+	mes "^i[1001440] ^i[1001441] ^i[1001442] ^i[1001443]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 250) {
+			mes "[火之湖管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.250 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[火之湖管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[火之湖管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 250) {
+			mes "[火之湖管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.250 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//任務
+			if(checkquest(30001) == -1) { setquest 30001; }
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "火之湖",0;
+	end;
+}
+
+
+
+//------------------------------火之湖事件
+1@f_lake,0,0,0	script	火之湖事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map$ = instance_mapname("1@f_lake");
+	sleep 100;
+	switch(rand(1,4)){
+	case 1:
+	enablenpc instance_npcname("花之飛馬#lake");
+	set 'boss,1;
+	end;
+
+	case 2:
+	enablenpc instance_npcname("珊瑚海洋#lake");
+	set 'boss,2;
+	end;
+
+	case 3:
+	enablenpc instance_npcname("楓葉之樹#lake");
+	set 'boss,3;
+	end;
+
+	case 4:
+	enablenpc instance_npcname("君主企鵝#lake");
+	set 'boss,4;
+	end;
+	}
+	end;
+
+OnCcdd1:
+	end;
+
+OnEnd:
+	'win = 1;
+	//出場公告時間
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	enablenpc instance_npcname("火之湖管理者#02");
+	announce "【火之湖】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+
+//-------------------------- NPC
+1@f_lake,17,192,4	script	花之飛馬#lake	22177,{
+	
+	mes "神獸盯者你看";
+	mes "然後又漠不關心地閉上了眼";
+	mes "似乎並不想理會你";
+	next;
+	if(select("我想要監獄鑰匙:結束對話")==2){
+	close2;
+	
+	end;
+	}
+
+	hideonnpc instance_npcname(strnpcinfo(0));
+	monster 'map$,17,192,"花之飛馬",22177,1,instance_npcname("火之湖事件1")+"::OnCcdd1"; 
+	'lake1_boss1 = $@mobid[0];
+	initnpctimer instance_npcname("#cheat_Skill_f1");
+	// 無敵
+	areamobuseskill 'map$,17,192,20,22177,685,1,0,360000,ET_KEK,0;
+	viewpoint 1,41,31,1,0xFF0000;
+	instance_announce instance_id(1),"火之湖：必須把四季神獸引誘到下方區域才能造成傷害!",bc_all,0xFF33FF;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+}
+
+
+1@f_lake,17,192,4	script	珊瑚海洋#lake	22178,{
+	
+	mes "神獸盯者你看";
+	mes "然後又漠不關心地閉上了眼";
+	mes "似乎並不想理會你";
+	next;
+	if(select("我想要監獄鑰匙:結束對話")==2){
+	close2;
+	
+	end;
+	}
+
+	hideonnpc instance_npcname(strnpcinfo(0));
+	monster 'map$,17,192,"珊瑚海洋",22178,1,instance_npcname("火之湖事件1")+"::OnCcdd1"; 
+	'lake1_boss1 = $@mobid[0];
+	initnpctimer instance_npcname("#cheat_Skill_f1");
+	// 無敵
+	areamobuseskill 'map$,17,192,20,22178,685,1,0,360000,ET_KEK,0;
+	viewpoint 1,41,31,1,0xFF0000;
+	instance_announce instance_id(1),"火之湖：必須把四季神獸引誘到下方區域才能造成傷害!",bc_all,0xFF33FF;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+}
+
+
+1@f_lake,17,192,4	script	楓葉之樹#lake	22179,{
+	
+	mes "神獸盯者你看";
+	mes "然後又漠不關心地閉上了眼";
+	mes "似乎並不想理會你";
+	next;
+	if(select("我想要監獄鑰匙:結束對話")==2){
+	close2;
+	
+	end;
+	}
+
+	hideonnpc instance_npcname(strnpcinfo(0));
+	monster 'map$,17,192,"楓葉之樹",22179,1,instance_npcname("火之湖事件1")+"::OnCcdd1"; 
+	'lake1_boss1 = $@mobid[0];
+	initnpctimer instance_npcname("#cheat_Skill_f1");
+	// 無敵
+	areamobuseskill 'map$,17,192,20,22179,685,1,0,360000,ET_KEK,0;
+	viewpoint 1,41,31,1,0xFF0000;
+	instance_announce instance_id(1),"火之湖：必須把四季神獸引誘到下方區域才能造成傷害!",bc_all,0xFF33FF;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+}
+
+
+1@f_lake,17,192,4	script	君主企鵝#lake	22180,{
+	
+	mes "神獸盯者你看";
+	mes "然後又漠不關心地閉上了眼";
+	mes "似乎並不想理會你";
+	next;
+	if(select("我想要監獄鑰匙:結束對話")==2){
+	close2;
+	
+	end;
+	}
+
+	hideonnpc instance_npcname(strnpcinfo(0));
+	monster 'map$,17,192,"君主企鵝",22180,1,instance_npcname("火之湖事件1")+"::OnCcdd1"; 
+	'lake1_boss1 = $@mobid[0];
+	initnpctimer instance_npcname("#cheat_Skill_f1");
+	// 無敵
+	areamobuseskill 'map$,17,192,20,22180,685,1,0,360000,ET_KEK,0;
+	viewpoint 1,41,31,1,0xFF0000;
+	instance_announce instance_id(1),"火之湖：必須把四季神獸引誘到左下方區域才能造成傷害!",bc_all,0xFF33FF;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+}
+
+
+
+//--------------------------
+1@f_lake,38,33,4	script	觸發事件#01	139,6,6,{
+
+OnTouch:
+	if ('bossf1 != 1){
+		getunitdata 'lake1_boss1, .@mob_data;
+		.@x = .@mob_data[UMOB_X];
+		.@y = .@mob_data[UMOB_Y];
+		if (.@x > 44 || .@x > 42 || .@y <49 || .@y <38){
+		set 'map$,instance_mapname("1@f_lake");
+		killmonster 'map$,instance_npcname("火之湖事件1")+"::OnCcdd1";
+		instance_announce instance_id(1),"火之湖：開始挑戰!",bc_all,0xFF33FF;
+		set 'bossf1 , 1;
+		hideoffnpc instance_npcname(strnpcinfo(0));
+		sleep 5000;
+		mapwarp instance_mapname("1@f_lake"),instance_mapname("1@f_lake"),167,159;
+			if ('boss == 1){
+			monster 'map$,177,173,"花之飛馬",22177,1,instance_npcname("火之湖事件1")+"::OnEnd"; 
+			'lake1_boss2 = $@mobid[0];
+			initnpctimer instance_npcname("#cheat_Skill_f2");
+			end;
+			}
+			if ('boss == 2){
+			monster 'map$,177,173,"珊瑚海洋",22178,1,instance_npcname("火之湖事件1")+"::OnEnd"; 
+			'lake1_boss2 = $@mobid[0];
+			initnpctimer instance_npcname("#cheat_Skill_f2");
+			end;
+			}
+			if ('boss == 3){
+			monster 'map$,177,173,"楓葉之樹",22179,1,instance_npcname("火之湖事件1")+"::OnEnd"; 
+			'lake1_boss2 = $@mobid[0];
+			initnpctimer instance_npcname("#cheat_Skill_f2");
+			end;
+			}
+			if ('boss == 4){
+			monster 'map$,177,173,"君主企鵝",22180,1,instance_npcname("火之湖事件1")+"::OnEnd"; 
+			'lake1_boss2 = $@mobid[0];
+			initnpctimer instance_npcname("#cheat_Skill_f2");
+			end;
+			}
+		}
+	}
+}
+
+
+
+1@f_lake,0,0,0	script	#cheat_Skill_f1	-1,{
+	end;
+	
+OnTimer1000:
+	if(unitexists('lake1_boss1))
+	{
+	//debugmes "1111";
+		getunitdata 'lake1_boss1, .@mob_data;
+		.@x = .@mob_data[UMOB_X];
+		.@y = .@mob_data[UMOB_Y];
+		if(rand(1,100) <= 50)
+		{
+		//debugmes "3";
+			callfunc "unitskilluseid_lake1", 'lake1_boss1, 1, 'map$, .@x, .@y;
+			initnpctimer;
+		}
+	}
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+
+function	script	unitskilluseid_lake1	{
+	if(!unitexists(getarg(0))) return;
+	.@gid = getarg(0);
+	.@type = getarg(1);
+	.@map$ = getarg(2);
+	.@x = getarg(3);
+	.@y = getarg(4);
+	showscript " !!",getarg(0),AREA;
+			unittalk 'lake1_boss1, "！";
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x-.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y-.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x+.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y+.@range, "", 2343, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x-.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x+.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+
+	if(.@type == 1) sleep 3000;
+	else sleep 3000;
+	for(.@i=0; .@i<getarraysize(.@bot); .@i++)
+		if(unitexists(.@bot[.@i])) mobRemove .@bot[.@i];
+	return;
+		
+}
+
+
+1@f_lake,0,0,0	script	#cheat_Skill_f2	-1,{
+	end;
+	
+OnTimer1000:
+	if(unitexists('lake1_boss2))
+	{
+	//debugmes "1111";
+		getunitdata 'lake1_boss2, .@mob_data;
+		.@x = .@mob_data[UMOB_X];
+		.@y = .@mob_data[UMOB_Y];
+		//debugmes "3";
+			callfunc "unitskilluseid_lake2", 'lake1_boss2, rand(1,2), 'map$, .@x, .@y;
+			initnpctimer;
+	}
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+
+function	script	unitskilluseid_lake2	{
+	if(!unitexists(getarg(0))) return;
+	.@gid = getarg(0);
+	.@type = getarg(1);
+	.@map$ = getarg(2);
+	.@x = getarg(3);
+	.@y = getarg(4);
+	showscript " !!",getarg(0),AREA;
+	//debugmes ""+.@type;
+	switch(.@type)
+	{
+		case 1:
+			unittalk 'lake1_boss2, "！";
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x-.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y-.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x+.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y+.@range, "", 2343, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x-.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x+.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			.@range = rand(2,8);
+			if ( checkcell(.@map$, .@x, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-.@range, "", 22183, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+
+
+		case 2:
+			//十字
+			//unittalk 'RIGEL_boss, "怒爆2！";
+			.@range = 5;
+			if ( checkcell(.@map$, .@x-.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y+.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			
+			if ( checkcell(.@map$, .@x+.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y+.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x-.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			
+			if ( checkcell(.@map$, .@x, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x+.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x-.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y-.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x+.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y-.@range, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x, .@y+(.@range*2), cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+(.@range*2), "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x, .@y-(.@range*2), cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-(.@range*2), "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x-(.@range*2), .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-(.@range*2), .@y, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x+(.@range*2), .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+(.@range*2), .@y, "", 22184, 1;
+				.@unit_id = $@mobid[0];
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			break;
+			
+			sleep 1000;
+		for(set .@i,0;.@i < getarraysize(.@id); set .@i,.@i+1) {
+			mobremove .@id[.@i];
+		}
+		break;
+
+	}
+	
+	if(.@type == 1) sleep 5000;
+	else sleep 3000;
+	for(.@i=0; .@i<getarraysize(.@bot); .@i++)
+		if(unitexists(.@bot[.@i])) mobRemove .@bot[.@i];
+	return;
+		
+}
+
+
+
+1@f_lake,177,170,4	script	火之湖管理者#02	10007,{
+
+	mes "[火之湖管理者]";
+	mes "讓我把你們送出去吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	
+	case 1:
+	//副本任務獎勵
+	if(checkquest(30001) >= 0) { erasequest 30001; setquest 30002; }
+	if(rand(100)<50) getitem 1001415,1;	//生命殿堂鑰匙
+	getitem 1001414,10;	//次元水晶碎片
+	getitem 1001440,1;	//春夏秋冬的能量
+	getitem 1001441,1;	//春夏秋冬的能量
+	getitem 1001442,1;	//春夏秋冬的能量
+	getitem 1001443,1;	//春夏秋冬的能量
+	callfunc "offical_instance_finish",60;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+}
+
+
+
+
+

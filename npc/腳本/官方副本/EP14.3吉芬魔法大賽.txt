@@ -1,0 +1,5358 @@
+//===== Hercules Script ====================================== 
+//= Geffen Magic Tournament (jRO Servers)
+//===== By: ================================================== 
+//= refis(Auriga), pengc2010
+//===== Current Version: ===================================== 
+//= 1.2 (Chinese version)
+//===== Compatible With: ===================================== 
+//= Hercules
+//===== Additional Comments: ================================= 
+//= [jRO Playing Conversion]
+//= Translated to Chinese [pengc2010]
+//= 1.0 First Version [refis]
+//= 1.1 Rewrite the script for Hercules [pengc2010]
+//= 1.2 Translated to Chinese [pengc2010]
+//============================================================
+//------------------------------地圖屬性
+1@gef	mapflag	partylock
+1@gef	mapflag	noteleport
+1@gef	mapflag	nosave	SavePoint
+1@gef	mapflag	nomemo
+1@gef	mapflag	nobranch
+1@gef	mapflag	noicewall
+1@gef	mapflag	restricted	6
+
+1@ge_st	mapflag	partylock
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	nosave	SavePoint
+1@ge_st	mapflag	nomemo
+1@ge_st	mapflag	nobranch
+1@ge_st	mapflag	noicewall
+1@ge_st	mapflag	restricted	6
+
+1@gef_in	mapflag	partylock
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	nosave	SavePoint
+1@gef_in	mapflag	nomemo
+1@gef_in	mapflag	nobranch
+1@gef_in	mapflag	noicewall
+1@gef_in	mapflag	restricted	6
+
+
+vdistrict1,26,73,4	script	吉芬魔法大賽管理者	899,{
+
+	if(checkquest(9308) >= 0){
+        erasequest 9308;
+	}
+	//副本任務獎勵
+	if(checkquest(32031,HUNTING)==2 ) { 
+	dispbottom "吉芬魔法大賽任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",22;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32031; }
+	if(checkquest(9294)>0 ){setquest 9294;}
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_10 < gettime(8) ){
+	set Instance_Bout_10,10;
+	set day_Instance_Bout_10,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_10 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+		mes "此副本僅限隊長單人進入";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裝置]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "吉芬魔法大賽";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裝置]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_10+"^000000 ]";
+	mes "副本獎勵：";
+	mes "吉芬魔法大賽硬幣";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[次元裝置]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裝置]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裝置]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[次元裝置]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_10,Instance_Bout_10-1;
+
+			//副本任務
+			if(checkquest(32031,HUNTING)<0 ){setquest 32031;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",102,118;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "吉芬魔法大賽",0;
+	end;
+}
+
+
+
+
+//=============================================================================
+// Three events for GEFFEN BUFF
+//=============================================================================
+1@gef,119,199,0	script	#Instancestart	139,5,5,{
+OnTouch:
+	viewpoint 1, 122, 58, 1, 0xFF0000;
+	donpcevent instance_npcname("#announcer") + "::OnStart";
+	specialeffect2 1;
+	disablenpc instance_npcname("#Instancestart");
+	end;
+}
+
+1@gef,1,1,1	script	#announcer	-1,{
+		end;
+	OnStart:
+		initnpctimer;
+		mapannounce instance_mapname("1@gef"),"吉芬廣播: 終於！備受期待的魔法大賽即將開始！", bc_map, 0x00ebff, 0x190, 12, 0, 0;
+		end;
+	OnTimer3000:
+		mapannounce instance_mapname("1@gef"),"吉芬廣播: 我們期待著吉芬市民和諸位遠道而來的遊客選手們的熱情參與！", bc_map, 0x00ebff, 0x190, 12, 0, 0;
+		end;
+	OnTimer6000:
+		mapannounce instance_mapname("1@gef"),"吉芬廣播: 吉芬魔法大賽的報名註冊在6點水池方向！", bc_map, 0x00ebff, 0x190, 12, 0, 0;
+		end;
+	OnTimer20000:
+		stopnpctimer;
+		mapannounce instance_mapname("1@gef"),"吉芬廣播: 請有興趣參加魔法大賽的選手們前往6點水池方向註冊！", bc_map, 0x00ebff, 0x190, 12, 0, 0;
+		end;
+}
+
+1@gef,169,167,0	script	#event1開始	139,8,8,{
+		end;
+	OnTouch_:
+		mes "好像有一群惡徒正在欺負少女。";
+		close2;
+    if(!checkquest(9284) >= 0) setquest 9284;
+    'charid = getcharid(3);
+    'charname$ = strcharinfo(0);
+		disablenpc instance_npcname("#event1開始");
+		donpcevent instance_npcname("#event2開始") + "::OnDisable";
+		donpcevent instance_npcname("#event3開始") + "::OnDisable";
+		disablenpc instance_npcname("#event4");
+		initnpctimer;
+		end;
+	OnDisable:
+		disablenpc instance_npcname("#event1開始");
+		disablenpc instance_npcname("吉芬不良少年#1");
+		disablenpc instance_npcname("吉芬不良少年#3");
+		disablenpc instance_npcname("吉芬流氓#2");
+		disablenpc instance_npcname("卡普拉職員#001");
+		end;
+	
+	OnTimer1000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnTalk1";
+		end;
+	OnTimer4000:
+		donpcevent instance_npcname("卡普拉職員#001") + "::OnTalk2";
+		end;
+	OnTimer7000:
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnTalk3";
+		end;
+	OnTimer10000:
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk4";
+		end;
+	OnTimer13000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnTalk5";
+		end;
+	OnTimer16000:
+		donpcevent instance_npcname("卡普拉職員#001") + "::OnTalk6";
+		end;
+	OnTimer19000:
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk7";
+		end;
+	OnTimer22000:
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnTalk8";
+		end;
+	OnTimer24000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnWalk";
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnWalk";
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnWalk";
+		end;
+	OnTimer24500:
+		donpcevent instance_npcname("卡普拉職員#001") + "::OnTalk9";
+		end;
+	OnTimer26000:
+		donpcevent instance_npcname("卡奧斯#1") + "::OnEnable";
+		end;
+	OnTimer27000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnTalk10";
+		end;
+	OnTimer30000:
+		donpcevent instance_npcname("卡奧斯#1") + "::OnTalk11";
+		end;
+	OnTimer33000:
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk12";
+		end;
+	OnTimer34000:
+		donpcevent instance_npcname("卡奧斯#1") + "::OnTalk13";
+		end;
+	OnTimer35000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnTalk14";
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk14";
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnTalk14";
+		end;
+	OnTimer38000:
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk15";		
+		end;
+	OnTimer39000:
+		stopnpctimer;
+		enablenpc instance_npcname("#event1繼續");
+		end;
+}
+
+1@gef,168,167,0	script	#event1繼續	139,10,10,{
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("#event1繼續");
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+		end;
+	OnTouch_:
+		mes "- 好像矛盾激化了 -";
+		next;
+		select "向卡奧斯打招呼。";
+		mes "- 走上前向卡奧斯打招呼 -";
+		close2;
+		disablenpc instance_npcname("#event1繼續");
+		initnpctimer;
+		end;
+	
+	OnTimer100:
+		unittalk 'charid, "卡奧斯麼，好久不見啊，這是怎麼了？";
+		end;
+
+	OnTimer2000:
+		donpcevent instance_npcname("卡奧斯#1") + "::OnTalk16";
+		end;
+		
+	OnTimer5000:
+		donpcevent instance_npcname("愛麗絲#001") + "::OnEnable";
+		end;
+	
+	OnTimer7000:
+		'event1 = 1;
+		donpcevent instance_npcname("卡奧斯#1") + "::OnTalk17";
+		end;
+		
+	OnTimer10000:
+		donpcevent instance_npcname("愛麗絲#001") + "::OnTalk17a";
+		end;
+		
+	OnTimer13000:
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnTalk18";
+		end;
+		
+	OnTimer16000:
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnTalk19";
+		end;
+		
+	OnTimer18000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnTalk20";
+		end;
+		
+	OnTimer19000:
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnWalk2";
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnWalk2";
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnWalk2";
+		end;
+	
+	OnTimer20000:
+		stopnpctimer;
+		enablenpc instance_npcname("#event1結束");
+		end;
+}
+
+1@gef,168,167,0	script	#event1結束	139,9,9,{
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("#event1結束");
+		end;
+	OnTouch_:
+		cutin "kafra_04",2;
+		mes "[卡普拉職員]";
+		mes "真是太感謝各位了...";
+		donpcevent instance_npcname("卡普拉職員#001")+"::OnTalk21";
+		next;
+		cutin "h_iris02",2;
+		mes "[愛麗絲]";
+		mes "不客氣，卡奧斯這個笨蛋就喜歡做這樣的事情。";
+		donpcevent instance_npcname("愛麗絲#001")+"::OnTalk22";
+		next;
+		cutin "h_chaos02",2;
+		mes "[卡奧斯]";
+		mes "總是笨蛋笨蛋的...";
+		donpcevent instance_npcname("卡奧斯#1")+"::OnTalk23";
+		next;
+		cutin "h_iris02",2;
+		mes "[愛麗絲]";
+		mes "因為是笨蛋嘛，這不差點在吉芬又惹事了。";
+		donpcevent instance_npcname("愛麗絲#001")+"::OnTalk24";
+		next;
+		cutin "h_chaos01",2;
+		mes "[卡奧斯]";
+		mes "這沒辦法啊，那幫不良少年太可惡了...居然欺負一個女孩。";
+		donpcevent instance_npcname("卡奧斯#1")+"::OnTalk25";
+		next;
+		cutin "kafra_04",2;
+		mes "[卡普拉職員]";
+		mes "嗯，多虧了你們幫忙，不然我真不知道怎麼辦好了...";
+		donpcevent instance_npcname("卡普拉職員#001")+"::OnTalk26";
+		next;
+		cutin "h_iris02",2;
+		mes "[愛麗絲]";
+		mes "哈哈，你還是謝謝"+'charname$+"吧，他及時出現化解了一場危機。";
+		donpcevent instance_npcname("愛麗絲#001")+"::OnTalk27";
+		next;
+		cutin "h_chaos01",2;
+		mes "[卡奧斯]";
+		mes "明明出力的是我好不好...";
+		mes "不過也是...謝謝了！";
+		donpcevent instance_npcname("卡奧斯#1")+"::OnTalk28";
+		next;
+		cutin "h_iris02",2;
+		mes "[愛麗絲]";
+		mes "嘿嘿，"+'charname$+"也來參加吉芬魔法大賽麼？我和卡奧斯會給你加油的！";
+		donpcevent instance_npcname("愛麗絲#001")+"::OnTalk29";
+		next;
+		cutin "h_chaos01",2;
+		mes "[卡奧斯]";
+		mes "那麼我和愛麗絲就先過去了，等會見！";
+		donpcevent instance_npcname("卡奧斯#1") + "::OnTalk30";
+		next;
+		hideonnpc instance_npcname("卡奧斯#1");
+		cutin "h_iris01",2;
+		mes "[愛麗絲]";
+		mes "笨蛋卡奧斯！你怎麼又先跑了？";
+		donpcevent instance_npcname("愛麗絲#001")+"::OnTalk31";
+		next;
+		hideonnpc instance_npcname("愛麗絲#001");
+		cutin "kafra_04",2;
+		mes "[卡普拉職員]";
+		mes "那麼我也先去工作了，這塊魔法水晶請你收下，是我的一點點謝禮。";
+		donpcevent instance_npcname("卡普拉職員#001")+"::OnTalk32";
+		next;
+		cutin "",255;
+		mes "- 接過魔法水晶之後，全身被淡淡的光輝包裹，感覺力量增加了少許 -";
+		mes "^0000FF減少來自人型生物的傷害3%。^000000";
+		close2;
+		hideonnpc instance_npcname("卡普拉職員#001");
+		specialeffect2 EF_LIGHTSPHERE;
+		//sc_start SC_GEFFEN_MAGIC3,3600000,3;
+		'event1 = 2;
+		if(checkquest(9284) >= 0) changequest 9284,9285;
+		donpcevent instance_npcname("#eventf") + "::OnEnable";
+		disablenpc instance_npcname("#event1結束");
+		end;
+		
+}
+
+1@gef,159,172,6	script	吉芬不良少年#1	682,{
+	end;
+	OnTalk1:
+		npctalk "你剛剛撞到我了！";
+		end;
+	OnTalk5:
+		npctalk "就是就是，至少要賠 50,000 zeny！";
+		end;
+	OnTalk6:
+		npctalk "你說什麼！？";
+		end;
+	OnTalk10:
+		npctalk "你你你...你從哪冒出來的？";
+		end;
+	OnTalk14:
+		npctalk "呃...";
+		end;
+	OnTalk20:
+		npctalk "算你們運氣好！";
+		end;
+	OnWalk:
+		npcspeed 100;
+		npcwalkto 166,168;
+		end;
+	OnWalk2:
+		npcspeed 100;
+		npcwalkto 147,190;
+		sleep 500;
+		hideonnpc instance_npcname("吉芬不良少年#1");
+		end;
+	OnPush:
+//		pushnpc 2, 3;
+		end;
+}
+
+1@gef,160,176,6	script	吉芬流氓#2	682,{
+	end;
+	OnTalk4:
+		npctalk "我兄弟被你撞受傷了啊，醫藥費你得賠吧？";
+		end;
+	OnTalk7:
+		npctalk "算了，我們自己取，不要跟她廢話了！";
+		end;
+	OnTalk12:
+		npctalk "想多管閒事？別怪我...";
+		end;
+	OnTalk14:
+		npctalk "哼...";
+		end;
+	OnTalk15:
+		npctalk "你想找死麼？";
+		end;
+	OnTalk19:
+		npctalk "切，一會還要參加大賽，這裡就先放過你們了！";
+		end;
+	OnWalk:
+		npcspeed 100;
+		npcwalkto 167,169;
+		end;
+	OnWalk2:
+		npcspeed 100;
+		npcwalkto 147,190;
+		sleep 500;
+		hideonnpc instance_npcname("吉芬流氓#2");
+		end;
+	OnPush:
+//		pushnpc 1, 2;
+		end;
+}
+
+1@gef,164,175,6	script	吉芬不良少年#3	682,{
+	end;
+	OnTalk3:
+		npctalk "幾句對不起就想矇混過去麼？";
+		end;
+	OnTalk8:
+		npctalk "是，上！";
+		end;
+	OnTalk14:
+		npctalk "呃...";
+		end;
+	OnTalk18:
+		npctalk "老大，怎麼辦，他們人也挺多了...";
+		end;
+	OnWalk:
+		npcspeed 100;
+		npcwalkto 168,170;
+		end;
+	OnWalk2:
+		npcspeed 100;
+		npcwalkto 147,190;
+		sleep 500;
+		hideonnpc instance_npcname("吉芬不良少年#3");
+		end;
+	OnPush:
+//		pushnpc 0, 3;
+		end;
+}
+
+1@gef,169,167,2	script	卡普拉職員#001	114,{
+	end;
+	OnTalk2:
+		npctalk "啊啊，真的對不起！";
+		end;
+	OnTalk6:
+		npctalk "我沒這麼多錢啊，而且他看上去不是沒什麼問題麼...";
+		end;
+	OnTalk9:
+		npctalk "啊啊，你們要做什麼！？";
+		end;
+	OnTalk21:
+		npctalk "真是太感謝各位了...";
+		end;
+	OnTalk26:
+		npctalk "嗯，多虧了你們幫忙，不然我真不知道怎麼辦好了...";
+		end;
+	OnTalk32:
+		npctalk "那麼我也先去工作了，這塊魔法水晶請你收下，是我的一點點謝禮。";
+		end;
+}
+
+1@gef,168,168,2	script	卡奧斯#1	683,{
+	cutin "h_chaos01", 2;
+	if(!'event1) {
+		mes "[卡奧斯]";
+		mes "我們是不是在斐揚見過？";
+		mes "你叫什麼名字來著...";
+	} else {
+		mes "[卡奧斯]";
+		mes "哈哈，沒想到在吉芬也能碰上！";
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+	OnInstanceInit:
+		hideonnpc instance_npcname("卡奧斯#1");
+		end;
+		
+	OnEnable:
+		hideoffnpc instance_npcname("卡奧斯#1");
+		specialeffect 16;
+		npctalk "你們這是在幹什麼呢？";
+		end;
+		
+	OnTalk11:
+		npctalk "看見你們一群男人欺負一個女孩，自然就出來了！";
+		end;
+	
+	OnTalk13:
+		npctalk "哦？別怪什麼？";
+		sleep 500;
+		specialeffect 17;
+		donpcevent instance_npcname("吉芬不良少年#1") + "::OnPush";
+		donpcevent instance_npcname("吉芬流氓#2") + "::OnPush";
+		donpcevent instance_npcname("吉芬不良少年#3") + "::OnPush";
+		end;
+		
+	OnTalk16:
+		npctalk "啊？...你...？";
+		end;
+
+	OnTalk17:
+		npctalk "哦，對，哈哈，沒想到在吉芬也能碰到你！";
+		end;
+		
+	OnTalk23:
+		npctalk "總是笨蛋笨蛋的...";
+		end;
+		
+	OnTalk25:
+		npctalk "這沒辦法啊，那幫不良少年太可惡了...居然欺負一個女孩。";
+		end;
+		
+	OnTalk28:
+		npctalk "明明出力的是我好不好...不過也是...謝謝了！";
+		end;
+		
+	OnTalk30:
+		npctalk "那麼我和卡瑞絲就先過去了，待會兒見！";
+		end;
+
+}
+
+1@gef,170,168,2	script	愛麗絲#001	666,{
+	cutin "h_iris02", 2;
+	mes "[艾瑞斯]";
+	mes "嗨，"+'charname$+"，好久不見啊！";
+	close2;
+	cutin "", 255;
+	end;
+		
+	OnEnable:
+		hideoffnpc instance_npcname("愛麗絲#001");
+		specialeffect 16;
+		npctalk "是"+'charname$+"啊，人面蟲巢穴剛見過的，卡奧斯你是個笨蛋麼？";
+		end;
+
+	OnInstanceInit:
+		hideonnpc instance_npcname("愛麗絲#001");
+		end;
+
+	OnTalk17a:
+		npctalk "呼...終於追上來了，卡奧斯你碰見這種事，跑得還真快！";
+		end;
+	
+	OnTalk22:
+		npctalk "不客氣，卡奧斯這個笨蛋就喜歡做這樣的事情。";
+		end;
+		
+	OnTalk24:
+		npctalk "因為是笨蛋嘛，這不差點在吉芬又惹事了。";
+		end;
+		
+	OnTalk27:
+		npctalk "哈哈，你還是謝謝"+'charname$+"吧，他及時出現化解了一場危機。";
+		end;
+
+	OnTalk29:
+		npctalk "嘿嘿，"+'charname$+"也來參加吉芬魔法大賽麼？我和卡奧斯會給你加油的！";
+		end;
+
+	OnTalk31:
+		npctalk "笨蛋卡奧斯！你怎麼又先跑了？";
+		end;
+}
+
+
+1@gef,68,164,0	script	#event2開始	139,9,9,{
+		end;
+	OnTouch_:
+		mes "看見了洛奇，他旁邊的好像是芬裡斯 潘利爾！";
+		close2;
+    if(!checkquest(9286) >= 0) setquest 9286;
+		disablenpc instance_npcname("#event2開始");
+		donpcevent instance_npcname("#event1開始") + "::OnDisable";
+		donpcevent instance_npcname("#event3開始") + "::OnDisable";
+		disablenpc instance_npcname("#event4");
+		initnpctimer;
+		end;
+	OnDisable:
+		disablenpc instance_npcname("#event2開始");
+		disablenpc instance_npcname("洛奇#1");
+		disablenpc instance_npcname("潘利爾#1");
+		end;
+		
+	
+	OnTimer1000:
+    donpcevent instance_npcname("洛奇#1")+"::OnTalk1";
+    end;
+	OnTimer4000:
+    donpcevent instance_npcname("潘利爾#1")+"::OnTalk2";
+    end;
+	OnTimer7000:
+    donpcevent instance_npcname("潘利爾#1")+"::OnTalk3";
+    end;
+	OnTimer10000:
+    donpcevent instance_npcname("洛奇#1")+"::OnTalk4";
+    end;
+	OnTimer13000:
+    donpcevent instance_npcname("魔法學院學生#1")+"::OnTalk5";
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnChase";
+    donpcevent instance_npcname("吉芬暴徒#2")+"::OnChase";
+    donpcevent instance_npcname("吉芬暴徒#3")+"::OnChase";
+    end;
+
+	OnTimer16000:
+    donpcevent instance_npcname("潘利爾#1")+"::OnTalk6";
+    end;
+  
+  OnTimer17000:
+    donpcevent instance_npcname("魔法學院學生#1")+"::OnTalk7";
+    end;
+  
+  OnTimer20000:
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnTalk8";
+    end;
+ 
+  OnTimer22000:
+    donpcevent instance_npcname("吉芬暴徒#2")+"::OnTalk9";
+    end;
+
+  OnTimer24000:
+    donpcevent instance_npcname("吉芬暴徒#3")+"::OnTalk10";
+    end;
+	OnTimer27000:
+    donpcevent instance_npcname("潘利爾#1")+"::OnTalk11";
+    end;
+  OnTimer29000:
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnTalk12";
+    end;
+  OnTimer32000:
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnTalk13";
+    end;
+  OnTimer33200:
+    donpcevent instance_npcname("吉芬暴徒#3")+"::OnWalk";
+    donpcevent instance_npcname("吉芬暴徒#2")+"::OnWalk";
+    end;
+  OnTimer35000:
+    donpcevent instance_npcname("洛奇#1")+"::OnTalk14";
+    end;
+  OnTimer37000:
+    donpcevent instance_npcname("魔法學院學生#1")+"::OnTalk15";
+    end;
+  OnTimer40000:
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnTalk16";
+    end;
+  OnTimer41000:
+    donpcevent instance_npcname("吉芬暴徒#2")+"::OnTalk16";
+    donpcevent instance_npcname("吉芬暴徒#3")+"::OnTalk16";
+    end;
+  OnTimer43000:
+    hideonnpc instance_npcname("吉分鐵匠#1");
+    hideonnpc instance_npcname("吉芬暴徒#2");
+    hideonnpc instance_npcname("吉芬暴徒#3");
+    end;
+  OnTimer46000:
+    donpcevent instance_npcname("洛奇#1")+"::OnTalk17";
+    end;
+  OnTimer49000:
+    donpcevent instance_npcname("潘利爾#1")+"::OnTalk18";
+    end;
+  OnTimer51000:
+    hideonnpc instance_npcname("洛奇#1");
+    hideonnpc instance_npcname("潘利爾#1");
+    end;
+  OnTimer52000:
+    donpcevent instance_npcname("魔法學院學生#1")+"::OnTalk19";
+    end;
+  OnTimer55000:
+    donpcevent instance_npcname("魔法學院學生#1")+"::OnTalk20";
+    'event2 = 1;
+    end;
+   
+}
+
+
+1@gef,72,170,0	script	#event2開始2	139,{/* 83872 (hide)*/}
+1@gef,72,168,0	script	#event番外2	139,{/* 83873 (hide)*/}
+1@gef,69,168,0	script	洛奇#1	512,{
+	cutin "ep14_roki01", 2;
+	mes "[洛奇]";
+	mes "嗯？，你是？";
+	mes "總感覺有點眼熟，但...";
+	mes "- 這是以前的洛奇，看起來並不認識你。 -";
+	close2;
+	cutin "", 255;
+	end;
+
+  OnTalk1:
+    npctalk "潘利爾你不打算參加魔法大賽麼？";
+    end;
+    
+  OnTalk4:
+    npctalk "以你的魔法實力，應該輕易就能取得冠軍了吧...";
+    end;
+    
+  OnTalk14:
+    npctalk "哼！不要擅自打斷我們談話！";
+    sleep 500;
+    hideonnpc instance_npcname("洛奇#1");
+    movenpc instance_npcname("洛奇#1"),67,170;
+    sleep 200;
+    hideoffnpc instance_npcname("洛奇#1");
+    specialeffect 812;
+    donpcevent instance_npcname("吉芬暴徒#3")+"::OnAttack";
+    sleep 200;
+    hideonnpc instance_npcname("洛奇#1");
+    movenpc instance_npcname("洛奇#1"),69,170;
+    sleep 200;
+    hideoffnpc instance_npcname("洛奇#1");
+    specialeffect 812;
+    donpcevent instance_npcname("吉分鐵匠#1")+"::OnAttack";
+    sleep 200;
+    hideonnpc instance_npcname("洛奇#1");
+    movenpc instance_npcname("洛奇#1"),69,168;
+    sleep 200;
+    hideoffnpc instance_npcname("洛奇#1");
+    specialeffect 812;
+    donpcevent instance_npcname("吉芬暴徒#2")+"::OnAttack";
+    end;
+  
+  OnTalk17:
+    npctalk "事情應該解決了，我們去大賽那看看吧。";
+    end;
+}
+
+1@gef,85,182,4	script	吉分鐵匠#1	681,{
+  end;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分鐵匠#1");
+    end;
+  OnChase:
+    enablenpc instance_npcname("吉分鐵匠#1");
+		npcspeed 100;
+		npcwalkto 75,172;
+		sleep 500;
+    npctalk "追上她！";
+    end;
+  OnTalk8:
+    npctalk "哼，你們不要多管閒事！";
+    end;
+  OnTalk12:
+    npctalk "哼！你說什麼！";
+    end;
+  OnTalk13:
+    npctalk "上！一起收拾了！";
+    sleep 500;
+		npcwalkto 70,171;
+    end;
+  OnAttack:
+    specialeffect 630;
+    npctalk "呃...";
+    end;
+  
+  OnTalk16:
+    npctalk "哼！算你們厲害，今天就放過你們！我們撤...";
+    end;   
+    
+}
+
+1@gef,86,180,4	script	吉芬暴徒#2	681,{
+  end;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉芬暴徒#2");
+    end;
+  OnChase:
+    enablenpc instance_npcname("吉芬暴徒#2");
+		npcspeed 100;
+		npcwalkto 76,170;
+ 		sleep 500;
+    npctalk "你別跑！";
+    end;
+  OnTalk9:
+    npctalk "她剛剛居然嘲笑我們不會魔法，要讓她吸取點教訓。";
+    end;
+  OnWalk:
+		npcwalkto 70,169;
+    npctalk "是，老大！";
+    end;
+  OnAttack:
+    specialeffect 630;
+    npctalk "唔...";
+    end;
+  OnTalk16:
+    npctalk "是...老大...";
+    end;   
+}
+
+1@gef,83,183,4	script	吉芬暴徒#3	681,{
+  end;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉芬暴徒#3");
+    end;
+  OnChase:
+    enablenpc instance_npcname("吉芬暴徒#3");
+		npcspeed 100;
+		npcwalkto 73,173;
+		sleep 500;
+    npctalk "跑得還真快！！";
+    end;
+  OnTalk10:
+    npctalk "如果你們插手的話，就連你們一起收拾了！";
+    end;
+  OnWalk:
+		npcwalkto 68,171;
+    npctalk "嘿嘿！";
+    end;
+  OnAttack:
+    specialeffect 630;
+    npctalk "唔...";
+    end;
+  OnTalk16:
+    npctalk "呃...好痛...";
+    end;   
+}
+
+1@gef,73,170,1	script	魔法學院學生#1	123,{
+  if(!'event2)
+    end;
+  mes "[魔法學院學生]";
+  mes "你好像也會參加魔法大賽吧。";
+  mes "幫我打聽一下那個帥哥的信息好不好！";
+  next;
+  select("可是..."); 
+  mes "[魔法學院學生]";
+  mes "拜託啦！什麼信息都行。";
+  mes "我會用我的魔力給你加持的，幫幫忙！";
+  next;
+  mes "年輕的學生使用了魔法後就跑開了。";
+	mes "- 全身被淡淡的光輝包裹，感覺力量增加了少許 -";
+	mes "^0000FFd對人型生物的魔法傷害提升3%。^000000";
+	close2;
+	hideonnpc instance_npcname("魔法學院學生#1");
+	specialeffect2 EF_LIGHTSPHERE;
+	//sc_start SC_GEFFEN_MAGIC2,3600000,3;
+	if(checkquest(9286) >= 0)	changequest 9286,9287;
+	donpcevent instance_npcname("#eventf") + "::OnEnable";
+	end;
+	
+  OnInstanceInit:
+    hideonnpc instance_npcname("魔法學院學生#1");
+    end;
+  OnTalk5:
+    hideoffnpc instance_npcname("魔法學院學生#1");
+		specialeffect 16;
+    npctalk "啊，救命啊！";
+    end;
+    
+  OnTalk7:
+    hideonnpc instance_npcname("魔法學院學生#1");
+    movenpc instance_npcname("魔法學院學生#1"), 70, 167, 4;
+    sleep 500;
+    hideoffnpc instance_npcname("魔法學院學生#1");
+		specialeffect 16;
+		npctalk "姐姐幫幫我";
+    end;
+  
+  OnTalk15:
+    npctalk "哇！好帥！";
+    end;
+    
+  OnTalk19:
+    npctalk "啊！走掉了...還沒問名字...";
+    end;
+    
+  OnTalk20:
+    npctalk "那位冒險者，你能過來一下麼？";
+    end;
+  
+}
+
+1@gef,68,169,0	script	潘利爾#1	664,{
+	cutin "fenrir_a", 2;
+	mes "[潘利爾]";
+	mes "你看起來好像認識洛奇？";
+	close2;
+	cutin "", 255;
+	end;
+	
+	OnTalk2:
+    npctalk "為什麼要參加啊...";
+    end;
+    
+  OnTalk3:
+    npctalk "不，我沒有太多興趣。";
+    end;
+    
+  OnTalk6:
+    npctalk "你們在幹什麼！";
+    end;
+    
+  OnTalk11:
+    npctalk "欺負一個學生，你們不感到羞恥麼！";
+    end;
+  
+  OnTalk18:
+    npctalk "嗯，走吧，魔法大賽也快要開始了。";
+    end;
+
+}
+
+
+1@gef,111,146,4	script	吉芬居民#1	67,{/* 83896 (hide)*/}
+1@gef,107,133,0	script	#event3開始	139,9,9,{
+		end;
+	OnTouch_:
+    mes "[吉芬居民]";
+		mes "你能幫幫我麼？我的錢包被偷走了...";
+		next;
+		select("出什麼事了？");
+    mes "[吉芬居民]";
+		mes "剛剛有個戴著兔耳發圈的女孩撞了我一下，然後我的錢包就不見了...";
+		next;
+		enablenpc instance_npcname("吉分小偷#1");
+		specialeffect 16,AREA,instance_npcname("吉分小偷#1");
+		mes "[吉分小偷]";
+		mes "哈哈，你難道說的是我？你有什麼證據麼？";
+    next;
+    mes "[吉芬居民]";
+		mes "啊！就是她，剛剛就是她...";
+		next;
+		mes "[吉分小偷]";
+		mes "哈哈，有本事來抓我啊！";
+		close2;
+		if(!checkquest(9288) >= 0) setquest 9288;
+		disablenpc instance_npcname("#event3開始");
+		donpcevent instance_npcname("#event1開始") + "::OnDisable";
+		donpcevent instance_npcname("#event2開始") + "::OnDisable";
+		disablenpc instance_npcname("#event4");
+		initnpctimer;
+		end;
+
+	OnDisable:
+		disablenpc instance_npcname("#event3開始");
+		disablenpc instance_npcname("吉芬居民#1");
+		end;
+}
+
+1@gef,105,137,0	script	#event3開始2	139,6,6,{
+		end;
+	OnInstanceInit:
+    disablenpc instance_npcname("#event3開始2");
+    end;
+  OnTouch_:
+    cutin "lydia_a",2;
+    mes "[莉迪亞]";
+    mes "喲，回來啦？";
+    mes "你們追逐的時候，我看著有趣，就把錢包先拿回來了。";
+    next;
+    cutin "",255;
+    mes "[吉分小偷]";
+    mes "啊？什麼時候...";
+    next;
+    cutin "lydia_a",2;
+    mes "[莉迪亞]";
+    mes "哈哈，作為盜賊你的水平還遠遠不夠！";
+    mes "這位先生，錢包就還給你了，下次一定要多注意啊。";
+    next;
+    cutin "",255;
+    mes "[吉芬居民]";
+    mes "嗯...太感謝了...";
+    next;
+    mes "[吉分小偷]";
+    mes "哼！";
+    next;
+    hideonnpc instance_npcname("吉分小偷#6");
+    cutin "lydia_a",2;
+    mes "[莉迪亞]";
+    mes "哈哈，惱羞成怒，跑了！";
+    mes "我也先走了，這次的大賽聽說會很精彩！";
+    mes "再見咯~";
+    next;
+    cutin "",255;
+    hideonnpc instance_npcname("莉迪亞#1");
+    mes "[吉芬居民]";
+    mes "再見...";
+    mes "這位冒險家，也謝謝你。";
+    mes "這是我們家獨特的護符，希望能對你有所幫助~";
+    next;
+    mes "接過了護身符。";
+    mes "- 全身被淡淡的光輝包裹，感覺力量增加了少許 -";
+    mes "^0000FFd對人型生物的物理傷害提升3%。^000000";
+    close2;
+    specialeffect2 EF_LIGHTSPHERE;
+    //sc_start SC_GEFFEN_MAGIC1,3600000,3;
+    if(checkquest(9288) >= 0)	changequest 9288,9289;
+    disablenpc instance_npcname("#event3開始2");
+		donpcevent instance_npcname("#eventf") + "::OnEnable";
+    end;
+}
+
+1@gef,108,139,6	script	吉分小偷#1	671,3,3,{
+    end;
+  OnTouch:
+    specialeffect 16;
+    npctalk "哈哈，你是抓不到我的。";
+    enablenpc instance_npcname("吉分小偷#2");
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#1");
+    end;
+}
+
+1@gef,107,126,4	script	吉分小偷#2	671,3,3,{
+    end;
+  OnTouch:
+    specialeffect 16;
+    npctalk "太慢了...";
+    enablenpc instance_npcname("吉分小偷#3");
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#2");
+    end;
+}
+
+1@gef,111,118,4	script	吉分小偷#3	671,3,3,{
+    end;
+  OnTouch:
+    specialeffect 16;
+    npctalk "有點累了...";
+    enablenpc instance_npcname("吉分小偷#4");
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#3");
+    end;
+}
+1@gef,123,111,4	script	吉分小偷#4	671,3,3,{
+    end;
+  OnTouch:
+    specialeffect 16;
+    npctalk "真是執著啊...";
+    enablenpc instance_npcname("吉分小偷#5");
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#4");
+    end;
+}
+1@gef,129,121,4	script	吉分小偷#5	671,3,3,{
+    end;
+  OnTouch:
+    npctalk "算了算了，真是敗給你了...";
+    sleep 1500;
+    npctalk "來，還給你！反正也沒什麼值錢的東西。";
+    sleep 500;
+    donpcevent instance_npcname("吉分小偷#55")+"::OnEnable";
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#5");
+    end;
+}
+
+1@gef,129,121,4	script	吉分小偷#55	671,{
+  mes "[吉分小偷]";
+  mes "啊？怎麼不見了？";
+  mes "剛剛還在的...";
+  next;
+  select("開什麼玩笑？！");
+  mes "[吉分小偷]";
+  mes "我是說真的！";
+  mes "錢包不見了...";
+  next;
+  announce "莉迪亞: 錢包我已經幫你取回來了，快回來吧", bc_map;
+  mes "[吉分小偷]";
+  mes "呃......";
+  next;
+  mes "[吉分小偷]";
+  mes "什麼時候？";
+  next;
+  mes "[吉分小偷]";
+  mes "你別纏著我了，沒聽到麼？";
+  mes "錢包被其他人拿走了！";
+  close2;
+  hideonnpc instance_npcname("吉分小偷#55");
+  disablenpc instance_npcname("吉芬居民#1");
+  enablenpc instance_npcname("吉分小偷#6");
+  enablenpc instance_npcname("吉芬居民#2");
+  enablenpc instance_npcname("莉迪亞#1");
+  enablenpc instance_npcname("#event3開始2");
+  end;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#55");
+    end;
+  OnEnable:
+    specialeffect 16;
+    enablenpc instance_npcname("吉分小偷#55");
+    end;
+}
+
+1@gef,114,137,4	script	吉分小偷#6	671,{
+    end;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉分小偷#6");
+    end;
+}
+
+
+
+1@gef,104,141,6	script	莉迪亞#1	10010,{
+    end;
+  OnInstanceInit:
+    disablenpc instance_npcname("莉迪亞#1");
+    end;
+}
+
+1@gef,106,141,4	script	吉芬居民#2	67,{
+    mes "[吉芬居民]";
+    mes "謝謝你的幫助...";
+    close;
+  OnInstanceInit:
+    disablenpc instance_npcname("吉芬居民#2");
+    end;
+}
+
+1@gef,141,119,1	script	#event4	139,10,10,{
+	OnTouch_:
+		donpcevent instance_npcname("#eventf")+"::OnEnable";
+		donpcevent instance_npcname("#event1開始") + "::OnDisable";
+		donpcevent instance_npcname("#event2開始") + "::OnDisable";
+		donpcevent instance_npcname("#event3開始") + "::OnDisable";
+		disablenpc instance_npcname("#event4");
+		end;
+}
+
+1@gef,120,101,1	script	#eventf	139,9,9,{
+	end;
+	OnInstanceInit:
+		disablenpc instance_npcname("莉迪亞");
+		disablenpc instance_npcname("愛麗絲");
+		disablenpc instance_npcname("卡奧斯");
+		disablenpc instance_npcname("潘利爾");
+		disablenpc instance_npcname("吉芬魔法學院院長");
+		disablenpc instance_npcname("#eventf");
+		end;
+	OnEnable:
+		enablenpc instance_npcname("莉迪亞");
+		enablenpc instance_npcname("愛麗絲");
+		enablenpc instance_npcname("卡奧斯");
+		enablenpc instance_npcname("潘利爾");
+		enablenpc instance_npcname("吉芬魔法學院院長");
+		enablenpc instance_npcname("#eventf");
+		end;
+	OnTouch_:
+		mes "又看到了卡奧斯一行人";
+		next;
+		if(select("觀看劇情","跳過")==2) {
+	close2;
+	disablenpc instance_npcname("#eventf");
+	end;
+		}
+		close2;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnStart";
+		disablenpc instance_npcname("#eventf");
+		end;
+}
+
+//=======================================================================
+// Main story line
+// ======================================================================
+
+1@gef,121,100,5	script	莉迪亞	10010,{
+		npctalk "飛空艇的票價完全不合理!";
+		end;
+	OnTalk1:
+		cutin "lydia_a.bmp",2;
+		npctalk "哈哈! 你該不會相信這樣的胡言亂語吧?";
+		sleep 3500;
+		npctalk "那個傳說都不知是真是假, 誰又會把它當真呢.";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk4";
+		end;
+}
+
+1@gef,122,107,5	script	卡奧斯	683,{
+	npctalk ".......";
+	end;
+}
+
+1@gef,122,104,5	script	愛麗絲	666,{
+		npctalk "Fighting!";
+		end;
+	OnTalk1:
+		cutin "h_iris02.bmp",2;
+		npctalk "沒錯...不過你怎麼會一眼就認出來. 你對武器很有研究嗎?";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk1";
+		end;
+	OnTalk2:
+		cutin "h_iris02.bmp",2;
+		npctalk "葛帔尼亞, 好像在哪裡聽到過.";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk2";
+		end;
+	OnTalk3:
+		cutin "h_iris02.bmp",2;
+		npctalk "啊!";
+		sleep 3500;
+		npctalk "我想起來了, 莉迪亞說過要去找葛帔尼亞的寶藏!";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk3";
+		end;
+	OnTalk4:
+		cutin "h_iris02.bmp",2;
+		npctalk "啊! 我們正好淮備要來參加魔法大賽的. 我身後的這位姐姐絕對不會讓您失望!";
+		sleep 3500;
+		doevent instance_npcname("潘利爾")+"::OnTalk2";
+		end;
+	OnTalk5:
+		cutin "h_iris02.bmp",2;
+		npctalk "哈哈哈, 你放心吧! 她一定會參加的.";
+		sleep 3500;
+		doevent instance_npcname("潘利爾")+"::OnTalk4";
+		end;
+	OnTalk6:
+		cutin "h_iris02.bmp",2;
+		npctalk "這...是為了獲得獎金~";
+		sleep 3500;
+		npctalk "我們必須拿到獎金才買得起飛空艇的船票...";
+		sleep 3500;
+		doevent instance_npcname("潘利爾")+"::OnTalk5";
+		end;
+}
+
+1@gef,119,104,5	script	潘利爾	664,{
+		npctalk "唉!";
+		end;
+	OnTalk1:
+		cutin "fenrir_a.bmp",2;
+		npctalk "葛帔尼亞!?";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk2";
+		end;
+	OnTalk2:
+		cutin "fenrir_a.bmp",2;
+		npctalk "愛麗絲你別亂講.";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk5";
+		end;
+	OnTalk3:
+		cutin "fenrir_a.bmp",2;
+		npctalk "不是..不是這樣的!";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk5";
+		end;
+	OnTalk4:
+		cutin "fenrir_a.bmp",2;
+		npctalk "你倒是告訴我, 為什麼我一定要參加魔法大賽?";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk6";
+		end;
+	OnTalk5:
+		cutin "fenrir_a.bmp",2;
+		npctalk "唉. 是這樣啊! 好吧我去報名...";
+		sleep 3500;
+		doevent instance_npcname("吉芬魔法學院院長")+"::OnTalk6";
+		end;
+}
+
+1@gef,126,104,4	script	吉芬魔法學院院長	10006,{
+		end;
+	OnStart:
+		cutin "acamaster_a.bmp",2;
+		npctalk "剛才我的守衛不小心撞到你們, 非常抱歉.";
+		sleep 3500;
+		npctalk "請問你們身上的是[支配權杖]和[天龍刃]嗎?";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk1";
+		end;
+	OnTalk1:
+		cutin "acamaster_a.bmp",2;
+		npctalk "我們吉芬城內有一座頗具規模的圖書館.";
+		sleep 3500;
+		npctalk "那裡珍藏一些有關魔法武器和遠古遺物的介紹.";
+		sleep 3500;
+		npctalk "傳聞在吉分的地下, 有著一座叫做葛帔尼亞王國的城堡.";
+		sleep 3500;
+		doevent instance_npcname("潘利爾")+"::OnTalk1";
+		end;
+	OnTalk2:
+		cutin "acamaster_a.bmp",2;
+		npctalk "哈哈, 那是很著名的傳說, 講述一個遭到天譴而滅亡的魔法王國.";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk3";
+		end;
+	OnTalk3:
+		cutin "acamaster_a.bmp",2;
+		npctalk "哦! 葛帔尼亞的寶藏?";
+		sleep 3500;
+		doevent instance_npcname("莉迪亞")+"::OnTalk1";
+		end;
+	OnTalk4:
+		cutin "acamaster_a.bmp",2;
+		npctalk "說的也是, 那只是個傳說而已.";
+		sleep 3500;
+		npctalk "諸位, 在此特別邀請你們來參加我們吉芬的盛大慶典.";
+		sleep 3500;
+		doevent instance_npcname("愛麗絲")+"::OnTalk4";
+		end;
+	OnTalk5:
+		cutin "acamaster_a.bmp",2;
+		npctalk "唉, 魔法大賽出現手持支配權杖的法師...真是讓人期待!";
+		sleep 3500;
+		doevent instance_npcname("潘利爾")+"::OnTalk3";
+		end;
+	OnTalk6:
+		cutin "acamaster_a.bmp",2;
+		npctalk "太好了! 我很期待這位手持支配權杖法師的表現.";
+		sleep 3500;
+		npctalk "你們找上面的'大賽報名'人員登記下就行了.";
+		cutin "acamaster_a.bmp",255;
+		end;
+}
+
+//===========================================================
+// Guides, #6 is the end of match guide
+//===========================================================
+1@gef,116,203,5	script	吉芬嚮導#5	705,{/* 83916 */
+	viewpoint 1, 166, 168, 1, 0x32CD32; //65270
+	viewpoint 1, 72, 169, 2, 0x0000FF; //65270
+	viewpoint 1, 114, 143, 3, 0xFF8000; //65270
+	cutin "gef_soldier.bmp", 2;
+	mes "[魔法大賽嚮導]";
+	mes "歡迎來到魔法都市^8B4513吉芬^000000。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "現在，趁著吉芬魔法大賽舉辦，";
+	mes "^ff0000不少惡徒也在城裡出沒^000000。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "目前收到報告的事件有，";
+	mes "^32cd32東側^000000有不良少年出沒，";
+	mes "^FF8000南側^000000有小偷事件，";
+	mes "^0000FF西側^000000則有暴徒傷人。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "雖然我們也會加強警戒，但還是請你多加注意。";
+	close2;
+	cutin "gef_soldier.bmp", 255;
+	end;
+}
+
+1@gef,203,116,4	script	吉芬嚮導#4	705,{/* 83918 */
+	cutin "gef_soldier.bmp", 2;
+	mes "[魔法大賽嚮導]";
+	mes "歡迎來到魔法都市^8B4513吉芬^000000。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "現在吉芬魔法大賽還在報名中，";
+	mes "如果想參加^006400魔法大賽^000000的話，";
+	mes "請前往吉芬6點方向報名。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "為了慶祝魔法大賽的舉辦，";
+	mes "吉芬各地設置了魔法的煙花。";
+	mes "這些魔法經過特殊處理，不會傷人，請安心觀看。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "作為有著悠久歷史的活動，";
+	mes "吉芬魔法大賽一定不會讓諸位冒險者們失望的。";
+	mes "希望你們在此能盡情享受這項盛事！";
+	close2;
+	cutin "gef_soldier.bmp", 255;
+	end;
+}
+
+1@gef,36,123,6	script	吉芬嚮導#1	705,{/* 83919 */
+	cutin "gef_soldier.bmp", 2;
+	mes "[魔法大賽嚮導]";
+	mes "歡迎來到魔法都市^8B4513吉芬^000000。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "現在吉芬魔法大賽還在報名中，";
+	mes "如果想參加^006400魔法大賽^000000的話，";
+	mes "請前往吉芬6點方向報名。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "為了慶祝魔法大賽的舉辦，";
+	mes "吉芬各地設置了魔法的煙花。";
+	mes "這些魔法經過特殊處理，不會傷人，請安心觀看。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "作為有著悠久歷史的活動，";
+	mes "吉芬魔法大賽一定不會讓諸位冒險者們失望的。";
+	mes "希望你們在此能盡情享受這項盛事！";
+	close2;
+	cutin "gef_soldier.bmp", 255;
+	end;
+}
+
+1@gef,123,203,4	script	吉芬嚮導#2	705,{/* 83920 */
+	cutin "gef_soldier.bmp", 2;
+	mes "[魔法大賽嚮導]";
+	mes "歡迎來到魔法都市^8B4513吉芬^000000。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "現在吉芬魔法大賽還在報名中，";
+	mes "如果想參加^006400魔法大賽^000000的話，";
+	mes "請前往吉芬6點方向報名。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "為了慶祝魔法大賽的舉辦，";
+	mes "吉芬各地設置了魔法的煙花。";
+	mes "這些魔法經過特殊處理，不會傷人，請安心觀看。";
+	next;
+	mes "[魔法大賽嚮導]";
+	mes "作為有著悠久歷史的活動，";
+	mes "吉芬魔法大賽一定不會讓諸位冒險者們失望的。";
+	mes "希望你們在此能盡情享受這項盛事！";
+	close2;
+	cutin "gef_soldier.bmp", 255;
+	end;
+}
+
+
+
+//==========================================================================
+// Pre-Events end
+// Rivals
+//==========================================================================
+
+1@gef,145,125,4	script	雅樂西#z1	670,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[雅樂西]";
+		mes "....";
+		mes "好可惜啊...";
+		mes "謝謝你的指教。";
+		close;
+	}
+	else {
+		mes "[雅樂西]";
+		mes "我，我叫雅樂西。";
+		mes "...你也是參賽者麼？";
+		mes "其實我本來不打算參加比賽的。";
+		mes "因為這還是我的初次實戰...";
+		mes "到底能取得什麼樣的成績呢，有些不安...";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "比賽結果出來了，真是不錯的大賽啊！";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "一直以來都是管家塞伯斯在做這些事，我的登記能不能順利呢...";
+	end;
+		case 1:
+	npctalk "聽傳聞說，還有女性參賽者...";
+	end;
+		case 2:
+	npctalk "啊，還是再讀一遍使用武器的參考書吧。";
+	end;
+		}
+	}
+}
+
+1@gef,91,117,6	script	狄歐艾瑞默司#z1	669,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[狄歐艾瑞默司]";
+		mes "大賽終於結束了啊，";
+		mes "順便說一下，我現在的身體狀況恢復了。";
+		mes "雖然沒告訴其他人，但昨天身體稍微有些不舒服...";
+		mes "算了~輸了就是輸了。";
+		close;
+	}
+	else {
+		mes "[狄歐艾瑞默司]";
+		mes "我是狄歐艾瑞默司。";
+		mes "為了某種崇高的目的來參加這次大賽。";
+		mes "看來你也是大賽的參與者啊，請多指教。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "如果對手是女性的話，真的無法拿出全力來，看來輸了也是正常的。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "經過這次戰鬥以後，我的粉絲又要增加了，真是頭疼啊...";
+	end;
+		case 1:
+	npctalk "雖然比我的寶貝還差點，但也有可愛的女孩參加比賽啊。";
+	end;
+		case 2:
+	npctalk "希望對手不是女性啊，實在無法認真起來...";
+	end;
+		}
+	}
+}
+
+1@gef,53,90,6	script	沛蒙#z1	672,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[沛蒙]";
+		mes "...這怎麼可能！";
+		mes "我居然會輸...";
+		mes "不過，我登場的華麗姿態應該都被觀眾們記住了吧！";
+		close;
+	}
+	else {
+		mes "[沛蒙]";
+		mes "看你的實力，果然也是來參加魔法大賽的吧。";
+		mes "我是沛蒙，可能會和你分在同一半區，到時就比賽場上見吧。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "沒空閒聊了，我要去安慰失敗的女孩們。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "...大賽過後就是享樂的時間。";
+	end;
+		case 1:
+	npctalk "能感受到女孩們炙熱的視線...";
+	end;
+		case 2:
+	npctalk "噢...好多美女參賽者啊。";
+	end;
+		}
+	}
+}
+
+1@gef,85,68,6	script	奧樂德#z1	673,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[奧樂德]";
+		mes "...在命運的重大時刻，能做出什麼選擇取決於之前付出的努力有多少...";
+		mes "你，你是...";
+		mes "對不起，剛剛一個人自言自語的，參賽辛苦了。";
+		close;
+	}
+	else {
+		mes "[奧樂德]";
+		mes "你也試參賽者吧？";
+		mes "我是奧樂德。";
+		mes "同為魔法大賽的參賽者。";
+		mes "能參加這樣的比賽真是榮幸。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "連她那樣厲害的人都會失敗，果然人上有人啊。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "不知道為什麼，總感覺有奇怪的視線...";
+	end;
+		case 1:
+	npctalk "...說不定我可以和她...不行不行，大賽前想什麼呢！";
+	end;
+		case 2:
+	npctalk "本來想最多1人2人了，結果女性參賽者這麼多...";
+	end;
+		}
+	}
+}
+
+1@gef,111,62,6	script	布魯德哈載#z1	674,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[布魯德哈載]";
+		mes "...啊，太好了！";
+		mes "這個兔耳，最近很流行。";
+		mes "一直擔心會不會壞...";
+		mes "比賽的時候都集中不了精神。";
+		mes "...啊，沒什麼事哦~~";
+		close;
+	}
+	else {
+		mes "[布魯德哈載]";
+		mes "什麼什麼？";
+		mes "對我有好感麼？";
+		mes "我叫布魯德哈載！";
+		mes "頭上的兔耳是...";
+		mes "什麼？沒有見過這種裝飾？";
+		mes "切...";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "...同為女性，她怎麼能這麼厲害呢。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "用誰的鮮血化妝呢，期待著哦！";
+	end;
+		case 1:
+	npctalk "希望不要碰到女性對手...";
+	end;
+		case 2:
+	npctalk "嗯...雖然女性參賽者很多，但感覺沒有和我年齡相近的人啊，可惜！";
+	end;
+		}
+	}
+}
+
+1@gef,104,42,6	script	庫洛雅庫瑪#z1	675,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[庫洛雅庫瑪]";
+		mes "...切。";
+		mes "這戰鬥太掃興了。";
+		mes "居然連原本的目標都沒達到就失敗了...";
+		mes "浪費時間！";
+		close;
+	}
+	else {
+		mes "[庫洛雅庫瑪]";
+		mes "...噢。";
+		mes "你知道號稱漆黑之牙的本大爺麼？";
+		mes "想和我說話？";
+		mes "不要被我平和的外表欺騙了啊，";
+		mes "所以還是別說話了。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "...切，那個女性，真是運氣好！";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "那個女孩...那個，難道你不覺得她就像男人一樣麼？";
+	end;
+		case 1:
+	npctalk "...小惡魔帽的顏色變了啊，原來是什麼顏色呢？";
+	end;
+		case 2:
+	npctalk "...那個女孩的鷹隼我好像以前見過啊，一模一樣。";
+	end;
+		}
+	}
+}
+
+1@gef,115,66,6	script	伊佛德斯#z1	676,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[伊佛德斯]";
+		mes "居然輸了...！真奇怪！";
+		mes "居然能勝過我！";
+		mes "肯定是昨天連喝了10杯幸運飲料，肚子不舒服的原因...";
+		close;
+	}
+	else {
+		mes "[伊佛德斯]";
+		mes "哈哈！";
+		mes "你也試參賽者麼？";
+		mes "我的名字是伊佛德斯！";
+		mes "米德加爾特全境首屈一指的參賽者哦，請多指教！";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "居然輸給了女性...最近的女人好可怕...";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "對手別是女性就好了！不過即便是，我也不會手下留情，一定能華麗的勝出，哈哈！";
+	end;
+		case 1:
+	npctalk "噢...對手裡這麼多美女啊，可以約會的對象有1個，2個...啊，在想什麼呢。";
+	end;
+		case 2:
+	npctalk "我到目前為止的戰鬥還沒有失敗過，但為什麼沒有女孩喜歡我呢...";
+	end;
+		}
+	}
+}
+
+1@gef,137,53,4	script	萊采尼芮#z1	677,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[萊采尼芮]";
+		mes "...";
+		mes "啊啦？";
+		mes "你也出來了？";
+		mes "啊？比賽結束了？";
+		mes "什麼時候的事？";
+		mes "我什麼都不記得了...";
+		close;
+	}
+	else {
+		mes "[萊采尼芮]";
+		mes "嘻嘻，你也來參加比賽？";
+		mes "我是萊采尼芮。";
+		mes "雖然在拉赫出生，不過現在生活在普隆德拉。";
+		mes "啊啦...祈禱的時間到了，晚點再聊。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "比賽的事情都想不起來了，沒有失敗的實感啊...";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "這個大賽結束後，我也要開始新的旅程了。";
+	end;
+		case 1:
+	npctalk "這樣的話，不如雙方都是女性時，不比戰鬥，比美貌算了...";
+	end;
+		case 2:
+	npctalk "...參賽者居然有這麼多女性，真是震驚了。";
+	end;
+		}
+	}
+}
+
+1@gef,158,63,4	script	歐託莉柯#z1	678,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[歐託莉柯]";
+		mes "討厭~ 輸了...";
+		mes "大家，真強呢。";
+		mes "都散發著年輕的活力，真是羨慕啊...";
+		mes "如果我也能再年輕一點的話...";
+		mes "不對，我應該還算年輕吧...";
+		mes "...也就30多，沒問題吧...";
+		close;
+	}
+	else {
+		mes "[歐託莉柯]";
+		mes "啊啦~？找姐姐我有事麼？";
+		mes "我是歐託莉柯哦~";
+		mes "雖然看起來不像，但我其實是參賽者。";
+		mes "你也是來參加這次大賽的吧？請多指教了~";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "這就是年輕的活力麼，姐姐我很傷心...";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "可愛的女孩們好多啊，有沒有想學舞蹈的呢？...";
+	end;
+		case 1:
+	npctalk "如果你是女孩子，又對舞蹈有興趣的話，就來找我吧~";
+	end;
+		case 2:
+	npctalk "如果你學習舞蹈的話，就可以維持體型了。";
+	end;
+		}
+	}
+}
+
+1@gef,178,91,4	script	朱朱#z1	679,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[朱朱]";
+		mes "嗯，真不錯。";
+		mes "這麼年輕就有如此身手。";
+		mes "參加這次大賽見識到了這麼多年輕的強者，來得很有價值啊。";
+		close;
+	}
+	else {
+		mes "[朱朱]";
+		mes "在下名為朱朱。";
+		mes "這次有幸取得大賽參賽權。";
+		mes "不過，沒想到這裡天氣如此炎熱。";
+		mes "戴著圍巾真難受啊...";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "...果然勝者和性別無關啊。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "這次一定要全力以赴了，不能輸給女性參賽者啊...";
+	end;
+		case 1:
+	npctalk "這種大賽有女性選手參加，以前想都沒想過...";
+	end;
+		case 2:
+	npctalk "嗯...沒想到這次女性參賽者如此之多。";
+	end;
+		}
+	}
+}
+
+1@gef,113,99,4	script	狄瓦伊#z1	680,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		mes "[狄瓦伊]";
+		mes "什麼都不用說了，漂亮的戰鬥！";
+		mes "這次大賽的觀眾中有養育我的親人。";
+		mes "在他們面前進行了這麼精彩的戰鬥，謝謝你了。";
+		close;
+	}
+	else {
+		mes "[狄瓦伊]";
+		mes "我的名字是狄瓦伊。";
+		mes "看來你也是參賽者啊。";
+		mes "所以接下來的比賽我們倆可能會成為對手。";
+		mes "請全力以赴吧。";
+		close;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "什麼都不用多說了，漂亮的決勝戰！";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "啊，不是不是的，這次我來不是為了教學，而是參加魔法大賽的。";
+	end;
+		case 1:
+	npctalk "汶巴拉族長，還有弟子們，都來了啊。";
+	end;
+		case 2:
+	npctalk "還有比我的弟子們更年輕的參賽者啊，真是感慨...";
+	end;
+		}
+	}
+}
+
+1@gef,117,72,6	script	培坎納比恩#z1	665,5,5,{
+	mes "看起來也是大賽的參賽者";
+	mes "　聊聊看吧~";
+	next;
+	if(select("算了","你好") == 1) {
+		mes "還是算了吧";
+		close;
+	}
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		cutin "paycana_b ",2;
+		mes "[培坎納比恩]";
+		mes "啊？";
+		mes "我居然輸了？騙人的吧~！";
+		mes "根據我的計算，絕對不會輸得啊，大賽勝利者應該是我啊。";
+		mes "絕對有什麼地方出錯了吧！？";
+		close2;
+		cutin "",255;
+		end;
+	}
+	else {
+		cutin "paycana_a",2;
+		mes "[培坎納比恩]";
+		mes "來找我搭話麼？";
+		mes "你的眼光不錯啊~！";
+		mes "我就是最強的煉金術師 培坎納比恩！";
+		mes "我最喜歡人造生命體了！";
+		close2;
+		cutin "",255;
+		end;
+	}
+OnTouch:
+	if(checkquest(9308) >= 0 || checkquest(9309) >= 0) {
+		npctalk "嗚，這是在做夢吧？但是又很痛...我居然輸了，這怎麼可能。";
+	}
+	else {
+		switch(rand(3)) {
+		case 0:
+	npctalk "嗯，我的人造生命體也很開心哦。";
+	end;
+		case 1:
+	npctalk "如果我取得了優勝，都不敢想像其他姐姐阿姨會有多嫉妒了...算了，不管了！";
+	end;
+		case 2:
+	npctalk "哦~ 參賽者的女性很多嘛...";
+	end;
+		}
+	}
+}
+
+//==============================================================================
+// Tourists, Citizens, Fireworks
+//==============================================================================
+
+1@gef,124,173,4	script	吉芬男性#a1	49,5,5,{/* 83921 */
+	end;
+OnTouch:
+	switch(rand(3)) {
+	case 0:
+		npctalk "趁著這個機會有什麼邂逅就好了...";
+		end;
+	case 1:
+		npctalk "魔法大賽的時間，美女好多啊~";
+		end;
+	case 2:
+		npctalk "這個年齡了還是單身，好寂寞...";
+		end;
+	}
+}
+
+1@gef,194,91,4	script	吉芬小孩#a2	82,5,5,{/* 83922 */
+	end;
+OnTouch:
+	switch(rand(3)) {
+	case 0:
+		npctalk "真無聊！雖然是祭典...";
+		end;
+	case 1:
+		npctalk "有什麼有意思的事情沒有啊...";
+		end;
+	case 2:
+		npctalk "找爸爸要點零花錢吧！";
+		end;
+	}
+}
+
+1@gef,71,86,4	script	吉芬女性#a3	478,{
+	mes "[吉芬女性]";
+	mes "那個冒險者好帥~";
+	close;
+}
+
+1@gef,73,84,4	script	吉芬女性#a4	879,{
+	mes "[吉芬女性]";
+	mes "每年大賽總能見到很棒的參賽者啊~";
+	close;
+}
+
+1@gef,75,82,4	script	吉芬女性#a5	92,{
+	mes "[吉芬女性]";
+	mes "哇，帥哥~";
+	close;
+}
+
+1@gef,68,79,6	script	帥氣的冒險者#a6	751,{
+	mes "[帥氣的冒險者]";
+	mes "怎麼樣，這個魔法大賽不錯吧~";
+	close;
+}
+
+1@gef,70,77,2	script	男冒險者#a7	869,{
+	mes "[帥氣的冒險者]";
+	mes "你不覺得總是有人盯著看你麼，長得帥真好啊...";
+	close;
+}
+
+1@gef,42,102,6	script	吉芬居民#a8	50,{/* 83928 */
+	mes "[吉芬居民]";
+	mes "魔法大賽的時節，觀光客真多啊！";
+	close;
+}
+
+1@gef,103,100,6	script	吉芬居民#a9	54,{/* 83929 */
+	mes "[吉芬居民]";
+	mes "獨自餓了啊~";
+	close;
+}
+
+1@gef,128,93,4	script	吉芬居民#a10	979,{/* 83930 */
+	mes "[吉芬居民]";
+	mes "你是參賽者麼？";
+	mes "比賽還請加油啊，謝謝你支持這項盛事。";
+	close;
+}
+
+1@gef,130,196,6	script	魔法大賽觀眾#c5	46,{/* 83931 */
+	mes "[魔法大賽觀眾]";
+	mes "!!";
+	mes "什麼？！原來是魔法的煙花啊！";
+	mes "怎麼樣才能讓它們自動釋放的啊...";
+	mes "真是令人在意...";
+	close;
+}
+
+1@gef,137,190,6	script	魔法大賽觀眾#c6	67,{/* 83932 */
+	mes "[魔法大賽觀眾]";
+	mes "奶奶~！";
+	mes "這裡到處都是漂亮的煙花呢！";
+	close;
+}
+
+1@gef,149,196,6	script	魔法大賽觀眾#c8	47,{/* 83933 */
+	mes "[魔法大賽觀眾]";
+	mes "我不太喜歡人多地地方...";
+	mes "不過既然是魔法大賽的話，";
+	mes "我也能勉強接受！";
+	close;
+}
+
+1@gef,136,188,6	script	魔法大賽觀眾#c10	771,{/* 83934 */
+	mes "[魔法大賽觀眾]";
+	mes "呵呵呵...";
+	mes "氣氛真是不錯啊。";
+	close;
+}
+
+1@gef,110,195,4	script	魔法大賽觀眾#c12	49,{/* 83935 */
+	mes "[魔法大賽觀眾]";
+	mes "噢噢噢，心情舒暢~";
+	close;
+}
+
+1@gef,104,189,4	script	魔法大賽觀眾#c14	66,{/* 83936 */
+	mes "[魔法大賽觀眾]";
+	mes "怎麼辦啊~";
+	mes "和朋友們走散了~";
+	close;
+}
+
+1@gef,94,194,4	script	魔法大賽觀眾#c16	68,{/* 83937 */
+	mes "[魔法大賽觀眾]";
+	mes "真不愧是魔法大賽！";
+	mes "太厲害了~";
+	mes "到處都是魔法的焰火！";
+	close;
+}
+
+1@gef,52,155,6	script	魔法大賽觀眾#c28	69,{/* 83938 */
+	mes "[魔法大賽觀眾]";
+	mes "那個人的頭髮顏色好漂亮！";
+	mes "我也想染成那樣的顏色～";
+	close;
+}
+
+1@gef,55,142,4	script	魔法大賽觀眾#c30	70,{/* 83939 */
+	mes "[魔法大賽觀眾]";
+	mes "哥哥！快一點好麼！";
+	close;
+}
+
+1@gef,58,146,4	script	魔法大賽觀眾#c32	51,{/* 83940 */
+	mes "[魔法大賽觀眾]";
+	mes "等，等等我啊~！";
+	mes "樂器太重了，走起來很累的~！";
+	close;
+}
+
+1@gef,45,149,6	script	魔法大賽觀眾#c36	71,{/* 83941 */
+	mes "[魔法大賽觀眾]";
+	mes "!!";
+	mes "總覺得被誰盯著...";
+	close;
+}
+
+1@gef,44,133,6	script	魔法大賽觀眾#c37	52,{/* 83942 */
+	mes "[魔法大賽觀眾]";
+	mes "瓦噢噢噢～！";
+	mes "我也要參賽～！";
+	close;
+}
+
+1@gef,45,126,6	script	魔法大賽觀眾#c38	48,{/* 83943 */
+	mes "[魔法大賽觀眾]";
+	mes "你好。";
+	mes "今天天氣真不錯呢。";
+	close;
+}
+
+1@gef,44,118,6	script	魔法大賽觀眾#c39	73,{/* 83944 */
+	mes "[魔法大賽觀眾]";
+	mes "你也是第一次來參加魔法大賽麼？";
+	close;
+}
+
+1@gef,55,113,4	script	魔法大賽觀眾#c40	74,{/* 83945 */
+	mes "[魔法大賽觀眾]";
+	mes "像祭典一樣熱鬧，我也跟著心情雀躍了～！";
+	close;
+}
+
+1@gef,50,107,6	script	魔法大賽觀眾#c41	54,{/* 83946 */
+	mes "[魔法大賽觀眾]";
+	mes "真不錯啊，今天的天氣。";
+	close;
+}
+
+1@gef,44,95,6	script	魔法大賽觀眾#c42	55,{/* 83947 */
+	mes "[魔法大賽觀眾]";
+	mes "接下來該去哪呢？";
+	mes "感覺到處都很有意思～";
+	close;
+}
+
+1@gef,52,83,6	script	魔法大賽觀眾#c43	56,{/* 83948 */
+	mes "[魔法大賽觀眾]";
+	mes "噓！安靜！";
+	mes "我是辦成遊客的守衛。";
+	mes "正在警備這片地區。";
+	close;
+}
+
+1@gef,72,65,6	script	魔法大賽觀眾#c44	57,{/* 83949 */
+	mes "[魔法大賽觀眾]";
+	mes "哦呀哦呀！你是！";
+	mes "嗯...？";
+	mes "啊，對不起，認錯人了。";
+	mes "你和我認識的一位冒險者很像。";
+	close;
+}
+
+1@gef,83,60,6	script	魔法大賽觀眾#c45	75,{/* 83950 */
+	mes "[魔法大賽觀眾]";
+	mes "啊～？";
+	mes "那二人之前還在的，";
+	mes "怎麼不見了呢...";
+	mes "不會迷路了吧？";
+	close;
+}
+
+1@gef,94,68,6	script	魔法大賽觀眾#c46	76,{/* 83951 */
+	mes "[魔法大賽觀眾]";
+	mes "去哪裡了呢？...";
+	mes "啊，在那邊！";
+	mes "就是那個人吧？";
+	close;
+}
+
+1@gef,97,66,4	script	魔法大賽觀眾#c47	77,{/* 83952 */
+	mes "[魔法大賽觀眾]";
+	mes "真的！就是她！";
+	mes "終於找到了～！";
+	mes "人一多就容易走散呢。";
+	close;
+}
+
+1@gef,106,56,6	script	魔法大賽觀眾#c48	78,{/* 83953 */
+	mes "[魔法大賽觀眾]";
+	mes "大賽舉辦日真是熱鬧啊～";
+	mes "年輕人也多，氣氛也很活躍～";
+	mes "讓我也好像回到了年輕的時候～";
+	close;
+}
+
+1@gef,134,63,4	script	魔法大賽觀眾#c49	58,{/* 83954 */
+	mes "[魔法大賽觀眾]";
+	mes "哇，那個女孩！";
+	mes "好漂亮啊，一個人麼？";
+	mes "要不要打個招呼呢...";
+	close;
+}
+
+1@gef,145,47,4	script	魔法大賽觀眾#c50	106,{/* 83955 */
+	mes "[魔法大賽觀眾]";
+	mes "哦？是參賽者啊？";
+	mes "我是便衣警衛，正裝成遊客在此警戒呢。";
+	mes "請不要到處宣傳這件事。";
+	close;
+}
+
+1@gef,154,55,4	script	魔法大賽觀眾#c51	59,{/* 83956 */
+	mes "[魔法大賽觀眾]";
+	mes "你也是大賽的參加者麼。";
+	mes "好厲害啊...！";
+	mes "下次比賽我也要努力，爭取拿到參賽資格！";
+	close;
+}
+
+1@gef,147,65,5	script	魔法大賽觀眾#c52	60,{/* 83957 */
+	mes "[魔法大賽觀眾]";
+	mes "她真是漂亮啊...";
+	mes "啊，不行，不行。";
+	mes "作為聖職人員，不能盯著女性看。";
+	close;
+}
+
+1@gef,163,76,4	script	魔法大賽觀眾#c53	79,{/* 83958 */
+	mes "[魔法大賽觀眾]";
+	mes "神父大人去哪裡了呢？";
+	mes "他比較好色，應該去美女比較多的地方了吧。";
+	close;
+}
+
+1@gef,167,68,4	script	魔法大賽觀眾#c54	80,{/* 83959 */
+	mes "[魔法大賽觀眾]";
+	mes "這裡的食物也很棒啊，";
+	mes "魔法大賽真讓人開心！";
+	mes "我還要吃更多～！";
+	close;
+}
+
+1@gef,175,74,4	script	魔法大賽觀眾#c55	947,{/* 83960 */
+	mes "[魔法大賽觀眾]";
+	mes "你是這次魔法大賽的參賽者麼？";
+	mes "聽說今年的參賽者平均水平非常高！";
+	close;
+}
+
+1@gef,180,84,4	script	魔法大賽觀眾#c56	53,{/* 83961 */
+	mes "[魔法大賽觀眾]";
+	mes "你好！";
+	mes "能來到這裡觀看魔法大賽，真是開心啊。";
+	mes "我從很遠的地方過來，這次旅程花費了不少的時間金錢，但很值得！";
+	close;
+}
+
+1@gef,189,97,4	script	魔法大賽觀眾#c57	62,{/* 83962 */
+	mes "[魔法大賽觀眾]";
+	mes "哇！";
+	mes "一起玩吧！";
+	close;
+}
+
+1@gef,194,110,4	script	魔法大賽觀眾#c58	107,{/* 83963 */
+	mes "[魔法大賽觀眾]";
+	mes "嗚...俄得都走不動了！";
+	mes "但是，這個料理店只有鍋可以賣了！";
+	mes "怎麼辦...";
+	close;
+}
+
+1@gef,185,107,6	script	魔法大賽觀眾#c59	108,{/* 83964 */
+	mes "[魔法大賽觀眾]";
+	mes "為了警備魔法大賽，我進行了完美的變裝！";
+	mes "應該沒有人能發現我是警衛！";
+	close;
+}
+
+1@gef,189,120,4	script	魔法大賽觀眾#c60	61,{/* 83965 */
+	mes "[魔法大賽觀眾]";
+	mes "喂，你！";
+	mes "打扮成國王一樣是想幹什麼！";
+	mes "不覺得很奇怪麼?!";
+	close;
+}
+
+1@gef,152,120,4	script	魔法大賽觀眾#c62	123,{/* 83967 */
+	mes "[魔法大賽觀眾]";
+	mes "真有意思啊~！";
+	mes "下次也要再來！";
+	close;
+}
+
+1@gef,138,110,4	script	魔法大賽觀眾#c63	90,{/* 83968 */
+	mes "[魔法大賽觀眾]";
+	mes "看！這個煙花！";
+	mes "在這麼近的地方燃放，但是一點感覺不到熱量。";
+	mes "魔法好厲害啊。";
+	close;
+}
+
+1@gef,128,99,4	script	魔法大賽觀眾#c64	91,{/* 83969 */
+	mes "[魔法大賽觀眾]";
+	mes "你好！";
+	mes "我是第一次來吉芬！";
+	mes "街道真漂亮啊！";
+	close;
+}
+
+1@gef,105,109,6	script	魔法大賽觀眾#c65	92,{/* 83970 */
+	mes "[魔法大賽觀眾]";
+	mes "嗚哇...";
+	mes "人真多啊！";
+	close;
+}
+
+1@gef,96,122,6	script	魔法大賽觀眾#c66	93,{/* 83971 */
+	mes "[魔法大賽觀眾]";
+	mes "你好！";
+	mes "這樣的盛事，覺得還不錯吧？";
+	close;
+}
+
+1@gef,132,137,6	script	魔法大賽觀眾#c67	920,{/* 83972 */
+	mes "[魔法大賽觀眾]";
+	mes "從沒見過這麼多人！";
+	mes "魔法大賽真有人氣啊。";
+	close;
+}
+
+1@gef,141,132,4	script	魔法大賽觀眾#c68	806,{/* 83973 */
+	mes "[魔法大賽觀眾]";
+	mes "噢~ 冒險者麼？";
+	mes "被你發現了啊？";
+	mes "我是變裝成遊客的警衛，";
+	mes "如果發現了奇怪的人物，請報告給我哦。";
+	close;
+}
+
+1@gef,124,72,4	script	魔法大賽觀眾#c69	807,{/* 83974 */
+	mes "[魔法大賽觀眾]";
+	mes "你好，今天天氣真好啊。";
+	mes "在這樣的日子舉辦這樣盛大的活動，真是相稱啊！";
+	close;
+}
+
+1@gef,130,49,6	script	魔法大賽觀眾#c70	808,{/* 83975 */
+	mes "[魔法大賽觀眾]";
+	mes "你看起來很強的樣子，也是魔法大賽的參賽者麼？";
+	mes "要不要和我較量一下？";
+	mes "哈哈哈...開玩笑的。";
+	close;
+}
+
+1@gef_in,110,172,0	script	克裡斯托弗 朱尼亞 #1	63,{/* 65360 */
+	mes "[克裡斯托弗 朱尼亞]";
+	mes "這裡是^8B4513克裡斯托弗家^000000的鐵匠鋪。";
+	mes "我們出售與精煉相關的所有物品。";
+	next;
+	mes "[克裡斯托弗 朱尼亞]";
+	mes "今天是吉芬魔法大賽舉辦的日子。";
+	mes "我們也在臨時休業中，";
+	mes "請盡情享受這場盛典吧。";
+	close;
+}
+
+1@gef,127,196,0	script	#fireworks_1	139,{/* 83977 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 30; //65331
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 29; //65331
+		end;
+}
+
+1@gef,146,175,0	script	#fireworks_2	139,{/* 83978 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 62; //65332
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 22; //65332
+		end;
+}
+
+1@gef,182,163,0	script	#fireworks_3	139,{/* 83979 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 89; //65333
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 74; //65333
+		end;
+}
+
+1@gef,183,126,0	script	#fireworks_4	139,{/* 83980 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 97; //65334
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 92; //65334
+		end;
+}
+
+1@gef,194,89,0	script	#fireworks_5	139,{/* 83981 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 234; //65335
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 225; //65335
+		end;
+}
+
+1@gef,141,56,0	script	#fireworks_6	139,{/* 83982 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 256; //65336
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 258; //65336
+		end;
+}
+
+1@gef,127,49,0	script	#fireworks_7	139,{/* 83983 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 257; //65337
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 244; //65337
+		end;
+}
+
+1@gef,123,75,0	script	#fireworks_8	139,{/* 83984 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 92; //65338
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 29; //65338
+		end;
+}
+
+1@gef,135,111,0	script	#fireworks_9	139,{/* 83985 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 62; //65339
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 30; //65339
+		end;
+}
+
+1@gef,134,145,0	script	#fireworks_10	139,{/* 83986 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 234; //65340
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 89; //65340
+		end;
+}
+
+1@gef,90,197,0	script	#fireworks_b1	139,{/* 83987 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 28; //65341
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 258; //65341
+		end;
+}
+
+1@gef,71,181,0	script	#fireworks_b2	139,{/* 83988 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 97; //65342
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 29; //65342
+		end;
+}
+
+1@gef,62,147,0	script	#fireworks_b3	139,{/* 83989 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 195; //65343
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 116; //65343
+		end;
+}
+
+1@gef,59,125,0	script	#fireworks_b4	139,{/* 83990 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 32; //65344
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 62; //65344
+		end;
+}
+
+1@gef,62,91,0	script	#fireworks_b5	139,{/* 83991 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 92; //65345
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 30; //65345
+		end;
+}
+
+1@gef,98,58,0	script	#fireworks_b6	139,{/* 83992 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 225; //65346
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 234; //65346
+		end;
+}
+
+1@gef,112,49,0	script	#fireworks_b7	139,{/* 83993 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 28; //65347
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 89; //65347
+		end;
+}
+
+1@gef,116,75,0	script	#fireworks_b8	139,{/* 83994 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 257; //65348
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 94; //65348
+		end;
+}
+
+1@gef,107,111,0	script	#fireworks_b9	139,{/* 83995 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 244; //65349
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 255; //65349
+		end;
+}
+
+1@gef,106,145,0	script	#fireworks_b10	139,{/* 83996 (hide)*/
+		end;
+	OnInstanceInit:
+		initnpctimer;
+		end;
+	OnTimer7000:
+		specialeffect 92; //65350
+		end;
+	OnTimer13000:
+		initnpctimer;
+		specialeffect 195; //65350
+		end;
+}
+
+
+
+1@gef,124,65,4	script	卡普拉職員#gef	114,{/* 83997 */
+	cutin "kafra_04",2;
+	mes "[卡普拉職員]";
+	mes "這裡是卡普拉服務，";
+	mes "請問您需要什麼服務呢?";
+	next;
+	switch(select("使用卡普拉倉庫:取消")) {
+	case 1:
+		if (Zeny < 20) {
+	mes "[卡普拉職員]";
+	mes "不好意思";
+	mes "使用倉庫服務的話至少需要 20金幣的費用";
+	close;
+		}
+		set Zeny, Zeny-20;
+		mes "[卡普拉職員]";
+		mes "請使用您的倉庫。";
+		callfunc("GS_Storage");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 2:
+		mes "[卡普拉職員]";
+		mes "歡迎下次再使用卡普拉服務。";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+
+}
+
+
+//================================================================================
+// Registration
+//================================================================================
+
+1@gef,120,34,0	script	#entrance	45,1,1,{
+
+		disablenpc instance_npcname("魔法大賽登記人員#1");
+		disablenpc instance_npcname("培坎納比恩#z1");
+		disablenpc instance_npcname("狄瓦伊#z1");
+		disablenpc instance_npcname("朱朱#z1");
+		disablenpc instance_npcname("歐託莉柯#z1");
+		disablenpc instance_npcname("萊采尼芮#z1");
+		disablenpc instance_npcname("伊佛德斯#z1");
+		disablenpc instance_npcname("庫洛雅庫瑪#z1");
+		disablenpc instance_npcname("布魯德哈載#z1");
+		disablenpc instance_npcname("奧樂德#z1");
+		disablenpc instance_npcname("沛蒙#z1");
+		disablenpc instance_npcname("狄歐艾瑞默司#z1");
+		disablenpc instance_npcname("雅樂西#z1");
+		disablenpc instance_npcname("莉迪亞");
+		disablenpc instance_npcname("愛麗絲");
+		disablenpc instance_npcname("卡奧斯");
+		disablenpc instance_npcname("潘利爾");
+		disablenpc instance_npcname("吉芬魔法學院院長");
+		'GMT_1QUE = 10;
+		disablenpc instance_npcname("#entrance");
+		warp instance_mapname("1@ge_st"),104,50;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("#entrance");
+		end;
+}
+
+
+1@gef,122,58,4	script	魔法大賽登記人員#1	937,{/* 83856 */
+
+	viewpoint 2, 1, 1, 1, 0xFFFFFF; //65210
+	if(checkquest(9294) > 0) {
+		mes "[魔法大賽登記人員]";
+		mes "您的參賽資格已經登錄，請從6點方向的入口進入比賽場地。";
+		next;
+		mes "[魔法大賽登記人員]";
+		mes "祝武運昌隆！";
+		close;
+	}
+
+	if(checkquest(9293) >= 0) {
+		if(!'test) {
+	mes "[魔法大賽登記人員]";
+	mes "很可惜，你沒有在時間限制內完成試煉。";
+	mes "你可以選擇再次挑戰。";
+	erasequest 9293;
+	close;
+		}
+	mes "[魔法大賽登記人員]";
+	mes "恭喜你，試煉合格了！";
+	mes "請讓我登錄一下你的信息。";
+	mes "...試煉合格...";
+	mes "職業...裝備...";
+	mes "能告訴我你的名字麼？";
+	next;
+	select("告訴他名字");
+	mes "[魔法大賽登記人員]";
+	mes strcharinfo(0)+ " 是吧，好的。";
+	mes "信息登錄已經完畢了！";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "魔法大賽的獎勵按回合發放，";
+	mes "每贏得一回合都能獲得相應的魔法大賽硬幣，";
+	mes "請全力以赴，祝你取得好成績！";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "現在開始可以進入比賽場地了，";
+	mes "入口在6點方向。";
+	erasequest 9293;
+	setquest 9294;
+	viewpoint 1,120,34,1,0xFF0000;
+	enablenpc instance_npcname("#entrance"); //84000
+
+
+	close2;
+	npctalk "比賽場地的入口在6點鐘方向。";
+	end;
+	}
+
+	mes "[魔法大賽登記人員]";
+	mes "你好！這裡是吉芬魔法大賽登記處，有什麼需要麼？";
+	while(1) {
+		next;
+		switch(select("參加吉芬魔法大賽:吉芬魔法大賽信息:吉芬魔法大賽優勝獎勵:結束對話")) {
+		case 1:
+	mes "[魔法大賽登記人員]";
+	mes "魔法大賽的選手註冊不需要任何參賽費用。";
+	mes "但是需要一個簡單的試煉，以確保參賽者有最基本的實力資格。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "試煉很簡單，我們會放出一匹沙漠之狼，";
+	mes "在60秒內打倒它就合格了。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "即便試煉失敗，你也可以再次挑戰，直到成功為止。";
+	mes "現在開始試煉麼？";
+	next;
+	if(select("開始","算了") == 2) {
+		mes "[魔法大賽登記人員]";
+		mes "參加魔法大賽的話，能贏得各種名譽，希望你再考慮一下。";
+		break;
+	}
+	mes "[魔法大賽登記人員]";
+	mes "那麼試煉請加油！";
+	mes "現在開始！";
+	close2;
+	for(.@i = 9284; .@i <= 9289; ++.@i) {
+		if(checkquest(.@i) >= 0) erasequest .@i;
+	} 
+	setquest 9293; //state=1
+	hideonnpc instance_npcname("魔法大賽登記人員#1"); //65210
+	initnpctimer;
+	'BossID = monster(instance_mapname("1@gef"),119,58,"沙漠之狼",2546,1,instance_npcname("魔法大賽登記人員#1")+"::OnTestKill");	
+	end;
+		case 2:
+	mes "[魔法大賽登記人員]";
+	mes "吉芬魔法大賽每3年舉辦一次，";
+	mes "是魔法競技的頂級比賽。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "魔法大賽的前身其實是魔法研究的發表會。";
+	mes "各魔法學院互相交流魔法研究的進展和新方向。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "後來研究發表會逐漸演變成了競技比賽，";
+	mes "選手們在賽場中切磋，並互相學習魔法的實戰能力。";
+	mes "現在的吉芬魔法大賽，也不局限於單純的魔法競技。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "每到舉辦期間，";
+	mes "這裡就聚集了全世界的冒險者和魔法師，是最頂級的魔法盛事。";
+	break;
+		case 3:
+	mes "[魔法大賽登記人員]";
+	mes "吉芬魔法大賽根據參賽選手的成績給予合適的獎勵。";
+	mes "獎勵物品為吉芬魔法大賽硬幣。";
+	next;
+	mes "[魔法大賽登記人員]";
+	mes "硬幣在每回合取得勝利時發放，可以兌換吉芬魔法學院最新研製的魔法物品。";
+	break;
+		case 4:
+	mes "[魔法大賽登記人員]";
+	mes "希望你在這裡玩得開心。";
+	close;
+		}
+		next;
+		mes "[魔法大賽登記人員]";
+		mes "還有其他需要瞭解的麼？";
+	}
+	
+	OnTestKill:
+		stopnpctimer;
+		hideoffnpc instance_npcname("魔法大賽登記人員#1"); //65210
+		npctalk "恭喜你，測試合格了，來找我登記吧。",instance_npcname("魔法大賽登記人員#1");
+		'test = 1;
+		end;
+		
+	OnTimer60000:
+		stopnpctimer;
+		mobremove 'BossID;
+		hideoffnpc instance_npcname("魔法大賽登記人員#1"); //65210
+		npctalk "很遺憾，你的測試沒有通過。",instance_npcname("魔法大賽登記人員#1");
+		'test = 0;
+		end;
+}
+
+
+
+//===================================================================================
+// Tournament start
+//===================================================================================
+
+1@ge_st,107,57,4	script	魔法大賽主持#1	899,{
+	if('failure) {
+			mes "[魔法大賽主持]";
+			if('GMT_1QUE < 23)
+		mes "很遺憾，你在第"+('GMT_1QUE-10)+"回合失敗了...";
+			else
+		mes "很遺憾，你在最終決賽失敗了...";
+			next;
+			if(select("離開會場","留下來") == 2)
+		close;
+			mes "[魔法大賽主持]";
+			mes "那麼馬上送您離開會場。";
+			close2;
+			for(.@i = 9295; .@i <= 9307; ++.@i) {
+		if(checkquest(.@i) >= 0) erasequest .@i;
+			}
+			setquest 9309;
+			donpcevent instance_npcname("#theend") + "::OnEnd";
+			//warp instance_mapname("1@gef"),120,35;
+			warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+			end;	
+	}
+	if(checkquest(9307) >= 0){
+        erasequest 9307;
+	setquest 9308;
+	}
+	if(checkquest(9308) >= 0){
+		mes "[魔法大賽主持]";
+		mes "恭喜取得大賽優勝！";
+		next;
+		if(select("領取優勝獎勵，離開會場","留下來") == 2)
+		close;
+		mes "[魔法大賽主持]";
+		mes "那麼請收好您的優勝獎勵，馬上送您離開會場。";
+		getitem 6671, 'reward['GMT_1QUE-11];
+        	erasequest 9308;
+		//副本任務獎勵
+		if(checkquest(32031,HUNTING)==2 ) { 
+		dispbottom "吉芬魔法大賽任務完成，以下是你的獎勵!!"; 
+		set #Instance_Points,#Instance_Points+10;	//副本積分+10
+		dispbottom "副本積分+10";
+		dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+		erasequest 32031; }
+
+		close2;
+		//出場公告時間
+		//set $@Instance_Miao,gettimetick(2)-getd("$@Instance_Annal"+instance_id(1));
+		announce "【吉芬魔法大賽】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+		//warp instance_mapname("1@gef"),120,35;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		donpcevent instance_npcname("#theend") + "::OnEnd";
+		end;
+	}
+	if('GMT_1QUE < 11) { //start
+			hideoffnpc instance_npcname("吉芬魔法學院院長#1"); //83648
+			cutin "acamaster_a.bmp", 2;
+			mes "[吉芬魔法學院院長]";
+			mes "女士們，先生們！";
+			mes "擁有悠久歷史的吉芬魔法大賽，現在開幕了！";
+			mes "這是每3年舉行一次，最盛大的魔法賽事！！";
+			next;
+			mes "[吉芬魔法學院院長]";
+			mes "吉芬魔法大賽設有A，B兩組，";
+			mes "分別進行預選淘汰。";
+			mes "最終的決賽將是A組B組勝者對決！";
+			next;
+			mes "[吉芬魔法學院院長]";
+			mes "我是A組比賽的裁判，吉芬魔法學院院長!!";
+			mes "亞克梅吉 贊吉帕爾 海爾默多。";
+			next;
+			mes "[吉芬魔法學院院長]";
+			mes "謝謝魔法大賽舉辦方讓我擔當如此榮幸之職。！";
+			mes "讓我們長話短說，快點開始吧！";
+			next;
+			mes "[吉芬魔法學院院長]";
+			mes "咳咳...咳咳咳咳！";
+			close2;
+			cutin "acamaster_a.bmp", 255;
+			hideonnpc "魔法大賽主持#1"; //83647
+			'GMT_1QUE = 11;
+			erasequest 9294;	//state=1
+			setquest 9295;
+			hideonnpc instance_npcname("魔法大賽主持#1");
+			donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnStart";
+			'charname$ = strcharinfo(0);
+			end;
+	}
+	mes "[魔法大賽主持]";
+	if('GMT_1QUE < 22) {
+		mes "恭喜第"+('GMT_1QUE-10)+"回合的勝利！";
+		.@menu$ = "開始第"+('GMT_1QUE-9)+"回合";
+	}
+	else {
+		mes "恭喜取得A組優勝，接下來就是大賽的決賽了！";
+		.@menu$ = "開始決賽";
+	}
+	next;
+	switch(select(.@menu$,"終止對話","在當前回合棄權")) {
+			case 1:
+            mes "[魔法大賽主持]";
+            mes "勝者的的獎勵是";
+            mes "^006400"+'reward['GMT_1QUE-11]+"枚吉芬魔法大賽硬幣^000000。";
+            mes "請收好。";
+            getitem 6671, 'reward['GMT_1QUE-11];
+            next;
+		mes "[魔法大賽主持]";
+		mes "那麼接下來馬上"+.@menu$;
+		close2;
+		hideonnpc instance_npcname("魔法大賽主持#1");
+		hideonnpc instance_npcname("魔法大賽醫療班#1");
+		changequest 9284 + 'GMT_1QUE, 9285 + 'GMT_1QUE;
+		switch('GMT_1QUE) {
+              case 11:
+                enablenpc instance_npcname("狄歐艾瑞默司#1");
+                break;
+              case 12:
+				if('event1)
+			enablenpc instance_npcname("吉芬流氓#n1");
+				else if('event2)
+			enablenpc instance_npcname("吉分鐵匠#n1");
+				else
+			enablenpc instance_npcname("吉分小偷#n1");
+                break;
+              case 13:
+                enablenpc instance_npcname("沛蒙#1");
+                break;
+              case 14:
+                enablenpc instance_npcname("奧樂德#1");
+                break;
+              case 15:
+                enablenpc instance_npcname("布魯德哈載#1");
+                break;
+              case 16:
+                enablenpc instance_npcname("庫洛雅庫瑪#1");
+                break;
+              case 17:
+                enablenpc instance_npcname("伊佛德斯#1");
+                break;
+              case 18:
+                enablenpc instance_npcname("萊采尼芮#1");
+                break;
+              case 19:
+                enablenpc instance_npcname("歐託莉柯#1");
+                break;
+              case 20:
+                enablenpc instance_npcname("朱朱#1");
+                break;
+              case 21:
+				'half = rand(0,1);
+				if('half) {
+			enablenpc instance_npcname("狄瓦伊#1");
+				} else {
+			enablenpc instance_npcname("培坎納比恩#1");
+                }
+                break;
+              case 22:
+                enablenpc instance_npcname("潘利爾#f");
+                break;
+		}
+		warp instance_mapname("1@ge_st"),104,50;
+		++'GMT_1QUE;
+		sleep 500;
+		donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnStart";
+		end;
+			case 2:
+		mes "[魔法大賽主持]";
+		mes "還需要準備時間麼？";
+		mes "沒問題了請再找我對話。";
+		close;
+			case 3:
+            mes "[魔法大賽主持]";
+            mes "當前回合的獎勵是";
+            mes "^006400"+'reward['GMT_1QUE-11]+"枚吉芬魔法大賽硬幣^000000。";
+            mes "請收好。";
+            getitem 6671, 'reward['GMT_1QUE-11];
+            next;
+            mes "[魔法大賽主持]";
+            mes "那麼這就送你出去。";
+            close2;
+            erasequest 9284 + 'GMT_1QUE;
+            setquest 9309;
+            donpcevent instance_npcname("#theend") + "::OnEnd";
+            warp instance_mapname("1@gef"),120,35;
+            end;
+		}
+		
+	OnInstanceInit:
+		setarray 'reward[0],1,2,3,4,5,6,7,8,9,10,15,20,20;
+		end;	
+}
+
+
+1@ge_st,109,57,4	script	吉芬魔法學院院長#1	10006,{
+		end;
+	OnStart:
+		switch('GMT_1QUE) {
+	case 11:
+		donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+		npctalk "那麼，吉芬魔法大賽，現在開幕！";
+		sleep 500;
+		npctalk "URRRRRRRRR...HERE WE GO！";
+		donpcevent instance_npcname("#FWcontrol") + "::OnStart";
+		enablenpc instance_npcname("雅樂西#1");
+		sleep 500;
+		npctalk "即將開始的是A組第一回合的較量。";
+		sleep 500;
+		npctalk "首先是第一次參加魔法大賽的神秘選手！";
+		sleep 500;
+		npctalk "連名字都不被世人熟知的，無名選手！";
+		sleep 500;
+		npctalk "然後對手是...";
+		sleep 500;
+		npctalk "名門的貴公子！雖然看起來不強但鬥志十足！";
+		sleep 500;
+		npctalk "年輕的參賽者，假面的雅樂西！";
+		sleep 500;
+		donpcevent instance_npcname("雅樂西#1") + "::OnActivate";
+		end;
+	case 12:
+		donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+		npctalk "既然選手都準備好了，那我們馬上開始第二回合！";
+		sleep 500;
+		npctalk "首先是初次參賽，卻贏得第一場勝利的迷之選手！";
+		sleep 500;
+		npctalk "到底能進行到第幾回合呢，讓我們有所期待吧！";
+		sleep 500;
+		npctalk "然後，站在對面的這位是...";
+		sleep 500;
+		npctalk "在魔法學院中也備受矚目的學生！";
+		sleep 500;
+		npctalk "只有心態是大魔法師的狄歐艾瑞默司！";
+		sleep 500;
+		donpcevent instance_npcname("狄歐艾瑞默司#1") + "::OnActivate";
+		end;
+	case 13:
+		donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+		npctalk "即將開始第三回合！";
+		sleep 500;
+		npctalk "首先是擁有特殊體質，總是被捲入事件的不幸選手！";
+		sleep 500;
+		npctalk "而他的對手是...";
+		sleep 500;
+		if('event1) {
+			npctalk "吉芬城內的不良少年頭領！";
+			sleep 500;
+			npctalk "胡作非為的混混，吉芬流氓！";
+			sleep 500;
+			donpcevent instance_npcname("吉芬流氓#n1") + "::OnActivate";		
+		} else if('event2) {
+			npctalk "吉芬城內橫行作惡的暴徒！";
+			sleep 500;
+			npctalk "吉芬兄弟幫頭領 吉分鐵匠！";
+			sleep 500;
+			donpcevent instance_npcname("吉分鐵匠#n1") + "::OnActivate";		
+		} else {
+			npctalk "以前也見過的小偷，最近在吉芬城內多次作案！";
+			sleep 500;
+			npctalk "[你的zeny就是我的zeny，我的zeny還是我的zeny]公會會長！吉分小偷！";
+			sleep 500;
+			donpcevent instance_npcname("吉分小偷#n1") + "::OnActivate";
+		}
+		end;
+	case 14:
+		npctalk "通過連續獲勝，已經人氣高漲的，";
+		sleep 500;
+		npctalk "未來的勇士"+'charname$+"！";
+		sleep 500;
+		donpcevent instance_npcname("沛蒙#1") + "::OnActivate";
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "不懂人情世故，溫室裡的花朵~";
+		sleep 500;
+		npctalk "來自普隆德拉的潮人 沛蒙！";
+		npctalk "哦 ~ 來自普隆德拉的選手啊！",instance_npcname("普隆德拉遊客#a1");
+		sleep 500;
+		npctalk "支持支持！別給普隆德拉丟臉啊！",instance_npcname("普隆德拉遊客#a2");
+		end;
+	case 15:
+		npctalk "已經不再是籍籍無名的，";
+		sleep 500;
+		npctalk "新星一般的選手"+'charname$+"！";
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "剛正不阿的格鬥家~";
+		sleep 500;
+		npctalk "努力的典範，正統派戰鬥大師奧樂德！";
+		npctalk "帥氣！",instance_npcname("魔法大賽觀眾#a13");
+		sleep 500;
+		npctalk "這次大賽的水平很高啊！",instance_npcname("魔法大賽觀眾#a3");
+		donpcevent instance_npcname("奧樂德#1") + "::OnActivate";
+		end;
+	case 16:
+		npctalk "轉眼間，我們已經迎來了第六回合！";
+		sleep 500;
+		npctalk "初次參加大賽，但卻將強豪連續擊敗，";
+		sleep 500;
+		npctalk "注目度 No.1 的選手"+'charname$+"！";
+		sleep 500;
+		npctalk "哇，好緊張！",instance_npcname("魔法大賽觀眾#a34");
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "根本無法移開目光，太刺激了！",instance_npcname("魔法大賽觀眾#a11");
+		npctalk "加油啊~~~~！",instance_npcname("魔法大賽觀眾#a7");
+		npctalk "不要被可愛外表欺騙，其實內心非常狠辣~";
+		sleep 500;
+		npctalk "血染的兔耳，布魯德哈載！";
+		sleep 500;
+		donpcevent instance_npcname("布魯德哈載#1") + "::OnActivate";
+		end;
+	case 17:
+		npctalk "接下來要開始的是第七回合！";
+		sleep 500;
+		npctalk "一方是勢如破竹，誰也無法阻擋的新人選手！";
+		sleep 500;
+		npctalk "難道就要這樣子問鼎大賽桂冠了？令人期待的"+'charname$+"！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "將兇惡又強大的對手接連擊敗，";
+		sleep 500;
+		npctalk "漆黑之牙 庫洛雅庫瑪！";
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("庫洛雅庫瑪#1") + "::OnActivate";
+		end;
+	case 18:
+		npctalk "馬上開始A組的第八回合！";
+		sleep 500;
+		npctalk "名副其實的大賽黑馬！";
+		sleep 500;
+		npctalk "米德加爾特大陸的實力冒險家，"+'charname$+"！";
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "目前最強的選手？！",instance_npcname("斐揚遊客#a1");
+		npctalk "看起來好強啊！",instance_npcname("伯仁斯遊客#a1");
+		sleep 500;
+		npctalk "自身就像銅牆鐵壁一般，將對手的攻擊盡數化解的，";
+		sleep 500;
+		npctalk "擁有炙熱的鬥志，鐵壁之防禦 伊佛德斯！";
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("伊佛德斯#1") + "::OnActivate";
+		end;
+	case 19:
+		npctalk "A組的比賽已經進入到了第九回合！";
+		sleep 500;
+		npctalk "誰也沒有預見到的，黑馬選手，"+'charname$+"！";
+		sleep 500;
+		npctalk "他的實力已經被眾人認可!";
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "像蝴蝶一樣惹人憐愛，卻又像毒蛇一樣殘忍狠毒的，";
+		sleep 500;
+		npctalk "死之修女 萊采尼芮！";
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("萊采尼芮#1") + "::OnActivate";
+		end;
+	case 20:
+		npctalk "那麼這就讓我們開始A組比賽的第十回合！";
+		sleep 500;
+		npctalk "雖是初次參賽，但已擊敗眾多實力選手的，";
+		sleep 500;
+		npctalk "實力派挑戰者，"+'charname$+"！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "大賽也漸入高潮了！",instance_npcname("艾爾貝塔遊客#a1");
+		sleep 500;
+		npctalk "擁有魅惑的舞姿，讓人無法移開目光的身段曲線，";
+		sleep 500;
+		npctalk "引導死亡的舞女 歐託莉柯！";
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("歐託莉柯#1") + "::OnActivate";
+		end;
+	case 21:
+		npctalk "經過精彩激烈的戰鬥，現在到了1/4決賽階段！";
+		sleep 500;
+		npctalk "一路連勝，無人可擋的選手"+'charname$+"！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "血腥味...",instance_npcname("洛奇#a2");
+		sleep 500;
+		npctalk "噢...激烈的比賽哦，不是麼？",instance_npcname("愛麗絲#a2");
+		sleep 500;
+		npctalk "實戰的達人！朱朱！";
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("朱朱#1") + "::OnActivate";
+		end;
+	case 22:
+		npctalk "接下來就要決出A組的勝者了，也是本次大賽的半決賽！";
+		sleep 500;
+		npctalk "目標直指大賽優勝的A組黑馬，"+'charname$+"！";
+		sleep 500;
+		npctalk "已經半決賽了啊！",instance_npcname("魔法大賽觀眾#a3");
+		sleep 500;
+		npctalk "馬上就到決賽啊！",instance_npcname("魔法大賽觀眾#a2");
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		if('half) {
+		sleep 500;
+		npctalk "魔法學院的首席教授，受到眾多弟子愛戴的最強魔法使！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "戰場的毀滅漩渦，狄瓦伊！";
+		sleep 500;
+		donpcevent instance_npcname("狄瓦伊#1") + "::OnActivate";
+		}
+		else {
+		sleep 500;
+		npctalk "來自寧靜都市艾爾帕蘭的煉金術士！！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "培坎納比恩，還有她親自製作的巨大人造生命體！";
+		sleep 500;
+		donpcevent instance_npcname("培坎納比恩#1") + "::OnActivate";
+		}
+		end;
+	case 23:
+		npctalk "終於！我們到了大賽的最高潮！馬上就是最後的比試了！A組B組勝者之間的~決！勝！戰！！";
+		sleep 500;
+		npctalk "初次參賽的神秘勇者！";
+		sleep 500;
+		npctalk "以預料之外的實力，一路過關斬將贏得了決賽資格！！";
+		sleep 500;
+		npctalk "現在達到了人氣的最高峰，可謂是優勝候補！";
+		sleep 500;
+		npctalk "能否一路笑到最後呢？！"+'charname$+"！";
+		npctalk "噢！終於決賽了啊！",instance_npcname("魔法大賽觀眾#a8");
+		sleep 500;
+		npctalk "不簡單，居然一路到了決賽。",instance_npcname("洛奇#a2");
+		sleep 500;
+		npctalk "而他的對手是~~~!";
+		sleep 500;
+		npctalk "到底哪邊會贏呢？",instance_npcname("魔法大賽觀眾#a8");
+		sleep 500;
+		npctalk "以壓倒性的實力，將對手相繼葬送！";
+		sleep 500;
+		npctalk "嗚啊...興奮得鼻血都出來了...",instance_npcname("魔法大賽觀眾#a11");
+		sleep 500;
+		npctalk "以無人可擋的怒濤之勢，迅速取得了B組的優勝！";
+		sleep 500;
+		npctalk "看來這將是最精彩的比賽！",instance_npcname("卡奧斯#a2");
+		sleep 500;
+		npctalk "簡直可以說是米德加爾特大陸，哦不，說不定是世界最強！";
+		sleep 500;
+		npctalk "青色魔法師！芬裡斯 潘利爾！";
+		sleep 500;
+		npctalk "潘利爾加油！",instance_npcname("魔法大賽觀眾#a12");
+		donpcevent instance_npcname("潘利爾#f") + "::OnActivate";
+		end;
+		}
+	OnTalk1:
+		npctalk "好了，比賽開始了，到底誰能取得最後的勝利，讓我們拭目以待。";
+		end;
+	OnTalk2:
+		if('GMT_1QUE < 22)
+	npctalk "A組第"+('GMT_1QUE-10)+"輪比賽結束！勝利的選手是"+'charname$+"！";
+		else
+	npctalk "A組最後一回合戰鬥結束！終於決出了A組勝者，恭喜"+'charname$+"！";
+		sleep 1000;
+		npctalk "接下來是短暫的休息時間，為了迎接下一回合的比賽！";
+		sleep 1000;
+		npctalk "馬上醫療班和主持就進場了，等選手準備完成後，與主持對話進入下一回合。";
+		sleep 500;
+		switch('GMT_1QUE) {
+	case 11:
+	case 12:
+	case 14:
+	case 15:
+	case 17:
+	case 18:
+	case 20:
+	case 21:
+		break;
+	case 13:
+		npctalk "剛才收到魔法大賽B組傳來的消息。";
+		sleep 500;
+		npctalk "B組的潘利爾選手因為連續輕鬆獲勝，現在非常引人注目！";
+		sleep 500;
+		break;
+	case 16:
+		npctalk "B組又傳來了新的消息。";
+		sleep 500;
+		npctalk "潘利爾選手短期內已經六連勝了，真是大賽最引人注目的黑馬！";
+		sleep 500;
+		break;
+	case 19:
+		npctalk "比賽流程已過大半，這裡插播一下B組的新消息。";
+		sleep 500;
+		npctalk "B組的戰況已經呈現一邊倒的態勢。";
+		sleep 500;
+		npctalk "芬裡斯 潘利爾選手展現出了壓倒性的實力！";
+		sleep 500;
+		npctalk "A組的各位選手如果想取得優勝的話，也要提前做好與她戰鬥的準備。";
+		sleep 500;
+		break;
+	case 22:
+		npctalk "到此本次魔法大賽的A組B組比賽都結束了！";
+		sleep 500;
+		npctalk "無視任何質疑，魔法詠唱速度快到讓人看不見的，";
+		sleep 500;
+		npctalk "名為芬裡斯 潘利爾的選手，以壓倒性的優勢取得了B組勝者！";
+		sleep 500;
+		npctalk "這一邊則是初次參賽，便勢如破竹，打倒數名大賽種子選手的神秘冒險家,"+'charname$+"！";
+		sleep 500;
+		npctalk "接下來就請期待這兩位選手的決賽對決！";
+		sleep 500;
+		break;
+		}
+		hideoffnpc instance_npcname("魔法大賽主持#1");
+		hideoffnpc instance_npcname("魔法大賽醫療班#1");
+		end;
+		
+	OnTalk3:
+		npctalk "最終決賽正式開始了！究竟誰才是魔法大賽優勝者，讓我們一起見證這場最強對決！";
+		end;
+	OnTalk4:
+		npctalk "本屆吉芬魔法大賽決勝戰的勝負已定！！！";
+		sleep 500;
+		npctalk "獲勝者~~~~"+'charname$+"！！";
+		sleep 500;
+		npctalk "各位觀眾！請為優勝者和准優勝者鼓掌祝賀！！";
+		donpcevent instance_npcname("#FWcontrol") + "::OnWin";
+		sleep 500;
+		npctalk "本屆魔法大賽到此就結束了！希望大家也能支持以後的魔法大賽！";
+		sleep 500;
+		npctalk 'charname$+"恭喜你取得魔法大賽優勝！";
+		end;
+		
+	OnInstanceInit:
+		hideonnpc instance_npcname("吉芬魔法學院院長#1");
+		disablenpc instance_npcname("雅樂西#1");
+		disablenpc instance_npcname("狄歐艾瑞默司#1");
+		disablenpc instance_npcname("吉芬流氓#n1");
+		disablenpc instance_npcname("吉分鐵匠#n1");
+		disablenpc instance_npcname("吉分小偷#n1");
+		disablenpc instance_npcname("沛蒙#1");
+		disablenpc instance_npcname("奧樂德#1");
+		disablenpc instance_npcname("布魯德哈載#1");
+		disablenpc instance_npcname("庫洛雅庫瑪#1");
+		disablenpc instance_npcname("伊佛德斯#1");
+		disablenpc instance_npcname("萊采尼芮#1");		
+		disablenpc instance_npcname("歐託莉柯#1");		
+		disablenpc instance_npcname("朱朱#1");		
+		disablenpc instance_npcname("狄瓦伊#1");		
+		disablenpc instance_npcname("培坎納比恩#1");		
+		disablenpc instance_npcname("潘利爾#f");		
+		end;
+	OnMobDead:	
+}
+
+
+
+1@ge_st,1,1,1	script	#比賽控制	-1,{
+	end;
+	OnStart:
+		enablenpc instance_npcname("#比賽控制");
+		.@map$ = instance_mapname("1@ge_st");
+		.@label$ = instance_npcname("#比賽控制") + "::OnMobDead";
+		mapannounce .@map$,"< 魔法大賽廣播 > : 比賽限時3分鐘，請在時限內擊敗對手！",bc_map,0xffff22;
+		sleep 500;
+		mapannounce .@map$,"< 魔法大賽廣播 > : 那麼比賽準備...",bc_map,0xffff22;
+		sleep 500;
+		mapannounce .@map$,"< 魔法大賽廣播 > : 開始！",bc_map,0xffff22;
+		donpcevent instance_npcname("#FWcontrol") + "::OnTurn";
+		initnpctimer;
+		switch('GMT_1QUE) {
+		case 11:
+			hideonnpc instance_npcname("雅樂西#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2549,1,.@label$);
+			break;
+		case 12:
+			hideonnpc instance_npcname("狄歐艾瑞默司#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2550,1,.@label$);
+			break;
+		case 13:
+			if('event1) {
+			hideonnpc instance_npcname("吉芬流氓#n1");
+			'BossID = monster(.@map$,114,50,"--ja--",2553,1,.@label$);
+			} else if('event2) {
+			hideonnpc instance_npcname("吉分鐵匠#n1");
+			'BossID = monster(.@map$,114,50,"--ja--",2552,1,.@label$);
+			} else {
+			hideonnpc instance_npcname("吉分小偷#n1");
+			'BossID = monster(.@map$,114,50,"--ja--",2551,1,.@label$);
+			}
+			break;
+		case 14:
+			hideonnpc instance_npcname("沛蒙#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2554,1,.@label$);
+			break;
+		case 15:
+			hideonnpc instance_npcname("奧樂德#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2555,1,.@label$);
+			break;
+		case 16:
+			hideonnpc instance_npcname("布魯德哈載#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2556,1,.@label$);
+			break;
+		case 17:
+			hideonnpc instance_npcname("庫洛雅庫瑪#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2557,1,.@label$);
+			break;
+		case 18:
+			hideonnpc instance_npcname("伊佛德斯#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2558,1,.@label$);
+			break;
+		case 19:
+			hideonnpc instance_npcname("萊采尼芮#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2559,1,.@label$);
+			break;
+		case 20:
+			hideonnpc instance_npcname("歐託莉柯#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2560,1,.@label$);
+			break;
+		case 21:
+			hideonnpc instance_npcname("朱朱#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2561,1,.@label$);
+			break;
+		case 22:
+			if('half) {
+			hideonnpc instance_npcname("狄瓦伊#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2562,1,.@label$);
+			} else {
+			hideonnpc instance_npcname("培坎納比恩#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2563,1,.@label$);
+			donpcevent instance_npcname("#生命體")+"::OnSummon";
+			}
+			break;
+		}
+		donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnTalk1";
+		end;
+		
+	OnMobDead:
+		stopnpctimer;
+		disablenpc instance_npcname("#比賽控制");
+		switch('GMT_1QUE) {
+		case 11:
+		donpcevent instance_npcname("雅樂西#1") + "::OnDefeat";
+		break;
+		case 12:
+		donpcevent instance_npcname("狄歐艾瑞默司#1") + "::OnDefeat";
+		break;
+		case 13:
+		if('event1)
+			donpcevent instance_npcname("吉芬流氓#n1") + "::OnDefeat";
+		else if('event2)
+			donpcevent instance_npcname("吉分鐵匠#n1") + "::OnDefeat";
+		else
+			donpcevent instance_npcname("吉分小偷#n1") + "::OnDefeat";
+		break;
+		case 14:
+		donpcevent instance_npcname("沛蒙#1") + "::OnDefeat";
+		break;
+		case 15:
+		donpcevent instance_npcname("奧樂德#1") + "::OnDefeat";
+		break;
+		case 16:
+		donpcevent instance_npcname("布魯德哈載#1") + "::OnDefeat";
+		break;
+		case 17:
+		donpcevent instance_npcname("庫洛雅庫瑪#1") + "::OnDefeat";
+		break;
+		case 18:
+		donpcevent instance_npcname("伊佛德斯#1") + "::OnDefeat";
+		break;
+		case 19:
+		donpcevent instance_npcname("萊采尼芮#1") + "::OnDefeat";
+		break;
+		case 20:
+		donpcevent instance_npcname("歐託莉柯#1") + "::OnDefeat";
+		break;
+		case 21:
+		donpcevent instance_npcname("朱朱#1") + "::OnDefeat";
+		break;
+		case 22:
+		if('half)
+			donpcevent instance_npcname("狄瓦伊#1") + "::OnDefeat";
+		else {
+			donpcevent instance_npcname("培坎納比恩#1") + "::OnDefeat";
+			donpcevent instance_npcname("#生命體") + "::OnEnd";
+		}
+		break;
+		}
+		donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnTalk2";
+		end;
+		
+	OnTimer60000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間兩分鐘，比賽進入白熱化階段！",bc_map,0xffff22;
+		end;
+	OnTimer90000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間90秒，回合已經過半！",bc_map,0xffff22;
+		end;
+	OnTimer150000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間30秒，回合即將結束！",bc_map,0xffff22;
+		end;
+	OnTimer170000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 回合時間只剩下最後10秒！",bc_map,0xffff22;
+		end;
+	OnTimer175000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 5秒！",bc_map,0xffff22;
+		end;
+	OnTimer176000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 4秒！",bc_map,0xffff22;
+		end;
+	OnTimer177000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 3秒！",bc_map,0xffff22;
+		end;
+	OnTimer178000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 2秒！",bc_map,0xffff22;
+		end;
+	OnTimer179000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 1秒！",bc_map,0xffff22;
+		end;
+	OnTimer180000:
+		stopnpctimer;
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 時間到，沒有在時限內擊敗對手, 挑戰失敗!",bc_map,0xffff22;
+		mobremove 'BossID;
+		'BossID = 0;
+		if('HomID) {
+	mobremove 'HomID;
+	'HomID = 0;
+		}
+		sleep 500;
+		'failure = 1;
+    hideoffnpc instance_npcname("魔法大賽主持#1");
+		end;
+		
+	OnInstanceInit:
+		disablenpc instance_npcname("#比賽控制");
+		end;
+}
+
+1@ge_st,1,1,1	script	#final	-1,{
+	end;
+	OnStart:
+		enablenpc instance_npcname("#final");
+		.@map$ = instance_mapname("1@ge_st");
+		.@label$ = instance_npcname("#final") + "::OnFenrir";
+		mapannounce .@map$,"< 魔法大賽廣播 > : 決賽限時5分鐘，請在時限內擊敗對手！",bc_map,0xffff22;
+		sleep 500;
+		mapannounce .@map$,"< 魔法大賽廣播 > : 那麼比賽準備...",bc_map,0xffff22;
+		sleep 500;
+		mapannounce .@map$,"< 魔法大賽廣播 > : 開始！",bc_map,0xffff22;
+		initnpctimer;
+		hideonnpc instance_npcname("潘利爾#f");
+		'BossID = monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+		donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnTalk3";
+		end;
+		
+	OnFenrir:
+		stopnpctimer;
+		disablenpc instance_npcname("#final");
+		donpcevent instance_npcname("潘利爾#f") + "::OnDefeat";
+		donpcevent instance_npcname("吉芬魔法學院院長#1") + "::OnTalk4";
+		end;
+		
+		
+	OnTimer60000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間四分鐘，比賽漸入佳境！",bc_map,0xffff22;
+		end;
+	OnTimer120000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間三分鐘，比賽已經進入了白熱化的階段！",bc_map,0xffff22;
+		end;
+	OnTimer180000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間二分鐘，賽程已過半！",bc_map,0xffff22;
+		end;
+	OnTimer240000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 剩餘時間一分鐘，回合已經接近結束！",bc_map,0xffff22;
+		end;
+	OnTimer270000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 回合時間只剩下最後30秒！",bc_map,0xffff22;
+		end;
+	OnTimer290000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 10秒！",bc_map,0xffff22;
+		end;
+	OnTimer295000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 5秒！",bc_map,0xffff22;
+		end;
+	OnTimer296000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 4秒！",bc_map,0xffff22;
+		end;
+	OnTimer297000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 3秒！",bc_map,0xffff22;
+		end;
+	OnTimer298000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 2秒！",bc_map,0xffff22;
+		end;
+	OnTimer299000:
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 1秒！",bc_map,0xffff22;
+		end;
+	OnTimer300000:
+		stopnpctimer;
+		mapannounce instance_mapname("1@ge_st"),"< 魔法大賽廣播 > : 時間到，沒有在時限內擊敗對手, 挑戰失敗!",bc_map,0xffff22;
+		mobremove 'BossID;
+		sleep 500;
+		'failure = 1;
+    hideoffnpc instance_npcname("魔法大賽主持#1");
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("#final");
+		end;
+}
+
+
+1@ge_st,1,1,1	script	#生命體	CLEAR_NPC,{
+		end;
+	OnSummon:
+		initnpctimer;
+		'HomID = monster(instance_mapname("1@ge_st"),114,50,"--ja--",2565,1,instance_npcname("#生命體")+"::OnHomDead");
+		end;
+	
+	OnTimer10000:
+		if(!'BossID){
+	stopnpctimer;
+	disablenpc instance_npcname("#生命體");
+	end;
+		}
+		initnpctimer;
+		if('HomID) {
+	getunitdata 'BossID,.@bossdata;
+	getunitdata 'HomID,.@homdata;
+	if(distance(.@bossdata[6],.@bossdata[7],.@homdata[6],.@homdata[7]) > 10) {
+		unittalk 'BossID,"阿爾方斯，快過來！";
+		sleep 500;
+		unitwarp 'HomID,instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
+	}
+		}
+		else {
+	if(mobcount(instance_mapname("1@ge_st"),instance_npcname("#生命體")+"::OnHomJR"))
+		end;
+	getunitdata 'BossID,.@bossdata;
+	unittalk 'BossID,"阿爾方斯，我這就復活你！";
+	areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#生命體")+"::OnHomJR";
+		}
+		end;
+		
+	OnHomDead:
+		initnpctimer;
+		'HomID = 0;
+		end;
+		
+	OnHomJR:
+		end;
+		
+	OnEnd:
+		stopnpctimer;
+		if('HomID)
+	mobremove 'HomID;
+		disablenpc instance_npcname("#生命體");
+		end;
+}
+
+1@ge_st,109,51,4	script	魔法大賽醫療班#1	475,{/* 83649 (hide)*/
+	mes "[魔法大賽醫療班]";
+	mes "獲勝的選手可以在這裡接受治療，需要治療麼？";
+	next;
+	if(select("治療","取消") == 2) {
+	mes "[魔法大賽醫療班]";
+	mes "明白了。";
+	close;
+	}
+	mes "[魔法大賽醫療班]";
+	mes "治療完成了，";
+	mes "接下來的比賽請加油。";
+	percentheal 100,100;
+	specialeffect2 312;
+	close2;
+	hideonnpc instance_npcname("魔法大賽醫療班#1"); //83649
+	end;
+	OnInstanceInit:
+		hideonnpc instance_npcname("魔法大賽醫療班#1");
+		end;
+}
+
+1@ge_st,1,1,1	script	#FWcontrol	-1,{
+	end;
+	OnStart:
+		initnpctimer;
+		for(.@i = 11; .@i <= 20; ++.@i) {
+		specialeffect 'effect[rand(3)], AREA, instance_npcname("#fireworks_" + .@i);
+		}
+		end;
+	OnTimer6000:
+		initnpctimer;
+		for(.@i = 0; .@i < 5; ++.@i)
+	specialeffect 'effect[rand(3)], AREA, instance_npcname("#fireworks_" + rand(11,20));
+		end;
+
+	OnTurn:
+		stopnpctimer;
+		end;
+
+	OnWin:
+		for(.@i = 1; .@i <= 4; ++.@i)
+	specialeffect 90, AREA, instance_npcname("#fireworks_f" + .@i);
+		sleep 500;
+		for(.@i = 1; .@i <= 4; ++.@i)
+	specialeffect 62, AREA, instance_npcname("#fireworks_f" + .@i);
+		sleep 500;
+		for(.@i = 1; .@i <= 4; ++.@i)
+	specialeffect 89, AREA, instance_npcname("#fireworks_f" + .@i);
+		sleep 500;
+		for(.@i = 1; .@i <= 4; ++.@i)
+	specialeffect 237, AREA, instance_npcname("#fireworks_f" + .@i);
+		end;
+		
+	OnInstanceInit:
+		setarray 'effect[0], 30, 89, 92;
+		end;
+}
+
+
+1@ge_st,92,59,0	script	#fireworks_11	139,{
+	end;
+}
+1@ge_st,100,60,0	script	#fireworks_12	139,{
+	end;
+}
+1@ge_st,109,60,0	script	#fireworks_13	139,{
+	end;
+}
+1@ge_st,118,60,0	script	#fireworks_14	139,{
+	end;
+}
+1@ge_st,126,59,0	script	#fireworks_15	139,{
+	end;
+}
+1@ge_st,126,37,0	script	#fireworks_16	139,{
+	end;
+}
+1@ge_st,118,36,0	script	#fireworks_17	139,{
+	end;
+}
+1@ge_st,109,36,0	script	#fireworks_18	139,{
+	end;
+}
+1@ge_st,100,36,0	script	#fireworks_19	139,{
+	end;
+}
+1@ge_st,92,37,0	script	#fireworks_20	139,{
+	end;
+}
+1@ge_st,112,52,0	script	#fireworks_f1	139,{
+	end;
+}
+1@ge_st,112,42,0	script	#fireworks_f2	139,{
+	end;
+}
+1@ge_st,102,52,0	script	#fireworks_f3	139,{
+	end;
+}
+1@ge_st,102,42,0	script	#fireworks_f4	139,{
+	end;
+}
+
+
+1@ge_st,1,1,1	script	#hiddenaud	CLEAR_NPC,{
+		end;
+	OnInstanceInit:
+		for(.@i = 1; .@i <= 5; ++.@i)
+	disablenpc instance_npcname("魔法大賽觀眾#z"+.@i);
+		enablenpc instance_npcname("魔法大賽觀眾#z"+rand(1,5));
+		end;
+}
+1@ge_st,88,48,0	script	魔法大賽觀眾#z1	810,{}
+1@ge_st,88,48,0	script	魔法大賽觀眾#z2	72,{
+//	setquest 114701; //state=1
+//	compquest 114701;
+	mes "[唱著奇妙歌曲的少女]";
+	mes "我用歌聲為你們加油！";
+	mes "　";
+	mes "呼~！勒~！呼 ~ 勒！";
+	mes "呼~~~~~！";
+	mes "呼卡嘻勒！";
+	mes "謝謝你傾聽我的歌~~";
+	close2;
+	hideonnpc instance_npcname("魔法大賽觀眾#z2"); //92304
+	end;
+}
+1@ge_st,88,48,0	script	魔法大賽觀眾#z3	61,{
+	//setquest 114702; //state=1
+	//compquest 114702;
+	mes "[喜歡酒的戰鬥大師]";
+	mes "酒真是好東西啊！";
+	mes "勝利之後的美酒特別醉人！";
+	mes "請加油吧。";
+	close2;
+	hideonnpc instance_npcname("魔法大賽觀眾#z3"); //92304
+	end;
+}
+1@ge_st,88,48,0	script	魔法大賽觀眾#z4	553,{
+//	setquest 114703; //state=1
+//	compquest 114703;
+	mes "[夢中的貓]";
+	mes "加油哦~！";
+	mes "上啊~！再加把勁~！";
+	mes "喵~ 把食物搶回來 ~！";
+	mes "輸了的話就沒得吃了喵 ~！";
+	close2;
+	hideonnpc instance_npcname("魔法大賽觀眾#z4"); //92304
+	end;
+}
+1@ge_st,88,48,0	script	魔法大賽觀眾#z5	655,{}
+
+
+1@ge_st,1,1,1	script	#Talkcontrol	-1,{
+		end;
+	OnStart:
+		'talkcounter = 0;
+		initnpctimer;
+		end;
+
+	OnTimer5000:
+		++ 'talkcounter;
+		if('talkcounter < 4)
+	initnpctimer;
+	OnRndtalk:
+		.@iter = rand(1,3);
+		for(.@i = 0; .@i < .@iter; .@i ++) {
+		.@group = rand(30);
+		if(.@group < 18) {
+		npctalk 'audience$[rand(getarraysize('audience$))],instance_npcname("魔法大賽觀眾#a"+rand(1,43));
+		} else if (.@group < 23) {
+		npctalk 'student$[rand(getarraysize('student$))],instance_npcname("魔法學院學生#a"+rand(1,5));
+		}	else {
+		.@id = rand(getarraysize('tourist$));
+		npctalk 'tourist$[.@id],instance_npcname('touristname$[.@id]);
+		}
+		sleep rand(2,5)*100;
+		}
+		end;
+		
+	OnTimer13000:
+		stopnpctimer;
+		.@iter = rand(1,3);
+		for(.@i = 0; .@i < .@iter; .@i ++) {
+		.@group = rand(30);
+		if(.@group < 18) {
+		npctalk 'audience$[rand(getarraysize('audience$))],instance_npcname("魔法大賽觀眾#a"+rand(1,43));
+		} else if (.@group < 23) {
+		npctalk 'student$[rand(getarraysize('student$))],instance_npcname("魔法學院學生#a"+rand(1,5));
+		}	else {
+		.@id = rand(getarraysize('tourist$));
+		npctalk 'tourist$[.@id],instance_npcname('touristname$[.@id]);
+		}
+		sleep rand(2,5)*100;
+		}
+		end;
+		
+	OnInstanceInit:
+		setarray 'audience$[0],
+		"備受期待的新人啊！",
+		"希望是不錯的比賽！",
+		"上啊！上啊！",
+		"噢噢，終於要開始了！",
+		"開始！比賽！快點開始！",
+		"那傢伙是第一次參賽？感覺很厲害啊！",
+		"誰會取得勝利呢？",
+		"快點開始！",
+		"初次參加的選手請加油！",
+		"感覺危險了...",
+		"看起來要輸啊...",
+		"就算是同情也要幫他加油！",
+		"他好棒！我要給他加油！",
+		"不知為何覺得興致盎然！",
+		"加油！~~",
+		"上吧，讓我們看看你有多厲害吧。",
+		"大概這場比賽會輸吧",
+		"這次大賽優秀的選手很多啊",
+		"不要怕，加油啊！",
+		"差不多要開始了哦。",
+		"真是有趣呢！",
+		"手心裡都是汗...",
+		"接下來也要加油啊！";
+		
+		setarray 'student$[0],
+		"YA~HOOOOO~",
+		"嗚哇，好緊張！",
+		"雙方都請加油！";
+		
+		setarray 'tourist$[0],
+		"噢，氣氛開始熱烈了",
+		"新人加油啊",
+		"這裡難道沒有斐揚的參賽選手麼？",
+		"這裡的氣氛好棒！",	
+		"噢噢！我也給你加油！",
+		"選手們都加油啊！",
+		"挺不錯的嘛...",
+		"不要太快就輸了噢！";
+		
+		setarray 'touristname$[0],
+		"普隆德拉遊客#a1",
+		"普隆德拉遊客#a2",
+		"斐揚遊客#a1",
+		"斐揚遊客#a2",
+		"艾爾貝塔遊客#a1",
+		"艾爾貝塔遊客#a2",
+		"伯仁斯遊客#a1",
+		"克魔島遊客#a1";
+		
+}
+
+
+1@ge_st,123,62,4	script	魔法學院學生#a1	805,{}
+1@ge_st,103,62,6	script	魔法學院學生#a2	84,{}
+1@ge_st,114,62,4	script	魔法學院學生#a3	86,{}
+1@ge_st,109,62,4	script	魔法學院學生#a4	921,{}
+1@ge_st,122,62,4	script	魔法學院學生#a5	72,{}
+1@ge_st,97,62,6	script	普隆德拉遊客#a1	985,{}
+1@ge_st,115,62,4	script	普隆德拉遊客#a2	945,{}
+1@ge_st,117,62,4	script	斐揚遊客#a1	803,{}
+1@ge_st,101,62,6	script	斐揚遊客#a2	828,{}
+1@ge_st,121,62,4	script	艾爾貝塔遊客#a1	712,{}
+1@ge_st,105,62,6	script	艾爾貝塔遊客#a2	89,{}
+1@ge_st,107,62,6	script	伯仁斯遊客#a1	558,{}
+1@ge_st,110,62,4	script	克魔島遊客#a1	850,{}
+
+1@ge_st,95,62,6	script	魔法大賽觀眾#a1	870,{}
+1@ge_st,113,62,4	script	魔法大賽觀眾#a2	868,{}
+1@ge_st,99,62,6	script	魔法大賽觀眾#a3	727,{}
+1@ge_st,119,62,4	script	魔法大賽觀眾#a4	728,{}
+1@ge_st,93,62,6	script	魔法大賽觀眾#a5	46,{}
+1@ge_st,94,62,6	script	魔法大賽觀眾#a6	67,{}
+1@ge_st,96,62,6	script	魔法大賽觀眾#a7	47,{}
+1@ge_st,98,62,6	script	魔法大賽觀眾#a8	48,{}
+1@ge_st,100,62,6	script	魔法大賽觀眾#a9	49,{}
+1@ge_st,102,62,6	script	魔法大賽觀眾#a10	66,{}
+1@ge_st,104,62,6	script	魔法大賽觀眾#a11	68,{}
+1@ge_st,116,62,4	script	魔法大賽觀眾#a12	69,{}
+1@ge_st,118,62,4	script	魔法大賽觀眾#a13	70,{}
+1@ge_st,120,62,4	script	魔法大賽觀眾#a14	51,{}
+1@ge_st,124,62,4	script	魔法大賽觀眾#a15	71,{}
+1@ge_st,125,62,4	script	魔法大賽觀眾#a16	52,{}
+1@ge_st,100,64,6	script	魔法大賽觀眾#a17	76,{}
+1@ge_st,101,64,6	script	魔法大賽觀眾#a18	77,{}
+1@ge_st,102,64,6	script	魔法大賽觀眾#a19	78,{}
+1@ge_st,103,64,6	script	魔法大賽觀眾#a20	58,{}
+1@ge_st,104,64,6	script	魔法大賽觀眾#a21	106,{}
+1@ge_st,105,64,6	script	魔法大賽觀眾#a22	59,{}
+1@ge_st,106,64,6	script	魔法大賽觀眾#a23	60,{}
+1@ge_st,107,64,6	script	魔法大賽觀眾#a24	79,{}
+1@ge_st,108,64,6	script	魔法大賽觀眾#a25	80,{}
+1@ge_st,109,64,4	script	魔法大賽觀眾#a26	947,{}
+1@ge_st,110,64,4	script	魔法大賽觀眾#a27	53,{}
+1@ge_st,111,64,4	script	魔法大賽觀眾#a28	62,{}
+1@ge_st,112,64,4	script	魔法大賽觀眾#a29	107,{}
+1@ge_st,113,64,4	script	魔法大賽觀眾#a30	108,{}
+1@ge_st,114,64,4	script	魔法大賽觀眾#a31	61,{}
+1@ge_st,115,64,4	script	魔法大賽觀眾#a32	804,{}
+1@ge_st,116,64,4	script	魔法大賽觀眾#a33	123,{}
+1@ge_st,117,64,4	script	魔法大賽觀眾#a34	90,{}
+1@ge_st,118,64,4	script	魔法大賽觀眾#a35	91,{}
+1@ge_st,119,64,4	script	魔法大賽觀眾#a36	92,{}
+1@ge_st,120,64,4	script	魔法大賽觀眾#a37	401,{}
+1@ge_st,121,64,4	script	魔法大賽觀眾#a38	920,{}
+1@ge_st,122,64,4	script	魔法大賽觀眾#a39	806,{}
+1@ge_st,123,64,4	script	魔法大賽觀眾#a40	807,{}
+1@ge_st,124,64,4	script	魔法大賽觀眾#a41	808,{}
+1@ge_st,125,64,4	script	魔法大賽觀眾#a42	711,{}
+1@ge_st,126,64,4	script	魔法大賽觀眾#a43	714,{}
+
+1@ge_st,87,59,6	script	魔法大賽觀眾#a198	484,{}
+1@ge_st,87,60,6	script	魔法大賽觀眾#a199	534,{}
+1@ge_st,88,61,6	script	魔法大賽觀眾#a200	540,{}
+1@ge_st,89,62,6	script	魔法大賽觀眾#a201	923,{}
+1@ge_st,90,63,6	script	魔法大賽觀眾#a202	124,{}
+1@ge_st,91,63,6	script	魔法大賽觀眾#a203	838,{}
+1@ge_st,92,64,6	script	魔法大賽觀眾#a238	771,{}
+1@ge_st,93,64,6	script	魔法大賽觀眾#a239	73,{}
+1@ge_st,94,64,6	script	魔法大賽觀眾#a240	74,{}
+1@ge_st,95,64,6	script	魔法大賽觀眾#a241	54,{}
+1@ge_st,96,64,6	script	魔法大賽觀眾#a242	55,{}
+1@ge_st,97,64,6	script	魔法大賽觀眾#a243	56,{}
+1@ge_st,98,64,6	script	魔法大賽觀眾#a244	57,{}
+1@ge_st,99,64,6	script	魔法大賽觀眾#a245	75,{}
+1@ge_st,127,63,4	script	魔法大賽觀眾#a73	724,{/* 83746 */}
+1@ge_st,128,63,4	script	魔法大賽觀眾#a74	885,{/* 83747 */}
+1@ge_st,129,62,4	script	魔法大賽觀眾#a75	809,{/* 83748 */}
+1@ge_st,130,61,4	script	魔法大賽觀眾#a76	810,{/* 83749 */}
+1@ge_st,130,60,4	script	魔法大賽觀眾#a77	63,{/* 83750 */}
+1@ge_st,128,60,4	script	魔法大賽觀眾#a78	744,{/* 83751 */}
+1@ge_st,128,59,4	script	魔法大賽觀眾#a79	953,{/* 83752 */}
+1@ge_st,128,58,4	script	魔法大賽觀眾#a80	408,{/* 83753 */}
+1@ge_st,128,57,4	script	魔法大賽觀眾#a81	473,{/* 83754 */}
+1@ge_st,128,56,4	script	魔法大賽觀眾#a82	64,{/* 83755 */}
+1@ge_st,128,55,4	script	魔法大賽觀眾#a83	65,{/* 83756 */}
+1@ge_st,128,54,4	script	魔法大賽觀眾#a84	740,{/* 83757 */}
+1@ge_st,128,53,4	script	魔法大賽觀眾#a85	473,{/* 83758 */}
+1@ge_st,128,52,4	script	魔法大賽觀眾#a86	474,{/* 83759 */}
+1@ge_st,128,51,4	script	魔法大賽觀眾#a87	478,{/* 83760 */}
+1@ge_st,128,45,2	script	魔法大賽觀眾#a88	741,{/* 83761 */}
+1@ge_st,128,44,2	script	魔法大賽觀眾#a89	122,{/* 83762 */}
+1@ge_st,128,43,2	script	魔法大賽觀眾#a90	121,{/* 83763 */}
+1@ge_st,128,42,2	script	魔法大賽觀眾#a91	879,{/* 83764 */}
+1@ge_st,128,41,2	script	魔法大賽觀眾#a92	979,{/* 83765 */}
+1@ge_st,128,40,2	script	魔法大賽觀眾#a93	914,{/* 83766 */}
+1@ge_st,128,39,2	script	魔法大賽觀眾#a94	813,{/* 83767 */}
+1@ge_st,128,38,2	script	魔法大賽觀眾#a95	120,{/* 83768 */}
+1@ge_st,128,37,2	script	魔法大賽觀眾#a96	742,{/* 83769 */}
+1@ge_st,128,33,2	script	魔法大賽觀眾#a101	816,{/* 83770 */}
+1@ge_st,127,33,2	script	魔法大賽觀眾#a102	817,{/* 83771 */}
+1@ge_st,125,32,2	script	魔法大賽觀眾#a104	886,{/* 83772 */}
+1@ge_st,123,32,2	script	魔法大賽觀眾#a106	745,{/* 83773 */}
+1@ge_st,121,32,2	script	魔法大賽觀眾#a108	82,{/* 83774 */}
+1@ge_st,119,32,2	script	魔法大賽觀眾#a110	941,{/* 83775 */}
+1@ge_st,117,32,2	script	魔法大賽觀眾#a112	83,{/* 83776 */}
+1@ge_st,115,32,2	script	魔法大賽觀眾#a114	951,{/* 83777 */}
+1@ge_st,113,32,2	script	魔法大賽觀眾#a116	983,{/* 83778 */}
+1@ge_st,111,32,2	script	魔法大賽觀眾#a118	846,{/* 83779 */}
+1@ge_st,109,32,2	script	魔法大賽觀眾#a120	985,{/* 83780 */}
+1@ge_st,107,32,0	script	魔法大賽觀眾#a122	701,{/* 83781 */}
+1@ge_st,105,32,0	script	魔法大賽觀眾#a124	987,{/* 83782 */}
+1@ge_st,103,32,0	script	魔法大賽觀眾#a126	989,{/* 83783 */}
+1@ge_st,101,32,0	script	魔法大賽觀眾#a128	466,{/* 83784 */}
+1@ge_st,99,32,0	script	魔法大賽觀眾#a130	892,{/* 83785 */}
+1@ge_st,97,32,0	script	魔法大賽觀眾#a132	991,{/* 83786 */}
+1@ge_st,95,32,0	script	魔法大賽觀眾#a134	993,{/* 83787 */}
+1@ge_st,93,32,0	script	魔法大賽觀眾#a136	748,{/* 83788 */}
+1@ge_st,92,32,0	script	魔法大賽觀眾#a137	725,{/* 83789 */}
+1@ge_st,91,33,0	script	魔法大賽觀眾#a138	726,{/* 83790 */}
+1@ge_st,89,38,0	script	魔法大賽觀眾#a144	542,{/* 83791 */}
+1@ge_st,89,39,0	script	魔法大賽觀眾#a145	937,{/* 83792 */}
+1@ge_st,89,40,0	script	魔法大賽觀眾#a146	757,{/* 83793 */}
+1@ge_st,89,41,0	script	魔法大賽觀眾#a147	758,{/* 83794 */}
+1@ge_st,89,42,0	script	魔法大賽觀眾#a148	759,{/* 83795 */}
+1@ge_st,89,43,0	script	魔法大賽觀眾#a149	892,{/* 83796 */}
+1@ge_st,89,44,0	script	魔法大賽觀眾#a150	760,{/* 83797 */}
+1@ge_st,89,45,0	script	魔法大賽觀眾#a151	761,{/* 83798 */}
+1@ge_st,89,51,6	script	魔法大賽觀眾#a189	982,{/* 83799 */}
+1@ge_st,89,52,6	script	魔法大賽觀眾#a190	919,{/* 83800 */}
+1@ge_st,89,53,6	script	魔法大賽觀眾#a191	413,{/* 83801 */}
+1@ge_st,89,54,6	script	魔法大賽觀眾#a192	943,{/* 83802 */}
+1@ge_st,89,55,6	script	魔法大賽觀眾#a193	538,{/* 83803 */}
+1@ge_st,89,56,6	script	魔法大賽觀眾#a194	536,{/* 83804 */}
+1@ge_st,89,57,6	script	魔法大賽觀眾#a195	482,{/* 83805 */}
+1@ge_st,89,58,6	script	魔法大賽觀眾#a196	95,{/* 83806 */}
+1@ge_st,89,59,6	script	魔法大賽觀眾#a197	911,{/* 83807 */}
+1@ge_st,94,34,0	script	魔法大賽觀眾#a153	87,{/* 83808 */}
+1@ge_st,96,34,0	script	魔法大賽觀眾#a155	704,{/* 83809 */}
+1@ge_st,98,34,0	script	魔法大賽觀眾#a157	894,{/* 83810 */}
+1@ge_st,100,34,0	script	魔法大賽觀眾#a159	906,{/* 83811 */}
+1@ge_st,102,34,0	script	魔法大賽觀眾#a161	476,{/* 83812 */}
+1@ge_st,104,34,0	script	魔法大賽觀眾#a163	995,{/* 83813 */}
+1@ge_st,106,34,0	script	魔法大賽觀眾#a165	839,{/* 83814 */}
+1@ge_st,108,34,0	script	魔法大賽觀眾#a167	717,{/* 83815 */}
+1@ge_st,110,34,2	script	魔法大賽觀眾#a169	863,{/* 83816 */}
+1@ge_st,112,34,2	script	魔法大賽觀眾#a171	819,{/* 83817 */}
+1@ge_st,114,34,2	script	魔法大賽觀眾#a173	821,{/* 83818 */}
+1@ge_st,116,34,2	script	魔法大賽觀眾#a175	917,{/* 83819 */}
+1@ge_st,118,34,2	script	魔法大賽觀眾#a177	793,{/* 83820 */}
+1@ge_st,120,34,2	script	魔法大賽觀眾#a179	823,{/* 83821 */}
+1@ge_st,122,34,2	script	魔法大賽觀眾#a181	825,{/* 83822 */}
+1@ge_st,124,34,2	script	魔法大賽觀眾#a183	918,{/* 83823 */}
+
+1@ge_st,106,62,6	script	洛奇#a2	512,{}
+1@ge_st,108,62,6	script	卡奧斯#a2	683,{}
+1@ge_st,111,62,4	script	愛麗絲#a2	666,{}
+1@ge_st,112,62,4	script	莉迪亞#a2	10010,{}
+
+
+//================================================================
+// Rivals
+//================================================================
+1@ge_st,114,50,4	script	雅樂西#1	670,{
+	end;
+	OnActivate:
+		enablenpc instance_npcname("雅樂西#1");
+		npctalk "沒問題...";
+		sleep 500;
+		npctalk "我有母親大人和父親大人贈送的...";
+		sleep 500;
+		npctalk "天使的羽飾和女神的假面。";
+		sleep 500;
+		npctalk "一一一一，一定沒問題的...";
+		sleep 500;
+		npctalk "請多紫教了！";
+		sleep 500;
+		npctalk "啊，咬到舌頭了...";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("雅樂西#1");
+		sleep 500;
+		npctalk "....呃...完敗...";
+		sleep 500;
+		npctalk "...感覺差了好幾個次元，好痛...";
+		sleep 500;
+		npctalk "我的比賽就到此為止了...";
+		sleep 500;
+		npctalk "接下來的比賽請你加油！";
+		sleep 500;
+		npctalk "我也會在場外給你打氣的！";
+		sleep 500;
+		hideonnpc instance_npcname("雅樂西#1");
+		sleep 500;
+		enablenpc instance_npcname("雅樂西#z1");
+		disablenpc instance_npcname("雅樂西#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	狄歐艾瑞默司#1	669,{
+	end;
+	OnActivate:
+		npctalk "我呢...";
+		sleep 500;
+		npctalk "不太喜歡沒有意義的閒聊...";
+		sleep 500;
+		npctalk "讓我們快點開始吧！";
+		sleep 500;
+		npctalk "反正結果已經注定了。";
+		sleep 500;
+		npctalk "快點結束我好去找我的honey告白了！";
+		sleep 500;
+		npctalk "告白的結果肯定也是成功！";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("狄歐艾瑞默司#1");
+		sleep 500;
+		npctalk "....呃...最近剛換了武器...";
+		sleep 500;
+		npctalk "...看來還沒有完全適應...";
+		sleep 500;
+		npctalk "這並不是因為我的實力而輸掉的比賽！";
+		sleep 500;
+		npctalk "都是武器不太好的緣故！";
+		sleep 500;
+		npctalk "你的運氣真不錯啊！";
+		sleep 500;
+		npctalk "真是的...這都是運氣的原因啊！";
+		sleep 500;
+		hideonnpc instance_npcname("狄歐艾瑞默司#1");
+		sleep 500;
+		enablenpc instance_npcname("狄歐艾瑞默司#z1");
+		disablenpc instance_npcname("狄歐艾瑞默司#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	吉芬流氓#n1	682,{
+	end;
+	OnActivate:
+		npctalk "哼哼，是你小子啊...";
+		sleep 500;
+		npctalk "看來在這裡要好好教訓你一次了！";
+		sleep 500;
+		npctalk "誰叫你多管閒事。";
+		sleep 500;
+		npctalk "讓你嘗嘗苦頭！";
+		sleep 500;
+		npctalk "下次看你還敢不敢惹我們。";
+		sleep 500;
+		npctalk "準備受死吧！";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("吉芬流氓#n1");
+		sleep 500;
+		npctalk "....嗚...怎麼會輸的...";
+		sleep 500;
+		npctalk "......我在吉芬街道縱橫這麼多年。";
+		sleep 500;
+		npctalk "居然輸給一個名不見經傳的外來人！";
+		sleep 500;
+		npctalk "這還怎麼繼續混下去！";
+		sleep 500;
+		npctalk "你給我記著！";
+		sleep 500;
+		npctalk "這個仇...我一定要報！";
+		sleep 500;
+		hideonnpc instance_npcname("吉芬流氓#n1");
+		sleep 500;
+		disablenpc instance_npcname("吉芬流氓#n1");
+		end;
+}
+
+1@ge_st,114,50,4	script	吉分鐵匠#n1	681,{
+	end;
+	OnActivate:
+		npctalk "你就等著吧，馬上就打殘你！";
+		sleep 500;
+		npctalk "zeny也全都搶光！";
+		sleep 500;
+		npctalk "你就哭著回家吧。";
+		sleep 500;
+		npctalk "讓你見識一下流氓的實力！";
+		sleep 500;
+		npctalk "你完蛋了！";
+		sleep 500;
+		npctalk "受死吧！";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("吉分鐵匠#n1");
+		sleep 500;
+		npctalk "怎麼可能！我居然輸給了那種人...";
+		sleep 500;
+		npctalk "難以置信！";
+		sleep 500;
+		npctalk "這要是傳出去，我在吉芬還怎麼混...";
+		sleep 500;
+		npctalk "會被瞧不起的...";
+		sleep 500;
+		npctalk "天哪！完全不能接受！";
+		sleep 500;
+		hideonnpc instance_npcname("吉分鐵匠#n1");
+		sleep 500;
+		disablenpc instance_npcname("吉分鐵匠#n1");
+		end;
+}
+
+1@ge_st,114,50,4	script	吉分小偷#n1	671,{
+	end;
+	OnActivate:
+		npctalk "我還以為這次至少能拿到100萬zeny。";
+		sleep 500;
+		npctalk "結果太過招搖了，反而收穫很小...";
+		sleep 500;
+		npctalk "唉，我只是想要zeny而已。";
+		sleep 500;
+		npctalk "這樣參加魔法大賽也沒什麼意義了...";
+		sleep 500;
+		npctalk "算了，先贏了再說！";
+		sleep 500;
+		npctalk "果然還是金錢最棒了！";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("吉分小偷#n1");
+		sleep 500;
+		npctalk "你...下手就不能輕一點麼...";
+		sleep 500;
+		npctalk "我居然輸了...";
+		sleep 500;
+		npctalk "是因為太常去偷東西的緣故麼...";
+		sleep 500;
+		npctalk "所以戰鬥力才退步這麼多麼...";
+		sleep 500;
+		npctalk "嗚...看來要想多偷東西，也要精進實力才行！";
+		sleep 500;
+		npctalk "回去再好好努力吧！";
+		sleep 500;
+		hideonnpc instance_npcname("吉分小偷#n1");
+		sleep 500;
+		disablenpc instance_npcname("吉分小偷#n1");
+		end;
+}
+
+1@ge_st,114,50,4	script	沛蒙#1	672,{
+	end;
+	OnActivate:
+		enablenpc instance_npcname("沛蒙#1");
+		npctalk "哼，這次的對手...一看感覺就是...";
+		sleep 500;
+		npctalk "運氣好才能晉陞的吧...";
+		sleep 500;
+		npctalk "真不想弄髒了我的手。";
+		sleep 500;
+		npctalk "就優雅的把你打敗吧...";
+		sleep 500;
+		npctalk "看來馬上就要開始了！";
+		sleep 500;
+		npctalk "趕快結束，我好去買新的頭飾...";
+		npctalk "加油！",instance_npcname("普隆德拉遊客#a1");
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("沛蒙#1");
+		sleep 500;
+		npctalk "怎麼可能...我怎麼會輸...";
+		sleep 500;
+		npctalk "竟被這種沒品味的傢伙...";
+		sleep 500;
+		npctalk "真是我人生中的恥辱...";
+		sleep 500;
+		npctalk "我的眾多女粉絲肯定傷心了！";
+		sleep 500;
+		npctalk "唉，這讓我還怎麼泡妞...";
+		sleep 500;
+		npctalk "看來還是先低調一點吧...";
+		sleep 500;
+		hideonnpc instance_npcname("沛蒙#1");
+		sleep 500;
+		enablenpc instance_npcname("沛蒙#z1");
+		disablenpc instance_npcname("沛蒙#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	奧樂德#1	673,{
+	end;
+	OnActivate:
+		enablenpc instance_npcname("奧樂德#1");
+		npctalk "我是奧樂德...";
+		sleep 500;
+		npctalk "很高興有機會與你較量。";
+		sleep 500;
+		npctalk "請你拿出全力，讓我們來一場堂堂正正的比試。";
+		sleep 500;
+		npctalk "請多指教了！";
+		sleep 500;
+		npctalk "嗯，就連我在這場合都會有些緊張啊。";
+		npctalk "YAHOO~~~~FIGHT！！",instance_npcname("魔法大賽觀眾#a8");
+		sleep 500;
+		npctalk "必須得冷靜下來...";
+		npctalk "希望比賽精彩！！",instance_npcname("魔法大賽觀眾#a11");
+		npctalk "上啊！上啊！加油~~~！！",instance_npcname("魔法大賽觀眾#a14");
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("奧樂德#1");
+		sleep 500;
+		npctalk "謝謝你的指教！";
+		sleep 500;
+		npctalk "這次的比試真的非常有意義...";
+		sleep 500;
+		npctalk "但可惜的是，我沒有被勝利女神所眷顧...";
+		sleep 500;
+		npctalk "我相信你一定會在這場大賽中走的更遠！";
+		sleep 500;
+		npctalk "我會在觀眾席上見識你的英姿！";
+		sleep 500;
+		npctalk "請在之後的比賽中加油！";
+		sleep 500;
+		hideonnpc instance_npcname("奧樂德#1");
+		sleep 500;
+		enablenpc instance_npcname("奧樂德#z1");
+		disablenpc instance_npcname("奧樂德#1");
+		end;
+}
+
+
+1@ge_st,114,50,4	script	布魯德哈載#1	674,{
+	end;
+	OnActivate:
+		npctalk "我也想要流淌你的血液呢...";
+		sleep 500;
+		npctalk "啊？...";
+		sleep 500;
+		npctalk "怎麼感覺像在表白！";
+		sleep 500;
+		npctalk "剛剛的不算，重來重來。";
+		sleep 500;
+		npctalk "不過，我很強的，你這次肯定沒戲了！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		npctalk "另外我最喜歡的是我哥哥！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("布魯德哈載#1");
+		sleep 500;
+		npctalk "等等！";
+		sleep 500;
+		npctalk "兔耳快壞了啦...搖搖晃晃的了！";
+		sleep 500;
+		npctalk "這是哥哥在小時候送給我的生日禮物！";
+		sleep 500;
+		npctalk "啊，有這個在，比賽都集中不了精神！";
+		sleep 500;
+		npctalk "....唉！";
+		sleep 500;
+		npctalk "那...那...我還是撤退了...";
+		sleep 500;
+		hideonnpc instance_npcname("布魯德哈載#1");
+		sleep 500;
+		enablenpc instance_npcname("布魯德哈載#z1");
+		disablenpc instance_npcname("布魯德哈載#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	庫洛雅庫瑪#1	675,{
+	end;
+	OnActivate:
+		npctalk "呼啊...";
+		sleep 500;
+		npctalk "真是麻煩...";
+		sleep 500;
+		npctalk "這種過家家般的戰鬥，沒什麼意思啊！";
+		sleep 500;
+		npctalk "不是賭上性命的死鬥，實在無法提起精神來...";
+		sleep 500;
+		npctalk "不過你打敗了幾名不錯的選手！";
+		sleep 500;
+		npctalk "從這點看，你應該夠格當我的對手了！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("庫洛雅庫瑪#1");
+		sleep 500;
+		npctalk "要顧著對手，不能痛下殺手，真是麻煩哪！";
+		sleep 500;
+		npctalk "這無聊透頂的比試。";
+		sleep 500;
+		npctalk "死，或生，這樣才簡單！";
+		sleep 500;
+		npctalk "真是的...就因為這束手束腳的規矩。";
+		sleep 500;
+		npctalk "算了...今天就到此為止了！";
+		sleep 500;
+		hideonnpc instance_npcname("庫洛雅庫瑪#1");
+		sleep 500;
+		enablenpc instance_npcname("庫洛雅庫瑪#z1");
+		disablenpc instance_npcname("庫洛雅庫瑪#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	伊佛德斯#1	676,{
+	end;
+	OnActivate:
+		npctalk "與我的這場戰鬥，大概你一輩子都不會忘記。";
+		sleep 500;
+		npctalk "為什麼朱朱那個混蛋會忘了...";
+		sleep 500;
+		npctalk "算了，不要哭了哦！";
+		sleep 500;
+		npctalk "拼盡你的全力吧！";
+		sleep 500;
+		npctalk "多多指教了！";
+		sleep 500;
+		npctalk "我們這就開始吧！";
+		sleep 500;
+		donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("伊佛德斯#1");
+		sleep 500;
+		npctalk "唔噢噢噢噢噢噢噢噢噢噢噢！";
+		sleep 500;
+		npctalk "怎麼回事！我居然輸了！";
+		sleep 500;
+		npctalk "居然打敗了號稱鐵壁的我。";
+		sleep 500;
+		npctalk "你會被朱朱那個傢伙設為新的目標的！";
+		sleep 500;
+		npctalk "做好覺悟吧！";
+		sleep 500;
+		hideonnpc instance_npcname("伊佛德斯#1");
+		sleep 500;
+		enablenpc instance_npcname("伊佛德斯#z1");
+		disablenpc instance_npcname("伊佛德斯#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	萊采尼芮#1	677,{
+	end;
+	OnActivate:
+		npctalk "咳...";
+		sleep 500;
+		npctalk "開始了就要好好繼續下去哦...";
+		sleep 500;
+		npctalk "不過你肯定也是一樣...";
+		sleep 500;
+		npctalk "一開始鬥志高漲！";
+		sleep 500;
+		npctalk "沒多久就哭著逃跑了！";
+		sleep 500;
+		npctalk "好了，不要磨蹭了，快開始吧！";
+		sleep 500;
+		npctalk "好恐怖的選手...",instance_npcname("斐揚遊客#a1");
+		sleep 500;
+		npctalk "不要害怕啊，黑馬選手！",instance_npcname("普隆德拉遊客#a1");
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("萊采尼芮#1");
+		sleep 500;
+		npctalk "啊啦？居然打敗了我？";
+		sleep 500;
+		npctalk "真奇怪...";
+		sleep 500;
+		npctalk "戰鬥的記憶完全沒有了。";
+		sleep 500;
+		npctalk "不過既然你還站在這，那就應該是你贏了。";
+		sleep 500;
+		npctalk "和其他人情況不一樣呢！";
+		sleep 500;
+		npctalk "真是不可思議...";
+		sleep 500;
+		hideonnpc instance_npcname("萊采尼芮#1");
+		sleep 500;
+		enablenpc instance_npcname("萊采尼芮#z1");
+		disablenpc instance_npcname("萊采尼芮#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	歐託莉柯#1	678,{
+	end;
+	OnActivate:
+		npctalk "果然在賽場上，氣氛就是和觀眾席不同呢...";
+		sleep 500;
+		npctalk "能來親身體驗一下真是太好了...";
+		sleep 500;
+		npctalk "比試也不像舞蹈那麼在乎年齡，你說是麼？";
+		sleep 500;
+		npctalk "算了...";
+		sleep 500;
+		npctalk "總之，就享受這場戰鬥吧！";
+		sleep 500;
+		npctalk "拜託大家加油了~";
+		sleep 500;
+		npctalk "好美！！！",instance_npcname("伯仁斯遊客#a1");
+		npctalk "移不開目光...",instance_npcname("魔法大賽觀眾#a21");
+		npctalk "啊，好漂亮...",instance_npcname("魔法大賽觀眾#a14");
+		sleep 500;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("歐託莉柯#1");
+		sleep 500;
+		npctalk "不要~~~";
+		sleep 500;
+		npctalk "果然，年齡太大了，也沒什麼戰鬥經驗...";
+		sleep 500;
+		npctalk "不過真是不錯的比試呢。";
+		sleep 500;
+		npctalk "雖然沒有取勝有點可惜，但還是挺有意思的。";
+		sleep 500;
+		npctalk "稍微找回了一點年輕時的感覺了。";
+		sleep 500;
+		npctalk "謝謝啦~~";
+		sleep 500;
+		hideonnpc instance_npcname("歐託莉柯#1");
+		sleep 500;
+		enablenpc instance_npcname("歐託莉柯#z1");
+		disablenpc instance_npcname("歐託莉柯#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	朱朱#1	679,{
+	end;
+	OnActivate:
+		npctalk "真是謝謝你們準備這樣的舞台。";
+		sleep 500;
+		npctalk "我也已經很久沒有實戰過了...";
+		sleep 500;
+		npctalk "再不鍛煉鍛煉，水平都要退化了。";
+		sleep 500;
+		npctalk "我會全力以赴！放馬過來吧！";
+		sleep 500;
+		npctalk "那麼，堂堂正正的一決勝負吧！";
+		sleep 500;
+		npctalk "這次的比試，令人非常期待啊！",instance_npcname("魔法大賽觀眾#a9");
+		npctalk "噢...接下來的對決看起來會很棒！",instance_npcname("魔法大賽觀眾#a4");
+		sleep 500;
+		npctalk "心跳的好快，好緊張！",instance_npcname("莉迪亞#a2");
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("朱朱#1");
+		sleep 500;
+		npctalk "這個大賽果然臥虎藏龍。";
+		sleep 500;
+		npctalk "可以見識到這麼優秀的年輕選手，真是一件幸事。";
+		sleep 500;
+		npctalk "我的奪冠之夢就止步於此了。";
+		sleep 500;
+		npctalk "希望作為擊敗我的選手，你能夠最終奪冠。";
+		sleep 500;
+		npctalk "我會為你祝福的！";
+		sleep 500;
+		hideonnpc instance_npcname("朱朱#1");
+		sleep 500;
+		enablenpc instance_npcname("朱朱#z1");
+		disablenpc instance_npcname("朱朱#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	狄瓦伊#1	680,{
+	end;
+	OnActivate:
+		npctalk "我名叫狄瓦伊...";
+		sleep 500;
+		npctalk "以你作為對手的話，想必戰鬥一定會很激烈吧...";
+		sleep 500;
+		npctalk "如果讓你看到了身為教授的我的狼狽形象，請不要在意。";
+		sleep 500;
+		npctalk "汶巴拉族長，養育我的親人，還有可愛的弟子們都在啊...";
+		sleep 500;
+		npctalk "對我重要的人都在觀看這場戰鬥！";
+		sleep 500;
+		npctalk "我會拿出全力，不讓他們失望。";
+		sleep 500;
+		npctalk  "哇，老師！",instance_npcname("魔法學院學生#a2");
+		npctalk  "老師，一定要加油啊！",instance_npcname("魔法學院學生#a3");
+		npctalk  "老師好棒，我也想像老師那樣！",instance_npcname("魔法學院學生#a4");
+		sleep 500;
+		npctalk "想像不出老師會輸的樣子~！",instance_npcname("魔法學院學生#a1");
+		npctalk "大家一起為老師大聲加油吧！",instance_npcname("魔法學院學生#a5");
+		sleep 500;
+		npctalk "請你也盡全力，一決勝負吧！";
+		npctalk "聽說B組已經決出勝者了，是潘利爾！",instance_npcname("魔法大賽觀眾#a11");
+		sleep 500;
+		npctalk "到底誰會對站潘利爾呢？真讓人期待啊！",instance_npcname("魔法大賽觀眾#a12");
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		sleep 500;
+		npctalk "一~！二~！",instance_npcname("魔法學院學生#a5");
+		sleep 500;
+		npctalk  "狄瓦伊老師，加油！",instance_npcname("魔法學院學生#a2");
+		npctalk  "老師，加油啊！",instance_npcname("魔法學院學生#a3");
+		npctalk  "老師，FIGHT~！",instance_npcname("魔法學院學生#a4");
+		npctalk  "老師，加油啊！",instance_npcname("魔法學院學生#a1");
+		npctalk  "老師，加油啊！",instance_npcname("魔法學院學生#a5");
+		end;
+		
+	OnDefeat:
+		hideoffnpc instance_npcname("狄瓦伊#1");
+		sleep 500;
+		npctalk "這次的戰鬥，汶巴拉的大家和族長肯定...";
+		sleep 500;
+		npctalk "還有魔法學院的學生們，都能接受這樣的結果吧。";
+		sleep 500;
+		npctalk "更重要的是，我自己也認為這是一場精彩的戰鬥。";
+		sleep 500;
+		npctalk "最後的決賽請加油！";
+		sleep 500;
+		npctalk "據弟子所言，潘利爾的實力應該還在我之上，祝你好運！";
+		sleep 500;
+		hideonnpc instance_npcname("狄瓦伊#1");
+		sleep 500;
+		enablenpc instance_npcname("狄瓦伊#z1");
+		disablenpc instance_npcname("狄瓦伊#1");
+		end;
+}
+
+1@ge_st,114,50,4	script	培坎納比恩#1	665,{
+	end;
+	OnActivate:
+	enablenpc instance_npcname("#paycanatalk");
+	end;
+	OnDefeat:
+	hideoffnpc instance_npcname("培坎納比恩#1");
+	enablenpc instance_npcname("#paycanatalk2");
+	end;
+	
+	OnTalk1:
+    npctalk "喲，無名小卒！";
+    sleep 1000;
+    npctalk "你有聽到很多觀眾為我加油的聲音吧！";
+    sleep 1000;
+    npctalk "真無聊真無聊~~",instance_npcname("魔法大賽觀眾#a11");
+    sleep 1000;
+    npctalk "快點開始決賽吧~！",instance_npcname("魔法大賽觀眾#a13");
+    sleep 1000;
+    npctalk "珍惜生命的話，勸你還是快點棄權吧！";
+    sleep 1000;
+    npctalk "不過你如果想體驗我的傑作，阿爾方斯的威力，我倒是也沒什麼意見啦~";
+    sleep 1000;
+    npctalk "來點精彩的吧~！",instance_npcname("魔法大賽觀眾#a13");
+    sleep 1000;
+    npctalk "你有看見過我的生命體，阿爾方斯吧？";
+    sleep 1000;
+    donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+    sleep 1000;
+    npctalk "戰鬥一旦開始，再求饒就來不及了哦！";
+    sleep 1000;
+		donpcevent instance_npcname("#比賽控制") + "::OnStart";
+		end;
+	
+	OnTalk2:
+    npctalk "我竟然輸了...";
+    sleep 1000;
+    npctalk "我的心血之作，阿爾方斯...！";
+    sleep 1000;
+    npctalk "本來是要晉陞決賽的...";
+    sleep 1000;
+    npctalk "還想和潘利爾一較高下的...";
+    sleep 1000;
+    npctalk "真不甘心！！！";
+    sleep 1000;
+		hideonnpc instance_npcname("培坎納比恩#1");
+		sleep 500;
+		enablenpc instance_npcname("培坎納比恩#z1");
+		disablenpc instance_npcname("培坎納比恩#1");
+		end;
+}
+
+1@ge_st,108,50,4	script	#paycanatalk	139,25,25,{
+	end;
+	
+OnTouch:
+	donpcevent instance_npcname("培坎納比恩#1")+"::OnTalk1";
+	disablenpc instance_npcname("#paycanatalk");
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname("#paycanatalk");
+	end;
+}
+
+1@ge_st,108,50,4	script	#paycanatalk2	139,25,25,{
+	end;
+	
+OnTouch_:
+	donpcevent instance_npcname("培坎納比恩#1")+"::OnTalk2";
+	disablenpc instance_npcname("#paycanatalk2");
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname("#paycanatalk2");
+	end;
+
+}
+
+1@ge_st,114,50,4	script	潘利爾#f	664,{
+    end;
+	OnActivate:
+    enablenpc instance_npcname("#fenrirtalk");
+    end;
+	OnDefeat:
+    hideoffnpc instance_npcname("潘利爾#f");
+    enablenpc instance_npcname("#fenrirtalk2");
+    end;
+	
+	OnTalk1:
+    npctalk "...終於到決賽了啊。";
+    sleep 1000;
+    npctalk "初次參賽就這麼厲害，加油啊，新人！",instance_npcname("斐揚遊客#a1");
+    sleep 1000;
+    npctalk "....既然一路到了這裡。";
+    sleep 1000;
+    npctalk "喂喂，你們不覺得這比賽會很有意思麼！",instance_npcname("愛麗絲#a2");
+    sleep 1000;
+    npctalk "想必你的實力也很強吧。";
+    sleep 1000;
+    npctalk "既然站在了決賽場上，我也會拿出自己全部的實力。";
+    sleep 1000;
+    npctalk "困擾啊~~該為哪邊加油呢？",instance_npcname("莉迪亞#a2");
+    npctalk "潘利爾請給我簽名！",instance_npcname("普隆德拉遊客#a2");
+    sleep 1000;
+    npctalk "所以我希望你也能全力以赴。";
+    sleep 1000;
+    npctalk "最強的對決要開始了！",instance_npcname("魔法大賽觀眾#a5");
+		donpcevent instance_npcname("#final") + "::OnStart";
+		end;
+	
+	OnTalk2:
+    npctalk "...我失敗了。";
+    sleep 1000;
+    npctalk "沒想到魔法大賽竟有這麼強的參賽者。";
+    sleep 1000;
+    npctalk "看來我也有很多地方需要繼續精進啊。";
+    sleep 1000;
+    npctalk "總之，你是魔法大賽的決賽勝者。";
+    sleep 1000;
+    npctalk "恭喜你！";
+    sleep 1000;
+    npctalk "不過，下次的魔法大賽就不會讓你輕易取勝了！";
+    sleep 1000;
+
+    //warp instance_mapname("1@ge_st"),109,50;
+		donpcevent instance_npcname("#win")+"::OnEnable";
+		end;
+}
+
+
+1@ge_st,108,50,4	script	#fenrirtalk	139,25,25,{
+	end;
+	
+OnTouch:
+	donpcevent instance_npcname("潘利爾#f")+"::OnTalk1";
+	disablenpc instance_npcname("#fenrirtalk");
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname("#fenrirtalk");
+	end;
+}
+
+1@ge_st,108,50,4	script	#fenrirtalk2	139,25,25,{
+	end;
+	
+OnTouch_:
+	donpcevent instance_npcname("潘利爾#f")+"::OnTalk2";
+	disablenpc instance_npcname("#fenrirtalk2");
+	end;
+	
+OnInstanceInit:
+	disablenpc instance_npcname("#fenrirtalk2");
+	end;
+}
+
+1@ge_st,1,1,1	script	#win	CLEAR_NPC,{
+		end;
+	OnEnable:
+		disablenpc instance_npcname("潘利爾#f");
+		movenpc instance_npcname("雅樂西#q1"), 104, 53;
+		movenpc instance_npcname("狄歐艾瑞默司#q1"), 100, 49;
+		movenpc instance_npcname("沛蒙#q1"), 102, 46;
+		movenpc instance_npcname("奧樂德#q1"), 104, 44;
+		movenpc instance_npcname("布魯德哈載#q1"), 112, 45;
+		movenpc instance_npcname("庫洛雅庫瑪#q1"), 116, 46;
+		movenpc instance_npcname("伊佛德斯#q1"), 115, 53;
+		movenpc instance_npcname("萊采尼芮#q1"), 116, 49;
+		movenpc instance_npcname("歐託莉柯#q1"), 112, 53;
+		movenpc instance_npcname("朱朱#q1"), 109, 54;
+		movenpc instance_npcname("狄瓦伊#q1"), 106, 50;
+		movenpc instance_npcname("培坎納比恩#q1"), 107, 48;
+		movenpc instance_npcname("潘利爾#q1"), 112, 50;
+		hideoffnpc instance_npcname("魔法大賽主持#1");
+		//changequest 9307,9308;
+		sleep 500;
+		npctalk "其他的參賽者也想要祝賀你的優勝。",instance_npcname("潘利爾#q1");
+		end;
+		
+	OnInstanceInit:
+		end;
+}
+
+
+
+1@ge_st,1,1,6	script	雅樂西#q1	670,{
+	OnTalk:
+		npctalk "恭喜你...要是有一天我也能這麼強就好了...";
+		end;
+}
+1@ge_st,1,1,6	script	狄歐艾瑞默司#q1	669,{
+	OnTalk:
+		npctalk "你的運氣太好了！是的，這一切都是運氣！";
+		end;
+}
+1@ge_st,1,1,0	script	沛蒙#q1	672,{
+	OnTalk:
+		npctalk "比賽結束後要去哪裡搭訕美女呢...";
+		end;
+}
+1@ge_st,1,1,0	script	奧樂德#q1	673,{
+	OnTalk:
+		npctalk "真是令人大開眼界的戰鬥！";
+		end;
+}
+1@ge_st,1,1,2	script	布魯德哈載#q1	674,{
+	OnTalk:
+		npctalk "要是我哥哥來了，勝者說不定就不是你了！";
+		end;
+}
+1@ge_st,1,1,2	script	庫洛雅庫瑪#q1	675,{
+	OnTalk:
+		npctalk "哼！無聊的比賽，不過還是祝賀你的勝利。";
+		end;
+}
+1@ge_st,1,1,4	script	伊佛德斯#q1	676,{
+	OnTalk:
+		npctalk "你連朱朱那傢伙都打敗了...取勝也是正常的吧。";
+		end;
+}
+1@ge_st,1,1,4	script	萊采尼芮#q1	677,{
+	OnTalk:
+		npctalk "雖然我還在煩惱記憶的事情，不過先祝賀你取得優勝了！";
+		end;
+}
+1@ge_st,1,1,4	script	歐託莉柯#q1	678,{
+	OnTalk:
+		npctalk "年輕太好了~ 你的獲勝真是熱血啊！";
+		end;
+}
+1@ge_st,1,1,4	script	朱朱#q1	679,{
+	OnTalk:
+		npctalk "恭喜取得優勝，以你的實力來說這真是理所應當。";
+		end;
+}
+1@ge_st,1,1,6	script	狄瓦伊#q1	680,{
+	OnTalk:
+		npctalk "真是漂亮的戰鬥，你的實力果然很強！";
+		end;
+}
+1@ge_st,1,1,0	script	培坎納比恩#q1	665,{
+	OnTalk:
+		npctalk "哼！下次我會像你證明我和阿爾方斯的取勝方程式！";
+		end;
+}
+1@ge_st,1,1,4	script	潘利爾#q1	664,{
+	OnTalk:
+	npctalk "謝謝你讓我認識到了不足";
+	end;
+}
+
+//================================================================
+// Main Characters after the tournament
+//================================================================
+
+1@gef,125,105,4	script	愛麗絲#a1	666,{/* 83899 (hide)*/
+		if(checkquest(9308) >= 0) {
+	cutin "hero_iris_02.bmp", 2;
+	mes "[愛麗絲]";
+	mes "啊...我的飛空艇船票...";
+	mes "算了，再想其他辦法吧~";
+	mes "恭喜你獲得優勝，真是精彩的比賽！";
+	close2;
+	cutin "hero_iris_02.bmp", 255;
+	end;
+		}
+		if(!checkquest(9309) >= 0 || 'IRIS) {
+	cutin "hero_iris_02.bmp", 2;
+	mes "[愛麗絲]";
+	mes "本來是在旅途中，結果飛空艇...";
+	mes "還以為當時死定了~";
+	mes "不過這個大賽真有意思呢，";
+	mes "看來反而因禍得福了。";
+	close2;
+	cutin "hero_iris_02.bmp", 255;
+	end;
+		}
+		cutin "hero_iris_02.bmp", 2;
+		mes "[愛麗絲]";
+		mes "比試辛苦了！";
+		mes "這次有點可惜呢...";
+		mes "下次應該會更好吧！";
+		next;
+		mes "[愛麗絲]";
+		mes "希望你能繼續加油！";
+		mes "這裡有點小的禮物，送給你作為安慰獎好了！";
+		getitem 608, 1;
+		'IRIS = 1;
+		close2;
+		cutin "hero_iris_01.bmp", 255;
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("愛麗絲#a1");
+		end;
+}
+
+1@gef,123,108,4	script	卡奧斯#a1	683,{/* 83900 (hide)*/
+		if(checkquest(9308) >= 0) {
+	cutin "hero_chaos_01.bmp", 2;
+	mes "[卡奧斯]";
+	mes "恭喜你取得大賽優勝！";
+	mes "真是精彩的比賽啊...";
+	close2;
+	cutin "hero_chaos_01.bmp", 255;
+	end;
+		}
+		if(!checkquest(9309) >= 0 || 'CHAOS) {
+	cutin "hero_chaos_01.bmp", 2;
+	mes "[卡奧斯]";
+	mes "啊...乘坐飛空艇時出了些意外。";
+	mes "不知怎麼就到吉芬來了。";
+	mes "因為各種各樣的原因，潘利爾代表我們參賽了！";
+	mes "哈哈，稍微有點不安啊...";
+	close2;
+	cutin "hero_chaos_01.bmp", 255;
+	end;
+		}
+		cutin "hero_chaos_01.bmp", 2;
+		mes "[卡奧斯]";
+		mes "不錯的比賽！";
+		mes "不過，有些可惜啊。";
+		mes "如果再來一次的話，感覺有勝利的機會！";
+		next;
+		mes "[卡奧斯]";
+		mes "對了，熟人一場，我這有點藥品，";
+		mes "作為參賽紀念品送給你了！";
+		mes "希望對你有所幫助。";
+		getitem 608, 1;
+		'CHAOS = 1;
+		close2;
+		cutin "hero_chaos_01.bmp", 255;
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("卡奧斯#a1");
+		end;
+}
+
+1@gef,117,108,6	script	莉迪亞#a1	10010,{/* 83901 (hide)*/
+		if(checkquest(9308) >= 0) {
+	cutin "lydia_a.bmp", 2;
+	mes "[莉迪亞]";
+	mes "好厲害，恭喜你成為優勝者！";
+	mes "嘿嘿，不枉我一直給你加油。";
+	close2;
+	cutin "lydia_a.bmp", 255;
+	end;
+		}
+		if(!checkquest(9309) >= 0 || 'LYDIA) {
+	cutin "lydia_a.bmp", 2;
+	mes "[莉迪亞]";
+	mes "啊啊，走在路上突然就碰見了飛空艇掉下來！";
+	mes "真是嚇我一跳。";
+	mes "不過遇見了不錯的帥哥，嘿嘿。";
+	close2;
+	cutin "lydia_a.bmp", 255;
+	end;
+		}
+		cutin "lydia_a.bmp", 2;
+		mes "[莉迪亞]";
+		mes "你的比賽，我在觀眾席上觀看了！";
+		next;
+		mes "[莉迪亞]";
+		mes "雖然結果有些可惜，但你表現得不錯！";
+		mes "下次也許會更好吧。";
+		mes "拿著！這是我在森林裡撿到的，送給你了！";
+		getitem 608, 1;
+		'LYDIA = 1;
+		close2;
+		cutin "lydia_a.bmp", 255;
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("莉迪亞#a1");
+		end;
+}
+
+1@gef,120,108,4	script	潘利爾#a1	664,{/* 83902 (hide)*/
+		if(checkquest(9308) >= 0) {
+	cutin "fenrir_a.bmp", 2;
+	mes "[潘利爾]";
+	mes "真是精彩的戰鬥！";
+	mes "多虧了你，我也認識到了自己實力不足的一面。";
+	close2;
+	cutin "fenrir_a.bmp", 255;
+	end;
+		}
+		if(!checkquest(9309) >= 0 || 'FENRIR) {
+	cutin "fenrir_a.bmp", 2;
+	mes "[潘利爾]";
+	mes "因為各種各樣的原因，";
+	mes "結果我也成為了大賽的參賽者了。";
+	mes "不過這可能對我的修行也有所幫助吧。";
+	close2;
+	cutin "fenrir_a.bmp", 255;
+	end;
+		}
+		cutin "fenrir_a.bmp", 2;
+		mes "[潘利爾]";
+		mes "雖然輸得很可惜，但現在還是先休息一下吧。";
+		next;
+		mes "[潘利爾]";
+		mes "對了，這個送給你，作為努力到現在的紀念吧。";
+		getitem 608, 1;
+		'FENRIR = 1;
+		close2;
+		cutin "fenrir_a.bmp", 255;
+		end;
+		
+	OnInstanceInit:
+		disablenpc instance_npcname("潘利爾#a1");
+		end;
+}
+
+1@gef,115,105,6	script	洛奇#a1	512,{/* 83903 (hide)*/
+		if(checkquest(9308) >= 0) {
+	cutin "ep14_roki01.bmp", 2;
+	mes "[洛奇]";
+	mes "真沒想到你能擊敗潘利爾。";
+	mes "我原本以為潘利爾能輕鬆取得大賽優勝。";
+	mes "不過，還是恭喜你！";
+	close2;
+	cutin "ep14_roki01.bmp", 255;
+	end;
+		}
+		if(!checkquest(9309) >= 0 || 'LOKI) {
+	cutin "ep14_roki01.bmp", 2;
+	mes "[洛奇]";
+	mes "由于飛空艇事件，我們現在困在了吉芬。";
+	mes "不找到其他替代的交通工具的話，接下來的旅行會有點困難。";
+	close2;
+	cutin "ep14_roki01.bmp", 255;
+	end;
+		}
+		cutin "ep14_roki01.bmp", 2;
+		mes "[洛奇]";
+		mes "你的比賽我看了，";
+		mes "還是有些不成熟啊...";
+		mes "應該還有進步的空間。";
+		next;
+		mes "[洛奇]";
+		mes "...";
+		mes "這裡是一點餞別禮，收下吧。";
+		getitem 608, 1;
+		'LOKI = 1;
+		close2;
+		cutin "ep14_roki01.bmp", 255;
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("洛奇#a1");
+		end;
+}
+
+1@gef,116,203,5	script	吉芬嚮導#6	705,{/* 83917 (hide)*/
+		viewpoint 1, 119, 213, 1, 0xFF0000;
+		cutin "gef_soldier.bmp", 2;
+		mes "[魔法大賽嚮導]";
+		mes "這次的吉芬魔法大賽結束了。";
+		next;
+		mes "[魔法大賽嚮導]";
+		mes "感謝各位來參予這次賽事。";
+		mes "希望你們享受到了魔法大賽帶來的樂趣。";
+		next;
+		mes "[魔法大賽嚮導]";
+		mes "請期待下次的大賽!";
+		close2;
+		cutin "gef_soldier.bmp", 255;
+		end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("吉芬嚮導#6");
+		end;
+}
+
+
+1@gef,128,62,4	script	吉芬嚮導#3	705,{/* 83917 (hide)*/
+		viewpoint 1, 119, 213, 1, 0xFF0000;
+		cutin "gef_soldier.bmp", 2;
+		mes "[魔法大賽嚮導]";
+		mes "這次的吉芬魔法大賽結束了。";
+		next;
+		mes "[魔法大賽嚮導]";
+		mes "感謝各位來參予這次賽事。";
+		mes "希望你們享受到了魔法大賽帶來的樂趣。";
+		next;
+		mes "[魔法大賽嚮導]";
+		mes "請期待下次的大賽!";
+		close2;
+		cutin "gef_soldier.bmp", 255;
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("吉芬嚮導#3");
+		end;
+}
+
+1@gef,119,213,0	script	#exit	45,1,1,{/* 84004 (hide)*/
+		mes "從這裡可以離開吉芬，回到次元空間，要離開麼？";
+		next;
+		if(select("再留下來一會兒","回到次元空間") == 1) {
+		mes "你離開了這個場所";
+	close;
+		}
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("#exit");
+		end;
+}
+
+
+1@gef,1,1,1	script	#theend	-1,{
+	end;
+OnEnd:
+	disablenpc instance_npcname("吉芬嚮導#5");
+	disablenpc instance_npcname("吉芬嚮導#4");
+	disablenpc instance_npcname("吉芬嚮導#1");
+	disablenpc instance_npcname("吉芬嚮導#2");
+	enablenpc instance_npcname("吉芬嚮導#3");
+	enablenpc instance_npcname("吉芬嚮導#6");
+	enablenpc instance_npcname("愛麗絲#a1");
+	enablenpc instance_npcname("卡奧斯#a1");
+	enablenpc instance_npcname("莉迪亞#a1");
+	enablenpc instance_npcname("洛奇#a1");
+	enablenpc instance_npcname("潘利爾#a1");
+	enablenpc instance_npcname("#exit");
+	end;
+}
+

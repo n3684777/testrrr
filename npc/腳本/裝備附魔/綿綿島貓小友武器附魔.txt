@@ -1,0 +1,1410 @@
+vdistrict1,59,57,6	script	貓小友	555,{
+
+//------------------------------附魔狀態
+	set $@Enc1,rand(0,11);	//E級代幣
+	set $@Enc2,rand(0,11);	//E級代幣
+	setarray $@Enc_ing1[0],4787,4792,4801,4795,4796,4819,4700,4710,4720,4730,4740,4750;
+	setarray $@Enc_ing2[0],4787,4792,4801,4795,4796,4819,4700,4710,4720,4730,4740,4750;
+
+	set $@Enc3,rand(0,8);	//D級代幣
+	set $@Enc4,rand(0,8);	//D級代幣
+	setarray $@Enc_ing3[0],4795,4796,4819,4740,4750,4700,4701,4731,4711;
+	setarray $@Enc_ing4[0],4795,4796,4819,4740,4750,4700,4701,4731,4711;
+
+	set $@Enc5,rand(0,11);	//C級代幣
+	set $@Enc6,rand(0,11);	//C級代幣
+	setarray $@Enc_ing5[0],4700,4710,4720,4730,4740,4750,4701,4731,4751,4702,4732,4752;
+	setarray $@Enc_ing6[0],4700,4710,4720,4730,4740,4750,4701,4731,4751,4702,4732,4752;
+
+	set $@Enc7,rand(0,8);	//B級代幣
+	set $@Enc8,rand(0,8);	//B級代幣
+	setarray $@Enc_ing7[0],4700,4701,4702,4730,4731,4732,4710,4711,4712;
+	setarray $@Enc_ing8[0],4700,4701,4702,4730,4731,4732,4710,4711,4712;
+
+	set $@Enc9,rand(0,10);	//A級代幣(近距離型)
+	set $@Enc10,rand(0,10);	//A級代幣(近距離型)
+	set $@Enc11,rand(0,10);	//A級代幣(遠距離型)
+	set $@Enc12,rand(0,10);	//A級代幣(遠距離型)
+	set $@Enc13,rand(0,12);	//A級代幣(施法型)
+	set $@Enc14,rand(0,12);	//A級代幣(施法型)
+	setarray $@Enc_ing9[0],4731,4732,4733,4734,4808,4820,4821,4822,4817,4816,4807;
+	setarray $@Enc_ing10[0],4731,4732,4733,4734,4808,4820,4821,4822,4817,4816,4807;
+	setarray $@Enc_ing11[0],4731,4732,4733,47344833,4834,4835,4836,4817,4816,4807;
+	setarray $@Enc_ing12[0],4731,4732,4733,47344833,4834,4835,4836,4817,4816,4807;
+	setarray $@Enc_ing13[0],4711,4712,4713,4714,4721,4722,4723,4814,4813,4812,4826,4760,4761;
+	setarray $@Enc_ing14[0],4711,4712,4713,4714,4721,4722,4723,4814,4813,4812,4826,4760,4761;
+
+	set $@Enc15,rand(0,11);	//海神之憤怒(近距離型)
+	set $@Enc16,rand(0,11);	//海神之憤怒(近距離型)
+	set $@Enc17,rand(0,11);	//海神之憤怒(遠距離型)
+	set $@Enc18,rand(0,11);	//海神之憤怒(遠距離型)
+	set $@Enc19,rand(0,11);	//海神之憤怒(施法型)
+	set $@Enc20,rand(0,11);	//海神之憤怒(施法型)
+	setarray $@Enc_ing15[0],4732,4733,4734,4735,4820,4821,4822,4823,4843,4844,4807,4842;
+	setarray $@Enc_ing16[0],4732,4733,4734,4735,4820,4821,4822,4823,4843,4844,4807,4842;
+	setarray $@Enc_ing17[0],4732,4733,4734,4735,4834,4835,4836,4837,4843,4844,4807,4842;
+	setarray $@Enc_ing18[0],4732,4733,4734,4735,4834,4835,4836,4837,4843,4844,4807,4842;
+	setarray $@Enc_ing19[0],4712,4713,4714,4715,4722,4813,4812,4826,4827,4760,4761,4806;
+	setarray $@Enc_ing20[0],4712,4713,4714,4715,4722,4813,4812,4826,4827,4760,4761,4806;
+
+//------------------------------附魔價格
+	setarray $@S_zeny,1000000;
+	setarray $@A_zeny,500000;
+	setarray $@B_zeny,400000;
+	setarray $@C_zeny,300000;
+	setarray $@D_zeny,200000;
+	setarray $@E_zeny,300000;
+
+	mes "[貓小友]";
+	mes "歡迎光臨!這裡是重新裝潢的貓小友強化店~針對包含4級武器的部分高級武器為您進行各種附魔。";
+	next;
+	switch(select("經營方針有變更嗎?:對高級武器附魔:取消")){
+case 1:
+	mes "[貓小友]";
+	mes "我對於再幫人強化武器時，對卡片和精煉值消失上一直感到自己的極限。後來有一天我找到突破的方法!";
+	next;
+	mes "[貓小友]";
+	mes "你有看到這附近強化能力人士公會大樓嗎?";
+	next;
+	mes "[貓小友]";
+	mes "去那裡的話，有個會強化永恆之翼的像神般的人。當時我就覺得非常驚人!因為那是以我的技術來說是辦不到的能力...";
+	next;
+	mes "[貓小友]";
+	mes "所以我每晚當他的管家幫他打雜，好不容易才學會了保護卡片跟精煉值便能強化武器的方法。";
+	next;
+	mes "[貓小友]";
+	mes "也因為如此，變更了多項規則，至於那部份建議你親自體驗看看好了!";
+ 	next;
+	mes "[貓小友]";
+	mes "海神之憤怒加上A~E級的代幣";
+	mes "一共分為6個等級";
+	mes "^0000FF費用如下：^000000";
+	mes "E級代幣費用30萬";
+	mes "D級代幣費用20萬";
+	mes "C級代幣費用30萬";
+	mes "B級代幣費用40萬";
+	mes "A級代幣費用50萬";
+	mes "海神之憤怒費用100萬";
+	close;
+
+case 2:
+	mes "[貓小友]";
+	mes "選擇你要強化的武器";
+	if (getequipisequiped(8) == 0) set .@strRetPart9$,"武器左-[無法裝置]";
+	else set .@strRetPart9$,getequipname(8);
+	if (getequipisequiped(9) == 0) set .@strRetPart10$,"武器右-[無法裝置]";
+	else set .@strRetPart10$,getequipname(9);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fake_Cat_1,getequipcardid(.@is,0);
+	set @fake_Cat_2,getequipcardid(.@is,1);
+	set @fake_Cat_3,getequipcardid(.@is,2);
+	set @fake_Cat_4,getequipcardid(.@is,3);
+	set @Refine_Cat,getequiprefinerycnt(.@is);
+	if(countitem(@abd)>1){
+	mes "[貓小友]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	mes "[貓小友]";
+	mes "再一次確定你要進行強化的武器";
+	mes "如果裝備的武器無法強化將不會出現";
+
+	next;
+	menu
+	"取消",no,
+	(@abd==1230)?"破甲短錐":"",Cat_net1_3,
+	(@abd==1231)?"華麗短劍":"",Cat_net1_3,
+	(@abd==13062)?"遠古短劍":"",Cat_net1_3,
+	(@abd==1261)?"刺殺拳刃":"",Cat_net1_3,
+	(@abd==1266)?"刺殺拳刃[打洞]":"",Cat_net1_3,
+	(@abd==28010)?"朱麗葉 瑞秋拳刃":"",Cat_net1_3,
+	(@abd==1376)?"心破壞斧":"",Cat_net1_3,
+	(@abd==1377)?"狂暴颶風斧":"",Cat_net1_3,
+	(@abd==1372)?"智天使之斧":"",Cat_net1_3,
+	(@abd==1370)?"超重雙手斧":"",Cat_net1_3,
+	(@abd==1371)?"超重雙手斧[打洞]":"",Cat_net1_3,
+	(@abd==1132)?"秘劍慕戀":"",Cat_net1_3,
+	(@abd==1185)?"湛紫魔劍":"",Cat_net1_3,
+	(@abd==13460)?"封印超能魔劍":"",Cat_net1_3,
+	(@abd==13461)?"封印超能邪劍":"",Cat_net1_3,
+	(@abd==13462)?"封印超能神劍":"",Cat_net1_3,
+	(@abd==1186)?"死亡引導者":"",Cat_net1_3,
+	(@abd==21018)?"林迪舞長劍":"",Cat_net1_3,
+	(@abd==1422)?"狩獵長矛":"",Cat_net1_3,
+	(@abd==1697)?"黃色狐尾草模型":"",Cat_net1_3,
+	(@abd==1693)?"黃色狐尾草手杖":"",Cat_net1_3,
+	(@abd==2000)?"破壞之杖":"",Cat_net1_3,
+	(@abd==2027)?"向日葵少年魔杖":"",Cat_net1_3,
+	(@abd==1528)?"聖錘十字星":"",Cat_net1_3,
+	(@abd==1540)?"聖錘十字星[打洞]":"",Cat_net1_3,
+	(@abd==1565)?"死神的名簿":"",Cat_net1_3,
+	(@abd==1985)?"紅玫瑰鞭":"",Cat_net1_3,
+	(@abd==1223)?"幸運短劍":"",Cat_net1_2,
+	(@abd==1228)?"戰鬥短劍":"",Cat_net1_2,
+	(@abd==1234)?"月靈短劍":"",Cat_net1_2,
+	(@abd==1268)?"野獸的指甲":"",Cat_net1_2,
+	(@abd==1269)?"茵博斯拳刃":"",Cat_net1_2,
+	(@abd==1265)?"血拳刃":"",Cat_net1_2,
+	(@abd==1387)?"巨人斧":"",Cat_net1_2,
+	(@abd==1369)?"斬首之斧":"",Cat_net1_2,
+	(@abd==1363)?"血斧":"",Cat_net1_2,
+	(@abd==13431)?"鉻合金長劍":"",Cat_net1_0,
+	(@abd==1137)?"石中劍":"",Cat_net1_2,
+	(@abd==1130)?"多刃尖刺刀":"",Cat_net1_2,
+	(@abd==1196)?"鉻合金雙手巨劍":"",Cat_net1_2,
+	(@abd==1165)?"秘刀十六夜月":"",Cat_net1_2,
+	(@abd==1169)?"死神之劍":"",Cat_net1_2,
+	(@abd==1179)?"死神之劍[打洞]":"",Cat_net1_2,
+	(@abd==1175)?"阿特羅斯的巨劍":"",Cat_net1_2,
+	(@abd==1433)?"帝國長矛":"",Cat_net1_2,
+	(@abd==1415)?"魔力之矛":"",Cat_net1_2,
+	(@abd==1421)?"戰鬥鉤槍":"",Cat_net1_2,
+	(@abd==1484)?"樞機長槍":"",Cat_net1_2,
+	(@abd==1636)?"黑暗的荊棘骷髏杖":"",Cat_net1_2,
+	(@abd==1664)?"黑暗的荊棘骷髏杖[打洞]":"",Cat_net1_2,
+	(@abd==1637)?"銷魂杖":"",Cat_net1_2,
+	(@abd==2001)?"神聖十字之杖":"",Cat_net1_2,
+	(@abd==2017)?"神聖十字之杖[打洞]":"",Cat_net1_2,
+	(@abd==1523)?"闇盲之錘":"",Cat_net1_2,
+	(@abd==1538)?"闇盲之錘[打洞]":"",Cat_net1_2,
+	(@abd==1526)?"魔錘安魂曲":"",Cat_net1_2,
+	(@abd==1830)?"黃龍拳套":"",Cat_net1_2,
+	(@abd==1720)?"熾天使之弓":"",Cat_net1_2,
+	(@abd==1930)?"綠花草梗笛":"",Cat_net1_2,
+
+	(@abd==1224)?"削刃短劍":"",Cat_net1_1,
+	(@abd==1225)?"破甲短劍":"",Cat_net1_1,
+	(@abd==1227)?"鋤草短劍":"",Cat_net1_1,
+	(@abd==1229)?"廚刀":"",Cat_net1_1,
+	(@abd==1232)?"妖短劍泣神怨":"",Cat_net1_1,
+	(@abd==1233)?"除靈短劍":"",Cat_net1_1,
+	(@abd==1235)?"變形短劍":"",Cat_net1_1,
+	(@abd==1236)?"砂塵短劍":"",Cat_net1_1,
+	(@abd==1237)?"魔短劍闇噬":"",Cat_net1_1,
+	(@abd==1240)?"皇家短劍":"",Cat_net1_1,
+	(@abd==1241)?"詛咒的短劍":"",Cat_net1_1,
+	(@abd==1242)?"反擊短劍":"",Cat_net1_1,
+	(@abd==1244)?"神聖大駒短劍":"",Cat_net1_1,
+	(@abd==13047)?"毒鋸短劍":"",Cat_net1_1,
+	(@abd==13046)?"刺針短劍":"",Cat_net1_1,
+	(@abd==13061)?"齒輪短劍":"",Cat_net1_1,
+
+	(@abd==1271)?"血淚拳刃":"",Cat_net1_1,
+	(@abd==1263)?"邪惡拳刃":"",Cat_net1_1,
+	(@abd==1270)?"鑽孔機拳刃":"",Cat_net1_1,
+	(@abd==1284)?"克裡希納拳刃":"",Cat_net1_1,
+	(@abd==1285)?"恰克蘭拳刃":"",Cat_net1_1,
+
+	(@abd==1305)?"切削之斧":"",Cat_net1_1,
+	(@abd==1311)?"貝伽勒巨斧":"",Cat_net1_1,
+
+	(@abd==1364)?"克萊伊特斧":"",Cat_net1_1,
+	(@abd==1365)?"暗靈之斧":"",Cat_net1_1,
+	(@abd==1385)?"鈽鐳石鎚":"",Cat_net1_1,
+	(@abd==1367)?"斯勒特斧":"",Cat_net1_1,
+	(@abd==1368)?"風靈之斧":"",Cat_net1_1,
+
+	(@abd==1131)?"水靈之刀":"",Cat_net1_1,
+	(@abd==1133)?"火靈之劍":"",Cat_net1_1,
+	(@abd==1134)?"利剪劍":"",Cat_net1_1,
+	(@abd==1135)?"狂擊之劍":"",Cat_net1_1,
+	(@abd==13400)?"狂擊之劍[打洞]":"",Cat_net1_1,
+	(@abd==1136)?"烈陽之劍":"",Cat_net1_1,
+	(@abd==1138)?"妖劍弒光":"",Cat_net1_1,
+	(@abd==1139)?"魔刀吞神":"",Cat_net1_1,
+	(@abd==1140)?"首領之劍":"",Cat_net1_1,
+	(@abd==1141)?"聖劍渾沌":"",Cat_net1_1,
+	(@abd==1148)?"星塵劍":"",Cat_net1_1,
+	(@abd==13421)?"紅寶石劍":"",Cat_net1_1,
+
+	(@abd==1164)?"名刀不知火":"",Cat_net1_1,
+	(@abd==21003)?"名刀不知火[2]":"",Cat_net1_1,
+	(@abd==1166)?"龍牙劍":"",Cat_net1_1,
+	(@abd==1180)?"龍牙劍[打洞]":"",Cat_net1_1,
+	(@abd==1167)?"風靈之劍":"",Cat_net1_1,
+	(@abd==1178)?"風靈之劍[打洞]":"",Cat_net1_1,
+	(@abd==1168)?"巨大雙手劍":"",Cat_net1_1,
+	(@abd==1171)?"巨大雙手劍[打洞]":"",Cat_net1_1,
+	(@abd==1170)?"亞藍斯之劍":"",Cat_net1_1,
+	(@abd==1176)?"肌肉切斷器":"",Cat_net1_1,
+	(@abd==1181)?"太九連":"",Cat_net1_1,
+	(@abd==1182)?"血靈魔劍":"",Cat_net1_1,
+	(@abd==1188)?"熟練者之劍":"",Cat_net1_1,
+
+	(@abd==1420)?"長角槍":"",Cat_net1_1,
+	(@abd==1413)?"剛尼爾長矛":"",Cat_net1_1,
+	(@abd==1418)?"剛尼爾長矛[打洞]":"",Cat_net1_1,
+	(@abd==1414)?"地靈之矛":"",Cat_net1_1,
+	(@abd==1416)?"邪靈之矛":"",Cat_net1_1,
+
+	(@abd==1466)?"死神之鐮":"",Cat_net1_1,
+	(@abd==1476)?"死神之鐮[打洞]":"",Cat_net1_1,
+	(@abd==1467)?"修爾特長矛":"",Cat_net1_1,
+	(@abd==1468)?"風靈之矛":"",Cat_net1_1,
+	(@abd==1481)?"風靈之矛[打洞]":"",Cat_net1_1,
+	(@abd==1469)?"龍威弩斯長矛":"",Cat_net1_1,
+	(@abd==1470)?"聖光之戟":"",Cat_net1_1,
+	(@abd==1471)?"火靈之矛":"",Cat_net1_1,
+	(@abd==1474)?"加野矛":"",Cat_net1_1,
+	(@abd==1480)?"加野矛[打洞]":"",Cat_net1_1,
+	(@abd==1477)?"妖怪的槍":"",Cat_net1_1,
+	(@abd==1479)?"妖怪的槍[打洞]":"",Cat_net1_1,
+	(@abd==1478)?"爾休披斯槍":"",Cat_net1_1,
+
+	(@abd==1616)?"羽翼之杖":"",Cat_net1_1,
+	(@abd==1629)?"紳士的權杖":"",Cat_net1_1,
+	(@abd==1631)?"驅魔聖杖":"",Cat_net1_1,
+	(@abd==1643)?"枯木魔杖":"",Cat_net1_1,
+	(@abd==1654)?"智慧魔杖":"",Cat_net1_1,
+
+	(@abd==1473)?"大巫師之杖":"",Cat_net1_1,
+	(@abd==2004)?"克羅納斯魔杖":"",Cat_net1_1,
+	(@abd==2005)?"女神之杖":"",Cat_net1_1,
+
+	(@abd==1524)?"黃金之錘":"",Cat_net1_1,
+	(@abd==1539)?"黃金之錘[打洞]":"",Cat_net1_1,
+	(@abd==1525)?"祕銀長錘":"",Cat_net1_1,
+	(@abd==1527)?"祕錘冷月":"",Cat_net1_1,
+	(@abd==1541)?"納米西斯錘":"",Cat_net1_1,
+	(@abd==16000)?"智慧之錘":"",Cat_net1_1,
+	(@abd==16001)?"紅手提包":"",Cat_net1_1,
+	(@abd==16010)?"紅色乙太包":"",Cat_net1_1,
+
+	(@abd==1557)?"預言錄":"",Cat_net1_1,
+	(@abd==1558)?"日記本":"",Cat_net1_1,
+	(@abd==1559)?"天龍的遺產":"",Cat_net1_1,
+	(@abd==1589)?"天龍的遺產[打洞]":"",Cat_net1_1,
+	(@abd==1561)?"精裝之書":"",Cat_net1_1,
+	(@abd==1562)?"前章之書":"",Cat_net1_1,
+
+	(@abd==1813)?"風靈拳套":"",Cat_net1_1,
+	(@abd==1814)?"祕拳套閃光":"",Cat_net1_1,
+	(@abd==1816)?"祕拳套閃光[打洞]":"",Cat_net1_1,
+	(@abd==1815)?"卡崙的指甲":"",Cat_net1_1,
+
+	(@abd==1719)?"盜賊之弓":"",Cat_net1_1,
+	(@abd==1722)?"貝利斯塔強弩":"",Cat_net1_1,
+	(@abd==1727)?"貝利斯塔強弩[打洞]":"",Cat_net1_1,
+	(@abd==1724)?"天龍之翼":"",Cat_net1_1,
+	(@abd==1725)?"吟遊詩人之弓":"",Cat_net1_1,
+	(@abd==1737)?"伊克希恩的羽翼":"",Cat_net1_1,
+
+	(@abd==1740)?"豬籠草之精弓":"",Cat_net1_1,
+	(@abd==18103)?"水靈天弓":"",Cat_net1_1,
+	(@abd==1741)?"詛咒琴弓":"",Cat_net1_1,
+	(@abd==1745)?"獵鷹閃電弓":"",Cat_net1_1,
+
+	(@abd==1913)?"電子吉他":"",Cat_net1_1,
+	(@abd==1918)?"琵琶":"",Cat_net1_1,
+	(@abd==1922)?"琵琶[打洞]":"",Cat_net1_1,
+	(@abd==1920)?"狂暴吉他":"",Cat_net1_1,
+	(@abd==1926)?"豬籠草之豎琴":"",Cat_net1_1,
+
+	(@abd==1962)?"細刃鞭子":"",Cat_net1_1,
+	(@abd==1963)?"毒鞭薔薇":"",Cat_net1_1,
+	(@abd==1964)?"祕鞭眷戀":"",Cat_net1_1,
+	(@abd==1969)?"利刃之鞭":"",Cat_net1_1,
+	(@abd==1970)?"女王的鞭子":"",Cat_net1_1,
+	(@abd==1976)?"女王的鞭子[打洞]":"",Cat_net1_1,
+
+	(@abd==1972)?"電鰻鞭":"",Cat_net1_1,
+	(@abd==1973)?"海洋魔女之腳鞭":"",Cat_net1_1,
+	(@abd==1974)?"紅蘿蔔鞭":"",Cat_net1_1,
+	(@abd==1979)?"豬籠草之莖鞭":"",Cat_net1_1,
+	(@abd==1984)?"植物梗鞭":"",Cat_net1_1,
+
+	(@abd==13138)?"黑玫瑰左輪手槍":"",Cat_net1_1,
+	(@abd==28223)?"終結者狙擊步槍":"",Cat_net1_1,
+	(@abd==28224)?"火焰四射霰彈槍":"",Cat_net1_1,
+	(@abd==28225)?"燃燒玫瑰格林機槍":"",Cat_net1_1,
+	(@abd==28226)?"復仇者榴彈發射器":"",Cat_net1_1,
+
+	(@abd==13412)?"夜勝魔的雙子銳劍(B)":"",Cat_net1_31,
+	(@abd==13413)?"夜勝魔的雙子銳劍(R)":"",Cat_net1_31,
+	(@abd==1189)?"克拉斯拿雅劍":"",Cat_net1_31,
+	(@abd==1447)?"劇毒長槍":"",Cat_net1_31,
+	(@abd==1497)?"火靈之矛[打洞]":"",Cat_net1_31;
+
+
+Cat_net1_0:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=15?"E級代幣("+countitem(6422)+"持有 需要, 15)":"^CECECEE級代幣("+(15-countitem(6422))+"不足)^000000",E_Coin01,
+	countitem(6421)>=10?"D級代幣("+countitem(6421)+"持有 需要, 10)":"^CECECED級代幣("+(10-countitem(6421))+"不足)^000000",D_Coin01,
+	countitem(6420)>=6?"C級代幣("+countitem(6420)+"持有 需要, 6)":"^CECECEC級代幣("+(6-countitem(6420))+"不足)^000000",C_Coin01,
+	countitem(6419)>=3?"B級代幣("+countitem(6419)+"持有 需要, 3)":"^CECECEB級代幣("+(3-countitem(6419))+"不足)^000000",B_Coin01,
+	countitem(6418)>=2?"A級代幣("+countitem(6418)+"持有 需要, 2)":"^CECECEA級代幣("+(2-countitem(6418))+"不足)^000000",A_Coin01;
+
+Cat_net1_1:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=15?"E級代幣("+countitem(6422)+"持有 需要, 15)":"^CECECEE級代幣("+(15-countitem(6422))+"不足)^000000",E_Coin01,
+	countitem(6421)>=10?"D級代幣("+countitem(6421)+"持有 需要, 10)":"^CECECED級代幣("+(10-countitem(6421))+"不足)^000000",D_Coin01,
+	countitem(6420)>=6?"C級代幣("+countitem(6420)+"持有 需要, 6)":"^CECECEC級代幣("+(6-countitem(6420))+"不足)^000000",C_Coin01,
+	countitem(6419)>=3?"B級代幣("+countitem(6419)+"持有 需要, 3)":"^CECECEB級代幣("+(3-countitem(6419))+"不足)^000000",B_Coin01,
+	countitem(6418)>=2?"A級代幣("+countitem(6418)+"持有 需要, 2)":"^CECECEA級代幣("+(2-countitem(6418))+"不足)^000000",A_Coin01,
+	countitem(6423)>=1?"海神之憤怒("+countitem(6423)+"持有 需要, 1)":"^CECECE海神之憤怒("+(1-countitem(6423))+"不足)^000000",S_Coin01;
+
+Cat_net1_2:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=30?"E級代幣("+countitem(6422)+"持有 需要, 30)":"^CECECEE級代幣("+(30-countitem(6422))+"不足)^000000",E_Coin02,
+	countitem(6421)>=20?"C級代幣("+countitem(6421)+"持有 需要, 20)":"^CECECEC級代幣("+(20-countitem(6421))+"不足)^000000",D_Coin02,
+	countitem(6420)>=12?"C級代幣("+countitem(6420)+"持有 需要, 12)":"^CECECEC級代幣("+(12-countitem(6420))+"不足)^000000",C_Coin02,
+	countitem(6419)>=6?"B級代幣("+countitem(6419)+"持有 需要, 6)":"^CECECEB級代幣("+(6-countitem(6419))+"不足)^000000",B_Coin02,
+	countitem(6418)>=4?"A級代幣("+countitem(6418)+"持有 需要, 4)":"^CECECEA級代幣("+(4-countitem(6418))+"不足)^000000",A_Coin02,
+	countitem(6423)>=2?"海神之憤怒("+countitem(6423)+"持有 需要, 2)":"^CECECE海神之憤怒("+(2-countitem(6423))+"不足)^000000",S_Coin02;
+
+Cat_net1_3:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=60?"E級代幣("+countitem(6422)+"持有 需要, 60)":"^CECECEE級代幣("+(60-countitem(6422))+"不足)^000000",E_Coin03,
+	countitem(6421)>=40?"C級代幣("+countitem(6421)+"持有 需要, 40)":"^CECECEC級代幣("+(40-countitem(6421))+"不足)^000000",D_Coin03,
+	countitem(6420)>=24?"C級代幣("+countitem(6420)+"持有 需要, 24)":"^CECECEC級代幣("+(24-countitem(6420))+"不足)^000000",C_Coin03,
+	countitem(6419)>=12?"B級代幣("+countitem(6419)+"持有 需要, 12)":"^CECECEB級代幣("+(12-countitem(6419))+"不足)^000000",B_Coin03,
+	countitem(6418)>=8?"A級代幣("+countitem(6418)+"持有 需要, 8)":"^CECECEA級代幣("+(8-countitem(6418))+"不足)^000000",A_Coin03,
+	countitem(6423)>=4?"海神之憤怒("+countitem(6423)+"持有 需要, 4)":"^CECECE海神之憤怒("+(4-countitem(6423))+"不足)^000000",S_Coin03;
+
+
+Cat_net1_31:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=60?"E級代幣("+countitem(6422)+"持有 需要, 60)":"^CECECEE級代幣("+(60-countitem(6422))+"不足)^000000",E_Coin031,
+	countitem(6421)>=40?"C級代幣("+countitem(6421)+"持有 需要, 40)":"^CECECEC級代幣("+(40-countitem(6421))+"不足)^000000",D_Coin031,
+	countitem(6420)>=24?"C級代幣("+countitem(6420)+"持有 需要, 24)":"^CECECEC級代幣("+(24-countitem(6420))+"不足)^000000",C_Coin031,
+	countitem(6419)>=12?"B級代幣("+countitem(6419)+"持有 需要, 12)":"^CECECEB級代幣("+(12-countitem(6419))+"不足)^000000",B_Coin031,
+	countitem(6418)>=8?"A級代幣("+countitem(6418)+"持有 需要, 8)":"^CECECEA級代幣("+(8-countitem(6418))+"不足)^000000",A_Coin031,
+	countitem(6423)>=4?"海神之憤怒("+countitem(6423)+"持有 需要, 4)":"^CECECE海神之憤怒("+(4-countitem(6423))+"不足)^000000",S_Coin031;
+
+
+Cat_net2_1:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=15?"E級代幣("+countitem(6422)+"持有 需要, 15)":"^CECECEE級代幣("+(15-countitem(6422))+"不足)^000000",E_Coin01,
+	countitem(6421)>=10?"D級代幣("+countitem(6421)+"持有 需要, 10)":"^CECECED級代幣("+(10-countitem(6421))+"不足)^000000",D_Coin01,
+	countitem(6420)>=6?"C級代幣("+countitem(6420)+"持有 需要, 6)":"^CECECEC級代幣("+(6-countitem(6420))+"不足)^000000",C_Coin01,
+	countitem(6419)>=3?"B級代幣("+countitem(6419)+"持有 需要, 3)":"^CECECEB級代幣("+(3-countitem(6419))+"不足)^000000",B_Coin01,
+	countitem(6418)>=2?"A級代幣("+countitem(6418)+"持有 需要, 2)":"^CECECEA級代幣("+(2-countitem(6418))+"不足)^000000",A_Coin01,
+	countitem(6423)>=1?"海神之憤怒("+countitem(6423)+"持有 需要, 1)":"^CECECE海神之憤怒("+(1-countitem(6423))+"不足)^000000",S_Coin01;
+
+Cat_net2_2:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=30?"E級代幣("+countitem(6422)+"持有 需要, 30)":"^CECECEE級代幣("+(30-countitem(6422))+"不足)^000000",E_Coin02,
+	countitem(6421)>=20?"C級代幣("+countitem(6421)+"持有 需要, 20)":"^CECECEC級代幣("+(20-countitem(6421))+"不足)^000000",D_Coin02,
+	countitem(6420)>=12?"C級代幣("+countitem(6420)+"持有 需要, 12)":"^CECECEC級代幣("+(12-countitem(6420))+"不足)^000000",C_Coin02,
+	countitem(6419)>=6?"B級代幣("+countitem(6419)+"持有 需要, 6)":"^CECECEB級代幣("+(6-countitem(6419))+"不足)^000000",B_Coin02,
+	countitem(6418)>=4?"A級代幣("+countitem(6418)+"持有 需要, 4)":"^CECECEA級代幣("+(4-countitem(6418))+"不足)^000000",A_Coin02,
+	countitem(6423)>=2?"海神之憤怒("+countitem(6423)+"持有 需要, 2)":"^CECECE海神之憤怒("+(2-countitem(6423))+"不足)^000000",S_Coin02;
+
+Cat_net2_3:
+	mes "[貓小友]";
+	mes "要怎麼結算強化費用呢?";
+	next;
+	menu
+	"取消",no,
+	countitem(6422)>=60?"E級代幣("+countitem(6422)+"持有 需要, 60)":"^CECECEE級代幣("+(60-countitem(6422))+"不足)^000000",E_Coin03,
+	countitem(6421)>=40?"C級代幣("+countitem(6421)+"持有 需要, 40)":"^CECECEC級代幣("+(40-countitem(6421))+"不足)^000000",D_Coin03,
+	countitem(6420)>=24?"C級代幣("+countitem(6420)+"持有 需要, 24)":"^CECECEC級代幣("+(24-countitem(6420))+"不足)^000000",C_Coin03,
+	countitem(6419)>=12?"B級代幣("+countitem(6419)+"持有 需要, 12)":"^CECECEB級代幣("+(12-countitem(6419))+"不足)^000000",B_Coin03,
+	countitem(6418)>=8?"A級代幣("+countitem(6418)+"持有 需要, 8)":"^CECECEA級代幣("+(8-countitem(6418))+"不足)^000000",A_Coin03,
+	countitem(6423)>=4?"海神之憤怒("+countitem(6423)+"持有 需要, 4)":"^CECECE海神之憤怒("+(4-countitem(6423))+"不足)^000000",S_Coin03;
+
+
+//--------------------------------附魔狀態
+E_Coin01:
+	if(zeny < $@E_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6422)<15){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6422,15;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],$@Enc_ing2[$@Enc2];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6422,15;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],0;
+	close;	}
+
+D_Coin01:
+	if(zeny < $@D_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6421)<10){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6421,10;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],$@Enc_ing4[$@Enc4];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6421,10;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],0;
+	close;	}
+
+C_Coin01:
+	if(zeny < $@C_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6420)<6){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6420,6;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],$@Enc_ing6[$@Enc6];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6420,6;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],0;
+	close;	}
+
+B_Coin01:
+	if(zeny < $@B_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6419)<3){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6419,3;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],$@Enc_ing8[$@Enc8];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6419,3;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],0;
+	close;	}
+
+A_Coin01:
+	if(zeny < $@A_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6418)<2){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用A級代幣時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],$@Enc_ing10[$@Enc10];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],$@Enc_ing12[$@Enc12];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],0;
+		close;	}
+
+		case 4:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],$@Enc_ing14[$@Enc14];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,2;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],0;
+		close;	}
+		}
+
+S_Coin01:
+	if(zeny < $@S_zeny){
+	mes "[貓小友]";
+	mes "你身上的錢不夠。";
+	close; }
+	if(countitem(6423)<1){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用海神之憤怒時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],$@Enc_ing16[$@Enc16];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],$@Enc_ing18[$@Enc18];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],0;
+		close;	}
+
+		case 4:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],$@Enc_ing20[$@Enc20];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,1;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],0;
+		close;	}
+		}
+
+
+E_Coin02:
+	if(zeny < $@E_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6422)<30){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6422,30;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],$@Enc_ing2[$@Enc2];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6422,30;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],0;
+	close;	}
+
+D_Coin02:
+	if(zeny < $@D_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6421)<20){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6421,20;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],$@Enc_ing4[$@Enc4];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6421,20;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],0;
+	close;	}
+
+C_Coin02:
+	if(zeny < $@C_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6420)<12){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6420,12;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],$@Enc_ing6[$@Enc6];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6420,12;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],0;
+	close;	}
+
+B_Coin02:
+	if(zeny < $@B_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6419)<6){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6419,6;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],$@Enc_ing8[$@Enc8];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6419,6;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],0;
+	close;	}
+
+A_Coin02:
+	if(zeny < $@A_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6418)<4){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用A級代幣時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],$@Enc_ing10[$@Enc10];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],$@Enc_ing12[$@Enc12];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],0;
+		close;	}
+
+		case 4:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],$@Enc_ing14[$@Enc14];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,4;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],0;
+		close;	}
+		}
+
+S_Coin02:
+	if(zeny < $@S_zeny){
+	mes "[貓小友]";
+	mes "你身上的錢不夠。";
+	close; }
+	if(countitem(6423)<2){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用海神之憤怒時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],$@Enc_ing16[$@Enc16];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],$@Enc_ing18[$@Enc18];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],0;
+		close;	}
+
+		case 4:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],$@Enc_ing20[$@Enc20];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,2;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],0;
+		close;	}
+		}
+
+E_Coin03:
+	if(zeny < $@E_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6422)<60){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6422,60;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],$@Enc_ing2[$@Enc2];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6422,60;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing1[$@Enc1],0;
+	close;	}
+
+D_Coin03:
+	if(zeny < $@D_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6421)<40){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6421,40;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],$@Enc_ing4[$@Enc4];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6421,40;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing3[$@Enc3],0;
+	close;	}
+
+C_Coin03:
+	if(zeny < $@C_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6420)<24){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6420,24;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],$@Enc_ing6[$@Enc6];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6420,24;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing5[$@Enc5],0;
+	close;	}
+
+B_Coin03:
+	if(zeny < $@B_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6419)<12){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+	set @Cat01,rand(1,100);
+	if(@Cat01<=90){
+	dispbottom "強化了二個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6419,12;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],$@Enc_ing8[$@Enc8];
+	close;
+	} else {
+	dispbottom "強化了一個屬性";
+	specialeffect 155;
+	delitem @abd,1;
+	delitem 6419,12;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing7[$@Enc7],0;
+	close;	}
+
+A_Coin03:
+	if(zeny < $@A_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6418)<8){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用A級代幣時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],$@Enc_ing10[$@Enc10];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing9[$@Enc9],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],$@Enc_ing12[$@Enc12];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing11[$@Enc11],0;
+		close;	}
+
+		case 4:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],$@Enc_ing14[$@Enc14];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing13[$@Enc13],0;
+		close;	}
+		}
+
+S_Coin03:
+	if(zeny < $@S_zeny){
+	mes "[貓小友]";
+	mes "你身上的錢不夠。";
+	close; }
+	if(countitem(6423)<4){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用海神之憤怒時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],$@Enc_ing16[$@Enc16];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing15[$@Enc15],0;
+		close;	}
+
+		case 3:
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],$@Enc_ing18[$@Enc18];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing17[$@Enc17],0;
+		close;	}
+
+		case 4:
+		if(@abd == 13412) goto EncCat_net3;
+		if(@abd == 13413) goto EncCat_net3;
+		set @Cat01,rand(1,100);
+		if(@Cat01<=90){
+		dispbottom "強化了二個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],$@Enc_ing20[$@Enc20];
+		close;
+		} else {
+		dispbottom "強化了一個屬性";
+		specialeffect 155;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,$@Enc_ing19[$@Enc19],0;
+		close;	}
+		}
+
+
+E_Coin031:
+	if(zeny < $@E_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6422)<60){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+	dispbottom "強化了1個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6422,60;
+	set zeny,zeny-$@E_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing2[$@Enc2];
+	close;
+
+D_Coin031:
+	if(zeny < $@D_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6421)<40){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+	dispbottom "強化了1個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6421,40;
+	set zeny,zeny-$@D_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing4[$@Enc4];
+	close;
+
+C_Coin031:
+	if(zeny < $@C_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6420)<24){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+	dispbottom "強化了1個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6420,24;
+	set zeny,zeny-$@C_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing6[$@Enc6];
+	close;
+
+B_Coin031:
+	if(zeny < $@B_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6419)<12){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+	dispbottom "強化了1個屬性";
+	specialeffect 154;
+	delitem @abd,1;
+	delitem 6419,12;
+	set zeny,zeny-$@B_zeny;
+	getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing8[$@Enc8];
+	close;
+
+A_Coin031:
+	if(zeny < $@A_zeny){
+	mes "[貓小友]";
+	mes"你身上的錢不夠。";
+	close; }
+	if(countitem(6418)<8){
+	mes "[貓小友]";
+	mes"你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用A級代幣時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing10[$@Enc10];
+		close;
+
+		case 3:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing12[$@Enc12];
+		close;
+
+		case 4:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6418,8;
+		set zeny,zeny-$@A_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing14[$@Enc14];
+		close;
+		}
+
+S_Coin031:
+	if(zeny < $@S_zeny){
+	mes "[貓小友]";
+	mes "你身上的錢不夠。";
+	close; }
+	if(countitem(6423)<4){
+	mes "[貓小友]";
+	mes "你身上附魔物品不足";
+	close; }
+
+		mes "[貓小友]";
+		mes "使用海神之憤怒時可額外選擇強化的類型";
+		next;
+		switch(select("取消:近距離型:遠距離型:施法型")){
+
+		case 1:
+		close;
+
+		case 2:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing16[$@Enc16];
+		close;
+
+		case 3:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing18[$@Enc18];
+		close;
+
+		case 4:
+		dispbottom "強化了1個屬性";
+		specialeffect 154;
+		delitem @abd,1;
+		delitem 6423,4;
+		set zeny,zeny-$@S_zeny;
+		getitem2 @abd,1,1,@Refine_Cat,0,@fake_Cat_1,@fake_Cat_2,@fake_Cat_3,$@Enc_ing20[$@Enc20];
+		close;
+		}
+
+
+case 3:
+	close;
+no:
+	close;
+	}
+OnInit:
+	waitingroom "綿綿島武器附魔",0;
+	end;
+}
+
+

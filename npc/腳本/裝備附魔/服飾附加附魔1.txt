@@ -1,0 +1,422 @@
+﻿
+//------------------------------------------------------- 頭上
+function	script	Costume_Top_01	{
+function	RandomOPT	{
+	.@idx = rand(getarg(1,getarraysize(getarg(0))));
+	if(.@idx%2 == 0)
+		return .@idx;
+	else return .@idx-1;
+}
+	disable_items;
+	.@part = EQI_COSTUME_HEAD_TOP;
+	//setarray .@item_id,31607;
+	if(getequipid(.@part) == -1)
+	{
+		dispbottom "您沒有裝備任何裝備.",0xff0000;
+		end;
+	}
+	//.@index = inarray(.@item_id,getequipid(.@part));
+
+	select(.@index > -1 ? getequipname(.@part) + "[^0000FF可進行附魔^000000]" : "^888888"+getequipname(.@part) + "[無法附魔]^000000");
+	//if(.@index == -1)
+	//{
+	//	dispbottom "您無法附魔這項武器.",0xff0000;
+	//	end;
+	//}
+	.@nameid = getequipid(.@part);
+	.@refine_cnt = getequiprefinerycnt(.@part);
+	.@card0 = getequipcardid(.@part, 0);
+	.@card1 = getequipcardid(.@part, 1);
+	.@card2 = getequipcardid(.@part, 2);
+	.@card3 = getequipcardid(.@part, 3);
+	.@randomop1 = getequiprandomoption(.@part,0,ROA_ID);
+	.@randomop2 = getequiprandomoption(.@part,1,ROA_ID);
+	.@randomop3 = getequiprandomoption(.@part,2,ROA_ID);
+	.@randomop4 = getequiprandomoption(.@part,3,ROA_ID);
+	.@randomop5 = getequiprandomoption(.@part,4,ROA_ID);
+	.@randomopval1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	.@randomopval2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	.@randomopval3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	.@randomopval4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	.@randomopval5 = getequiprandomoption(.@part,4,ROA_VALUE);
+	.@enclvl = getinventoryinfo(getequipidx(.@part),28);
+
+	switch(getarg(0))
+	{
+		case 80021:
+		setarray .@type,
+		RDMOPT_VAR_MAXHPAMOUNT, rand(1,100) <= 80 ? rand(300,1000) : rand(1000,2000),
+		RDMOPT_VAR_MAXSPAMOUNT, rand(1,100) <= 80 ? rand(20,100) : rand(100,200),
+		RDMOPT_VAR_MAXHPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MAXSPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_POWAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_SPLAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_STAAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_WISAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CONAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRTAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRITICALSUCCESSVALUE, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_ATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_MAGICATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_RACE_DAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10);
+
+		setarray .@type2,
+		RDMOPT_VAR_PLUSASPD, rand(1,100) <= 80 ? rand(1,1) : rand(1,1),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_BOSS_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_NORMAL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_BOSS, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_ADDSKILLMDAMAGE_ALL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_DEC_SPELL_DELAY_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_PATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_SMATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_RESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MRESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_HEAL_PLUS, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_CRITICAL_RATE, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_DEC_SPELL_CAST_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_HEAL_VALUE, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10);
+		break;
+	}
+	specialeffect2 EF_MAXPOWER;
+	if(getarraysize(.@type))
+	{
+		.@RDMOPT[0] = .@type[.@i = RandomOPT(.@type)];
+		.@RDMVALUE[0] = .@type[.@i+1];
+	}
+	if(getarraysize(.@type2))
+	{
+		.@RDMOPT[1] = .@type2[.@j = RandomOPT(.@type2)];
+		.@RDMVALUE[1] = .@type2[.@j+1];
+	}
+	setarray .@PARAM, 0;
+
+	.@RDMOPT[2] = .@randomop3;
+	.@RDMVALUE[2] = .@randomopval3;
+	.@Param[2] = .@randomopval3;
+	.@RDMOPT[3] = .@randomop4;
+	.@RDMVALUE[3] = .@randomopval4;
+	.@Param[3] = .@randomopval4;
+	.@RDMOPT[4] = .@randomop5;
+	.@RDMVALUE[4] = .@randomopval5;
+	.@Param[4] = .@randomopval5;
+
+	delitem getarg(0), 1;
+	delequip .@part;
+	getitem3 .@nameid, 1, 1, .@refine_cnt, 0, .@card0, .@card1, .@card2, .@card3, .@RDMOPT, .@RDMVALUE, .@PARAM;
+	dispbottom getitemname(.@nameid)+" 附魔成功.",0x00ffff;
+	end;
+}
+
+
+//------------------------------------------------------- 頭中
+function	script	Costume_Mid_01	{
+function	RandomOPT	{
+	.@idx = rand(getarg(1,getarraysize(getarg(0))));
+	if(.@idx%2 == 0)
+		return .@idx;
+	else return .@idx-1;
+}
+	disable_items;
+	.@part = EQI_COSTUME_HEAD_MID;
+	//setarray .@item_id,31607;
+	if(getequipid(.@part) == -1)
+	{
+		dispbottom "您沒有裝備任何裝備.",0xff0000;
+		end;
+	}
+	//.@index = inarray(.@item_id,getequipid(.@part));
+
+	select(.@index > -1 ? getequipname(.@part) + "[^0000FF可進行附魔^000000]" : "^888888"+getequipname(.@part) + "[無法附魔]^000000");
+	//if(.@index == -1)
+	//{
+	//	dispbottom "您無法附魔這項武器.",0xff0000;
+	//	end;
+	//}
+	.@nameid = getequipid(.@part);
+	.@refine_cnt = getequiprefinerycnt(.@part);
+	.@card0 = getequipcardid(.@part, 0);
+	.@card1 = getequipcardid(.@part, 1);
+	.@card2 = getequipcardid(.@part, 2);
+	.@card3 = getequipcardid(.@part, 3);
+	.@randomop1 = getequiprandomoption(.@part,0,ROA_ID);
+	.@randomop2 = getequiprandomoption(.@part,1,ROA_ID);
+	.@randomop3 = getequiprandomoption(.@part,2,ROA_ID);
+	.@randomop4 = getequiprandomoption(.@part,3,ROA_ID);
+	.@randomop5 = getequiprandomoption(.@part,4,ROA_ID);
+	.@randomopval1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	.@randomopval2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	.@randomopval3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	.@randomopval4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	.@randomopval5 = getequiprandomoption(.@part,4,ROA_VALUE);
+	.@enclvl = getinventoryinfo(getequipidx(.@part),28);
+	.@RDMOPT[2] = .@randomop3;
+	.@RDMVALUE[2] = .@randomopval3;
+	.@Param[2] = .@randomopval3;
+	.@RDMOPT[3] = .@randomop4;
+	.@RDMVALUE[3] = .@randomopval4;
+	.@Param[3] = .@randomopval4;
+	.@RDMOPT[4] = .@randomop5;
+	.@RDMVALUE[4] = .@randomopval5;
+	.@Param[4] = .@randomopval5;
+
+	switch(getarg(0))
+	{
+		case 80022:
+		setarray .@type,
+		RDMOPT_VAR_MAXHPAMOUNT, rand(1,100) <= 80 ? rand(300,1000) : rand(1000,2000),
+		RDMOPT_VAR_MAXSPAMOUNT, rand(1,100) <= 80 ? rand(20,100) : rand(100,200),
+		RDMOPT_VAR_MAXHPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MAXSPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_POWAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_SPLAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_STAAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_WISAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CONAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRTAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRITICALSUCCESSVALUE, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_ATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_MAGICATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_RACE_DAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10);
+
+		setarray .@type2,
+		RDMOPT_VAR_PLUSASPD, rand(1,100) <= 80 ? rand(1,1) : rand(1,1),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_BOSS_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_NORMAL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_BOSS, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_ADDSKILLMDAMAGE_ALL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_DEC_SPELL_DELAY_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_PATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_SMATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_RESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MRESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_HEAL_PLUS, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_CRITICAL_RATE, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_DEC_SPELL_CAST_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_HEAL_VALUE, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10);
+		break;
+	}
+	specialeffect2 EF_MAXPOWER;
+	if(getarraysize(.@type))
+	{
+		.@RDMOPT[0] = .@type[.@i = RandomOPT(.@type)];
+		.@RDMVALUE[0] = .@type[.@i+1];
+	}
+	if(getarraysize(.@type2))
+	{
+		.@RDMOPT[1] = .@type2[.@j = RandomOPT(.@type2)];
+		.@RDMVALUE[1] = .@type2[.@j+1];
+	}
+	setarray .@PARAM, 0;
+	delitem getarg(0), 1;
+	delequip .@part;
+	getitem3 .@nameid, 1, 1, .@refine_cnt, 0, .@card0, .@card1, .@card2, .@card3, .@RDMOPT, .@RDMVALUE, .@PARAM;
+	dispbottom getitemname(.@nameid)+" 附魔成功.",0x00ffff;
+	end;
+}
+
+
+//------------------------------------------------------- 頭下
+function	script	Costume_Low_01	{
+function	RandomOPT	{
+	.@idx = rand(getarg(1,getarraysize(getarg(0))));
+	if(.@idx%2 == 0)
+		return .@idx;
+	else return .@idx-1;
+}
+	disable_items;
+	.@part = EQI_COSTUME_HEAD_LOW;
+	//setarray .@item_id,31607;
+	if(getequipid(.@part) == -1)
+	{
+		dispbottom "您沒有裝備任何裝備.",0xff0000;
+		end;
+	}
+	//.@index = inarray(.@item_id,getequipid(.@part));
+
+	select(.@index > -1 ? getequipname(.@part) + "[^0000FF可進行附魔^000000]" : "^888888"+getequipname(.@part) + "[無法附魔]^000000");
+	//if(.@index == -1)
+	//{
+	//	dispbottom "您無法附魔這項武器.",0xff0000;
+	//	end;
+	//}
+	.@nameid = getequipid(.@part);
+	.@refine_cnt = getequiprefinerycnt(.@part);
+	.@card0 = getequipcardid(.@part, 0);
+	.@card1 = getequipcardid(.@part, 1);
+	.@card2 = getequipcardid(.@part, 2);
+	.@card3 = getequipcardid(.@part, 3);
+	.@randomop1 = getequiprandomoption(.@part,0,ROA_ID);
+	.@randomop2 = getequiprandomoption(.@part,1,ROA_ID);
+	.@randomop3 = getequiprandomoption(.@part,2,ROA_ID);
+	.@randomop4 = getequiprandomoption(.@part,3,ROA_ID);
+	.@randomop5 = getequiprandomoption(.@part,4,ROA_ID);
+	.@randomopval1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	.@randomopval2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	.@randomopval3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	.@randomopval4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	.@randomopval5 = getequiprandomoption(.@part,4,ROA_VALUE);
+	.@enclvl = getinventoryinfo(getequipidx(.@part),28);
+	.@RDMOPT[2] = .@randomop3;
+	.@RDMVALUE[2] = .@randomopval3;
+	.@Param[2] = .@randomopval3;
+	.@RDMOPT[3] = .@randomop4;
+	.@RDMVALUE[3] = .@randomopval4;
+	.@Param[3] = .@randomopval4;
+	.@RDMOPT[4] = .@randomop5;
+	.@RDMVALUE[4] = .@randomopval5;
+	.@Param[4] = .@randomopval5;
+
+	switch(getarg(0))
+	{
+		case 80023:
+		setarray .@type,
+		RDMOPT_VAR_MAXHPAMOUNT, rand(1,100) <= 80 ? rand(300,1000) : rand(1000,2000),
+		RDMOPT_VAR_MAXSPAMOUNT, rand(1,100) <= 80 ? rand(20,100) : rand(100,200),
+		RDMOPT_VAR_MAXHPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MAXSPPERCENT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_POWAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_SPLAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_STAAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_WISAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CONAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRTAMOUNT, rand(1,100) <= 80 ? rand(1,3) : rand(3,5),
+		RDMOPT_VAR_CRITICALSUCCESSVALUE, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_ATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_VAR_MAGICATKPERCENT, rand(1,100) <= 80 ? rand(3,4) : rand(4,7),
+		RDMOPT_RACE_DAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_NOTHING, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_UNDEAD, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANIMAL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_PLANT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_INSECT, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_FISHS, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DEVIL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_HUMAN, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_ANGEL, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_DAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10),
+		RDMOPT_RACE_MDAMAGE_DRAGON, rand(1,100) <= 80 ? rand(3,7) : rand(7,10);
+
+		setarray .@type2,
+		RDMOPT_VAR_PLUSASPD, rand(1,100) <= 80 ? rand(1,1) : rand(1,1),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_BOSS_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_NORMAL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_MDAMAGE_BOSS, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_MELEE_ATTACK_DAMAGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_ADDSKILLMDAMAGE_ALL, rand(1,100) <= 80 ? rand(3,5) : rand(5,10),
+		RDMOPT_DEC_SPELL_DELAY_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_PATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_SMATKAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_RESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_MRESAMOUNT, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_HEAL_PLUS, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_VAR_CRITICAL_RATE, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_DEC_SPELL_CAST_TIME, rand(1,100) <= 80 ? rand(3,5) : rand(5,7),
+		RDMOPT_HEAL_VALUE, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_MDAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_SMALL_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10),
+		RDMOPT_DAMAGE_SIZE_LARGE_TARGET, rand(1,100) <= 80 ? rand(3,5) : rand(6,10);
+		break;
+	}
+	specialeffect2 EF_MAXPOWER;
+	if(getarraysize(.@type))
+	{
+		.@RDMOPT[0] = .@type[.@i = RandomOPT(.@type)];
+		.@RDMVALUE[0] = .@type[.@i+1];
+	}
+	if(getarraysize(.@type2))
+	{
+		.@RDMOPT[1] = .@type2[.@j = RandomOPT(.@type2)];
+		.@RDMVALUE[1] = .@type2[.@j+1];
+	}
+	setarray .@PARAM, 0;
+	delitem getarg(0), 1;
+	delequip .@part;
+	getitem3 .@nameid, 1, 1, .@refine_cnt, 0, .@card0, .@card1, .@card2, .@card3, .@RDMOPT, .@RDMVALUE, .@PARAM;
+	dispbottom getitemname(.@nameid)+" 附魔成功.",0x00ffff;
+	end;
+}
+
+
+
+

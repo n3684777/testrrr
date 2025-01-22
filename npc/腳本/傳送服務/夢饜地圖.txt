@@ -1,0 +1,144 @@
+function	script	Nightmare_Map	{
+
+	mes "[傳送服務]";
+	mes "請選擇您要到達的夢魘地區";
+	next;
+	switch(select("夢羅克金字塔地下1樓【moc_prydn1】","夢羅克金字塔地下2樓【moc_prydn2】","斯卡勒伯熔岩【dic_dun03】",
+	"克雷斯特漢姆古城 地下公墓【gl_chyard_】","克雷斯特漢姆古城 2樓【gl_cas02_】","夢魘密穴鐘塔2F【c_tower2_】","夢魘密穴鐘塔3F【c_tower3_】",
+	"戰死者之墓【lhz_dun_n】","諾可羅德 3樓【mag_dun03】","克雷斯特漢姆 深淵地 1樓【gl_cas01_】","深淵湖水地下洞穴4F【abyss_04】","礦山洞穴3F【ein_dun03】",
+	"古代澳丁神殿【odin_past】","實驗體廢棄場魯杜斯四樓【sp_rudus4】","廢棄研究所阿米希提婭1樓【amicitia1】","廢棄研究所阿米希提婭2樓【amicitia2】",
+	"尼芙菲姆密穴 亡者宴會廳【nif_dun01】","尼芙菲姆密穴 崩塌的歌劇院【nif_dun02】","鐘塔未知的地下層【clock_01】",
+	"妙勒尼地下洞穴【mjo_wst01】","聖域神力扭曲平原【ra_pol01】","霸肋門德環境生態圈","被遺忘的時間的水晶")) {
+
+	case 1:
+	set WarpMap$,"moc_prydn1"; set WarpMapX,93; set WarpMapY,87;
+	warp "moc_prydn1",93,87;
+	close;
+
+	case 2:
+	set WarpMap$,"moc_prydn2"; set WarpMapX,190; set WarpMapY,11;
+	warp "moc_prydn2",190,11;
+	close;
+
+	case 3:
+	set WarpMap$,"dic_dun03"; set WarpMapX,101; set WarpMapY,141;
+	warp "dic_dun03",101,141;
+	close;
+
+	case 4:
+	set WarpMap$,"gl_chyard_"; set WarpMapX,147; set WarpMapY,48;
+	warp "gl_chyard_",147,48;
+	close;
+
+	case 5:
+	set WarpMap$,"gl_cas02_"; set WarpMapX,103; set WarpMapY,172;
+	warp "gl_cas02_",103,172;
+	close;
+
+	case 6:
+	set WarpMap$,"c_tower2_"; set WarpMapX,0; set WarpMapY,0;
+	warp "c_tower2_",0,0;
+	close;
+
+	case 7:
+	set WarpMap$,"c_tower3_"; set WarpMapX,0; set WarpMapY,0;
+	warp "c_tower3_",0,0;
+	close;
+
+	case 8:
+	set WarpMap$,"lhz_dun_n"; set WarpMapX,140; set WarpMapY,260;
+	warp "lhz_dun_n",140,260;
+	close;
+
+	case 9:
+	set WarpMap$,"mag_dun03"; set WarpMapX,0; set WarpMapY,0;
+	warp "mag_dun03",0,0;
+	close;
+
+	case 10:
+	set WarpMap$,"gl_cas01_"; set WarpMapX,0; set WarpMapY,0;
+	warp "gl_cas01_",0,0;
+	close;
+
+	case 11:
+	set WarpMap$,"abyss_04"; set WarpMapX,0; set WarpMapY,0;
+	warp "abyss_04",0,0;
+	close;
+
+	case 12:
+	set WarpMap$,"ein_dun03"; set WarpMapX,0; set WarpMapY,0;
+	warp "ein_dun03",0,0;
+	close;
+
+	case 13:
+	set WarpMap$,"odin_past"; set WarpMapX,0; set WarpMapY,0;
+	warp "odin_past",0,0;
+	close;
+
+	case 14:
+	set WarpMap$,"sp_rudus4"; set WarpMapX,0; set WarpMapY,0;
+	warp "sp_rudus4",0,0;
+	close;
+
+	case 15:
+	set WarpMap$,"amicitia1"; set WarpMapX,0; set WarpMapY,0;
+	warp "amicitia1",0,0;
+	close;
+
+	case 16:
+	set WarpMap$,"amicitia2"; set WarpMapX,0; set WarpMapY,0;
+	warp "amicitia2",0,0;
+	close;
+
+	case 17:
+	set WarpMap$,"nif_dun01"; set WarpMapX,0; set WarpMapY,0;
+	warp "nif_dun01",0,0;
+	close;
+
+	case 18:
+	set WarpMap$,"nif_dun02"; set WarpMapX,0; set WarpMapY,0;
+	warp "nif_dun02",0,0;
+	close;
+
+	case 19:
+	set WarpMap$,"clock_01"; set WarpMapX,0; set WarpMapY,0;
+	warp "clock_01",0,0;
+	close;
+
+	case 20:
+	set WarpMap$,"mjo_wst01"; set WarpMapX,0; set WarpMapY,0;
+	warp "mjo_wst01",0,0;
+	close;
+
+	case 21:
+	set WarpMap$,"ra_pol01"; set WarpMapX,0; set WarpMapY,0;
+	warp "ra_pol01",0,0;
+	close;
+
+	case 22:
+		switch(select("環境生態圈-草原【bl_grass】","環境生態圈-火焰【bl_lava】","環境生態圈-寒冰【bl_ice】","環境生態圈-死亡【bl_death】",
+		"環境生態圈-猛毒【bl_venom】","環境生態圈-聖殿【bl_temple】","環境生態圈-靈魂【bl_soul】","環境生態圈-深層1階【bl_depth1】","環境生態圈-深層2階【bl_depth2】")) {
+		case 1: set WarpMap$,"bl_grass"; set WarpMapX,0; set WarpMapY,0; warp "bl_grass",0,0;	close;
+		case 2: set WarpMap$,"bl_lava"; set WarpMapX,0; set WarpMapY,0; warp "bl_lava",0,0;	close;
+		case 3: set WarpMap$,"bl_ice"; set WarpMapX,0; set WarpMapY,0; warp "bl_ice",0,0;	close;
+		case 4: set WarpMap$,"bl_death"; set WarpMapX,0; set WarpMapY,0; warp "bl_death",0,0;	close;
+		case 5: set WarpMap$,"bl_venom"; set WarpMapX,0; set WarpMapY,0; warp "bl_venom",0,0;	close;
+		case 6: set WarpMap$,"bl_temple"; set WarpMapX,0; set WarpMapY,0; warp "bl_temple",0,0;	close;
+		case 7: set WarpMap$,"bl_soul"; set WarpMapX,0; set WarpMapY,0; warp "bl_soul",0,0;	close;
+		case 8: set WarpMap$,"bl_depth1"; set WarpMapX,0; set WarpMapY,0; warp "bl_depth1",0,0;	close;
+		case 9: set WarpMap$,"bl_depth2"; set WarpMapX,0; set WarpMapY,0; warp "bl_depth2",0,0;	close;
+
+		}
+	case 23:
+		switch(select("被遺忘的時間的水晶(1區域)【for_dun01】","被遺忘的時間的水晶(2區域)【for_dun02】")) {
+		case 1: set WarpMap$,"for_dun01"; set WarpMapX,0; set WarpMapY,0; warp "for_dun01",0,0;	close;
+		case 2: set WarpMap$,"for_dun02"; set WarpMapX,0; set WarpMapY,0; warp "for_dun02",0,0;	close;
+
+		}
+
+	}
+}
+
+
+//----------------地圖屬性
+

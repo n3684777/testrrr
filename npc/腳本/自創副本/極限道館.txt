@@ -1,0 +1,1260 @@
+﻿/*================================================
+- 腳本名稱：極限道館
+- 腳本作者：瘋兔工作組
+- 測試環境：rAthena
+- 更新內容：
+- Ver 1.0 完成架構
+>>>各位大哥大姐轉載請保留以上，萬分感激<<<
+================================================*/
+trinity,81,33,4	script	極限道館	856,{
+
+	//道場挑戰次數
+	if ( day_Daoguan < gettime(8) ){
+	set Daoguan,6;
+	set day_Daoguan,gettime(8);	//一年中的一天
+	end; }
+	if (Daoguan < 1) {
+		mes "[極限道館]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	mes "["+strnpcinfo(0)+"]";
+	mes "本日道場挑戰剩餘次數[ ^FF0000"+Daoguan+"^000000 ]";
+	mes "入場的玩家都需要繳交 ^0000FF100萬^000000";
+	mes "每挑戰^FF1493 10 ^000000關隊長可以選擇繼續或領獎";
+	mes "每挑戰^FF1493 10 ^000000關可以領取到20點道館積分";
+	mes "^i[34101]、^i[34102]、^i[34103]、^i[34104]、^i[34105]";
+	mes "請問您是否要挑戰呢!?";
+	next;
+	switch(select("挑戰極限道館","取消")){
+		case 1:
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[極限道館]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+
+	.@md_name$ = "極限道館";
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[極限道館]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[極限道館]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		if(Zeny<1000000){
+		mes "["+strnpcinfo(0)+"]";
+		mes "您身上金錢不足 ^0000FF100萬^000000.";
+		close;
+		}
+
+		if (instance_create(.@md_name$) < 0) {
+			mes "[極限道館]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+		//入場判定
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】！",15,0x33ea91;
+		mes "[極限道館]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[極限道館]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+		if(Zeny<1000000){
+		mes "["+strnpcinfo(0)+"]";
+		mes "您身上金錢不足 ^0000FF200萬^000000.";
+		close;
+		}
+		if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+			mes "[極限道館]";
+			mes "道館挑戰已經開始無法入場!";
+			close;
+		}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣錢
+			set Zeny,Zeny-1000000;
+			//扣除挑戰次數
+			set Daoguan,Daoguan-1;
+
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end; }
+			close;
+		}
+	}
+	close;
+
+		case 2:
+		close;
+	}
+	close;
+
+//------------------------------怪物資訊
+OnInit:
+	waitingroom "極限道館",0;
+	setarray $@Elite_Boss1,1038,1039,1046,1059,1086,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1689;
+	setarray $@Elite_Boss2,1719,1734,1751,1768,1779,1785,1832,1871,1874,1890,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+	setarray $@Elite_Boss3,20520,3741,20934,3633,20421,20422,20419,20618,20601,20610,20611,3029,3659,2996,2235,2236,2237,2238,2239,2240,2241,3254,3804,20648,20273,20277,20381,20536,3150,3151;
+	setarray $@Elite_Boss4,3757,3758,3796,3804,20260,20273,20277,20520,20811,20843,21395,20520,3741,20934,3633,20421,20422,20419,20618,20601,20610,20611,3029,3659,2996,2235,2236,2237,2238,2239,2240,2241,3254,3804,20648,20273,20277,20381,20536,3150,3151;
+
+	setarray $@Elite_Boss0,20713,20713,20711,20703,20705,20709,20704,20712,20707,20706,20710;
+	end;
+}
+
+// Core Functions
+//============================================================
+function	script	Gym_better_Mvp1	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+
+	.@RES=.@por_arr[54];
+	.@MRES=.@por_arr[55];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+300000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+8000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+16000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+6000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+12000;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+100;
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+50;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+120;
+	setunitdata .@MOD,UMOB_RES,.@RES+200;
+	setunitdata .@MOD,UMOB_MRES,.@MRES+200;
+
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(180,350);
+	setunitdata .@MOD,UMOB_AGI,rand(150,280);
+	setunitdata .@MOD,UMOB_VIT,rand(130,250);
+	setunitdata .@MOD,UMOB_INT,rand(200,380);
+	setunitdata .@MOD,UMOB_DEX,rand(240,400);
+	setunitdata .@MOD,UMOB_LUK,rand(120,300);
+
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,5;
+	//end;
+	return;
+}
+
+function	script	Gym_better_Mvp2	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	.@RES=.@por_arr[54];
+	.@MRES=.@por_arr[55];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+400000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+10000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+22000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+8000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+16000;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+150;
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+80;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+180;
+
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(250,350);
+	setunitdata .@MOD,UMOB_AGI,rand(150,280);
+	setunitdata .@MOD,UMOB_VIT,rand(120,250);
+	setunitdata .@MOD,UMOB_INT,rand(200,380);
+	setunitdata .@MOD,UMOB_DEX,rand(200,400);
+	setunitdata .@MOD,UMOB_LUK,rand(120,300);
+
+	setunitdata .@MOD,UMOB_RES,.@RES+300;
+	setunitdata .@MOD,UMOB_MRES,.@MRES+300;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//end;
+	return;
+}
+
+function	script	Gym_better_Mvp3	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	.@RES=.@por_arr[54];
+	.@MRES=.@por_arr[55];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+800000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+ 15000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+ 30000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+ 10000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+ 20000;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+250;
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+120;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+250;
+
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(280,470);
+	setunitdata .@MOD,UMOB_AGI,rand(270,350);
+	setunitdata .@MOD,UMOB_VIT,rand(120,250);
+	setunitdata .@MOD,UMOB_INT,rand(250,420);
+	setunitdata .@MOD,UMOB_DEX,rand(350,450);
+	setunitdata .@MOD,UMOB_LUK,rand(180,330);
+	setunitdata .@MOD,UMOB_RES,.@RES+ 750;
+	setunitdata .@MOD,UMOB_MRES,.@MRES+ 750;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//end;
+	return;
+}
+
+
+function	script	Gym_better_Mvp4	{
+	.@label$ = getarg(7);
+	areamonster getarg(0),getarg(1),getarg(2),getarg(3),getarg(4),"--ja--",getarg(5),getarg(6),.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	.@RES=.@por_arr[54];
+	.@MRES=.@por_arr[55];
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+2000000000;
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+ 13000;
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+ 28000;
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+ 12000;
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+ 20000;
+	setunitdata .@MOD,UMOB_DEF,.@DEF+400;
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+180;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+400;
+
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(330,470);
+	setunitdata .@MOD,UMOB_AGI,rand(340,400);
+	setunitdata .@MOD,UMOB_VIT,rand(120,250);
+	setunitdata .@MOD,UMOB_INT,rand(340,460);
+	setunitdata .@MOD,UMOB_DEX,rand(350,450);
+	setunitdata .@MOD,UMOB_LUK,rand(180,330);
+	setunitdata .@MOD,UMOB_RES,.@RES+ 1200;
+	setunitdata .@MOD,UMOB_MRES,.@MRES+ 1200;
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,1;
+	//end;
+	return;
+}
+
+
+//------------------------------ 
+2@gvs,50,50,5	script	極限道館館長	89,{
+	if('level/10 && 'level%10==0){
+		if('pass){
+
+			if('level==50){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; getitem 34103,1; getitem 34104,1; }
+			getitem 34105,1;	//30關道館寶箱
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==40){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; getitem 34103,1; }
+			getitem 34104,1;	//30關道館寶箱
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==30){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; }
+			getitem 34103,1;	//30關道館寶箱
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==20){
+			getitem 34102,1;	//20關道館寶箱
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==10){
+			getitem 34101,1;	//10關道館寶箱
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+		}
+		
+		if(getpartyleader(getcharid(1),2) == getcharid(0)){
+		
+		switch(select(
+		"取消",
+		'level<=10?"挑戰一般模式":"",
+		'level<50?"挑戰加強模式":"",
+		"領獎")){
+
+		case 1:
+			close;
+			
+		case 2:
+				announce "【極限道館】"+getpartyname(getcharid(1))+" 隊伍, 隊長選擇了挑戰一般模式！",bc_map,0xffff90;
+				donpcevent instance_npcname(strnpcinfo(0))+"::OnDo";
+				hideonnpc instance_npcname(strnpcinfo(0));
+				end;
+
+		case 3:
+				announce "【極限道館】"+getpartyname(getcharid(1))+" 隊伍, 隊長選擇了挑戰加強模式！",bc_map,0xffff90;
+				set 'Gym_LV,1;
+				donpcevent instance_npcname(strnpcinfo(0))+"::OnDo";
+				hideonnpc instance_npcname(strnpcinfo(0));
+				end;
+
+		case 4:
+				//出場公告時間
+				set Instance_Miao,gettimetick(2)-Instance_Annal;
+				set 'gvs_count,getmapusers('map$);
+				announce "【極限道館】隊伍 ["+getpartyname(getcharid(1))+"] ["+'gvs_count+"]人 在隊長"+strcharinfo(0)+"帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰 "+'level+"關 成功",15;
+				announce "【極限道館】"+getpartyname(getcharid(1))+" 隊伍, 闖關至 "+'level+" 關, 隊長選擇了領獎！",bc_map,0xffff90;
+				set 'pass,1;
+
+			if('level==50){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; getitem 34103,1; getitem 34104,1; }
+			getitem 34105,1;	//30關道館寶箱
+			getitem 82001,2;	//寶石碎片
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==40){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; getitem 34103,1; }
+			getitem 34104,1;	//30關道館寶箱
+			getitem 82001,2;	//寶石碎片
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==30){
+			if('Gym_LV==1){ getitem 34101,1; getitem 34102,1; }
+			getitem 34103,1;	//30關道館寶箱
+			getitem 82001,2;	//寶石碎片
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==20){
+			getitem 34102,1;	//20關道館寶箱
+			getitem 82001,1;	//寶石碎片
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+			if('level==10){
+			getitem 34101,1;	//10關道館寶箱
+			getitem 82001,1;	//寶石碎片
+			set #Gym_Points,#Gym_Points+'level*2;	//道館積分
+			dispbottom "道館積分+ "+'level*2+"";
+			dispbottom "目前道館積分 "+#Gym_Points+" 點";
+			if(checkquest(43003)==1){completequest 43003; dispbottom "天賦道館任務 (已完成)";}
+			warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+			end;
+			}
+
+		}
+
+		} else dispbottom "你不是隊長，請隊長選擇繼續或者領獎.";
+		end;
+		
+	}
+	if(getpartyleader(getcharid(1),2) != getcharid(0)){
+		mes "["+strnpcinfo(0)+"]";
+		mes "你不是隊長！";
+	} else {
+		mes "["+strnpcinfo(0)+"]";
+		mes "開始後，中間將不停止休息";
+		mes "每關挑戰時間 ^FF14935 分鐘^000000";
+		mes "時間內沒有擊敗將挑戰終止…";
+		mes "關數越後面，Boss會越來越強！";
+		mes "請問您準備好要開始挑戰了嗎!?";
+		next;
+		if(select("- 準備好了","- 還沒")==2){
+			mes "["+strnpcinfo(0)+"]";
+			mes "都進來了，還沒準備好呀！";
+		} else {
+			'win = 1;
+			set 'Gym_LV,0;
+			//開始記錄時間
+			setd "Instance_Annal"+instance_id(1),gettimetick(2);
+			announce "【極限道館】隊伍 ["+getpartyname(getcharid(1))+"], 隊長"+strcharinfo(0)+"開始挑戰極限道館！",15;
+			donpcevent instance_npcname(strnpcinfo(0))+"::OnDo";
+			hideonnpc instance_npcname(strnpcinfo(0));
+		}
+	}
+	end;
+
+//------------------------------ 道館寶箱
+OnInstanceInit:
+	'win = 0;
+	set 'map$,instance_mapname("2@gvs");
+	setarray 'Item[1],34101,34102,34103,34104,34105,34106,34107,34108,34109,34110;
+	end;
+
+OnDo:
+	set 'level,'level+1;
+	if('level>0 && 'level<=10) set .@amount,2;
+	else if('level>10 && 'level<=20) set .@amount,2;
+	else if('level>20 && 'level<=30) set .@amount,2;
+	else if('level>30 && 'level<=40) set .@amount,2;
+	else if('level>40 && 'level<=50) set .@amount,3;
+	else if('level>50 && 'level<=60) set .@amount,3;
+	else if('level>60 && 'level<=70) set .@amount,3;
+	else if('level>70 && 'level<=80) set .@amount,3;
+	else if('level>80 && 'level<=90) set .@amount,3;
+	else if('level>90 && 'level<=100) set .@amount,3;
+
+
+	if('level==10){
+	areamonster 'map$,34,67,65,32,"--ja--",20707,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 傷害緩減
+	areamobuseskill 'map$,50,50,100,20704,771,5,0,500,ET_KEK,0;
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20713,532,10,0,10000,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20713,349,5,0,25000,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+	if('level==20){
+	areamonster 'map$,34,67,65,32,"--ja--",20706,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	enablenpc instance_npcname("#cheat_Skill_Gym");
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 傷害緩減
+	areamobuseskill 'map$,50,50,100,20704,771,6,0,500,ET_KEK,0;
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20711,532,10,0,500,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20711,349,5,0,500,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+	if('level==30){
+	areamonster 'map$,34,67,65,32,"--ja--",20710,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	enablenpc instance_npcname("#cheat_Skill_Gym");
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 傷害緩減
+	areamobuseskill 'map$,50,50,100,20704,771,7,0,500,ET_KEK,0;
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20703,532,10,0,500,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20703,349,5,0,500,ET_KEK,0;
+	// 艾斯克
+	areamobuseskill 'map$,50,50,100,20703,471,1,0,500,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+	if('level==40){
+	areamonster 'map$,34,67,65,32,"--ja--",20705,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	enablenpc instance_npcname("#cheat_Skill_Gym");
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 傷害緩減
+	areamobuseskill 'map$,50,50,100,20704,771,9,0,500,ET_KEK,0;
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20705,532,10,0,500,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20705,349,5,0,500,ET_KEK,0;
+	// 艾斯克
+	areamobuseskill 'map$,50,50,100,20705,471,1,0,500,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+	if('level==50){
+	areamonster 'map$,34,67,65,32,"--ja--",20704,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	enablenpc instance_npcname("#cheat_Skill_Gym");
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 傷害緩減
+	areamobuseskill 'map$,50,50,100,20704,771,9,0,500,ET_KEK,0;
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20709,532,10,0,500,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20709,349,5,0,500,ET_KEK,0;
+	// 艾斯克
+	areamobuseskill 'map$,50,50,100,20709,471,2,0,500,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+	if('level==60){
+	areamonster 'map$,34,67,65,32,"--ja--",20704,1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	'Gym_boss = $@mobid[0];
+	enablenpc instance_npcname("#cheat_Skill_Gym");
+	initnpctimer instance_npcname("#cheat_Skill_Gym");
+	// 幻影化身
+	areamobuseskill 'map$,50,50,100,20704,532,10,0,500,ET_KEK,0;
+	// 爆氣
+	areamobuseskill 'map$,50,50,100,20704,349,5,0,500,ET_KEK,0;
+	// 艾斯克
+	areamobuseskill 'map$,50,50,100,20704,471,3,0,500,ET_KEK,0;
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+	}
+
+
+		if('level>0 && 'level<=20){
+	for(.@i=0; .@i<.@amount; .@i++){
+	set .@mob[.@i],rand(getarraysize($@Elite_Boss1));
+	//areamonster 'map$,34,67,65,32,"--ja--",$@Elite_Boss1[.@mob[.@i]],1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	callfunc "Gym_better_Mvp1",'map$,34,67,65,32,$@Elite_Boss1[.@mob[.@i]],1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	}
+	// 爆氣
+	if('level > 15){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss1[.@mob[.@i]],349,5,0,1000,ET_KEK,0;
+	}
+	// 艾斯克
+	if('level > 15){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss1[.@mob[.@i]],471,1,0,1000,ET_KEK,0;
+	}
+	// 聖母之祈福
+	if('level > 10){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss1[.@mob[.@i]],361,10,0,1000,ET_KEK,0;
+	}
+	// 光之盾
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss1[.@mob[.@i]],205,2,0,1000,ET_KEK,0;
+	}
+		}
+
+		if('level>20 && 'level<=30){
+			if('Gym_LV==1){
+	for(.@i=0; .@i<.@amount; .@i++){
+	set .@mob[.@i],rand(getarraysize($@Elite_Boss2));
+	callfunc "Gym_better_Mvp3",'map$,34,67,65,32,$@Elite_Boss3[.@mob[.@i]],1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	}
+	// 幻影化身
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],532,10,0,1000,ET_KEK,0;
+	}
+	// 爆氣
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],349,5,0,1000,ET_KEK,0;
+	}
+	// 艾斯克
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],471,1,0,1000,ET_KEK,0;
+	}
+	// 聖母之祈福
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],361,10,0,1000,ET_KEK,0;
+	}
+	// 光之盾
+	if('level > 20){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],205,2,0,1000,ET_KEK,0;
+	}
+		}
+			}
+
+		if('level>30 && 'level<=60){
+	for(.@i=0; .@i<.@amount; .@i++){
+	set .@mob[.@i],rand(getarraysize($@Elite_Boss3));
+	callfunc "Gym_better_Mvp4",'map$,34,67,65,32,$@Elite_Boss4[.@mob[.@i]],1,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	}
+	// 幻影化身
+	if('level > 30 && 'level <= 60){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],532,10,0,1000,ET_KEK,0;
+	}
+	// 爆氣
+	if('level > 30){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],349,5,0,1000,ET_KEK,0;
+	}
+	// 艾斯克
+	if('level > 30){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],471,3,0,1000,ET_KEK,0;
+	}
+	// 聖母之祈福
+	if('level > 30){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],361,10,0,1000,ET_KEK,0;
+	}
+	// 光之盾
+	if('level > 30){
+	for(.@i=0; .@i<.@amount; .@i++)
+	areamobuseskill 'map$,50,50,100,$@Elite_Boss3[.@mob[.@i]],205,4,0,1000,ET_KEK,0;
+	}
+		}
+
+	mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP放出！挑戰開始！",bc_map,0xffff90;
+	end;
+
+OnMyMobDead:
+	if(set(.@count,mobcount('map$,instance_npcname(strnpcinfo(0))+"::OnMyMobDead"))<1){
+		mapannounce 'map$,"【極限道館】"+getpartyname(getcharid(1))+" 隊伍,第 "+'level+" 關挑戰成功！",bc_map,0xffff90;
+		if('level/10 && 'level%10==0){
+			hideoffnpc instance_npcname(strnpcinfo(0));
+			end;
+		}
+		sleep2(rand(2500,3500));
+		donpcevent instance_npcname(strnpcinfo(0))+"::OnDo";
+	} else mapannounce 'map$,"【極限道館】第 "+'level+" 關，MVP剩餘數量 : "+.@count+"",bc_map,0xffff90;
+	end;
+}
+
+
+//-------------------------MVP技能
+2@gvs,0,0,0	script	#cheat_Skill_Gym	-1,{
+	end;
+	
+OnTimer1500:
+	//debugmes "11";
+	if(unitexists('Gym_boss))
+	{
+	//debugmes "22";
+		getunitdata 'Gym_boss, .@mob_data;
+		.@x = .@mob_data[UMOB_X];
+		.@y = .@mob_data[UMOB_Y];
+		if(rand(1,100) <= 60)
+		{
+		//debugmes "33";
+			callfunc "unitskilluseidGym", 'Gym_boss, rand(1,8), 'map$, .@x, .@y;
+			//initnpctimer;
+		}
+	}
+	//debugmes "44";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+
+function	script	unitskilluseidGym	{
+	if(!unitexists(getarg(0))) return;
+	.@gid = getarg(0);
+	.@type = getarg(1);
+	.@map$ = getarg(2);
+	.@x = getarg(3);
+	.@y = getarg(4);
+	showscript " !!",getarg(0),AREA;
+	//debugmes ""+.@type;
+	switch(.@type)
+	{
+		// 崩裂術(十字)
+		case 1:
+			.@range = 5;
+			for(.@i=1; .@i<9; .@i++)
+			{
+				if ( checkcell(.@map$, .@x, .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x, .@y+(.@range*.@i), cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y+(.@range*.@i), "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y+(.@range*.@i), -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x, .@y-(.@range*.@i), cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y-(.@range*.@i), "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y-(.@range*.@i), -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x-(.@range*.@i), .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x-(.@range*.@i), .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x-(.@range*.@i), .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x+(.@range*.@i), .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x+(.@range*.@i), .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x+(.@range*.@i), .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+			}
+			break;
+			
+		// 崩裂術(十字)
+		case 2:
+			.@range = 5;
+			for(.@i=1; .@i<9; .@i++)
+			{
+				if ( checkcell(.@map$, .@x, .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x, .@y+(.@range*.@i), cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y+(.@range*.@i), "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y+(.@range*.@i), -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x, .@y-(.@range*.@i), cell_chkpass) )
+				{
+					monster .@map$, .@x, .@y-(.@range*.@i), "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x, .@y-(.@range*.@i), -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x-(.@range*.@i), .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x-(.@range*.@i), .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x-(.@range*.@i), .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x+(.@range*.@i), .@y, cell_chkpass) )
+				{
+					monster .@map$, .@x+(.@range*.@i), .@y, "", 20562, 1;
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_HEAVENDRIVE", 20, .@x+(.@range*.@i), .@y, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+			}
+			break;
+		//隕石術
+		case 3:
+			.@range = 3;
+			for(.@i = 0; .@i < 15; .@i += .@range)
+			{
+				if ( checkcell(.@map$, .@x+.@i, .@y+.@i, cell_chkpass) )
+				{
+					monster .@map$, .@x+.@i, .@y+.@i, "", 20582, 1, "";
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_METEOR", 20, .@x+.@i, .@y+.@i, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x+.@i, .@y-.@i, cell_chkpass) )
+				{
+					monster .@map$, .@x+.@i, .@y-.@i, "", 20562, 1, "";
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_METEOR", 20, .@x+.@i, .@y-.@i, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x-.@i, .@y-.@i, cell_chkpass) )
+				{
+					monster .@map$, .@x-.@i, .@y-.@i, "", 20562, 1, "";
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_METEOR", 20, .@x-.@i, .@y-.@i, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				if ( checkcell(.@map$, .@x-.@i, .@y+.@i, cell_chkpass) )
+				{
+					monster .@map$, .@x-.@i, .@y+.@i, "", 20562, 1, "";
+					.@unit_id = $@mobid[0];
+					setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+					unitskillusepos .@unit_id, "WZ_METEOR", 20, .@x-.@i, .@y+.@i, -5000;
+					.@bot[getarraysize(.@bot)] = .@unit_id;
+				}
+				sleep 600;
+			}
+			break;
+		//雷爆
+		case 4:
+			//unittalk 'LASGAND_boss, "究極拉斯甘德:！";
+			.@range = 5;
+			if ( checkcell(.@map$, .@x-.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y+.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x-.@range, .@y+.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x, .@y+.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x+.@range, .@y+.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y+.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x+.@range, .@y+.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x-.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x-.@range, .@y, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x, .@y, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x+.@range, .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x+.@range, .@y, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x-.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x-.@range, .@y-.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x-.@range, .@y-.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x, .@y-.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}	
+			if ( checkcell(.@map$, .@x+.@range, .@y-.@range, cell_chkpass) )
+			{
+				monster .@map$, .@x+.@range, .@y-.@range, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x+.@range, .@y-.@range, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x, .@y+(.@range*2), cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y+(.@range*2), "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x, .@y+(.@range*2), -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x, .@y-(.@range*2), cell_chkpass) )
+			{
+				monster .@map$, .@x, .@y-(.@range*2), "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x, .@y-(.@range*2), -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x-(.@range*2), .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x-(.@range*2), .@y, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x-(.@range*2), .@y, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			if ( checkcell(.@map$, .@x+(.@range*2), .@y, cell_chkpass) )
+			{
+				monster .@map$, .@x+(.@range*2), .@y, "", 20562, 1;
+				.@unit_id = $@mobid[0];
+				setunitdata .@unit_id, UMOB_DMGIMMUNE, 1;
+					setunitdata .@unit_id, UMOB_CLASS, 139;
+				unitskillusepos .@unit_id, "MG_THUNDERSTORM", 20, .@x+(.@range*2), .@y, -5000;
+				.@bot[getarraysize(.@bot)] = .@unit_id;
+			}
+			break;
+		case 5:
+			//咖般塔音	
+			sleep 1000;
+			.@k=0;
+			for(.@i = 0; .@i < 5; .@i++){
+				
+				for(.@j = 0; .@j < 5; .@j++){
+					monster .@map$,.@x-9+.@j*6,.@y+9-.@i*6,"--ja--",3095,1;					
+					.@id[.@k++] = $@mobid[0];
+					
+				}
+			}
+			
+			
+			
+			for(.@i = 0; .@i < getarraysize(.@id);.@i++) {
+				////debugmes "lll";
+				unitskilluseid .@id[.@i], 353, 1;
+			}
+			.@k=0;
+			sleep 500;
+			for(.@i = 0; .@i < 5; .@i++) {
+				
+				for(.@j = 0; .@j < 5; .@j++){
+					if(unitexists(.@id[.@i]) == true)
+						unitskillusepos .@id[.@k++],483,5,.@x-9+.@j*6,.@y+9-.@i*6,-5;
+				}
+			}
+			sleep 3000;
+			for(set .@i,0;.@i < getarraysize(.@id);set .@i,.@i+1) {
+				if(unitexists(.@id[.@i]))
+				mobremove .@id[.@i];
+			}
+			break;			
+		default:
+			break;
+		//隕石術
+		case 6:
+							unittalk 'Gym_boss, "看看這個如何.流星！！";	
+					for(.@i = 0; .@i < 5; .@i++){
+				monster .@map$,.@x-9+2*.@i,.@y+9-2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				.@k++;
+				
+				monster .@map$,.@x+9-2*.@i,.@y+9-2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				.@k++;
+				
+				
+			}
+			for(.@i = 0; .@i < 5; .@i++){
+				
+				monster .@map$,.@x-9+2*.@i,.@y-9+2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				.@k++;
+				
+				monster .@map$,.@x+9-2*.@i,.@y-9+2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				.@k++;
+				
+				
+			}
+			
+			
+			
+			
+			for(.@i = 0; .@i < 20; .@i++) {
+				////debugmes "lll";
+				unitskilluseid .@id[.@i], 353, 1;
+			}
+			
+			sleep 500;
+			.@k=0;
+			for(.@i = 0; .@i < 10; .@i++){
+				
+				if(unitexists(.@id[.@k]) == true){
+					
+					unitskillusepos .@id[.@k],83,10,.@x-9+2*.@i,.@y+9-2*.@i,-10;
+					
+					unitaura .@id[.@k],1071;
+					.@k++;
+				}
+				
+			}
+			
+			for(.@i = 0; .@i < 10; .@i++){
+				
+				if(unitexists(.@id[.@k]) == true){
+					
+					unitskillusepos .@id[.@k],83,10,.@x+9-2*.@i,.@y-9+2*.@i,-10;
+					
+					unitaura .@id[.@k],1071;
+					.@k++;
+				}
+				
+			}
+			
+			sleep 1000;
+		for(set .@i,0;.@i < getarraysize(.@id); set .@i,.@i+1) {
+			mobremove .@id[.@i];
+		}
+		break;
+		case 7:
+					unittalk 'Gym_boss, "你已無處可藏！！";	
+					.@k=0;
+			
+			for(.@i = 0; .@i < 5; .@i++){
+				//.@k=0;
+				monster .@map$,.@x-2-2*.@i,.@y+2+2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				unitskilluseid .@id[.@i], 353, 1;
+				unitskillusepos .@id[.@k],83,5,.@x-2-2*.@i,.@y+2+2*.@i,-10;	
+				unitaura .@id[.@k],1071;
+				.@k++;
+				
+				monster .@map$,.@x+2+2*.@i,.@y+2+2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				unitskilluseid .@id[.@i], 353, 1;
+				unitskillusepos .@id[.@k],83,5,.@x+2+2*.@i,.@y+2+2*.@i,-10;	
+				unitaura .@id[.@k],1071;
+				.@k++;
+				
+				monster .@map$,.@x+2+2*.@i,.@y-2-2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				unitskilluseid .@id[.@i], 353, 1;
+				unitskillusepos .@id[.@k],83,5,.@x+2+2*.@i,.@y-2-2*.@i,-10;	
+				unitaura .@id[.@k],1071;
+				.@k++;
+
+				monster .@map$,.@x-2-2*.@i,.@y-2-2*.@i,"--ja--",3095,1;
+				.@id[.@k] = $@mobid[0];
+				unitskilluseid .@id[.@i], 353, 1;
+				unitskillusepos .@id[.@k],83,5,.@x-2-2*.@i,.@y-2-2*.@i,-10;	
+				unitaura .@id[.@k],1071;
+				.@k++;	
+				sleep 1000;
+				
+			}
+
+		for(set .@i,0;.@i < getarraysize(.@id); set .@i,.@i+1) {
+			mobremove .@id[.@i];
+		}
+					break;
+		case 8:
+		donpcevent instance_npcname("#死亡投射_Gym")+"::OnEnable";
+break;
+					
+			
+	}
+	
+	if(rand(5)==0){
+
+			//咖般塔音	
+			sleep 1000;
+			.@k=0;
+			for(.@i = 0; .@i < 5; .@i++){
+				
+				for(.@j = 0; .@j < 5; .@j++){
+					monster .@map$,.@x-9+.@j*6,.@y+9-.@i*6,"--ja--",3095,1;					
+					.@id[.@k++] = $@mobid[0];
+					
+				}
+			}
+			
+			
+			
+			for(.@i = 0; .@i < getarraysize(.@id);.@i++) {
+				////debugmes "lll";
+				unitskilluseid .@id[.@i], 353, 1;
+			}
+			.@k=0;
+			sleep 500;
+			for(.@i = 0; .@i < 5; .@i++) {
+				
+				for(.@j = 0; .@j < 5; .@j++){
+					if(unitexists(.@id[.@i]) == true)
+						unitskillusepos .@id[.@k++],483,5,.@x-9+.@j*6,.@y+9-.@i*6,-5;
+				}
+			}
+			sleep 3000;
+			for(set .@i,0;.@i < getarraysize(.@id);set .@i,.@i+1) {
+				if(unitexists(.@id[.@i]))
+				mobremove .@id[.@i];
+			}
+	
+	
+	}
+	
+	
+	if(.@type == 1) sleep 5000;
+	else sleep 3000;
+	for(.@i=0; .@i<getarraysize(.@bot); .@i++)
+		if(unitexists(.@bot[.@i])) mobRemove .@bot[.@i];
+	return;
+	
+	
+}
+
+2@gvs,0,0,3	script	#死亡投射_Gym	139,{
+end;
+OnEnable:
+		getunitdata 'Gym_boss, .@mob_data;
+		.@x = .@mob_data[UMOB_X];
+		.@y = .@mob_data[UMOB_Y];
+			unittalk 'Gym_boss, "呵呵~嘗嘗死亡的滋味！！";	
+			//addrid(4,0,126,64,180,180);
+						addrid(4,0,.@x-19,.@y-19,.@x+19,.@y+19);
+			//.map$= instance_mapname("6@tower");
+			//getmapxy(.@map$,.@mx,.@my,BL_PC);	
+			//monster .map$,.@mx,.@my,"--ja--",3095,1;
+			//.@id[0] = $@mobid[0];
+				//callfunc "boss_skill",.@id[0],'boss_state_4;			
+			//unitskilluseid .@id[0], 353, 1;
+			if(Hp>2){
+			if(!getstatus(SC_DEADLY_DEFEASANCE))
+				sc_start SC_DEADLY_DEFEASANCE,60000,10;
+			}
+			end;
+			//sleep2 500;
+end;
+}
+
+
+
+//-------------------------地圖屬性
+2@gvs	mapflag	partylock
+2@gvs	mapflag	noteleport
+2@gvs	mapflag	nomemo
+2@gvs	mapflag	nosave
+2@gvs	mapflag	nobranch
+2@gvs	mapflag	noloot
+2@gvs	mapflag	nomobloot
+2@gvs	mapflag	monster_noteleport
+2@gvs	mapflag	nobaseexp
+2@gvs	mapflag	nojobexp
+

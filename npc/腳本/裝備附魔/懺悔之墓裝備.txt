@@ -1,0 +1,35 @@
+﻿
+vdistrict1,56,37,6	script	懺悔之墓裝備	804,{
+
+	mes "[懺悔之墓裝備]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "提亞拉#Armor01";
+	end;
+
+	case 2:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "懺悔之墓裝備",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,182 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#見習武器
+   - Name: 見習武器兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_NOVICE2
+     Items:
+       - Index: 0
+         Item: Probation_Knuckle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 1
+         Item: Probation_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 2
+         Item: Probation_Revolver
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 3
+         Item: Probation_Shuriken
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 4
+         Item: Probation_Mace
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 5
+         Item: Probation_CrossBow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 6
+         Item: Probation_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 7
+         Item: Probation_TH_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 8
+         Item: Probation_Foxtail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 9
+         Item: Probation_Katar
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 10
+         Item: Probation_TH_Axe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 11
+         Item: Probation_Rifle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 12
+         Item: Probation_Gatling_Gun
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 13
+         Item: Probation_Launcher
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 14
+         Item: Probation_Shotgun
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 15
+         Item: Probation_Magicbook
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 16
+         Item: Probation_Bible
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 17
+         Item: Probation_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 18
+         Item: Probation_Lance
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 18
+         Item: Probation_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 18
+         Item: Probation_Foxtail
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10

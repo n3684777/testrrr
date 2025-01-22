@@ -1,0 +1,32 @@
+﻿
+trinity,96,65,6	script	消耗品合成箱預覽	10375,{
+
+	mes "[消耗品合成箱預覽]";
+	mes "這邊可以預覽消耗品合成箱可以開到的服飾外觀";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("預覽服飾頭具類:預覽服飾披肩類:取消")) {
+
+	case 1:
+	close2;
+	callshop "消耗品合成箱(頭飾)";
+	end;
+
+	case 2:
+	close2;
+	callshop "消耗品合成箱(披肩)";
+	end;
+
+	case 3:
+	close;
+
+	}
+OnInit:
+	waitingroom "消耗品合成箱預覽",0;
+	end;
+}
+
+
+
+
+

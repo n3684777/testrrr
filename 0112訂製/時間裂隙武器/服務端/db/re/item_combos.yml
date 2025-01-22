@@ -1,0 +1,305 @@
+﻿
+#時間裂隙武器
+#時隙守護長矛
+  - Combos:
+      - Combo:
+          - Time_Gap_Spear_IG   # 530060
+          - Time_DM_R_Crown_IG   # 400530
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bLongAtkRate,20;
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",45;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"LG_CANNONSPEAR",2*.@sum;
+         if (getskilllv("LG_CANNONSPEAR") > 0) {
+            bonus4 bAutoSpellOnSkill,"IG_RADIANT_SPEAR","LG_CANNONSPEAR",getskilllv("LG_CANNONSPEAR"),1000;
+         }
+      }
+#Time_Gap_HN_Staff
+  - Combos:
+      - Combo:
+          - Time_Gap_HN_Staff   # 550152
+          - Time_DM_R_Crown_HN   # 400545
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAddEle,Ele_All,10;
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",45;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",.@sum;
+         bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",.@sum;
+         bonus2 bSkillCooldown,"HN_JUPITEL_THUNDER_STORM",-300;
+      }
+#時隙小提琴
+  - Combos:
+      - Combo:
+          - Time_Gap_TR_Vilolin   # 570075
+          - Time_DM_R_Crown_TR   # 400540
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAddEle,Ele_All,10;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus bDelayrate,-10;
+         bonus2 bSkillAtk,"TR_METALIC_FURY",.@sum;
+      }
+#時隙音樂絲帶
+  - Combos:
+      - Combo:
+          - Time_Gap_TR_Ribbon   # 580075
+          - Time_DM_R_Crown_TR   # 400540
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAddEle,Ele_All,10;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus bDelayrate,-10;
+         bonus2 bSkillAtk,"TR_METALIC_FURY",.@sum;
+      }
+#時隙機械斧
+  - Combos:
+      - Combo:
+          - Time_Gap_MT_Axe   # 620043
+          - Time_DM_R_Crown_MT   # 400531
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSubEle,Ele_All,15;
+      bonus2 bSkillAtk,"MT_RUSH_STRIKE",40;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,15;
+         bonus2 bSkillAtk,"MT_MIGHTY_SMASH",.@sum;
+      }
+#Time_Gap_Staff_AG
+  - Combos:
+      - Combo:
+          - Time_Gap_Staff_AG   # 640054
+          - Time_DM_R_Crown_AG   # 400535
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",45;
+      bonus2 bMagicAtkEle,Ele_Dark,20;
+      bonus2 bMagicAtkEle,Ele_Ghost,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",.@sum;
+         bonus2 bSkillCooldown,"AG_SOUL_VC_STRIKE",-200;
+      }
+#時隙騎士手槍
+  - Combos:
+      - Combo:
+          - Time_Gap_Revolver_NW   # 800042
+          - Time_DM_R_Crown_NW   # 400542
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",.@sum;
+         bonus2 bSkillCooldown,"NW_WILD_SHOT",-200;
+      }
+#時隙暗影匕首(A)
+  - Combos:
+      - Combo:
+          - Time_Gap_SHC_Dagger1   # 510165
+          - Time_Gap_SHC_Dagger2   # 510166
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@r2 = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      .@sum = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      if (getiteminfo(getequipid(EQI_HAND_L),17) == 510166) {
+         bonus2 bAddClass,Class_All,(.@r/3);
+         bonus bBaseAtk,25*(.@r/3);
+      }
+      if (.@r2>=14) {
+         bonus bCritAtkRate,20;
+         if (.@r2>=17) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r2>=21) {
+               bonus2 bSkillAtk,"SHC_CROSS_SLASH",15;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_SHC_Dagger1   # 510165
+          - Time_Gap_SHC_Dagger2   # 510166
+          - Time_DM_R_Crown_SHC   # 400533
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@r2 = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",25;
+      bonus bShortAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_L)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         if (getiteminfo(getequipid(EQI_HAND_L),17) == 510166) {
+         bonus2 bSkillAtk,"SHC_CROSS_SLASH",.@sum;
+         bonus bCritical,15;
+         }
+      }
+#時隙生物刀
+  - Combos:
+      - Combo:
+          - Time_Gap_BO_Blade   # 500107
+          - Time_DM_R_Crown_BO   # 400532
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",25;
+      bonus bShortAtkRate,10;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"BO_DUST_EXPLOSION",15+.@sum;
+      }
+#時隙靈魂手杖
+  - Combos:
+      - Combo:
+          - Time_Gap_SOA_Rod   # 550155
+          - Time_DM_R_Crown_SOA   # 400544
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",45;
+      bonus2 bMagicAtkEle,Ele_All,10;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",.@sum;
+         bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLUE_DRAGON",.@sum;
+         bonus4 bAutoSpellOnSkill,"SOA_TALISMAN_OF_BLUE_DRAGON","SOA_TALISMAN_OF_RED_PHOENIX",getskilllv("SOA_TALISMAN_OF_RED_PHOENIX"),1000;
+      }
+#時隙帝皇運行書
+  - Combos:
+      - Combo:
+          - Time_Gap_CD_Staff   # 550156
+          - Time_DM_R_Crown_CD   # 400537
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",20;
+      bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",.@sum;
+         bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",.@sum;
+      }
+#時隙龍之槍
+  - Combos:
+      - Combo:
+          - Time_Gap_DK_Spear   # 630049
+          - Time_DM_R_Crown_DK   # 400529
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",20;
+      bonus bLongAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"DK_HACKANDSLASHER",.@sum;
+         bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",15;
+         bonus bCritical,10;
+      }
+
+#時隙深淵匕首
+  - Combos:
+      - Combo:
+          - Time_Gap_ABC_Dagger   # 28785
+          - Time_DM_R_Crown_ABC   # 400534
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",25;
+      bonus2 bMagicAddEle,Ele_All,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",15;
+         bonus bMatkRate,7;
+         bonus2 bMagicAddEle,Ele_All,15;
+      }
+#時隙魂靈狐尾草
+  - Combos:
+      - Combo:
+          - Time_Gap_SH_Foxtail   # 550159
+          - Time_DM_R_Crown_SOA   # 400544
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",45;
+      bonus bLongAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",.@sum;
+         bonus2 bSkillCooldown,"SH_CHUL_HO_SONIC_CLAW",-150;
+         bonus4 bAutoSpellOnSkill,"SH_CHUL_HO_SONIC_CLAW","SH_CHUL_HO_BATTERING",getskilllv("SH_CHUL_HO_BATTERING"),1000;
+      }
+#時隙審判拳套
+  - Combos:
+      - Combo:
+          - Time_Gap_IQ_Knuckle   # 560072
+          - Time_DM_R_Crown_IQ   # 400538
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",25;
+      bonus bLongAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",.@sum;
+         bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",.@sum;
+         bonus2 bSkillCooldown,"IQ_EXPOSION_BLASTER",-300;
+         bonus2 bSkillCooldown,"IQ_BLAZING_FLAME_BLAST",-300;
+      }
+#時隙風之弓
+  - Combos:
+      - Combo:
+          - Time_Gap_WH_Bow   # 700108
+          - Time_DM_R_Crown_WH   # 400539
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",15;
+      bonus bLongAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"WH_GALESTORM",.@sum;
+         bonus2 bSkillCooldown,"WH_GALESTORM",-150;
+      }
+#時隙暗影匕首(A)
+  - Combos:
+      - Combo:
+          - Time_Gap_SS_Dagger1   # 28789
+          - Time_Gap_SS_Dagger2   # 510172
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@r2 = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      .@sum = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      if (getiteminfo(getequipid(EQI_HAND_L),17) == 510172) {
+         bonus2 bAddClass,Class_All,(.@r/3);
+         bonus bBaseAtk,25*(.@r/3);
+      }
+      if (.@r2>=14) {
+         bonus bCritAtkRate,20;
+         if (.@r2>=17) {
+            bonus bCritical,15;
+            bonus bCRate,5;
+            if (.@r2>=21) {
+               bonus2 bSkillAtk,"SS_KUNAIKAITEN",15;
+            }
+         }
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_SS_Dagger1   # 28789
+          - Time_Gap_SS_Dagger2   # 510172
+          - Time_DM_R_Crown_SS   # 400541
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@r2 = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HAND_R);
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"SS_KUNAIKAITEN",25;
+      bonus bLongAtkRate,15;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_L)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         if (getiteminfo(getequipid(EQI_HAND_L),17) == 510172) {
+         bonus2 bSkillAtk,"SS_KUNAIKAITEN",.@sum;
+         bonus2 bSkillCooldown,"SS_KUNAIKAITEN",-700;
+         bonus2 bSkillCooldown,"SS_KUNAIKUSSETSU",-700;
+         }
+      }
+#時隙元素法術書
+  - Combos:
+      - Combo:
+          - Time_Gap_EM_S_Book   # 540096
+          - Time_DM_R_Crown_EM   # 400536
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",45;
+      bonus2 bMagicAtkEle,Ele_Poison,30;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"EM_PSYCHIC_STREAM",.@sum;
+         bonus2 bSkillCooldown,"EM_PSYCHIC_STREAM",-700;
+      }
+
+

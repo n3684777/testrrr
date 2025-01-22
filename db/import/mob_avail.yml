@@ -1,0 +1,514 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Mob Availability and Alias Database
+###########################################################################
+#
+# Mob Availability and Alias Settings
+#
+###########################################################################
+# - Mob                     Mob to adjust.
+#   Sprite                  Sprite which will be sent to the client instead of Mob.
+#   Sex                     Sex (if Sprite is a player). (Default: Female)
+#   HairStyle               Hair Style ID (if Sprite is a player). (Default: 0)
+#   HairColor               Hair Color ID (if Sprite is a player). (Default: 0)
+#   ClothColor              Cloth Color ID (if Sprite is a player). (Default: 0)
+#   Weapon                  Item name of weapon (if Sprite is a player). (Default: 0)
+#   Shield                  Item name of shield (if Sprite is a player). (Default: 0)
+#   HeadTop                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadMid                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadLow                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   PetEquip                Item name of pet equipment (if Mob is a valid pet). (Default: 0)
+#   Options:                Set an option for an object. (Optional)
+#     <Option>: bool
+###########################################################################
+
+Header:
+  Type: MOB_AVAIL_DB
+  Version: 1
+
+Body:
+
+#黃道十二宮
+  - Mob: Mu
+    Sprite: B_RANDEL
+  - Mob: Aldebaran
+    Sprite: B_FLAMEL
+  - Mob: Saga1
+    Sprite: B_ALPHOCCIO
+  - Mob: Saga2
+    Sprite: B_TRENTINI
+  - Mob: Death_Mask
+    Sprite: B_HARWORD
+  - Mob: Aiolia
+    Sprite: B_CHEN
+  - Mob: Shaka
+    Sprite: B_MAGALETA
+  - Mob: Dohko
+    Sprite: B_SEYREN
+  - Mob: Milo
+    Sprite: B_EREMES
+  - Mob: Aiolos
+    Sprite: B_SHECIL
+  - Mob: Shura
+    Sprite: B_GERTIE
+  - Mob: Camus
+    Sprite: B_KATRINN
+  - Mob: Aphrodite
+    Sprite: B_CELIA
+
+#守護女神
+  - Mob: RANDGRIS_
+    Sprite: JOB_Gypsy
+    Sex: Female
+    HairStyle: 10	#頭髮風格
+    HairColor: 2	#頭髮顏色
+    ClothColor: 1	#衣服顏色
+#    HeadTop: Sahkkat	#頭上
+#    HeadMid: Sunglasses	#頭中
+#    HeadLow: Cigar	#頭下
+#    Robe: Archangel_Wing	#翅膀
+    Options:
+     Hanbok: true
+
+  - Mob: Collabo_MOB_01
+    Sprite: PECOPECO_EGG
+  - Mob: Collabo_MOB_02
+    Sprite: PICKY
+  - Mob: Collabo_MOB_03
+    Sprite: HELL_POODLE
+  - Mob: Collabo_MOB_04
+    Sprite: SASQUATCH
+  - Mob: Collabo_MOB_05
+    Sprite: FUR_SEAL
+  - Mob: Collabo_MOB_06
+    Sprite: SPRING_RABBIT
+  - Mob: Collabo_MOB_07
+    Sprite: DRACO
+  - Mob: Collabo_MOB_08
+    Sprite: GRIM_REAPER_ANKOU
+  - Mob: BAKONAWA_Que
+    Sprite: BAKONAWA_1
+  - Mob: MINERAL_G_Que
+    Sprite: MINERAL_G
+  - Mob: MINERAL_R_Que
+    Sprite: MINERAL_R
+  - Mob: MINERAL_W_Que
+    Sprite: MINERAL_W
+  - Mob: MINERAL_P_
+    Sprite: MINERAL_P
+  - Mob: MOROCC_1_Que
+    Sprite: MOROCC_1
+  - Mob: MOROCC_2_Que
+    Sprite: MOROCC_2
+  - Mob: MOROCC_3_Que
+    Sprite: MOROCC_3
+  - Mob: MOROCC_4_Que
+    Sprite: MOROCC_4
+  - Mob: S_EMPEL_Mon
+    Sprite: S_EMPEL_1
+  - Mob: BARRICADE_Mon
+    Sprite: BARRICADE
+  - Mob: OBJ_A2_Mon
+    Sprite: OBJ_A2
+  - Mob: FIER_WOLF_Mon
+    Sprite: FIER_WOLF
+  - Mob: BAPHOMET_Mon
+    Sprite: BAPHOMET_I
+  - Mob: MOROCC_Mon
+    Sprite: MOROCC_
+  - Mob: STONE_SHOOTER_Mon
+    Sprite: MONEMUS
+  - Mob: ENTWEIHEN_Mon
+    Sprite: MONEMUS
+  - Mob: STONE_Mon
+    Sprite: STONE_SHOOTER
+  - Mob: LOST_DRAGON_Mon
+    Sprite: LOST_DRAGON
+  - Mob: GOBLIN_1_Mon
+    Sprite: GOBLIN_1
+  - Mob: GOBLIN_2_Mon
+    Sprite: GOBLIN_2
+  - Mob: GOBLIN_3_Mon
+    Sprite: GOBLIN_3
+  - Mob: GOBLIN_4_
+    Sprite: GOBLIN_4
+  - Mob: GOBLIN_5_Mon
+    Sprite: GOBLIN_5
+  - Mob: GOBLIN_LEADER_Mon
+    Sprite: GOBLIN_LEADER
+  - Mob: KOBOLD_1_Mon
+    Sprite: KOBOLD_1
+  - Mob: KOBOLD_2_Mon
+    Sprite: KOBOLD_2
+  - Mob: KOBOLD_3_Mon
+    Sprite: KOBOLD_3
+  - Mob: KOBOLD_LEADER_Mon
+    Sprite: KOBOLD_LEADER
+  - Mob: CRYSTAL_1_Mon
+    Sprite: CRYSTAL_1
+  - Mob: CRYSTAL_2_Mon
+    Sprite: CRYSTAL_2
+  - Mob: CRYSTAL_3_Mon
+    Sprite: CRYSTAL_3
+  - Mob: CRYSTAL_4_Mon
+    Sprite: CRYSTAL_4
+  - Mob: MM_MOROCC_ADT_Mon
+    Sprite: MM_MOROCC_ADT
+  - Mob: TERA_L_N
+    Sprite: EL_TERA_L
+  - Mob: TERA_S_N
+    Sprite: EL_TERA_S
+  - Mob: AGNI_L_F
+    Sprite: EL_AGNI_L
+  - Mob: AGNI_S_F
+    Sprite: EL_AGNI_S
+  - Mob: AQUA_L_I
+    Sprite: EL_AQUA_L
+  - Mob: AQUA_S_I
+    Sprite: EL_AQUA_S
+  - Mob: VENTUS_L_W
+    Sprite: EL_VENTUS_L
+  - Mob: VENTUS_S_W
+    Sprite: EL_VENTUS_S
+  - Mob: NOVUS_N
+    Sprite: NOVUS
+  - Mob: NOVUS_N
+    Sprite: NOVUS_
+  - Mob: FERUS_N
+    Sprite: FERUS
+  - Mob: FERUS__N
+    Sprite: FERUS_
+  - Mob: ACIDUS_N
+    Sprite: ACIDUS
+  - Mob: ACIDUS__N
+    Sprite: ACIDUS_
+  - Mob: ANCIENT_MIMIC_N
+    Sprite: ANCIENT_MIMIC
+  - Mob: DRAGON_EGG_N
+    Sprite: DRAGON_EGG
+  - Mob: HYDRO_N
+    Sprite: HYDRO
+  - Mob: BLAZZER_H_F
+    Sprite: BLAZZER_H
+  - Mob: NIGHTMARE_TERROR_H_F
+    Sprite: NIGHTMARE_TERROR_H
+  - Mob: DELETER_H_F
+    Sprite: DELETER_H
+  - Mob: DELETER2_H_F
+    Sprite: DELETER2_H
+  - Mob: EXPLOSION_H_F
+    Sprite: EXPLOSION_H
+  - Mob: KAHO_H_F
+    Sprite: KAHO_H
+  - Mob: LAVA_GOLEM_H_F
+    Sprite: LAVA_GOLEM_H
+  - Mob: SNOWIER_I
+    Sprite: SNOWIER
+  - Mob: SIROMA_I
+    Sprite: SIROMA
+  - Mob: ICE_TITAN_I
+    Sprite: ICE_TITAN
+  - Mob: GAZETI_I
+    Sprite: GAZETI
+  - Mob: FREEZER_I
+    Sprite: FREEZER
+  - Mob: AQUA_ELEMENTAL_I
+    Sprite: AQUA_ELEMENTAL
+  - Mob: RHYNCHO_I
+    Sprite: RHYNCHO
+  - Mob: PHYLLA_I
+    Sprite: PHYLLA
+  - Mob: GARM_BABY_I
+    Sprite: GARM_BABY
+  - Mob: LUCKY_BOX_Activity__
+    Sprite: GLD_TREASURE
+  - Mob: LUCKY_BOX_Activity_
+    Sprite: GLD_TREASURE
+  - Mob: LUCKY_BOX_Activity
+    Sprite: GLD_TREASURE
+  - Mob: MIMIC_Activity
+    Sprite: MIMIC
+  - Mob: ANCIENT_MIMIC_Activity
+    Sprite: ANCIENT_MIMIC
+  - Mob: BUNGISNGIS_W
+    Sprite: BUNGISNGIS
+  - Mob: ENGKANTO_W
+    Sprite: ENGKANTO
+  - Mob: MANANANGGAL_W
+    Sprite: MANANANGGAL
+  - Mob: MANGKUKULAM_W
+    Sprite: MANGKUKULAM
+  - Mob: TIKBALANG_W
+    Sprite: TIKBALANG
+  - Mob: TIYANAK_W
+    Sprite: TIYANAK
+  - Mob: WAKWAK_W
+    Sprite: WAKWAK
+  - Mob: TACNU_Maq
+    Sprite: TACNU
+  - Mob: RACARCH_Maq
+    Sprite: RACARCH
+  - Mob: TREASURE_BOX_Maq
+    Sprite: TREASURE_BOX1
+  - Mob: hell_MOD01
+    Sprite: MM_MUSPELLSKOLL
+  - Mob: hell_MOD02
+    Sprite: I_QUEEN_SCARABA
+  - Mob: hell_MOD03
+    Sprite: MOROCC
+  - Mob: hell_MOD04
+    Sprite: BRINARANEA_H
+  - Mob: hell_MOD05
+    Sprite: AS_WIND_GHOST
+  - Mob: SROPHO_Eco
+    Sprite: SROPHO
+  - Mob: FAITHFUL_MANAGER_Eco
+    Sprite: FAITHFUL_MANAGER
+  - Mob: BYORGUE_Eco
+    Sprite: BYORGUE
+  - Mob: STONE_SHOOTER_Eco
+    Sprite: MONEMUS
+  - Mob: ENTWEIHEN_Eco
+    Sprite: MONEMUS
+  - Mob: EMPELIUM_Ord
+    Sprite: EMPELIUM
+  - Mob: ENTWEIHEN_Ord
+    Sprite: ENTWEIHEN
+  - Mob: LADY_TANEE_Ord
+    Sprite: LADY_TANEE
+  - Mob: DOPPELGANGER_Ord
+    Sprite: DOPPELGANGER
+  - Mob: OSIRIS_Ord
+    Sprite: OSIRIS
+  - Mob: BAPHOMET_Ord
+    Sprite: BAPHOMET
+  - Mob: GOLDEN_BUG_Ord
+    Sprite: GOLDEN_BUG
+  - Mob: ORK_HERO_Ord
+    Sprite: ORK_HERO
+  - Mob: DRAKE_Ord
+    Sprite: DRAKE
+  - Mob: EDDGA_Ord
+    Sprite: EDDGA
+  - Mob: MAYA_Ord
+    Sprite: MAYA
+  - Mob: PHARAOH_Ord
+    Sprite: PHARAOH
+  - Mob: PHREEONI_Ord
+    Sprite: PHREEONI
+  - Mob: MOONLIGHT_Ord
+    Sprite: MOONLIGHT
+  - Mob: ORC_LORD_Ord
+    Sprite: ORC_LORD
+  - Mob: GARM_Ord
+    Sprite: GARM
+  - Mob: TURTLE_GENERAL_Ord
+    Sprite: TURTLE_GENERAL
+  - Mob: LORD_OF_DEATH_Ord
+    Sprite: LORD_OF_DEATH
+  - Mob: DRACULA_Ord
+    Sprite: DRACULA
+  - Mob: AMON_RA_Ord
+    Sprite: AMON_RA
+  - Mob: TAO_GUNKA_Ord
+    Sprite: TAO_GUNKA
+  - Mob: BACSOJIN_Ord
+    Sprite: BACSOJIN_
+  - Mob: B_SEYREN_Ord
+    Sprite: B_SEYREN
+  - Mob: B_EREMES_Ord
+    Sprite: B_EREMES
+  - Mob: B_HARWORD_Ord
+    Sprite: B_HARWORD
+  - Mob: B_MAGALETA_Ord
+    Sprite: B_MAGALETA
+  - Mob: B_SHECIL_Ord
+    Sprite: B_SHECIL
+  - Mob: B_KATRINN_Ord
+    Sprite: B_KATRINN
+  - Mob: APOCALIPS_H_Ord
+    Sprite: APOCALIPS_H
+  - Mob: G_BACSOJIN_Ord
+    Sprite: G_BACSOJIN
+  - Mob: THANATOS_Ord
+    Sprite: THANATOS
+  - Mob: DETALE_Ord
+    Sprite: DETALE
+  - Mob: RANDGRIS_Ord
+    Sprite: RANDGRIS
+  - Mob: GLOOMUNDERNIGHT_Ord
+    Sprite: GLOOMUNDERNIGHT
+  - Mob: KTULLANUX_Ord
+    Sprite: KTULLANUX
+  - Mob: ATROCE_Ord
+    Sprite: ATROCE
+  - Mob: IFRIT_Ord
+    Sprite: IFRIT
+  - Mob: FALLINGBISHOP_Ord
+    Sprite: FALLINGBISHOP
+  - Mob: GOPINICH_Ord
+    Sprite: GOPINICH
+  - Mob: PYURIEL_Ord
+    Sprite: PYURIEL
+  - Mob: GIOIA_Ord
+    Sprite: GIOIA
+  - Mob: DAEHYON_Ord
+    Sprite: DAEHYON
+  - Mob: KADES
+    Sprite: KADES
+  - Mob: BOITATA_Ord
+    Sprite: BOITATA
+  - Mob: DARK_SNAKE_LORD1
+    Sprite: DARK_SNAKE_LORD
+  - Mob: KNIGHT_OF_WINDSTORM_Ord
+    Sprite: KNIGHT_OF_WINDSTORM
+  - Mob: DARK_LORD_Ord
+    Sprite: DARK_LORD
+  - Mob: INCANTATION_SAMURAI_Ord
+    Sprite: INCANTATION_SAMURAI
+  - Mob: MISTRESS_Ord
+    Sprite: MISTRESS
+  - Mob: BEELZEBUB_Ord
+    Sprite: BEELZEBUB_
+  - Mob: MOROCC0_Ord
+    Sprite: MOROCC_
+  - Mob: QUEEN_SCARABA_Ord
+    Sprite: QUEEN_SCARABA
+  - Mob: LEAK_Ord
+    Sprite: LEAK
+  - Mob: I_QUEEN_SCARABA_Ord
+    Sprite: I_QUEEN_SCARABA
+  - Mob: KRAKEN_Ord
+    Sprite: KRAKEN
+  - Mob: TIMEHOLDER_Ord
+    Sprite: TIMEHOLDER
+  - Mob: EP16_2_VENOM_KIMERA_Ord
+    Sprite: EP16_2_VENOM_KIMERA
+  - Mob: MECHASPIDER_Ord
+    Sprite: MECHASPIDER
+  - Mob: MUSPELLSKOLL_H_Ord
+    Sprite: MUSPELLSKOLL_H
+  - Mob: BRINARANEA_H_Ord
+    Sprite: BRINARANEA_H
+  - Mob: DARK_LORD_H_Ord
+    Sprite: DARK_LORD_H
+  - Mob: JP_MAZEMOB_01
+    Sprite: GRIM_REAPER_ANKOU
+  - Mob: E_WICKED_NYMPH
+    Sprite: WICKED_NYMPH
+  - Mob: E_WICKED_NYMPH_BOSS
+    Sprite: G_BACSOJIN
+#大逃殺
+  - Mob: IMMORTAL_7115
+    Sprite: IMMORTAL_CO_CMDER
+
+#自創王人形小兵
+  - Mob: V_G_MAGALETA_
+    Sprite: V_G_MAGALETA
+  - Mob: V_G_KATRINN_
+    Sprite: V_G_KATRINN
+  - Mob: V_G_SHECIL_
+    Sprite: V_G_SHECIL
+  - Mob: V_G_HARWORD_
+    Sprite: V_G_HARWORD
+  - Mob: V_G_SEYREN_
+    Sprite: V_G_SEYREN
+
+#道館王人形小兵
+  - Mob: V_G_MAGALETA__
+    Sprite: V_G_MAGALETA
+  - Mob: V_G_KATRINN__
+    Sprite: V_G_KATRINN
+  - Mob: V_G_SHECIL__
+    Sprite: V_G_SHECIL
+  - Mob: V_G_HARWORD__
+    Sprite: V_G_HARWORD
+  - Mob: V_G_SEYREN__
+    Sprite: V_G_SEYREN
+
+#虛像奧克尼勒
+  - Mob: WISH_MAIDEN_
+    Sprite: WISH_MAIDEN
+  - Mob: PIAMETTE_
+    Sprite: PIAMETTE
+
+#魔物要塞
+  - Mob: WOOMAWANG__
+    Sprite: MINOROUS
+  - Mob: FIER_WOLF_
+    Sprite: FIER_WOLF
+  - Mob: BAPHOMET_Mon_
+    Sprite: BAPHOMET_I
+  - Mob: MM_MOROCC_ADT__
+    Sprite: MM_MOROCC_ADT
+
+#自創寵物
+  - Mob: MM_MOROCC_KID_
+    Sprite: MM_MOROCC_KID
+  - Mob: MM_MOROCC_ADT_
+    Sprite: MM_MOROCC_ADT
+
+
+#龍族來襲
+  - Mob: GREEN_IGUANA_S
+    Sprite: GREEN_IGUANA
+  - Mob: DRACO_S
+    Sprite: DRACO
+  - Mob: COMODO_S
+    Sprite: COMODO
+  - Mob: E1_G_S_NYDHOGK_S
+    Sprite: E1_G_S_NYDHOGK
+  - Mob: LOST_DRAGON_S
+    Sprite: LOST_DRAGON
+  - Mob: GOPINICH_S
+    Sprite: GOPINICH
+  - Mob: KTULLANUX_S
+    Sprite: KTULLANUX
+
+#RO大盜
+  - Mob: SAILOR_SKELETON_S
+    Sprite: SAILOR_SKELETON
+
+#螞蟻地獄
+  - Mob: MM_BRINARANEA_
+    Sprite: MM_BRINARANEA
+  - Mob: BRINARANEA_H_
+    Sprite: BRINARANEA_H
+
+#自創寵物
+  - Mob: MD_RIGEL_PET
+    Sprite: MD_RIGEL
+  - Mob: MD_BETELGEUSE_PET
+    Sprite: MD_BETELGEUSE
+
+#世界BOSS
+  - Mob: MD_PRI_DRAGON_1_
+    Sprite: MD_PRI_DRAGON_1
+  - Mob: MD_PRI_DRAGON_2_
+    Sprite: MD_PRI_DRAGON_2
+  - Mob: MD_PRI_DRAGON_3_
+    Sprite: MD_PRI_DRAGON_3
+  - Mob: MD_PRI_DRAGON_4_
+    Sprite: MD_PRI_DRAGON_4
+
+
+
+
+
+

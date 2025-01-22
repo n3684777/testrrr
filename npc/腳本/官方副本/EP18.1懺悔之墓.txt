@@ -1,0 +1,526 @@
+
+vdistrict1,20,36,4	script	懺悔之墓管理者	640,{
+
+	//副本任務獎勵
+	if(checkquest(32074,HUNTING)==2 ) { 
+	dispbottom "懺悔之墓任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32074; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_42 < gettime(8) ){
+	set Instance_Bout_42,10;
+	set day_Instance_Bout_42,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_42 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[懺悔之墓管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "懺悔之墓";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[懺悔之墓管理者]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1801+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_42+"^000000 ]";
+	mes "副本獎勵：";
+	mes "悔恨寶石";
+	mes "商城1點金幣x10";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 220) {
+			mes "[悔悟的公主提亞拉]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.220 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[悔悟的公主提亞拉]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[悔悟的公主提亞拉]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 220) {
+			mes "[悔悟的公主提亞拉]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.220 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_42,Instance_Bout_42-1;
+
+			//副本任務
+			if(checkquest(32074,HUNTING)<0){setquest 32074;}
+			if(checkquest(16465,HUNTING)<0){setquest 16465;}
+			if(checkquest(16467,HUNTING)<0){setquest 16467;}
+			if(checkquest(16469,HUNTING)<0){setquest 16469;}
+			if(checkquest(16471,HUNTING)<0){setquest 16471;}
+
+			if(checkquest(16465,HUNTING)<0){ if(checkquest(16466,PLAYTIME)==2){ erasequest 16466; setquest 16465;} }
+			if(checkquest(16467,HUNTING)<0){ if(checkquest(16468,PLAYTIME)==2){ erasequest 16468; setquest 16467;} }
+			if(checkquest(16469,HUNTING)<0){ if(checkquest(16470,PLAYTIME)==2){ erasequest 16470; setquest 16469;} }
+			if(checkquest(16471,HUNTING)<0){ if(checkquest(16472,PLAYTIME)==2){ erasequest 16472; setquest 16471;} }
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "懺悔之墓",0;
+	end;
+}
+
+
+//------------------------------懺悔之墓事件
+1@spa2,0,0,0	script	懺悔之墓事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@spa2");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("懺悔的侯爵#spa201");
+	disablenpc instance_npcname("提亞拉公主#spa201");
+	disablenpc instance_npcname("薩克萊#spa201");
+	disablenpc instance_npcname("薩克萊#spa202");
+	disablenpc instance_npcname("薩克萊#spa203");
+	disablenpc instance_npcname("希梅爾茲#spa201");
+	disablenpc instance_npcname("傳送門#spa201");
+	disablenpc instance_npcname("傳送門#spa202");
+	disablenpc instance_npcname("傳送門#spa203");
+	disablenpc instance_npcname("傳送門#spa204");
+	//出怪
+	areamonster 'map_name$[0],49,245,55,238,"--ja--",20899,1,instance_npcname("懺悔之墓事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],48,253,55,213,"--ja--",20900,12;
+	//副本標籤
+	set 'CD_spa2_,0;
+	set 'CD_spa2_2,0;
+	set 'CD_spa2_Mob,0;
+	set 'CD_spa2_quest01,0;
+	set 'CD_spa2_quest02,0;
+	end;
+
+	OnCcdd2:
+	enablenpc instance_npcname("傳送門#spa201");
+	instance_announce 0, "懺悔的侯爵：解放了這樓層的怨念，北邊出現了通往下個區域的傳送點了!",bc_map,"0x00ff99";
+	set 'CD_spa2_Mob,30;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20897,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20898,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20896,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	instance_announce 0, "懺悔的侯爵：這些都是死在魔劍之下無法超渡的亡靈",bc_map,"0x00ff99";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20897,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20897,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20898,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	instance_announce 0, "懺悔的侯爵：希望你們能讓他們得到安息",bc_map,"0x00ff99";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20896,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	sleep 6000;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20898,4,instance_npcname("懺悔之墓事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'CD_spa2_Mob,'CD_spa2_Mob-1;
+
+	if ('CD_spa2_Mob>0) end;
+	areamonster 'map_name$[0],202,238,232,215,"--ja--",20893,1,instance_npcname("懺悔之墓事件1")+"::OnCcdd4";
+	instance_announce 0, "懺悔的侯爵：可憐的公主提亞拉...請幫他解脫!!",bc_map,"0xFFFF00";
+	sleep 2000;
+	instance_announce 0, "懺悔的侯爵：請注意打倒提亞拉時隊友必須在周圍才能完成淚流滿面任務",bc_map,"0x00ff99";
+	end;
+
+	OnCcdd4:
+	enablenpc instance_npcname("薩克萊#spa202");
+	end;
+
+	OnCcdd5:
+	set 'CD_spa2_Mob,'CD_spa2_Mob-1;
+	if ('CD_spa2_Mob>0) end;
+	enablenpc instance_npcname("傳送門#spa203");
+	enablenpc instance_npcname("薩克萊#spa203");
+	instance_announce 0, "懺悔的侯爵：解放了這樓層的怨念，中間出現了通往下個區域的傳送點了!",bc_map,"0xFFFF00";
+	end;
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【懺悔之墓】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_map,"0x00ff99";
+	enablenpc instance_npcname("懺悔的侯爵#spa201");
+	enablenpc instance_npcname("傳送門#spa204");
+	instance_announce 0, "懺悔的侯爵：感謝你們的幫助，來找我回報你們完成的任務吧!",bc_map,"0x00ff99";
+	sleep 1000;
+	instance_announce 0, "懺悔的侯爵：領取完獎勵就可以從北方傳送點離開這邊了...",bc_map,"0x00ff99";
+	end;
+}
+
+
+//------------------------------ 任務
+1@spa2,74,211,4	script	記憶碎片#spa201	723,{
+	npctalk "一段關於皇宮內薩克萊跟提亞拉公主的快樂時光回憶片段!";
+	set 'CD_spa2_quest01, 'CD_spa2_quest01+1;
+	dispbottom "記憶的碎片獲得，目前記憶的碎片數量"+'CD_spa2_quest01+""; 
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa201");
+	end;
+}
+
+1@spa2,83,255,4	script	記憶碎片#spa202	723,{
+	npctalk "一段關於鄰國王子向提亞拉公主求婚的回憶片段!";
+	set 'CD_spa2_quest01, 'CD_spa2_quest01+1;
+	dispbottom "記憶的碎片獲得，目前記憶的碎片數量"+'CD_spa2_quest01+""; 
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa202");
+	end;
+}
+
+1@spa2,28,226,4	script	記憶碎片#spa203	723,{
+
+	set 'CD_spa2_quest02,1;
+	enablenpc instance_npcname("提亞拉公主#spa201");
+	enablenpc instance_npcname("薩克萊#spa201");
+	donpcevent instance_npcname("薩克萊#spa201")+"::OnCcdd1";
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa203");
+	dispbottom "破碎的過去任務完成!!"; 
+	end;
+}
+
+1@spa2,25,222,8	script	薩克萊#spa201	686,{end;
+
+OnCcdd1:
+	sleep 1000;
+	npctalk "薩克萊: 公主，你總是都在彈奏者同一首歌呢!";
+	sleep 1000;
+	donpcevent instance_npcname("提亞拉公主#spa201")+"::OnTalk1";
+	sleep 1000;
+	npctalk "薩克萊: 因為我一直都在你身旁呀";
+	sleep 1000;
+	donpcevent instance_npcname("提亞拉公主#spa201")+"::OnTalk2";
+	sleep 1000;
+	npctalk "薩克萊: 恩...我從禁衛隊長那邊聽說了..";
+	sleep 1000;
+	donpcevent instance_npcname("提亞拉公主#spa201")+"::OnTalk3";
+	sleep 1000;
+	npctalk "薩克萊: 公主..我相信他會對你很好的，他會給你幸福..";
+	sleep 1000;
+	donpcevent instance_npcname("提亞拉公主#spa201")+"::OnTalk4";
+	sleep 1000;
+	npctalk "薩克萊: 我知道...但我只是一個小小的護衛..我無法給你富裕安穩的生活";
+	sleep 1000;
+	donpcevent instance_npcname("提亞拉公主#spa201")+"::OnTalk5";
+	disablenpc instance_npcname("提亞拉公主#spa201");
+	disablenpc instance_npcname("薩克萊#spa201");
+	end;
+}
+
+
+1@spa2,215,245,4	script	記憶碎片#spa204	723,{
+	npctalk "[記憶碎片]: 一段關於提亞拉公主成為鄰國的王妃後薩克萊失落的回憶片段!";
+	set 'CD_spa2_quest01, 'CD_spa2_quest01+1;
+	dispbottom "記憶的碎片獲得，目前記憶的碎片數量"+'CD_spa2_quest01+""; 
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa204");
+	end;
+}
+
+1@spa2,230,252,4	script	記憶碎片#spa205	723,{
+	npctalk "[記憶碎片]: 一段關於薩克萊逃離了監獄的回憶片段!";
+	set 'CD_spa2_quest01, 'CD_spa2_quest01+1;
+	dispbottom "記憶的碎片獲得，目前記憶的碎片數量"+'CD_spa2_quest01+""; 
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa205");
+	end;
+}
+
+1@spa2,201,254,4	script	記憶碎片#spa206	723,{
+	npctalk "[記憶碎片]: 一段關於薩克萊遭到他人誣陷被關入監獄中的回憶片段!";
+	set 'CD_spa2_quest01, 'CD_spa2_quest01+1;
+	dispbottom "記憶的碎片獲得，目前記憶的碎片數量"+'CD_spa2_quest01+""; 
+	specialeffect 16;
+	disablenpc instance_npcname("記憶碎片#spa206");
+	end;
+}
+
+
+1@spa2,28,224,4	script	提亞拉公主#spa201	640,{end;
+
+OnTalk1:
+	npctalk "薩提亞拉公主: 我都不知道你一直有在注意聽";
+	end;
+OnTalk2:
+	npctalk "薩克萊你知道嗎?父王要把我嫁給鄰國的王子了..";
+	end;
+OnTalk3:
+	npctalk "那你...沒有什麼想法嗎?";
+	end;
+OnTalk4:
+	npctalk "你在說什麼!? 你難道不知道我心裡對你的想法嗎?";
+	end;
+OnTalk5:
+	npctalk "我並不在乎那些..我們走你帶我走吧..";
+	npctalk "去遙遠的地方，沒有任何人的地方";
+	npctalk "只要那裡有我們追求的幸福...";
+	npctalk "薩克萊你可以帶我去吧...?";
+	end;
+}
+
+
+1@spa2,218,237,4	script	薩克萊#spa202	685,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_spa2_1==1) {end;}
+	set 'CD_spa2_1,1;
+	npctalk "塔諾斯: 薩克萊，你又回來了嗎?";
+	sleep 1000;
+	npctalk "薩克萊: 我只是想去我想去的地方，你不要阻止我!";
+	sleep 1000;
+	npctalk "塔諾斯: 是誰說過要擺脫人類脆弱的人性的?";
+	sleep 1000;
+	npctalk "塔諾斯: 你就算這樣，到最後結果不也都是相同嗎?";
+	sleep 1000;
+	npctalk "薩克萊: 吵死了!你不要再說了!";
+	sleep 1000;
+	npctalk "塔諾斯: 唯一要取勝的辦法就是我們必須要一起合作";
+	sleep 1000;
+	npctalk "塔諾斯: 在獻上你的血之前，你的靈魂就是我的了!";
+	sleep 1000;
+	npctalk "塔諾斯: 我們沒有時間繼續在這邊浪費了";
+	sleep 1000;
+	npctalk "塔諾斯: 現在城內人數沒以前多了，不曉得現在還能吸收到足夠的血嗎....";
+	sleep 1000;
+	npctalk "塔諾斯: 血!渴望更多!!!!";
+	sleep 1000;
+	specialeffect 16;
+	disablenpc instance_npcname("薩克萊#spa202");
+	enablenpc instance_npcname("希梅爾茲#spa201");
+	sleep 1000;
+	donpcevent instance_npcname("希梅爾茲#spa201")+"::OnTalk1";
+	sleep 1000;
+	donpcevent instance_npcname("希梅爾茲#spa201")+"::OnTalk2";
+	sleep 1000;
+	donpcevent instance_npcname("希梅爾茲#spa201")+"::OnTalk3";
+	sleep 1000;
+	disablenpc instance_npcname("希梅爾茲#spa201");
+	enablenpc instance_npcname("傳送門#spa202");
+	instance_announce 0, "懺悔的侯爵：左上方出現了通往下個區域的傳送點了!",bc_map,"0xFFFF00";
+
+	set 'CD_spa2_Mob,30;
+	areamonster 'map_name$[0],51,33,64,19,"--ja--",20895,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],51,33,64,19,"--ja--",20896,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	sleep 6000;
+	areamonster 'map_name$[0],26,33,39,18,"--ja--",20896,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],26,33,39,18,"--ja--",20895,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],26,33,39,18,"--ja--",20897,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	sleep 6000;
+	areamonster 'map_name$[0],76,33,88,19,"--ja--",20897,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],76,33,88,19,"--ja--",20896,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],76,33,88,19,"--ja--",20895,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	sleep 6000;
+	areamonster 'map_name$[0],50,79,65,72,"--ja--",20897,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],50,79,65,72,"--ja--",20894,2,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	sleep 6000;
+	areamonster 'map_name$[0],26,61,39,46,"--ja--",20897,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],76,61,89,47,"--ja--",20894,3,instance_npcname("懺悔之墓事件1")+"::OnCcdd5";
+	instance_announce 0, "懺悔的侯爵：殘留在這座城堡的幽靈實在太多了...",bc_map,"0x00ff99";
+	end;
+}
+
+
+1@spa2,221,234,4	script	希梅爾茲#spa201	4_F_HIMEL2,{end;
+
+OnTalk1:
+	specialeffect 16;
+	npctalk "希梅爾茲: 恩~看到契約者就追了上去，是不是很有趣阿?";
+	end;
+OnTalk2:
+	npctalk "希梅爾茲: 呵呵呵，你有沒有感覺到整個皇宮都是死亡屍體氣息?";
+	end;
+OnTalk3:
+	npctalk "希梅爾茲: 其實這些根本就不夠....";
+	end;
+}
+
+
+1@spa2,211,67,4	script	薩克萊#spa203	685,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_spa2_2==1) {end;}
+	set 'CD_spa2_2,1;
+
+	npctalk "塔諾斯: 你為什麼還在這裡!";
+	sleep 1000;
+	npctalk "魔劍士薩克萊: 我只想要看看公主，順便看看這裡發生了甚麼";
+	sleep 1000;
+	npctalk "塔諾斯: 哦..是那時候的公主阿...這裡的確改變了很多";
+	sleep 1000;
+	npctalk "塔諾斯: 在那之前..你還是先獻上你的鮮血吧!";
+	sleep 1000;
+	npctalk "魔劍士薩克萊: (我必須趕快找到公主)";
+	sleep 1000;
+	npctalk "塔諾斯: 不要在廢話了，你的魔劍我要了!";
+	sleep 200;
+	specialeffect 16;
+	disablenpc instance_npcname("薩克萊#spa203");
+	areamonster 'map_name$[0],211,67,211,67,"--ja--",20892,1,instance_npcname("懺悔之墓事件1")+"::OnEnd01";
+	end;
+}
+
+
+//------------------------------傳點資訊
+1@spa2,51,259,0	warp	傳送門#spa201	1,1,1@spa2,215,200
+1@spa2,210,254,0	warp	傳送門#spa202	2,2,1@spa2,57,20
+1@spa2,57,41,0	warp	傳送門#spa203	2,2,1@spa2,211,60
+
+1@spa2,211,87,0	script	傳送門#spa204	45,2,2,{
+	end;
+OnTouch:
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+//------------------------------ 領獎
+1@spa2,211,81,4	script	懺悔的侯爵#spa201	110,{
+
+	if(checkquest(32074,HUNTING)==2 ) { 
+	dispbottom "懺悔之墓任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32074; }
+	if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+	callfunc "offical_instance_finish",55;
+	mes "[懺悔的侯爵]";
+	mes "你完成了那些任務?";
+	next;
+	switch (select("斬斷因緣:淚流滿面:破碎的記憶:破碎的過去:取消")) {
+
+	case 1:
+	if(checkquest(16465,HUNTING)==2 ) { 
+	dispbottom "斬斷因緣任務完成，以下是你的獎勵!!"; 
+	getitem 1000367,10*$EP1702;	//悔恨寶石x10
+	erasequest 16465;	//刪除任務
+	setquest 16466;	//接取冷卻任務
+	}
+	close;
+
+	case 2:
+	if(checkquest(16467,HUNTING)==2 ) { 
+	dispbottom "淚流滿面任務完成，以下是你的獎勵!!"; 
+	getitem 1000367,8*$EP1702;	//悔恨寶石x8
+	erasequest 16467;	//刪除任務
+	setquest 16468;	//接取冷卻任務
+	}
+	close;
+
+	case 3:
+	.@quest01 = checkquest(16470,PLAYTIME);
+	if(.@quest01 == 2) erasequest 16470;
+	if(.@quest01 == 0 || .@quest01 == 1){
+	mes "[懺悔的侯爵]";
+	mes "此任務冷卻時間還在，請冷卻時間結束之時再來找我。";
+	close; }
+	if('CD_spa2_quest01==5) {
+	dispbottom "破碎的記憶任務完成，以下是你的獎勵!!"; 
+	getitem 1000367,1*$EP1702;	//悔恨寶石x1
+	erasequest 16469;	//刪除任務
+	setquest 16470;	//接取冷卻任務
+	}
+	close;
+
+	case 4:
+	.@quest02 = checkquest(16472,PLAYTIME);
+	if(.@quest02 == 2) erasequest 16472;
+	if(.@quest02 == 0 || .@quest02 == 1){
+	mes "[懺悔的侯爵]";
+	mes "此任務冷卻時間還在，請冷卻時間結束之時再來找我。";
+	close; }
+	if('CD_spa2_quest02==1) {
+	dispbottom "破碎的過去任務完成，以下是你的獎勵!!"; 
+	getitem 1000367,1*$EP1702;	//悔恨寶石x1
+	erasequest 16471;	//刪除任務
+	setquest 16472;	//接取冷卻任務
+	}
+	close;
+
+	case 5:
+	close;
+	}
+}
+
+
+//------------------------------ 地圖屬性
+1@spa2	mapflag	partylock
+1@spa2	mapflag	noteleport
+1@spa2	mapflag	nosave	SavePoint
+1@spa2	mapflag	nomemo
+1@spa2	mapflag	nobranch
+1@spa2	mapflag	noicewall
+1@spa2	mapflag	restricted	6
+

@@ -1,0 +1,857 @@
+
+vdistrict1,6,77,4	script	儀式之間管理者	735,{
+
+	//副本任務獎勵
+	if(checkquest(32063,HUNTING)==2 ) { 
+	dispbottom "儀式之間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,3;	//商城1點金幣
+	erasequest 32063; }
+	if(checkquest(7705,HUNTING)==2 ) {
+	mes"[宮廷魔法師 邁倫]";
+	mes "這些物品就是要給你的獎勵!";
+	getitem 6919,10*$EP1601;	//榮譽之證
+	erasequest 7705;
+	close;
+	}
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_27 < gettime(8) ){
+	set Instance_Bout_27,10;
+	set day_Instance_Bout_27,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_27 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+		mes "此副本僅限隊長單人進入";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[宮廷魔法師 邁倫]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "儀式之間";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[宮廷魔法師 邁倫]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1601+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_27+"^000000 ]";
+	mes "副本獎勵：";
+	mes "榮譽之證x10";
+	mes "商城1點金幣3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[宮廷魔法師 邁倫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[宮廷魔法師 邁倫]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[宮廷魔法師 邁倫]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[宮廷魔法師 邁倫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_27,Instance_Bout_27-1;
+
+			if(checkquest(7705,HUNTING)<0 ){setquest 7705;}
+			//副本任務
+			if(checkquest(32063,HUNTING)<0 ){setquest 32063;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "儀式之間",0;
+	end;
+}
+
+
+//------------------------------儀式之間事件
+1@mir,0,0,0	script	儀式之間事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@mir");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("愛麗絲#mir02");
+	disablenpc instance_npcname("潘利爾#mir02");
+	disablenpc instance_npcname("畢尤#mir01");
+	disablenpc instance_npcname("愛麗絲#mir03");
+	disablenpc instance_npcname("潘利爾#mir03");
+	disablenpc instance_npcname("畢尤#mir02");
+	disablenpc instance_npcname("強化闇答萊屍#mir01");
+	disablenpc instance_npcname("愛麗絲#mir04");
+	disablenpc instance_npcname("潘利爾#mir04");
+	disablenpc instance_npcname("畢尤#mir03");
+	disablenpc instance_npcname("莎拉#mir01");
+	disablenpc instance_npcname("愛麗絲#mir05");
+	disablenpc instance_npcname("潘利爾#mir05");
+	disablenpc instance_npcname("畢尤#mir04");
+	disablenpc instance_npcname("莎拉#mir02");
+	//副本標籤
+	set 'CD_mir_1,0;
+	set 'CD_mir_2,0;
+	set 'CD_mir_3,0;
+	set 'CD_mir_4,0;
+	set 'CD_mir_5,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'mir1_mob_01,'mir1_mob_01-1;
+	if ('mir1_mob_01>0) end;
+	set 'mir1_mob_01,8;
+	areamonster 'map_name$[0],113,69,113,69,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],96,66,96,66,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],110,55,110,55,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],89,41,89,41,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],93,53,93,53,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],112,46,112,46,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],93,43,93,43,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],102,36,102,36,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd2";
+	instance_announce instance_id(1),"畢尤：放棄吧，「不死軍團」是不會被打倒的!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd2:
+	set 'mir1_mob_01,'mir1_mob_01-1;
+	if ('mir1_mob_01>0) end;
+	set 'mir1_mob_01,8;
+	areamonster 'map_name$[0],113,69,113,69,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],96,66,96,66,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],110,55,110,55,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],89,41,89,41,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],93,53,93,53,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],112,46,112,46,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],93,43,93,43,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],102,36,102,36,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd3";
+	instance_announce instance_id(1),"畢尤：希梅爾茲大人的「不死軍團」是無敵的!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd3:
+	set 'mir1_mob_01,'mir1_mob_01-1;
+	if ('mir1_mob_01>0) end;
+	enablenpc instance_npcname("愛麗絲#mir03");
+	enablenpc instance_npcname("潘利爾#mir03");
+	enablenpc instance_npcname("畢尤#mir02");
+	instance_announce instance_id(1),"畢尤：告訴你們，無謂的抵抗或是這種小花招都是沒用的。",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd4:
+	enablenpc instance_npcname("愛麗絲#mir04");
+	enablenpc instance_npcname("潘利爾#mir04");
+	instance_announce instance_id(1),"畢尤：想不到你們能打倒闇答萊屍，看來我是低估你們了。",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd5:
+	set 'mir1_mob_01,'mir1_mob_01-1;
+	if ('mir1_mob_01>0) end;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【儀式之屋】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("愛麗絲#mir05");
+	enablenpc instance_npcname("潘利爾#mir05");
+	enablenpc instance_npcname("畢尤#mir04");
+	end;
+}
+
+
+//------------------------------副本NPC
+
+1@mir,103,40,4	script	潘利爾#mir01	664,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mir_1==1) {end;}
+
+	cutin "fenrir_a",2;
+	mes "[潘利爾]";
+	mes "在普隆德拉王城地下";
+	mes "被封印的此處...";
+	mes "沒想到有這麼寬的空間...";
+	next;
+	cutin "fenrir_a",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "這裡面到底有者什麼?";
+	next;
+	cutin "h_iris01",255;
+	close2;
+	set 'CD_mir_1,1;
+	disablenpc instance_npcname("潘利爾#mir01");
+	disablenpc instance_npcname("愛麗絲#mir01");
+	enablenpc instance_npcname("愛麗絲#mir02");
+	enablenpc instance_npcname("潘利爾#mir02");
+	end;
+}
+
+1@mir,100,40,6	script	愛麗絲#mir01	666,{ end;
+}
+
+
+1@mir,100,94,6	script	愛麗絲#mir02	666,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mir_2==1) {end;}
+
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "這..這就是..";
+	next;
+	cutin "h_iris01",255;
+	cutin "fenrir_a",2;
+	mes "[潘利爾]";
+	mes "這就是「伊美樂的心臟」?";
+	next;
+	cutin "fenrir_a",255;
+	mes "...忽然開始了激烈的震動...";
+	next;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "這震動是怎麼回事?";
+	next;
+	cutin "h_iris01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "震動的更厲害了，看來他們正式展開攻擊了..?";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	enablenpc instance_npcname("畢尤#mir01");
+	mes "[畢尤]";
+	mes "呵呵..正式?";
+	next;
+	cutin "bijou_01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "是誰!?";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "呵呵..看來你們還不了解什麼才叫做「正式」!";
+	next;
+	mes "[畢尤]";
+	mes "首先，我先感謝你們帶我來到這裡。";
+	next;
+	mes "[畢尤]";
+	mes "不過呢，由此刻開始，普隆德拉的伊美樂的心臟...";
+	next;
+	mes "[畢尤]";
+	mes "將改由祭師希梅爾茲大人的無敵軍隊..";
+	mes "「不死軍團」接管!";
+	next;
+	cutin "bijou_01",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "什麼!?";
+	mes "就由我來對付妳!";
+	next;
+	cutin "h_iris01",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "哼!";
+	mes "愚蠢的人類，你以為我需要親自出手嗎?";
+	next;
+	mes "[畢尤]";
+	mes "你的對手不是已經在你背後了嗎?";
+	next;
+	cutin "bijou_01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "什麼?";
+	next;
+	cutin "fenrir_b",255;
+	close2;
+	set 'CD_mir_2,1;
+	disablenpc instance_npcname("潘利爾#mir02");
+	disablenpc instance_npcname("愛麗絲#mir02");
+	disablenpc instance_npcname("畢尤#mir01");
+
+	set 'mir1_mob_01,8;
+	areamonster 'map_name$[0],113,69,113,69,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],96,66,96,66,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],110,55,110,55,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],89,41,89,41,"--ja--",3446,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],93,53,93,53,"--ja--",3447,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],112,46,112,46,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],93,43,93,43,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],102,36,102,36,"--ja--",3445,1,instance_npcname("儀式之間事件1")+"::OnCcdd1";
+	end;
+}
+
+1@mir,103,94,1	script	潘利爾#mir02	664,{ end;
+}
+1@mir,101,97,5	script	畢尤#mir01	10143,{ end;
+}
+
+
+1@mir,101,88,3	script	畢尤#mir02	10143,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mir_3==1) {end;}
+
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "送你們個臨死前的禮物吧，我叫畢尤，是祭師希梅爾茲大人的副官。";
+	next;
+	cutin "bijou_02",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "你們拿伊美樂的心臟要做什麼?";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "這你們不用知道...因為你們就快死了...";
+	next;
+	enablenpc instance_npcname("強化闇答萊屍#mir01");
+	mes "[畢尤]";
+	mes "對付你們這種低等生物，就要用適合你們的方式..";
+	next;
+	mes "[畢尤]";
+	mes "闇答萊屍踩扁他們吧!!";
+	next;
+	cutin "bijou_01",255;
+	mes "喀吼吼吼吼吼吼!!";
+	close2;
+	set 'CD_mir_3,1;
+	disablenpc instance_npcname("潘利爾#mir03");
+	disablenpc instance_npcname("愛麗絲#mir03");
+	disablenpc instance_npcname("畢尤#mir02");
+	disablenpc instance_npcname("強化闇答萊屍#mir01");
+	areamonster 'map_name$[0],101,95,101,95,"--ja--",3448,1,instance_npcname("儀式之間事件1")+"::OnCcdd4";
+	end;
+}
+
+1@mir,100,85,7	script	潘利爾#mir03	664,{ end;
+}
+1@mir,103,85,1	script	愛麗絲#mir03	666,{ end;
+}
+1@mir,101,95,4	script	強化闇答萊屍#mir01	3448,{ end;
+}
+
+
+
+1@mir,100,90,7	script	愛麗絲#mir04	666,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mir_4==1) {end;}
+
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "總算消滅掉闇答萊屍了，接下來就剩下..";
+	next;
+	cutin "h_iris01",255;
+	cutin "bijou_01",2;
+	enablenpc instance_npcname("畢尤#mir03");
+	mes "[畢尤]";
+	mes "就剩下我一個是嗎?";
+	next;
+	specialeffect EF_FROSTDIVER2,AREA,instance_npcname("潘利爾#mir04");
+	mes "[畢尤]";
+	mes "冰刃之牆!!";
+	next;
+	cutin "bijou_01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "呃啊!";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "怎樣? 動彈不得了吧?";
+	next;
+	mes "[畢尤]";
+	mes "不過，我不會這麼輕易的殺掉你!";
+	next;
+	mes "[畢尤]";
+	mes "你要看者我殺掉這個該死的ㄚ頭!";
+	next;
+	cutin "bijou_01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "愛麗絲..";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "疑?";
+	next;
+	mes "[畢尤]";
+	mes "怎麼回事?";
+	next;
+	mes "[畢尤]";
+	mes "開始在崩壞了嗎?";
+	mes "看來我不能在耽擱下去了";
+	next;
+	enablenpc instance_npcname("莎拉#mir01");
+	mes "[畢尤]";
+	mes "莎拉...大人!?";
+	next;
+	cutin "bijou_01",255;
+	cutin "sarah_hero3",2;
+	mes "[莎拉]";
+	mes "這裡就是普隆德拉地底...?";
+	next;
+	mes "[莎拉]";
+	mes "第一個伊美樂的心臟被封印的地方..";
+	next;
+	cutin "sarah_hero3",255;
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "---她來這裡做什麼?...---";
+	next;
+	cutin "bijou_02",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "莎拉大人，您親自到這裡是有什麼事嗎?";
+	next;
+	cutin "bijou_01",255;
+	cutin "sarah_hero3",2;
+	mes "[莎拉]";
+	mes "畢尤你到這裡做什麼?";
+	next;
+	cutin "sarah_hero3",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "正如您所見，我正在教訓這些臭蟲!";
+	next;
+	cutin "bijou_01",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "我不想聽這些廢話!";
+	next;
+	mes "[莎拉]";
+	mes "我是問你為什麼還沒解開伊美樂的心臟的封印?";
+	next;
+	cutin "sarah_hero3_2",255;
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "這..這..";
+	next;
+	cutin "bijou_02",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "幹嘛吞吞吐吐，快回答!";
+	next;
+	cutin "sarah_hero3_2",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "我已經解開第一道封印!";
+	next;
+	mes "[畢尤]";
+	mes "反正這裡的事我會處理好，莎拉大人您不必為這些費心!";
+	next;
+	mes "[畢尤]";
+	mes "您來這裡實在有失祭師的身份!";
+	next;
+	mes "[畢尤]";
+	mes "---哼..性急又囂張..你這黃毛ㄚ頭憑什麼當上祭師?---";
+	next;
+	cutin "bijou_01",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "畢尤，你好大的膽子!";
+	next;
+	mes "[畢尤]";
+	mes "這裡可沒希梅爾茲給你撐腰!";
+	next;
+	specialeffect EF_PETRIFYATTACK,AREA,instance_npcname("畢尤#mir03");
+	cutin "sarah_hero3_2",255;
+	cutin "bijou_03",2;
+	mes "[畢尤]";
+	mes "阿!";
+	next;
+	mes "[畢尤]";
+	mes "呃...不能呼吸...";
+	next;
+	cutin "bijou_03",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "你最好不要隨便說話!";
+	next;
+	mes "[莎拉]";
+	mes "像你這種辦事沒效率的的部下，不要也罷!";
+	next;
+	mes "[莎拉]";
+	mes "我看伊美樂的心臟..";
+	mes "我帶走好了";
+	next;
+	disablenpc instance_npcname("莎拉#mir01");
+	cutin "sarah_hero3_2",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "---雖然不服她，但他的確利害..---";
+	next;
+	cutin "bijou_01",255;
+	cutin "fenrir_b",2;
+	specialeffect EF_FROSTDIVER2,AREA,instance_npcname("畢尤#mir03");
+	mes "[潘利爾]";
+	mes "冰刃之牆!!";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "什..什麼?";
+	next;
+	mes "[畢尤]";
+	mes "---不可能!他是怎麼脫身的?---";
+	next;
+	mes "[畢尤]";
+	mes "怎麼可能?這是怎麼回事?";
+	next;
+	cutin "bijou_02",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "沒想到這個技能需要高等魔力!";
+	mes "施展起來並不容易!";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "---什麼...難道這是她中了我的攻擊後當場練成的?---";
+	next;
+	cutin "bijou_02",255;
+	cutin "fenrir_b",2;
+	specialeffect EF_POTION1,AREA,instance_npcname("愛麗絲#mir04");
+	specialeffect EF_POTION1,AREA,instance_npcname("愛麗絲#mir04");
+	mes "[潘利爾]";
+	mes "愛麗絲!";
+	mes "這是紅色藥水喝下去，就沒事了!";
+	next;
+	cutin "fenrir_b",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "哇啊!!!!";
+	mes "什麼東西這麼苦阿!";
+	next;
+	mes "[愛麗絲]";
+	mes "你到底餵我吃了什麼?";
+	next;
+	cutin "h_iris01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "愛麗絲..";
+	mes "妳醒了那就好了";
+	next;
+	cutin "fenrir_b",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "啊!";
+	mes "潘利爾...伊美樂的心臟呢?";
+	next;
+	cutin "h_iris01",255;
+	cutin "bijou_02",2;
+	mes "[畢尤]";
+	mes "---等一下!他叫潘利爾---";
+	next;
+	mes "[畢尤]";
+	mes "---我真笨!剛才只顧者處理伊美樂的心臟，現在才想起來...---";
+	next;
+	cutin "bijou_02",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "潘利爾怎麼回事?";
+	mes "難道封印被解除了?";
+	next;
+	cutin "h_iris01",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "情況很糟糕，連祭師都出現了..";
+	next;
+	cutin "fenrir_b",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "祭師?";
+	next;
+	cutin "h_iris01",255;
+	cutin "fenrir_b",2;
+	mes "[畢尤]";
+	mes "就是我們在斐揚村遇到的..";
+	mes "祭師莎拉·艾琳!";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "喝!!!";
+	next;
+	mes "[畢尤]";
+	mes "看來我該配合你的水準來點特別的攻擊!";
+	next;
+	cutin "bijou_01",255;
+
+	close2;
+	set 'CD_mir_4,1;
+	disablenpc instance_npcname("潘利爾#mir04");
+	disablenpc instance_npcname("愛麗絲#mir04");
+	disablenpc instance_npcname("畢尤#mir03");
+	set 'mir1_mob_01,2;
+	areamonster 'map_name$[0],101,95,101,95,"--ja--",3449,1,instance_npcname("儀式之間事件1")+"::OnCcdd5";
+	areamonster 'map_name$[0],101,90,101,90,"--ja--",3450,1,instance_npcname("儀式之間事件1")+"::OnCcdd5";
+	end;
+}
+
+1@mir,103,90,1	script	潘利爾#mir04	664,{ end;
+}
+1@mir,102,95,3	script	畢尤#mir03	10143,{ end;
+}
+1@mir,99,97,6	script	莎拉#mir01	10066,{end;
+}
+
+
+1@mir,100,95,6	script	愛麗絲#mir05	666,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mir_5==1) {end;}
+
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "我，愛麗絲·艾琳呼喚你們的力量!!就是現在!!";
+	next;
+	cutin "h_iris01",255;
+	cutin "bijou_01",2;
+	mes "[畢尤]";
+	mes "沒用的..";
+	mes "沒人能救得了你..";
+	next;
+	mes "[畢尤]";
+	mes "這將會是致命的最後一擊!";
+	next;
+	cutin "bijou_01",255;
+	enablenpc instance_npcname("莎拉#mir02");
+	sleep2 1000;
+	specialeffect EF_HFLIMOON1,AREA,instance_npcname("畢尤#mir04");
+	sleep2 1000;
+	cutin "bijou_death",4;
+	mes "[畢尤]";
+	mes "莎拉..大人?";
+	mes "為...什麼!?";
+	next;
+	mes "[莎拉]";
+	mes "這就是你的遺言?";
+	next;
+	mes "[畢尤]";
+	mes "你怎麼..可能...";
+	next;
+	mes "[莎拉]";
+	mes "你放心，我會跟希梅爾茲解釋的..";
+	next;
+	mes "[畢尤]";
+	mes "妳..妳..!!";
+	next;
+	mes "[莎拉]";
+	mes "永別了..";
+	next;
+	mes "[莎拉]";
+	mes "畢尤你不要怪我..";
+	next;
+	mes "[莎拉]";
+	mes "我只是幫你解開希梅爾茲給你綁上的狗鍊而已";
+	next;
+	cutin "bijou_death",255;
+	cutin "fenrir_b",2;
+	mes "[潘利爾]";
+	mes "怎麼會!?";
+	mes "她殺了自己人?";
+	next;
+	cutin "fenrir_b",255;
+	cutin "bijou_03",2;
+	mes "[畢尤]";
+	mes "為什麼?究竟為了什麼..?";
+	next;
+	mes "[畢尤]";
+	mes "就因為那ㄚ頭是你親妹妹嗎?";
+	next;
+	mes "[畢尤]";
+	mes "所以..你下手殺我!?";
+	next;
+	disablenpc instance_npcname("畢尤#mir03");
+	cutin "bijou_03",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "妳的靈魂終於自由了";
+	next;
+	cutin "sarah_hero3_2",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "---她救了我...?---";
+	next;
+	mes "[愛麗絲]";
+	mes "姊...姊?";
+	next;
+	mes "[愛麗絲]";
+	mes "莎拉姊姊..你是從小就失散的莎拉姊姊!?";
+	next;
+	mes "[愛麗絲]";
+	mes "你..到底想怎樣?";
+	mes "你..為什麼要救我?";
+	next;
+	mes "[愛麗絲]";
+	mes "妳以為這樣就能改變我的想法!?";
+	mes "我絕不會原諒妳的!!";
+	next;
+	mes "[愛麗絲]";
+	mes "妳是殺害爸爸媽媽和所有村人的仇人!!";
+	next;
+	cutin "h_iris01",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "閉嘴!";
+	mes "你不必替他們喊冤他們是罪有應得";
+	mes "他們只是償還12年前的血債...";
+	next;
+	mes "[莎拉]";
+	mes "還有..";
+	mes "雖然我是你姊姊...";
+	next;
+	mes "[莎拉]";
+	mes "不過..";
+	mes "恐怕你還不知道這件事吧?";
+	mes "我和妳是同父異母的姊妹";
+	next;
+	mes "[莎拉]";
+	mes "你為什麼不想想我為什麼沒有和妳一起長大..";
+	next;
+	mes "[莎拉]";
+	mes "為什麼我要毀滅斐揚村..";
+	mes "難道你對這些都不好奇嗎?";
+	next;
+	cutin "sarah_hero3_2",255;
+	cutin "h_iris01",2;
+	mes "[愛麗絲]";
+	mes "注口!";
+	mes "我不想聽妳這些藉口!!";
+	next;
+	cutin "h_iris01",255;
+	cutin "sarah_hero3_2",2;
+	mes "[莎拉]";
+	mes "藉口!?";
+	mes "哼!蠢妹妹妳別亂說話..";
+	next;
+	mes "[莎拉]";
+	mes "要不要我告訴你真相";
+	mes "妳最敬愛的大長老..我們的爸爸和村裡的人其實是..";
+	next;
+	mes "[莎拉]";
+	mes "算了...先拿到伊美樂的心臟再說..";
+	next;
+	mes "[莎拉]";
+	mes "妳記住，我並不是救妳，我一定會殺了妳";
+	next;
+	mes "[莎拉]";
+	mes "愛麗絲，妳一定要死在我手中...";
+	mes "所以妳千萬不可以死，我要親手殺了妳..";
+	next;
+	mes "[莎拉]";
+	mes "今天就到此為此吧...";
+	next;
+
+	close2;
+	set 'CD_mir_5,1;
+
+	//副本任務獎勵
+	if(checkquest(32063,HUNTING)==2 ) { 
+	dispbottom "儀式之間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,rand(3,5);
+	erasequest 32063;
+	}
+	if(checkquest(7705,HUNTING)==2 ) {
+	getitem 6919,10*$EP1601;	//榮譽之證
+	callfunc "offical_instance_finish",39;
+	erasequest 7705;
+	}
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+
+//------------------------------
+1@mir,103,90,1	script	潘利爾#mir05	664,{ end;}
+1@mir,102,95,3	script	畢尤#mir04	10143,{ end;}
+1@mir,104,95,3	script	莎拉#mir02	10066,{end;}
+
+
+//------------------------------地圖屬性
+1@mir	mapflag	partylock
+1@mir	mapflag	noteleport
+1@mir	mapflag	nosave	SavePoint
+1@mir	mapflag	nomemo
+1@mir	mapflag	nobranch
+1@mir	mapflag	noicewall
+1@mir	mapflag	restricted	6
+
+

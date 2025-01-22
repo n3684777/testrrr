@@ -1,0 +1,60 @@
+//===== eAthena Script =======================================
+//= 攻城戰 自動開啟控制
+//===== By: ==================================================
+//= 笨冰
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= RO Episode 4+ (台灣)
+//===== Description: =========================================
+//= 自動開啟攻城戰
+//= 相關的城戰時間設定可以參考 doc\woe_time_explanation.txt
+//=============================================
+//= gettime(3): 取得時間(小時) (24小時制)
+//= gettime(4): 取得時間(星期) 1=星期一, 2=星期二,
+//= 3=星期三, 4=星期四, 等等
+//===== Additional Comments: =================================
+//= 1.9 Rearranged the time-checks so they no longer use goto. [L0ne_W0lf]
+//=	Removed treasure spawning function calls. (No longer needed)
+//= 2.0 變更語言，繁體中文-台灣，變更設定為台灣伺服器 [笨冰]
+//============================================================
+-	script	Agit_Event	-1,{
+	end;
+
+OnClock2100:	//開始時間
+OnClock2200:	//結束時間
+
+OnAgitInit:
+	// starting time checks
+	if((gettime(DT_DAYOFWEEK)==WEDNESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<22)) {
+		if (!agitcheck()) {
+			AgitStart;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+
+	// end time checks
+	if ((gettime(DT_DAYOFWEEK)==WEDNESDAY) && (gettime(DT_HOUR)==22)) { 
+		if (agitcheck()) {
+			AgitEnd;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+	end;
+
+S_DisplayOwners:
+	setarray .@maps$[0],"prtg_cas01";
+	for( set .@i, 0; .@i <= 0; set .@i, .@i+1 ) {
+		if (GetCastleData(.@maps$[.@i],1)) {
+			Announce " [" + GetCastleName(.@maps$[.@i]) + "] 城堡已經被 [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] 公會佔領",bc_all|bc_woe;
+		}
+		else {
+			Announce "[" + GetCastleName(.@maps$[.@i]) + "] 城堡目前無人占領",bc_all|bc_woe;
+		}
+	}
+	end;
+}
+
+

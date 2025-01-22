@@ -1,0 +1,50 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Homunculus Experience Database
+###########################################################################
+#
+# Homunculus Experience Settings
+#
+###########################################################################
+# - Level   Level required.
+#   Exp     Experience required for the next level.
+###########################################################################
+
+Header:
+  Type: HOMUN_EXP_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/exp_homun.yml
+    Mode: Prerenewal
+  - Path: db/re/exp_homun.yml
+    Mode: Renewal
+
+  # -----------------------------------------------------------------------
+  # 熊貓模擬器專業版的資料補丁
+  # -----------------------------------------------------------------------
+  - Path: db/pandas/re/exp_homun.yml
+    Mode: Renewal
+
+  # -----------------------------------------------------------------------
+  # 請確保你對人工生命體經驗值資料庫的改動都在上面那些補丁之後被載入,
+  # 這將使得你的資料擁有最高優先順序.
+  # -----------------------------------------------------------------------
+  - Path: db/import/exp_homun.yml

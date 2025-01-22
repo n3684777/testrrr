@@ -1,0 +1,25 @@
+﻿trinity,102,81,6	script	符文石碑	10547,{
+
+	mes "[符文石碑]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("符文操作:合成版畫:取消")){
+
+	case 1:
+	close2;
+	openrunetableui;
+	end;
+
+	case 2:
+	close2;
+	item_reform 102440;
+	end;
+
+	case 3:
+	close;
+	}
+
+OnInit:
+	waitingroom "符文石碑",0;
+	end;
+}

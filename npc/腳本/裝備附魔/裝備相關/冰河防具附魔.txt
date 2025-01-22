@@ -1,0 +1,103 @@
+﻿vdistrict1,75,57,6	script	冰河防具製作&附魔	4_EP19_IWIN,{
+
+	mes "[冰河防具附魔]";
+	mes "<TIPBOX>冰河鎧甲附魔<INFO>20008</INFO></TIPBOX>";
+	mes "<TIPBOX>冰河披肩附魔<INFO>20009</INFO></TIPBOX>";
+	mes "<TIPBOX>冰河鞋子附魔<INFO>20010</INFO></TIPBOX>";
+	mes "<TIPBOX>冰河盾牌附魔<INFO>20011</INFO></TIPBOX>";
+	mes "<TIPBOX>冰河飾品附魔(右)<INFO>20012</INFO></TIPBOX>";
+	mes "<TIPBOX>冰河飾品附魔(左)<INFO>20013</INFO></TIPBOX>";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("前往相關地圖:裝備製作:附魔 冰河防具:附魔 黯淡冰河防具")){
+
+	case 1:
+		switch(select("冰封的鱗片海灘【jor_back4】","古代冰峽谷東部【jor_back5】","古代冰峽谷西部【jor_back6】","流冰地帶【jor_twice】","神聖的根【jor_sanct】","蛇神的根 1F【jor_root1】","蛇神的根 2F【jor_root2】","深根洞窟【jor_root3】","蛇的迷宮【jor_maze】")) {
+
+		case 1: set WarpMap$,"jor_back4"; set WarpMapX,0; set WarpMapY,0; warp "jor_back4",0,0;	close;
+		case 2: set WarpMap$,"jor_back5"; set WarpMapX,0; set WarpMapY,0; warp "jor_back5",0,0;	close;
+		case 3: set WarpMap$,"jor_back6"; set WarpMapX,0; set WarpMapY,0; warp "jor_back6",0,0;	close;
+		case 4: set WarpMap$,"jor_twice"; set WarpMapX,0; set WarpMapY,0; warp "jor_twice",0,0;	close;
+		case 5: set WarpMap$,"jor_sanct"; set WarpMapX,0; set WarpMapY,0; warp "jor_sanct",0,0;	close;
+		case 6: set WarpMap$,"jor_root1"; set WarpMapX,0; set WarpMapY,0; warp "jor_root1",0,0;	close;
+		case 7: set WarpMap$,"jor_root2"; set WarpMapX,0; set WarpMapY,0; warp "jor_root2",0,0;	close;
+		case 8: set WarpMap$,"jor_root3"; set WarpMapX,0; set WarpMapY,0; warp "jor_root3",0,0;	close;
+		case 9: set WarpMap$,"jor_maze"; set WarpMapX,0; set WarpMapY,0; warp "jor_maze",0,0;	close;
+		}
+
+	case 2:
+		close2;
+		callshop "冰河防具";
+		end;
+
+	case 3:
+		mes "[冰河防具附魔]";
+		mes "請選擇你要附魔的裝備位置";
+		next;
+		switch(select("身體:斗篷:鞋子:盾牌:飾品右:飾品左:取消")){
+
+		case 1:
+		close2;
+		item_enchant 89;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 90;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 91;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 92;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 93;
+		end;
+
+		case 6:
+		close2;
+		item_enchant 94;
+
+		end;
+		case 7:
+		close;
+		}
+
+	case 4:
+		mes "[冰河防具附魔]";
+		mes "請選擇你要附魔的裝備位置";
+		next;
+		switch(select("身體:斗篷:鞋子:取消")){
+
+		case 1:
+		close2;
+		item_enchant 95;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 96;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 97;
+		end;
+
+		end;
+		case 4:
+		close;
+		}
+	}
+
+OnInit:
+	waitingroom "冰河防具製作&附魔",0;
+	end;	
+}

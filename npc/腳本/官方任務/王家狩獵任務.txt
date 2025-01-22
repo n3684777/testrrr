@@ -1,0 +1,162 @@
+trinity,102,129,6	script	副官 羅賓財	415,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 50)) {
+	mes "[副官 羅賓財]";
+	mes "這任務限等級 ^ff000050以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[副官 羅賓財]";
+	mes "每當秋冬時節，原先在妙勒尼山脈棲息的魔物們，為了越冬準備而往山下居民定居地侵襲，直至王城附近為止。";
+	next;
+	mes "[副官 羅賓財]";
+	mes "因此盧恩米德加茲王室家族們，又來召集眾多冒險家，舉辦狩獵大會。";
+	next;
+	mes "[副官 羅賓財]";
+	mes "為了召集更多的冒險家前來也新增了不少為狩獵魔物們所打造的裝備與狩獵魔物所能獲得的報酬獎品。";
+	next;
+	mes "[副官 羅賓財]";
+	mes "完成任務可以取得<ITEM>榮譽玫瑰<INFO>23533</INFO></ITEM>";
+	mes "兌換各種王室所提供的精美獎勵!";
+	next;
+	switch(select("承接任務","回報任務","獵場傳送","兌換裝備","取消")){
+
+	case 1:
+		mes "[副官 羅賓財]";
+		mes "你是來參加狩獵比賽的冒險家啊!";
+		mes "你打算承接那一種任務呢?";
+		next;
+		switch(select(checkquest(16378,HUNTING)<0?"擊殺昆蟲型怪":"^CECECEE擊殺昆蟲型怪-打怪中^000000",checkquest(16380,HUNTING)<0?"擊殺動物型怪":"^CECECEE擊殺動物型怪-打怪中^000000",checkquest(16382,HUNTING)<0?"擊殺魚貝類怪":"^CECECEE擊殺魚貝類怪-打怪中^000000",checkquest(16384,HUNTING)<0?"擊殺龍族怪":"^CECECEE擊殺龍族怪-打怪中^000000")) {
+
+		case 1:
+			if(checkquest(16378,HUNTING)>=0){mes "[副官 羅賓財]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16379,PLAYTIME)==0){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16379,PLAYTIME)==1){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16378;
+			if(checkquest(16379,PLAYTIME)==2){erasequest 16379;}
+			mes "[副官 羅賓財]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(16380,HUNTING)>=0){mes "[副官 羅賓財]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16381,PLAYTIME)==0){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16381,PLAYTIME)==1){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16380;
+			if(checkquest(16381,PLAYTIME)==2){erasequest 16381;}
+			mes "[副官 羅賓財]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(16382,HUNTING)>=0){mes "[副官 羅賓財]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16383,PLAYTIME)==0){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16383,PLAYTIME)==1){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16382;
+			if(checkquest(16383,PLAYTIME)==2){erasequest 16383;}
+			mes "[副官 羅賓財]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(16384,HUNTING)>=0){mes "[副官 羅賓財]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(16385,PLAYTIME)==0){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(16385,PLAYTIME)==1){mes "[副官 羅賓財]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 16384;
+			if(checkquest(16385,PLAYTIME)==2){erasequest 16385;}
+			mes "[副官 羅賓財]";
+			mes "任務接取完成";
+			close;
+
+		}
+
+
+	case 2:
+		mes "[副官 羅賓財]";
+		mes "你是來參加狩獵比賽的冒險家啊!";
+		mes "你打算回報那一種任務呢?";
+		next;
+		switch(select("擊殺昆蟲型怪","擊殺動物型怪","擊殺魚貝類怪","擊殺龍族怪")){
+
+		case 1:
+			if(checkquest(16378,HUNTING)==2 ) { 
+			dispbottom "擊殺昆蟲型怪任務回報完成!!";
+			erasequest 16378;
+			setquest 16379;
+			getitem 23533,10;
+			getexp 500000,500000;
+			}
+			mes "[副官 羅賓財]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(16380,HUNTING)==2 ) { 
+			dispbottom "擊殺動物型怪任務回報完成!!";
+			erasequest 16380;
+			setquest 16381;
+			getitem 23533,10;
+			getexp 500000,500000;
+			}
+			mes "[副官 羅賓財]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if(checkquest(16382,HUNTING)==2 ) { 
+			dispbottom "擊殺魚貝類怪任務回報完成!!";
+			erasequest 16382;
+			setquest 16383;
+			getitem 23533,10;
+			getexp 500000,500000;
+			}
+			mes "[副官 羅賓財]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(16384,HUNTING)==2 ) { 
+			dispbottom "擊殺龍族怪任務回報完成!!";
+			erasequest 16384;
+			setquest 16385;
+			getitem 23533,10;
+			getexp 500000,500000;
+			}
+			mes "[副官 羅賓財]";
+			mes "你沒有完成的任務";
+			close;
+		}
+
+	case 3:
+		mes "[副官 羅賓財]";
+		mes "對王室狩獵比賽有疑問的地方嗎";
+		mes "你想要到哪個獵場?";
+		next;
+		switch(select("昆蟲獵場","動物獵場","魚貝類獵場","龍族獵場")){
+
+		case 1:
+			warp "mjolnir_04",0,0;
+			close;
+		case 2:
+			warp "mjolnir_07",0,0;
+			close;
+		case 3:
+			warp "iz_dun02",0,0;
+			close;
+		case 4:
+			warp "gef_fild08",0,0;
+			close;
+		}
+
+	case 4:
+		close2;
+		callshop "王家狩獵";
+		end;
+
+	}
+OnInit:
+	waitingroom "王家狩獵任務",0;
+	end;
+}
+

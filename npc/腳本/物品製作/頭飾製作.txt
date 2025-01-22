@@ -1,0 +1,31 @@
+trinity,117,48,4	script	頭飾製作員	10242,{
+
+	mes "[頭飾製作員]";
+	mes "請選擇你要製作的頭飾類別";
+	next;
+	switch(select("頭飾(頭上)","頭飾(頭中)","頭飾(頭下)","頭飾(頭上中下)","頭飾(頭上中)","頭飾(頭中下)")) {
+
+	case 1:
+	callfunc "qshop",5,6,7,8,9,10;
+
+	case 2:
+	callfunc "qshop",11;
+
+	case 3:
+	callfunc "qshop",12;
+
+	case 4:
+	callfunc "qshop",13;
+
+	case 5:
+	callfunc "qshop",14;
+
+	case 6:
+	callfunc "qshop",15;
+	}
+
+//OnInit:
+//	waitingroom "頭飾製作",0;
+//	end;
+}
+

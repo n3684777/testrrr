@@ -1,0 +1,3960 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions.
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions.
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+# NoDrop 如果項目不能被丟棄。 （默認：假）
+# NoTrade 如果該項目不能交易。 （默認：假）
+# TradePartner 如果物品不能交易給玩家的伙伴。 （默認：假）
+# NoSell 如果商品無法出售。 （默認：假）
+# NoCart 如果物品不能放入購物車。 （默認：假）
+# NoStorage 如果項目不能放入存儲中。 （默認：假）
+# NoGuildStorage 如果該物品不能放入公會倉庫。 （默認：假）
+# NoMail 如果該項目不能放入郵件中。 （默認：假）
+# NoAuction 如果物品不能被拍賣。 （默認：假）
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+#魔物堡壘寶箱
+  - Id: 15374
+    AegisName: lunar_eclipse_Armor_
+    Name: 月全蝕魔力外袍
+    Type: Armor
+    Buy: 10
+    Weight: 600
+    Defense: 120
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMdef,10;
+      bonus2 bWeaponSubSize,Size_Medium,10; 
+      bonus2 bMagicSubSize,Size_Medium,10; 
+      bonus2 bWeaponSubSize,Size_Large,10; 
+      bonus2 bMagicSubSize,Size_Large,10; 
+      bonus2 bSubSkill,"SJ_SOLARBURST",30; 
+      bonus2 bSubSkill,"SJ_FULLMOONKICK",20; 
+      bonus2 bSubSkill,"SJ_NEWMOONKICK",20; 
+      bonus bDelayrate,-getrefine(); 
+      bonus bAtk,getrefine()*10; 
+      bonus bMatk,getrefine()*10; 
+      bonus bMaxHPrate,getrefine()/4*5; 
+      bonus bAtkRate,getrefine()/4*5; 
+      bonus bMatkRate,getrefine()/4*5;
+  - Id: 490086
+    AegisName: Eclipsedefmind_TW
+    Name: 月蝕守護之心
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMaxHPrate,8; 
+      bonus2 bMagicAtkEle,3,10; 
+      bonus2 bSubSkill,"SJ_FULLMOONKICK",20; 
+      bonus2 bSubSkill,"SJ_NEWMOONKICK",20; 
+      skill "MG_SIGHT",1;
+  - Id: 460003
+    AegisName: Feather_Shield
+    Name: 聖之羽翼神盾
+    Type: Armor
+    Buy: 200000
+    Weight: 400
+    Defense: 150
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 4
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,(.@r>=9?12:(.@r>=7?8:4));
+      bonus bDelayrate,-(.@r>=9?12:(.@r>=7?8:4));
+      if (.@r>=8) {
+         bonus bBaseAtk,50;
+         bonus bMatk,50;
+      }
+  - Id: 470098
+    AegisName: EC_Boots_TW
+    Name: 翡翠玉結晶戰靴
+    Type: Armor
+    Weight: 200
+    Defense: 25
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bDex,3*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20*(.@r/3);
+      if (.@r>=7)
+         bonus bAtkRate,5;
+      if (.@r>=9)
+         bonus bLongAtkRate,7;
+      if (.@r>=11)
+         autobonus "{ bonus bDex,200; bonus2 bSPLossRate,50,1000; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
+  - Id: 470094
+    AegisName: Hero_Boots_LT
+    Name: 英雄戰靴-LT
+    Type: Armor
+    Weight: 600
+    Defense: 15
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 190
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMaxHP,1500;
+      bonus bMaxSP,150;
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bSmatk,1;
+      }
+      if (.@r>=7) {
+         bonus bMatkRate,5;
+         bonus2 bAddClass,Class_All,5;
+         if (.@r>=9) {
+            bonus bCastrate,-5;
+            bonus bPerfectHitAddRate,10;
+            bonus bCritical,5;
+            if (.@r>=11) {
+               bonus bFixedCast,-800;
+               bonus bDelayrate,-5;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus bMres,50;
+         bonus bRes,50;
+         if (.@g>=2) {
+            bonus2 bMagicAddEle,Ele_All,10;
+            bonus2 bAddEle,Ele_All,10;
+            if (.@g>=3) {
+               bonus bSta,5;
+               bonus bWis,5;
+               if (.@g>=4) {
+                  bonus bPAtk,5;
+                  bonus bSmatk,5;
+                  if (.@r>=13) {
+                     bonus bFixedCast,-200;
+                  }
+               }
+            }
+         }
+      }
+      bonus bMaxHPrate,(.@r/3);
+      bonus bMaxSPrate,(.@r/3);
+
+#下水道金庫寶箱
+  - Id: 470127
+    AegisName: Wine_Shoes
+    Name: 深紅魔術之靴
+    Type: Armor
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bStr,1;
+      bonus bMdef,15;
+      bonus bAtkRate,5;
+      bonus bMatkRate,5;
+      bonus bLongAtkDef,5;
+      bonus2 bSubEle,Ele_Neutral,5;
+      bonus bAtkRate,.@r/2;
+      bonus bMatkRate,.@r/2;
+      if (.@r>=11) {
+         bonus2 bSubEle,Ele_Water,10;
+         bonus2 bSubEle,Ele_Wind,10;
+         bonus2 bSubEle,Ele_Earth,10;
+         bonus2 bSubEle,Ele_Fire,10;
+         if (.@r>=13) {
+            bonus bFixedCast,-600;
+            bonus bDelayrate,-6; 
+         }
+      }
+  - Id: 490189
+    AegisName: Wine_Jewel_Brooch_TW
+    Name: 深紅寶石胸針
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bDelayrate,-5;
+      bonus2 bAddClass,Class_All,5+(readparam(bStr)/16);
+      bonus bMatkRate,5+(readparam(bInt)/16);
+      bonus2 bSubEle,Ele_All,5;
+      bonus bLongAtkDef,5;
+  - Id: 490103
+    AegisName: Garnet_Pendant_TW
+    Name: 深紅寶石結晶之墜
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15; 
+      bonus2 bSubEle,0,5; 
+      bonus bLongAtkDef,5; 
+      if(Class == 4061 || Class == 4097 ){ end; } skill "WL_RECOGNIZEDSPELL",1; bonus2 bSkillUseSP,"WL_RECOGNIZEDSPELL",100; bonus2 bSkillCooldown,"WL_RECOGNIZEDSPELL",120000;
+  - Id: 19393
+    AegisName: Magic_Star_TW
+    Name: 魔力之星
+    Type: Armor
+    Weight: 200
+    Defense: 20
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1119
+    EquipLevelMin: 1
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,2*(readparam(bStr)/12);
+      bonus2 bMagicAtkEle,Ele_Wind,2*(readparam(bAgi)/12);
+      bonus2 bMagicAtkEle,Ele_Water,2*(readparam(bVit)/12);
+      bonus2 bMagicAtkEle,Ele_Fire,2*(readparam(bInt)/12);
+      bonus2 bMagicAtkEle,Ele_Earth,2*(readparam(bDex)/12);
+      bonus2 bMagicAtkEle,Ele_Holy,2*(readparam(bLuk)/12);
+      bonus bCastrate,-5;
+    UnEquipScript: |
+      hateffect(HAT_EF_Magic_Star_TW,false);
+
+#官方副本積分商店
+  - Id: 19138
+    AegisName: SeraphimCoronet
+    Name: 熾天使花冠
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 2992
+    Script: |
+      bonus bStr,2; 
+      bonus bAtk,(readparam(bInt)/8)*5; 
+      bonus bHealPower,readparam(bInt)/8; 
+      bonus bCastrate,readparam(bInt)/8; 
+      if(readparam(bInt)>=108){ bonus bAtk,50; bonus bHealPower,5; bonus bCastrate,4; } 
+      if(readparam(bInt)>=120){ bonus bAtk,125; bonus bHealPower,10; bonus bCastrate,6; }
+
+  - Id: 5966
+    AegisName: KarduiEar
+    Name: 柯杜威之耳
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2865
+    Script: |
+      bonus bMatk,(readparam(bDex)/10)*2; 
+      if(readparam(bDex)>=108){bonus bMatk,60;bonus bCastrate,-10;} 
+      if(readparam(bDex)>=120){bonus bMatk,100;bonus bCastrate,-5;} 
+      if(isequipped(4463)){ bonus2 bMagicAddRace,10,((getequiprefinerycnt(EQI_HAND_R)>9)?20:getequiprefinerycnt(EQI_HAND_R)*2); } 
+      if(isequipped(2198)){ if(getequiprefinerycnt(EQI_HAND_L)>6){ bonus2 bSkillCooldown,"WL_COMET",-20000; } 
+      if(getequiprefinerycnt(EQI_HAND_L)>8){ bonus2 bSkillCooldown,"WL_COMET",-20000; } }
+
+  - Id: 19437
+    AegisName: LittleGarden
+    Name: 花園髮圈
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 3096
+    Script: |
+      bonus bBaseAtk,40;
+      bonus bCritAtkRate,5;
+      if (readparam(bLuk)>=90) {
+         bonus bBaseAtk,60;
+         bonus bCritAtkRate,10;
+      }
+      if (readparam(bLuk)>=125) {
+         bonus bBaseAtk,80;
+         bonus bCritAtkRate,20;
+      }
+      
+  - Id: 5918
+    AegisName: Gambler_Seal
+    Name: 賭徒之印
+    Type: Armor
+    Weight: 500
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 2584
+    Script: |
+      .@dex = readparam(bDex);
+      .@luk = readparam(bLuk);
+      .@critical = 3 + (.@luk / 10);
+      .@critical_dmg = 3 - (.@dex/10) * 2;
+      .@sub_arrowstorm = 10;
+      .@sub_gateofhell = 10;
+      bonus bBaseAtk,(.@luk/10)*2;
+      bonus bMatk,(.@luk / 10) * 2;
+      if (.@luk > 107) {
+         .@critical += 5;
+         .@critical_dmg += 10;
+      }
+      if (.@luk > 119) {
+         .@critical += 10;
+         .@critical_dmg += 17;
+         .@sub_arrowstorm += 30;
+         .@sub_gateofhell += 30;
+      }
+      bonus bCritical,.@critical;
+      bonus bCritAtkRate,.@critical_dmg;
+      bonus2 bSubSkill,"RA_ARROWSTORM",.@sub_arrowstorm;
+      bonus2 bSubSkill,"SR_GATEOFHELL",.@sub_gateofhell;
+
+  - Id: 5933
+    AegisName: Crow_Tengu_Mask
+    Name: 烏鴉天狗面具
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 0
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 2677
+    Script: |
+      bonus bAtkRate,1; 
+      bonus bLongAtkRate,2; 
+      if(readparam(bStr)>=108){bonus bAtkRate,1; bonus bLongAtkRate,2;} 
+      if(readparam(bStr)>=120){bonus bAtkRate,2; bonus bLongAtkRate,3;} 
+      if(readparam(bVit)>=108){bonus bLongAtkDef,5;}
+
+  - Id: 470086
+    AegisName: Peep_Toe_Sandals
+    Name: 守護精靈祈禱之鞋
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 20
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatk,30; bonus bMatkRate,getskilllv("WL_FREEZE_SP")/3*2; 
+      bonus bDelayrate,-getskilllv("WL_FREEZE_SP")/3*2; 
+      if(isequipped(2198)){ bonus bDelayrate,-3; bonus bAspdRate,10; bonus bFixedCast,-(getequiprefinerycnt(EQI_SHOES)/2)*100; } 
+      if(isequipped(5966)){ bonus bMatk,30; bonus2 bSkillCooldown,"WL_COMET",-20000; } 
+      if(isequipped(4456)){ bonus2 bMagicAddClass,1,40; bonus2 bSubEle,Ele_All,-20; }
+
+
+  - Id: 480070
+    AegisName: Wings_Of_Raguel
+    Name: 奧林帕斯之翼
+    Type: Armor
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 56
+    Script: |
+      bonus bMdef,10;
+      skill "PA_GOSPEL",1;
+  - Id: 32244
+    AegisName: Dictator_Necklace_TW
+    Name: 狄克推多項鍊
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
+      bonus bDelayrate,-3;
+  - Id: 490084
+    AegisName: Dictator_Ring_TW
+    Name: 狄克推多耳環
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
+      bonus bDelayrate,-3;
+  - Id: 19126
+    AegisName: Head_Item_44385
+    Name: 影子推助器
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 3285
+    Script: |
+      bonus bAspd,1;
+      bonus bDelayrate,-1;
+  - Id: 19244
+    AegisName: Necklace_Rosary_K
+    Name: 玫瑰園之鏈
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Defense: 12
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3292
+    Script: |
+      bonus bHealPower,5; if(isequipped(1659)){ bonus bDelayrate,-getequiprefinerycnt(EQI_HAND_R)/2*3; }
+  - Id: 19246
+    AegisName: Head_Item_22655
+    Name: 皇家衛士頸鍊
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Defense: 10
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 80
+    View: 1899
+    Script: |
+      bonus bAspd,1; if(isequipped(18823)){ bonus bAtk,40; bonus bAspdRate,3; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Blind,10000; if(readparam(bAgi)>=108){ bonus bAtk,60; bonus bAspdRate,5; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; } if(readparam(bAgi)>=120){ bonus bAtk,80; bonus bAspdRate,7; bonus2 bSubRace,RC_Player_Human,4; bonus2 bSubRace,RC_Player_Doram,4; } }
+  - Id: 19307
+    AegisName: Head_Item_44399
+    Name: 綠光鬼火
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3299
+    Script: |
+      bonus2 bResEff,Eff_Confusion,10000; bonus bVariableCastrate,-10;
+  - Id: 19327
+    AegisName: Head_Item_44200
+    Name: 熾天使羽毛
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3100
+    Script: |
+      bonus bHealPower,5; bonus bVariableCastrate,-(readparam(bInt)/8); if(isequipped(19138)){ bonus bHealPower,5; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2;  bonus2 bVariableCastrate,"AB_CHEAL",-100; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Bleeding,10000; if(readparam(bInt)>=108){ bonus bVariableCastrate,-4; bonus bHealPower,10; bonus bHealPower2,10; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2;  } if(readparam(bInt)>=120){ bonus bVariableCastrate,-6; bonus bHealPower,15; bonus bHealPower2,15; bonus2 bSubRace,RC_Player_Human,4; bonus2 bSubRace,RC_Player_Doram,4;  } }
+  - Id: 19371
+    AegisName: Head_Item_44405
+    Name: 小巴風特降落傘
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3305
+    Script: |
+      bonus bAspd,1; bonus bDelayrate,-1;
+  - Id: 19427
+    AegisName: RabbitFamilyBalloon
+    Name: 瘋兔家族氣球
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3222
+    Script: |
+      bonus bVariableCastrate,-readparam(bVit)/18; 
+      if(readparam(bVit)>=120){ bonus bDelayrate,-2; } 
+      if(readparam(bVit)>=130){ bonus bDelayrate,-3; }
+  - Id: 19299
+    AegisName: Head_Item_44110
+    Name: 神木嫩葉
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 80
+    View: 3010
+    Script: |
+      bonus bMatk,10; 
+      bonus bVariableCastrate,-5; 
+      if(isequipped(5966)){ bonus bMatk,20; bonus bVariableCastrate,-2; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; if(readparam(bDex)>=108){ bonus bMatk,20; bonus bVariableCastrate,-3; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; } if(readparam(bDex)>=120){ bonus bMatk,30; bonus bVariableCastrate,-5; bonus2 bSubRace,RC_Player_Human,4; bonus2 bSubRace,RC_Player_Doram,4; } } 
+      if(isequipped(4463)){ bonus2 bMagicAddRace,RC_Player_Human,((getequiprefinerycnt(EQI_HAND_R)>9)?20:getequiprefinerycnt(EQI_HAND_R)*2); bonus2 bMagicAddRace,RC_Player_Doram,((getequiprefinerycnt(EQI_HAND_R)>9)?20:getequiprefinerycnt(EQI_HAND_R)*2); }
+  - Id: 19306
+    AegisName: Head_Item_44172
+    Name: 紅心王牌
+    Type: Armor
+    Buy: 20
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 80
+    View: 3072
+    Script: |
+      bonus bCritAtkRate,5; 
+      if(isequipped(5918)){ bonus bAspd,1; bonus bCritAtkRate,2; bonus bCritAtkRate,readparam(bDex)/10*2; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; if(readparam(bLuk)>=108){ bonus bAspd,1; bonus bCritAtkRate,2; bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_Player_Doram,2; } if(readparam(bLuk)>=120){ bonus bAspd,2; bonus bCritAtkRate,4; bonus2 bSubRace,RC_Player_Human,4; bonus2 bSubRace,RC_Player_Doram,4; bonus bSplashRange,1; } }
+  - Id: 490362
+    AegisName: Gray_W_Armguard
+    Name: 灰狼護腕
+    Type: Armor
+    Weight: 100
+    Defense: 0
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,3;
+      bonus bAtkRate,7;
+      bonus bMatkRate,7;
+      bonus bDelayrate,-5;
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      
+#簡單模式道館
+  - Id: 32243
+    AegisName: Anel_do_Desbravador
+    Name: 魔力星環
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bCastrate,-20; 
+      bonus bAspd,1; 
+      bonus5 bAutoSpell,"WL_RECOGNIZEDSPELL",1,20,BF_MAGIC,0; 
+      bonus3 bAutoSpell,"MG_COLDBOLT",3,50; 
+      bonus3 bAutoSpell,"MG_FIREBOLT",3,50; 
+      bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",3,50; 
+      if(isequipped(19393)){ bonus bAtk,30; bonus bMatk,30; bonus bCastrate,-5; bonus bFixedCast,-200; bonus2 bMagicAddClass,1,20; }
+
+  - Id: 420087
+    AegisName: Magic_Circle_TW
+    Name: 魔力星陣
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 10
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 74
+    View: 1119
+    Script: |
+      bonus bFixedCast,-200; 
+      if(isequipped(19393)){ 
+      bonus bMatkRate,readparam(bStr)/20; 
+      bonus bDelayrate,-readparam(bAgi)/20; 
+      bonus2 bMagicAddRace,RC_All,readparam(bVit)/20; 
+      bonus2 bMagicAddClass,Class_All,readparam(bInt)/20;
+      bonus2 bMagicAddSize,Size_All,readparam(bDex)/20; 
+      bonus2 bMagicAtkEle,Ele_All,readparam(bLuk)/20; 
+      } 
+      if(isequipped(32243)){ bonus bCastrate,-20; } 
+      hateffect HAT_EF_Magiccircle_Blue_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_Magiccircle_Blue_TW,false;
+
+  - Id: 490318
+    AegisName: Arc_A_Ring
+    Name: 無上大天使之戒
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bWeaponSubSize,Size_All,3;
+      bonus2 bMagicSubSize,Size_All,3;
+      bonus bAllStats,6; 
+      bonus bCastrate,-10;
+      bonus bDelayrate,-10;
+      skill "LG_SHIELDSPELL",2;
+  - Id: 490088
+    AegisName: 2020maypay_06
+    Name: 絕望的連通之環
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAtkRate,5; bonus bMatkRate,5;
+  - Id: 20735
+    AegisName: Unknown_Item_20735
+    Name: 火精靈力量斗篷
+    Type: Armor
+    Buy: 10000
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus2 bSubEle,3,10; bonus2 bSubEle,1,-10; bonus bShortWeaponDamageReturn,getrefine()*2+10; bonus bUnbreakableGarment,n;
+  - Id: 20745
+    AegisName: Unknown_Item_20745
+    Name: 水精靈力量斗篷
+    Type: Armor
+    Buy: 10000
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus2 bSubEle,1,10; bonus2 bSubEle,4,-10; bonus2 bAddEffWhenHit,Eff_Freeze,1000; if(getrefine()>5){bonus2 bAddEffWhenHit,Eff_Freeze,500;} if(getrefine()>9){bonus2 bAddEffWhenHit,Eff_Freeze,500;} bonus bUnbreakableGarment,n;
+  - Id: 20734
+    AegisName: Unknown_Item_20734
+    Name: 風精靈力量斗篷
+    Type: Armor
+    Buy: 10000
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus2 bSubEle,4,10; bonus2 bSubEle,2,-10; bonus bLongAtkDef,5; bonus bLongAtkDef,getrefine(); bonus bUnbreakableGarment,n;
+  - Id: 20747
+    AegisName: Unknown_Item_20747
+    Name: 地精靈力量斗篷
+    Type: Armor
+    Buy: 10000
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus2 bSubEle,2,10; bonus2 bSubEle,3,-10; bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",1,(getrefine()*10)+100,BF_SHORT|BF_LONG,1; bonus bUnbreakableGarment,n;
+  - Id: 28955
+    AegisName: Fotia_Shield
+    Name: 火力盾牌
+    Type: Armor
+    Buy: 10
+    Weight: 1000
+    Defense: 120
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bUnbreakableShield,n; bonus bMdef,10; bonus2 bSubEle,Ele_Fire,10; bonus2 bAddEle,Ele_Fire,5; bonus2 bMagicAtkEle,Ele_Fire,5;if(getrefine()>5){ bonus2 bSubEle,Ele_Fire,15; bonus2 bAddEle,Ele_Fire,10; bonus2 bMagicAtkEle,Ele_Fire,10; } if(getrefine()>7){ if(readparam(bStr)>=90){ bonus bAtk,50; } if(readparam(bAgi)>=90){ bonus bAspdRate,5; } if(readparam(bVit)>=90){ bonus bHealPower,10; bonus bAddItemHealRate,10; } if(readparam(bInt)>=90){ bonus bMatk,30; } if(readparam(bDex)>=90){ bonus bCastrate,-5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } }
+  - Id: 28951
+    AegisName: Nero_Shield
+    Name: 水力盾牌
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bUnbreakableShield,n; bonus bMdef,5; bonus2 bSubEle,Ele_Water,10; bonus2 bAddEle,Ele_Water,5; bonus2 bMagicAtkEle,Ele_Water,5; if(getrefine()>5){ bonus2 bSubEle,Ele_Water,15; bonus2 bAddEle,Ele_Water,10; bonus2 bMagicAtkEle,Ele_Water,10; } if(getrefine()>7){ if(readparam(bStr)>=90){ bonus bAtk,50; } if(readparam(bAgi)>=90){ bonus bAspdRate,5; } if(readparam(bVit)>=90){ bonus bHealPower2,10; bonus bAddItemHealRate,10; } if(readparam(bInt)>=90){ bonus bMatk,30; } if(readparam(bDex)>=90){ bonus bCastrate,-5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } }
+  - Id: 28916
+    AegisName: Gunpowder_Shield
+    Name: 地力盾牌
+    Type: Armor
+    Buy: 10
+    Weight: 2000
+    Defense: 150
+    Slots: 1
+    Classes:
+      Upper: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bUnbreakableShield,n; bonus bMdef,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bAddEle,Ele_Earth,5; bonus2 bMagicAtkEle,Ele_Earth,5;if(getrefine()>5){ bonus2 bSubEle,Ele_Earth,15; bonus2 bAddEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Earth,10; } if(getrefine()>7){ if(readparam(bStr)>=90){ bonus bAtk,50; } if(readparam(bAgi)>=90){ bonus bAspdRate,5; } if(readparam(bVit)>=90){ bonus bHealPower,10; } if(readparam(bInt)>=90){ bonus bMatk,30; } if(readparam(bDex)>=90){ bonus bCastrate,-5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } }
+  - Id: 28921
+    AegisName: Anne_Moss_Shield
+    Name: 風力盾牌
+    Type: Armor
+    Buy: 10
+    Weight: 3500
+    Defense: 150
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bUnbreakableShield,n; 
+      bonus bMdef,15;
+      bonus2 bSubEle,Ele_Wind,10; 
+      bonus2 bAddEle,Ele_Wind,5; 
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      if(getrefine()>5){ bonus2 bSubEle,Ele_Wind,15; bonus2 bAddEle,Ele_Wind,10; bonus2 bMagicAtkEle,Ele_Wind,10; } 
+      if(getrefine()>7){ 
+      if(readparam(bStr)>=90){  bonus bBaseAtk,50; } 
+      if(readparam(bAgi)>=90){ bonus bAspdRate,5; } 
+      if(readparam(bVit)>=90){ bonus bHealPower,10; bonus bAddItemHealRate,10; } 
+      if(readparam(bInt)>=90){ bonus bMatk,30; } 
+      if(readparam(bDex)>=90){ bonus bCastrate,-5; } 
+      if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; }
+      }
+  - Id: 28502
+    AegisName: Mob_Scarf
+    Name: 暴徒領巾
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 975
+    Script: |
+      skill "SA_SPELLBREAKER",2;
+
+  - Id: 420425
+    AegisName: Mob_Scarf_LT
+    Name: 暴徒領巾-LT
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 2
+    View: 975
+    Script: |
+      skill "SA_SPELLBREAKER",2;
+
+#玩具工廠的遺跡(席琳基米)
+#官方怪物掉落
+  - Id: 450135
+    AegisName: Bloody_Celine_Dress_TW
+    Name: 席琳的沾血黑禮服
+    Type: Armor
+    Weight: 200
+    Defense: 40
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine()/2*10; if(getrefine()>6){ bonus bMatkRate,10; } if(getrefine()>7){ bonus bUnbreakableArmor,n; } 
+      if(isequipped(31023)){ autobonus "{ bonus bDelayrate,-50; bonus bMatkRate,25; active_transform 2996,5000; }",100,5000,BF_MAGIC; bonus5 bAutoSpell,"AB_VITUPERATUM",1,10,BF_MAGIC,1; } 
+      if(isequipped(2980)){ bonus bMatk,50; bonus5 bAutoSpell,"WL_SOULEXPANSION",3,10,BF_WEAPON,1; bonus5 bAutoSpell,"WL_TELEKINESIS_INTENSE",1,10,BF_MAGIC,1; } 
+      if(isequipped(18849)){ bonus2 bSubRace,RC_Player_Human,7; bonus2 bSubRace,RC_Player_Doram,7; if(getequiprefinerycnt(EQI_HEAD_TOP)>10){ bonus2 bMagicAddClass,1,15; } }
+  - Id: 450179
+    AegisName: Bloody_Dress_
+    Name: 基米的沾血黑禮服
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 40
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMatk,50; 
+      if(getrefine()>6){ bonus bVariableCastrate,-10; } 
+      if(getrefine()>8){ bonus2 bMagicAtkEle,Ele_All,10; } 
+      if(getrefine()>10){ bonus bDelayrate,-10; } 
+      if(getrefine()>11){ bonus bDelayrate,-5; }
+
+  - Id: 480153
+    AegisName: S_G_Manteau_TW
+    Name: 豔陽沙礫斗篷
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 30
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bPerfectHitAddRate,3; bonus bCritical,getrefine()/3*2; bonus bFlee,getrefine()/3*3; bonus bHit,getrefine()/3*3; 
+      bonus bShortAtkRate,getrefine()/4*2; bonus bLongAtkRate,getrefine()/4*2; 
+      if(Class == 4073 || Class == 4102 || Class == 4258 ){ bonus bPerfectHitAddRate,25; bonus bPerfectHitAddRate,getrefine()/4*4; bonus2 bSkillCooldown,2321,-getrefine()/4*500; bonus2 bSkillCooldown,"LG_SHIELDPRESS",-((getrefine()/4)*300); 
+      if(getrefine()>11){ bonus bAllStats,12; bonus bShortAtkRate,15; bonus2 bMagicAtkEle,6,15; } }
+      if(Class == 4078 || Class == 4107 || Class == 4259 ){ bonus bPerfectHitAddRate,25; bonus bPerfectHitAddRate,getrefine()/4*4; bonus2 bSkillCooldown,2476,-getrefine()/4*500; if(getrefine()>11){ bonus bAllStats,12; bonus bShortAtkRate,15; } }
+  - Id: 22191
+    AegisName: Fire_big_god_boots
+    Name: 火雷大神靴
+    Type: Armor
+    Weight: 500
+    Defense: 18
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine()*5; 
+      if(isequipped(4131)){ skill "AL_HEAL",10; bonus bMatk,getrefine()*15; bonus bMdef,getrefine()*5;}
+
+  - Id: 20859
+    AegisName: Phreeoni_Manteau
+    Name: 皮里恩飛行翼
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bHit,10; 
+      bonus bMaxHPrate,10; 
+      if(getrefine()>6){ bonus bHit,10;} 
+      if(getrefine()>8){ bonus bHit,10;} 
+      if(getrefine()>11){ bonus bHit,20; bonus5 bAutoSpell,"NPC_WIDESTONE",1,30,BF_WEAPON|BF_SHORT,1; } 
+      if(isequipped(4121)){ bonus bHit,20; bonus5 bAutoSpell,"NPC_WIDESTONE",4,60,BF_WEAPON|BF_SHORT,1; skill "WL_SIENNAEXECRATE",3; bonus2 bSkillCooldown,"WL_SIENNAEXECRATE",10000; }
+  - Id: 28436
+    AegisName: Elvra_Charm
+    Name: 埃維亞的吊飾
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus2 bMagicAddRace,RC_All,6;
+      bonus bDelayrate,-6;
+
+  - Id: 490100
+    AegisName: Red_Force_Pendant
+    Name: 紅色陽剛吊墜
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bAddClass,Class_All,5; 
+      if(isequipped(400023)){ if(getequiprefinerycnt(EQI_HEAD_TOP)>6){ bonus bAspdRate,10; bonus bVariableCastrate,-10; } 
+      if(getequiprefinerycnt(EQI_HEAD_TOP)>8){ bonus bAtkRate,5; bonus bWeaponAtkRate,5; bonus bMatkRate,5; } 
+      if(getequiprefinerycnt(EQI_HEAD_TOP)>10){ bonus bFixedCast,-500; } }
+  - Id: 490101
+    AegisName: Blue_Mental_Pendant
+    Name: 藍色心靈吊墜
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bAddClass,Class_All,5; 
+      if(isequipped(400023)){ if(getequiprefinerycnt(EQI_HEAD_TOP)>6){ bonus bAspdRate,10; bonus bVariableCastrate,-10; } 
+      if(getequiprefinerycnt(EQI_HEAD_TOP)>8){ bonus bAtkRate,5; bonus bWeaponAtkRate,5; bonus bMatkRate,5; } 
+      if(getequiprefinerycnt(EQI_HEAD_TOP)>10){ bonus bFixedCast,-500; } }
+      
+  - Id: 410235
+    AegisName: Unknown_Item_44997
+    Name: 輕便望遠鏡
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 3897
+    Script: |
+      bonus bHit,10;
+      bonus2 bAddRace,RC_Formless,readparam(bStr)/20;
+      bonus2 bAddRace,RC_Undead,readparam(bStr)/20;
+      bonus2 bAddRace,RC_Brute,readparam(bAgi)/20;
+      bonus2 bAddRace,RC_Plant,readparam(bAgi)/20;
+      bonus2 bAddRace,RC_Insect,readparam(bVit)/20;
+      bonus2 bAddRace,RC_Fish,readparam(bVit)/20;
+      bonus2 bAddRace,RC_Demon,readparam(bInt)/20;
+      bonus2 bAddRace,RC_DemiHuman,readparam(bInt)/20;
+      bonus2 bAddRace,RC_Angel,readparam(bDex)/20;
+      bonus2 bAddRace,RC_Dragon,readparam(bDex)/20;
+      bonus2 bAddRace,RC_Player_Human,readparam(bLuk)/20;
+      bonus2 bAddRace,RC_Player_Doram,readparam(bLuk)/20;
+      if(readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk)>=600){ bonus bHit,10; bonus2 bAddRace,RC_All,10; }
+
+  - Id: 420199
+    AegisName: Ghost_Fire_TW
+    Name: 幽魅火球
+    Type: Armor
+    Buy: 10
+    Weight: 700
+    Slots: 0
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      hateffect(HAT_EF_Ghost_Fire,false);
+      bonus bCastrate,-8;
+      bonus bDelayrate,-5;
+      bonus bFixedCast,-100;
+    UnEquipScript: |
+      hateffect(HAT_EF_Ghost_Fire,false);
+
+  - Id: 22202
+    AegisName: Temporal_Boots_TW
+    Name: 時光超越者之靴
+    Type: Armor
+    Weight: 600
+    Defense: 25
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMdef,15;
+      if(readparam(bStr)>=108){ bonus bAtk,50; }
+      if(readparam(bAgi)>=108){ bonus bAspd,1; } 
+      if(readparam(bVit)>=108){ bonus bMaxHPrate,8; } 
+      if(readparam(bInt)>=108){ bonus bMatk,60; } 
+      if(readparam(bDex)>=108){ bonus bFixedCast,-500; bonus bLongAtkRate,5; } 
+      if(readparam(bLuk)>=108){ bonus bCritAtkRate,30; }
+      if(getrefine()>9){ bonus bAllStats,2; }
+  - Id: 450175
+    AegisName: Temporal_Armor_TW
+    Name: 時光超越湧現鎧甲
+    Type: Armor
+    Buy: 10
+    Weight: 2000
+    Defense: 120
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bAtk,30; bonus bMatk,30; bonus bAtkRate,getrefine()/3*2; bonus bMatkRate,getrefine()/3*2; 
+      if(getrefine()>6){ bonus bAtk,50; bonus bMatk,50; } 
+      if(getrefine()>8){ bonus2 bIgnoreDefRaceRate,2,30; bonus2 bIgnoreMdefRaceRate,6,30; } 
+      if(getrefine()>10){ bonus2 bAddEle,Ele_All,10; bonus2 bMagicAtkEle,Ele_All,10; } 
+      if(isequipped(480076)){ if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT))>=22){ bonus2 bAddSize,0,10; bonus2 bAddSize,1,10; bonus2 bAddSize,2,10; bonus2 bMagicAddSize,0,10; bonus2 bMagicAddSize,1,10; bonus2 bMagicAddSize,2,10; bonus bCritAtkRate,8; } } 
+      if(isequipped(22202)){ bonus bAtk,80; bonus bMatk,80; if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES))>=22){ bonus2 bIgnoreDefRaceRate,2,20; bonus2 bIgnoreMdefRaceRate,6,20; } }
+  - Id: 480076
+    AegisName: Temporal_Cape_TW
+    Name: 時光超越者斗篷
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMdef,10; bonus bAtkRate,getrefine()/2; bonus bMatkRate,getrefine()/2; bonus bLongAtkRate,getrefine()/2; 
+      bonus bCritical,getrefine()/2*3; bonus bCritAtkRate,getrefine()/2; bonus2 bAddSize,0,getrefine()/4*3; 
+      bonus2 bAddSize,1,getrefine()/4*3; bonus2 bAddSize,2,getrefine()/4*3; bonus2 bMagicAtkEle,Ele_All,getrefine()/4*3; 
+      bonus bMaxHPrate,getrefine()/4*3; bonus bAspdRate,getrefine()/4*3; bonus bDelayrate,-getrefine()/4*3;
+      bonus bCritAtkRate,getrefine()/4*3; if(getrefine()>8){ bonus bAtkRate,7; bonus bMatkRate,7; } 
+      if(isequipped(22202)){ bonus bMdef,5; if(readparam(bStr)>=108){ bonus bAtk,50; } if(readparam(bAgi)>=108){ bonus bAspd,1; } if(readparam(bVit)>=108){ bonus bDelayrate,-5; } if(readparam(bInt)>=108){ bonus bMatk,50; } if(readparam(bDex)>=108){ bonus bLongAtkRate,7; } if(readparam(bLuk)>=108){ bonus bCritDefRate,7; } } 
+      if(isequipped(450175,22202)){ if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES))>=27){ bonus bDelayrate,-5; } 
+      if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES))>=37){ bonus bDelayrate,-8; } }
+  - Id: 490030
+    AegisName: Temporal_Ring_TW
+    Name: 時光超越者之戒
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
+  - Id: 490097
+    AegisName: Ring_Of_Nature_TW
+    Name: 時光超越者手鐲
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,2; bonus bMdef,5;
+  - Id: 420106
+    AegisName: Temporal_Sapling_TW
+    Name: 時光超越天地樹苗
+    Type: Armor
+    Buy: 10
+    Weight: 50
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 3010
+    Script: |
+      bonus bDelayrate,-3;
+      if(isequipped(480076)){ bonus bDelayrate,-3; bonus bAspdRate,10; } 
+      if(isequipped(450175)){ bonus bMaxHPrate,15; } 
+      if(isequipped(22202)){ bonus2 bAddClass,Class_All,10; bonus2 bMagicAddClass,Class_All,10; } 
+      if(isequipped(450175,480076)){ bonus bWeaponAtkRate,5; if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT))>=18){ bonus bAtk,80; bonus bMatk,80; } 
+      if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT))>=20){ bonus bAtkRate,10; bonus bMatkRate,10; } 
+      if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT))>=26){ bonus2 bAddEle,Ele_All,10; bonus2 bMagicAddEle,Ele_All,10; } } 
+      if(isequipped(450175,480076,22202)){bonus bLongAtkRate,8; bonus bShortAtkRate,8; bonus2 bMagicAtkEle,Ele_All,8; 
+      if((getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES))>=39){ bonus bIgnoreDefRace,RC_All; bonus bIgnoreMDefRace,RC_All; } } 
+
+  - Id: 15367
+    AegisName: Astraea_Armor
+    Name: 阿斯特莉亞鎧甲
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 94
+    Refineable: true
+    View: 1
+    Script: |
+      
+  - Id: 20905
+    AegisName: Astrea_Cape
+    Name: 阿斯特莉亞斗篷
+    Type: Armor
+    Buy: 10
+    Weight: 400
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bInt,2; bonus bVit,2; bonus bDex,2; if(getrefine()>11){ bonus bAspd,2; }
+  - Id: 22167
+    AegisName: Astraea_Shoes
+    Name: 阿斯特莉亞戰靴
+    Type: Armor
+    Buy: 10
+    Weight: 250
+    Defense: 25
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bAllStats,1; if(getrefine()>9){ if(readparam(bStr)>=100){ bonus bMaxHPrate,5; bonus bMaxSPrate,5; } if(readparam(bInt)>=100){ bonus bFixedCastRate,-30; } if(readparam(bVit)>=100){ bonus2 bWeaponSubSize,Size_Medium,10; } if(readparam(bAgi)>=100){ bonus bAspdRate,8; } if(readparam(bDex)>=100){ bonus bDelayrate,-3; } if(readparam(bLuk)>=100){ bonus bCritical,5; } if(readparam(bStr)>=120){ bonus bMaxHPrate,2; bonus bMaxSPrate,2; } if(readparam(bInt)>=120){ bonus bFixedCast,-500; } if(readparam(bVit)>=120){ bonus2 bWeaponSubSize,Size_Medium,2; } if(readparam(bAgi)>=120){ bonus bAspd,1; } if(readparam(bDex)>=120){ bonus bDelayrate,-2; } if(readparam(bLuk)>=120){ bonus bCritical,2; bonus bFlee2,1; } }
+  - Id: 32219
+    AegisName: Astraea_Ring
+    Name: 阿斯特莉亞指環
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1; skill "PR_SUFFRAGIUM",3; bonus2 bAddClass,Class_Boss,5; bonus2 bMagicAddClass,1,5;
+  - Id: 44450
+    AegisName: Head_Item_44450
+    Name: 阿斯特莉亞戰盔
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Defense: 20
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 3350
+    Script: |
+      bonus bMaxHPrate,5; if(getrefine()>6){ bonus bMaxHPrate,5; } if(getrefine()>8){ bonus2 bSubEle,Ele_All,5; } if(getrefine()>9){ bonus2 bWeaponSubSize,Size_Small,5; bonus2 bWeaponSubSize,Size_Medium,5; bonus2 bWeaponSubSize,Size_Large,5; bonus2 bMagicSubSize,Size_Small,5; bonus2 bMagicSubSize,Size_Medium,5; bonus2 bMagicSubSize,Size_Large,5; } if(getrefine()>10){ bonus2 bAddClass,Class_All,5; } if(getrefine()>11){ bonus2 bSubRace,RC_All,5; } if(isequipped(22167,15367,20905,32219)){ if(getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES) >= 48){ if(Class == 4063){ skill "MG_ENERGYCOAT",1; } } }
+
+  - Id: 480269
+    AegisName: Day_of_the_Dead
+    Name: 夜勝魔復仇斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 0
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtk,10*(.@r/2);
+      bonus2 bSubRace,RC_Dragon,(.@r/3)*4;;
+      bonus2 bAddRace,RC_Dragon,(.@r/4)*8;
+      bonus2 bAddRace,RC_DemiHuman,(.@r/4)*8;
+      if (.@r>=7) {
+         bonus bAtkRate,10;
+         if (.@r>=9) {
+            bonus bDelayrate,-8;
+            if (.@r>=11) {
+               bonus bLongAtkRate,10;
+               bonus bShortAtkRate,10;
+            if (.@r>=12) {
+            bonus2 bAddEle,Ele_Neutral,12;
+                 if (.@r>=13) {
+                 bonus bLongAtkRate,15;
+                 bonus bShortAtkRate,15;
+               }
+            }
+            }
+         }
+      }
+  - Id: 480270
+    AegisName: N_Spirit_Cape_TW
+    Name: 夜勝魔意念斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 0
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSubRace,RC_Dragon,(.@r/3)*4;;
+      bonus2 bMagicAddRace,RC_Dragon,(.@r/4)*8;
+      bonus2 bMagicAddRace,RC_DemiHuman,(.@r/4)*8;
+      if (.@r>=7) {
+         bonus bMatkRate,10;
+         if (.@r>=9) {
+            bonus bDelayrate,-8;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_Water,10;
+               bonus2 bMagicAtkEle,Ele_Fire,10;
+               bonus2 bMagicAtkEle,Ele_Ghost,10;
+            if (.@r>=12) {
+            bonus2 bMagicAddEle,Ele_Neutral,12;
+                 if (.@r>=13) {
+               bonus2 bMagicAtkEle,Ele_Water,15;
+               bonus2 bMagicAtkEle,Ele_Fire,15;
+               bonus2 bMagicAtkEle,Ele_Ghost,15;
+               }
+            }
+            }
+         }
+      }
+
+  - Id: 400401
+    AegisName: Faith_Of_Yggdrasil
+    Name: 天地樹的信仰
+    Type: Armor
+    Weight: 700
+    Defense: 0
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    View: 3872
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2)*20;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/3)*7;
+      if (.@r>=7) {
+         bonus bMatkRate,10;
+         if (.@r>=9) {
+            bonus bDelayrate,-10;
+            if (.@r>=11) {
+               bonus2 bMagicAddRace,RC_All,15;
+                 if (.@r>=12) {
+                 bonus2 bMagicAddEle,Ele_All,15;
+                    if (.@r>=13) {
+                    bonus bFixedCast,-500;
+                  }
+               }
+            }
+         }
+      }
+  - Id: 480306
+    AegisName: Dual_SW_Cape
+    Name: 雙影鏡界斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,5;
+      bonus bAllStats,(.@r/2);
+      bonus bBaseAtk,(.@r/3)*3;
+      bonus bAtkRate,(.@r/2);
+      bonus bMatk,(.@r/3)*3;
+      bonus bMatkRate,(.@r/2);
+      bonus2 bAddEle,RC_All,(.@r/4)*3;
+      bonus2 bMagicAddEle,RC_All,(.@r/4)*3;
+      if (.@r>=9) {
+         bonus bAtkRate,3;
+         bonus bMatkRate,3;
+         bonus bDelayrate,-5;
+         bonus bCastrate,-5;
+         if (.@r>=11) {
+            bonus bBaseAtk,25;
+            bonus bAtkRate,7;
+            bonus bMatk,25;
+            bonus bMatkRate,7;
+            bonus bDelayrate,-5;
+         }
+      }
+
+#EP伊斯加爾特王冠
+  - Id: 400105
+    AegisName: Glacier_Helm_1
+    Name: 伊斯加爾特近戰王冠
+    Type: Armor
+    Weight: 300
+    Defense: 80
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Refineable: true
+    Gradable: true
+    View: 3323
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bShortAtkRate,10;
+      bonus bAtkRate,3*(.@r/2);
+      bonus2 bAddSize,Size_All,4*(.@r/3);
+      if (.@r>=7) {
+         bonus bDelayrate,-8;
+         if (.@r>=9) {
+            bonus bShortAtkRate,10;
+            bonus bPAtk,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMdef,30;
+            bonus bDef,150;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,5;
+               bonus bCon,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+               }
+            }
+         }
+      }
+  - Id: 400106
+    AegisName: Glacier_Helm_2
+    Name: 伊斯加爾特魔法王冠
+    Type: Armor
+    Weight: 100
+    Defense: 20
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Refineable: true
+    Gradable: true
+    View: 3323
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bMatkRate,3*(.@r/2);
+      bonus2 bMagicAddSize,Size_All,4*(.@r/3);
+      if (.@r>=7) {
+         bonus bDelayrate,-8;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            bonus bSMatk,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMdef,30;
+            bonus bDef,150;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,5;
+               bonus bCon,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+               }
+            }
+         }
+      }
+  - Id: 400107
+    AegisName: Glacier_Helm_3
+    Name: 伊斯加爾特遠程王冠
+    Type: Armor
+    Weight: 200
+    Defense: 50
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 230
+    Refineable: true
+    Gradable: true
+    View: 3323
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bLongAtkRate,10;
+      bonus bAtkRate,3*(.@r/2);
+      bonus2 bAddSize,Size_All,4*(.@r/3);
+      if (.@r>=7) {
+         bonus bDelayrate,-8;
+         if (.@r>=9) {
+            bonus bLongAtkRate,10;
+            bonus bPAtk,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMdef,30;
+            bonus bDef,150;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,5;
+               bonus bCon,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bMRes,50;
+                  bonus bRes,50;
+               }
+            }
+         }
+      }
+  - Id: 470204
+    AegisName: aegis_470204
+    Name: 墮落的呻吟
+    Type: Armor
+    Weight: 300
+    Defense: 16
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 240
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSpl,5;
+      bonus bCon,3;
+      bonus bUseSPrate,15;
+      bonus bMatk,7*(.@r/3);
+      if (.@r>=7) {
+         bonus bSMatk,3;
+         bonus bMatkRate,5;
+         if (.@r>=9) {
+            bonus bCastrate,-10;
+            if (.@r>=11) {
+               bonus2 bMagicAddSize,Size_Medium,15;
+               bonus2 bMagicAddSize,Size_Large,15;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMatkRate,5;
+         bonus bSpl,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bFixedCast,-1000;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSMatk,7;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,8*(.@r/2);
+               }
+            }
+         }
+      }
+
+  - Id: 410232
+    AegisName: Gambler_Seal_
+    Name: 賭徒之印
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 2584
+  - Id: 410233
+    AegisName: Gambler_Seal_KR_
+    Name: 賭徒之印
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 2584
+
+  - Id: 420210
+    AegisName: Heart_Ace_Melee
+    Name: 嘴叼紅心A(近距離物理)
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 3072
+  - Id: 420213
+    AegisName: Spade_Ace_Melee
+    Name: 嘴叼黑桃A(魔法)
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 2903
+  - Id: 420220
+    AegisName: Diamond_Ace_Range
+    Name: 嘴叼方塊A(遠程物理)
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 3896
+
+  - Id: 460030
+    AegisName: Fake_Alloy_Pot
+    Name: 仿生鋁合金花盆
+    Type: Armor
+    Weight: 1000
+    Defense: 100
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bStr,(.@r/2);
+      bonus bInt,(.@r/2);
+      bonus bMaxHPrate,(.@r/2)*2;
+      bonus2 bSubEle,Ele_Neutral,(.@r/4)*5;
+      
+      if (.@r>=9) {
+         bonus bStr,5;
+         bonus bInt,5;
+         bonus bMaxHPrate,3;
+         if (.@r>=11) {
+            bonus bStr,5;
+            bonus bInt,10;
+            bonus bMaxHPrate,5;
+         }
+      }
+      if(class==4078 || class==4259){
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",(getskilllv("GN_REMODELING_CART")+getskilllv("GN_CARTBOOST"))*3;
+      bonus2 bSkillAtk,"GN_HELLS_PLANT",(getskilllv("GN_REMODELING_CART")+getskilllv("GN_CARTBOOST"))*3;
+      bonus2 bSkillAtk,"GN_CARTCANNON",getskilllv("GN_CART_TORNADO")*3;
+      }
+  - Id: 460027
+    AegisName: Titan_Shield_TW
+    Name: 泰坦神盾
+    Type: Armor
+    Weight: 2500
+    Defense: 100
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      if (.@r >= 9){
+      if(readparam(bStr)>=108){ bonus2 bSubEle,Ele_Wind,20; }
+      if(readparam(bAgi)>=108){ bonus2 bSubEle,Ele_Water,20; }
+      if(readparam(bVit)>=108){ bonus2 bSubEle,Ele_Neutral,20; }
+      if(readparam(bInt)>=108){ bonus2 bSubEle,Ele_Earth,20; }
+      if(readparam(bDex)>=108){ bonus2 bSubEle,Ele_Fire,20; }
+      if(readparam(bLuk)>=108){ bonus bFlee2,20; }
+      }
+      if (.@r >= 12){ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bSubEle,Ele_All,5; } 
+  - Id: 470120
+    AegisName: Unknown_Item_470120
+    Name: 機械鋁合金改造靴
+    Type: Armor
+    Weight: 1500
+    Defense: 50
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bStr,.@r/2*2; 
+      bonus bMaxHPrate,(.@r/3)*2;
+      if (.@r>=7) {
+         bonus bAtkRate,7;
+         if (.@r>=9) {
+            bonus bFixedCast,-500;
+            if (.@r>=11) {
+               bonus2 bSubDefEle,Ele_All,7;
+            }
+         }
+      }
+  - Id: 490208
+    AegisName: Shield_Ring
+    Name: 王城魔戒
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bAddRace,RC_All,10;
+
+  - Id: 490089
+    AegisName: Alice_Pillow
+    Name: 愛麗絲女僕抱枕
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bMdef,10; 
+      bonus bAllStats,2; 
+      bonus bMaxHPrate,5; 
+      bonus2 bWeaponSubSize,Size_Small,5; 
+      bonus2 bWeaponSubSize,Size_Medium,5; 
+      bonus2 bWeaponSubSize,Size_Large,5; 
+      bonus2 bMagicSubSize,Size_Small,5; 
+      bonus2 bMagicSubSize,Size_Medium,5; 
+      bonus2 bMagicSubSize,Size_Large,5; 
+      bonus2 bSubRace,RC_Player_Human,3; 
+      bonus2 bSubRace,RC_DemiHuman,3; 
+      if(isequipped(9027)){ bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_DemiHuman,2; } 
+      if(isequipped(9030)){ bonus2 bSubRace,RC_Player_Human,2; bonus2 bSubRace,RC_DemiHuman,2; } 
+      if(isequipped(4257)){ bonus bAllStats,8; bonus bMaxHPrate,5; bonus bFlee2,8; }
+
+  - Id: 480136
+    AegisName: Thanatos_Sword
+    Name: 魔劍士塔納托斯之劍
+    Type: Armor
+    Weight: 500
+    Defense: 60
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 23
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,3;
+         bonus bSmatk,3;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_Angel,20;
+         bonus2 bIgnoreMDefRaceRate,RC_Angel,20;
+         bonus2 bIgnoreDefRaceRate,RC_Dragon,20;
+         bonus2 bIgnoreMDefRaceRate,RC_Dragon,20;
+         if (.@r>=11) {
+            bonus2 bIgnoreDefRaceRate,RC_Angel,10;
+            bonus2 bIgnoreMDefRaceRate,RC_Angel,10;
+            bonus2 bIgnoreDefRaceRate,RC_Dragon,10;
+            bonus2 bIgnoreMDefRaceRate,RC_Dragon,10;
+         }
+      }
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
+      bonus bShortAtkRate,2*(.@r/3);
+      bonus bLongAtkRate,2*(.@r/3);
+      bonus2 bAddSize,Size_Medium,5*(.@r/5);
+      bonus2 bMagicAddSize,Size_Medium,5*(.@r/5);
+      bonus2 bAddSize,Size_Large,5*(.@r/5);
+      bonus2 bMagicAddSize,Size_Large,5*(.@r/5);
+
+  - Id: 480291
+    AegisName: Manteau_Of_Guardsman_1
+    Name: 英雄恩惠斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 0
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,3000;
+      bonus bMaxSP,200;
+      if (BaseLevel>=200) {
+         bonus bSMatk,1;
+         bonus bRes,7;
+         bonus bMRes,7;
+         bonus bSMatk,(BaseLevel/10);
+         bonus bRes,(BaseLevel/10)*5;
+         bonus bMRes,(BaseLevel/10)*5;
+         bonus bMatk,(.@r/2)*10;
+         bonus bMatkRate,(.@r/3)*2;
+      }
+      if (.@r>=7) {
+         bonus bCastrate,-10;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@r>=11) {
+               bonus bDelayrate,-10;
+               if (.@r>=13) {
+               bonus2 bMagicAddRace,RC_All,15; 
+               }
+            }
+         }
+      }
+  - Id: 480292
+    AegisName: Manteau_Of_Guardsman_2
+    Name: 英雄英勇斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 0
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,3000;
+      bonus bMaxSP,200;
+      if (BaseLevel>=200) {
+         bonus bPAtk,1;
+         bonus bRes,7;
+         bonus bMRes,7;
+         bonus bPAtk,(BaseLevel/10);
+         bonus bRes,(BaseLevel/10)*5;
+         bonus bMRes,(BaseLevel/10)*5;
+         bonus bAtk,(.@r/2)*10;
+         bonus bAtkRate,(.@r/3)*2;
+      }
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         
+         if (.@r>=9) {
+            bonus2 bAddSize,Size_All,10;
+            if (.@r>=11) {
+               bonus bDelayrate,-10;
+               if (.@r>=13) {
+               bonus2 bAddRace,RC_All,15; 
+               }
+            }
+         }
+      }
+
+  - Id: 460038
+    AegisName: Nob_Lib_Shield
+    Name: 貴族天秤之盾
+    Type: Armor
+    Weight: 300
+    Defense: 50
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,((.@r/3)*3)+5;
+      if (.@r>=7) {
+         bonus bShortWeaponDamageReturn,15;
+         if (.@r>=9) {
+            bonus2 bSubEle,Ele_All,10;
+            if (.@r>=11) {
+               bonus bSta,3;
+               bonus bWis,3;
+               bonus bCrt,3;
+            }
+         }
+      }
+
+  - Id: 420064
+    AegisName: Head_Item_420064
+    Name: 貴族手帕
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 0
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 908
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus5 bAutoSpell,"WL_CHAINLIGHTNING",2,20,BF_WEAPON,1;
+      bonus2 bSubRace,RC_Player_Human,2;
+      bonus2 bSubRace,RC_Player_Doram,2;
+      skill "WL_MARSHOFABYSS",1;
+  - Id: 420173
+    AegisName: Protect_cloth
+    Name: 克勞斯羽翼護甲
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 0
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 3402
+    Script: |
+      bonus bMaxHPrate,3;
+      bonus bVit,3;
+      bonus bDelayrate,-3;
+      if(isequipped(400291,400328)){ hateffect(HAT_EF_99LV_Minstrel_Pink,true); }
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Minstrel_Pink,false);
+  - Id: 400328
+    AegisName: Feather_Beret_WH
+    Name: 羽翼貝雷帽
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Defense: 0
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 3876
+    Script: |
+      .@r = getrefine();
+      bonus bSpeedRate,25;
+      bonus bMdef,10;
+      bonus2 bSubEle,Ele_Neutral,.@r;
+      bonus bMaxHPrate,(.@r/2)*2;
+      bonus bMaxSPrate,(.@r/2)*2;
+      bonus bDelayrate,-(.@r/3)*3; 
+      bonus2 bSubRace,RC_All,-(.@r/4);
+      if (.@r>=13) {
+         bonus bFixedCast,-500;
+      }
+
+  - Id: 400291
+    AegisName: Wing_Of_Bless
+    Name: 護身羽翼
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2635
+    Script: |
+      bonus bFixedCast,-100;
+      if(readparam(bStr)>=90){ bonus bFixedCast,-100; } 
+      if(readparam(bAgi)>=90){ bonus bMaxHPrate,1; } 
+      if(readparam(bVit)>=90){ bonus bMdef,1; } 
+      if(readparam(bInt)>=90){ bonus bMaxSPrate,1; } 
+      if(readparam(bDex)>=90){ bonus bFixedCast,-100; } 
+      if(readparam(bLuk)>=90){ bonus bFlee,10; } 
+
+  - Id: 420194
+    AegisName: Head_Item_420194
+    Name: 求生哨
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2200
+    Script: |
+      bonus bFlee,10;
+      bonus2 bAddEle,Ele_All,readparam(bStr)/20;
+      bonus2 bAddEle,Ele_Neutral,readparam(bAgi)/20;
+      bonus2 bAddEle,Ele_Water,readparam(bVit)/20;
+      bonus2 bAddEle,Ele_Earth,readparam(bInt)/20;
+      bonus2 bAddEle,Ele_Fire,readparam(bDex)/20;
+      bonus2 bAddEle,Ele_Wind,readparam(bLuk)/20;
+      if((readparam(bStr)+readparam(bAgi)+readparam(bVit)+readparam(bInt)+readparam(bDex)+readparam(bLuk))>=600){ bonus2 bAddEle,Ele_All,10; bonus bFlee,10; }
+
+  - Id: 32259
+    AegisName: CannonConverter_TW
+    Name: 加農改造器
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
+  - Id: 28438
+    AegisName: Fairy_Leaf_Powder
+    Name: 苗娃佩瑞絲製止滑粉
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bDex,2; 
+      bonus bLongAtkRate,2; 
+      bonus bDelayrate,-5; 
+      skill "SM_MAGNUM",3; 
+      if(readparam(bDex)>=100){bonus bLongAtkRate,5;}
+  - Id: 28430
+    AegisName: Chief_Priests_Ring
+    Name: 大祭司聖戒
+    Type: Armor
+    Buy: 20
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bLuk,2;
+      bonus bFlee2,5;
+      bonus bUseSPrate,-5;
+      bonus bHealPower,15;
+      bonus bAddItemHealRate,15;
+  - Id: 28434
+    AegisName: Fist_Fighter_Glove
+    Name: 拳王手套
+    Type: Armor
+    Buy: 10
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bStr,2; bonus bMaxSP,100; 
+      bonus bAtkRate,2; 
+      skill "MO_ABSORBSPIRITS",1; 
+      if(readparam(bStr)>=100){ bonus bAtkRate,5; }
+  - Id: 28437
+    AegisName: Fallen_Glove
+    Name: 大神官手套
+    Type: Armor
+    Buy: 310
+    Weight: 400
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bUseSPrate,-5; 
+      bonus bInt,2; 
+      bonus bMatkRate,2; 
+      skill "AL_HEAL",3; 
+      if(readparam(bInt)>=110){bonus bMatkRate,5;}
+  - Id: 22071
+    AegisName: Personal_sandals
+    Name: 尼羅河貴族高跟鞋
+    Type: Armor
+    Weight: 200
+    Defense: 7
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      if(getrefine()>6){ bonus bDelayrate,-4; } 
+      if(getrefine()>6){ bonus bDelayrate,-4; } 
+      if(getrefine()>6){ bonus bDelayrate,-4; } 
+      if(isequipped(4144)){ bonus bDelayrate,-5; bonus bAllStats,getrefine(); bonus bAtkRate,n; bonus bMatkRate,getrefine(); }
+
+#極限道館
+  - Id: 480124
+    AegisName: Cvt_Physical_Wing
+    Name: 超高頻物理推進翼
+    Type: Armor
+    Weight: 400
+    Defense: 38
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus2 bAddSize,Size_All,3*(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,7;
+         if (.@r>=9) {
+            bonus2 bSubEle,Ele_Neutral,7;
+            if (.@r>=11) {
+               bonus bLongAtkRate,10;
+               bonus bShortAtkRate,10;
+            }
+         }
+      }
+  - Id: 480125
+    AegisName: Cvt_Magical_Wing
+    Name: 超高頻魔法推進翼
+    Type: Armor
+    Weight: 400
+    Defense: 38
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,(.@r/2);
+      bonus bMatk,5*(.@r/2);
+      if (.@r>=7) {
+         bonus bCastrate,-7;
+         if (.@r>=9) {
+            bonus2 bSubEle,Ele_Neutral,7;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_All,10;
+            }
+         }
+      }
+  - Id: 480197
+    AegisName: Supplement_Part_Wing
+    Name: 超高頻強運推進翼
+    Type: Armor
+    Weight: 400
+    Defense: 38
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,2*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus2 bAddSize,Size_All,3*(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,7;
+         if (.@r>=9) {
+            bonus2 bSubEle,Ele_Neutral,7;
+            if (.@r>=11) {
+               bonus bLongAtkRate,10;
+               bonus bShortAtkRate,10;
+            }
+         }
+      }
+
+#極限道館
+  - Id: 410079
+    AegisName: Deepblue_Sunglasses
+    Name: 深藍太陽眼鏡
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 3899
+    Script: |
+      bonus bCastrate,-10;
+  - Id: 410080
+    AegisName: Deepblue_Sunglasses_
+    Name: 深藍太陽眼鏡
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 3899
+    Script: |
+      bonus bCastrate,-5;
+  - Id: 480278
+    AegisName: Huse_Luk_R_Wing
+    Name: 強運緞帶羽翼
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 160
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,8*(.@r/2);
+      bonus bAtk,8*(.@r/2);
+      bonus2 bExpAddRace,RC_All,(.@r/4)*3;
+      if (.@r>=7) {
+         bonus bMatkRate,4;
+         bonus bAtkRate,4;
+         if (.@r>=9) {
+            bonus bShortAtkRate,7;
+            bonus bLongAtkRate,7;
+            bonus2 bMagicAtkEle,Ele_All,7;
+            if (.@r>=13) {
+            bonus2 bIgnoreDefClassRate,Class_Normal,10;
+            bonus2 bIgnoreMdefClassRate,Class_Normal,10; 
+            }
+         }
+      }
+      if (BaseJob == Job_DANCER || BaseJob == Job_MONK || BaseJob == Job_ROGUE || BaseJob == Job_ASSASSIN) {
+      bonus bMatk,8*(.@r/2);
+      bonus bAtk,8*(.@r/2);
+      bonus2 bExpAddRace,RC_All,(.@r/4)*3;
+      if (.@r>=7) {
+         bonus bMatkRate,4;
+         bonus bAtkRate,4;
+         if (.@r>=9) {
+            bonus bShortAtkRate,7;
+            bonus bLongAtkRate,7;
+            bonus2 bMagicAtkEle,Ele_All,7;
+            if (.@r>=13) {
+            bonus2 bIgnoreDefClassRate,Class_Normal,10;
+            bonus2 bIgnoreMdefClassRate,Class_Normal,10; 
+            }
+         }
+      }
+      }
+#極限道館
+  - Id: 480175
+    AegisName: Changeable_Magic_Cape
+    Name: 變幻莫測魔術斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 40
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,4*.@r;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/3)*2;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         if (.@r>=9) {
+            bonus bMatkRate,10;
+            if (.@r>=11) {
+               bonus3 bAutoSpell,"MG_THUNDERSTORM",5,50;
+               bonus3 bAutoSpell,"WZ_HEAVENDRIVE",5,50;
+               bonus2 bMagicAtkEle,Ele_Dark,35;
+            }
+         }
+      }
+      if (getskilllv("SC_AUTOSHADOWSPELL") == 10) {
+         bonus bMatk,150;
+      if (.@r>=9) {
+         bonus3 bAutoSpell,"WL_HELLINFERNO",3,50;
+         bonus3 bAutoSpell,"SO_DIAMONDDUST",3,50;
+      }
+      if (.@r>=11) {
+         bonus3 bAutoSpell,"SO_EARTHGRAVE",3,50;
+         bonus3 bAutoSpell,"WL_CHAINLIGHTNING",3,50;
+      }
+      if (.@r>=13) {
+         bonus2 bIgnoreMdefClassRate,Class_Normal,15;
+         bonus2 bIgnoreMdefClassRate,Class_Boss,15;
+      }
+      }
+  - Id: 470114
+    AegisName: Noname_Ad_Shoes_TW
+    Name: 無名旅者重靴
+    Type: Armor
+    Weight: 100
+    Defense: 30
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus2 bExpAddRace,RC_All,8;
+      bonus2 bSubRace,RC_All,-10;
+
+  - Id: 480154
+    AegisName: Devil_Flame_Manteau_TW
+    Name: 魔鬼惡火斗篷
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      if(getrefine()>1){ bonus bMatk,10; } 
+      if(getrefine()>3){ bonus2 bMagicAtkEle,3,3; bonus2 bMagicAtkEle,7,3; } 
+      if(getrefine()>6){ bonus bMatkRate,0; } 
+      if(getrefine()>8){ bonus2 bSkillAtk,"WL_HELLINFERNO",30; bonus2 bSkillAtk,"WL_CRIMSONROCK",30; } 
+      if(getrefine()>10){ bonus bDelayrate,-12; } if(getrefine()>12){ bonus2 bIgnoreMdefClassRate,1,10; } 
+      if(isequipped(26151)){ bonus2 bMagicAtkEle,3,10; bonus2 bMagicAtkEle,7,10; bonus2 bSkillAtk,"WL_HELLINFERNO",getequiprefinerycnt(EQI_HAND_R)/4*20; if(getequiprefinerycnt(EQI_HAND_R)>11){ bonus2 bSkillCooldown,"WL_CRIMSONROCK",-1000; bonus2 bSkillCooldown,"WL_HELLINFERNO",-1000; } }
+  - Id: 32270
+    AegisName: Luminous_Blue_Stone
+    Name: 蒼藍光明珠
+    Type: Armor
+    Buy: 10
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bAspdRate,5; 
+      bonus bCritical,5; 
+      bonus bCritAtkRate,5; 
+      skill "MG_SIGHT",1; 
+      if(readparam(bLuk)>=100){ bonus bCritical,5; bonus bCritAtkRate,5; }
+
+  - Id: 28536
+    AegisName: Emerald_Earring_TW
+    Name: 翡翠耳環
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 3
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Script: |
+      bonus bMatk,getskilllv("WM_LESSON")/2*20; 
+      bonus bAgi,5; 
+      bonus bInt,5; 
+      bonus bDex,5; 
+      bonus2 bSkillAtk,394,BaseLevel*2; 
+      bonus2 bSkillAtk,316,BaseLevel*2; 
+      bonus2 bSkillAtk,324,BaseLevel*2; 
+      bonus2 bSkillAtk,2413,BaseLevel/5*2; 
+      bonus2 bVariableCastrate,2413,-BaseLevel/5;
+      bonus bAgi,getskilllv("WM_LESSON")/2; 
+      bonus bInt,getskilllv("WM_LESSON")/2; 
+      bonus bDex,getskilllv("WM_LESSON")/2;
+  - Id: 28573
+    AegisName: Emerald_Ring
+    Name: 翡翠戒指
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bDex,5; 
+      bonus bVit,5; 
+      bonus bAgi,5; 
+      bonus2 bSkillUseSP,"WM_RANDOMIZESPELL",-18; 
+      bonus2 bSkillAtk,"AC_SHOWER",BaseLevel; 
+      bonus2 bSkillAtk,"AC_DOUBLE",BaseLevel; 
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/10*2; 
+      bonus bDex,getskilllv("AC_DOUBLE")/2; 
+      bonus bVit,getskilllv("AC_DOUBLE")/2;
+      bonus bAgi,getskilllv("AC_DOUBLE")/2; 
+      bonus bAtk,getskilllv("AC_DOUBLE")/2*20;
+  - Id: 470129
+    AegisName: Moaning_of_EvilSpirits
+    Name: 墮落的神吟魔靴
+    Type: Armor
+    Weight: 600
+    Defense: 0
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,1500;
+      bonus bMaxSP,200;
+      bonus bMatkRate,.@r/3*2;
+      bonus bSMatk,.@r/3;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+         if (.@r>=9) {
+            bonus bFixedCast,-500; 
+            if (.@r>=11) {
+               bonus2 bAddEle,Ele_All,10;
+               if (.@r>=12) {
+                  bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",20;
+                  bonus2 bSkillAtk,"CD_FRAMEN",20;
+                  if (.@r>=13) {
+                     autobonus "{ bonus bSpl,10; bonus bMatkRate,15; }",30,10000,BF_MAGIC,"{ specialeffect2 EF_LAMADAN; }";
+                  }
+               }
+            }
+         }
+      }
+  - Id: 480242
+    AegisName: Tele_WG_Cape
+    Name: 念動風神斗篷
+    Type: Armor
+    Weight: 100
+    Defense: 0
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,10*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_Wind,(.@r/4)*3;
+      bonus2 bMagicAtkEle,Ele_Ghost,(.@r/4)*3;
+      if (.@r>=7) {
+         bonus bMatkRate,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_All,10;
+            if (.@r>=11) {
+               bonus bDelayrate,-12;
+                 if (.@r>=13) {
+                 bonus2 bIgnoreMdefClassRate,Class_All,10;
+               }
+            }
+         }
+      }
+
+  - Id: 410009
+    AegisName: Head_Item_23421_
+    Name: 彩虹之星
+    Type: Armor
+    Weight: 500
+    Defense: 5
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 2331
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,5; 
+      bonus2 bSubRace,RC_Player_Doram,5;
+
+  - Id: 400164
+    AegisName: 2021RTC_Headset_TW
+    Name: 2021RTC電競耳機
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 3570
+    Script: |
+      bonus bFixedCast,-100;
+      bonus bShortAtkRate,1;
+      bonus bLongAtkRate,1;
+      bonus2 bMagicAtkEle,Ele_All,1;
+
+  - Id: 400082
+    AegisName: 2020RTC_Imp_TW
+    Name: 2020RTC頑皮鬼
+    Type: Armor
+    View: 3386
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddEffWhenHit,Eff_Freeze,100;
+      if (.@r>=9) {
+         bonus bFixedCast,-100*.@r;
+         bonus bAtkRate,2*.@r;
+         bonus bMatkRate,2*.@r;
+         bonus bLongAtkRate,2*.@r;
+         bonus bHealPower2,3*.@r;
+         bonus bCritAtkRate,5*.@r;
+         bonus bCritical,3*.@r;
+            }
+
+  - Id: 480328
+    AegisName: 2023RTC_S_Robe4_
+    Name: 2023ROS決戰spark斗篷
+    Type: Armor
+    Weight: 200
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Refineable: true
+    View: 184
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,(.@r/2)*1500; 
+      bonus bBaseAtk,(.@r/2)*5; 
+      bonus bMatk,(.@r/2)*5; 
+      if (.@r>=7) {
+         bonus bLongAtkRate,10;
+         bonus bShortAtkRate,10;
+         bonus2 bMagicAtkEle,Ele_All,10;
+         if (.@r>=9) {
+            bonus2 bWeaponSubSize,Size_All,7;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus2 bMagicAddSize,Size_All,15;
+            if (.@r>=13) {
+               bonus2 bSubRace,RC_DemiHuman,8;
+               bonus2 bSubRace,RC_Player_Human,8;
+               bonus2 bSubRace,RC_Player_Doram,8;
+            }
+            }
+         }
+      }
+  - Id: 400445
+    AegisName: Officer_Cap_LT
+    Name: 將領軍帽-LT
+    Type: Armor
+    Buy: 10
+    Weight: 400
+    Defense: 35
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 100
+    Refineable: true
+    View: 3234
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bAtk,.@r/2*10; 
+      bonus bMatk,.@r/2*10; 
+      bonus2 bHPLossRate,10,5000; 
+      autobonus "{ bonus2 bHPRegenRate,300,1000; bonus2 bSPRegenRate,70,1000; }",40,4000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }"; 
+      if(.@r>6){ bonus bAtkRate,5; bonus bMatkRate,5; } 
+      if(.@r>8){ bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,3; }
+      if(.@r>10){ bonus bAspdRate,10; bonus bCastrate,-10; }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         bonus bLongAtkRate,5;
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            if(.@r>11){ bonus bFixedCast,-500; }
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,5; 
+               bonus bSMatk,5;
+            }
+         }
+      }
+
+  - Id: 18698
+    AegisName: Head_Item_23040
+    Name: 吉事棒
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 959
+  - Id: 420074
+    AegisName: Limesoda_In_Mouth
+    Name:  嘴刁萊姆汽水
+    Type: Armor
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3819
+
+  - Id: 28567
+    AegisName: Ring_Elf_King
+    Name: 精靈王之戒
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Script: |
+      bonus bVit,5; bonus bDelayrate,-5; 
+      bonus2 bVariableCastrate,"SO_WARMER",-50; 
+      bonus2 bSkillCooldown,"SO_WARMER",-15000; 
+      bonus2 bSkillCooldown,"SO_EARTHGRAVE",-500; 
+      bonus2 bSkillCooldown,"SO_DIAMONDDUST",-500; 
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",BaseLevel/8; 
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",BaseLevel/8;
+
+  - Id: 32260
+    AegisName: BraveHunterBadge_TW
+    Name: 獵人勇士徽章
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1;
+
+  - Id: 490218
+    AegisName: Pure_Heart_TW
+    Name: 純愛之心
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bCastrate,-5;
+      bonus bAtkRate,5+(readparam(bStr)/16);
+      bonus bMatkRate,5+(readparam(bInt)/16);
+      bonus bStr,5; 
+      bonus bInt,5;
+      bonus2 bAddClass,Class_Normal,5;
+      bonus2 bMagicAddClass,Class_Normal,5;
+      bonus bDelayrate,-readparam(bStr)/16;
+      bonus bCastrate,-readparam(bInt)/16;
+      if(BaseClass==Job_Merchant) { 
+      bonus bLongAtkRate,10;
+      bonus bShortAtkRate,10;
+      }
+
+  - Id: 490245
+    AegisName: Unknown_Item_490245
+    Name: 神諭號角
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bAllStats,3;
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus bDelayrate,-5;
+      if(Class == 4063 || Class == 4256){ skill "HW_GANBANTEIN",1; if (BaseLevel>=200) { bonus2 bFixedCastrate,"AB_CONVENIO",-70; } }
+  - Id: 490264
+    AegisName: Infinity_Chip_MAX
+    Name: 無盡晶片-Max
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,10;
+      bonus bAllStats,5;
+      bonus bAtkRate,5;
+      bonus bCastrate,-5;
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus bDelayrate,-5;
+      if(BaseClass==Job_Merchant) { 
+      bonus bAtkRate,8;
+      bonus2 bAddSize,Size_All,8;
+      }
+
+  - Id: 420032
+    AegisName: TwinCannon_TW
+    Name: 雙管加農砲
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    View: 3200
+    Script: |
+      bonus bDelayrate,-3; 
+      bonus bAspd,1; 
+      if(isequipped(19126)){ bonus bAspdRate,5; bonus bDelayrate,-4; bonus bLongAtkRate,8; bonus bShortAtkRate,8; }
+
+  - Id: 28429
+    AegisName: Arquien's_Necklace
+    Name: 艾昆妮華麗項鍊
+    Type: Armor
+    Buy: 10
+    Weight: 300
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    Script: |
+      bonus2 bSkillUseSP,"NC_POWERSWING",-2; bonus2 bSkillAtk,"NC_POWERSWING",BaseLevel/5; bonus2 bSkillAtk,"NC_AXETORNADO",BaseLevel/3; bonus2 bSkillAtk,"MC_CARTREVOLUTION",BaseLevel; bonus2 bAddMonsterDropItem,529,20; bonus2 bAddMonsterDropItem,530,20; bonus2 bAddItemHealRate,529,100; bonus2 bAddItemHealRate,530,100;
+
+#啟海伊洛轉蛋
+  - Id: 32278
+    AegisName: Sealed_Ring_TW
+    Name: 冰封環戒
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAtkRate,5;
+      bonus bMatkRate,5;
+      bonus bMaxHPrate,5;
+      bonus bMdef,10;
+  - Id: 28595
+    AegisName: BlueDragonRing_TW
+    Name: 蒼龍之環
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bAllStats,1;
+      bonus bMdef,10;
+      if (BaseClass == Job_Swordman) {
+         bonus bMaxHPrate,7;
+         bonus2 bSkillAtk,"RK_SONICWAVE",50;
+         autobonus3 "{ bonus bAspd,2; }",1000,30000,"PA_SACRIFICE";
+      }
+      if (BaseClass == Job_Mage) {
+         bonus bMatkRate,5;
+         bonus5 bAutoSpellOnSkill,"WL_FROSTMISTY","MG_SAFETYWALL",5,1000,1;
+         bonus5 bAutoSpellOnSkill,"PF_FOGWALL","MG_SAFETYWALL",5,1000,1;
+      }
+      if (BaseClass == Job_Thief) {
+         bonus bFlee,10;
+         bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-60000;
+         bonus2 bVariableCastrate,"SC_MANHOLE",-100;
+      }
+      if (BaseClass == Job_Acolyte) {
+         bonus bDelayrate,-5;
+         autobonus3 "{ bonus bMaxHPrate,25; bonus bDelayrate,-20; }",1000,30000,"AB_OFFERTORIUM";
+         autobonus3 "{ bonus bMaxHPrate,25; bonus bDelayrate,-20; }",1000,10000,"SR_RAISINGDRAGON";
+      }
+      if (BaseClass == Job_Archer) {
+         bonus bAspd,1;
+         autobonus3 "{ bonus bVariableCastrate,-100; }",1000,5000,"RA_WUGBITE";
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel*2;
+      }
+      if (BaseClass == Job_Merchant) {
+         bonus bAtkRate,5;
+         bonus2 bSkillAtk,"GN_CART_TORNADO",20;
+         bonus5 bAutoSpellOnSkill,"NC_SELFDESTRUCTION","GN_CARTBOOST",5,1000,1;
+      }
+      if (BaseClass == Job_Novice || BaseClass == Job_Taekwon || Class == Job_Ninja || Class == Job_Gunslinger) {
+         bonus bAtkRate,5;
+         bonus bMatkRate,5;
+      }
+  - Id: 28517
+    AegisName: Anel_do_Rei_Abissal
+    Name: 深淵斬裂戒
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus bStr,2; 
+      bonus bAgi,1; 
+      bonus2 bAddClass,0,8; 
+      bonus2 bAddClass,Class_Boss,8; 
+      bonus bSPGainValue,300; 
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",BaseLevel/5; 
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",BaseLevel/5;
+  - Id: 32245
+    AegisName: Unknown_Item_32245
+    Name: 思念之戒
+    Type: Armor
+    Buy: 10
+    Weight: 200
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAspdRate,5; 
+      skill "AL_TELEPORT",1;
+
+  - Id: 490082
+    AegisName: Dragon_Ring
+    Name: 幻象戰戒
+    Type: Armor
+    Buy: 20
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,1; 
+      bonus bAtkRate,5; 
+      bonus bMatkRate,5; 
+      if(isequipped(32207)){ bonus2 bSPDrainRate,10,1; bonus2 bAddClass,Class_Boss,10; } 
+      if(isequipped(32208)){ bonus bMaxHPrate,10; bonus bMaxSPrate,10; } 
+      if(isequipped(32209)){ bonus bInt,5; bonus bDex,5; bonus2 bMagicAddClass,Class_Boss,10; } 
+      if(isequipped(32210)){ bonus bMdef,15; bonus bFixedCast,-300; }
+
+  - Id: 480088
+    AegisName: Ultio_Cape_TW
+    Name: 烏爾蒂奧聖魔法斗篷
+    Type: Armor
+    Buy: 10000
+    Weight: 100
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine()/2*10; bonus2 bMagicAtkEle,0,getrefine()/4*3; bonus2 bMagicAtkEle,6,getrefine()/4*3; 
+      if(getrefine()>8){ bonus bMatkRate,10; } 
+      if(getrefine()>10){ bonus bDelayrate,-12; } 
+      if(getrefine()>12){ bonus2 bIgnoreDefClassRate,1,10; } 
+      if(isequipped(16089)){ bonus bMatk,30; if(getequiprefinerycnt(EQI_HAND_R)>=12){ bonus2 bSkillCooldown,"AB_ADORAMUS",-500; bonus2 bIgnoreMdefRaceRate,1,15; bonus2 bIgnoreMdefRaceRate,6,15; } }
+
+#湯麵節
+  - Id: 15174
+    AegisName: Supper_Swimsuit_K
+    Name: 衝浪泳衣
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 1
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Refineable: true
+    Script: |
+      bonus bMaxHPrate,(getrefine()/3)+5;
+      bonus bMaxSPrate,(getrefine()/3)+5;
+  - Id: 20819
+    AegisName: Oxygen_Bomb_K
+    Name: 潛水氧氣瓶
+    Type: Armor
+    Weight: 500
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Refineable: true
+    Script: |
+      bonus bFlee,12+getrefine();
+      bonus bHit,getrefine();
+  - Id: 19162
+    AegisName: Scuba_Mask_K
+    Name: 浮潛蛙鏡
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Refineable: true
+    View: 400
+    Script: |
+      bonus bBaseAtk,5;
+      bonus bMatk,5;
+
+  - Id: 20926
+    AegisName: 2018_RTC_Cape4_TW
+    Name: 2018-RTC紀念斗篷
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    EquipLevelMin: 100
+    View: 32
+    Script: |
+      bonus bAllStats,2;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bAddRace,RC_All,3;
+      bonus2 bMagicAddRace,RC_All,3;
+      bonus2 bSubRace,RC_All,getrefine()/4;
+      bonus2 bAddItemHealRate,522,50;
+      bonus2 bAddItemHealRate,547,50;
+  - Id: 19261
+    AegisName: 2017RTCSymbole
+    Name: 2017-RTC象徵
+    Type: Armor
+    View: 3297
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,2;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bSubRace,RC_DemiHuman,6+(min(15,.@r)/3);
+      bonus2 bSubRace,RC_Player_Human,6+(min(15,.@r)/3);
+      bonus2 bSubRace,RC_Player_Doram,6+(min(15,.@r)/3);
+      if (.@r>=9)
+         bonus bMdef,6;
+  - Id: 400014
+    AegisName: 2019RTC_CeleAura_TW
+    Name: 2019RTC紀念波利池
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1119
+    Script: |
+      bonus2 bSubRace,RC_Player_Human,2;
+      bonus2 bSubRace,RC_Player_Doram,2;
+      bonus2 bSubRace,RC_DemiHuman,2;
+      bonus2 bSubRace,RC_Brute,2;
+      hateffect HAT_EF_2019RTC_CeleAura_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_2019RTC_CeleAura_TW,false;
+
+  - Id: 400368
+    AegisName: 20th_Anniversary_Hat_TW
+    Name: RO二十週年限定帽
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 3867
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,2000;
+      bonus bMaxSP,200;
+      bonus bBaseAtk,20*(.@r/2);
+      bonus bMatk,20*(.@r/2);
+      bonus bAtkRate,3*(.@r/3);
+      bonus bMatkRate,3*(.@r/3);
+      if (.@r>=7)
+         bonus bAspdRate,10;
+      if (.@r>=9) {
+         bonus bShortAtkRate,10;
+         bonus bLongAtkRate,10;
+         bonus2 bMagicAtkEle,Ele_All,10;
+      }
+      if (.@r>=11) {
+         bonus2 bAddEle,Ele_All,15;
+         bonus2 bMagicAddEle,Ele_All,15;
+      }
+      if (.@r>=12)
+         bonus bFixedCast,-15*(.@r-11);
+
+  - Id: 420186
+    AegisName: 20th_Anniversary_TW
+    Name: 20週年慶生氣球
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 3866
+    Script: |
+      bonus bPAtk,2;
+      bonus bSMatk,2;
+      bonus bFixedCast,-100;
+
+  - Id: 22222
+    AegisName: Agenda_Shoes_TW
+    Name: 審判決議長靴
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMdef,15;
+      bonus bUseSPrate,10;
+      bonus2 bAddRace,RC_DemiHuman,10;
+      bonus2 bAddRace,RC_Demon,10;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Undead,10;
+      bonus2 bMagicAddRace,RC_DemiHuman,10;
+      bonus2 bMagicAddRace,RC_Demon,10;
+      bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+
+  - Id: 28906
+    AegisName: Shield_Of_Flame
+    Name: 栩如生煙火盾牌
+    Type: Armor
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus2 bSubEle,Ele_Fire,25; .@r = getrefine(); if(.@r > 4) { bonus bAspd,1+((.@r > 6) ? 1 : 0); }
+  - Id: 28908
+    AegisName: Shield_Of_Water
+    Name: 大水針織盾牌
+    Type: Armor
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus2 bSubEle,Ele_Water,25; bonus bMdef,5; .@r = getrefine(); if(.@r > 4) { bonus bAspd,1+((.@r > 6) ? 1 : 0); }
+  - Id: 28907
+    AegisName: Shield_Of_Gust
+    Name: 疾風之盾
+    Type: Armor
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus2 bSubEle,Ele_Wind,25; .@r = getrefine(); if(.@r > 4) { bonus bAspd,1+((.@r > 6) ? 1 : 0); }
+  - Id: 28909
+    AegisName: Shield_Of_Earth
+    Name: 飄渺大地神盾
+    Type: Armor
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      bonus2 bSubEle,Ele_Earth,25; .@r = getrefine(); if(.@r > 4) { bonus bAspd,1+((.@r > 6) ? 1 : 0); }
+  - Id: 28918
+    AegisName: Shield_Of_Chaos
+    Name: 激揚混沌盾牌
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5;
+      bonus2 bSubEle,Ele_Dark,25;
+      if (.@r>=5)
+         bonus bAspd,1;
+      if (.@r>=7)
+         bonus bAspd,1;
+
+  - Id: 480115
+    AegisName: SE_Light_Of_World_TW
+    Name: 世界之光●阿斯富力咖
+    Type: Armor
+    Weight: 400
+    Defense: 40
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bFlee,40;
+      bonus bMdef,10;
+      skill "AL_TELEPORT",1;
+      bonus bDelayrate,-10;
+      bonus2 bSubEle,Ele_All,30;
+      bonus bAtkRate,30;
+      bonus bMatkRate,30;
+
+  - Id: 450187
+    AegisName: SE_Mind_Of_Valhalla_TW
+    Name: 瓦爾哈拉之心●布林喜德
+    Type: Armor
+    Buy: 20
+    Weight: 1500
+    Defense: 150
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Script: |
+      bonus bMdef,15;
+      bonus bMaxHP,100*BaseLevel;
+      bonus bMaxSP,20*BaseLevel;
+      bonus2 bAddClass,Class_All,15;
+      bonus2 bMagicAddClass,Class_All,15;
+      bonus bDelayrate,-20;
+      bonus bBaseAtk,2*BaseLevel;
+      bonus bMatk,2*BaseLevel;
+      
+  - Id: 20866
+    AegisName: Golden_Angel_Wing_TW
+    Name: 黃金天使羽翼
+    Type: Armor
+    Weight: 10
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 5
+    Script: |
+      .@r = getrefine();
+      if (readparam(bStr) >= 90) {
+         bonus bBaseAtk,15;
+         if (.@r >= 9)
+            bonus bBaseAtk,15;
+      }
+      if (readparam(bInt) >= 90) {
+         bonus bMatk,15;
+         if (.@r >= 9)
+            bonus bMatk,15;
+      }
+      if (readparam(bVit) >= 90) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         if (.@r >= 9) {
+            bonus bMaxHPrate,5;
+            bonus bMaxSPrate,5;
+         }
+      }
+      if (readparam(bAgi) >= 90) {
+         bonus bAspd,1;
+         if (.@r >= 9)
+            bonus bAspd,1;
+      }
+      if (readparam(bDex) >= 90) {
+         bonus bLongAtkRate,5;
+         if (.@r >= 9)
+            bonus bLongAtkRate,5;
+      }
+      if (readparam(bLuk) >= 90) {
+         bonus bCritAtkRate,5;
+         if (.@r >= 9)
+            bonus bCritAtkRate,5;
+      }
+  - Id: 470177
+    AegisName: Walk_Of_DarkVoid
+    Name: 虛空陰暗長靴
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAllTraitStats,2;
+      skill "TF_HIDING",1;
+      bonus2 bSubRace,RC_All,2;
+      bonus bAspdRate,(.@r/3)*3;
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         if (.@r>=10) {
+            bonus2 bWeaponSubSize,Size_All,10;
+            bonus2 bMagicSubSize,Size_All,10;
+            if (.@r>=12) {
+               skill "RG_RAID",1;
+               bonus2 bSkillCooldown,"RG_RAID",60000;
+               if (BaseJob == Job_ROGUE) {
+               bonus2 bSkillCooldown,"RG_RAID",-60000;
+               }
+                if (.@r>=13) {
+                   bonus2 bSubRace,RC_All,3;
+                }
+            }
+         }
+      }
+  - Id: 490389
+    AegisName: Unknown_Item_490389
+    Name: 障壁指環
+    Type: Armor
+    Weight: 100
+    Defense: 5
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 50
+    Script: |
+      bonus bMaxHPrate,10; 
+      bonus bMaxSPrate,10;
+      bonus bHPrecovRate,15;
+      bonus2 bExpAddRace,RC_All,2;
+      skill "AL_ANGELUS",5;
+  - Id: 19095
+    AegisName: Head_Item_23765
+    Name: 漂浮快樂氣球
+    Type: Armor
+    Weight: 10
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2675
+    Script: |
+      bonus2 bExpAddClass,Class_All,5;
+      bonus2 bDropAddRace,RC_All,10;
+  - Id: 480024
+    AegisName: Subject_Cape_TW
+    Name: 思念者斗篷
+    Type: Armor
+    Buy: 10
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+      Fourth: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMaxHPrate,getrefine()/2; bonus bMaxSPrate,getrefine()/2; bonus bMdef,getrefine()/2; bonus bDelayrate,-getrefine()/2;
+
+#懺悔冠冕寶箱
+  - Id: 400469
+    AegisName: Poenetentia_D_Crown
+    Name: 懺悔精巧冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 3567
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bCritAtkRate,(.@r/3)*5;
+      bonus bLongAtkRate,(.@r/4)*4;
+      if(.@r>=9){ bonus bAspdRate,10; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400474
+    AegisName: Remorse_Crown
+    Name: 懺悔造物冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 3568
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus2 bAddClass,Class_All,(.@r/3)*5;
+      bonus bLongAtkRate,(.@r/4)*4;
+      if(.@r>=9){ bonus bDelayrate,-10; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400440
+    AegisName: Remorse_C_Crown
+    Name: 懺悔魔咒冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 699
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMatk,(.@r/2)*15; 
+      bonus bMatkRate,(.@r/3)*5; 
+      bonus2 bMagicAtkEle,Ele_All,(.@r/4)*5;
+      if(.@r>=9){ bonus bDelayrate,-10; } 
+      if(.@r>=11){ bonus2 bMagicAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bMagicAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400447
+    AegisName: Poenetentia_B_Crown
+    Name: 懺悔勇氣冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 3895
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bAtkRate,(.@r/3)*5;
+      bonus2 bAddEle,Ele_All,(.@r/4)*3;
+      bonus2 bMagicAddEle,Ele_All,(.@r/4)*3;
+      if(.@r>=9){ bonus bAspdRate,10; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400457
+    AegisName: Poenetentia_A_Crown
+    Name: 懺悔霸氣冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 3896
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bCritAtkRate,(.@r/3)*5;
+      bonus bShortAtkRate,(.@r/4)*4;
+      if(.@r>=9){ bonus bCritical,8; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400482
+    AegisName: Poenetentia_H_Crown
+    Name: 懺悔榮耀冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 3569
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bMatkRate,(.@r/3)*5;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/4)*5;
+      if(.@r>=9){ bonus bCastrate,-10; } 
+      if(.@r>=11){ bonus2 bMagicAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bMagicAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400598
+    AegisName: Poenetentia_P_Crown
+    Name: 懺悔動力冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 4081
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bMatkRate,(.@r/3)*5;
+      bonus bShortAtkRate,(.@r/4)*3;
+      bonus bLongAtkRate,(.@r/4)*3;
+      if(.@r>=9){ bonus bCastrate,-10; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400603
+    AegisName: Poenetentia_S_Crown
+    Name: 懺悔靈氣冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 4082
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMatk,(.@r/2)*15;
+      bonus bMatkRate,(.@r/3)*5;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/4)*5;
+      if(.@r>=9){ bonus bDelayrate,-10; } 
+      if(.@r>=11){ bonus2 bMagicAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bMagicAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 400625
+    AegisName: Poenetentia_M_Crown
+    Name: 懺悔機動冠冕
+    Type: Armor
+    Weight: 100
+    Defense: 40
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Refineable: true
+    View: 4083
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bAtk,(.@r/2)*15;
+      bonus bMatkRate,(.@r/3)*5;
+      bonus bLongAtkRate,(.@r/4)*4;
+      if(.@r>=9){ bonus bCritical,8; } 
+      if(.@r>=11){ bonus2 bAddSize,Size_All,15; }
+      if(.@r>=13){ bonus2 bAddRace,RC_All,20; bonus bFixedCast,-500; }
+  - Id: 28505
+    AegisName: Demon_God‘s Ring
+    Name: 魔神之戒
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 3
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAtkRate,5; 
+      bonus bMatkRate,5;
+  - Id: 28515
+    AegisName: Imperial_Ring
+    Name: 帝國魔戒
+    Type: Armor
+    Buy: 10
+    Weight: 500
+    Defense: 3
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Script: |
+      bonus bStr,1; 
+      bonus bInt,1; 
+      bonus bMaxHPrate,3; 
+      bonus bMaxSPrate,3; 
+      if(isequipped(1433)){ bonus2 bSkillAtk,"LG_CANNONSPEAR",getequiprefinerycnt(EQI_HAND_R)/2*3; bonus2 bSkillAtk,"LG_BANISHINGPOINT",getequiprefinerycnt(EQI_HAND_R)/2*3; } 
+      if(isequipped(18823)){ bonus2 bVariableCastrate,"CR_GRANDCROSS",-100; bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel; bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/30; bonus2 bSkillUseSP,"LG_RAYOFGENESIS",-BaseLevel/30*10; }
+  - Id: 410211
+    AegisName: JRO_Little_Abyss_Dragon_
+    Name: 深淵湖水龍寶寶
+    Type: Armor
+    Weight: 100
+    Defense: 2
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 3889
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+      bonus bMatk,BaseLevel;
+
+  - Id: 420328
+    AegisName: Head_Item_420328
+    Name: 冰封強運玫瑰
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 2711
+    Script: |
+      bonus2 bExpAddRace,RC_All,3;
+      bonus2 bDropAddRace,RC_All,3;
+      bonus2 bAddEle,Ele_Water,20;
+      bonus2 bMagicAddEle,Ele_Water,20;
+      bonus2 bSubDefEle,Ele_Water,10;
+      bonus2 bMagicSubDefEle,Ele_Water,10;
+
+  - Id: 420330
+    AegisName: Head_Item_420330
+    Name: 炙熱強運玫瑰
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 534
+    Script: |
+      bonus2 bExpAddRace,RC_All,3;
+      bonus2 bDropAddRace,RC_All,3;
+      bonus2 bAddEle,Ele_Fire,20;
+      bonus2 bMagicAddEle,Ele_Fire,20;
+      bonus2 bSubDefEle,Ele_Fire,10;
+      bonus2 bMagicSubDefEle,Ele_Fire,10;
+  - Id: 420331
+    AegisName: Undead_Seal_Rose
+    Name: 沉睡強運玫瑰
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 4170
+    Script: |
+      bonus2 bExpAddRace,RC_All,3;
+      bonus2 bDropAddRace,RC_All,3;
+      bonus2 bAddEle,Ele_Undead,20;
+      bonus2 bMagicAddEle,Ele_Undead,20;
+      bonus2 bSubDefEle,Ele_Undead,10;
+      bonus2 bMagicSubDefEle,Ele_Undead,10;
+  - Id: 420332
+    AegisName: Ground_Seal_Rose
+    Name: 大地強運玫瑰
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    View: 4170
+    Script: |
+      bonus2 bExpAddRace,RC_All,3;
+      bonus2 bDropAddRace,RC_All,3;
+      bonus2 bAddEle,Ele_Earth,20;
+      bonus2 bMagicAddEle,Ele_Earth,20;
+      bonus2 bSubDefEle,Ele_Earth,10;
+      bonus2 bMagicSubDefEle,Ele_Earth,10;
+  - Id: 490552
+    AegisName: Signet_Of_Star_
+    Name: 星雲吊墜
+    Type: Armor
+    Weight: 100
+    Defense: 0
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    Script: |
+      bonus bAtkRate,10;
+      bonus bMatkRate,10;
+  - Id: 480245
+    AegisName: JP_EV17
+    Name: 王冠大耳狗喜拿背包
+    Type: Armor
+    Weight: 300
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 153
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus2 bExpAddRace,RC_All,10;
+      skill "ALL_PRONTERA_RECALL",1;
+      bonus bBaseAtk,BaseLevel;
+      bonus bMatk,BaseLevel;
+      bonus bMaxHP,BaseLevel*20;
+      bonus bMaxSP,BaseLevel*2;
+      if (.@r>=5)
+         bonus2 bSubEle,Ele_Holy,80;
+      if (.@r>=7)
+         bonus2 bHPDrainRate,1000,2;
+
+
+
+#-------------------------------------
+  - Id: 2190
+    AegisName: Ancient_Shield_Of_Aeon
+    Name: 艾溫的古代盾牌
+    Type: Armor
+    Weight: 200
+    Defense: 5
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    View: 2
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,10; 
+      bonus2 bSubEle,Ele_Fire,10; 
+      bonus2 bSubEle,Ele_Water,10; 
+      bonus2 bSubEle,Ele_Wind,10; 
+      bonus2 bSubEle,Ele_Earth,10; 
+      bonus2 bSubEle,Ele_Dark,10; 
+      bonus2 bSubEle,Ele_Holy,10; 
+      bonus2 bSubEle,Ele_Ghost,10; 
+      bonus bMaxHP,500; 
+      bonus bMaxSP,50; 
+      if(getrefine()>=14) skill "MG_STONECURSE",5;
+
+
+

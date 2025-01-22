@@ -1,0 +1,76 @@
+﻿-	shop	道具商店#mbase	-1,103501:1500,103502:1500;
+
+mbase_in,232,122,6	script	喬樂斯加爾夫兌換商店#01	10504,{
+
+	mes "[喬樂斯加爾夫兌換商店]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("購買道具:兌換卡片:兌換裝備:改造裝備:進行附魔:前往相關地圖")){
+
+	case 1:	
+	callshop
+	"道具商店#mbase",1;
+	end;
+
+	case 2:
+	close2;
+	callshop "喬樂斯加爾夫兌換商店#兌換卡片";
+	end;
+
+	case 3:
+	close2;
+	callshop "喬樂斯加爾夫兌換商店#兌換裝備";
+	end;
+
+	case 4:
+	close2;
+	item_reform 103503;
+	end;
+
+	case 5:
+		mes "[喬樂斯加爾夫兌換商店]";
+		mes "請選擇你要附魔的裝備";
+		next;
+		switch(select("喬樂斯加爾夫鎧甲:喬樂斯加爾夫斗篷:喬樂斯加爾夫戰鞋:喬樂斯加爾夫戒指:喬樂斯加爾夫冠冕")){
+
+		case 1:
+		close2;
+		item_enchant 152;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 153;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 154;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 155;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 156;
+		end;
+		}
+
+	case 6:
+		switch(select("喬樂斯加爾夫密穴1層【jor_sklf1】","喬樂斯加爾夫密穴2層【jor_sklf2】")) {
+		case 1: set WarpMap$,"jor_sklf1"; set WarpMapX,0; set WarpMapY,0; warp "jor_sklf1",0,0;	close;
+		case 2: set WarpMap$,"jor_sklf2"; set WarpMapX,0; set WarpMapY,0; warp "jor_sklf2",0,0;	close;
+		}
+	}
+
+
+OnInit:
+	waitingroom "喬樂斯加爾夫兌換商店",0;
+	end;
+}
+
+
+

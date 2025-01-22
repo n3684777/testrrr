@@ -1,0 +1,194 @@
+﻿//===== rAthena Script ======================================= 
+//= Ticket Refiner
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiner that uses +5~9/+11 refine tickets to refine
+//= equipment with no chance of failure.
+//= NOTE: This NPC is currently disabled on official servers.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//= 1.1 Do not refine above ticket level. [Euphy]
+//============================================================
+
+// Main NPC :: safety_Ref_NPC
+//============================================================
+rgsr_in,137,174,4	script	精煉專家	851,{
+	disable_items;
+	if (countitem(6864) || countitem(6875) || countitem(6874) || countitem(6873) || countitem(6872) || countitem(6871) || countitem(6870) || countitem(6584) || countitem(6238) || countitem(6993) || countitem(6228) || countitem(6229) || countitem(6230) || countitem(6231) || countitem(6456))
+		set .@bWeaponUp,1;
+	if (countitem(6865) || countitem(6881) || countitem(6880) || countitem(6879) || countitem(6878) || countitem(6877) || countitem(6876) || countitem(6585) || countitem(6239) || countitem(6994) || countitem(6232) || countitem(6233) || countitem(6234) || countitem(6235) || countitem(6457))
+		set .@bArmorUp,1;
+	if (!.@bWeaponUp && !.@bArmorUp) {
+		mes "[精煉專家]";
+		mes "你好。";
+		mes "找我有事嗎?";
+		mes "我曾是精鍊方面";
+		mes "專家中的專家";
+		mes "只是最近洗手不幹了。";
+		next;
+		switch(select("不理會:嗯……這讓我很好奇。")) {
+		case 1:
+			mes "[精煉專家]";
+			mes "保重了，冒險家";
+			close;
+		case 2:
+			mes "[精煉專家]";
+			mes "當你有^006400精煉券^000000時我會提供精煉服務";
+			mes "再見~!";
+			close;
+		}
+	}
+	emotion ET_SURPRISE;
+	mes "[精煉專家]";
+	mes "你好!";
+	mes "我可以將一個裝備精煉到^006400你所提供的精煉卷等級^000000";
+	mes "你不必擔心你的裝備不會受到損壞";
+	next;
+	if(select("我稍後再來:使用精鍊卷") == 1) {
+		mes "[精煉專家]";
+		mes "Okay";
+		mes "你有需要時再來找我";
+		close;
+	}
+	mes "[精煉專家]";
+	mes "你想要精煉哪個裝備?";
+	next;
+	setarray .@position$[1],"頭上","盔甲","盾牌","武器","斗篷","鞋子","飾品左","飾品右","頭中","頭下";
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$+((getequipisequiped(.@indices[.@i]))?getequipname(.@indices[.@i]):.@position$[.@i]+"- [Empty]")+":";
+	set .@part, .@indices[ select(.@menu$) ];
+	if (!getequipisequiped(.@part)) {
+		mes "[精煉專家]";
+		mes "你必須裝備你想要精煉的物品";
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		emotion ET_OTL;
+		mes "[精煉專家]";
+		mes "很抱歉";
+		mes "這個裝備無法精煉";
+		close;
+	}
+	.@refineitemid = getequipid(.@part); // 紀錄道具編號
+	.@refinerycnt = getequiprefinerycnt(.@part); // 紀錄精煉等級
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
+	if( .@itemtype == IT_WEAPON ){
+		switch( getequipweaponlv( .@part ) ){
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+				setarray .@tickets[0],6456,6231,6230,6229,6228,6993,6238,6584,6870,6871,6872,6873,6874,6875,6864;
+				setarray .@levels[0],5,6,7,8,9,10,11,12,13,14,15,16,17,18,19;
+				set .@type$,"武器";
+				set .@check,.@bWeaponUp;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_ARMOR ){
+		switch( getequiparmorlv( .@part ) ){
+			case 1:
+				setarray .@tickets[0],6457,6235,6234,6233,6232,6994,6239,6585,6876,6877,6878,6879,6880,6881,6865;
+				setarray .@levels[0],5,6,7,8,9,10,11,12,13,14,15,16,17,18,19;
+				set .@type$,"防具";
+				set .@check,.@bArmorUp;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
+	}
+	if (!.@check) {
+		emotion ET_THINK;
+		mes "[精煉專家]";
+		mes "如果你想要精煉 ^006400"+.@type$+"^000000, 需要持有 ^006400"+.@type$+" 精煉券^000000.";
+		mes "再見!";
+		close;
+	}
+	mes "[精煉專家]";
+	mes "請選擇你要使用的 ^006400"+.@type$+" 精煉券^000000";
+	next;
+	set .@menu$,"";
+	for(set .@i,0; .@i<getarraysize(.@tickets); set .@i,.@i+1)
+		set .@menu$, .@menu$+getitemname(.@tickets[.@i])+":";
+	set .@select, select(.@menu$)-1;
+	set .@ticket_lv, .@levels[.@select];
+	set .@ticket_id, .@tickets[.@select];
+	if (countitem(.@ticket_id) == 0) {
+		emotion ET_QUESTION;
+		mes "[精煉專家]";
+		mes getitemname(.@ticket_id)+" 不在你身上";
+		mes "請再檢查一次";
+		mes "再見!";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) >= .@ticket_lv) {
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[精煉專家]";
+		mes "^8B4513這個裝備精煉等級高於你給我的精煉券^000000";
+		mes "請攜帶正確的精煉券";
+		close;
+	}
+	mes "[精煉專家]";
+	mes "我準備強化 ^006400"+getequipname(.@part)+"^8B4513到+"+.@ticket_lv+"等級^000000 需要消耗^006400"+getitemname(.@ticket_id)+"^000000.";
+	mes "我可以繼續嗎?";
+	next;
+	if(select("停止精煉:繼續精煉") == 1) {
+		emotion ET_THINK;
+		mes "[精煉專家]";
+		mes "哦 你改變主意了";
+		mes "Ok.";
+		mes "你有需要時再來找我";
+		close;
+	}
+	mes "[精煉專家]";
+	mes "就聽你的!";
+	mes "我有特殊的精煉方式..";
+	mes "......碰!";
+	specialeffect EF_SUI_EXPLOSION;
+	if (countitem(.@ticket_id)) {
+		delitem .@ticket_id,1;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
+			mes "[精煉專家]";
+			emotion ET_FRET;
+			mes "等一下...";
+			mes "你覺得我傻嗎?!";
+			mes "你想趁我不注意偷換裝備!";
+			close;
+		}
+	} else {
+		next;
+		mes "錯誤!";
+		mes "請回報管理員";
+		close;
+	}
+	successrefitem .@part, .@ticket_lv - getequiprefinerycnt(.@part);
+	next;
+	emotion ET_DELIGHT;
+	mes "[精煉專家]";
+	mes "恭喜^0000FF"+strcharinfo(0)+"^000000";
+	mes "你成功強化了"+.@type$+"";
+	mes "看起來很棒!";
+	mes "再見~!";
+	close;
+
+//OnInit:
+//	waitingroom "精鍊卷精鍊師",0;
+//	end;
+}

@@ -1,0 +1,144 @@
+#四轉技能影子裝備改造箱
+  - Id: 342
+    Group: Group_4th_Skill_Shadow
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 100
+            MaxValue: 500
+            Chance: 455
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 20
+            MaxValue: 100
+            Chance: 455
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 455
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 455
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 455
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 455
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 455
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 455
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 455
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 455
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 455
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 25
+            Chance: 455
+          - Option: VAR_MDEFPOWER
+            MinValue: 1
+            MaxValue: 3
+            Chance: 455
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 455
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 5
+            Chance: 455
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 3
+            MaxValue: 5
+            Chance: 455
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 455
+      - Slot: 2
+        Options:
+          - Option: VAR_CRITICAL_RATE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_HEAL_PLUS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 275
+          - Option: VAR_POWAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_SPLAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_STAAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_WISAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_CONAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_CRTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 275
+          - Option: VAR_PATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 275
+          - Option: VAR_SMATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 275
+          - Option: VAR_RESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 275
+          - Option: VAR_MRESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 275

@@ -1,0 +1,593 @@
+﻿trinity,93,91,6	script	回憶精靈_賽芬妮#RO	756,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[回憶精靈_賽芬妮]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[回憶精靈_賽芬妮]";
+	mes "你想要開始20周年任務嗎?";
+	mes "任務進度：^FF0000"+#Ragnarok_20th+"^000000";
+	next;
+	switch(select("開始任務","取消")){
+
+	case 1:
+		if (#Ragnarok_20th == 0) goto Ragnarok_Q01;
+		if (#Ragnarok_20th == 1) goto Ragnarok_Q01;
+		if (#Ragnarok_20th == 2) goto Ragnarok_Q02;
+		if (#Ragnarok_20th == 3) goto Ragnarok_Q03;
+		if (#Ragnarok_20th == 4) goto Ragnarok_Q04;
+		if (#Ragnarok_20th == 5) goto Ragnarok_Q05;
+		if (#Ragnarok_20th == 6) goto Ragnarok_Q06;
+		if (#Ragnarok_20th == 7) goto Ragnarok_Q07;
+		if (#Ragnarok_20th == 8) goto Ragnarok_Q08;
+		if (#Ragnarok_20th == 9) goto Ragnarok_Q09;
+		if (#Ragnarok_20th == 10) goto Ragnarok_Q10;
+		if (#Ragnarok_20th == 11) goto Ragnarok_Q11;
+		if (#Ragnarok_20th == 12) goto Ragnarok_Q12;
+		if (#Ragnarok_20th == 13) goto Ragnarok_Q13;
+		if (#Ragnarok_20th == 14) goto Ragnarok_Q14;
+		if (#Ragnarok_20th == 15) goto Ragnarok_Q15;
+		if (#Ragnarok_20th == 16) goto Ragnarok_Q16;
+		if (#Ragnarok_20th == 17) goto Ragnarok_Q17;
+		if (#Ragnarok_20th == 18) goto Ragnarok_Q18;
+		if (#Ragnarok_20th == 19) goto Ragnarok_Q19;
+		if (#Ragnarok_20th == 20) goto Ragnarok_Q20;
+		if (#Ragnarok_20th == 21) goto Ragnarok_Q21;
+		if (#Ragnarok_20th == 22) goto Ragnarok_Q22;
+		if (#Ragnarok_20th == 23) goto Ragnarok_Q23;
+		if (#Ragnarok_20th == 24) goto Ragnarok_Q24;
+		if (#Ragnarok_20th == 25) goto Ragnarok_Q25;
+		if (#Ragnarok_20th == 26) goto Ragnarok_Q26;
+		close;
+
+		Ragnarok_Q01:
+		if(checkquest(293357,HUNTING)< 0){ setquest 293357; set #Ragnarok_20th,1; close; }
+		if(checkquest(293357,HUNTING)==2){ erasequest 293357; setquest 293356; set #Ragnarok_20th,2; dispbottom "傳說拉開序幕 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q02:
+		if(checkquest(293358,HUNTING)< 0){ setquest 293358; close; }
+		if(checkquest(293358,HUNTING)==2){ erasequest 293358; set #Ragnarok_20th,3; dispbottom "愛情競技場 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q03:
+		if(checkquest(293359,HUNTING)< 0){ setquest 293359; close; }
+		if (countitem(619)>=3 ) {  erasequest 293359; set #Ragnarok_20th,4; dispbottom "口袋情人夢 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; delitem 619,3; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q04:
+		if(checkquest(293360,HUNTING)< 0){ setquest 293360; close; }
+		if (countitem(714)>0 ){ erasequest 293360; set #Ragnarok_20th,5; dispbottom "傾城之戰 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; delitem 714,1; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q05:
+		if(checkquest(293361,HUNTING)< 0){ setquest 293361; close; }
+		if(checkquest(293361,HUNTING)==2){ erasequest 293361; set #Ragnarok_20th,6; dispbottom "夢想天空 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q06:
+		if(checkquest(293362,HUNTING)< 0){ setquest 293362; close; }
+		if (countitem(2613)>0 ){ erasequest 293362; set #Ragnarok_20th,7; dispbottom "櫻之花嫁 任務完成!!"; delitem 2613,1; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q07:
+		if(checkquest(293363,HUNTING)< 0){ setquest 293363; close; }
+		if ( Zeny>1285000 ){ erasequest 293363; set #Ragnarok_20th,8; dispbottom "黑色派對 任務完成!!"; set Zeny,Zeny - 1285000; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q08:
+		if(checkquest(293364,HUNTING)< 0){ setquest 293364; close; }
+		if (countitem(2357) >0) { erasequest 293364;  set #Ragnarok_20th,9; dispbottom "P.S 你今天微笑了嗎 任務完成!!"; delitem 2357,1; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q09:
+		if(checkquest(294009,HUNTING)< 0){ setquest 294009; close; }
+		if(checkquest(294009,HUNTING)==2){ erasequest 294009; set #Ragnarok_20th,10; dispbottom "不要露出悲傷的表情，笑吧 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q10:
+		if(checkquest(294010,HUNTING)< 0){ setquest 294010; close; }
+		if(checkquest(294010,HUNTING)==2){ erasequest 294010; set #Ragnarok_20th,11; dispbottom "新時代的來臨 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q11:
+		if(checkquest(294011,HUNTING)< 0){ setquest 294011; close; }
+		if(checkquest(294011,HUNTING)==2){ erasequest 294011; set #Ragnarok_20th,12; dispbottom "信仰之都 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q12:
+		if(checkquest(294012,HUNTING)< 0){ setquest 294012; close; }
+		if(checkquest(294012,HUNTING)==2){ erasequest 294012; set #Ragnarok_20th,13; dispbottom "榮耀的勇士 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q13:
+		if(checkquest(294013,HUNTING)< 0){ setquest 294013; close; }
+		if(checkquest(294013,HUNTING)==2){ erasequest 294013; set #Ragnarok_20th,14; dispbottom "虛幻的奧克尼爾 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q14:
+		if(checkquest(294014,HUNTING)< 0){ setquest 294014; close; }
+		if(checkquest(294014,HUNTING)==2){ erasequest 294014; set #Ragnarok_20th,15; dispbottom "聖轉試煉 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q15:
+		if(checkquest(294015,HUNTING)< 0){ setquest 294015; close; }
+		if(checkquest(294015,HUNTING)==2){ erasequest 294015; set #Ragnarok_20th,16; dispbottom "愛吃章魚的貓 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q16:
+		if(checkquest(294016,HUNTING)< 0){ setquest 294016; close; }
+		if(checkquest(294016,HUNTING)==2){ erasequest 294016; set #Ragnarok_20th,17; dispbottom "從不支配人類的巨人們 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q17:
+		if(checkquest(294017,HUNTING)< 0){ setquest 294017; close; }
+		if(checkquest(294017,HUNTING)==2){ erasequest 294017; set #Ragnarok_20th,18; dispbottom "要是能重來 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q18:
+		if(checkquest(294018,HUNTING)< 0){ setquest 294018; close; }
+		if(checkquest(294018,HUNTING)==2){ erasequest 294018; set #Ragnarok_20th,19; dispbottom "說出你的願望 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q19:
+		if(checkquest(294019,HUNTING)< 0){ setquest 294019; close; }
+		if(checkquest(294019,HUNTING)==2){ erasequest 294019; set #Ragnarok_20th,20; dispbottom "魔王再臨 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q20:
+		if(checkquest(294020,HUNTING)< 0){ setquest 294020; close; }
+		if(checkquest(294020,HUNTING)==2){ erasequest 294020; set #Ragnarok_20th,21; dispbottom "穿越時空的鞋跟 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q21:
+		if(checkquest(294021,HUNTING)< 0){ setquest 294021; close; }
+		if(checkquest(294021,HUNTING)==2){ erasequest 294021; set #Ragnarok_20th,22; dispbottom "英雄之宴 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q22:
+		if(checkquest(294022,HUNTING)< 0){ setquest 294022; close; }
+		if(checkquest(294022,HUNTING)==2){ erasequest 294022; set #Ragnarok_20th,23; dispbottom "尋回特拉葛洛麗雅 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q23:
+		if(checkquest(294023,HUNTING)< 0){ setquest 294023; close; }
+		if(checkquest(294023,HUNTING)==2){ erasequest 294023; set #Ragnarok_20th,24; dispbottom "顯現之虛幻 任務完成!!"; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q24:
+		if(checkquest(294024,HUNTING)< 0){ setquest 294024; close; }
+		if (countitem(12018)<20) { mes "您身上的鞭炮不足20個！";close; }
+		if(checkquest(294024,PLAYTIME)>0){ erasequest 294024; set #Ragnarok_20th,25; dispbottom "仙境傳說生日快樂 任務完成!!"; delitem 12018,20; getitem 7987,2; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q25:
+		if(checkquest(294025,HUNTING)< 0){ setquest 294025; close; }
+		if (countitem(539)<30) { mes "您身上的小蛋糕不足30個！";close; }
+		if(checkquest(294025,PLAYTIME)>0){ erasequest 294025; set #Ragnarok_20th,26; dispbottom "讓我們一起繼續守候 任務完成!!"; delitem 539,30; getitem 7987,2; getitem 400076,1; sc_start SC_EXPBOOST,900000,100; sc_start SC_ITEMBOOST,900000,200; close;}
+		mes "[回憶精靈_賽芬妮]";
+		mes "請去完成你的任務";
+		close;
+
+		Ragnarok_Q26:
+		mes "[回憶精靈_賽芬妮]";
+		mes "你已經完成所有任務了!";
+		close;
+
+	case 2:
+		close;
+	}
+OnInit:
+	waitingroom "仙境20周年紀念活動任務",0;
+	end;
+}
+
+
+//------------------------------------ 商店
+trinity,91,93,6	script	慶典服務人員#RO	496,{
+
+	mes "[慶典服務人員]";
+	mes "您現在持有 回憶蠟燭 [^0000ff"+countitem(7987)+"^000000] 個";
+	mes "我可以幫你把回憶蠟燭換成下面物品";
+	next;
+	switch(select("烤野豬 (1)","狼血雞尾酒 (1)","米洛斯燒肉 (1)","小雪獸冰茶 (1)","捕蟲草藥草煎 (1)","畢帝特龍尾麵 (1)","揮擊藥水 (1)","魔力藥水 (1)",
+	"血跡樹枝 (10)","海神之憤怒 (5)","皮里恩卷軸 (10)","齊爾-D-01卷軸 (10)","影子精靈精煉 (30)","影子職業套裝箱 (30)","服飾附魔石精靈合成箱 (30)",
+	"(服飾)慶生派對氣球 (50)","(服飾)20週年紀念頭飾 (50)","取消")){
+
+	case 1:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個烤野豬";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12429,@input*3;
+		close;
+
+	case 2:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個狼血雞尾酒";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12430,@input*3;
+		close;
+
+	case 3:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個米洛斯燒肉";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12431,@input*3;
+		close;
+
+	case 4:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個小雪獸冰茶";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12432,@input*3;
+		close;
+
+	case 5:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個捕蟲草藥草煎";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12433,@input*3;
+		close;
+
+	case 6:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換3個畢帝特龍尾麵";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12434,@input*3;
+		close;
+
+	case 7:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換5個揮擊藥水";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12418,@input*5;
+		close;
+
+	case 8:
+		mes "[慶典服務人員]";
+		mes "1個回憶蠟燭兌換5個魔力藥水";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*1 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*1;
+		getitem 12419,@input*5;
+		close;
+
+	case 9:
+		mes "[慶典服務人員]";
+		mes "10個回憶蠟燭兌換1個血跡樹枝";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*10 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*10;
+		getitem 12103,@input*1;
+		close;
+
+	case 10:
+		mes "[慶典服務人員]";
+		mes "5個回憶蠟燭兌換1個海神之憤怒";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*5 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*5;
+		getitem 6423,@input*1;
+		close;
+
+	case 11:
+		mes "[慶典服務人員]";
+		mes "10個回憶蠟燭兌換2個皮里恩卷軸";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*10 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*10;
+		getitem 14597,@input*2;
+		close;
+
+	case 12:
+		mes "[慶典服務人員]";
+		mes "10個回憶蠟燭兌換2個齊爾-D-01卷軸";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*10 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*10;
+		getitem 14606,@input*2;
+		close;
+
+	case 13:
+		mes "[慶典服務人員]";
+		mes "30個回憶蠟燭兌換1個影子精靈精煉";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*30 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*30;
+		getitem 23534,@input*1;
+		close;
+
+	case 14:
+		mes "[慶典服務人員]";
+		mes "30個回憶蠟燭兌換1個影子職業套裝箱";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*30 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*30;
+		getitem 23115,@input*1;
+		close;
+
+	case 15:
+		mes "[慶典服務人員]";
+		mes "30個回憶蠟燭兌換1個服飾附魔石精靈合成箱";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*30 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*30;
+		getitem 23151,@input*1;
+		close;
+
+	case 16:
+		mes "[慶典服務人員]";
+		mes "50個回憶蠟燭兌換1個(服飾)慶生派對氣球";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*50 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*50;
+		getitem 410082,@input*1;
+		close;
+
+	case 17:
+		mes "[慶典服務人員]";
+		mes "50個回憶蠟燭兌換1個(服飾)20週年紀念頭飾";
+		mes "請輸入您想兌換的數量。";
+		mes "數量：Min 1 個，Max 100 個！";
+		next;
+		set @input,0;
+		input @input;
+		if ( @input < 1 || @input > 100 ) {
+		mes "[慶典服務人員]";
+		mes "您輸入的數量不正確！";
+		close;	}
+		if ( countitem(7987)<@input*50 ) {
+		mes "[慶典服務人員]";
+		mes "數量不足";
+		close;	}
+		delitem 7987,@input*50;
+		getitem 400309,@input*1;
+		close;
+
+	case 18:
+		close;
+
+	}
+}
+

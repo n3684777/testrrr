@@ -1,0 +1,16 @@
+﻿-	script	天龍氣息	-1,{
+
+//OnPCSCEndEvent:
+//OnPCSCStartEvent:
+//	status_calc();
+//	end;
+
+OnPCStatCalcEvent:
+
+	if(Class == 4252 ){
+	bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",-70;
+	end;
+	}
+	end;
+}
+

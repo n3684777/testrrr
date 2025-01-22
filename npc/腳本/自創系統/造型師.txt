@@ -1,0 +1,1009 @@
+trinity,122,65,4	script	服裝髮型造型師	878,{
+
+	set hairdyer,getlook(6);
+	set hstyler,getlook(1);
+	set cdyer,getlook(7);
+
+	mes "[服裝髮型造型師]";
+	mes "目前髮型顏色："+getlook(6)+"";
+	mes "目前衣服顏色："+getlook(7)+"";
+	mes "歡迎光臨美髮店，需要什麼服務呢?";
+	next;
+	addtimer 300, strnpcinfo(3)+"::On_hdLeave"; 
+	switch(select("變更髮型","變更髮型顏色","變更服裝顏色","變更職業幻裝")) {
+
+	case 1:
+	callfunc "Hair_hair";
+	close;
+
+	case 2:
+	callfunc "Hair_color";
+	close;
+
+	case 3:
+	callfunc "clothe_dye";
+	close;
+
+	case 4:
+	callfunc "costume_body2";
+	close;
+
+	}
+
+On_hdLeave:
+OnPCLogoutEvent:
+	if(!hdpayed) setlook 6,hairdyer;
+	if(!hspayed) setlook 1,hstyler;
+	if(!cdpayed) setlook 7,cdyer;
+	end;
+
+OnPCLoginEvent:
+	set hairdyer,getlook(6);
+	set hstyler,getlook(1);
+	set cdyer,getlook(7);
+	end;
+	
+Oninit:
+	//正常
+	set $@maxhairdye,127;	//最大髮色
+	set $@hairdyepay,10000;	//染髮費用
+	set $@maxhairestyleF,112;	//最大女生髮型
+	set $@maxhairestyleM,112;	//最大男生髮型
+	set $@hstyledeignpay,1000;	//髮型設計費用
+	set $@maxcdye,1300;	//最大衣服染色
+	set $@cdyecost,1000;	//衣服挑染費用
+	set $@maxFav,4;	//我的最愛的最大記錄數目
+	waitingroom "服裝髮型造型師",0;
+	end;
+}
+
+//====================================================//
+
+function	script	Hair_color	{
+        set hdpayed,0;
+	mes "[服裝髮型造型師]";
+	mes "漂亮的你難道不想染個新髮色嗎？";
+	mes "換個色彩可以換個心情哦。";
+	mes "髮色總共有"+$@maxhairdye+"色";
+	mes "一次只需"+$@hairdyepay+"Z~~選擇一下啦。";
+	next;
+	switch(select("幫頭髮染顏色","頭髮最初色")) {
+
+	case 1:
+		mes "[服裝髮型造型師]";
+		mes "很好,請選擇一種方式...";
+		next;
+		switch(select("邊看邊選","輸入顏色代號","我的最愛"))
+		{
+		case 1:                                   
+                    while(1){
+                               
+                      if(@hairdye > 0 && @hairdye < $@maxhairdye)
+                        setarray .@hdye_Menu$[1],"下一款","上一款","確定要染","加到我的最愛";
+                      else if(@hairdye <=0)
+                        setarray .@hdye_Menu$[1],"下一款","確定","加到我的最愛","";
+                      else
+                        setarray .@hdye_Menu$[1],"上一款","確定","加到我的最愛","";
+                      
+                      set .@mselect,select(.@hdye_Menu$[1],.@hdye_Menu$[2],.@hdye_Menu$[3],.@hdye_Menu$[4],.@hdye_Menu$[5]);
+                      if(.@mselect==1)set .@hdnum,1; if(.@mselect==2)set .@hdnum,2;
+                      if(.@mselect==3)set .@hdnum,3; if(.@mselect==4)set .@hdnum,4;
+                      if(.@mselect==5)set .@hdnum,5;
+                      if(.@hdye_Menu$[.@hdnum]=="下一款"){
+                        set @hairdye,@hairdye+1;
+                        setlook 6,@hairdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@hairdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@hdye_Menu$[.@hdnum]=="上一款"){
+                        set @hairdye,@hairdye-1;
+                        setlook 6,@hairdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@hairdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@hdye_Menu$[.@hdnum]=="加到我的最愛")
+                       { 
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                         set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavhd"+.@i)==0 ?"無記錄":""+getd("myfavhd"+.@i));
+                        
+                        set .@tmpselect,select(.@soption$);
+                        setd("myfavhd"+.@tmpselect),@hairdye;        
+                        mes "[服裝髮型造型師]";
+                        mes "已經儲存";
+                        next;                    
+                       } 
+                      else
+                       {
+		        if(zeny < $@hairdyepay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hairdyepay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hairdyepay;
+                        mes "[服裝髮型造型師]";
+                        mes "已經幫你染好了，謝謝光臨!";
+                        set hdpayed,1;
+                        Close;
+                       } 
+                     }
+                 break;  
+		case 2:
+			mes "[服裝髮型造型師]";
+			mes "請輸入一個大於0,小於"+$@maxhairdye+"的數字";
+			next;
+			do {
+			input @hairdye;
+			if((@hairdye <0) || (@hairdye >$@maxhairdye)) {
+			mes "[服裝髮型造型師]";
+			mes "對不起,輸入的範圍有誤.請重新輸入";
+                        next;
+                        continue;
+			}
+			setlook 6,@hairdye;
+			mes "[服裝髮型造型師]";
+                        mes "你輸入的款式是:"+@hairdye;
+			mes "你決定要這款了嗎?";
+			next;
+                        set .@tmpselect,select("確定","重新輸入");
+                        if(.@tmpselect==1)break;
+			} while(@hairdye <0) || (@hairdye >$@maxhairdye ||.@tmpselect==2);
+		        if(zeny < $@hairdyepay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hairdyepay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hairdyepay;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set hdpayed,1;
+                        Close;
+			break;
+                 case 3:
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavhd"+.@i)==0 ?"無記錄":""+getd("myfavhd"+.@i));
+                        do {
+                        set .@tmpselect,select(.@soption$);
+ 			mes "[服裝髮型造型師]";
+                        mes "你選的款式是:"+getd("myfavhd"+.@tmpselect);
+			mes "你決定要這款了嗎?";
+                        set @hairdye,getd("myfavhd"+.@tmpselect);
+                        setlook 6,@hairdye;
+                        next;
+                        } while(select("確定","重選")==2);
+		        if(zeny < $@hairdyepay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hairdyepay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hairdyepay;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set hdpayed,1;
+                        Close;                     
+                      break;
+		}
+
+	case 2:
+		mes "[服裝髮型造型師]";
+		mes "是否確定要把髮色還原成最基本色呢?";
+		next;
+                setlook 6,0;
+		menu "是的,我要最初",-,"結束對話",hd_end;
+		  if(zeny < $@hairdyepay) {
+		      mes "[服裝髮型造型師]";
+		      mes "對不起哎,你身上帶的現金好像不夠"+$@hairdyepay+"哦...";
+	              close;
+		      }
+		set zeny,zeny-$@hairdyepay;                     		
+                set @hairdye,0;
+		mes "[服裝髮型造型師]";
+		mes "好的,完成了...";
+                mes "目前款式是:"+@hairdye;
+                set hdpayed,1;
+                hd_end:
+	        close;
+
+
+        }
+ close;
+}
+
+//====================================================//
+
+function	script	Hair_hair	{
+        set hspayed,0;
+	mes "[服裝髮型造型師]";
+	mes "髮型也是一種極具個性化的藝術。";
+	mes "想要個完美的髮型嗎？";
+	mes "髮型總共有"+(Sex?$@maxhairestyleM:$@maxhairestyleF)+"種";
+	mes "特價優惠每次只需"+$@hstyledeignpay+"Z~~";
+	next;
+	switch(select("換個新造型","髮型最初型")) {
+
+	case 1:
+		mes "[服裝髮型造型師]";
+		mes "很好,請選擇一種方式...";
+		next;
+		switch(select("邊看邊選","輸入髮型編號","我的最愛"))
+		{
+		case 1:                                   
+                    while(1){
+                               
+                      if(@hstyle > 0 && @hstyle < (Sex?$@maxhairestyleM:$@maxhairestyleF))
+                        setarray .@hstyle_Menu$[1],"下一款","上一款","確定要設計髮型","加到我的最愛";
+                      else if(@hstyle <=0 )
+                        setarray .@hstyle_Menu$[1],"下一款","確定","加到我的最愛","";
+                      else
+                        setarray .@hstyle_Menu$[1],"上一款","確定","加到我的最愛","";
+                      
+                      set .@mselect,select(.@hstyle_Menu$[1],.@hstyle_Menu$[2],.@hstyle_Menu$[3],.@hstyle_Menu$[4],.@hstyle_Menu$[5]);
+                      if(.@mselect==1)set .@hsnum,1; if(.@mselect==2)set .@hsnum,2;
+                      if(.@mselect==3)set .@hsnum,3; if(.@mselect==4)set .@hsnum,4;
+                      if(.@mselect==5)set .@hsnum,5;
+                      if(.@hstyle_Menu$[.@hsnum]=="下一款"){
+                        set @hstyle,@hstyle+1;
+                        setlook 1,@hstyle;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@hstyle;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@hstyle_Menu$[.@hsnum]=="上一款"){
+                        set @hstyle,@hstyle-1;
+                        setlook 1,@hstyle;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@hstyle;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@hstyle_Menu$[.@hsnum]=="加到我的最愛")
+                       { 
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavhs"+.@i)==0 ?"無記錄":""+getd("myfavhs"+.@i));
+                        
+                        set .@tmpselect,select(.@soption$);
+                        setd("myfavhs"+.@tmpselect),@hstyle;        
+                        mes "[服裝髮型造型師]";
+                        mes "已經儲存";
+                        next;                    
+                       } 
+                      else
+                       {
+		        if(zeny < $@hstyledeignpay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hstyledeignpay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hstyledeignpay;
+                        mes "[服裝髮型造型師]";
+                        mes "已經幫你設計好髮型了，謝謝光臨!";
+                        set hspayed,1;
+                        Close;
+                       } 
+                     }
+                 break;  
+		case 2:
+			mes "[服裝髮型造型師]";
+			mes "請輸入一個大於0,小於"+(Sex?$@maxhairestyleM:$@maxhairestyleF)+"的數字";
+			next;
+			do {
+			input @hstyle;
+			if((@hstyle <0) || (@hstyle >(Sex?$@maxhairestyleM:$@maxhairestyleF))) {
+			mes "[服裝髮型造型師]";
+			mes "對不起,輸入的範圍有誤.請重新輸入";
+                        next;
+                        continue;
+			}
+			setlook 1,@hstyle;
+			mes "[服裝髮型造型師]";
+                        mes "你輸入的款式是:"+@hstyle;
+			mes "你決定要這款了嗎?";
+			next;
+                        set .@tmpselect,select("確定","重新輸入");
+                        if(.@tmpselect==1)break;
+			} while(@hstyle <0) || (@hstyle >(Sex?$@maxhairestyleM:$@maxhairestyleF) ||.@tmpselect==2);
+		        if(zeny < $@hstyledeignpay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hstyledeignpay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hstyledeignpay;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set hspayed,1;
+                        Close;
+			break;
+                 case 3:
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavhs"+.@i)==0 ?"無記錄":""+getd("myfavhs"+.@i));
+                        do {
+                        set .@tmpselect,select(.@soption$);
+ 			mes "[服裝髮型造型師]";
+                        mes "你選的款式是:"+getd("myfavhs"+.@tmpselect);
+			mes "你決定要這款了嗎?";
+                        set @hstyle,getd("myfavhs"+.@tmpselect);
+                        setlook 1,@hstyle;
+                        next;
+                        } while(select("確定","重選")==2);
+		        if(zeny < $@hstyledeignpay) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@hstyledeignpay+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@hstyledeignpay;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set hspayed,1;
+                        Close;
+                      break;
+		}
+
+	case 2:
+		mes "[服裝髮型造型師]";
+		mes "是否確定要把髮型還原成最初的呢?";
+		next;
+                setlook 1,0;
+		menu "是的,我要最初",-,"結束對話",hs_end;
+
+		  if(zeny < $@hstyledeignpay) {
+		      mes "[服裝髮型造型師]";
+		      mes "對不起哎,你身上帶的現金好像不夠"+$@hstyledeignpay+"哦...";
+	              close;
+		      }
+		set zeny,zeny-$@hstyledeignpay;                     
+                set @hstyle,0;
+		mes "[服裝髮型造型師]";
+		mes "好的,完成了...";
+                mes "目前款式是:"+@hstyle;
+                set hspayed,1;
+                hs_end:
+	        close;
+
+
+        }
+ close;
+}
+
+
+
+
+
+//====================================================//
+
+function	script	clothe_dye	{
+
+	if(costume_body > 0) { goto maxcdye2; }
+        set cdpayed,0;
+	mes "[服裝髮型造型師]";
+	mes "歡迎光臨~~";
+	mes "有很多選擇哦~但是選了就不要後悔";
+	mes "衣服總共有"+$@maxcdye+"色";
+	mes "每次染衣的費用為"+$@cdyecost+"Z";
+	mes "想染成什麼樣呢？";
+	next;
+	switch(select("換個新衣服","衣服最初色")) {
+
+	case 1:
+		mes "[服裝髮型造型師]";
+		mes "很好,請選擇一種方式...";
+		next;
+		switch(select("邊看邊選","輸入衣服顏色代號","我的最愛"))
+		{
+		case 1:                                   
+                    while(1){
+                               
+                      if(@cdye > 0 && @cdye < $@maxcdye)
+                        setarray .@cdye_Menu$[1],"下一款","上一款","確定要染","加到我的最愛";
+                      else if(@cdye <=0 )
+                        setarray .@cdye_Menu$[1],"下一款","確定","加到我的最愛","";
+                      else
+                        setarray .@cdye_Menu$[1],"上一款","確定","加到我的最愛","";
+                      
+                      set .@mselect,select(.@cdye_Menu$[1],.@cdye_Menu$[2],.@cdye_Menu$[3],.@cdye_Menu$[4],.@cdye_Menu$[5]);
+                      if(.@mselect==1)set .@cdnum,1; if(.@mselect==2)set .@cdnum,2;
+                      if(.@mselect==3)set .@cdnum,3; if(.@mselect==4)set .@cdnum,4;
+                      if(.@mselect==5)set .@cdnum,5;
+                      if(.@cdye_Menu$[.@cdnum]=="下一款"){
+                        set @cdye,@cdye+1;
+                        setlook 7,@cdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@cdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@cdye_Menu$[.@cdnum]=="上一款"){
+                        set @cdye,@cdye-1;
+                        setlook 7,@cdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@cdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@cdye_Menu$[.@cdnum]=="加到我的最愛")
+                       { 
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavcd_Clothes"+.@i)==0 ?"無記錄":""+getd("myfavcd_Clothes"+.@i));
+                        
+                        set .@tmpselect22,select(.@soption$);
+                        setd("myfavcd_Clothes"+.@tmpselect22),@cdye;        
+                        mes "[服裝髮型造型師]";
+                        mes "已經儲存";
+                        next;                    
+                       } 
+                      else
+                       {
+		        if(zeny < $@cdyecost) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@cdyecost;
+                        mes "[服裝髮型造型師]";
+                        mes "已經幫你染好了，謝謝光臨!";
+                        set cdpayed,1;
+                        Close;
+                       } 
+                     }
+                 break;  
+		case 2:
+			mes "[服裝髮型造型師]";
+			mes "請輸入一個大於0,小於"+$@maxcdye+"的數字";
+			next;
+			do {
+			input @cdye;
+			if((@cdye <0) || (@cdye >$@maxcdye)) {
+			mes "[服裝髮型造型師]";
+			mes "對不起,輸入的範圍有誤.請重新輸入";
+                        next;
+                        continue;
+			}
+			setlook 7,@cdye;
+			mes "[服裝髮型造型師]";
+                        mes "你輸入的款式是:"+@cdye;
+			mes "你決定要這款了嗎?";
+			next;
+                        set .@tmpselect22,select("確定","重新輸入");
+                        if(.@tmpselect22==1)break;
+			} while(@cdye <0) || (@cdye >$@maxcdye ||.@tmpselect22==2);
+		        if(zeny < $@cdyecost) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@cdyecost;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set cdpayed,1;
+                        Close;
+			break;
+                 case 3:
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavcd_Clothes"+.@i)==0 ?"無記錄":""+getd("myfavcd_Clothes"+.@i));
+                        do {
+                        set .@tmpselect22,select(.@soption$);
+ 			mes "[服裝髮型造型師]";
+                        mes "你選的款式是:"+getd("myfavcd_Clothes"+.@tmpselect22);
+			mes "你決定要這款了嗎?";
+                        set @cdye,getd("myfavcd_Clothes"+.@tmpselect22);
+                        setlook 7,@cdye;
+                        next;
+                        } while(select("確定","重選")==2);
+		        if(zeny < $@cdyecost) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@cdyecost;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set cdpayed,1;
+			close;                       
+                      break;
+		}
+
+	case 2:
+		mes "[服裝髮型造型師]";
+		mes "是否確定要把衣服顏色還原成最基本色呢?";
+		next;
+                setlook 7,0;
+		menu "是的,我要最初",-,"結束對話",cd_end;
+		  if(zeny < $@cdyecost) {
+		      mes "[服裝髮型造型師]";
+		      mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	              close;
+		      }
+		set zeny,zeny-$@cdyecost;                     		
+                set @cdye,0;
+		mes "[服裝髮型造型師]";
+		mes "好的,完成了...";
+                mes "目前款式是:"+@cdye;
+                set cdpayed,1;
+                cd_end:
+	        close;
+        }
+
+
+	maxcdye2:
+        set cdpayed,0;
+	mes "[服裝髮型造型師]";
+	mes "歡迎光臨~~";
+	mes "有很多選擇哦~但是選了就不要後悔";
+	mes "衣服總共有"+$@maxcdye2+"色";
+	mes "每次染衣的費用為"+$@cdyecost+"Z";
+	mes "想染成什麼樣呢？";
+	next;
+	switch(select("換個新衣服","衣服最初色")) {
+
+	case 1:
+		mes "[服裝髮型造型師]";
+		mes "很好,請選擇一種方式...";
+		next;
+		switch(select("邊看邊選","輸入衣服顏色代號"))
+		{
+		case 1:                                   
+                    while(1){
+                               
+                      if(@cdye > 0 && @cdye < $@maxcdye2)
+                        setarray .@cdye_Menu$[1],"下一款","上一款","確定要染","加到我的最愛";
+                      else if(@cdye <=0 )
+                        setarray .@cdye_Menu$[1],"下一款","確定","加到我的最愛","";
+                      else
+                        setarray .@cdye_Menu$[1],"上一款","確定","加到我的最愛","";
+                      
+                      set .@mselect,select(.@cdye_Menu$[1],.@cdye_Menu$[2],.@cdye_Menu$[3],.@cdye_Menu$[4],.@cdye_Menu$[5]);
+                      if(.@mselect==1)set .@cdnum,1; if(.@mselect==2)set .@cdnum,2;
+                      if(.@mselect==3)set .@cdnum,3; if(.@mselect==4)set .@cdnum,4;
+                      if(.@mselect==5)set .@cdnum,5;
+                      if(.@cdye_Menu$[.@cdnum]=="下一款"){
+                        set @cdye,@cdye+1;
+                        setlook 7,@cdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@cdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@cdye_Menu$[.@cdnum]=="上一款"){
+                        set @cdye,@cdye-1;
+                        setlook 7,@cdye;
+                        mes "[服裝髮型造型師]";
+                        mes "目前款式是:"+@cdye;
+                        mes "覺得這款如何?";
+                        next;
+                       }
+                      else if(.@cdye_Menu$[.@cdnum]=="加到我的最愛")
+                       { 
+                        set .@soption$,"";                 
+                        for(set .@i,1;.@i<=$@maxFav;set .@i,.@i+1) 
+                          set .@soption$,.@soption$+(.@i>1 ? ":":"")+(getd("myfavcd_Clothes"+.@i)==0 ?"無記錄":""+getd("myfavcd_Clothes"+.@i));
+                        
+                        set .@tmpselect22,select(.@soption$);
+                        setd("myfavcd_Clothes"+.@tmpselect22),@cdye;        
+                        mes "[服裝髮型造型師]";
+                        mes "已經儲存";
+                        next;                    
+                       } 
+                      else
+                       {
+		        if(zeny < $@cdyecost) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@cdyecost;
+                        mes "[服裝髮型造型師]";
+                        mes "已經幫你染好了，謝謝光臨!";
+                        set cdpayed,1;
+                        Close;
+                       } 
+                     }
+                 break;  
+		case 2:
+			mes "[服裝髮型造型師]";
+			mes "請輸入一個大於0,小於"+$@maxcdye2+"的數字";
+			next;
+			do {
+			input @cdye;
+			if((@cdye <0) || (@cdye >$@maxcdye2)) {
+			mes "[服裝髮型造型師]";
+			mes "對不起,輸入的範圍有誤.請重新輸入";
+                        next;
+                        continue;
+			}
+			setlook 7,@cdye;
+			mes "[服裝髮型造型師]";
+                        mes "你輸入的款式是:"+@cdye;
+			mes "你決定要這款了嗎?";
+			next;
+                        set .@tmpselect22,select("確定","重新輸入");
+                        if(.@tmpselect22==1)break;
+			} while(@cdye <0) || (@cdye >$@maxcdye2 ||.@tmpselect22==2);
+		        if(zeny < $@cdyecost) {
+		          mes "[服裝髮型造型師]";
+		          mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	                  close;
+		          }
+		        set zeny,zeny-$@cdyecost;
+			mes "[服裝髮型造型師]";
+			mes "完成了,希望你對它也比較滿意吧!";
+                        set cdpayed,1;
+                        Close;
+			break;
+		}
+
+	case 2:
+		mes "[服裝髮型造型師]";
+		mes "是否確定要把衣服顏色還原成最基本色呢?";
+		next;
+                setlook 7,0;
+		menu "是的,我要最初",-,"結束對話",cd_end;
+		  if(zeny < $@cdyecost) {
+		      mes "[服裝髮型造型師]";
+		      mes "對不起哎,你身上帶的現金好像不夠"+$@cdyecost+"哦...";
+	              close;
+		      }
+		set zeny,zeny-$@cdyecost;                     		
+                set @cdye,0;
+		mes "[服裝髮型造型師]";
+		mes "好的,完成了...";
+                set cdpayed,1;
+	        close;
+        }
+
+}
+
+//-------------------------職業幻裝
+function	script	costume_body2	{
+
+	mes "[服裝髮型造型師]";
+	mes "你想要哪種幻裝服務？";
+	next;
+	switch(select("恢復本來職業外觀","選擇幻化職業外觀")) {
+
+	case 1:
+	setlook LOOK_BODY2,class;
+	close;
+
+	case 2:
+	mes "[服裝髮型造型師]";
+	mes "你想要變幻哪種職業外觀？";
+	next;
+	switch(select("進階二轉職業","三轉職業","JRO三轉職業","四轉職業","擴充職業")) {
+
+		case 1:
+		mes "[服裝髮型造型師]";
+		mes "你想要變幻哪種進階二轉職業外觀？";
+		next;
+		switch(select("騎士領主","神官","超魔導師","神工匠","神射手","十字刺客","聖殿十字軍","武術宗師","智者","神行太保","創造者","搞笑藝人","冷豔舞姬")) {
+
+			case 1:
+			setlook LOOK_BODY2,4008;
+			close;
+			case 2:
+			setlook LOOK_BODY2,4009;
+			close;
+			case 3:
+			setlook LOOK_BODY2,4010;
+			close;
+			case 4:
+			setlook LOOK_BODY2,4011;
+			close;
+			case 5:
+			setlook LOOK_BODY2,4012;
+			close;
+			case 6:
+			setlook LOOK_BODY2,4013;
+			close;
+			case 7:
+			setlook LOOK_BODY2,4015;
+			close;
+			case 8:
+			setlook LOOK_BODY2,4016;
+			close;
+			case 9:
+			setlook LOOK_BODY2,4017;
+			close;
+			case 10:
+			setlook LOOK_BODY2,4018;
+			close;
+			case 11:
+			setlook LOOK_BODY2,4019;
+			close;
+			case 12:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4020;
+			close;
+			case 13:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4021;
+			close;
+			}
+
+		case 2:
+		mes "[服裝髮型造型師]";
+		mes "你想要變幻哪種三轉職業外觀？";
+		next;
+		switch(select("盧恩騎士","咒術士","遊俠","大主教","機械工匠","十字斬首者","皇家禁衛隊","妖術師","宮廷樂師","浪姬舞者","修羅","基因學者","魅影追蹤者")) {
+
+			case 1:
+			setlook LOOK_BODY2,4060;
+			close;
+			case 2:
+			setlook LOOK_BODY2,4061;
+			close;
+			case 3:
+			setlook LOOK_BODY2,4062;
+			close;
+			case 4:
+			setlook LOOK_BODY2,4063;
+			close;
+			case 5:
+			setlook LOOK_BODY2,4064;
+			close;
+			case 6:
+			setlook LOOK_BODY2,4065;
+			close;
+			case 7:
+			setlook LOOK_BODY2,4073;
+			close;
+			case 8:
+			setlook LOOK_BODY2,4074;
+			close;
+			case 9:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4075;
+			close;
+			case 10:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4076;
+			close;
+			case 11:
+			setlook LOOK_BODY2,4077;
+			close;
+			case 12:
+			setlook LOOK_BODY2,4078;
+			close;
+			case 13:
+			setlook LOOK_BODY2,4079;
+			close;
+			}
+
+		case 3:
+		mes "[服裝髮型造型師]";
+		mes "你想要變幻哪種JRO三轉職業外觀？";
+		next;
+		switch(select("盧恩騎士","機械工匠","十字斬首者","咒術士","大主教","遊俠","皇家禁衛隊","基因學者","魅影追蹤者","妖術師","修羅","宮廷樂師","浪姬舞者")) {
+
+			case 1:
+			setlook LOOK_BODY2,4332;
+			close;
+			case 2:
+			setlook LOOK_BODY2,4333;
+			close;
+			case 3:
+			setlook LOOK_BODY2,4334;
+			close;
+			case 4:
+			setlook LOOK_BODY2,4335;
+			close;
+			case 5:
+			setlook LOOK_BODY2,4336;
+			close;
+			case 6:
+			setlook LOOK_BODY2,4337;
+			close;
+			case 7:
+			setlook LOOK_BODY2,4338;
+			close;
+			case 8:
+			setlook LOOK_BODY2,4339;
+			close;
+			case 9:
+			setlook LOOK_BODY2,4340;
+			close;
+			case 10:
+			setlook LOOK_BODY2,4341;
+			close;
+			case 11:
+			setlook LOOK_BODY2,4342;
+			close;
+			case 12:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4343;
+			close;
+			case 13:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4344;
+			close;
+			}
+
+		case 4:
+		mes "[服裝髮型造型師]";
+		mes "你想要變幻哪種四轉職業外觀？";
+		next;
+		switch(select("盧恩龍爵","機械神匠","十字影武","禁咒魔導士","樞機主教","風鷹狩獵者","帝國聖衛軍","生命締造者","深淵追跡者","元素支配者","聖裁者","天籟頌者","樂之舞靈")) {
+
+			case 1:
+			setlook LOOK_BODY2,4252;
+			close;
+			case 2:
+			setlook LOOK_BODY2,4253;
+			close;
+			case 3:
+			setlook LOOK_BODY2,4254;
+			close;
+			case 4:
+			setlook LOOK_BODY2,4255;
+			close;
+			case 5:
+			setlook LOOK_BODY2,4256;
+			close;
+			case 6:
+			setlook LOOK_BODY2,4257;
+			close;
+			case 7:
+			setlook LOOK_BODY2,4258;
+			close;
+			case 8:
+			setlook LOOK_BODY2,4259;
+			close;
+			case 9:
+			setlook LOOK_BODY2,4260;
+			close;
+			case 10:
+			setlook LOOK_BODY2,4261;
+			close;
+			case 11:
+			setlook LOOK_BODY2,4262;
+			close;
+			case 12:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4263;
+			close;
+			case 13:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4264;
+			close;
+			}
+
+		case 5:
+		mes "[服裝髮型造型師]";
+		mes "你想要變幻哪種擴充職業外觀？";
+		next;
+		switch(select(
+		"超級初學者","神槍手","忍者","跆拳少年",
+		"拳聖","悟靈士",
+		"進階超級初學者","日影忍者","月影忍者","反叛者","召喚師","拳皇","獵靈士",
+		"天帝","契靈士","流浪忍者","疾風忍者","夜衛隊","終極初學者","魂靈師")) {
+
+			case 1:
+			setlook LOOK_BODY2,23;
+			close;
+			case 2:
+			setlook LOOK_BODY2,24;
+			close;
+			case 3:
+			setlook LOOK_BODY2,25;
+			close;
+			case 4:
+			setlook LOOK_BODY2,4046;
+			close;
+
+			case 5:
+			setlook LOOK_BODY2,4047;
+			close;
+			case 6:
+			setlook LOOK_BODY2,4049;
+			close;
+
+			case 7:
+			setlook LOOK_BODY2,4190;
+			close;
+			case 8:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4211;
+			close;
+			case 9:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4212;
+			close;
+			case 10:
+			setlook LOOK_BODY2,4215;
+			close;
+			case 11:
+			setlook LOOK_BODY2,4218;
+			close;
+			case 12:
+			setlook LOOK_BODY2,4239;
+			close;
+			case 13:
+			setlook LOOK_BODY2,4240;
+			close;
+
+			case 14:
+			setlook LOOK_BODY2,4302;
+			close;
+			case 15:
+			setlook LOOK_BODY2,4303;
+			close;
+			case 16:
+			if (sex == 0) {
+			mes "[服裝髮型造型師]";
+			mes "男性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4304;
+			close;
+			case 17:
+			if (sex == 1) {
+			mes "[服裝髮型造型師]";
+			mes "女性才能幻化這個外觀哦";
+			close;
+			}
+			setlook LOOK_BODY2,4305;
+			close;
+			case 18:
+			setlook LOOK_BODY2,4306;
+			close;
+			case 19:
+			setlook LOOK_BODY2,4307;
+			close;
+			case 20:
+			setlook LOOK_BODY2,4308;
+			close;
+
+			}
+		}
+	}
+}
+
+

@@ -1,0 +1,25 @@
+trinity,100,105,4	script	王卡碎片兌換機	564,{
+
+	mes "[王卡碎片兌換機]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("兌換 一般王卡:兌換 副本王卡")){
+
+
+	case 1:
+		close2;
+		callshop "王卡碎片#1";
+		end;
+
+	case 2:
+		close2;
+		callshop "王卡碎片#2";
+		end;
+	}
+
+OnInit:
+	waitingroom "王卡碎片兌換機",0;
+	end;	
+}
+
+

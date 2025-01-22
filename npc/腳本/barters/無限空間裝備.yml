@@ -1,0 +1,126 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#無限空間裝備
+   - Name: 遺跡管理者
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_HUMAN_02
+     Items:
+       - Index: 0
+         Item: Unlimited_Violin
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 1
+         Item: Unlimited_Rope
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 2
+         Item: Unlimited_Handed_Staffs
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 3
+         Item: Unlimited_Shooter
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 4
+         Item: Unlimited_Huuma_Bird_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 5
+         Item: Unlimited_Chain
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 6
+         Item: Unlimited_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 7
+         Item: Unlimited_Slayer
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 8
+         Item: Unlimited_Axe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 9
+         Item: Unlimited_Knife
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 50
+       - Index: 10
+         Item: Infinite_Ancient_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 100
+       - Index: 11
+         Item: Infinite_Ancient_Decoration
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 100
+       - Index: 12
+         Item: Infinite_Cracking_Cloak
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 100
+       - Index: 13
+         Item: Infinite_Cracked_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Damage_Stone
+             Amount: 100

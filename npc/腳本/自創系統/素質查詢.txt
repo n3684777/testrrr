@@ -1,0 +1,44 @@
+﻿bago_01,38,67,6	script	素質查詢	10083,{
+
+	mes "★★★一般類型★★★";
+	mes "MaxHP + "+ (readparam(bMaxHPrate)-100) +"%";
+	mes "MaxSP + "+ (readparam(bMaxSPrate)-100) +"%";
+	mes "MaxAP + "+ (readparam(bMaxAP)-200)+"";
+	mes "MaxAP + "+ (readparam(bMaxAPrate)-100) +"%";
+	mes "技能延遲 - "+readparam(bDelayrate)+"%";
+	mes "變動詠唱 - "+readparam(bCastrate)+"%";
+	mes "固定詠唱 "+readparam(bFixedCastrate)+"%";
+	mes "固定詠唱 "+readparam(bFixedCast)+" 毫秒(ms)";
+	mes "攻擊速度 + "+readparam(bAspdRate)+"%";
+	mes "冷卻時間 "+readparam(bSkillCooldown)+" 毫秒(ms)";
+	mes "所有技能傷害 "+readparam(bSkillAtk)+"%";
+	mes " ";
+	mes "★★★物理類型★★★";
+	mes "Atk + "+readparam(bAtkRate)+"%";
+	mes "P.Atk + "+(readparam(bPAtkRate)-100)+"";
+	mes "C.Rate + "+(readparam(bCRateRate)-100)+"%";
+	mes "近距離傷害 "+readparam(bShortAtkRate) +"%";
+	mes "遠距離傷害 "+readparam(bLongAtkRate) +"%";
+	mes "爆擊傷害 + "+readparam(bCritAtkRate) +"%";
+	mes " ";
+	mes "★★★魔法類型★★★";
+	mes "Matk + "+(readparam(bMatkRate)-100) +"%";
+	mes "S.Matk + "+(readparam(bSMatkRate)-100) +"%";
+	close;
+
+OnInit:
+	waitingroom "素質查詢",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+

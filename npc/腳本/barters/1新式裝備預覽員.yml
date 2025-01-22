@@ -1,0 +1,422 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+#時序象限頭冠
+   - Name: 時序象限頭冠#01
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 1
+         Item: Time_DM_R_Crown_DK
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: Time_DM_R_Crown_IG
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: Time_DM_R_Crown_MT
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: Time_DM_R_Crown_BO
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: Time_DM_R_Crown_SHC
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: Time_DM_R_Crown_ABC
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: Time_DM_R_Crown_AG
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: Time_DM_R_Crown_EM
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: Time_DM_R_Crown_CD
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: Time_DM_R_Crown_IQ
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 11
+         Item: Time_DM_R_Crown_WH
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 12
+         Item: Time_DM_R_Crown_TR
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 13
+         Item: Time_DM_R_Crown_SS
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 14
+         Item: Time_DM_R_Crown_NW
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 15
+         Item: Time_DM_R_Crown_SKE
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 16
+         Item: Time_DM_R_Crown_SOA
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 17
+         Item: Time_DM_R_Crown_HN
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 18
+         Item: Time_DM_R_Crown_SH
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+#時序象限武器
+   - Name: 時序象限武器#01
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 1
+         Item: Dimen_DK_T_Sword
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: Dimen_SHC_Katar
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: Dimen_SHC_Cakram
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: Dimen_MT_Axe
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: Dimen_DK_Lance
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: Dimen_AG_Staff
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: Dimen_AG_Rod
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: Dimen_SS_Humma
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 9
+         Item: Dimen_SS_Wheel
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 10
+         Item: Dimen_ABC_Bow
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 11
+         Item: Dimen_WH_C_Bow
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 12
+         Item: Dimen_WH_Bow
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 13
+         Item: Dimen_NW_Rifle
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 14
+         Item: Dimen_NW_Launcher
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 15
+         Item: Dimen_IG_Sword
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 16
+         Item: Dimen_BO_Sword
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 17
+         Item: Dimen_HN_Sword
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 18
+         Item: Dimen_ABC_Knife
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 19
+         Item: Dimen_IG_Spear
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 20
+         Item: Dimen_EM_M_Book
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 21
+         Item: Dimen_EM_S_Book
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 22
+         Item: Dimen_CD_Bible
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 23
+         Item: Dimen_SKE_M_Book
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 24
+         Item: Dimen_SKE_S_Book
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 25
+         Item: Dimen_CD_Rod
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 26
+         Item: Dimen_SOA_Stick
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 27
+         Item: Dimen_SOA_Rod
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 28
+         Item: Dimen_HN_Rod
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 29
+         Item: Dimen_SH_Foxtail
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 30
+         Item: Dimen_SH_F_Model
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 31
+         Item: Dimen_IQ_Knuckle
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 32
+         Item: Dimen_IQ_Claw
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 33
+         Item: Dimen_TR_Vilolin
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 34
+         Item: Dimen_TR_Ribbon
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 35
+         Item: Dimen_TR_Harp
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 36
+         Item: Dimen_TR_Rope
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 37
+         Item: Dimen_MT_Mace
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 38
+         Item: Dimen_BO_Hall
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+#生命循環斗篷
+   - Name: 生命循環斗篷#01
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 1
+         Item: Season_Hood_Spring
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 2
+         Item: Season_Hood_Summer
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 3
+         Item: Season_Hood_Autumn
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 4
+         Item: Season_Hood_Winter
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 5
+         Item: Circul_Of_Life_Spring
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 6
+         Item: Circul_Of_Life_Summer
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 7
+         Item: Circul_Of_Life_Autumn
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+       - Index: 8
+         Item: Circul_Of_Life_Winter
+         RequiredItems:
+           - Index: 1
+             Item: Unknown_Item_65002
+             Amount: 1
+
+
+
+
+
+
+

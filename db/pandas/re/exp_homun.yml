@@ -1,0 +1,183 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Homunculus Experience Database
+###########################################################################
+#
+# Homunculus Experience Settings
+#
+###########################################################################
+# - Level   Level required.
+#   Exp     Experience required for the next level.
+###########################################################################
+
+Header:
+  Type: HOMUN_EXP_DB
+  Version: 1
+
+Body:
+  - Level: 175
+    Exp: 107398500
+  - Level: 176
+    Exp: 121575102
+  - Level: 177
+    Exp: 137623015
+  - Level: 178
+    Exp: 155789253
+  - Level: 179
+    Exp: 176353434
+  - Level: 180
+    Exp: 199632087
+  - Level: 181
+    Exp: 225983522
+  - Level: 182
+    Exp: 255813347
+  - Level: 183
+    Exp: 289580709
+  - Level: 184
+    Exp: 327805362
+  - Level: 185
+    Exp: 371075670
+  - Level: 186
+    Exp: 420057658
+  - Level: 187
+    Exp: 475505269
+  - Level: 188
+    Exp: 538271964
+  - Level: 189
+    Exp: 609323863
+  - Level: 190
+    Exp: 689754613
+  - Level: 191
+    Exp: 780802221
+  - Level: 192
+    Exp: 883868114
+  - Level: 193
+    Exp: 1000538705
+  - Level: 194
+    Exp: 1132609814
+  - Level: 195
+    Exp: 1282114309
+  - Level: 196
+    Exp: 1451353398
+  - Level: 197
+    Exp: 1642932046
+  - Level: 198
+    Exp: 1859799076
+  - Level: 199
+    Exp: 2105283401
+  - Level: 200
+    Exp: 199243117
+  - Level: 201
+    Exp: 199840846
+  - Level: 202
+    Exp: 200440369
+  - Level: 203
+    Exp: 201041690
+  - Level: 204
+    Exp: 201644815
+  - Level: 205
+    Exp: 202249749
+  - Level: 206
+    Exp: 202856498
+  - Level: 207
+    Exp: 203465067
+  - Level: 208
+    Exp: 204075463
+  - Level: 209
+    Exp: 204687689
+  - Level: 210
+    Exp: 205301752
+  - Level: 211
+    Exp: 205917657
+  - Level: 212
+    Exp: 206535410
+  - Level: 213
+    Exp: 207155016
+  - Level: 214
+    Exp: 207776481
+  - Level: 215
+    Exp: 208399810
+  - Level: 216
+    Exp: 209025009
+  - Level: 217
+    Exp: 209652084
+  - Level: 218
+    Exp: 210281040
+  - Level: 219
+    Exp: 210911883
+  - Level: 220
+    Exp: 257312497
+  - Level: 221
+    Exp: 313921247
+  - Level: 222
+    Exp: 382983921
+  - Level: 223
+    Exp: 467240383
+  - Level: 224
+    Exp: 570033267
+  - Level: 225
+    Exp: 695440586
+  - Level: 226
+    Exp: 848437515
+  - Level: 227
+    Exp: 1035093768
+  - Level: 228
+    Exp: 1262814396
+  - Level: 229
+    Exp: 1540633564
+  - Level: 230
+    Exp: 1879572947
+  - Level: 231
+    Exp: 2293078996
+  - Level: 232
+    Exp: 2797556375
+  - Level: 233
+    Exp: 3413018777
+  - Level: 234
+    Exp: 4163882908
+  - Level: 235
+    Exp: 5079937147
+  - Level: 236
+    Exp: 6197523319
+  - Level: 237
+    Exp: 7560978450
+  - Level: 238
+    Exp: 9224393708
+  - Level: 239
+    Exp: 11253760324
+  - Level: 240
+    Exp: 13729587595
+  - Level: 241
+    Exp: 16750096866
+  - Level: 242
+    Exp: 20435118176
+  - Level: 243
+    Exp: 24930844175
+  - Level: 244
+    Exp: 30415629893
+  - Level: 245
+    Exp: 37107068470
+  - Level: 246
+    Exp: 45270623533
+  - Level: 247
+    Exp: 55230160710
+  - Level: 248
+    Exp: 67380796066
+  - Level: 249
+    Exp: 82204571200

@@ -1,0 +1,648 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#道館頭飾(頭上)
+   - Name: 道館頭飾(頭上)
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: C_Dragonhelm_Gold
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 2
+         Item: C_Dragonhelm_Silver
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 3
+         Item: C_Dragonhelm_Copper
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_23196
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_23197
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_23198
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_23199
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_23286
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 9
+         Item: C_Head_Item_23287
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 10
+         Item: C_Head_Item_23288
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+
+       - Index: 11
+         Item: C_Head_Item_23289
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 12
+         Item: C_Head_Item_44379
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 13
+         Item: C_Head_Item_44380
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 14
+         Item: C_Head_Item_44381
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 15
+         Item: C_Head_Item_44382
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 16
+         Item: C_Head_Item_44394
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 17
+         Item: C_Head_Item_44395
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 18
+         Item: C_Head_Item_44396
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 19
+         Item: C_Head_Item_44397
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+       - Index: 20
+         Item: C_Head_Item_23458
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_1
+             Amount: 1
+
+#道館頭飾(頭中)
+   - Name: 道館頭飾(頭中)
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: C_Head_Item_23372
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 2
+         Item: C_Head_Item_23246
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 3
+         Item: C_Head_Item_23247
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_23249
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_23315
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_23316
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_23317
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_23318
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 9
+         Item: C_Head_Item_23319
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 10
+         Item: C_Head_Item_23320
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+
+       - Index: 11
+         Item: C_Head_Item_23321
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 12
+         Item: C_Head_Item_23322
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 13
+         Item: C_Head_Item_23323
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 14
+         Item: C_Head_Item_23324
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 15
+         Item: C_Head_Item_23325
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 16
+         Item: C_Head_Item_23245
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 17
+         Item: C_Head_Item_23137
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 18
+         Item: C_Head_Item_22653
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 19
+         Item: C_Head_Item_44802
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 20
+         Item: C_Head_Item_44803
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 21
+         Item: C_Head_Item_44804
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 22
+         Item: C_Head_Item_44805
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 23
+         Item: C_Head_Item_44806
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 24
+         Item: C_Head_Item_44807
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+
+
+#道館頭飾(頭下)
+   - Name: 道館頭飾(頭下)
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: C_Head_Item_44838
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 2
+         Item: C_Head_Item_44851
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 3
+         Item: C_Head_Item_44782
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 4
+         Item: C_Head_Item_44742
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 5
+         Item: C_Head_Item_44743
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 6
+         Item: C_Head_Item_22725
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 7
+         Item: C_Head_Item_22726
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+       - Index: 8
+         Item: C_Head_Item_a013
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_2
+             Amount: 1
+
+       - Index: 9
+         Item: C_Head_Item_23284
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 10
+         Item: C_Head_Item_23934
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 11
+         Item: C_Head_Item_23935
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 12
+         Item: C_Head_Item_23936
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 13
+         Item: C_Head_Item_23937
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 14
+         Item: C_Head_Item_23938
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 15
+         Item: C_Head_Item_23939
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 16
+         Item: C_Head_Item_44653
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 17
+         Item: C_Head_Item_44654
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 18
+         Item: C_Head_Item_44655
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 19
+         Item: C_Head_Item_44656
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 20
+         Item: C_Head_Item_44657
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+
+       - Index: 21
+         Item: C_Head_Item_23902
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 22
+         Item: C_Head_Item_23903
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 23
+         Item: C_Head_Item_23904
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 24
+         Item: C_Head_Item_23905
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 25
+         Item: C_Head_Item_23906
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+
+       - Index: 26
+         Item: C_Head_Item_44726
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 27
+         Item: C_Head_Item_44727
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 28
+         Item: C_Head_Item_44728
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 29
+         Item: C_Head_Item_44729
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 30
+         Item: C_Head_Item_44730
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+       - Index: 31
+         Item: C_Head_Item_44731
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: COSTUME_Piece_3
+             Amount: 1
+
+
+
+
+
+
+
+
+
+

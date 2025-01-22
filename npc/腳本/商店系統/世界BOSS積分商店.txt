@@ -1,0 +1,75 @@
+﻿
+-	shop	#Worl_Boss_Points01	-1,512:-1
+//腳本開始
+trinity,44,108,6	script	世界BOSS積分商城	564,{
+	//mes "此商店只能使用 [ 世界BOSS積分 ] 進行交易"; 
+	//mes "您目前一共有世界BOSS積分 [ "+#Worl_Boss_Points01+" ] 點"; 
+
+	message strcharinfo(0),"此商店只能使用[ 世界BOSS積分 ]進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在還有世界BOSS積分 [ "+#Worl_Boss_Points01+" ] 點."; //有多少點數
+
+	callshop "#Worl_Boss_Points01",1; 
+	npcshopattach "#Worl_Boss_Points01"; 
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; 
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > #Worl_Boss_Points01) dispbottom "抱歉!您沒用足夠的 [世界BOSS積分] 點數";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買 [ "+@bought_quantity[.@i]+" ] 個 [ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除點數
+		set #Worl_Boss_Points01,#Worl_Boss_Points01 - @totalcost; 
+		dispbottom "使用了 [ "+@totalcost+" ] 點, 還剩餘 [ "+#Worl_Boss_Points01+" ] 點";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+	//waitingroom "世界BOSS積分商店",0;
+//---------------------------------------------------
+	//設置商品的ID
+	setarray .Commodity[0],70111,70112,61036,80021,80022,80023,80086,80087,80088	//材料
+	,9311,9312	//寵物蛋
+	,20621,480223,480295,480287,480247;	//服飾
+
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],1000,10000,3000,600,600,600,1000,1000,1000	//材料
+	,60000,60000	//寵物蛋
+	,80000,50000,30000,30000,30000;	//服飾
+
+// --------------------------------------------------
+//初始化商店中物品
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "#Worl_Boss_Points01",512;
+		npcshopadditem "#Worl_Boss_Points01",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	end;
+}

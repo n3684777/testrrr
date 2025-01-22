@@ -1,0 +1,97 @@
+﻿vdistrict1,62,23,6	script	影子M.附魔服務員	10154,{
+
+	mes "[影子M.附魔服務員]";
+	mes "<TIPBOX>影子M職業套裝資訊<INFO>31001</INFO></TIPBOX>";
+	mes "消耗 [<ITEM>影子精髓<INFO>1001253</INFO></ITEM>]";
+	mes "就能為各種影子M系列裝備進行插槽式強化附魔";
+	mes "請選擇你要附魔的裝備";
+	next;
+	switch(select("影子大師:影子M.盧恩龍爵:影子M.帝國守衛:影子M.十字暗影:影子M.深淵追蹤者:影子M.樞機主教:影子M.聖裁者:影子M.機甲神匠:影子M.生命締造者:影子M.風鷹狩獵者:影子M.天籟頌者&月之舞靈:影子M.禁咒魔導士:影子M.元素支配者:影子M.夜衛隊:影子M.魂靈師:影子M.不知火&蜃氣樓:影子M.天帝:影子M.靈導士:影子M.頂級初學者:取消")){
+
+	case 1:
+	close2;
+	item_enchant 70;
+	end;
+	case 2:
+	close2;
+	item_enchant 71;
+	end;
+	case 3:
+	close2;
+	item_enchant 72;
+	end;
+	case 4:
+	close2;
+	item_enchant 73;
+	end;
+	case 5:
+	close2;
+	item_enchant 74;
+	end;
+	case 6:
+	close2;
+	item_enchant 75;
+	end;
+	case 7:
+	close2;
+	item_enchant 76;
+	end;
+	case 8:
+	close2;
+	item_enchant 77;
+	end;
+	case 9:
+	close2;
+	item_enchant 78;
+	end;
+	case 10:
+	close2;
+	item_enchant 79;
+	end;
+	case 11:
+	close2;
+	item_enchant 80;
+	end;
+	case 12:
+	close2;
+	item_enchant 81;
+	end;
+	case 13:
+	close2;
+	item_enchant 82;
+	end;
+	case 14:
+	close2;
+	item_enchant 83;
+	end;
+	case 15:
+	close2;
+	item_enchant 84;
+	end;
+	case 16:
+	close2;
+	item_enchant 85;
+	end;
+	case 17:
+	close2;
+	item_enchant 86;
+	end;
+	case 18:
+	close2;
+	item_enchant 87;
+	end;
+	case 19:
+	close2;
+	item_enchant 88;
+	end;
+
+	case 20:
+	close;
+	}
+
+OnInit:
+	waitingroom "影子M.附魔服務",0;
+	end;
+
+}
+

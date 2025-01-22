@@ -1,0 +1,490 @@
+
+vdistrict1,31,39,4	script	柯爾記憶迷宮管理者	10198,{
+
+	//副本任務獎勵
+	if(checkquest(32069,HUNTING)==2 ) { 
+	dispbottom "柯爾記憶迷宮任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25723,1*$EP1701;	//核心元件
+	getitem 25669,5*$EP1701;	//神秘零件
+	getitem 61006,rand(3,5);	//商城1點金幣
+	erasequest 32069; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_30 < gettime(8) ){
+	set Instance_Bout_30,10;
+	set day_Instance_Bout_30,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_30 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[反叛軍隊員]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "柯爾記憶迷宮";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[反叛軍隊員]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1701+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_30+"^000000 ]";
+	mes "副本獎勵：";
+	mes "核心元件x1";
+	mes "神秘零件x5";
+	mes "商城1點金幣x3~5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[反叛軍隊員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[反叛軍隊員]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[反叛軍隊員]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 100) {
+			mes "[反叛軍隊員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_30,Instance_Bout_30-1;
+
+			//副本任務
+			if(checkquest(32069,HUNTING)<0 ){setquest 32069;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "柯爾記憶迷宮",0;
+	end;
+}
+
+
+//------------------------------柯爾記憶迷宮事件
+1@cor,0,0,0	script	柯爾記憶迷宮事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@cor");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("艾琉米那#COR01");
+	disablenpc instance_npcname("艾琉米那#COR02");
+	disablenpc instance_npcname("艾琉米那#COR03");
+	disablenpc instance_npcname("艾琉米那#COR04");
+	disablenpc instance_npcname("艾琉米那#COR05");
+	disablenpc instance_npcname("艾琉米那#COR06");
+	disablenpc instance_npcname("艾琉米那#COR07");
+	disablenpc instance_npcname("埃琳娜 博克巴#COR02");
+	disablenpc instance_npcname("箱子#COR01");
+	disablenpc instance_npcname("箱子#COR02");
+	disablenpc instance_npcname("箱子#COR03");
+	disablenpc instance_npcname("箱子#COR04");
+	disablenpc instance_npcname("傳送門#COR01");
+	//------防禦線(無型牆)
+	setcell instance_mapname('map_name$[0]),159,224,159,216,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),159,224,159,216,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),98,224,98,216,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),98,224,98,216,cell_shootable,0;
+	setcell instance_mapname('map_name$[0]),133,240,141,240,cell_walkable,0;
+	setcell instance_mapname('map_name$[0]),133,240,141,240,cell_shootable,0;
+	//副本標籤
+	set 'CD_OS_01,0;
+	set 'CD_OS_02,0;
+	set 'CD_OS_03,0;
+	set 'CD_OS_04,0;
+	setd "$@CD_OS_00"+instance_id(1),4;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'CD_OS_Mob_01,'CD_OS_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_OS_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_01>0) end;
+	set 'CD_OS_00,'CD_OS_00-1;
+	instance_announce 0, "【副本公告】成功的解除一個箱子，還剩下個"+'CD_OS_00+"箱子",bc_map,"0xFFFF33";
+	disablenpc instance_npcname("箱子#COR01");
+	disablenpc instance_npcname("艾琉米那#COR03");
+	viewpoint 0,141,79,0,0xffffff;
+	if ('CD_OS_00>0) end;
+	instance_announce instance_id(1),"埃琳娜 博克巴：如果全部都處理好了的話，就趕緊過來軍營這邊艾琉米那會帶路的!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("艾琉米那#COR02");
+	viewpoint 1,171,223,4,0xffffff;
+	end;
+
+	OnCcdd2:
+	set 'CD_OS_Mob_02,'CD_OS_Mob_02-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_OS_Mob_02+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_02>0) end;
+	set 'CD_OS_00,'CD_OS_00-1;
+	instance_announce 0, "【副本公告】成功的解除一個箱子，還剩下個"+'CD_OS_00+"箱子",bc_map,"0xFFFF33";
+	disablenpc instance_npcname("箱子#COR02");
+	disablenpc instance_npcname("艾琉米那#COR04");
+	viewpoint 0,160,120,1,0xffffff;
+	if ('CD_OS_00>0) end;
+	instance_announce instance_id(1),"埃琳娜 博克巴：如果全部都處理好了的話，就趕緊過來軍營這邊艾琉米那會帶路的!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("艾琉米那#COR02");
+	viewpoint 1,171,223,4,0xffffff;
+	end;
+
+	OnCcdd3:
+	set 'CD_OS_Mob_03,'CD_OS_Mob_03-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_OS_Mob_03+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_03>0) end;
+	set 'CD_OS_00,'CD_OS_00-1;
+	instance_announce 0, "【副本公告】成功的解除一個箱子，還剩下個"+'CD_OS_00+"箱子",bc_map,"0xFFFF33";
+	disablenpc instance_npcname("箱子#COR03");
+	disablenpc instance_npcname("艾琉米那#COR05");
+	viewpoint 0,220,171,2,0xffffff;
+	if ('CD_OS_00>0) end;
+	instance_announce instance_id(1),"埃琳娜 博克巴：如果全部都處理好了的話，就趕緊過來軍營這邊艾琉米那會帶路的!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("艾琉米那#COR02");
+	viewpoint 1,171,223,4,0xffffff;
+	end;
+
+	OnCcdd4:
+	set 'CD_OS_Mob_04,'CD_OS_Mob_04-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_OS_Mob_04+"只怪物",bc_all,0xD7BA98;
+	if ('CD_OS_Mob_04>0) end;
+	set 'CD_OS_00,'CD_OS_00-1;
+	instance_announce 0, "【副本公告】成功的解除一個箱子，還剩下個"+'CD_OS_00+"箱子",bc_map,"0xFFFF33";
+	disablenpc instance_npcname("箱子#COR04");
+	disablenpc instance_npcname("艾琉米那#COR06");
+	viewpoint 0,222,236,3,0xffffff;
+	if ('CD_OS_00>0) end;
+	instance_announce instance_id(1),"埃琳娜 博克巴：如果全部都處理好了的話，就趕緊過來軍營這邊艾琉米那會帶路的!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("艾琉米那#COR02");
+	viewpoint 1,171,223,4,0xffffff;
+	end;
+
+	OnCcdd10:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【柯爾記憶迷宮】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	viewpoint 1,138,221,20,0xffffff;
+	enablenpc instance_npcname("艾琉米那#COR07");
+	enablenpc instance_npcname("埃琳娜 博克巴#COR02");
+	instance_announce 0, "埃琳娜 博克巴：你們動作真是快，來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@cor,180,169,4	script	埃琳娜 博克巴#COR01	10192,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	enablenpc instance_npcname("艾琉米那#COR01");
+	npctalk "說明...這罪犯會給你說的了。 看管罪犯真是太累了。";
+	mes "[埃琳娜 博克巴]";
+	mes "說明...這罪犯會給你說的了。 看管罪犯真是太累了。";
+	next;
+	npctalk "哈哈!那只是小事吧? 好好幹吧。不要把說明也推給我好嗎?", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "哈哈!那只是小事吧? 好好幹吧。不要把說明也推給我好嗎?";
+	next;
+	npctalk "住口。快開始吧。在我把你扔回USU之前開始吧?";
+	mes "[埃琳娜 博克巴]";
+	mes "住口。快開始吧。在我把你扔回USU之前開始吧?";
+	next;
+	npctalk "這，這個...怕了你! 哼。這是為了保護我的孩子們才做說明的!", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "這。這個...怕了你! 哼。這是為了保護我的孩子們才做說明的!";
+	next;
+	npctalk "...好吧，長話短說。 我的孩子們在四個地方設置了陷阱。", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "...好吧，長話短說。 我的孩子們在四個地方設置了陷阱。";
+	next;
+	npctalk "我在地圖上做了標記，你這混蛋要告訴隊友們如何前進。 你不是一個人來的吧?我的孩子們很強大哦。", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "我在地圖上做了標記，你這混蛋要告訴隊友們如何前進。 你不是一個人來的吧?我的孩子們很強大哦。";
+	next;
+	viewpoint 1,141,79,0,0xffffff;
+	viewpoint 1,160,120,1,0xffffff;
+	viewpoint 1,220,171,2,0xffffff;
+	viewpoint 1,222,236,3,0xffffff;
+	npctalk "如果觸碰了陷阱，我可愛的孩子們就會出現哦。 你已經看到各處陷阱了吧?", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "如果觸碰了陷阱，我可愛的孩子們就會出現哦。 你已經看到各處陷阱了吧?";
+	next;
+	npctalk "四個陷阱都處理完畢後EL_A17T就會出現， 屆時我會把你這混蛋帶到上次一樣的地方。", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "四個陷阱都處理完畢後EL_A17T就會出現， 屆時我會把你這混蛋帶到上次一樣的地方。";
+	next;
+	npctalk "說明到此為止，那麼，快去幹活吧! 肌肉笨蛋們!哈哈哈哈!", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "說明到此為止，那麼，快去幹活吧! 肌肉笨蛋們!哈哈哈哈!";
+	npctalk "...我會以某種方式和這個罪犯談談的...那就拜託了冒險者們!";
+	mes "[埃琳娜 博克巴]";
+	mes "...我會以某種方式和這個罪犯談談的...那就拜託了冒險者們!";
+	enablenpc instance_npcname("箱子#COR01");
+	enablenpc instance_npcname("箱子#COR02");
+	enablenpc instance_npcname("箱子#COR03");
+	enablenpc instance_npcname("箱子#COR04");
+	enablenpc instance_npcname("艾琉米那#COR04");
+	enablenpc instance_npcname("艾琉米那#COR05");
+	enablenpc instance_npcname("艾琉米那#COR06");
+	enablenpc instance_npcname("艾琉米那#COR07");
+	disablenpc instance_npcname("埃琳娜 博克巴#COR01");
+	disablenpc instance_npcname("艾琉米那#COR01");
+	close;
+}
+
+1@cor,178,172,4	script	艾琉米那#COR01	10301,{	end;}
+
+1@cor,171,223,4	script	艾琉米那#COR02	10301,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	npctalk "真快呢...我的孩子們不能獲勝也是理所當然的。 雖然你這混蛋看起來很累的樣子~", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "真快呢...我的孩子們不能獲勝也是理所當然的。 雖然你這混蛋看起來很累的樣子~";
+	next;
+	npctalk "...好吧，馬上去除掉EL_A17T試試?", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "...好吧，馬上去除掉EL_A17T試試?";
+	next;
+	npctalk "哈哈哈!好吧，努力去吧! 為我獲得新的戰鬥數據吧!", instance_npcname("艾琉米那#COR01", instance_id());
+	mes "[艾琉米那]";
+	mes "哈哈哈!好吧，努力去吧! 為我獲得新的戰鬥數據吧!";
+
+	instance_announce instance_id(1),"埃琳娜 博克巴：喂，該死的罪犯!立刻把門打開吧?",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],100,231,156,203,"--ja--",20344,10;
+	areamonster 'map_name$[0],137,221,137,221,"--ja--",20340,1,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd10";
+	enablenpc instance_npcname("傳送門#COR01");
+	disablenpc instance_npcname("艾琉米那#COR02");
+	close;
+}
+
+
+1@cor,141,83,4	script	艾琉米那#COR03	10301,{
+	if ('CD_OS_Mob_01>0) {
+	npctalk "這是其中一處陷阱。";
+	end;
+	}
+	npctalk "這是非常好的戰鬥數據...那麼，繼續為我跑腿吧!";
+	end;
+}
+
+1@cor,141,79,4	script	箱子#COR01	10250,{
+	if ('CD_OS_01>0) end;
+	specialeffect2 EF_SUI_EXPLOSION;
+	set 'CD_OS_01,1;
+	set 'CD_OS_Mob_01,12;
+	areamonster 'map_name$[0],132,85,147,73,"--ja--",rand(20344,20345),1;
+	areamonster 'map_name$[0],132,85,147,73,"--ja--",20342,6,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],132,85,147,73,"--ja--",20343,3,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],132,85,147,73,"--ja--",20355,2,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],132,85,147,73,"--ja--",20356,1,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd1";
+	end;
+}
+
+
+1@cor,163,118,4	script	艾琉米那#COR04	10301,{
+	if ('CD_OS_Mob_02>0) {
+	npctalk "這是其中一處陷阱。";
+	end;
+	}
+	npctalk "這是非常好的戰鬥數據...那麼，繼續為我跑腿吧!";
+	end;
+}
+
+1@cor,160,120,4	script	箱子#COR02	10250,{
+	if ('CD_OS_02>0) end;
+	specialeffect2 EF_SUI_EXPLOSION;
+	set 'CD_OS_02,1;
+	set 'CD_OS_Mob_02,12;
+	areamonster 'map_name$[0],150,125,168,115,"--ja--",rand(20344,20345),1;
+	areamonster 'map_name$[0],150,125,168,115,"--ja--",20341,6,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],150,125,168,115,"--ja--",20343,3,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],150,125,168,115,"--ja--",20355,1,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],150,125,168,115,"--ja--",20356,2,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd2";
+	end;
+}
+
+
+1@cor,218,173,6	script	艾琉米那#COR05	10301,{
+	if ('CD_OS_Mob_02>0) {
+	npctalk "這是其中一處陷阱。";
+	end;
+	}
+	npctalk "這是非常好的戰鬥數據...那麼，繼續為我跑腿吧!";
+	end;
+}
+
+1@cor,220,171,4	script	箱子#COR03	10250,{
+	if ('CD_OS_03>0) end;
+	specialeffect2 EF_SUI_EXPLOSION;
+	set 'CD_OS_03,1;
+	set 'CD_OS_Mob_03,12;
+	areamonster 'map_name$[0],214,179,226,166,"--ja--",rand(20344,20345),1;
+	areamonster 'map_name$[0],214,179,226,166,"--ja--",20342,6,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],214,179,226,166,"--ja--",20341,3,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],214,179,226,166,"--ja--",20356,2,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],214,179,226,166,"--ja--",20355,1,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd3";
+	end;
+}
+
+
+1@cor,225,239,4	script	艾琉米那#COR06	10301,{
+	if ('CD_OS_Mob_02>0) {
+	npctalk "這是其中一處陷阱。";
+	end;
+	}
+	npctalk "這是非常好的戰鬥數據...那麼，繼續為我跑腿吧!";
+	end;
+}
+
+1@cor,222,236,4	script	箱子#COR04	10250,{
+	if ('CD_OS_04>0) end;
+	specialeffect2 EF_SUI_EXPLOSION;
+	set 'CD_OS_04,1;
+	set 'CD_OS_Mob_04,12;
+	areamonster 'map_name$[0],215,242,228,231,"--ja--",rand(20344,20345),1;
+	areamonster 'map_name$[0],215,242,228,231,"--ja--",20341,6,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],215,242,228,231,"--ja--",20343,3,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],215,242,228,231,"--ja--",20355,1,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],215,242,228,231,"--ja--",20356,2,instance_npcname("柯爾記憶迷宮事件1")+"::OnCcdd4";
+	end;
+}
+
+
+1@cor,140,221,4	script	艾琉米那#COR07	10301,{
+	mes "[艾琉米那]";
+	mes "這是非常好的戰鬥數據...";
+	close;
+}
+
+//------------------------------ 障礙
+1@cor,159,224,4	script	障礙#COR01	10024,{end;}
+1@cor,159,222,4	script	障礙#COR02	10024,{end;}
+1@cor,159,220,4	script	障礙#COR03	10024,{end;}
+1@cor,159,218,4	script	障礙#COR04	10024,{end;}
+
+1@cor,98,224,4	script	障礙#COR05	10024,{end;}
+1@cor,98,222,4	script	障礙#COR06	10024,{end;}
+1@cor,98,220,4	script	障礙#COR07	10024,{end;}
+1@cor,98,218,4	script	障礙#COR08	10024,{end;}
+
+1@cor,133,240,4	script	障礙#COR09	10024,{end;}
+1@cor,135,240,4	script	障礙#COR10	10024,{end;}
+1@cor,137,240,4	script	障礙#COR11	10024,{end;}
+1@cor,139,240,4	script	障礙#COR12	10024,{end;}
+
+
+//------------------------------傳點資訊
+1@cor,161,221,0	script	傳送門#COR01	45,1,1,{
+	warp 'map_name$[0],153,221;
+	end;
+}
+
+//------------------------------
+1@cor,138,221,4	script	埃琳娜 博克巴#COR02	10198,{
+
+	mes "[埃琳娜 博克巴]";
+	mes "讓我把你們送出柯爾記憶迷宮吧";
+	mes "並送你們一些物品作為獎勵";
+	next;
+	switch (select("請把我送出去.:我還想四處看看.")) {
+	case 1:
+
+	//副本任務獎勵
+	if(checkquest(32069,HUNTING)==2 ) { 
+	dispbottom "柯爾記憶迷宮任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	callfunc "offical_instance_finish",42;
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 25723,1*$EP1701;	//核心元件
+	getitem 25669,5*$EP1701;	//神秘零件
+	getitem 61006,rand(3,5);	//商城1點兌換券
+	erasequest 32069; }
+	if(checkquest(33021)==1){completequest 33021; dispbottom "官方副本任務 (已完成)";}
+
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@cor	mapflag	partylock
+1@cor	mapflag	noteleport
+1@cor	mapflag	nosave	SavePoint
+1@cor	mapflag	nomemo
+1@cor	mapflag	nobranch
+1@cor	mapflag	noicewall
+1@cor	mapflag	restricted	6
+1@cor	mapflag	monster_noteleport
+

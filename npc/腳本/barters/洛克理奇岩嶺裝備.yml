@@ -1,0 +1,127 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#洛克理奇岩嶺裝備
+   - Name: 哈沃德者
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_TATIO
+     Items:
+       - Index: 0
+         Item: Vigilante_Badge
+         Stock: 0
+         Zeny: 15000000
+         RequiredItems:
+       - Index: 1
+         Item: Hippie_Feather
+         Stock: 0
+         Zeny: 15000000
+         RequiredItems:
+       - Index: 2
+         Item: C_Head_Item_44171
+         Stock: 0
+         Zeny: 15000000
+         RequiredItems:
+       - Index: 3
+         Item: Golden_Scarf
+         Stock: 0
+         Zeny: 30000000
+         RequiredItems:
+       - Index: 4
+         Item: Elemental_Cape
+         Stock: 0
+         Zeny: 30000000
+         RequiredItems:
+       - Index: 5
+         Item: Vigilante_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 24
+       - Index: 6
+         Item: Elemental_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Golden_Ninja_Suit
+             Amount: 24
+       - Index: 7
+         Item: Golden_Ninja_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 24
+       - Index: 8
+         Item: Mine_Worker's_Backpack
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 24
+       - Index: 9
+         Item: Mine_Worker's_Backpack
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 24
+       - Index: 10
+         Item: C_Head_Item_44159
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 100
+       - Index: 11
+         Item: C_Head_Item_44160
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 100
+       - Index: 12
+         Item: Drifter's_Cape
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 150
+       - Index: 13
+         Item: Spurred_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 150
+       - Index: 14
+         Item: Liquor_Bottle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 180
+       - Index: 15
+         Item: Elder_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Rock_Ridge_Coin
+             Amount: 300

@@ -1,0 +1,64 @@
+﻿vdistrict1,78,39,6	script	霸肋門德深層套裝#Con12	4_EP17_BUCKETS,{
+
+	mes "[霸肋門德深層套裝]";
+	mes "<TIPBOX>火地鎧甲附魔<INFO>20019</INFO></TIPBOX>";
+	mes "<TIPBOX>冰風鎧甲附魔<INFO>20020</INFO></TIPBOX>";
+	mes "<TIPBOX>魂靈淨化鎧甲附魔<INFO>20021</INFO></TIPBOX>";
+	mes "<TIPBOX>腐敗劇毒鎧甲附魔<INFO>20022</INFO></TIPBOX>";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("裝備製作:物品兌換:進行附魔:前往霸肋門德環境生態圈深層1階")){
+
+	case 1:
+	close2;
+	callshop "霸肋門德深層裝備";
+	end;
+
+	case 2:
+	close2;
+	callshop "深層符文石兌換";
+	end;
+
+	case 3:
+		mes "[霸肋門德深層套裝附魔]";
+		mes "請選擇你要附魔的霸肋門德深層套裝";
+		next;
+		switch(select("火地鎧甲:冰風鎧甲:魂靈淨化長袍:腐敗劇毒布甲:取消")){
+
+		case 1:
+		close2;
+		item_enchant 99;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 100;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 101;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 132;
+		end;
+
+		case 5:
+		close;
+		}
+
+	case 4:
+	warp "bl_depth1",0,0;
+	close;
+
+	}
+
+
+OnInit:
+	waitingroom "霸肋門德深層套裝",0;
+	end;
+}
+
+

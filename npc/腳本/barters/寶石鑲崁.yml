@@ -1,0 +1,137 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+
+#寶石鑲崁
+   - Name: 寶石鑲崁
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 2_DROP_MACHINE
+     Items:
+       - Index: 1
+         Item: Unknown_Item_92011
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_82001
+             Amount: 30
+
+       - Index: 4
+         Item: Unknown_Item_92012
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92011
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 50
+
+       - Index: 7
+         Item: Unknown_Item_92013
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92012
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 80
+
+       - Index: 10
+         Item: Unknown_Item_92014
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92013
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 100
+
+       - Index: 13
+         Item: Unknown_Item_92015
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92014
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 200
+
+       - Index: 16
+         Item: Unknown_Item_92016
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92015
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 350
+
+       - Index: 19
+         Item: Unknown_Item_92017
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92016
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 500
+
+       - Index: 22
+         Item: Unknown_Item_92018
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92017
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 700
+
+       - Index: 25
+         Item: Unknown_Item_92019
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92018
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 800
+
+       - Index: 28
+         Item: Unknown_Item_92020
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_92019
+             Amount: 1
+           - Index: 1
+             Item: Unknown_Item_82001
+             Amount: 1000
+
+
+
+
+
+

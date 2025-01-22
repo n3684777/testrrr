@@ -1,0 +1,1205 @@
+﻿
+#影子4.0
+  - Id: 103309
+    AegisName: Reform_4th_Skill_Shadow
+    Name: 四轉技能影子裝備改造箱
+    Type: DelayConsume
+    Script: |
+      item_reform();
+
+  - Id: 24906
+    AegisName: S_SHC_EC_Earring
+    Name: 影子永恆斬擊耳環
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24907
+    AegisName: S_SHC_EC_Pendant
+    Name: 影子十字斬擊墜子
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24908
+    AegisName: S_SHC_SI_Armor
+    Name: 影子野蠻衝擊鎧甲
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24909
+    AegisName: S_SHC_SI_Shoes
+    Name: 影子野蠻衝擊戰靴
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24910
+    AegisName: S_WH_GS_Earring
+    Name: 影子毀滅風暴耳環
+    Type: ShadowGear
+    Jobs:
+      Hunter: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WH_GALESTORM",5+(.@r/3);
+      bonus bBaseAtk,10*(.@r/2);
+  - Id: 24911
+    AegisName: S_WH_GS_Pendant
+    Name: 影子毀滅風暴墜子
+    Type: ShadowGear
+    Jobs:
+      Hunter: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WH_GALESTORM",5+(.@r/3);
+      bonus bBaseAtk,10*(.@r/2);
+  - Id: 24912
+    AegisName: S_WH_CB_Armor
+    Name: 影子漸進狙擊鎧甲
+    Type: ShadowGear
+    Jobs:
+      Hunter: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24913
+    AegisName: S_WH_CB_Shoes
+    Name: 影子漸進狙擊戰靴
+    Type: ShadowGear
+    Jobs:
+      Hunter: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24914
+    AegisName: S_SS_SR_Earring
+    Name: 影子火焰砲耳環
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SS_SEKIENHOU",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24915
+    AegisName: S_SS_SR_Pendant
+    Name: 影子雷電砲墜子
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SS_RAIDENPOU",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24916
+    AegisName: S_SS_KR_Armor
+    Name: 影子金龍砲鎧甲
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();;
+      bonus2 bSkillAtk,"SS_KINRYUUHOU",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24917
+    AegisName: S_SS_KR_Shoes
+    Name: 影子冷焰砲戰靴
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SS_REIKETSUHOU",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24918
+    AegisName: S_DK_SS_Earring
+    Name: 影子風暴斬擊耳環
+    Type: ShadowGear
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"DK_STORMSLASH",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24919
+    AegisName: S_DK_SS_Pendant
+    Name: 影子死侍武器墜子
+    Type: ShadowGear
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24920
+    AegisName: S_DK_HS_Armor
+    Name: 影子橫揮斬鎧甲
+    Type: ShadowGear
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24921
+    AegisName: S_DK_HS_Shoes
+    Name: 影子橫揮斬戰靴
+    Type: ShadowGear
+    Jobs:
+      Knight: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24922
+    AegisName: S_TR_RW_Earring
+    Name: 影子韻律耳環
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24923
+    AegisName: S_TR_RW_Pendant
+    Name: 影子韻律墜子
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24924
+    AegisName: S_TR_MF_Armor
+    Name: 影子金屬狂怒鎧甲
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"TR_METALIC_FURY",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24925
+    AegisName: S_TR_MF_Shoes
+    Name: 影子金屬狂怒戰靴
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"TR_METALIC_FURY",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24926
+    AegisName: S_NW_SO_Earring
+    Name: 影子螺旋射擊耳環
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24927
+    AegisName: S_NW_SO_Pendant
+    Name: 影子梅格競直擊墜子
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24928
+    AegisName: S_NW_WB_Armor
+    Name: 影子獨一槍彈鎧甲
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24929
+    AegisName: S_NW_WB_Shoes
+    Name: 影子狂野射擊戰靴
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_WILD_SHOT",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+
+  - Id: 24936
+    AegisName: S_MT_MS_Earring
+    Name: 影子強力粉碎耳環
+    Type: ShadowGear
+    Jobs:
+      Meister: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",8+2*(.@r/3);
+  - Id: 24937
+    AegisName: S_MT_MS_Pendant
+    Name: 影子戰斧踏滅墜子
+    Type: ShadowGear
+    Jobs:
+      Meister: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"MT_AXE_STOMP",8+2*(.@r/3);
+  - Id: 24938
+    AegisName: S_MT_PR_Armor
+    Name: 影子強力揮擊鎧甲
+    Type: ShadowGear
+    Jobs:
+      Meister: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"MT_POWERFUL_SWING",8+2*(.@r/3);
+  - Id: 24939
+    AegisName: S_MT_PR_Shoes
+    Name: 影子衝鋒直擊戰靴
+    Type: ShadowGear
+    Jobs:
+      Meister: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"MT_RUSH_STRIKE",8+2*(.@r/3);
+
+  - Id: 24940
+    AegisName: S_BO_EP_Earring
+    Name: 影子爆炸炸藥耳環
+    Type: ShadowGear
+    Jobs:
+      Biolo: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",5+1*(.@r/3);
+  - Id: 24941
+    AegisName: S_BO_EP_Pendant
+    Name: 影子爆炸炸藥墜子
+    Type: ShadowGear
+    Jobs:
+      Biolo: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",5+1*(.@r/3);
+  - Id: 24942
+    AegisName: S_BO_MD_Armor
+    Name: 影子神秘粉末鎧甲
+    Type: ShadowGear
+    Jobs:
+      Biolo: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"BO_MYSTERY_POWDER",8+2*(.@r/3);
+  - Id: 24943
+    AegisName: S_BO_MD_Shoes
+    Name: 影子粉塵爆炸戰靴
+    Type: ShadowGear
+    Jobs:
+      Biolo: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r*10;
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",8+2*(.@r/3);
+
+  - Id: 24944
+    AegisName: S_HN_VJ_Earring
+    Name: 影子念力連擊攻擊耳環
+    Type: ShadowGear
+    Jobs:
+      Hyper_Novice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24945
+    AegisName: S_HN_VJ_Pendant
+    Name: 影子新霜凍術墜子
+    Type: ShadowGear
+    Jobs:
+      Hyper_Novice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24946
+    AegisName: S_HN_TB_Armor
+    Name: 影子雷鳴術風暴鎧甲
+    Type: ShadowGear
+    Jobs:
+      Hyper_Novice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24947
+    AegisName: S_HN_TB_Shoes
+    Name: 影子隕石術猛擊戰靴
+    Type: ShadowGear
+    Jobs:
+      Hyper_Novice: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+
+  - Id: 24948
+    AegisName: S_IG_OC_Earring
+    Name: 影子強力粉碎耳環
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MT_MIGHTY_SMASH",8+2*(.@r/3);
+      bonus bBaseAtk,.@r*10;
+  - Id: 24949
+    AegisName: S_IG_OC_Pendant
+    Name: 影子帝國十字墜子
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",8+2*(.@r/3);
+      bonus bBaseAtk,.@r*10;
+  - Id: 24950
+    AegisName: S_IG_RF_Armor
+    Name: 影子聖十字雨鎧甲
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_CROSS_RAIN",8+2*(.@r/3);
+      bonus bBaseAtk,.@r*10;
+  - Id: 24951
+    AegisName: S_IG_RF_Shoes
+    Name: 影子帝國威壓戰靴
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_IMPERIAL_PRESSURE",8+2*(.@r/3);
+      bonus bBaseAtk,.@r*10;;
+
+  - Id: 24952
+    AegisName: S_IQ_EB_Earring
+    Name: 影子爆破衝擊耳環
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24953
+    AegisName: S_IQ_EB_Pendant
+    Name: 影子爆破衝擊墜子
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24954
+    AegisName: S_IQ_BFB_Armor
+    Name: 影子烈火氣彈鎧甲
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24955
+    AegisName: S_IQ_BFB_Shoes
+    Name: 影子烈火氣彈戰靴
+    Type: ShadowGear
+    Jobs:
+      Inquisitor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+
+  - Id: 24956
+    AegisName: S_SU_CS_Earring
+    Name: 影子鐵虎空心爪耳環
+    Type: ShadowGear
+    Jobs:
+      Spirit_Handler: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24957
+    AegisName: S_SU_CS_Pendant
+    Name: 影子鐵虎空心爪墜子
+    Type: ShadowGear
+    Jobs:
+      Spirit_Handler: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24958
+    AegisName: S_SU_HB_Armor
+    Name: 影子虎高空亂打鎧甲
+    Type: ShadowGear
+    Jobs:
+      Spirit_Handler: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24959
+    AegisName: S_SU_HB_Shoes
+    Name: 影子鐵虎亂舞戰靴
+    Type: ShadowGear
+    Jobs:
+      Spirit_Handler: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+
+  - Id: 24967
+    AegisName: S_CD_AR_Earring
+    Name: 影子制裁謳歌耳環
+    Type: ShadowGear
+    Jobs:
+      Cardinal: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_ARBITRIUM",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24968
+    AegisName: S_CD_AR_Pendant
+    Name: 影子制裁謳歌墜子
+    Type: ShadowGear
+    Jobs:
+      Cardinal: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_ARBITRIUM",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24969
+    AegisName: S_CD_DF_Armor
+    Name: 影子神聖之花鎧甲
+    Type: ShadowGear
+    Jobs:
+      Cardinal: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24970
+    AegisName: S_CD_DF_Shoes
+    Name: 影子神聖之花戰靴
+    Type: ShadowGear
+    Jobs:
+      Cardinal: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+
+  - Id: 24971
+    AegisName: S_AG_FB_Earring
+    Name: 影子焰火之徑耳環
+    Type: ShadowGear
+    Jobs:
+      Arch_Mage: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",5+(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24972
+    AegisName: S_AG_FB_Pendant
+    Name: 影子萬紫千紅墜子
+    Type: ShadowGear
+    Jobs:
+      Arch_Mage: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AG_ALL_BLOOM",5+(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24973
+    AegisName: S_AG_SH_Armor
+    Name: 影子龍捲風暴鎧甲
+    Type: ShadowGear
+    Jobs:
+      Arch_Mage: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AG_TORNADO_STORM",5+(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24974
+    AegisName: S_AG_SH_Shoes
+    Name: 影子毀滅颶風戰靴
+    Type: ShadowGear
+    Jobs:
+      Arch_Mage: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AG_DESTRUCTIVE_HURRICANE",5+(.@r/3);
+      bonus bMatk,7*(.@r/2);
+
+  - Id: 24975
+    AegisName: S_SKE_NS_Earring
+    Name: 影子天晨一陽耳環
+    Type: ShadowGear
+    Jobs:
+      Sky_Emperor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24976
+    AegisName: S_SKE_NS_Pendant
+    Name: 影子天氣神陽墜子
+    Type: ShadowGear
+    Jobs:
+      Sky_Emperor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_SKY_SUN",8+2*(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24977
+    AegisName: S_SKE_SB_Armor
+    Name: 影子天陽鎧甲
+    Type: ShadowGear
+    Jobs:
+      Sky_Emperor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+  - Id: 24978
+    AegisName: S_SKE_SB_Shoes
+    Name: 影子天陽戰靴
+    Type: ShadowGear
+    Jobs:
+      Sky_Emperor: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5+(.@r/3);
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,4*(.@r/2);
+
+  - Id: 24979
+    AegisName: S_EM_CO_Earring
+    Name: 影子灼熱耳環
+    Type: ShadowGear
+    Jobs:
+      Elemental_Master: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24980
+    AegisName: S_EM_CO_Pendant
+    Name: 影子灼熱墜子
+    Type: ShadowGear
+    Jobs:
+      Elemental_Master: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",5+2*(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24981
+    AegisName: S_EM_LS_Armor
+    Name: 影子雷霆戰靴
+    Type: ShadowGear
+    Jobs:
+      Elemental_Master: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24982
+    AegisName: S_EM_LS_Shoes
+    Name: 影子毒液戰靴
+    Type: ShadowGear
+    Jobs:
+      Elemental_Master: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+
+  - Id: 24983
+    AegisName: S_ABC_AF_Earring
+    Name: 影子深淵火焰耳環
+    Type: ShadowGear
+    Jobs:
+      Abyss_Chaser: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BC_ABYSS_FLAME",5+(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24984
+    AegisName: S_ABC_AF_Pendant
+    Name: 影子深淵火焰墜子
+    Type: ShadowGear
+    Jobs:
+      Abyss_Chaser: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BC_ABYSS_FLAME",5+2*(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24985
+    AegisName: S_ABC_FA_Armor
+    Name: 影子萬丈深淵鎧甲
+    Type: ShadowGear
+    Jobs:
+      Abyss_Chaser: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24986
+    AegisName: S_ABC_FA_Shoes
+    Name: 影子深淵墳場戰靴
+    Type: ShadowGear
+    Jobs:
+      Abyss_Chaser: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+
+  - Id: 24987
+    AegisName: S_SOA_TOWB_Earring
+    Name: 影子白虎耳環
+    Type: ShadowGear
+    Jobs:
+      Soul_Ascetic: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_WHITE_TIGER",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24988
+    AegisName: S_SOA_TOWB_Pendant
+    Name: 影子玄武墜子
+    Type: ShadowGear
+    Jobs:
+      Soul_Ascetic: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_BLACK_TORTOISE",8+2*(.@r/3);
+      bonus bMatk,7*(.@r/2);
+  - Id: 24989
+    AegisName: S_SOA_TOFG_Armor
+    Name: 影子四方神符鎧甲
+    Type: ShadowGear
+    Jobs:
+      Soul_Ascetic: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",8+2*(.@r/3);
+      bonus bMatk,10*(.@r/2);
+  - Id: 24990
+    AegisName: S_SOA_TOFG_Shoes
+    Name: 影子四方神符戰靴
+    Type: ShadowGear
+    Jobs:
+      Soul_Ascetic: true
+    Classes:
+      Fourth: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",8+2*(.@r/3);
+      bonus bMatk,10*(.@r/2);
+
+
+
+
+
+

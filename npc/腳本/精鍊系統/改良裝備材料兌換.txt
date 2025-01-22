@@ -1,0 +1,39 @@
+
+rgsr_in,115,170,6	script	礦石研究員	4_M_SCIENCE,{
+	
+	mes "[礦石研究員]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("礦石兌換:礦石升級(一):礦石升級(二):取消")){
+
+	case 1:
+	close2;
+	callshop "改良裝備材料兌換#1";
+	end;
+
+	case 2:
+	close2;
+	callshop "改良裝備材料兌換#2";
+	end;
+
+	case 3:
+	close2;
+	callshop "改良裝備材料兌換#3";
+	end;
+
+	case 4:
+	close;
+	}
+
+//OnInit:
+//	waitingroom "新手商店",0;
+//	end;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,1943 @@
+
+trinity,80,65,4	script	天賦管理員	10056,{
+
+	if (#day_Talent < gettime(8)){
+	set #Talent_Quest_01,2;	//天賦任務
+	set #Talent_Quest_02,2;	//天賦任務
+	set #Talent_Quest_03,2;	//天賦任務
+	set #Talent_Quest_04,2;	//天賦任務
+	set #Talent_Quest_05,2;	//天賦任務
+	set #day_Talent,gettime(8);	//一年中的一天
+	end; }
+
+	set Talent_01,0;
+	if(#Talent_LV<=5){ set #Talent_EXP_Max,5; }
+	if(#Talent_LV>=6 && #Talent_LV<=10){ set #Talent_EXP_Max,10; }
+	if(#Talent_LV>=11 && #Talent_LV<=20){ set #Talent_EXP_Max,10; }
+	if(#Talent_LV>=21 && #Talent_LV<=40){ set #Talent_EXP_Max,20; }
+	if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+
+Talent_end:
+	mes "[天賦管理員]";
+	mes "天賦等級：^0000FF"+#Talent_LV+"/40^000000級";
+	mes "天賦經驗：^0000FF"+#Talent_EXP+"^000000/"+#Talent_EXP_Max+"";
+	mes "天賦點數：^0000FF"+Talent_Points+"^000000/"+#Talent_LV+"";
+	mes "你想要進行那個服務?";
+	next;
+	switch(select("查看天賦能力:承接天賦任務:回報天賦任務:升級天賦能力:重置天賦能力:取消")) {
+
+	case 1:
+		mes "[天賦管理員]";
+		mes "完成各種天賦任務可以獲得天賦經驗";
+		mes "天賦經驗達到一定程度天賦等級就會升級";
+		mes "天賦等級提升後會獲得天賦點數";
+		mes "天賦點數可以用來升級各種天賦能力";
+		next;
+		mes "[天賦管理員]";
+		mes "接取天賦任務會消耗次數，每天各任務二次";
+		mes "天賦任務次數在每天凌晨會恢復";
+		mes "如果有剩餘次數並不會累積到隔天";
+		next;
+		mes "[天賦能力情報]";
+		mes " ^0000FF一般天賦^000000";
+		if(Talent_Pow>0){ mes "【POW】等級：^0000FF"+Talent_Pow+"^000000"; mes " 附加能力：^0000FFPOW + "+Talent_Pow*2+"^000000"; }
+		if(Talent_Sta>0){ mes "【STA】等級：^0000FF"+Talent_Sta+"^000000"; mes " 附加能力：^0000FFSta + "+Talent_Sta*2+"^000000"; }
+		if(Talent_Wis>0){ mes "【WIS】等級：^0000FF"+Talent_Wis+"^000000"; mes " 附加能力：^0000FFWis + "+Talent_Wis*2+"^000000"; }
+		if(Talent_Spl>0){ mes "【SPL】等級：^0000FF"+Talent_Spl+"^000000"; mes " 附加能力：^0000FFSpl + "+Talent_Spl*2+"^000000"; }
+		if(Talent_Con>0){ mes "【CON】等級：^0000FF"+Talent_Con+"^000000"; mes " 附加能力：^0000FFCon + "+Talent_Con*2+"^000000"; }
+		if(Talent_Crt>0){ mes "【CRT】等級：^0000FF"+Talent_Crt+"^000000"; mes " 附加能力：^0000FFCrt + "+Talent_Crt*2+"^000000"; }
+
+		if(Talent_PAtk>0){ mes "【P.Atk】等級：^0000FF"+Talent_PAtk+"^000000"; mes " 附加能力：^0000FFP.Atk + "+Talent_PAtk*5+"^000000"; }
+		if(Talent_SMatk>0){ mes "【S.Matk】等級：^0000FF"+Talent_SMatk+"^000000"; mes " 附加能力：^0000FFSMatk + "+Talent_SMatk*5+"^000000"; }
+		if(Talent_HPlus>0){ mes "【H.Plus】等級：^0000FF"+Talent_HPlus+"^000000"; mes " 附加能力：^0000FFHPlus + "+Talent_HPlus*2+"^000000"; }
+		if(Talent_CRate>0){ mes "【C.Rate】等級：^0000FF"+Talent_CRate+"^000000"; mes " 附加能力：^0000FFCRate + "+Talent_CRate*2+"^000000"; }
+
+		if(Talent_Castrate>0){ mes "【變動詠唱】等級："+Talent_Castrate+""; mes " 附加能力：^0000FF變動詠唱 - "+Talent_Castrate*2+"%^000000"; }
+		if(Talent_SPrate>0){ mes "【SP消耗】等級："+Talent_SPrate+""; mes " 附加能力：SP消耗 - "+Talent_SPrate*2+"%^000000"; }
+		if(Talent_CritAtkRate>0){ mes "【爆擊傷害】等級："+Talent_CritAtkRate+""; mes " 附加能力：^0000FF爆擊傷害+ "+Talent_CritAtkRate*5+"%^000000"; }
+		if(Talent_HealPower>0){ mes "【技能治癒效果】等級："+Talent_HealPower+""; mes " 附加能力：^0000FF技能治癒效果 + "+Talent_HealPower*5+"%^000000"; }
+		next;
+		mes "[天賦能力情報]";
+		mes " ^0000FF職業天賦^000000";
+		next;
+		goto Talent_end;
+
+
+	case 2:
+		mes "[天賦管理員]";
+		mes "狩獵任務(一般)次數[ ^0000ff"+#Talent_Quest_01+"^000000] ";
+		mes "狩獵任務(首領)次數[ ^0000ff"+#Talent_Quest_02+"^000000] ";
+		mes "官方副本任務次數[ ^0000ff"+#Talent_Quest_03+"^000000] ";
+		mes "自創副本任務次數[ ^0000ff"+#Talent_Quest_04+"^000000] ";
+		mes "天賦道館任務次數[ ^0000ff"+#Talent_Quest_05+"^000000] ";
+		mes "你想要承接那個天賦任務?";
+		next;
+		switch(select(
+		#Talent_Quest_01<=0?"無任務次數":"狩獵任務(一般)次數 [^0000ff經驗值1^000000]",
+		#Talent_Quest_02<=0?"無任務次數":"狩獵任務(首領)次數 [^0000ff經驗值1^000000]",
+		#Talent_Quest_03<=0?"無任務次數":"官方副本任務 [^0000ff經驗值2^000000]",
+		#Talent_Quest_04<=0?"無任務次數":"自創副本任務 [^0000ff經驗值2^000000]",
+		#Talent_Quest_05<=0?"無任務次數":"天賦道館任務 [^0000ff經驗值2^000000]"
+		)){
+		
+		case 1:
+			if(checkquest(43001,HUNTING)>=0){mes "[天賦管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(#Talent_Quest_01 <= 0){ mes "已經沒有接取任務次數了!"; close; }
+			setquest 43001;
+			set #Talent_Quest_01,#Talent_Quest_01 - 1;
+			mes "[天賦管理員]";
+			mes "成功接取了天賦狩獵任務(一般)";
+			close;
+
+		case 2:
+			if(checkquest(43002)>=0){mes "[天賦管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(#Talent_Quest_02 <= 0){ mes "已經沒有接取任務次數了!"; close; }
+			setquest 43002;
+			set #Talent_Quest_02,#Talent_Quest_02 - 1;
+			mes "[天賦管理員]";
+			mes "成功接取了天賦狩獵任務(首領)";
+			close;
+
+		case 3:
+			if(checkquest(33021)>=0){mes "[天賦管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(#Talent_Quest_03 <= 0){ mes "已經沒有接取任務次數了!"; close; }
+			setquest 33021;
+			set #Talent_Quest_03,#Talent_Quest_03 - 1;
+			mes "[天賦管理員]";
+			mes "成功接取了官方副本任務";
+			close;
+
+		case 4:
+			if(checkquest(33022)>=0){mes "[天賦管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(#Talent_Quest_04 <= 0){ mes "已經沒有接取任務次數了!"; close; }
+			setquest 33022;
+			set #Talent_Quest_04,#Talent_Quest_04 - 1;
+			mes "[天賦管理員]";
+			mes "成功接取了自創副本任務";
+			close;
+
+		case 5:
+			if(checkquest(43003)>=0){mes "[天賦管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(#Talent_Quest_05 <= 0){ mes "已經沒有接取任務次數了!"; close; }
+			setquest 43003;
+			set #Talent_Quest_05,#Talent_Quest_05 - 1;
+			mes "[天賦管理員]";
+			mes "成功接取了天賦道館任務";
+			close;
+			
+		case 6:
+			goto Talent_end;
+		}
+
+
+	case 3:
+		mes "[天賦管理員]";
+		if(checkquest(43001,HUNTING)==1){mes "天賦狩獵任務(一般) (未完成)";}
+		if(checkquest(43001,HUNTING)==2){mes "天賦狩獵任務(一般) (已完成)";}
+		if(checkquest(43002)==1){mes "天賦狩獵任務(首領) (未完成)";}
+		if(checkquest(43002)==2){mes "天賦狩獵任務(首領) (已完成)";}
+		if(checkquest(33021)==1){mes "天賦官方副本任務 (未完成)";}
+		if(checkquest(33021)==2){mes "天賦官方副本任務 (已完成)";}
+		if(checkquest(33022)==1){mes "天賦自創副本任務 (未完成)";}
+		if(checkquest(33022)==2){mes "天賦自創副本任務 (已完成)";}
+		if(checkquest(43003)==1){mes "天賦道館任務 (未完成)";}
+		if(checkquest(43003)==2){mes "天賦道館任務 (已完成)";}
+		mes "你想要回報那個天賦任務?";
+		next;
+		switch(select("天賦狩獵任務:官方副本任務:自創副本任務:天賦道館任務:回上層")) {
+
+		case 1:
+			if(checkquest(43001,HUNTING)==2 ){
+			dispbottom "天賦狩獵任務(一般) 回報完成!!";
+			erasequest 43001;
+			if(#Talent_LV==40){mes "[天賦管理員]"; mes "天賦等級已經無法在提升"; close;}
+			set #Talent_EXP,#Talent_EXP + 1;
+			dispbottom "獲得天賦經驗值1";
+			if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+			close;
+			}
+			if(checkquest(43002)==2 ){
+			dispbottom "天賦狩獵任務(首領) 回報完成!!";
+			erasequest 43002;
+			if(#Talent_LV==40){mes "[天賦管理員]"; mes "天賦等級已經無法在提升"; close;}
+			set #Talent_EXP,#Talent_EXP + 1;
+			dispbottom "獲得天賦經驗值1";
+			if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+			close;
+			}
+
+			mes "[天賦管理員]";
+			mes "你沒有完成的任務";
+			close;
+			
+		case 2:
+			if(checkquest(33021)==2 ){
+			dispbottom "官方副本任務 回報完成!!";
+			erasequest 33021;
+			if(#Talent_LV==40){mes "[天賦管理員]"; mes "天賦等級已經無法在提升"; close;}
+			set #Talent_EXP,#Talent_EXP + 2;
+			dispbottom "獲得天賦經驗值2";
+			if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+			close;
+			}
+			mes "[天賦管理員]";
+			mes "你沒有完成的任務";
+			close;
+			
+		case 3:
+			if(checkquest(33022)==2 ){
+			dispbottom "自創副本任務 回報完成!!";
+			erasequest 33022;
+			if(#Talent_LV==40){mes "[天賦管理員]"; mes "天賦等級已經無法在提升"; close;}
+			set #Talent_EXP,#Talent_EXP + 2;
+			dispbottom "獲得天賦經驗值2";
+			if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+			close;
+			}
+			mes "[天賦管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(43003)==2 ){
+			dispbottom "自創副本任務 回報完成!!";
+			erasequest 43003;
+			if(#Talent_LV==40){mes "[天賦管理員]"; mes "天賦等級已經無法在提升"; close;}
+			set #Talent_EXP,#Talent_EXP + 2;
+			dispbottom "獲得天賦經驗值2";
+			if(#Talent_EXP>=#Talent_EXP_Max){ set #Talent_EXP,#Talent_EXP - #Talent_EXP_Max; set #Talent_LV,#Talent_LV + 1; set Talent_Points,Talent_Points + 1; dispbottom "天賦等級提升為 ^0000ff"+#Talent_LV+"^000000 級"; }
+			close;
+			}
+			mes "[天賦管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 5:
+			goto Talent_end;
+		}
+
+	case 4:
+		mes "[天賦管理員]";
+		mes "每種天賦最高10級";
+		mes "你想要提升那個類別的天賦?";
+		next;
+		switch(select("一般天賦:職業天賦:普攻天賦:回上層")) {
+
+		//一般天賦
+		case 1:
+			Talent_next1:
+			mes " ^0000FF[一般天賦情報]^000000";
+			if(Talent_Pow==0){ mes "【POW】每提升1級POW+2"; }
+			if(Talent_Pow>0){ mes "【POW】等級：^0000FF"+Talent_Pow+""; mes " 附加能力：^0000FFPOW + "+Talent_Pow*2+"^000000"; }
+			if(Talent_Sta==0){ mes "【STA】每提升1級STA+2"; }
+			if(Talent_Sta>0){ mes "【STA】等級：^0000FF"+Talent_Sta+""; mes " 附加能力：^0000FFSta + "+Talent_Sta*2+"^000000"; }
+			if(Talent_Wis==0){ mes "【WIS】每提升1級WIS+2"; }
+			if(Talent_Wis>0){ mes "【WIS】等級：^0000FF"+Talent_Wis+""; mes " 附加能力：^0000FFWis + "+Talent_Wis*2+"^000000"; }
+			if(Talent_Spl==0){ mes "【SPL】每提升1級SPL+2"; }
+			if(Talent_Spl>0){ mes "【SPL】等級：^0000FF"+Talent_Spl+""; mes " 附加能力：^0000FFSpl + "+Talent_Spl*2+"^000000"; }
+			if(Talent_Con==0){ mes "【CON】每提升1級CON+2"; }
+			if(Talent_Con>0){ mes "【CON】等級：^0000FF"+Talent_Con+""; mes " 附加能力：^0000FFCon + "+Talent_Con*2+"^000000"; }
+			if(Talent_Crt==0){ mes "【CRT】每提升1級CRT+2"; }
+			if(Talent_Crt>0){ mes "【CRT】等級：^0000FF"+Talent_Crt+""; mes " 附加能力：^0000FFCrt + "+Talent_Crt*2+"^000000"; }
+			if(Talent_PAtk==0){ mes "【P.Atk】每提升1級P.Atk+2"; }
+			if(Talent_PAtk>0){ mes "【P.Atk】等級：^0000FF"+Talent_PAtk+""; mes " 附加能力：^0000FFP.Atk + "+Talent_PAtk*2+"^000000"; }
+			if(Talent_SMatk==0){ mes "【S.Matk】每提升1級S.Matk+2"; }
+			if(Talent_SMatk>0){ mes "【S.Matk】等級：^0000FF"+Talent_SMatk+""; mes " 附加能力：^0000FFS.Matk + "+Talent_SMatk*2+"^000000"; }
+			if(Talent_HPlus==0){ mes "【H.Plus】每提升1級H.Plus+2"; }
+			if(Talent_HPlus>0){ mes "【H.Plus】等級：^0000FF"+Talent_HPlus+""; mes " 附加能力：^0000FFH.Plus + "+Talent_HPlus*2+"^000000"; }
+			if(Talent_CRate==0){ mes "【C.Rate】每提升1級C.Rate+2"; }
+			if(Talent_CRate>0){ mes "【C.Rate】等級：^0000FF"+Talent_CRate+""; mes " 附加能力：^0000FFC.Rate + "+Talent_CRate*2+"^000000"; }
+
+			if(Talent_Castrate==0){ mes "【變動詠唱】"; mes "每提升1級變動詠唱時間-2%"; }
+			if(Talent_Castrate>0){ mes "【變動詠唱】等級："+Talent_Castrate+""; mes " 附加能力：^0000FF變動詠唱 - "+Talent_Castrate*2+"%^000000"; }
+			if(Talent_SPrate==0){ mes "【SP消耗】"; mes "每提升1級SP消耗-2%"; }
+			if(Talent_SPrate>0){ mes "【SP消耗】等級："+Talent_SPrate+""; mes " 附加能力：SP消耗 - "+Talent_SPrate*2+"%^000000"; }
+			if(Talent_CritAtkRate==0){ mes "【爆擊傷害】"; mes "每提升1級爆擊傷害+5%"; }
+			if(Talent_CritAtkRate>0){ mes "【爆擊傷害】等級："+Talent_CritAtkRate+""; mes " 附加能力：^0000FF爆擊傷害+ "+Talent_CritAtkRate*5+"%^000000"; }
+			if(Talent_HealPower==0){ mes "【技能治癒效果】"; mes "每提升1級技能治癒效果+2%"; }
+			if(Talent_HealPower>0){ mes "【技能治癒效果】等級："+Talent_HealPower+""; mes " 附加能力：^0000FF技能治癒效果 + "+Talent_HealPower*2+"%^000000"; }
+			mes "一般天賦每升1級，扣1點天賦點數";
+			mes "你想要提升那個一般天賦?";
+			next;
+			switch(select("POW:STA:WIS:SPL:CON:CRT:P.Atk:S.Matk:H.Plus:C.Rate:變動詠唱:SP消耗:爆擊傷害:技能治癒:回上層")) {
+
+			case 1:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Pow==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Pow,Talent_Pow + 1;
+				status_calc();
+				dispbottom "POW等級提升為 "+Talent_Pow+"";
+				goto Talent_next1;
+
+			case 2:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Sta==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Sta,Talent_Sta + 1;
+				status_calc();
+				dispbottom "STA等級提升為 "+Talent_Sta+"";
+				goto Talent_next1;
+
+			case 3:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Wis==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Wis,Talent_Wis + 1;
+				status_calc();
+				dispbottom "WIS等級提升為 "+Talent_Wis+"";
+				goto Talent_next1;
+
+			case 4:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Spl==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Spl,Talent_Spl + 1;
+				status_calc();
+				dispbottom "SPL等級提升為 "+Talent_Spl+"";
+				goto Talent_next1;
+
+			case 5:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Con==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Con,Talent_Con + 1;
+				status_calc();
+				dispbottom "CON等級提升為 "+Talent_Con+"";
+				goto Talent_next1;
+
+			case 6:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Crt==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Crt,Talent_Crt + 1;
+				status_calc();
+				dispbottom "CRT等級提升為 "+Talent_Crt+"";
+				goto Talent_next1;
+
+			case 7:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_PAtk==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_PAtk,Talent_PAtk + 1;
+				status_calc();
+				dispbottom "P.Atk等級提升為 "+Talent_PAtk+"";
+				goto Talent_next1;
+
+			case 8:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_SMatk==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_SMatk,Talent_SMatk + 1;
+				status_calc();
+				dispbottom "S.Matk等級提升為 "+Talent_SMatk+"";
+				goto Talent_next1;
+
+			case 9:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_HPlus==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_HPlus,Talent_HPlus + 1;
+				status_calc();
+				dispbottom "H.Plus等級提升為 "+Talent_HPlus+"";
+				goto Talent_next1;
+
+			case 10:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_CRate==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_CRate,Talent_CRate + 1;
+				status_calc();
+				dispbottom "C.Rate等級提升為 "+Talent_CRate+"";
+				goto Talent_next1;
+
+			case 11:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Castrate==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Castrate,Talent_Castrate + 1;
+				status_calc();
+				dispbottom "變動詠唱等級提升為 "+Talent_Castrate+"";
+				goto Talent_next1;
+
+			case 12:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_SPrate==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_SPrate,Talent_SPrate + 1;
+				status_calc();
+				dispbottom "SP消耗等級提升為 "+Talent_SPrate+"";
+				goto Talent_next1;
+
+			case 13:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_CritAtkRate==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_CritAtkRate,Talent_CritAtkRate + 1;
+				status_calc();
+				dispbottom "爆擊傷害等級提升為 "+Talent_CritAtkRate+"";
+				goto Talent_next1;
+
+			case 14:
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_HealPower==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_HealPower,Talent_HealPower + 1;
+				status_calc();
+				dispbottom "技能治癒效果等級提升為 "+Talent_HealPower+"";
+				goto Talent_next1;
+
+			case 15:
+				goto Talent_end;
+			}
+
+		//職業天賦
+		case 2:
+			Talent_next2:
+			mes " ^0000FF[職業天賦情報]^000000";
+			mes "職業天賦每升1級，扣1點天賦點數";
+			mes "你想要提升那個那個職業的天賦?";
+			next;
+			switch(select(
+			"盧恩龍爵",
+			"機甲神匠",
+			"十字影武",
+			"禁咒魔導士",
+			"樞機主教",
+			
+			"風鷹狩獵者",
+			"帝國聖衛軍",
+			"生命締造者",
+			"深淵追蹤者",
+			"元素支配者",
+			
+			"聖裁者",
+			"天籟頌者&月之舞靈",
+			"天帝",
+			"契靈師",
+			"流浪&疾風忍者",
+			
+			"夜行使",
+			"終極初學者",
+			"靈魂師",
+			"回上層")){
+
+			case 1:
+				Talent_next2_1:
+				mes " ^0000FF[盧恩龍爵天賦情報]^000000";
+				if(Talent_HUNDREDSPEAR_ATK==0){ mes "【百矛專精】"; mes "每提升1級，百矛穿刺技能傷害+10%"; }
+				if(Talent_HUNDREDSPEAR_ATK>0){ mes "【百矛專精】等級："+Talent_HUNDREDSPEAR_ATK+"/10"; mes " 附加能力：^0000FF百矛穿刺技能傷害 + "+Talent_HUNDREDSPEAR_ATK*10+"%^000000"; }
+				if(Talent_IGNITIONBREAK_ATK==0){ mes "【致命專精】"; mes "每提升1級，致命爆裂技能傷害+10%"; }
+				if(Talent_IGNITIONBREAK_ATK>0){ mes "【致命專精】等級："+Talent_IGNITIONBREAK_ATK+"/10"; mes " 附加能力：^0000FF致命爆裂技能傷害 + "+Talent_IGNITIONBREAK_ATK*10+"%^000000"; }
+				if(Talent_DRAGONBREATH_ATK==0){ mes "【龍火專精】"; mes "每提升1級，龍之氣息技能傷害+10%"; }
+				if(Talent_DRAGONBREATH_ATK0>0){ mes "【龍火專精】等級："+DRAGONBREATH_ATK+"/10"; mes " 附加能力：^0000FF龍之氣息技能傷害 + "+Talent_DRAGONBREATH_ATK*10+"%^000000"; }
+				if(Talent_DRAGONBREATH_WATER_ATK==0){ mes "【龍水專精】"; mes "每提升1級，龍之氣息-水技能傷害+10%"; }
+				if(Talent_DRAGONBREATH_WATER_ATK>0){ mes "【龍水專精】等級："+Talent_DRAGONBREATH_WATER_ATK+"/10"; mes " 附加能力：^0000FF龍之氣息-水技能傷害 + "+Talent_DRAGONBREATH_WATER_ATK*10+"%^000000"; }
+				if(Talent_HACKANDSLASHER_ATK==0){ mes "【橫揮專精】"; mes "每提升1級，橫揮斬技能傷害+5%"; }
+				if(Talent_HACKANDSLASHER_ATK>0){ mes "【橫揮專精】等級："+Talent_HACKANDSLASHER_ATK+"/5"; mes " 附加能力：^0000FF橫揮斬技能傷害 + "+Talent_HACKANDSLASHER_ATK*5+"%^000000"; }
+				if(Talent_STORMSLASH_ATK==0){ mes "【風暴專精】"; mes "每提升1級，風暴斬擊技能傷害+10%"; }
+				if(Talent_STORMSLASH_ATK>0){ mes "【風暴專精】等級："+Talent_STORMSLASH_ATK+"/5"; mes " 附加能力：^0000FF風暴斬擊技能傷害 + "+Talent_STORMSLASH_ATK*10+"%^000000"; }
+				if(Talent_SERVANTWEAPON_ATK==0){ mes "【死侍專精】"; mes "每提升1級，死侍武器技能傷害+10%"; }
+				if(Talent_SERVANTWEAPON_ATK>0){ mes "【死侍專精】等級："+Talent_SERVANTWEAPON_ATK+"/5"; mes " 附加能力：^0000FF死侍武器技能傷害 + "+Talent_SERVANTWEAPON_ATK*10+"%^000000"; }
+
+				if(Talent_HUNDREDSPEAR_Cool==0){ mes "【百矛冷卻】每提升1級，百矛穿刺技能冷卻時間-0.1秒"; }
+				if(Talent_HUNDREDSPEAR_Cool==1){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.1秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==2){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.2秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==3){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.3秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==4){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.4秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==5){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.5秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==6){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.6秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==7){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.7秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==8){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.8秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==9){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-0.9秒^000000"; }
+				if(Talent_HUNDREDSPEAR_Cool==10){ mes "【百矛冷卻】等級："+Talent_HUNDREDSPEAR_Cool+"/10"; mes " 附加能力：^0000FF百矛穿刺技能冷卻時間-1.0秒^000000"; }
+				if(Talent_HACKANDSLASHER_Cool==0){ mes "【橫揮冷卻】每提升1級，橫揮斬技能冷卻時間-0.35秒"; }
+				if(Talent_HACKANDSLASHER_Cool==1){ mes "【橫揮冷卻】等級："+Talent_HACKANDSLASHER_Cool+"/10"; mes " 附加能力：^0000FF橫揮斬技能冷卻時間-"+Talent_HACKANDSLASHER_Cool*350+"毫秒^000000"; }
+
+				if(Talent_SERVANTWEAPON_Cool==0){ mes "【死侍冷卻】每提升1級，死侍武器技能冷卻時間-15000毫秒"; }
+				if(Talent_SERVANTWEAPON_Cool==1){ mes "【死侍冷卻】等級："+Talent_SERVANTWEAPON_Cool+"/10"; mes " 附加能力：^0000FF死侍武器技能冷卻時間-"+Talent_SERVANTWEAPON_Cool*15000+"毫秒^000000"; }
+
+				if(Talent_IGNITIONBREAK_Cool==0){ mes "【致命冷卻】每提升1級，致命爆裂技能冷卻時間-400毫秒"; }
+				if(Talent_IGNITIONBREAK_Cool==1){ mes "【致命冷卻】等級："+Talent_IGNITIONBREAK_Cool+"/5"; mes " 附加能力：^0000FF死侍武器技能冷卻時間-"+Talent_IGNITIONBREAK_Cool*400+"毫秒^000000"; }
+
+
+				mes "你想要提升那個盧恩龍爵天賦?";
+				next;
+				switch(select(
+				"百矛專精 ("+Talent_HUNDREDSPEAR_ATK+"/10)",
+				"致命專精 ("+Talent_IGNITIONBREAK_ATK+"/10)",
+				"龍火專精 ("+Talent_DRAGONBREATH_ATK+"/10)",
+				"龍水專精 ("+Talent_DRAGONBREATH_WATER_ATK+"/10)",
+				"橫揮專精 ("+Talent_HACKANDSLASHER_ATK+"/10)",
+				"風暴專精 ("+Talent_STORMSLASH_ATK+"/10)",
+				"死侍專精 ("+Talent_SERVANTWEAPON_ATK+"/10)",
+				"橫揮冷卻 ("+Talent_HACKANDSLASHER_Cool+"/2)",
+				"百矛冷卻 ("+Talent_HUNDREDSPEAR_Cool+"/10)",
+				"死侍冷卻 ("+Talent_SERVANTWEAPON_Cool+"/10)",
+				"致命冷卻 ("+Talent_IGNITIONBREAK_Cool+"/5)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HUNDREDSPEAR_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HUNDREDSPEAR_ATK,Talent_HUNDREDSPEAR_ATK + 1;
+					status_calc();
+					dispbottom "百矛專精等級提升為 "+Talent_HUNDREDSPEAR_ATK+"";
+					goto Talent_next2_1;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_IGNITIONBREAK_ATK>10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_IGNITIONBREAK_ATK,Talent_IGNITIONBREAK_ATK + 1;
+					status_calc();
+					dispbottom "致命專精等級提升為 "+Talent_IGNITIONBREAK_ATK+"";
+					goto Talent_next2_1;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_DRAGONBREATH_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_DRAGONBREATH_ATK,Talent_DRAGONBREATH_ATK + 1;
+					status_calc();
+					dispbottom "龍火專精等級提升為 "+Talent_IGNITIONBREAK_ATK+"";
+					goto Talent_next2_1;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_DRAGONBREATH_WATER_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_DRAGONBREATH_WATER_ATK,Talent_DRAGONBREATH_WATER_ATK + 1;
+					status_calc();
+					dispbottom "龍水專精等級提升為 "+Talent_DRAGONBREATH_WATER_ATK+"";
+					goto Talent_next2_1;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HACKANDSLASHER_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HACKANDSLASHER_ATK,Talent_HACKANDSLASHER_ATK + 1;
+					status_calc();
+					dispbottom "橫揮專精等級提升為 "+Talent_HACKANDSLASHER_ATK+"";
+					goto Talent_next2_1;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_STORMSLASH_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_STORMSLASH_ATK,Talent_STORMSLASH_ATK + 1;
+					status_calc();
+					dispbottom "風暴專精等級提升為 "+Talent_STORMSLASH_ATK+"";
+					goto Talent_next2_1;
+
+				case 7:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SERVANTWEAPON_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SERVANTWEAPON_ATK,Talent_SERVANTWEAPON_ATK + 1;
+					status_calc();
+					dispbottom "死侍專精等級提升為 "+Talent_SERVANTWEAPON_ATK+"";
+					goto Talent_next2_1;
+
+
+				case 8:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HACKANDSLASHER_Cool==2){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HACKANDSLASHER_Cool,Talent_HACKANDSLASHER_Cool + 1;
+					status_calc();
+					dispbottom "橫揮冷卻等級提升為 "+Talent_HACKANDSLASHER_Cool+"";
+					goto Talent_next2_1;
+
+				case 9:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HUNDREDSPEAR_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HUNDREDSPEAR_Cool,Talent_HUNDREDSPEAR_Cool + 1;
+					status_calc();
+					dispbottom "百矛冷卻等級提升為 "+Talent_HUNDREDSPEAR_Cool+"";
+					goto Talent_next2_1;
+
+				case 10:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SERVANTWEAPON_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SERVANTWEAPON_Cool,Talent_SERVANTWEAPON_Cool + 1;
+					status_calc();
+					dispbottom "死侍冷卻等級提升為 "+Talent_SERVANTWEAPON_Cool+"";
+					goto Talent_next2_1;
+
+				case 11:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_IGNITIONBREAK_Cool==5){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_IGNITIONBREAK_Cool,Talent_IGNITIONBREAK_Cool + 1;
+					status_calc();
+					dispbottom "死侍冷卻等級提升為 "+Talent_IGNITIONBREAK_Cool+"";
+					goto Talent_next2_1;
+
+				case 12:
+					goto Talent_next2;
+				}
+
+			case 2:
+			Talent_next2_2:
+				mes " ^0000FF[機甲神匠天賦情報]^000000";
+				if(Talent_ARMSCANNON_ATK==0){ mes "【加農專精】"; mes "每提升1級，加農砲技能傷害+10%"; }
+				if(Talent_ARMSCANNON_ATK>0){ mes "【加農專精】等級："+Talent_ARMSCANNON_ATK+"/10"; mes " 附加能力：^0000FF加農砲技能傷害 + "+Talent_ARMSCANNON_ATK*10+"%^000000"; }
+				if(Talent_AXETORNADO_ATK==0){ mes "【戰斧專精】"; mes "每提升1級，戰斧颶風技能傷害+10%"; }
+				if(Talent_AXETORNADO_ATK>0){ mes "【戰斧專精】等級："+Talent_AXETORNADO_ATK+"/10"; mes " 附加能力：^0000FF戰斧颶風技能傷害 + "+Talent_AXETORNADO_ATK*10+"%^000000"; }
+				if(Talent_AXEBOOMERANG_ATK==0){ mes "【迴旋專精】"; mes "每提升1級，迴旋斧技能傷害+10%"; }
+				if(Talent_AXEBOOMERANG_ATK>0){ mes "【迴旋專精】等級："+Talent_AXEBOOMERANG_ATK+"/10"; mes " 附加能力：^0000FF迴旋斧技能傷害 + "+Talent_AXEBOOMERANGO_ATK*10+"%^000000"; }
+				if(Talent_POWERSWING_ATK==0){ mes "【揮斧專精】"; mes "每提升1級，揮斧重擊技能傷害+10%"; }
+				if(Talent_POWERSWING_ATK>0){ mes "【揮斧專精】等級："+Talent_POWERSWING_ATK+"/10"; mes " 附加能力：^0000FF揮斧重擊技能傷害 + "+Talent_POWERSWING_ATK*10+"%^000000"; }
+				if(Talent_TRIPLE_LASER_ATK==0){ mes "【三重雷射專精】"; mes "每提升1級，三重雷射技能傷害+5%"; }
+				if(Talent_TRIPLE_LASER_ATK >0){ mes "【三重雷射專精】等級："+Talent_TRIPLE_LASERS_ATK+"/10"; mes " 附加能力：^0000FF三重雷射技能傷害 + "+Talent_TRIPLE_LASER_ATK*5+"%^000000"; }
+
+				if(Talent_ARMSCANNON_Cool==0){ mes "【加農冷卻】每提升1級，加農砲技能冷卻時間-0.1秒"; }
+				if(Talent_ARMSCANNON_Cool==1){ mes "【加農冷卻】等級："+Talent_ARMSCANNON_Cool+"/5"; mes " 附加能力：^0000FF加農砲技能冷卻時間-0."+Talent_ARMSCANNON_Cool+"秒^000000"; }
+				if(Talent_AXETORNADO_Cool==0){ mes "【戰斧冷卻】每提升1級，戰斧颶風技能冷卻時間-0.1秒"; }
+				if(Talent_AXETORNADO_Cool==1){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.1秒^000000"; }
+				if(Talent_AXETORNADO_Cool==2){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.2秒^000000"; }
+				if(Talent_AXETORNADO_Cool==3){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.3秒^000000"; }
+				if(Talent_AXETORNADO_Cool==4){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.4秒^000000"; }
+				if(Talent_AXETORNADO_Cool==5){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.5秒^000000"; }
+				if(Talent_AXETORNADO_Cool==6){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.6秒^000000"; }
+				if(Talent_AXETORNADO_Cool==7){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.7秒^000000"; }
+				if(Talent_AXETORNADO_Cool==8){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.8秒^000000"; }
+				if(Talent_AXETORNADO_Cool==9){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-0.9秒^000000"; }
+				if(Talent_AXETORNADO_Cool==10){ mes "【戰斧冷卻】等級："+Talent_AXETORNADO_Cool+"/10"; mes " 附加能力：^0000FF戰斧颶風技能冷卻時間-1.0秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==0){ mes "【迴旋冷卻】每提升1級，迴旋斧技能冷卻時間-0.1秒"; }
+				if(Talent_AXEBOOMERANG_Cool==1){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.1秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==2){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.2秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==3){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.3秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==4){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.4秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==5){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.5秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==6){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.6秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==7){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.7秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==8){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.8秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==9){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-0.9秒^000000"; }
+				if(Talent_AXEBOOMERANG_Cool==10){ mes "【迴旋冷卻】等級："+Talent_AXEBOOMERANG_Cool+"/10"; mes " 附加能力：^0000FF迴旋斧技能冷卻時間-1.0秒^000000"; }
+
+				mes "你想要提升那個機甲神匠天賦?";
+				next;
+				switch(select("加農專精 ("+Talent_ARMSCANNON_ATK+"/10):三重雷射專精 ("+Talent_TRIPLE_LASER_ATK+"/10):戰斧專精 ("+Talent_AXETORNADO_ATK+"/10):迴旋專精 ("+Talent_AXEBOOMERANGO_ATK+"/10):揮斧專精 ("+Talent_POWERSWING_ATK+"/10):加農冷卻 ("+Talent_ARMSCANNON_Cool+"/5):戰斧冷卻 ("+Talent_AXETORNADO_Cool+"/10):迴旋冷卻 ("+Talent_AXEBOOMERANGO_Cool+"/10):回上層")) {
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ARMSCANNON_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ARMSCANNON_ATK,Talent_ARMSCANNON_ATK + 1;
+					status_calc();
+					dispbottom "加農專精等級提升為 "+Talent_ARMSCANNON_ATK+"";
+					goto Talent_next2_2;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_TRIPLE_LASER_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_TRIPLE_LASER_ATK,Talent_TRIPLE_LASER_ATK + 1;
+					status_calc();
+					dispbottom "三重雷射等級提升為 "+Talent_TRIPLE_LASER_ATK+"";
+					goto Talent_next2_2;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_AXETORNADO_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_AXETORNADO_ATK,Talent_AXETORNADO_ATK + 1;
+					status_calc();
+					dispbottom "戰斧專精等級提升為 "+Talent_AXETORNADO_ATK+"";
+					goto Talent_next2_2;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_AXEBOOMERANG_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_AXEBOOMERANG_ATK,Talent_AXEBOOMERANG_ATK + 1;
+					status_calc();
+					dispbottom "迴旋專精等級提升為 "+Talent_AXEBOOMERANG_ATK+"";
+					goto Talent_next2_2;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_POWERSWING_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_POWERSWING_ATK,Talent_POWERSWING_ATK + 1;
+					status_calc();
+					dispbottom "揮斧專精等級提升為 "+Talent_POWERSWING_ATK+"";
+					goto Talent_next2_2;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ARMSCANNON_Cool==5){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ARMSCANNON_Cool,Talent_ARMSCANNON_Cool + 1;
+					status_calc();
+					dispbottom "加農冷卻等級提升為 "+Talent_ARMSCANNON_Cool+"";
+					goto Talent_next2_2;
+
+				case 7:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_AXETORNADO_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_AXETORNADO_Cool,Talent_AXETORNADO_Cool + 1;
+					status_calc();
+					dispbottom "戰斧冷卻等級提升為 "+Talent_AXETORNADO_Cool+"";
+					goto Talent_next2_2;
+
+				case 8:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_AXEBOOMERANG_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_AXEBOOMERANG_Cool,Talent_AXEBOOMERANG_Cool + 1;
+					status_calc();
+					dispbottom "迴旋冷卻等級提升為 "+Talent_AXEBOOMERANG_Cool+"";
+					goto Talent_next2_2;
+
+				case 9:
+					goto Talent_next2;
+				}
+
+			case 3:
+			Talent_next2_3:
+				mes " ^0000FF[十字影武天賦情報]^000000";
+				if(Talent_SAVAGE_IMPACT_ATK==0){ mes "【野蠻專精】"; mes "每提升1級，野蠻衝擊技能傷害+5%"; }
+				if(Talent_SAVAGE_IMPACT_ATK>0){ mes "【野蠻專精】等級："+Talent_SAVAGE_IMPACT_ATK+"/10"; mes " 附加能力：^0000FF野蠻衝擊技能傷害 + "+Talent_SAVAGE_IMPACT_ATK*5+"%^000000"; }
+				if(Talent_SHADOW_STAB_ATK==0){ mes "【暗影專精】"; mes "每提升1級，暗影刺擊技能傷害+5%"; }
+				if(Talent_SHADOW_STAB_ATK>0){ mes "【暗影專精】等級："+Talent_SHADOW_STAB_ATK+"/10"; mes " 附加能力：^0000FF暗影刺擊技能傷害 + "+Talent_SHADOW_STAB_ATK*5+"%^000000"; }
+				if(Talent_ETERNAL_SLASH_ATK==0){ mes "【永恆專精】"; mes "每提升1級，永恆斬擊技能傷害+5%"; }
+				if(Talent_ETERNAL_SLASH_ATK>0){ mes "【永恆專精】等級："+Talent_ETERNAL_SLASH_ATK+"/10"; mes " 附加能力：^0000FF永恆斬擊技能傷害 + "+Talent_ETERNAL_SLASH_ATK*5+"%^000000"; }
+
+				if(Talent_DARKCROW_Cool==0){ mes "【爪痕冷卻】每提升1級，致命爪痕技能冷卻時間-5秒"; }
+				if(Talent_DARKCROW_Cool==1){ mes "【爪痕冷卻】等級："+Talent_DARKCROW_Cool+"/6"; mes " 附加能力：^0000FF致命爪痕技能冷卻時間-"+Talent_DARKCROW_Cool*5+"秒^000000"; }
+				switch(select(
+				"野蠻專精 ("+Talent_SAVAGE_IMPACT_ATK+"/10)",
+				"暗影專精 ("+Talent_SHADOW_STAB_ATK+"/10)",
+				"永恆專精 ("+Talent_ETERNAL_SLASH_ATK+"/10)",
+				"爪痕冷卻 ("+Talent_DARKCROW_Cool+"/6)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SAVAGE_IMPACT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SAVAGE_IMPACT_ATK,Talent_SAVAGE_IMPACT_ATK + 1;
+					status_calc();
+					dispbottom "野蠻專精等級提升為 "+Talent_SAVAGE_IMPACT_ATK+"";
+					goto Talent_next2_3;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SHADOW_STAB_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SHADOW_STAB_ATK,Talent_SHADOW_STAB_ATK + 1;
+					status_calc();
+					dispbottom "暗影專精等級提升為 "+Talent_SHADOW_STAB_ATK+"";
+					goto Talent_next2_3;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ETERNAL_SLASH_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ETERNAL_SLASH_ATK,Talent_ETERNAL_SLASH_ATK + 1;
+					status_calc();
+					dispbottom "永恆專精等級提升為 "+Talent_ETERNAL_SLASH_ATK+"";
+					goto Talent_next2_3;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_DARKCROW_Cool==6){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_DARKCROW_Cool,Talent_DARKCROW_Cool + 1;
+					status_calc();
+					dispbottom "爪痕冷卻等級提升為 "+Talent_DARKCROW_Cool+"";
+					goto Talent_next2_2;
+
+
+				case 5:
+					goto Talent_next2;
+				}
+
+			case 4:
+			if ( class != 4061 && class != 4255) {
+			mes "你不是禁咒魔導士無法學習!";
+			next;
+			goto Talent_next3;
+			}
+			Talent_next2_4:
+				mes " ^0000FF[禁咒魔導士天賦情報]^000000";
+				if(Talent_Ele_All_2_ATK==0){ mes "【法術專精】"; mes "每提升1級，所有屬性技能傷害+5%"; }
+				if(Talent_Ele_All_2_ATK>0){ mes "【法術專精】等級："+Talent_Ele_All_2_ATK+"/5"; mes " 附加能力：^0000FF所有屬性技能傷害 + "+Talent_Ele_All_2_ATK*5+"%^000000"; }
+				
+				switch(select(
+				"法術專精 ("+Talent_Ele_All_2_ATK+"/5)",
+				"回上層")){
+				
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Ele_All_2_ATK==5){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Ele_All_2_ATK,Talent_Ele_All_2_ATK + 1;
+					status_calc();
+					dispbottom "法術專精等級提升為 "+Talent_Ele_All_2_ATK+"";
+					goto Talent_next2_10;
+
+				case 2:
+					goto Talent_next2;
+				}
+
+			case 5:
+				Talent_next2_5:
+				mes " ^0000FF[樞機主教天賦情報]^000000";
+				if(Talent_ADORAMUS_ATK==0){ mes "【謳歌專精】"; mes "每提升1級，謳歌技能傷害+10%"; }
+				if(Talent_ADORAMUS_ATK>0){ mes "【謳歌專精】等級："+Talent_ADORAMUS_ATK+"/10"; mes " 附加能力：^0000FF謳歌技能傷害 + "+Talent_ADORAMUS_ATK*10+"%^000000"; }
+				if(Talent_JUDEX_ATK==0){ mes "【審判專精】"; mes "每提升1級，審判技能傷害+10%"; }
+				if(Talent_JUDEX_ATK>0){ mes "【審判專精】等級："+Talent_JUDEX_ATK+"/10"; mes " 附加能力：^0000FF審判技能傷害 + "+Talent_JUDEX_ATK*10+"%^000000"; }
+
+				if(Talent_ARBITRIUM_ATK==0){ mes "【制裁專精】"; mes "每提升1級，制裁謳歌技能傷害+5%"; }
+				if(Talent_ARBITRIUM_ATK>0){ mes "【制裁專精】等級："+Talent_ARBITRIUM_ATK+"/10"; mes " 附加能力：^0000FF審判技能傷害 + "+Talent_ARBITRIUM_ATK*5+"%^000000"; }
+				if(Talent_PNEUMATICUS_ATK==0){ mes "【驅魔專精】"; mes "每提升1級，驅魔風暴技能傷害+5%"; }
+				if(Talent_PNEUMATICUS_ATK>0){ mes "【驅魔專精】等級："+Talent_PNEUMATICUS_ATK+"/5"; mes " 附加能力：^0000FF審判技能傷害 + "+Talent_PNEUMATICUS_ATK*5+"%^000000"; }
+
+				mes "你想要提升那個樞機主教天賦?";
+				next;
+				switch(select("謳歌專精 ("+Talent_ADORAMUS_ATK+"/10):審判專精 ("+Talent_JUDEX_ATK+"/10):制裁專精 ("+Talent_ARBITRIUM_ATK+"/10):驅魔專精 ("+Talent_PNEUMATICUS_ATK+"/10):回上層")) {
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ADORAMUS_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ADORAMUS_ATK,Talent_ADORAMUS_ATK + 1;
+					status_calc();
+					dispbottom "謳歌專精等級提升為 "+Talent_ADORAMUS_ATK+"";
+					goto Talent_next2_5;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_JUDEX_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_JUDEX_ATK,Talent_JUDEX_ATK + 1;
+					status_calc();
+					dispbottom "審判專精等級提升為 "+Talent_JUDEX_ATK+"";
+					goto Talent_next2_5;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ARBITRIUM_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ARBITRIUM_ATK,Talent_ARBITRIUM_ATK + 1;
+					status_calc();
+					dispbottom "審判專精等級提升為 "+Talent_ARBITRIUM_ATK+"";
+					goto Talent_next2_5;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_PNEUMATICUS_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_PNEUMATICUS_ATK,Talent_PNEUMATICUS_ATK + 1;
+					status_calc();
+					dispbottom "驅魔專精等級提升為 "+Talent_PNEUMATICUS_ATK+"";
+					goto Talent_next2_5;
+
+				case 5:
+					goto Talent_next2;
+				}
+
+			case 6:
+			Talent_next2_6:
+				mes " ^0000FF[風鷹狩獵者天賦情報]^000000";
+				if(Talent_GALESTORM_ATK==0){ mes "【毀滅專精】"; mes "每提升1級，毀滅風暴技能傷害+5%"; }
+				if(Talent_GALESTORM_ATK>0){ mes "【毀滅專精】等級："+Talent_GALESTORM_ATK+"/10"; mes " 附加能力：^0000FF毀滅風暴技能傷害 + "+Talent_GALESTORM_ATK*5+"%^000000"; }
+				if(Talent_CRESCIVE_BOLT_ATK==0){ mes "【漸進專精】"; mes "每提升1級，漸進狙擊技能傷害+5%"; }
+				if(Talent_CRESCIVE_BOLT_ATK>0){ mes "【漸進專精】等級："+Talent_CRESCIVE_BOLT_ATK+"/10"; mes " 附加能力：^0000FF漸進狙擊技能傷害 + "+Talent_CRESCIVE_BOLT_ATK*5+"%^000000"; }
+				if(Talent_CALAMITYGALE_Cool==0){ mes "【憤怒冷卻】每提升1級，憤怒暴風技能冷卻時間-15秒"; }
+				if(Talent_CALAMITYGALE_Cool==1){ mes "【憤怒冷卻】等級："+Talent_CALAMITYGALE_Cool+"/5"; mes " 附加能力：^0000FF憤怒暴風技能冷卻時間-"+Talent_CALAMITYGALE_Cool*15+"秒^000000"; }
+
+				mes "你想要提升那個風鷹狩獵者天賦?";
+				next;
+				switch(select(
+				"毀滅專精 ("+Talent_GALESTORM_ATK+"/10)",
+				"漸進專精 ("+Talent_CRESCIVE_BOLT_ATK+"/10)",
+				"憤怒冷卻 ("+Talent_CALAMITYGALE_Cool+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_GALESTORM_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_GALESTORM_ATK,Talent_GALESTORM_ATK + 1;
+					status_calc();
+					dispbottom "毀滅專精等級提升為 "+Talent_GALESTORM_ATK+"";
+					goto Talent_next2_6;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CRESCIVE_BOLT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CRESCIVE_BOLT_ATK,Talent_CRESCIVE_BOLT_ATK + 1;
+					status_calc();
+					dispbottom "漸進專精等級提升為 "+Talent_CRESCIVE_BOLT_ATK+"";
+					goto Talent_next2_6;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CALAMITYGALE_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CALAMITYGALE_Cool,Talent_CALAMITYGALE_Cool + 1;
+					status_calc();
+					dispbottom "迴旋冷卻等級提升為 "+Talent_CALAMITYGALE_Cool+"";
+					goto Talent_next2_3;
+
+				case 4:
+					goto Talent_next2;
+				}
+
+			case 7:
+			Talent_next2_7:
+				mes " ^0000FF[帝國聖衛軍天賦情報]^000000";
+				if(Talent_RAYOFGENESIS_ATK==0){ mes "【創世專精】"; mes "每提升1級，創世之光技能傷害+10%"; }
+				if(Talent_RAYOFGENESIS_ATK>0){ mes "【創世專精】等級："+Talent_RAYOFGENESIS_ATK+"/10"; mes " 附加能力：^0000FF創世之光技能傷害 + "+Talent_RAYOFGENESIS_ATK*10+"%^000000"; }
+				if(Talent_BANISHINGPOIN_ATK==0){ mes "【放逐專精】"; mes "每提升1級，放逐攻擊技能傷害+10%"; }
+				if(Talent_BANISHINGPOIN_ATK>0){ mes "【放逐專精】等級："+Talent_BANISHINGPOIN_ATK+"/10"; mes " 附加能力：^0000FF放逐攻擊技能傷害 + "+Talent_BANISHINGPOIN_ATK*10+"%^000000"; }
+				if(Talent_OVERBRAND_ATK==0){ mes "【支配專精】"; mes "每提升1級，支配烙印技能傷害+10%"; }
+				if(Talent_OVERBRANDR_ATK>0){ mes "【支配專精】等級："+Talent_OVERBRAND_ATK+"/10"; mes " 附加能力：^0000FF支配烙印技能傷害 + "+Talent_OVERBRAND_ATK*10+"%^000000"; }
+
+				if(Talent_CROSS_RAIN_ATK==0){ mes "【聖雨專精】"; mes "每提升1級，聖十字雨技能傷害+5%"; }
+				if(Talent_CROSS_RAIN_ATK>0){ mes "【聖雨專精】等級："+Talent_CROSS_RAIN_ATK+"/10"; mes " 附加能力：^0000FF支配烙印技能傷害 + "+Talent_CROSS_RAIN_ATK*5+"%^000000"; }
+				if(Talent_RAYOFGENESIS_Cool==0){ mes "【創世冷卻】每提升1級，創世之光技能冷卻時間-0.1秒"; }
+				if(Talent_RAYOFGENESIS_Cool==1){ mes "【創世冷卻】等級："+Talent_RAYOFGENESIS_Cool+"/3"; mes " 附加能力：^0000FF創世之光技能冷卻時間-0."+Talent_RAYOFGENESIS_Cool+"秒^000000"; }
+
+				if(Talent_SHIELD_SHOOTING_Cool==0){ mes "【盾牌冷卻】每提升1級，盾牌投擲技能冷卻時間-30豪秒"; }
+				if(Talent_SHIELD_SHOOTING_Cool==1){ mes "【盾牌冷卻】等級："+Talent_SHIELD_SHOOTING_Cool+"/10"; mes " 附加能力：^0000FF盾牌投擲技能冷卻時間-"+Talent_SHIELD_SHOOTING_Cool*30+"豪秒^000000"; }
+
+				mes "你想要提升那個帝國聖衛軍天賦?";
+				next;
+				switch(select(
+				"創世專精 ("+Talent_RAYOFGENESIS_ATK+"/5)",
+				"放逐專精 ("+Talent_BANISHINGPOINT_ATK+"/5)",
+				"聖雨專精 ("+Talent_CROSS_RAIN_ATK+"/5)",
+				"支配專精 ("+Talent_OVERBRAND_ATK+"/5)",
+				"創世冷卻 ("+Talent_RAYOFGENESIS_Cool+"/3)",
+				"盾牌冷卻 ("+Talent_SHIELD_SHOOTING_Cool+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_RAYOFGENESIS_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_RAYOFGENESIS_ATK,Talent_RAYOFGENESIS_ATK + 1;
+					status_calc();
+					dispbottom "創世專精等級提升為 "+Talent_RAYOFGENESIS_ATK+"";
+					goto Talent_next2_7;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_BANISHINGPOINT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_BANISHINGPOINT_ATK,Talent_BANISHINGPOINT_ATK + 1;
+					status_calc();
+					dispbottom "放逐專精等級提升為 "+Talent_BANISHINGPOINT_ATK+"";
+					goto Talent_next2_7;
+					
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CROSS_RAIN_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CROSS_RAIN_ATK,Talent_CROSS_RAIN_ATK + 1;
+					status_calc();
+					dispbottom "聖雨專精等級提升為 "+Talent_CROSS_RAIN_ATK+"";
+					goto Talent_next2_7;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_OVERBRAND_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_OVERBRAND_ATK,Talent_OVERBRAND_ATK + 1;
+					status_calc();
+					dispbottom "支配專精等級提升為 "+Talent_OVERBRAND_ATK+"";
+					goto Talent_next2_7;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_RAYOFGENESIS_Cool==3){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_RAYOFGENESIS_Cool,Talent_RAYOFGENESIS_Cool + 1;
+					status_calc();
+					dispbottom "創世冷卻等級提升為 "+Talent_RAYOFGENESIS_Cool+"";
+					goto Talent_next2_7;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SHIELD_SHOOTING_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SHIELD_SHOOTING_Cool,Talent_SHIELD_SHOOTING_Cool + 1;
+					status_calc();
+					dispbottom "盾牌冷卻等級提升為 "+Talent_SHIELD_SHOOTING_Cool+"";
+					goto Talent_next2_7;
+
+				case 7:
+					goto Talent_next2;
+				}
+
+			case 8:
+			Talent_next2_8:
+				mes " ^0000FF[生命締造者天賦情報]^000000";
+				if(Talent_CARTCANNON_ATK==0){ mes "【加農砲專精】"; mes "每提升1級，手推車加農砲技能傷害+10%"; }
+				if(Talent_CARTCANNON_ATK>0){ mes "【加農砲專精】等級："+Talent_CARTCANNON_ATK+"/10"; mes " 附加能力：^0000FF手推車加農砲技能傷害 + "+Talent_CARTCANNON_ATK*10+"%^000000"; }
+				if(Talent_MAYHEMIC_THORNS_ATK==0){ mes "【混亂專精】"; mes "每提升1級，混亂荊棘技能傷害+5%"; }
+				if(Talent_MAYHEMIC_THORNS_ATK >0){ mes "【混亂專精】等級："+Talent_MAYHEMIC_THORNS_ATK+"/10"; mes " 附加能力：^0000FF混亂荊棘技能傷害 + "+Talent_MAYHEMIC_THORNS_ATK*5+"%^000000"; }
+				if(Talent_ACIDIFIED_ZONE_ATK==0){ mes "【強酸專精】"; mes "每提升1級，強酸禁地(水火風地)技能傷害+5%"; }
+				if(Talent_ACIDIFIED_ZONE_ATK >0){ mes "【強酸專精】等級："+Talent_ACIDIFIED_ZONE_ATK+"/10"; mes " 附加能力：^0000FF強酸禁地(水火風地)技能傷害 + "+Talent_ACIDIFIED_ZONE_ATK*5+"%^000000"; }
+
+				switch(select(
+				"加農砲專精 ("+Talent_CARTCANNON_ATK+"/10)",
+				"混亂專精 ("+Talent_MAYHEMIC_THORNS_ATK+"/10)",
+				"強酸專精 ("+Talent_ACIDIFIED_ZONE_ATK+"/10)",
+				"回上層")){
+				
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CARTCANNON_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CARTCANNON_ATK,Talent_CARTCANNON_ATK + 1;
+					status_calc();
+					dispbottom "加農砲專精等級提升為 "+Talent_CARTCANNON_ATK+"";
+					goto Talent_next2_8;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_MAYHEMIC_THORNS_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_MAYHEMIC_THORNS_ATK,Talent_MAYHEMIC_THORNS_ATK + 1;
+					status_calc();
+					dispbottom "混亂專精等級提升為 "+Talent_MAYHEMIC_THORNS_ATK+"";
+					goto Talent_next2_8;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ACIDIFIED_ZONE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ACIDIFIED_ZONE_ATK,Talent_ACIDIFIED_ZONE_ATK + 1;
+					status_calc();
+					dispbottom "強酸專精等級提升為 "+Talent_ACIDIFIED_ZONE_ATK+"";
+					goto Talent_next2_8;
+
+				case 4:
+					goto Talent_next2;
+				}
+
+			case 9:
+				Talent_next2_9:
+				mes " ^0000FF[深淵追蹤者天賦情報]^000000";
+				if(Talent_BACKSTAP_ATK==0){ mes "【背刺專精】"; mes "每提升1級，背刺技能傷害+10%"; }
+				if(Talent_BACKSTAP_ATK>0){ mes "【背刺專精】等級："+Talent_BACKSTAP_ATK+"/10"; mes " 附加能力：^0000FF背刺技能傷害 + "+Talent_BACKSTAP_ATK*10+"%^000000"; }
+				if(Talent_TRIANGLESHOT_ATK==0){ mes "【三角專精】"; mes "每提升1級，三角射擊技能傷害+10%"; }
+				if(Talent_TRIANGLESHOT_ATK>0){ mes "【三角專精】等級："+Talent_TRIANGLESHOT_ATK+"/10"; mes " 附加能力：^0000FF三角射擊技能傷害 + "+Talent_TRIANGLESHOT_ATK*10+"%^000000"; }
+				if(Talent_FATALMENACE_ATK==0){ mes "【致命專精】"; mes "每提升1級，致命威脅技能傷害+10%"; }
+				if(Talent_FATALMENACE_ATK>0){ mes "【致命專精】等級："+Talent_FATALMENACE_ATK+"/10"; mes " 附加能力：^0000FF致命威脅技能傷害 + "+Talent_FATALMENACE_ATK*10+"%^000000"; }
+
+				if(Talent_DEFT_STAB_ATK==0){ mes "【靈巧專精】"; mes "每提升1級，靈巧刺擊技能傷害+5%"; }
+				if(Talent_DEFT_STAB_ATK>0){ mes "【靈巧專精】等級："+Talent_DEFT_STAB_ATK+"/10"; mes " 附加能力：^0000FF靈巧刺擊技能傷害 + "+Talent_DEFT_STAB_ATK*5+"%^000000"; }
+				if(Talent_CHAIN_REACTION_SHOT_ATK==0){ mes "【連鎖專精】"; mes "每提升1級，連鎖射擊技能傷害+5%"; }
+				if(Talent_CHAIN_REACTION_SHOT_ATK>0){ mes "【連鎖專精】等級："+Talent_CHAIN_REACTION_SHOT_ATK+"/10"; mes " 附加能力：^0000FF連鎖射擊技能傷害 + "+Talent_CHAIN_REACTION_SHOT_ATK*5+"%^000000"; }
+				if(Talent_FRENZY_SHOT_ATK==0){ mes "【狂暴專精】"; mes "每提升1級，狂暴射擊技能傷害+5%"; }
+				if(Talent_FRENZY_SHOT_ATK>0){ mes "【狂暴專精】等級："+Talent_FRENZY_SHOT_ATK+"/10"; mes " 附加能力：^0000FF狂暴射擊技能傷害 + "+Talent_FRENZY_SHOT_ATK*5+"%^000000"; }
+
+				mes "你想要提升那深淵追蹤者天賦?";
+				next;
+				switch(select(
+				"背刺專精 ("+Talent_ARMSCANNON_ATK+"/10)",
+				"三角專精 ("+Talent_AXETORNADO_ATK+"/10)",
+				"致命專精 ("+Talent_FATALMENACE_ATK+"/10)",
+				"靈巧專精 ("+Talent_DEFT_STAB_ATK+"/10)",
+				"連鎖專精 ("+Talent_CHAIN_REACTION_SHOT_ATK+"/10)",
+				"狂暴專精 ("+Talent_FRENZY_SHOT_ATK+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_BACKSTAP_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_BACKSTAP_ATK,Talent_BACKSTAP_ATK + 1;
+					status_calc();
+					dispbottom "背刺專精等級提升為 "+Talent_BACKSTAP_ATK+"";
+					goto Talent_next2_9;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_TRIANGLESHOT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_TRIANGLESHOT_ATK,Talent_TRIANGLESHOT_ATK + 1;
+					status_calc();
+					dispbottom "三角專精等級提升為 "+Talent_TRIANGLESHOT_ATK+"";
+					goto Talent_next2_9;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_FATALMENACE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_FATALMENACE_ATK,Talent_FATALMENACE_ATK + 1;
+					status_calc();
+					dispbottom "致命專精等級提升為 "+Talent_FATALMENACE_ATK+"";
+					goto Talent_next2_9;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_DEFT_STAB_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_DEFT_STAB_ATK,Talent_DEFT_STAB_ATK + 1;
+					status_calc();
+					dispbottom "靈巧專精等級提升為 "+Talent_DEFT_STAB_ATK+"";
+					goto Talent_next2_9;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CHAIN_REACTION_SHOT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CHAIN_REACTION_SHOT_ATK,Talent_CHAIN_REACTION_SHOT_ATK + 1;
+					status_calc();
+					dispbottom "連鎖專精等級提升為 "+Talent_CHAIN_REACTION_SHOT_ATK+"";
+					goto Talent_next2_9;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_FRENZY_SHOT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_FRENZY_SHOT_ATK,Talent_FRENZY_SHOT_ATK + 1;
+					status_calc();
+					dispbottom "狂暴專精等級提升為 "+Talent_FRENZY_SHOT_ATK+"";
+					goto Talent_next2_9;
+
+				case 7:
+					goto Talent_next2;
+				}
+
+			case 10:
+			if ( class != 4074 && class != 4261) {
+			mes "你不是元素支配者無法學習!";
+			next;
+			goto Talent_next3;
+			}
+			Talent_next2_10:
+				mes " ^0000FF[元素支配者天賦情報]^000000";
+				if(Talent_Ele_All_ATK==0){ mes "【法術專精】"; mes "每提升1級，所有屬性技能傷害+10%"; }
+				if(Talent_Ele_All_ATK>0){ mes "【法術專精】等級："+Talent_Ele_All_ATK+"/5"; mes " 附加能力：^0000FF所有屬性技能傷害 + "+Talent_Ele_All_ATK*10+"%^000000"; }
+
+				if(Talent_DIAMOND_STORM_ATK==0){ mes "【鑽石專精】"; mes "每提升1級，鑽石風暴技能傷害+5%"; }
+				if(Talent_DIAMOND_STORM_ATK>0){ mes "【鑽石專精】等級："+Talent_DIAMOND_STORM_ATK+"/5"; mes " 附加能力：^0000FF鑽石風暴技能傷害 + "+Talent_DIAMOND_STORM_ATK*5+"%^000000"; }
+				if(Talent_TERRA_DRIVE_ATK==0){ mes "【大地專精】"; mes "每提升1級，大地驅動技能傷害+5%"; }
+				if(Talent_TERRA_DRIVE_ATK>0){ mes "【大地專精】等級："+Talent_TERRA_DRIVE_ATK+"/5"; mes " 附加能力：^0000FF大地驅動技能傷害 + "+Talent_TERRA_DRIVE_ATK*5+"%^000000"; }
+
+				if(Talent_STORM_DRIVE_Cool==0){ mes "【術法冷卻】每提升1級，鑽石風暴、大地驅動技能冷卻時間-0.15秒"; }
+				if(Talent_STORM_DRIVE_Cool==1){ mes "【術法冷卻】等級："+Talent_STORM_DRIVE_Cool+"/5"; mes " 附加能力：^0000FF鑽石風暴、大地驅動技能冷卻時間-"+Talent_STORM_DRIVE_Cool*150+"毫秒^000000"; }
+				if(Talent_LAND_ROKS_SWAMP_Cool==0){ mes "【領域冷卻】每提升1級，雷霆陣地、毒液沼澤、灼熱岩漿技能冷卻時間-0.2秒"; }
+				if(Talent_LAND_ROKS_SWAMP_Cool==1){ mes "【領域冷卻】等級："+Talent_LAND_ROKS_SWAMP_Cool+"/5"; mes " 附加能力：^0000FF雷霆陣地、毒液沼澤、灼熱岩漿技能冷卻時間-"+Talent_LAND_ROKS_SWAMP_Cool*200+"毫秒^000000"; }
+
+				switch(select(
+				"法術專精 ("+Talent_Ele_All_ATK+"/5)",
+				"鑽石專精 ("+Talent_DIAMOND_STORM_ATK+"/10)",
+				"大地專精 ("+Talent_TERRA_DRIVE_ATK+"/10)",
+				"術法冷卻 ("+Talent_STORM_DRIVE_Cool+"/5)",
+				"領域冷卻 ("+Talent_LAND_ROKS_SWAMP_Cool+"/5)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Ele_All_ATK==5){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Ele_All_ATK,Talent_Ele_All_ATK + 1;
+					status_calc();
+					dispbottom "法術專精等級提升為 "+Talent_Ele_All_ATK+"";
+					goto Talent_next2_10;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_DIAMOND_STORM_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_DIAMOND_STORM_ATK,Talent_Points - 1;
+					set Talent_DIAMOND_STORM_ATK,Talent_DIAMOND_STORM_ATK + 1;
+					status_calc();
+					dispbottom "鑽石專精等級提升為 "+Talent_DIAMOND_STORM_ATK+"";
+					goto Talent_next2_10;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_TERRA_DRIVE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_TERRA_DRIVE_ATK,Talent_Points - 1;
+					set Talent_TERRA_DRIVE_ATK,Talent_TERRA_DRIVE_ATK + 1;
+					status_calc();
+					dispbottom "大地專精等級提升為 "+Talent_TERRA_DRIVE_ATK+"";
+					goto Talent_next2_10;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_STORM_DRIVE_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_STORM_DRIVE_Cool,Talent_STORM_DRIVE_Cool + 1;
+					status_calc();
+					dispbottom "術法冷卻等級提升為 "+Talent_STORM_DRIVE_Cool+"";
+					goto Talent_next2_10;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_LAND_ROKS_SWAMP_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_LAND_ROKS_SWAMP_Cool,Talent_LAND_ROKS_SWAMP_Cool + 1;
+					status_calc();
+					dispbottom "領域冷卻等級提升為 "+Talent_LAND_ROKS_SWAMP_Cool+"";
+					goto Talent_next2_10;
+					
+				case 6:
+					goto Talent_next2;
+				}
+
+			case 11:
+				Talent_next2_11:
+				mes " ^0000FF[聖裁者天賦情報]^000000";
+				if(Talent_EXPOSION_BLASTER_Cool==0){ mes "【爆破冷卻】每提升1級，爆破衝擊技能冷卻時間-30豪秒"; }
+				if(Talent_EXPOSION_BLASTER_Cool==1){ mes "【爆破冷卻】等級："+Talent_EXPOSION_BLASTER_Cool+"/10"; mes " 附加能力：^0000FF爆破衝擊技能冷卻時間-"+Talent_EXPOSION_BLASTER_Cool*30+"豪秒^000000"; }
+
+				mes "你想要提升那個聖裁者天賦?";
+				next;
+				switch(select(
+				"爆破冷卻 ("+Talent_EXPOSION_BLASTER_Cool+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_EXPOSION_BLASTER_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_EXPOSION_BLASTER_Cool,Talent_EXPOSION_BLASTER_Cool + 1;
+					status_calc();
+					dispbottom "爆破冷卻等級提升為 "+Talent_EXPOSION_BLASTER_Cool+"";
+					goto Talent_next2_11;
+
+				case 2:
+					goto Talent_next2;
+				}
+
+			case 12:
+				Talent_next2_12:
+				mes " ^0000FF[天籟頌者&月之舞靈天賦情報]^000000";
+				if(Talent_ARROWVULCAN_ATK==0){ mes "【奧義專精】"; mes "每提升1級，奧義箭亂舞技能傷害+10%"; }
+				if(Talent_ARROWVULCAN_ATK>0){ mes "【奧義專精】等級："+Talent_ARROWVULCAN_ATK+"/10"; mes " 附加能力：^0000FF奧義箭亂舞技能傷害 + "+Talent_ARROWVULCAN_ATK*10+"%^000000"; }
+				if(Talent_RAINSTORM_ATK==0){ mes "【暴雨專精】"; mes "每提升1級，大暴雨技能傷害+10%"; }
+				if(Talent_RAINSTORM_ATK>0){ mes "【暴雨專精】等級："+Talent_RAINSTORM_ATK+"/10"; mes " 附加能力：^0000FF大暴雨技能傷害 + "+Talent_RAINSTORM_ATK*10+"%^000000"; }
+
+				if(Talent_ROSEBLOSSOM_ATK==0){ mes "【玫瑰專精】"; mes "每提升1級，玫瑰箭矢技能傷害+5%"; }
+				if(Talent_ROSEBLOSSOM_ATK>0){ mes "【玫瑰專精】等級："+Talent_ROSEBLOSSOM_ATK+"/10"; mes " 附加能力：^0000FF玫瑰箭矢技能傷害 + "+Talent_ROSEBLOSSOM_ATK*5+"%^000000"; }
+				if(Talent_METALIC_FURY_ATK==0){ mes "【金屬專精】"; mes "每提升1級，金屬狂怒技能傷害+5%"; }
+				if(Talent_METALIC_FURY_ATK>0){ mes "【金屬專精】等級："+Talent_METALIC_FURY_ATK+"/10"; mes " 附加能力：^0000FF金屬狂怒技能傷害 + "+Talent_METALIC_FURY_ATK*5+"%^000000"; }
+				if(Talent_RHYTHMSHOOTING_ATK==0){ mes "【節奏專精】"; mes "每提升1級，節奏射擊技能傷害+5%"; }
+				if(Talent_RHYTHMSHOOTING_ATK>0){ mes "【節奏專精】等級："+Talent_RHYTHMSHOOTING_ATK+"/10"; mes " 附加能力：^0000FF節奏射擊技能傷害 + "+Talent_RHYTHMSHOOTING_ATK*5+"%^000000"; }
+
+				mes "你想要提升那個天籟頌者&月之舞靈天賦?";
+				next;
+				switch(select(
+				"奧義專精 ("+Talent_ARROWVULCAN_ATK+"/10)",
+				"暴雨專精 ("+Talent_RAINSTORM_ATK+"/10)",
+				"玫瑰專精 ("+Talent_ROSEBLOSSOM_ATK+"/10)",
+				"金屬專精 ("+Talent_METALIC_FURY_ATK+"/10)",
+				"節奏專精 ("+Talent_RHYTHMSHOOTING_ATK+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ARROWVULCAN_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ARROWVULCAN_ATK,Talent_ARROWVULCAN_ATK + 1;
+					status_calc();
+					dispbottom "奧義專精等級提升為 "+Talent_ARROWVULCAN_ATK+"";
+					goto Talent_next2_12;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_RAINSTORM_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_RAINSTORM_ATK,Talent_RAINSTORM_ATK + 1;
+					status_calc();
+					dispbottom "暴雨專精等級提升為 "+Talent_RAINSTORM_ATK+"";
+					goto Talent_next2_12;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_ROSEBLOSSOM_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_ROSEBLOSSOM_ATK,Talent_ROSEBLOSSOM_ATK + 1;
+					status_calc();
+					dispbottom "玫瑰專精等級提升為 "+Talent_ROSEBLOSSOM_ATK+"";
+					goto Talent_next2_12;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_METALIC_FURY_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_METALIC_FURY_ATK,Talent_METALIC_FURY_ATK + 1;
+					status_calc();
+					dispbottom "金屬專精等級提升為 "+Talent_METALIC_FURY_ATK+"";
+					goto Talent_next2_12;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_RHYTHMSHOOTING_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_RHYTHMSHOOTING_ATK,Talent_RHYTHMSHOOTING_ATK + 1;
+					status_calc();
+					dispbottom "節奏專精等級提升為 "+Talent_RHYTHMSHOOTING_ATK+"";
+					goto Talent_next2_12;
+
+
+				case 6:
+					goto Talent_next2;
+				}
+
+			case 13:
+			if ( class != 4302 ) {
+			mes "你不是天帝無法學習!";
+			next;
+			goto Talent_next2;
+			}
+				Talent_next2_13:
+				mes " ^0000FF[天帝天賦情報]^000000";
+				
+				if(Talent_UNIVERSESTANCE_ATK==0){ mes "【宇宙專精】"; mes "每提升1級，對全階級物理傷害+5%"; }
+				if(Talent_UNIVERSESTANCE_ATK>0){ mes "【宇宙專精】等級："+Talent_UNIVERSESTANCE_ATK+"/10"; mes " 附加能力：^0000FF對全階級物理傷害 + "+Talent_UNIVERSESTANCE_ATK*5+"%^000000"; }
+				
+				if(Talent_SOLARBURST_ATK==0){ mes "【太陽專精】"; mes "每提升1級，太陽爆炸技能傷害+10%"; }
+				if(Talent_SOLARBURST_ATK>0){ mes "【太陽專精】等級："+Talent_SOLARBURST_ATK+"/10"; mes " 附加能力：^0000FF太陽爆炸技能傷害 + "+Talent_SOLARBURST_ATK*10+"%^000000"; }
+				if(Talent_FULLMOONKICK_ATK==0){ mes "【月亮專精】"; mes "每提升1級，滿月腳技能傷害+10%"; }
+				if(Talent_FULLMOONKICK_ATK>0){ mes "【月亮專精】等級："+Talent_FULLMOONKICK_ATK+"/10"; mes " 附加能力：^0000FF滿月腳技能傷害 + "+Talent_FULLMOONKICK_ATK*10+"%^000000"; }
+				if(Talent_FALLINGSTAR_ATK==0){ mes "【星星專精】"; mes "每提升1級，流星殞落技能傷害+10%"; }
+				if(Talent_FALLINGSTAR_ATK>0){ mes "【星星專精】等級："+Talent_FALLINGSTAR_ATK+"/10"; mes " 附加能力：^0000FF流星殞落技能傷害 + "+Talent_FALLINGSTAR_ATK*10+"%^000000"; }
+
+				mes "你想要提升那個天帝天賦?";
+				next;
+				switch(select(
+				"宇宙專精 ("+Talent_UNIVERSESTANCE_ATK+"/10)",
+				"太陽專精 ("+Talent_SOLARBURST_ATK+"/10)",
+				"月亮專精 ("+Talent_FULLMOONKICK_ATK+"/10)",
+				"星星專精 ("+Talent_FALLINGSTAR_ATK+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_UNIVERSESTANCE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_UNIVERSESTANCE_ATK,Talent_UNIVERSESTANCE_ATK + 1;
+					status_calc();
+					dispbottom "宇宙專精等級提升為 "+Talent_UNIVERSESTANCE_ATK+"";
+					goto Talent_next2_13;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SOLARBURST_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SOLARBURST_ATK,Talent_SOLARBURST_ATK + 1;
+					status_calc();
+					dispbottom "太陽專精等級提升為 "+Talent_SOLARBURST_ATK+"";
+					goto Talent_next2_13;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_FULLMOONKICK_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_FULLMOONKICK_ATK,Talent_FULLMOONKICK_ATK + 1;
+					status_calc();
+					dispbottom "月亮專精等級提升為 "+Talent_FULLMOONKICK_ATK+"";
+					goto Talent_next2_13;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_FALLINGSTAR_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_FALLINGSTAR_ATK,Talent_FALLINGSTAR_ATK + 1;
+					status_calc();
+					dispbottom "星星專精等級提升為 "+Talent_FALLINGSTAR_ATK+"";
+					goto Talent_next2_13;
+
+				case 5:
+					goto Talent_next2;
+				}
+
+			case 14:
+			if ( class != 4303 ) {
+			mes "你不是契靈師無法學習!";
+			next;
+			goto Talent_next2;
+			}
+				Talent_next2_14:
+				mes " ^0000FF[契靈師天賦情報]^000000";
+				if(Talent_TALISMAN_OF_ATK==0){ mes "【五行專精】"; mes "每提升1級，所有屬性魔法傷害+3%"; }
+				if(Talent_TALISMAN_OF_ATK>0){ mes "【五行專精】等級："+Talent_TALISMAN_OF_ATK+"/10"; mes " 附加能力：^所有屬性魔法傷害 + "+Talent_TALISMAN_OF_ATK*3+"%^000000"; }
+
+				mes "你想要提升那個契靈師天賦?";
+				next;
+				switch(select(
+				"五行專精 ("+Talent_TALISMAN_OF_ATK+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_TALISMAN_OF_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_TALISMAN_OF_ATK,Talent_TALISMAN_OF_ATK + 1;
+					status_calc();
+					dispbottom "五行專精等級提升為 "+Talent_TALISMAN_OF_ATK+"";
+					goto Talent_next2_14;
+
+
+				case 2:
+					goto Talent_next2;
+				}
+
+
+			case 15:
+			if ( class != 4211 && class != 4212 && class != 4304 && class != 4305) {
+			mes "你不是流浪&疾風忍者無法學習!";
+			next;
+			goto Talent_next2;
+			}
+				Talent_next2_15:
+				mes " ^0000FF[流浪&疾風忍者天賦情報]^000000";
+				if(Talent_HUUMARANKA_ATK==0){ mes "【風魔專精】"; mes "每提升1級，風魔飛鏢之飛舞技能傷害+10%"; }
+				if(Talent_HUUMARANKA_ATK>0){ mes "【風魔專精】等級："+Talent_HUUMARANKA_ATK+"/10"; mes " 附加能力：^0000FF風魔飛鏢之飛舞技能傷害 + "+Talent_HUUMARANKA_ATK*10+"%^000000"; }
+				if(Talent_HAPPOKUNAI_ATK==0){ mes "【飛刀專精】"; mes "每提升1級，太八方飛刀技能傷害+10%"; }
+				if(Talent_HAPPOKUNAI_ATK>0){ mes "【飛刀專精】等級："+Talent_HAPPOKUNAI_ATK+"/10"; mes " 附加能力：^0000FF八方飛刀技能傷害 + "+Talent_HAPPOKUNAI_ATK*10+"%^000000"; }
+				if(Talent_Water_MATK==0){ mes "【忍術專精-水】"; mes "每提升1級，水屬性忍術技能傷害+10%"; }
+				if(Talent_Water_MATK>0){ mes "【忍術專精-水】等級："+Talent_Water_MATK+"/7"; mes " 附加能力：^0000FF水屬性忍術技能傷害 + "+Talent_Water_MATK*10+"%^000000"; }
+				if(Talent_Fire_MATK==0){ mes "【忍術專精-火】"; mes "每提升1級，火屬性忍術技能傷害+10%"; }
+				if(Talent_Fire_MATK>0){ mes "【忍術專精-火】等級："+Talent_Fire_MATK+"/7"; mes " 附加能力：^0000FF火屬性忍術技能傷害 + "+Talent_Fire_MATK*10+"%^000000"; }
+				if(Talent_Wind_MATK==0){ mes "【忍術專精-風】"; mes "每提升1級，風屬性忍術技能傷害+10%"; }
+				if(Talent_Wind_MATK>0){ mes "【忍術專精-風】等級："+Talent_Wind_MATK+"/7"; mes " 附加能力：^0000FF風屬性忍術技能傷害 + "+Talent_Wind_MATK*10+"%^000000"; }
+				if(Talent_Earth_MATK==0){ mes "【忍術專精-地】"; mes "每提升1級，地屬性忍術技能傷害+10%"; }
+				if(Talent_Earth_MATK>0){ mes "【忍術專精-地】等級："+Talent_Earth_MATK+"/7"; mes " 附加能力：^0000FF地屬性忍術技能傷害 + "+Talent_Earth_MATK*10+"%^000000"; }
+
+				mes "你想要提升那個流浪/疾風忍者天賦?";
+				next;
+				switch(select("風魔專精 ("+Talent_HUUMARANKA_ATK+"/10):飛刀專精 ("+Talent_HAPPOKUNAI_ATK+"/10):忍術專精-水 ("+Talent_Water_MATK+"/7):忍術專精-火 ("+Talent_Fire_MATK+"/7):忍術專精-風 ("+Talent_Wind_MATK+"/7):忍術專精-地 ("+Talent_Earth_MATK+"/7):回上層")) {
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HUUMARANKA_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HUUMARANKA_ATK,Talent_HUUMARANKA_ATK + 1;
+					status_calc();
+					dispbottom "風魔專精等級提升為 "+Talent_HUUMARANKA_ATK+"";
+					goto Talent_next2_15;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HAPPOKUNAI_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HAPPOKUNAI_ATK,Talent_HAPPOKUNAI_ATK + 1;
+					status_calc();
+					dispbottom "飛刀專精等級提升為 "+Talent_HAPPOKUNAI_ATK+"";
+					goto Talent_next2_15;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Water_MATK==7){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Water_MATK,Talent_Water_MATK + 1;
+					status_calc();
+					dispbottom "忍術專精-水等級提升為 "+Talent_Water_MATK+"";
+					goto Talent_next2_15;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Fire_MATK==7){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Fire_MATK,Talent_Fire_MATK + 1;
+					status_calc();
+					dispbottom "忍術專精-火等級提升為 "+Talent_Fire_MATK+"";
+					goto Talent_next2_15;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Wind_MATK==7){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Wind_MATK,Talent_Wind_MATK + 1;
+					status_calc();
+					dispbottom "忍術專精-風等級提升為 "+Talent_Wind_MATK+"";
+					goto Talent_next2_15;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Earth_MATK==7){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Earth_MATK,Talent_Earth_MATK + 1;
+					status_calc();
+					dispbottom "忍術專精-地等級提升為 "+Talent_Earth_MATK+"";
+					goto Talent_next2_15;
+
+				case 7:
+					goto Talent_next2;
+				}
+
+			case 16:
+			if ( class != 4306 && class != 4215) {
+			mes "你不是夜行使無法學習!";
+			next;
+			goto Talent_next2;
+			}
+			
+				Talent_next2_16:
+				mes " ^0000FF[夜行使天賦情報]^000000";
+				if(Talent_BUSTER_ATK==0){ mes "【驅逐專精】"; mes "每提升1級，強制驅逐技能傷害+10%"; }
+				if(Talent_BUSTER_ATK>0){ mes "【驅逐專精】等級："+Talent_BUSTER_ATK+"/10"; mes " 附加能力：^0000FF強制驅逐技能傷害 + "+Talent_BUSTER_ATK*10+"%^000000"; }
+				if(Talent_SLUGSHOT_ATK==0){ mes "【根源專精】"; mes "每提升1級，根源破壞技能傷害+10%"; }
+				if(Talent_SLUGSHOT_ATK>0){ mes "【根源專精】等級："+Talent_SLUGSHOT_ATK+"/10"; mes " 附加能力：^0000FF根源破壞技能傷害 + "+Talent_SLUGSHOT_ATK*10+"%^000000"; }
+				if(Talent_D_TAIL_ATK==0){ mes "【魔獸專精】"; mes "每提升1級，魔獸擺尾技能傷害+10%"; }
+				if(Talent_D_TAIL_ATK>0){ mes "【魔獸專精】等級："+Talent_D_TAIL_ATK+"/10"; mes " 附加能力：^0000FF魔獸擺尾技能傷害 + "+Talent_D_TAIL_ATK*10+"%^000000"; }
+				if(Talent_R_TRIP_ATK==0){ mes "【圓桌專精】"; mes "每提升1級，圓桌舞蹈技能傷害+10%"; }
+				if(Talent_R_TRIP_ATK>0){ mes "【圓桌專精】等級："+Talent_R_TRIP_ATK+"/10"; mes " 附加能力：^0000FF圓桌舞蹈技能傷害 + "+Talent_R_TRIP_ATK*10+"%^000000"; }
+
+				if(Talent_Long_ATK==0){ mes "【遠距專精】"; mes "每提升1級，遠距離攻擊傷害+5%"; }
+				if(Talent_Long_ATK>0){ mes "【遠距專精】等級："+Talent_Long_ATK+"/10"; mes " 附加能力：^0000FF遠距離攻擊傷害 + "+Talent_Long_ATK*5+"%^000000"; }
+
+				mes "你想要提升那個夜行使天賦?";
+				next;
+				switch(select(
+				"驅逐專精 ("+Talent_UNIVERSESTANCE_ATK+"/10)",
+				"根源專精 ("+Talent_SOLARBURST_ATK+"/10)",
+				"魔獸專精 ("+Talent_FULLMOONKICK_ATK+"/10)",
+				"圓桌專精 ("+Talent_FALLINGSTAR_ATK+"/10)",
+				"遠距專精 ("+Talent_Long_ATK+"/10)",
+				"回上層")){
+				
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_BUSTER_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_BUSTER_ATK,Talent_BUSTER_ATK + 1;
+					status_calc();
+					dispbottom "驅逐專精等級提升為 "+Talent_BUSTER_ATK+"";
+					goto Talent_next2_16;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_SLUGSHOT_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_SLUGSHOT_ATK,Talent_SLUGSHOT_ATK + 1;
+					status_calc();
+					dispbottom "根源專精等級提升為 "+Talent_SLUGSHOT_ATK+"";
+					goto Talent_next2_16;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_D_TAIL_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_D_TAIL_ATK,Talent_D_TAIL_ATK + 1;
+					status_calc();
+					dispbottom "魔獸專精等級提升為 "+Talent_D_TAIL_ATK+"";
+					goto Talent_next2_16;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_R_TRIP_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_R_TRIP_ATK,Talent_R_TRIP_ATK + 1;
+					status_calc();
+					dispbottom "圓桌專精等級提升為 "+Talent_R_TRIP_ATK+"";
+					goto Talent_next2_16;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_Long_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_Long_ATK,Talent_Long_ATK + 1;
+					status_calc();
+					dispbottom "遠距專精等級提升為 "+Talent_Long_ATK+"";
+					goto Talent_next2_16;
+
+				case 6:
+					goto Talent_next2;
+				}
+
+			case 17:
+			if ( class != 4307 && class != 4191) {
+			mes "你不是終極初學者無法學習!";
+			next;
+			goto Talent_next2;
+			}
+			Talent_next2_17:
+				mes " ^0000FF[終極初學者天賦情報]^000000";
+				if(Talent_NOVICE_ATK==0){ mes "【技能專精】"; mes "每提升1級，終極初學者技能傷害+5%"; }
+				if(Talent_NOVICE_ATK>0){ mes "【技能專精】等級："+Talent_NOVICE_ATK+"/10"; mes " 附加能力：^0000FF終極初學者技能傷害 + "+Talent_NOVICE_ATK*5+"%^000000"; }
+
+				if(Talent_NOVICE_Cool==0){ mes "【技能冷卻】每提升1級，終極初學者技能冷卻時間-10%"; }
+				if(Talent_NOVICE_Cool==1){ mes "【技能冷卻】等級："+Talent_NOVICE_Cool+"/9"; mes " 附加能力：^0000FF終極初學者技能冷卻時間-"+Talent_NOVICE_Cool*10+"%^000000"; }
+
+				mes "你想要提升那個終極初學者天賦?";
+				next;
+				switch(select(
+				"技能專精 ("+Talent_NOVICE_ATK+"/10)",
+				"技能冷卻 ("+Talent_NOVICE_Cool+"/9)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_NOVICE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_NOVICE_ATK,Talent_NOVICE_ATK + 1;
+					status_calc();
+					dispbottom "技能專精等級提升為 "+Talent_NOVICE_ATK+"";
+					goto Talent_next2_17;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_NOVICE_Cool==9){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_NOVICE_Cool,Talent_NOVICE_Cool + 1;
+					status_calc();
+					dispbottom "技能冷卻等級提升為 "+Talent_NOVICE_Cool+"";
+					goto Talent_next2_17;
+
+				case 3:
+					goto Talent_next2;
+				}
+
+
+			case 18:
+				Talent_next2_18:
+				mes " ^0000FF[靈魂師天賦情報]^000000";
+				if(Talent_CHUL_HO_SONIC_CLAW_ATK==0){ mes "【鐵虎專精】"; mes "每提升1級，鐵虎空心爪技能傷害+5%"; }
+				if(Talent_CHUL_HO_SONIC_CLAW_ATK>0){ mes "【鐵虎專精】等級："+Talent_CHUL_HO_SONIC_CLAW_ATK+"/10"; mes " 附加能力：^0000FF鐵虎空心爪技能傷害 + "+Talent_CHUL_HO_SONIC_CLAW_ATK*5+"%^000000"; }
+				if(Talent_HOGOGONG_STRIKE_ATK==0){ mes "【虎高專精】"; mes "每提升1級，虎高空亂打技能傷害+5%"; }
+				if(Talent_HOGOGONG_STRIKE_ATK>0){ mes "【虎高專精】等級："+Talent_HOGOGONG_STRIKE_ATK+"/10"; mes " 附加能力：^0000FF虎高空亂打技能傷害 + "+Talent_HOGOGONG_STRIKE_ATK*5+"%^000000"; }
+				if(Talent_HYUN_ROK_CANNON_ATK==0){ mes "【鹿砲專精】"; mes "每提升1級，玄鹿砲技能傷害+5%"; }
+				if(Talent_HYUN_ROK_CANNON_ATK>0){ mes "【鹿砲專精】等級："+Talent_HYUN_ROK_CANNON_ATK+"/10"; mes " 附加能力：^0000FF玄鹿砲技能傷害 + "+Talent_HYUN_ROK_CANNON_ATK*5+"%^000000"; }
+				if(Talent_HYUN_ROKS_BREEZE_ATK==0){ mes "【葉風專精】"; mes "每提升1級，玄鹿葉風技能傷害+5%"; }
+				if(Talent_HYUN_ROKS_BREEZE_ATK>0){ mes "【葉風專精】等級："+Talent_HYUN_ROKS_BREEZE_ATK+"/10"; mes " 附加能力：^0000FF玄鹿葉風技能傷害 + "+Talent_HYUN_ROKS_BREEZE_ATK*5+"%^000000"; }
+
+				if(Talent_HYUN_ROK_CANNON_Cool==0){ mes "【鹿砲冷卻】每提升1級，玄鹿炮技能冷卻時間-0.1秒"; }
+				if(Talent_HYUN_ROK_CANNON_Cool==1){ mes "【鹿砲冷卻】等級："+Talent_HYUN_ROK_CANNON_Cool+"/3"; mes " 附加能力：^0000FF玄鹿炮技能冷卻時間-0."+Talent_HYUN_ROK_CANNON_Cool+"秒^000000"; }
+
+				if(Talent_HYUN_ROKS_BREEZE_Cool==0){ mes "【葉風冷卻】每提升1級，玄鹿炮技能冷卻時間-0.2秒"; }
+				if(Talent_HYUN_ROKS_BREEZE_Cool==1){ mes "【葉風冷卻】等級："+Talent_HYUN_ROKS_BREEZE_Cool+"/10"; mes " 附加能力：^0000FF玄鹿炮技能冷卻時間-"+Talent_HYUN_ROKS_BREEZE_Cool*200+"毫秒^000000"; }
+
+
+
+				mes "你想要提升那個靈魂師天賦?";
+				next;
+				switch(select(
+				"鐵虎專精 ("+Talent_CHUL_HO_SONIC_CLAW_ATK+"/10)",
+				"虎高專精 ("+Talent_HOGOGONG_STRIKE_ATK+"/10)",
+				"鹿砲專精 ("+Talent_HYUN_ROK_CANNON_ATK+"/10)",
+				"葉風專精 ("+Talent_HYUN_ROKS_BREEZE_ATK+"/10)",
+				"鹿砲冷卻 ("+Talent_HYUN_ROK_CANNON_Cool+"/3)",
+				"葉風冷卻 ("+Talent_HYUN_ROKS_BREEZE_Cool+"/10)",
+				"回上層")){
+
+				case 1:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_CHUL_HO_SONIC_CLAW_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_CHUL_HO_SONIC_CLAW_ATK,Talent_CHUL_HO_SONIC_CLAW_ATK + 1;
+					status_calc();
+					dispbottom "鐵虎專精等級提升為 "+Talent_CHUL_HO_SONIC_CLAW_ATK+"";
+					goto Talent_next2_18;
+
+				case 2:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HOGOGONG_STRIKE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HOGOGONG_STRIKE_ATK,Talent_HOGOGONG_STRIKE_ATK + 1;
+					status_calc();
+					dispbottom "虎高專精等級提升為 "+Talent_HOGOGONG_STRIKE_ATK+"";
+					goto Talent_next2_18;
+
+				case 3:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HYUN_ROK_CANNON_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HYUN_ROK_CANNON_ATK,Talent_HYUN_ROK_CANNON_ATK + 1;
+					status_calc();
+					dispbottom "鹿砲專精等級提升為 "+Talent_HYUN_ROK_CANNON_ATK+"";
+					goto Talent_next2_18;
+
+				case 4:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HYUN_ROKS_BREEZE_ATK==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HYUN_ROKS_BREEZE_ATK,Talent_HYUN_ROKS_BREEZE_ATK + 1;
+					status_calc();
+					dispbottom "葉風專精等級提升為 "+Talent_HYUN_ROKS_BREEZE_ATK+"";
+					goto Talent_next2_18;
+
+				case 5:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HYUN_ROK_CANNON_Cool==3){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HYUN_ROK_CANNON_Cool,Talent_HYUN_ROK_CANNON_Cool + 1;
+					status_calc();
+					dispbottom "鹿砲冷卻等級提升為 "+Talent_HYUN_ROK_CANNON_Cool+"";
+					goto Talent_next2_18;
+
+				case 6:
+					if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+					if(Talent_HYUN_ROKS_BREEZE_Cool==10){mes "[天賦管理員]"; mes "這個天賦已經滿級了!"; close;}
+					set Talent_Points,Talent_Points - 1;
+					set Talent_HYUN_ROKS_BREEZE_Cool,Talent_HYUN_ROKS_BREEZE_Cool + 1;
+					status_calc();
+					dispbottom "葉風冷卻等級提升為 "+Talent_HYUN_ROKS_BREEZE_Cool+"";
+					goto Talent_next2_18;
+
+				case 7:
+					goto Talent_next2;
+				}
+
+
+			case 19:
+				goto Talent_end;
+			}
+
+
+		//普攻天賦
+		case 3:
+			Talent_next3:
+			mes " ^0000FF[普攻天賦情報]^000000";
+			if(class == 4060){ if(Talent_Rune==0){ mes "【盧恩龍爵專精】"; } if(Talent_Rune==1){ mes "【盧恩龍爵專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[百矛穿刺]，武器精煉值越高觸發機率越高"; }
+			if(class == 4073){ if(Talent_Royal==0){ mes "【帝國聖衛軍專精】"; } if(Talent_Royal==1){ mes "【帝國聖衛軍專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[放逐攻擊]，武器精煉值越高觸發機率越高"; }
+			if(class == 4064){ if(Talent_Mechanic==0){ mes "【機甲神匠專精】"; } if(Talent_Mechanic==1){ mes "【機甲神匠專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[揮斧重擊]，武器精煉值越高觸發機率越高"; }
+			if(class == 4065){ if(Talent_Guillotine==0){ mes "【十字斬首者專精】"; } if(Talent_Guillotine==1){ mes "【十字斬首者專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[十字斬]，武器精煉值越高觸發機率越高"; }
+			if(class == 4079){ if(Talent_Shadow==0){ mes "【深淵追蹤者專精】"; } if(Talent_Shadow==1){ mes "【深淵追蹤者專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[三角射擊]，武器精煉值越高觸發機率越高"; }
+			if(class == 4062){ if(Talent_Ranger==0){ mes "【風鷹狩獵者專精】"; } if(Talent_Ranger==1){ mes "【風鷹狩獵者專精】^0000FF已學習^000000"; } mes "普通攻擊觸發[銳利射擊]，武器精煉值越高觸發機率越高"; }
+
+			mes "你想要學習那個普攻天賦?";
+			next;
+			switch(select("盧恩龍爵專精:帝國聖衛軍專精:機甲神匠專精:十字斬首者專精:深淵追蹤者專精:風鷹狩獵者專精:回上層")) {
+
+			case 1:
+				if ( class != 4060 && class != 4252 ) {
+				mes "你不是盧恩龍爵無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Rune==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Rune,Talent_Rune + 1;
+				status_calc();
+				dispbottom "盧恩龍爵專精學習成功";
+				goto Talent_next3;
+
+			case 2:
+				if ( class != 4073 && class != 4258) {
+				mes "你不是帝國聖衛軍無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Royal==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Royal,Talent_Royal + 1;
+				status_calc();
+				dispbottom "帝國聖衛軍專精學習成功";
+				goto Talent_next3;
+
+			case 3:
+				if ( class != 4064 && class != 4253) {
+				mes "你不是機甲神匠無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Mechanic==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Mechanic,Talent_Mechanic + 1;
+				status_calc();
+				dispbottom "機甲神匠專精學習成功";
+				goto Talent_next3;
+
+			case 4:
+				if ( class != 4065 && class != 4254) {
+				mes "你不是十字斬首者無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Guillotine==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Guillotine,Talent_Guillotine + 1;
+				status_calc();
+				dispbottom "十字斬首者專精學習成功";
+				goto Talent_next3;
+
+			case 5:
+				if ( class != 4079 && class != 4260) {
+				mes "你不是深淵追蹤者無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Shadow==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Shadow,Talent_Shadow + 1;
+				status_calc();
+				dispbottom "深淵追蹤者專精學習成功";
+				goto Talent_next3;
+
+			case 6:
+				if ( class != 4062 && class != 4257) {
+				mes "你不是風鷹狩獵者無法學習!";
+				next;
+				goto Talent_next3;
+				}
+				if(Talent_Points==0){mes "[天賦管理員]"; mes "天賦點數不夠!"; close;}
+				if(Talent_Ranger==1){mes "[天賦管理員]"; mes "這個天賦已經學習了!"; close;}
+				set Talent_Points,Talent_Points - 1;
+				set Talent_Ranger,Talent_Ranger + 1;
+				status_calc();
+				dispbottom "風鷹狩獵者專精學習成功";
+				goto Talent_next3;
+
+			case 7:
+				goto Talent_end;
+			}
+
+		case 4:
+			goto Talent_end;
+		}
+
+
+
+	//重置天賦
+	case 5:
+		mes "[天賦管理員]";
+		mes "你想要重置天賦?";
+		next;
+		switch(select("我在想想:我要重置天賦")) {
+
+		case 1:
+			close;
+
+		case 2:
+			//一般天賦
+			set Talent_Pow,0;
+			set Talent_Sta,0;
+			set Talent_Wis,0;
+			set Talent_Spl,0;
+			set Talent_Con,0;
+			set Talent_Crt,0;
+			set Talent_Hit,0;
+			set Talent_PAtk,0;
+			set Talent_SMatk,0;
+			set Talent_HPlus,0;
+			set Talent_CRate,0;
+			set Talent_Castrate,0;
+			set Talent_SPrate,0;
+			set Talent_LongAtkRate,0;
+			set Talent_CritAtkRate,0;
+			set Talent_HealPower,0;
+
+			//職業天賦
+			//新
+			set Talent_CROSS_RAIN_ATK,0;
+			set Talent_ARBITRIUM_ATK,0;
+			set Talent_PNEUMATICUS_ATK,0;
+			set Talent_ROSEBLOSSOM_ATK,0;
+			set Talent_METALIC_FURY_ATK,0;
+			set Talent_CALAMITYGALE_Cool,0;
+			set Talent_HACKANDSLASHER_ATK,0;
+			set Talent_MAYHEMIC_THORNS_ATK,0;
+			set Talent_ACIDIFIED_ZONE_ATK,0;
+			set Talent_DEFT_STAB_ATK,0;
+			set Talent_CHAIN_REACTION_SHOT_ATK,0;
+			set Talent_FRENZY_SHOT_ATK,0;
+			set Talent_SAVAGE_IMPACT_ATK,0;
+			set Talent_SHADOW_STAB_ATK,0;
+			set Talent_ETERNAL_SLASH_ATK,0;
+			set Talent_DARKCROW_Cool,0;
+			set Talent_STORMSLASH_ATK,0;
+			set Talent_CHUL_HO_SONIC_CLAW_ATK,0;
+			set Talent_HOGOGONG_STRIKE_ATK,0;
+			set Talent_HYUN_ROK_CANNON_ATK,0;
+			set Talent_HYUN_ROKS_BREEZE_ATK,0;
+			set Talent_HYUN_ROK_CANNON_Cool,0;
+			set Talent_HYUN_ROKS_BREEZE_Cool,0;
+			set Talent_SERVANTWEAPON_ATK,0;
+			set Talent_HACKANDSLASHER_Cool,0;
+			set Talent_TALISMAN_OF_ATK,0;
+			set Talent_UNIVERSESTANCE_ATK,0;
+			set Talent_Ele_All_ATK,0;
+			set Talent_Ele_All_2_ATK,0;
+
+			set Talent_DIAMOND_STORM_ATK,0;
+			set Talent_TERRA_DRIVE_ATK,0;
+			set Talent_STORM_DRIVE_Cool,0;
+			set Talent_LAND_ROKS_SWAMP_Cool,0;
+			set Talent_NOVICE_Cool,0;
+			set Talent_SERVANTWEAPON_Cool,0;
+			set Talent_EXPOSION_BLASTER_Cool,0;
+			set Talent_SHIELD_SHOOTING_Cool,0;
+			set Talent_Long_ATK,0;
+
+			set Talent_HUNDREDSPEAR_ATK,0;
+			set Talent_IGNITIONBREAK_ATK,0;
+			set Talent_DRAGONBREATH_ATK,0;
+			set Talent_DRAGONBREATH_WATER_ATK,0;
+			set Talent_HUNDREDSPEAR_Cool,0;
+			set Talent_SHIELDPRESS_ATK,0;
+			set Talent_RAYOFGENESIS_ATK,0;
+			set Talent_BANISHINGPOINT_ATK,0;
+			set Talent_OVERBRAND_ATK,0;
+			set Talent_SHIELDPRESS_Cool,0;
+			set Talent_RAYOFGENESIS_Cool,0;
+			set Talent_ARMSCANNON_ATK,0;
+			set Talent_AXETORNADO_ATK,0;
+			set Talent_AXEBOOMERANG_ATK,0;
+			set Talent_ARMSCANNON_Cool,0;
+			set Talent_AXETORNADO_Cool,0;
+			set Talent_AXEBOOMERANG_Cool,0;
+			set Talent_BACKSTAP_ATK,0;
+			set Talent_TRIANGLESHOT_ATK,0;
+			set Talent_FATALMENACE_ATK,0;
+			set Talent_ADORAMUS_ATK,0;
+			set Talent_JUDEX_ATK,0;
+			set Talent_HIGHNESSHEAL_Heal,0;
+			set Talent_CHEAL_Heal,0;
+			set Talent_HIGHNESSHEAL_Cool,0;
+			set Talent_CHEAL_Cool,0;
+			set Talent_ARROWVULCAN_ATK,0;
+			set Talent_RAINSTORM_ATK,0;
+			set Talent_BUSTER_ATK,0;
+			set Talent_SLUGSHOT_ATK,0;
+			set Talent_D_TAIL_ATK,0;
+			set Talent_R_TRIP_ATK,0;
+			
+			set Talent_NOVICE_ATK,0;
+			set Talent_GALESTORM_ATK,0;
+			set Talent_CRESCIVE_BOLT_ATK,0;
+			set Talent_CARTCANNON_ATK,0;
+			set Talent_MAYHEMIC_THORNS_ATK,0;
+			set Talent_ARMSCANNON_ATK,0;
+			set Talent_TRIPLE_LASER_ATK,0;
+
+			//普攻專精
+			set Talent_Rune,0;
+			set Talent_Royal,0;
+			set Talent_Mechanic,0;
+			set Talent_Guillotine,0;
+			set Talent_Shadow,0;
+			set Talent_Ranger,0;
+			
+			set Talent_Points,#Talent_LV;
+			status_calc();
+			dispbottom "重置天賦完成";
+			close;
+		}
+
+	//取消
+	case 6:
+	close;
+	}
+OnInit:
+	waitingroom "天賦系統",0;
+	end;
+}
+
+
+//------------------------------
+//amatsu,106,165,6	duplicate(天賦管理員)	天賦管理員#ama01	405

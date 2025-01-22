@@ -1,0 +1,393 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#鐘塔未知的地下層 堅硬&邪惡&精確武器
+   - Name: 堅硬武器
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_DANGDANG
+     Items:
+       - Index: 1
+         Item: ClockTower_Gear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 15
+
+       - Index: 2
+         Item: Solid_Claymore
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Sword
+             Amount: 1
+       - Index: 3
+         Item: Solid_Wand
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Wand
+             Amount: 1
+       - Index: 4
+         Item: Solid_Manual
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Book
+             Amount: 1
+       - Index: 5
+         Item: Solid_Spear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Spear
+             Amount: 1
+       - Index: 6
+         Item: Solid_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Rod
+             Amount: 1
+       - Index: 7
+         Item: Solid_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Nindo
+             Amount: 1
+       - Index: 8
+         Item: Solid_Edge
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Edge
+             Amount: 1
+       - Index: 9
+         Item: Solid_Rod
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Wand
+             Amount: 1
+
+       - Index: 10
+         Item: Wicked_Katar
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Katar
+             Amount: 1
+       - Index: 11
+         Item: Wicked_Cross
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Mace
+             Amount: 1
+       - Index: 12
+         Item: Wicked_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Dagger
+             Amount: 1
+       - Index: 13
+         Item: Wicked_Blade
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Sword
+             Amount: 1
+       - Index: 14
+         Item: Wicked_Axe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Axe
+             Amount: 1
+       - Index: 15
+         Item: Wicked_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Manual
+             Amount: 1
+       - Index: 1416
+         Item: Wicked_Plant
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Plant
+             Amount: 1
+       - Index: 17
+         Item: Wicked_Edge
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Nindo2
+             Amount: 1
+
+       - Index: 18
+         Item: Precision_Lute
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Lute
+             Amount: 1
+       - Index: 19
+         Item: Precision_Whip
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Whip
+             Amount: 1
+       - Index: 20
+         Item: Precision_Fist
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_1h_Knuckle
+             Amount: 1
+       - Index: 21
+         Item: Precision_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Bow
+             Amount: 1
+       - Index: 22
+         Item: Precision_Pistol
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Revolver
+             Amount: 1
+       - Index: 23
+         Item: Precision_Rifle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Rifle
+             Amount: 1
+       - Index: 24
+         Item: Precision_Shotgun
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Shotgun
+             Amount: 1
+       - Index: 25
+         Item: Precision_Gatling
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Gatling
+             Amount: 1
+       - Index: 26
+         Item: Precision_Grenade
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Grenade
+             Amount: 1
+       - Index: 27
+         Item: Precision_Fuuma
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: ClockTower_Lead
+             Amount: 125
+           - Index: 1
+             Item: ClockTower_Gear
+             Amount: 10
+           - Index: 2
+             Item: Fourth_Bh_Fuuma
+             Amount: 1
+
+
+
+

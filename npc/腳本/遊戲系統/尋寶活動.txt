@@ -1,0 +1,160 @@
+/*==========================================================================
+- 腳本名稱: 尋寶活動- Ver 0.4
+- 腳本作者: 貓薄荷
+- 測試環境：RAthenaCN
+- 更新內容：
+-  Ver 0.1 2018-11-03 -初步完成
+-  Ver 0.2 2018-11-03 -改用事件語法開關地圖pvp，並增加事件再次執行時移除上一輪事件中遺留的npc
+-  Ver 0.3 2018-11-03 -增設多項獎勵設置，開關與否，隨機領取幾次物品
+-  Ver 0.4 2018-11-05 -增加end結尾，每次執行'$@prt_map$'地圖調適問題已解決
+- 注意事項: 腳本僅供，程式語言研究，學術研究用途
+============================================================================
+============================================================================*/
+-	script	auto_ptr	-1,{
+	end;
+	/*	這裡增設時間	*/
+OnClock1320:
+OnClock2020:
+	hideonnpc "神秘寶藏#"+$@prt_map$[$maprand]+"";
+	if($openpvp) pvpoff ""+$@prt_map$[$maprand]+"";
+	donpcevent "Explorer"+"::OnStart";
+	end;
+
+	Oninit:
+	/*	如果有新增神秘寶藏地點請在這裡增設地圖名稱	*/
+	setarray $@prt_map$[1],"prontera","morocc","geffen","alberta","aldebaran","xmas","hugel","gonryun","louyang";
+	setarray $Chin_ap$[1],"普隆德拉","夢羅克","吉芬","愛爾貝塔","艾爾帕蘭","姜餅城","毀葛","崑崙","龍之城";
+	set $mpaquantity,9;	//地圖數量
+	/*	這裡設定相關獎勵&次數	*/
+	set $all,10;					//最多連續幾次尋寶事件
+	set $item,61007;					//獎品ID 商城10點兌換券
+	set $count,5;					//獲得數量
+	set $Tzeny,1;					//是否可以領取Zeny
+	set $gzeny,3000000;				//可以領取多少Zeny
+	set $opensecond,0;				//開啟寶箱所需要的秒數
+	set $openpvp,0;					//開啟寶箱時是否開啟PK模式
+	set $BriberyC,10;				//傳送所需要的cash
+	set $Buyintelligence,1000000;			//購買情報所需要的zeny
+	end;
+}
+
+
+	/*	如果你要增/減 神秘寶藏地點請在這裡修改					新增完NPC請務必在這裡補上NPCID	*/
+prontera,0,0,4	script	神秘寶藏#prontera	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#prontera"; end; }
+morocc,0,0,4	script	神秘寶藏#morocc	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#morocc"; end; }
+geffen,0,0,4	script	神秘寶藏#geffen	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#geffen"; end; }
+alberta,0,0,4	script	神秘寶藏#alberta	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#alberta"; end; }
+aldebaran,0,0,4	script	神秘寶藏#aldebaran	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#aldebaran"; end; }
+xmas,0,0,4	script	神秘寶藏#xmas	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#xmas"; end; }
+hugel,0,0,4	script	神秘寶藏#hugel	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#hugel"; end; }
+gonryun,0,0,4	script	神秘寶藏#gonryun	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#gonryun"; end; }
+louyang,0,0,4	script	神秘寶藏#louyang	10005,{ callfunc "Treasure_Open"; end; Oninit: hideonnpc "神秘寶藏#louyang"; end; }
+
+	/*	分	隔	線	*/
+
+
+sec_pri,50,75,4	script	尋寶活動書記官_如雨	641,{
+	set .@open,select(getgmlevel()>=90?" ^7700BB- GM - 開啟尋寶系統^000000 ":""
+					,$Start!=$all?" ^7700BB- GM - 直接到神秘寶藏地點^000000 ":""
+					,$Start!=$all?" - 傳送到現場'附近'!! ^7700BB["+$BriberyC+" Cash]^000000":""
+					,$Start!=$all?" - 我要準確的'座標'!! ^7700BB["+$Buyintelligence+" Zeny]^000000 ":""
+					," - 請問尋寶活動是幹甚麼的?");
+
+		if(.@open==1){
+					hideonnpc "神秘寶藏#"+$@prt_map$[$maprand]+"";
+					if($openpvp) pvpoff ""+$@prt_map$[$maprand]+"";
+					donpcevent "Explorer"+"::OnStart";
+					dispbottom "[書記官 如雨]: 收到!! 尋寶系統將在7秒後執行。";
+					close;
+					
+				}
+		else 
+			
+		if(.@open==2){
+					warp ""+$@prt_map$[$maprand]+"",$Treasure_x,$Treasure_y;
+					end;
+				}
+		else 
+			
+		if(.@open==3){
+					if(#CASHPOINTS<=$BriberyC){ showscript " - Cash 不足 !!"; end; }
+					mes "^0088FF[ "+strnpcinfo(0)+" ]^000000";
+					mes " ";
+					mes "^0000FF即時的傳送沒有辦法到很準確，很有可能造成空間的偏移導致座標錯位，卡在牆壁、建築物等等之類的請問這樣也接受嗎!!^000000";
+					if(select("送我過去吧!!:這..我在考慮一下")==2){ end; }
+					set #CASHPOINTS,#CASHPOINTS-$BriberyC;
+					set .@rand,rand(15,30);
+					set .@rand2,rand(15,30);
+					warp ""+$@prt_map$[$maprand]+"",($Treasure_x+.@rand),($Treasure_y-.@rand2);
+					end;
+				}
+		else 
+			
+		if(.@open==4){ 
+					if(zeny<=$Buyintelligence){ showscript " - Zeny 不足 !!"; end; }
+					set zeny,zeny-$Buyintelligence;
+					dispbottom "[書記官 如雨]: 地點在 "+$Chin_ap$[$maprand]+" , "+$Treasure_x+" , "+$Treasure_y+"";
+					end;
+				}
+		else 
+			
+		if(.@open==5){ 
+					mes "^0088FF[ "+strnpcinfo(0)+" ]^000000";
+					mes " ";
+					mes "/*在此寫上自己的說明*/";
+					end;
+				}
+	end;
+//OnInit:	
+//	waitingroom "尋寶活動",0;
+//end;
+}
+
+function	script	Treasure_Open	{
+	
+	if($openpvp) pvpon ""+$@prt_map$[$maprand]+"";
+	if($openpvp) mapannounce ""+$@prt_map$[$maprand]+"","【尋寶活動】好像有人正在開啟寶箱，這個人"+$opensecond+"秒內肯定無法移動快去把他找出來!! -開啟PVP公告- [寶箱開啟前PK領域不會消失]",bc_map,"0xFFFF00";
+	if(!$openpvp) mapannounce ""+$@prt_map$[$maprand]+"","【尋寶活動】有人正在觸碰寶箱 !! 形勢變的緊張起來了..",bc_map,"0xffff00";
+	//message strcharinfo(0),"開鎖中.."+$opensecond+"秒內請勿移動..";
+	//progressbar "ffff00",$opensecond;
+	set $Start,$Start+1;
+	//遊戲獎勵
+	getitem $item,$count;
+	announce "【尋寶活動】恭喜玩家 ["+strcharinfo(0)+"] 找到了這次的神秘寶藏，取得 "+getitemname($item)+" x "+$count+"",bc_all,0x00FF00;
+	if($Tzeny) set Zeny,zeny+$gzeny; dispbottom "[神秘寶藏]: 獲得了 "+$gzeny+" Zeny.";
+	if($openpvp) pvpoff ""+$@prt_map$[$maprand]+"";
+	hideonnpc "神秘寶藏#"+$@prt_map$[$maprand]+"";
+	if($Start>=$all) callsub OnOFF;
+	else donpcevent "Explorer"+"::OnStart";
+	end;
+	
+OnOFF:
+	announce "【尋寶活動】這次的尋寶結束了 感謝各位的參與。",bc_all,0x00FF00;
+	end;
+}
+
+-	script	Explorer	-1,{
+
+OnStart:
+	if($Start==$all){ set $Start,rand(0,($all-1)); }
+		$maprand=rand(1,$mpaquantity);
+	do {
+		set .@p,.@p+1;
+		set .@g1,bg_monster (0,$@prt_map$[$maprand],0,0,"隨機座標",2328);
+		sleep 7000;
+		if(.@g1>0){
+			getunitdata .@g1,.@array;
+			MobRemove .@g1;
+		}
+		if(.@p>30) { announce "設置有誤 請通知GM",15; end; }
+	} while (.@array[6]==0 && .@array[7]==0);
+	$Treasure_x=.@array[6];
+	$Treasure_y=.@array[7];
+	hideoffnpc "神秘寶藏#"+$@prt_map$[$maprand]+"";
+	movenpc "神秘寶藏#"+$@prt_map$[$maprand]+"",.@array[6],.@array[7];
+	announce "【尋寶活動】在 "+$Chin_ap$[$maprand]+" 出現了神秘寶藏的氣息，想尋寶的人請盡快前往 !!",bc_all,0x00FF00;
+	end;
+}
+
+
+

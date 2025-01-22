@@ -1,0 +1,46 @@
+﻿vdistrict1,82,27,6	script	強化礦山武器	10202,{
+
+	mes "[強化礦山武器附魔]";
+	mes "<TIPBOX>強化礦山武器資訊<INFO>21012</INFO></TIPBOX>";
+	mes "<TIPBOX>強化礦山武器附魔<INFO>20101</INFO></TIPBOX>";
+	mes "妙勒尼地下洞穴的怪物^ff00001%^000000機率隨機取得Plus設計圖";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("前往妙勒尼地下洞穴:裝備製作:進行附魔:取消")) {
+
+	case 1:
+	warp "mjo_wst01",0,0;
+	close;
+	close;
+
+	case 2:
+	close2;
+	callshop "現場管理員艾曼";
+	end;
+
+	case 3:
+	close2;
+	item_enchant 63;
+	end;
+
+	case 4:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "強化礦山武器",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+

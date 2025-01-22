@@ -1,0 +1,475 @@
+/*=======================================================================================================================
+- 腳本名稱：蘿蔔蹲
+- 腳本作者：貓吉工作室
+- 測試環境：Rathena/熊貓
+- 更新內容：
+
+
+=========================================================================================================================*/
+
+boss3	mapflag	noteleport			//無法瞬移
+boss3	mapflag	nodrop				//無法扔道具
+boss3	mapflag	nomemo				//無法記憶地圖
+boss3	mapflag	monster_noteleport	//魔物無法瞬移
+boss3	mapflag	nosave				//無法儲存位置
+boss3	mapflag	nobranch			//無法使用樹枝
+boss3	mapflag	nochat				//無法開聊天室
+boss3	mapflag	novending			//無法開露天商店
+boss3	mapflag	nozenypenalty		//死亡無金錢懲罰
+boss3	mapflag	noexppenalty		//死亡沒有經驗懲罰
+
+boss3	mapflag	noicewall			//無法使用冰牆
+boss3	mapflag	noskill				//無法使用全部技能
+boss3	mapflag	nocostume			//無法觀看到服裝
+br_map	mapflag	restricted	6
+
+-	script	timer_Carrot_Squat	-1,{
+	end;
+
+	
+// 時間幾點 啟動報名
+OnClock1217:
+OnClock1737:
+OnClock2217:
+		if($@startCarrot_Squat || $@Carrot_Squat_Play) end;
+		initnpctimer "Carrot_Squat_on";
+		end;
+	
+Oninit:
+		stopnpctimer;
+		detachnpctimer;
+		initnpctimer;
+		end;
+		
+OnTimer2000:
+		end;
+
+}
+
+
+trinity,39,113,6	script	蘿蔔蹲	861,{
+
+		set .@lv,200;
+		//set .@glv,getgmlevel();	
+		//多開防止
+
+		//mes $@startCarrot_Squat==1?"蘿蔔蹲: ^FF0000開放入場^000000":"蘿蔔蹲: ^FF0000尚未開放入場^000000";
+		mes "[蘿蔔蹲工作人員]";
+		mes "活動時間: ^0000FF22:05 ~ 22:08^000000";
+		next;
+		//if(.@glv>=90) goto mygm;
+		if(getgmlevel()>90) goto mygm;
+		
+mygm:
+		switch(select("我要報名",getgmlevel()>=90 && $@Carrot_Squat_Play!=1?"^FF0000手動模式 [GM]^000000":"","結束對話")){
+		
+	case 1:
+			if(!$@startCarrot_Squat){ 
+				mes "時間未到 無法進入";
+				mes "活動時間: ^0000FF09:05 ~ 09:08^000000";
+				mes "活動時間: ^0000FF21:05 ~ 21:08^000000";				
+				end; 
+			}
+			if(BaseLevel < .@lv) { mes "等級不足"; mes "等級至少: ^FF0000"+.@lv+"^000000 等"; close; }
+			//多開防止
+
+			if($@Carrot_Squat_Play==1){ mes "^FF0000遊戲已經開始 無法傳送了^000000"; close; }
+			if($@startCarrot_Squat ==1){ 
+			if(@st_fail_pcs) set @st_fail_pcs,0; warp "boss3",52,43; 
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+			end; }
+			break;
+			
+	case 2:
+			set .@open,select("啟動遊戲 [倒數 120秒]","啟動遊戲 [倒數 5分鐘]","結束服務");
+			switch(.@open){
+		case 1:
+		case 2:
+			if($@startCarrot_Squat ==1 || $@Carrot_Squat_Play ==1){ mes "^FF0000無法重複 啟動遊戲^000000"; close; }
+			mes "^0000FF啟動成功^000000";
+			set $@startCarrot_Squat,1;
+			set $@Carrot_Squat_GoEnd,1;
+			if(.@open==1){  
+				mes " "; 
+				mes "結束對話後 開始倒數120秒"; 
+				close2; 
+				announce "[蘿蔔蹲]: GM 手動 啟動遊戲  倒數120秒囉!!請火速入場",15; 
+				sleep 120000; 
+				donpcevent "Carrot_Squat_on::Onopen"; 
+				end; 
+			}
+			mes "^0000FF啟動成功^000000";
+			initnpctimer "Carrot_Squat_on";
+			announce "[蘿蔔蹲]: GM手動 遊戲",15;
+			break;
+		case 3:
+			break;
+			}//switch
+			break;
+		
+	case 3:
+			break;
+			}
+			end;
+
+OnInit:
+		waitingroom strnpcinfo(1),0;
+		end;
+
+}
+
+
+-	script	Carrot_Squat_on	-1,{
+
+
+OnTimer300:
+	set $@startCarrot_Squat,1;
+	set $@Carrot_Squat_GoEnd,1;
+	if( $@Carrot_Squat_Rank ) set $@Carrot_Squat_Rank,0;
+
+	announce "[蘿蔔蹲]: 倒數 3分鐘，請在時間內，入場",15;
+	end;
+
+OnTimer120000:
+	announce "[蘿蔔蹲]: 倒數 1分鐘，請在時間內，入場",15;
+	end;
+	
+OnTimer165000:
+	announce "[蘿蔔蹲]: 倒數 15 秒，請在時間內，入場",15;
+	end;	
+
+OnTimer180000:
+Onopen:
+
+	set .@play_pcs,1;				//開啟遊戲 最低人數 預設四人
+	set $@startCarrot_Squat,0;		//報名時間 到了變數歸零 無法報名了
+	set .@join_pcs,getmapusers("boss3");
+	if (.@join_pcs < .@play_pcs)	{
+		//announce "[蘿蔔蹲 提早結束]: 沒有達到 最低標準",15;
+		end;
+	}	
+	//宣告遊戲 正式開始 到時候判斷 開始就無法 再用 GM模式
+	$@Carrot_Squat_Play=1;
+	announce "[蘿蔔蹲 關閉入場]: 遊戲準備開始了，已經關閉入場",15;
+	mapannounce "boss3", "[蘿蔔蹲]: 蘿蔔蹲活動，參加人數共 "+.@join_pcs+" 人，現在開始，說明規則",bc_map,"0xFFFF37";
+	initnpctimer "規則說明#蘿蔔蹲";
+	end;
+
+}	 
+
+
+-	script	規則說明#蘿蔔蹲	-1,{
+	end;
+	
+Oninit:
+		set $@Carrot_Squat_Max,20;		//本活動，最大關卡次數
+		set $@Carrot_Squat_Delay,7000;  //初始值，需要在幾秒內，回答完成，預設 10 秒，單位毫秒
+	
+		//每5關，減少多少，反應時間，單位毫秒
+		set $@Carrot_Squat_dtime,1000;  
+		set $@Carrot_Squat_tpcs,($@Carrot_Squat_Delay/$@Carrot_Squat_dtime);
+		
+		end;
+
+OnTimer5000:
+		set $@male_stand_up,0;
+		set $@female_stand_up,0;
+		set $@Carrot_Squat_dpcs,0;
+		set $@Carrot_Squat_Level,0;
+		mapannounce "boss3", "[規則說明]: 遊戲總共 "+$@Carrot_Squat_Max+" 關，每關的反應時間，會越來越少",bc_map,"0xFFFF37";
+		end;
+		
+OnTimer8000:		
+		mapannounce "boss3", "[規則說明]: 你只需要依照指示 [站著] 或是 [坐下]",bc_map,"0xFFFF37";
+		end;
+		
+OnTimer11000:	
+		mapannounce "boss3", "[規則說明]: 只要做出錯誤的指示，超過三次，就會出局了",bc_map,"0xFFFF37";
+		end;
+		
+OnTimer14000:	
+		$@Carrot_Squat_GoEnd=0;
+		mapannounce "boss3", "[規則說明]: 本次遊戲 正式開始",bc_map,"0xFFFF37";
+		end;
+		
+OnTimer17000:			
+		donpcevent "Carrot_Squat_Level::OnStart";
+		donpcevent "Carrot_Squat_Timer::OnStart";
+		end;
+}
+
+function	script	Carrot_Squat_Gpyes	{
+
+	//活動獎勵道具
+	set .@item,61006;
+	set .@ipcs,3;
+	//小遊戲積分
+	set .@Game_Points,3;
+
+	set .@sex,Sex;
+	set .@aid,getcharid(3);
+	set .@st,readparam(Sitting);
+	set .@lv,$@Carrot_Squat_Level;	
+	set .@limit_fail,3;	
+	set .@mup,$@male_stand_up;
+	set .@fup,$@female_stand_up;	
+	
+	if( .@sex == 1 ){
+		if( .@mup == 1 ){
+			if( .@st == 0 ) set .@ok,1;
+		} else {
+			if( .@st == 1 ) set .@ok,1;		
+		}
+	} else {
+		if( .@fup == 1 ){
+			if( .@st == 0 ) set .@ok,1;
+		} else {
+			if( .@st == 1 ) set .@ok,1;		
+		}	
+	}
+	
+	if( .@ok == 1 ){
+		specialeffect2 131;
+		emotion ET_O,.@aid;
+		dispbottom "[蘿蔔蹲] 第 "+.@lv+" 關]: 恭喜通過，"+getitemname(.@item)+" x "+.@ipcs+"";
+		getitem .@item,.@ipcs;
+		set #Game_Points,#Game_Points+.@Game_Points;
+		dispbottom "小遊戲積分+"+.@Game_Points+"，目前小遊戲積分 "+#Game_Points+" 點";
+
+	} else {
+		specialeffect2 97; 	
+		emotion ET_X,.@aid;
+		set .@maxhp,readparam(MaxHp); 
+		set .@ohghp,(.@maxhp/5);  
+		set @st_fail_pcs,@st_fail_pcs+1;
+		dispbottom "[蘿蔔蹲] 第 "+.@lv+" 關]: 此關失敗，本次活動，累計失敗次數 "+@st_fail_pcs+"/"+.@limit_fail+" 次","0xFF82FF";
+		
+		if(Hp > .@ohghp && Hp != 1) 
+			percentheal -40,0; 
+		else 
+			atcommand "@die";	
+
+		if( @st_fail_pcs >= .@limit_fail )
+			warp "trinity",50,120;
+	}
+
+}// fnuction script end
+
+-	script	Carrot_Squat_Timer	-1,{
+	end;
+	
+	
+OnStop:
+	stopnpctimer;
+	detachnpctimer;
+	end;
+	
+OnStart:
+	stopnpctimer;
+	detachnpctimer;
+	initnpctimer;	
+	end;
+
+
+
+OnTimer1000:
+	set $@Carrot_Squat_dpcs,$@Carrot_Squat_dpcs+1;
+	set .@tpcs,$@Carrot_Squat_tpcs;
+	set .@dpcs,$@Carrot_Squat_dpcs;
+	set .@lv,$@Carrot_Squat_Level;
+	if(.@lv>4){
+		set .@exto,(.@lv/5);
+		set .@tpcs,(.@tpcs-.@exto);
+	}
+	
+	if( .@dpcs < .@tpcs ){
+		stopnpctimer;
+		detachnpctimer;
+		initnpctimer;
+		end;
+	}
+
+	set .@map$,"boss3";
+	
+	//addrid(5,0,.@map$);
+	
+	set .@mpcs,getmapusers(.@map$);
+	if(.@mpcs>0) script4each "{ callfunc \"Carrot_Squat_Gpyes\"; }",1,.@map$;
+	sleep 2000;
+	set .@mpcs,getmapusers("boss3");
+	mapannounce "boss3", "[蘿蔔蹲 第 "+.@lv+" 關]: 場地內剩餘"+.@mpcs+"名參賽者",15;
+	if(.@mpcs<1){
+		stopnpctimer;
+		detachnpctimer;	
+	} else {
+		stopnpctimer;
+		detachnpctimer;	
+		initnpctimer;
+		donpcevent "Carrot_Squat_Level::OnStart";
+	}
+	set $@Carrot_Squat_dpcs,0;
+	end;
+
+
+
+}
+
+-	script	Carrot_Squat_Level	-1,{
+	end;
+	
+OnStart:
+	stopnpctimer;
+	detachnpctimer;
+	initnpctimer;	
+	end;
+
+OnTimer1000:
+
+	// 順序名稱 若有變動順序 上下二邊 需要對應
+	// $@male_stand_up   = 1 代表要站起來
+	// $@female_stand_up = 1 代表要站起來
+
+	setarray .@list$[1],
+		"男生坐下來",
+		"女生坐下來",
+		"男生要站起來",
+		"女生要站起來",
+		"只有男生坐下來",
+		"只有女生坐下來",
+		"男生不要坐下來",
+		"女生不要坐下來",
+		"站起來的是男生",
+		"站起來的是女生",
+		"要站起來的是男生",
+		"要站起來的是女生",
+		"男生不要不站起來",
+		"女生不要不站起來",
+		"男生不要不坐下來",
+		"女生不要不坐下來",
+		"不要站起來的是女生",
+		"不要站起來的是男生",
+		"女生男生不要站起來",
+		"男生女生不要站起來",
+		"不是男生的要站起來",
+		"不是女生的要站起來",
+		"男生女生不要不坐下來",
+		"女生男生不要不坐下來",
+		"不要不坐下來的是男生";
+		
+		//陷阱題 預設 先不開放 若要開放 上面 ; 記得改 ,
+		//"不要不坐下來的是女生",
+		//"不要不站起來的是男生",
+		//"不要不站起來的是女生",
+		//"不是男生的不要不坐下來",
+		//"不是女生的不要不坐下來";
+
+	set .@r,rand( 1, getarraysize(.@list$)-1 );
+
+	set $@Carrot_Squat_Name$,"";
+	set $@Carrot_Squat_Name$,.@list$[.@r];
+	
+	switch(.@r){
+		default:// 19,20, 23,24
+			set $@male_stand_up,0;
+			set $@female_stand_up,0;
+			break;
+		case 1:
+		case 4:
+		case 5:
+		case 8:
+		case 10:
+		case 12:
+		case 14:
+		case 15:
+		case 18:
+		case 21:
+		//陷阱題
+		case 25:
+		case 27:
+		case 30:		
+			set $@male_stand_up,0;
+			set $@female_stand_up,1;
+			break;
+		case 2:
+		case 3:
+		case 6:
+		case 7:
+		case 9:
+		case 11:
+		case 13:
+		case 16:
+		case 17:
+		case 22:
+		//陷阱題
+		case 26:
+		case 28:
+		case 29:		
+			set $@male_stand_up,1;
+			set $@female_stand_up,0;
+			break;
+
+		
+	}//switch .@r
+	
+	// $@male_stand_up   = 1 代表要站起來
+	// $@female_stand_up = 1 代表要站起來
+	
+	// 比如 抽到 [1] 男生坐下來 那女生 坐下來 就判定 錯一題
+	// 錯一題 扣20% MHP   累計 5 題 出局
+	// 1  男生坐下來
+	// 2  女生坐下來
+	// 3  男生要站起來
+	// 4  女生要站起來
+	// 5  只有男生坐下來
+	// 6  只有女生坐下來
+	// 7  男生不要坐下來
+	// 8  女生不要坐下來	
+	// 9  站起來的是男生
+	// 10 站起來的是女生		
+	// 11 要站起來的是男生
+	// 12 要站起來的是女生	
+	// 13 男生不要不站起來
+	// 14 女生不要不站起來	
+	// 15 男生不要不坐下來
+	// 16 女生不要不坐下來
+	// 17 不要站起來的是女生
+	// 18 不要站起來的是男生	
+	// 19 女生男生不要站起來
+	// 20 男生女生不要站起來
+	// 21 不是男生的要站起來
+	// 22 不是女生的要站起來	
+	// 23 男生女生不要不坐下來
+	// 24 女生男生不要不坐下來	
+	// 25 不要不坐下來的是男生 = 男生要坐下
+	// 26 不要不坐下來的是女生 = 女生要坐下
+	// 27 不要不站起來的是男生 = 女生要坐下 
+	// 28 不要不站起來的是女生 = 男生要坐下	
+	// 29 不是男生的不要不坐下來 = 女生要坐下
+	// 30 不是女生的不要不坐下來 = 男生要坐下
+	
+	set $@Carrot_Squat_Level,$@Carrot_Squat_Level+1;
+	if( $@Carrot_Squat_Level > $@Carrot_Squat_Max ){
+		donpcevent "Carrot_Squat_Timer::OnStop";
+		$@Carrot_Squat_Play=0;
+		mapannounce "boss3", "[蘿蔔蹲]: 本次活動，已經結束，三秒內，自動傳送出去",bc_map,"0x00F5FF";
+		sleep 3000;
+		set .@mpcs,getmapusers("boss3");
+		if(.@mpcs>0) script4each "{ warp \"trinity\",50,120; }",1,"boss3";		
+		end;
+	}
+	set .@pcs,getmapusers("boss3");
+	mapannounce "boss3", "[蘿蔔蹲]: 第 "+$@Carrot_Squat_Level+" 關，[ "+$@Carrot_Squat_Name$+" ]",bc_map,"0x00F5FF";
+	end;
+
+}

@@ -1,0 +1,142 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 客服專員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+function	script	GS_Storage01	{
+
+		set #StoragePass,0;
+		set #StoragePass$,"";
+		set @Pass_Num,getstrlen(#GameServicePass$);
+		set @GPass_Num,getstrlen(getd("$GameServiceG"+getcharid(2)+"Pass$"));
+		if ( @Pass_Num < 4 && @Pass_Num > 16 ) {
+			set @Pass_Num,0;
+			set #GameServicePass$,"";
+		}
+		if ( @GPass_Num < 4 && @GPass_Num > 16 ) {
+			set @GPass_Num,0;
+			setd "$GameServiceG"+getcharid(2)+"Pass$","";
+		}
+
+	switch(select("個人倉庫")) {
+	case 1:
+		if ( basicskillcheck() && getskilllv(1) < 6 ) {
+			mes $@GameService_Str$;
+			mes "您的基本技能必須要6級以上，";
+			mes "才能使用倉庫服務唷！";
+			close;
+		}
+		if ( zeny < $@GSS_Zeny ) {
+			mes $@GameService_Str$;
+			mes "使用此服務需要^FF0000"+$@GSS_Zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		if ( @Pass_Num ) {
+			callfunc "GS_PassCheck",0;
+		}
+		mes $@GameService_Str$;
+		mes "您的倉庫已成功開啟，";
+		mes "非常感謝您的使用！";
+		set zeny,zeny - $@GSS_Zeny;
+		close2;
+		openstorage;
+		end;
+	}
+}
+
+
+function	script	GS_Storage	{
+
+	switch(select("倉庫1服務","倉庫2服務","倉庫3服務","公會倉庫")) {
+	case 1:
+		if ( zeny < $@GSS_Zeny ) {
+			mes $@GameService_Str$;
+			mes "使用此服務需要^FF0000"+$@GSS_Zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		if ( @Pass_Num ) {
+			callfunc "GS_PassCheck",0;
+		}
+		mes $@GameService_Str$;
+		mes "您的倉庫已成功開啟，";
+		mes "非常感謝您的使用！";
+		set zeny,zeny - $@GSS_Zeny;
+		close2;
+		openstorage;
+		end;
+
+	case 2:
+		if ( zeny < $@GSS_Zeny ) {
+			mes $@GameService_Str$;
+			mes "使用此服務需要^FF0000"+$@GSS_Zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		if ( @Pass_Num ) {
+			callfunc "GS_PassCheck",0;
+		}
+		mes $@GameService_Str$;
+		mes "您的倉庫已成功開啟，";
+		mes "非常感謝您的使用！";
+		set zeny,zeny - $@GSS_Zeny;
+		close2;
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+
+	case 3:
+		if ( zeny < $@GSS_Zeny ) {
+			mes $@GameService_Str$;
+			mes "使用此服務需要^FF0000"+$@GSS_Zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		if ( @Pass_Num ) {
+			callfunc "GS_PassCheck",0;
+		}
+		mes $@GameService_Str$;
+		mes "您的倉庫已成功開啟，";
+		mes "非常感謝您的使用！";
+		set zeny,zeny - $@GSS_Zeny;
+		close2;
+		openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+
+
+	case 4:
+		if ( getcharid(2) == 0 ) {
+			mes $@GameService_Str$;
+			mes "不好意思！您沒有加入任何公會唷！";
+			close;
+		}
+		if ( zeny < $@GSGS_Zeny ) {
+			mes $@GameService_Str$;
+			mes "使用此服務需要^FF0000"+$@GSGS_Zeny+"^000000z";
+			mes "您身上擁有的金錢不足！";
+			close;
+		}
+		if ( @GPass_Num ) {
+			callfunc "GS_PassCheck",1;
+		}
+		if ( guildopenstorage() == 1 ) {
+			mes $@GameService_Str$;
+			mes "不好意思！請您稍等一下，";
+			mes "有其它的成員正在使用倉庫。";
+			close;
+		}
+		mes $@GameService_Str$;
+		mes "您公會的倉庫已成功開啟，";
+		mes "非常感謝您的使用！";
+		set zeny,zeny - $@GSGS_Zeny;
+		close;
+
+	}
+}
+
+//================================================//

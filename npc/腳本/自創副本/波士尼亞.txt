@@ -1,0 +1,369 @@
+﻿trinity,45,33,4	script	波士尼亞管理者	10303,{
+
+	//挑戰次數
+	if ( day_Instance_S_Bout_S < gettime(8) ){
+	set Instance_S_Bout_S,6;
+	set day_Instance_S_Bout_S,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_S_Bout_S < 1) {
+		mes "[波士尼亞管理者]";
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[波士尼亞管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "波士尼亞";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[波士尼亞管理者]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_S_Bout_S+"^000000 ]";
+	mes "副本難度：?????";
+	mes "打倒副本MVP都有機率獲得^i[82001]跟^i[101869]";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 200) {
+			mes "[波士尼亞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+
+			if ( countitem(7227)<1 ) {
+			mes "[波士尼亞管理者]";
+			mes "你沒有波士尼亞入場卷無法入場";
+			close; }
+
+		if (instance_create(.@md_name$) < 0) {
+			mes "[波士尼亞管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		announce "【副本公告】隊伍 [ "+getpartyname(getcharid(1)) +" ] 隊長 "+strcharinfo(0)+" 準備挑戰【 "+.@md_name$+" 】副本！",15,0x33ea91;
+		mes "[波士尼亞管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 200) {
+			mes "[波士尼亞管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+			if ( countitem(7227)<1 ) {
+			mes "[波士尼亞管理者]";
+			mes "你沒有波士尼亞入場卷無法入場";
+			close; }
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_S_Bout_S,Instance_S_Bout_S-1;
+			delitem 7227,1;
+			
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到組隊中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "SavePoint",0,0;
+			end; }
+
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "波士尼亞",0;
+	end;
+
+}
+
+// Core Functions
+//============================================================
+function	script	boss_better_Mvp1	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'boss_2MVPmobid1[rand(0,49)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,300000000;
+	setunitdata .@MOD,UMOB_ATKMIN,10000;
+	setunitdata .@MOD,UMOB_ATKMAX,20000;
+	setunitdata .@MOD,UMOB_MATKMIN,9000;
+	setunitdata .@MOD,UMOB_MATKMAX,18000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+100;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+100;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(80,350);
+	setunitdata .@MOD,UMOB_AGI,rand(100,280);
+	setunitdata .@MOD,UMOB_VIT,rand(80,250);
+	setunitdata .@MOD,UMOB_INT,rand(100,380);
+	setunitdata .@MOD,UMOB_DEX,rand(200,400);
+	setunitdata .@MOD,UMOB_LUK,rand(100,300);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(400,800);
+	setunitdata .@MOD,UMOB_MRES,rand(400,800);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+function	script	boss_better_Mvp2	{
+
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'boss_2MVPmobid2[rand(0,49)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,600000000;
+	setunitdata .@MOD,UMOB_ATKMIN,10000;
+	setunitdata .@MOD,UMOB_ATKMAX,30000;
+	setunitdata .@MOD,UMOB_MATKMIN,10000;
+	setunitdata .@MOD,UMOB_MATKMAX,20000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+130;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+130;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(80,400);
+	setunitdata .@MOD,UMOB_AGI,rand(100,280);
+	setunitdata .@MOD,UMOB_VIT,rand(80,250);
+	setunitdata .@MOD,UMOB_INT,rand(100,420);
+	setunitdata .@MOD,UMOB_DEX,rand(200,400);
+	setunitdata .@MOD,UMOB_LUK,rand(100,300);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(400,800);
+	setunitdata .@MOD,UMOB_MRES,rand(400,800);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+function	script	boss_better_Mvp3	{
+
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'boss_2MVPmobid3[rand(0,49)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@HIT=.@por_arr[39];
+	.@FLEE=.@por_arr[40];
+
+	//攻擊/血量
+	setunitdata .@MOD,UMOB_LEVEL,260;
+	setunitdata .@MOD,UMOB_MAXHP,1200000000;
+	setunitdata .@MOD,UMOB_ATKMIN,10000;
+	setunitdata .@MOD,UMOB_ATKMAX,30000;
+	setunitdata .@MOD,UMOB_MATKMIN,10000;
+	setunitdata .@MOD,UMOB_MATKMAX,20000;
+	setunitdata .@MOD,UMOB_HIT,.@HIT+130;
+	setunitdata .@MOD,UMOB_FLEE,.@FLEE+130;
+	//素質
+	setunitdata .@MOD,UMOB_STR,rand(80,400);
+	setunitdata .@MOD,UMOB_AGI,rand(100,280);
+	setunitdata .@MOD,UMOB_VIT,rand(80,250);
+	setunitdata .@MOD,UMOB_INT,rand(100,420);
+	setunitdata .@MOD,UMOB_DEX,rand(200,400);
+	setunitdata .@MOD,UMOB_LUK,rand(100,300);
+	//防禦
+	setunitdata .@MOD,UMOB_DEF,F_rand(50,150,350,500);
+	setunitdata .@MOD,UMOB_MDEF,F_rand(50,100,150,300);
+	setunitdata .@MOD,UMOB_RES,rand(400,800);
+	setunitdata .@MOD,UMOB_MRES,rand(400,800);
+	//減傷
+	setunitdata .@MOD,UMOB_DAMAGETAKEN,10;
+	//光環
+	//setunitdata .@MOD,UMOB_AURA,2002;
+	return;
+}
+
+
+
+//------------------------------波士尼亞事件
+1@boss,0,0,0	script	boss_2Event1	-1,{
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@boss");
+
+	//野外MVP 1
+	setarray 'boss_2MVPmobid1[0],1038,1039,1046,1059,1086,1087,1389,1112,1115,1147,1150,1157,1159,1190,1251,1252,1272,1312,1373,1418,1492,1511,1583,1623,1630,1685,1688,1689,1719,1734,1751,1768,1779,1785,1832,1871,1874,1890,2068,2087,2156,2165,2202,2249,2251,2253,2255,2362,3074,3633;
+	//野外MVP 2
+	setarray 'boss_2MVPmobid2[0],3757,3758,3796,3804,20260,20273,20277,20520,20811,20843,21395,1646,1647,1648,1649,1650,1651,2235,2236,2237,2238,2239,2240,2241,3220,3221,3222,3223,3224,3225,3240,3241,3242,3243,3244,3245,3246,3741,20118,20381,20419,20421,20422,20601,20610,20611,20618,20785,20928,20934,20943,21301,21537,21950,21955,21980,21982;
+	//副本MVP
+	setarray 'boss_2MVPmobid3[0],2022,2131,2186,2187,2188,2189,2190,2194,2318,2320,2332,2475,2476,2564,2996,3029,3096,3097,3150,3151,3190,3254,3473,3621,3628,3659,3826,20340,20346,20381,20386,20536,20575,20620,20621,20648,20668,20572,20573,20785,20872,20892,20893,20996,21316,21361,21531,21533,21981,21996;
+
+	set 'CD_boss2_1,240;
+	//全區放怪
+	for(.@i=0;.@i<40;.@i++)
+	callfunc "boss_better_Mvp1",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp2",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp3",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+
+	//副本開始關閉入場
+	//'win = 1;
+	sleep 2000;
+	instance_announce instance_id(1),"波士尼亞：副本開始，請消滅在各地區的MVP!!",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"波士尼亞：每三分鐘會出現一波的MVP軍團，注意你只有60分鐘進行攻略!",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"波士尼亞：總共會有三波的MVP軍團，清除完畢就可以找我出去了",bc_all,0xD7BA98;
+	sleep 60000;
+	//全區放怪
+	for(.@i=0;.@i<40;.@i++)
+	callfunc "boss_better_Mvp1",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp2",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp3",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	instance_announce instance_id(1),"波士尼亞：第一波的MVP軍團登場了!!",bc_all,0xD7BA98;
+
+	sleep 60000;
+	//全區放怪
+	for(.@i=0;.@i<40;.@i++)
+	callfunc "boss_better_Mvp1",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp2",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp3",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	instance_announce instance_id(1),"波士尼亞：第二波的MVP軍團登場了!!",bc_all,0xD7BA98;
+
+	sleep 60000;
+	//全區放怪
+	for(.@i=0;.@i<40;.@i++)
+	callfunc "boss_better_Mvp1",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp2",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+	//全區放怪
+	for(.@i=0;.@i<10;.@i++)
+	callfunc "boss_better_Mvp3",30,210,210,29,instance_npcname("boss_2Event1")+"::OnCcdd0";
+
+	instance_announce instance_id(1),"波士尼亞：第三波的MVP軍團登場了!!",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"波士尼亞：接下來不會再有MVP軍團登場了，清除後就找我離開吧!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd0:
+	set 'CD_boss2_1,'CD_boss2_1-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'CD_boss2_1+"個MVP",bc_all,0xD7BA98;
+	callfunc "Gem_item_Lv2";
+	callfunc "Gem_item_Lv2";
+	callfunc "Blue_Box_Lv1";
+	end;
+
+	OnEnd:
+	enablenpc instance_npcname("波士尼亞管理者#boss_201");
+	//判斷過關人數時間
+	set 'boss_2count2,getmapusers('map_name$[0]);
+	set 'Instance_Annal,gettimetick(2)-'Instance_Annal;
+	announce "【波士尼亞】：隊伍 ["+strcharinfo(1)+"] ["+'boss_2count2+"]人 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Annal/60)+"分"+('Instance_Annal%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------
+//高級藍色寶箱
+function	script	Blue_Box_Lv1	{
+	//
+	if(rand(100)<2) getitem 101869,1;
+	return;
+}
+
+//------------------------------ 領取獎勵
+1@boss,68,128,4	script	波士尼亞管理者#boss_201	751,{
+
+	mes "[波士尼亞管理者]";
+	mes "讓我把你們送出波士尼亞吧";
+	mes "但是離開之後就無法再進來了";
+	next;
+	switch (select("請把我送出去:我還想四處看看.")) {
+	case 1:
+	warp $Instance_S_MA$,$Instance_S_MAP_X,$Instance_S_MAP_Y;
+	close;
+
+	case 2:
+	close;
+
+OnInstanceInit:
+	//disablenpc instance_npcname("波士尼亞管理者#boss_201");
+	end;
+	}
+}
+
+
+//------------------------------地圖屬性
+1@boss	mapflag	nomemo
+1@boss	mapflag	nosave	SavePoint
+1@boss	mapflag	monster_noteleport
+1@boss	mapflag	noteleport
+1@boss	mapflag	noicewall
+1@boss	mapflag	partylock
+1@boss	mapflag	restricted	6
+
+
+

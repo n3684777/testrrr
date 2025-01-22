@@ -1,0 +1,341 @@
+﻿
+vdistrict1,10,57,4	script	次元超越者_霸肋門德#x_prt	654,{
+
+	.@playtime = checkquest(33006,PLAYTIME);
+	if(.@playtime == 2) erasequest 33006;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[霸肋門德]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[霸肋門德]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "平行次元新危機";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+	set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+	set @menu$, ":進入"+.@md_name$;
+
+	mes "[霸肋門德]";
+	mes "你今天就當拯救世界的英雄吧!只是在另一個次元我無法給你獎勵，這樣還願意貢獻嗎?";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 100) {
+			mes "[霸肋門德]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[霸肋門德]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		set .@char_name$,strcharinfo(0);
+
+		//mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+"的隊長"+.@char_name$+"準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[霸肋門德]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(!instance_id(IM_PARTY)){
+		mes "還未生成副本";
+		cutin "",255;
+		close;
+		}
+		if(BaseLevel < 100) {
+			mes "[霸肋門德]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.100 後再來吧…"; 
+			close;
+		}
+		if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+		mes "副本已經開始了，無法再次進入。";
+		close;
+		}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			setquest 33006;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",156,84;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "平行次元新危機",0;
+	end;
+}
+
+
+//------------------------------ 怪物加成
+1@prt,0,0,0	script	x_prt_Settings	-1,{
+
+Oninit:
+	//每層MVP加成屬性
+	$@x_prt_HP_mvp=30000000;
+	$@x_prt_ATKMIN_mvp=2000;
+	$@x_prt_ATKMAX_mvp=6000;
+	$@x_prt_MATKMIN_mvp =1000;
+	$@x_prt_MATKMAX_mvp =3000;
+	$@x_prt_DEF_mvp=200;
+	$@x_prt_MDEF_mvp=50;
+	$@x_prt_HIT_mvp=150;
+	end;
+}
+
+// 核心計算
+//============================================================
+function	script	x_prt_better_Mvp1	{
+	.@label$ = getarg(4);
+	areamonster 'map_name$[0],getarg(0),getarg(1),getarg(2),getarg(3),"--ja--",'x_prt_MVPmobid1[rand(0,60)],1,.@label$;
+	.@MOD = $@mobid[0];
+	getunitdata .@MOD,.@por_arr;
+	.@MAXHP=.@por_arr[3];
+	.@ATKMIN=.@por_arr[33];
+	.@ATKMAX=.@por_arr[34];
+	.@MATKMIN=.@por_arr[35];
+	.@MATKMAX=.@por_arr[36];
+	.@DEF=.@por_arr[37];
+	.@MDEF=.@por_arr[38];
+	.@HIT=.@por_arr[39];
+	setunitdata .@MOD,UMOB_MAXHP,.@MAXHP+($@x_prt_HP_mvp);
+	setunitdata .@MOD,UMOB_ATKMIN,.@ATKMIN+($@x_prt_ATKMIN_mvp);
+	setunitdata .@MOD,UMOB_ATKMAX,.@ATKMAX+($@x_prt_ATKMAX_mvp);
+	setunitdata .@MOD,UMOB_MATKMIN,.@MATKMIN+($@x_prt_MATKMIN_mvp);
+	setunitdata .@MOD,UMOB_MATKMAX,.@MATKMAX+($@x_prt_MATKMAX_mvp);
+
+	setunitdata .@MOD,UMOB_DEF,.@DEF+($@x_prt_DEF_mvp);
+	setunitdata .@MOD,UMOB_MDEF,.@MDEF+($@x_prt_MDEF_mvp);
+	setunitdata .@MOD,UMOB_HIT,.@HIT+($@x_prt_HIT_mvp);
+	//end;
+	return;
+}
+
+
+//------------------------------平行次元新危機事件
+1@prt,0,0,0	script	平行次元新危機事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@prt");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("次元超越者_霸肋門德#x_prt0");
+
+	//副本MVP資訊
+	setarray 'x_prt_MVPmobid1[0],1086,1059,1147,1159,1112,1150,1630,1312,1492,1038,1511,1157,1418,1046,1785,1190,1087,1039,1272,1871,1832,1751,1874,1734,1115,1252,1251,1779,1530,1583,1623,2087,2202,1685,1876,3074,1688,2156,2068,1890,2249,2255,2253,2251,28231,3741,3633,20381,20419,20422,20421,20601,20610,20611,20618,1719,1768,2362,20934,20928,20943;
+
+	//副本標籤
+	set 'CD_x_prt_01,0;
+	set 'CD_x_prt_Mob_01,0;
+	set 'CD_x_prt_Mob_02,0;
+	end;
+
+	OnStart:;
+	if ('CD_x_prt_Mob_01==0) {
+	//donpcevent instance_npcname("平行次元新危機事件1")+"::OnEnd01";
+	instance_announce instance_id(1),"霸肋門德：不該出現的存在出現了，大家都小心一點!",bc_all,0xD7BA98;
+	////monster 'map_name$[0],0,0,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnEnd01";
+	callfunc "x_prt_better_Mvp1",0,0,250,250,instance_npcname("平行次元新危機事件1")+"::OnEnd01";
+	end;
+	}
+
+	sleep 6000;
+	switch(rand(1,4)){
+	case 1:
+	instance_announce instance_id(1),"霸肋門德：北邊出現了魔物的蹤跡!",bc_all,0xD7BA98;
+	set 'CD_x_prt_Mob_02,10;
+	areamonster 'map_name$[0],65,103,75,93,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd1";
+	areamonster 'map_name$[0],65,103,75,93,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd1";
+	end;
+
+	case 2:
+	instance_announce instance_id(1),"霸肋門德：南邊出現了魔物的蹤跡!",bc_all,0xD7BA98;
+	set 'CD_x_prt_Mob_02,10;
+	areamonster 'map_name$[0],65,47,75,37,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],65,47,75,37,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd2";
+	end;
+
+	case 3:
+	instance_announce instance_id(1),"霸肋門德：西邊邊出現了魔物的蹤跡!",bc_all,0xD7BA98;
+	set 'CD_x_prt_Mob_02,10;
+	areamonster 'map_name$[0],47,74,57,64,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],47,74,57,64,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd3";
+	end;
+
+	case 4:
+	instance_announce instance_id(1),"霸肋門德：東邊出現了魔物的蹤跡!",bc_all,0xD7BA98;
+	set 'CD_x_prt_Mob_02,10;
+	areamonster 'map_name$[0],83,75,93,65,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],83,75,93,65,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd4";
+	end;
+	}
+
+	OnCcdd1:
+	set 'CD_x_prt_Mob_02,'CD_x_prt_Mob_02-1;
+	if ('CD_x_prt_Mob_02==0) {
+	instance_announce instance_id(1),"霸肋門德：此波魔物軍團已經清除完畢",bc_all,0xD7BA98;
+	killmonster 'map_name$[0],instance_npcname("平行次元新危機事件1")+"::OnCcdd1";
+	set 'CD_x_prt_Mob_01,'CD_x_prt_Mob_01-1;
+	donpcevent instance_npcname("平行次元新危機事件1")+"::OnStart";
+	end;
+	}
+	instance_announce instance_id(1),"霸肋門德：還剩下"+'CD_x_prt_Mob_02+"只魔物",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],65,103,75,93,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd1";
+	end;
+
+	OnCcdd2:
+	set 'CD_x_prt_Mob_02,'CD_x_prt_Mob_02-1;
+	if ('CD_x_prt_Mob_02==0) {
+	instance_announce instance_id(1),"霸肋門德：此波魔物軍團已經清除完畢",bc_all,0xD7BA98;
+	killmonster 'map_name$[0],instance_npcname("平行次元新危機事件1")+"::OnCcdd2";
+	set 'CD_x_prt_Mob_01,'CD_x_prt_Mob_01-1;
+	donpcevent instance_npcname("平行次元新危機事件1")+"::OnStart";
+	end;
+	}
+	instance_announce instance_id(1),"霸肋門德：還剩下"+'CD_x_prt_Mob_02+"只魔物",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],65,47,75,37,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd3:
+	set 'CD_x_prt_Mob_02,'CD_x_prt_Mob_02-1;
+	if ('CD_x_prt_Mob_02==0) {
+	instance_announce instance_id(1),"霸肋門德：此波魔物軍團已經清除完畢",bc_all,0xD7BA98;
+	killmonster 'map_name$[0],instance_npcname("平行次元新危機事件1")+"::OnCcdd3";
+	set 'CD_x_prt_Mob_01,'CD_x_prt_Mob_01-1;
+	donpcevent instance_npcname("平行次元新危機事件1")+"::OnStart";
+	end;
+	}
+	instance_announce instance_id(1),"霸肋門德：還剩下"+'CD_x_prt_Mob_02+"只魔物",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],47,74,57,64,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd4:
+	set 'CD_x_prt_Mob_02,'CD_x_prt_Mob_02-1;
+	if ('CD_x_prt_Mob_02==0) {
+	instance_announce instance_id(1),"霸肋門德：此波魔物軍團已經清除完畢",bc_all,0xD7BA98;
+	killmonster 'map_name$[0],instance_npcname("平行次元新危機事件1")+"::OnCcdd4";
+	set 'CD_x_prt_Mob_01,'CD_x_prt_Mob_01-1;
+	donpcevent instance_npcname("平行次元新危機事件1")+"::OnStart";
+	end;
+	}
+	instance_announce instance_id(1),"霸肋門德：還剩下"+'CD_x_prt_Mob_02+"只魔物",bc_all,0xD7BA98;
+	areamonster 'map_name$[0],83,75,93,65,"--ja--",rand(23003,23006),1,instance_npcname("平行次元新危機事件1")+"::OnCcdd4";
+	end;
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【平行次元新危機】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	enablenpc instance_npcname("次元超越者_霸肋門德#x_prt0");
+	instance_announce 0, "霸肋門德：結束了來找我吧，我會傳送你們離開這裡",bc_map,"0xFFFF33";
+	end;
+}
+
+
+//------------------------------相關NPC
+1@prt,69,56,4	script	次元超越者_霸肋門德#x_prt01	654,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_x_prt_01>0) end;
+
+	mes "[霸肋門德]";
+	mes "這座另一邊次元城市裡的4處守護石現在受損了，我必須修復這些守護石";
+	mes "你願意在我修復的時候，幫我阻擋那些來破壞守護石的魔物嗎?";
+	next;
+	switch (select("等待其他同伴:幫忙阻擋魔物")) {
+
+	case 1:
+	close;
+
+	case 2:
+	close2;
+	set 'CD_x_prt_01,1;
+	set 'CD_x_prt_Mob_01,10;
+	instance_announce instance_id(1),"霸肋門德：冒險家們準備迎戰了，從遠處覬覦守護石的怪物正在蜂擁而至!",bc_all,0xFFFF33;
+	npctalk "霸肋門德：冒險家們準備迎戰了，從遠處覬覦守護石的怪物正在蜂擁而至!";
+	donpcevent instance_npcname("平行次元新危機事件1")+"::OnStart";
+	disablenpc instance_npcname("次元超越者_霸肋門德#x_prt01");
+	end;
+	}
+}
+
+
+1@prt,70,98,4	script	次元裂縫#x_prt01	21634,{end;}	//北
+1@prt,70,42,4	script	次元裂縫#x_prt02	21634,{end;}	//南
+1@prt,52,69,4	script	次元裂縫#x_prt03	21634,{end;}	//西
+1@prt,88,70,4	script	次元裂縫#x_prt04	21634,{end;}	//東
+//------------------------------ 傳點資訊
+//------------------------------ 領獎
+1@prt,69,56,4	script	次元超越者_霸肋門德#x_prt0	654,{
+
+	mes "[霸肋門德]";
+	mes "讓我把你們送出平行次元新危機吧";
+	next;
+	switch (select("請把我送出去:我還想四處看看")) {
+
+	case 1:
+	getitem 25376,5;	//寵物硬幣
+	callfunc "offical_instance_finish",1;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------地圖屬性
+1@prt	mapflag	partylock
+1@prt	mapflag	noteleport
+1@prt	mapflag	nosave	SavePoint
+1@prt	mapflag	nomemo
+1@prt	mapflag	nobranch
+1@prt	mapflag	noicewall
+1@prt	mapflag	restricted	6
+

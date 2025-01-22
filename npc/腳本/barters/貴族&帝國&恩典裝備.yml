@@ -1,0 +1,1134 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#貴族裝備
+   - Name: 貴族裝備兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_CRU
+     Items:
+       - Index: 0
+         Item: Noblesse_Attack_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 1
+         Item: Noblesse_Magic_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 2
+         Item: Noblesse_Attack_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 3
+         Item: Noblesse_Magic_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 4
+         Item: Noblesse_Attack_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 5
+         Item: Noblesse_Magic_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 6
+         Item: Noblesses_Refine_Ticket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 7
+         Item: Noblesse_Breath_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 8
+         Item: Noblesse_Knight_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 9
+         Item: Noblesse_Spear_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 10
+         Item: Noblesse_Genesis_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 11
+         Item: Noblesse_Sharp_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 12
+         Item: Noblesse_Aimed_suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 13
+         Item: Noblesse_Severe_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 14
+         Item: Noblesse_Reverb_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 15
+         Item: Noblesse_Adora_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 16
+         Item: Noblesse_Duple_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 17
+         Item: Noblesse_Tornado_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 18
+         Item: Noblesse_Vulcan_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 19
+         Item: Noblesse_Cart_Cannon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 20
+         Item: Noblesse_Cart_Tornado_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 21
+         Item: Noblesse_Rolling_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 22
+         Item: Noblesse_Assassin_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 23
+         Item: Noblesse_Fatal_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 24
+         Item: Noblesse_Stalker_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 25
+         Item: Noblesse_Picky_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 26
+         Item: Noblesse_Catnip_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 27
+         Item: Noblesse_Trip_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 28
+         Item: Noblesse_Fire_Rain_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 29
+         Item: Noblesse_Crimson_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 30
+         Item: Noblesse_Frost_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 31
+         Item: Noblesse_Psychic_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 32
+         Item: Noblesse_Dust_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 33
+         Item: Noblesse_Sun_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 34
+         Item: Noblesse_Moon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 35
+         Item: Noblesse_Ninja_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 36
+         Item: Noblesse_Kunai_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 37
+         Item: Noblesse_Eswhoo_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 38
+         Item: Noblesse_Explosion_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 39
+         Item: Noblesse_Knuckle_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 40
+         Item: Noblesse_Tiger_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 41
+         Item: Noblesse_Tiger_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 42
+         Item: Noblesse_Super_Novice_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 43
+         Item: Noblesse_Super_Novice_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+#帝國裝備兌換員
+   - Name: 帝國裝備兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_JOB_KNIGHT2
+     Items:
+       - Index: 0
+         Item: Imperial_Attack_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 1
+         Item: Imperial_Magic_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 2
+         Item: Imperial_Attack_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 3
+         Item: Imperial_Magic_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 4
+         Item: Imperial_Attack_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 5
+         Item: Imperial_Magic_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 6
+         Item: Imperial_Refine_Ticket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 7
+         Item: Imperial_P_Mo_Garment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 8
+         Item: Imperial_M_Mo_Garment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 9
+         Item: Imperial_P_Mo_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 10
+         Item: Imperial_M_Mo_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 5
+       - Index: 11
+         Item: Imperial_Breath_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 12
+         Item: Imperial_Knight_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 13
+         Item: Imperial_Spear_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 14
+         Item: Imperial_Genesis_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 15
+         Item: Imperial_Sharp_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 16
+         Item: Imperial_Aimed_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 17
+         Item: Imperial_Severe_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 18
+         Item: Imperial_Reverb_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 19
+         Item: Imperial_Adora_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 20
+         Item: Imperial_Duple_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 21
+         Item: Imperial_Knuckle_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 22
+         Item: Imperial_Tiger_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 23
+         Item: Imperial_Tornado_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 24
+         Item: Imperial_Vulcan_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 25
+         Item: Imperial_Cart_Cannon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 26
+         Item: Imperial_Cart_Tornado_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 27
+         Item: Imperial_Rolling_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 28
+         Item: Imperial_Assassin_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 29
+         Item: Imperial_Fatal_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 30
+         Item: Imperial_Stalker_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 31
+         Item: Imperial_Picky_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 32
+         Item: Imperial_Catnip_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 33
+         Item: Imperial_Trip_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 34
+         Item: Imperial_Fire_Rain_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 35
+         Item: Imperial_Crimson_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 36
+         Item: Imperial_Frost_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 37
+         Item: Imperial_Psychic_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 38
+         Item: Imperial_Dust_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 39
+         Item: Imperial_Sun_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 40
+         Item: Imperial_Moon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 41
+         Item: Imperial_Ninja_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 42
+         Item: Imperial_Kunai_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 43
+         Item: Imperial_Eswhoo_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 44
+         Item: Imperial_Explosion_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 45
+         Item: Imperial_Super_Novice_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 46
+         Item: Imperial_Super_Novice_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+#恩典裝備兌換員
+   - Name: 恩典裝備兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_M_REPAIR
+     Items:
+       - Index: 0
+         Item: Grace_Attack_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 1
+         Item: Grace_Magic_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 2
+         Item: Grace_Attack_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 3
+         Item: Grace_Magic_Manteau
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 4
+         Item: Grace_Attack_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 5
+         Item: Grace_Magic_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 6
+         Item: Grace_Refine_Ticket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 7
+         Item: Grace_P_Mo_Garment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 8
+         Item: Grace_M_Mo_Garment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 9
+         Item: Grace_P_Mo_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 10
+         Item: Grace_M_Mo_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 10
+       - Index: 11
+         Item: Grace_Breath_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 12
+         Item: Grace_Knight_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 13
+         Item: Grace_Spear_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 14
+         Item: Grace_Genesis_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 15
+         Item: Grace_Sharp_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 16
+         Item: Grace_Aimed_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 17
+         Item: Grace_Severe_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 18
+         Item: Grace_Reverb_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 19
+         Item: Grace_Adora_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 20
+         Item: Grace_Duple_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 21
+         Item: Grace_Knuckle_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 22
+         Item: Grace_Tiger_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 23
+         Item: Grace_Tornado_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 24
+         Item: Grace_Vulcan_Armor
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 25
+         Item: Grace_Cart_Cannon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 26
+         Item: Grace_Cart_Tornado_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 27
+         Item: Grace_Rolling_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 28
+         Item: Grace_Assassin_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 29
+         Item: Grace_Fatal_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 30
+         Item: Grace_Stalker_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 31
+         Item: Grace_Picky_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 32
+         Item: Grace_Catnip_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 33
+         Item: Grace_Trip_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 34
+         Item: Grace_Fire_Rain_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 35
+         Item: Grace_Crimson_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 36
+         Item: Grace_Frost_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 37
+         Item: Grace_Psychic_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 38
+         Item: Grace_Dust_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 39
+         Item: Grace_Sun_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 40
+         Item: Grace_Moon_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 41
+         Item: Grace_Ninja_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 42
+         Item: Grace_Kunai_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 43
+         Item: Grace_Eswhoo_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 44
+         Item: Grace_Explosion_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 45
+         Item: Grace_Super_Novice_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 46
+         Item: Grace_Super_Novice_Robe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20

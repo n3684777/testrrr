@@ -1,0 +1,29 @@
+function	script	Megaphone	{
+
+	mes "[會員服務]";
+	mes "廣播一次需等待^0000ff20秒^000000後才可在廣播";
+	mes "請勿廣播謾罵或是不雅的文字";
+	mes "不論你的理由為何廣播出謾罵或是不雅文字被拍照檢舉都會受到處分";
+	next;
+	switch(select("我要廣播","取消")){
+
+	case 1:
+	if(gettimetick(2) < Megaphone_CD){
+	mes "[會員服務]";
+	mes "你剛剛發過廣播";
+	mes "請稍微等會再來";
+	close;
+	}
+
+	input @selll$;
+	announce "["+strcharinfo(0)+"] :"+ @selll$ +"",bc_all|bc_name,0x000000;
+	set Megaphone_CD,gettimetick(2)+20;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+

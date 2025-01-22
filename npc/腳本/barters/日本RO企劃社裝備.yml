@@ -1,0 +1,185 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#日本RO企劃社裝備
+   - Name: 小山教授
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 1_M_SIGN1
+     Items:
+       - Index: 0
+         Item: JRO_Whikebain_Suit
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Special_Ninja_Suit
+             Amount: 1
+           - Index: 1
+             Item: Sabath's_Cloth
+             Amount: 1
+           - Index: 2
+             Item: White_Dyestuffs
+             Amount: 1
+             Amount: 5
+           - Index: 3
+             Item: Scarlet_Dyestuffs
+             Amount: 5
+           - Index: 4
+             Item: Spawns
+             Amount: 90
+       - Index: 1
+         Item: JRO_Some_Wizard_MagicSword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Magical_Blade_S_
+             Amount: 1
+           - Index: 1
+             Item: Excalibur
+             Amount: 1
+           - Index: 2
+             Item: Centipede_Larva_Card
+             Amount: 1
+           - Index: 3
+             Item: Runstone_Mystic
+             Amount: 50
+       - Index: 2
+         Item: JRO_Hetairoi_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Zweihander
+             Amount: 1
+           - Index: 1
+             Item: Katzbalger
+             Amount: 1
+           - Index: 2
+             Item: Hodremlin_Card
+             Amount: 1
+           - Index: 3
+             Item: Elunium
+             Amount: 50
+       - Index: 3
+         Item: JRO_Concertina_Wire
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Queen's_Whip
+             Amount: 1
+           - Index: 1
+             Item: House_Auger
+             Amount: 1
+           - Index: 2
+             Item: Dark_Debris
+             Amount: 40
+           - Index: 3
+             Item: Dark_Crystal
+             Amount: 10
+       - Index: 4
+         Item: Falconer_Flute
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Reptile_Tongue
+             Amount: 50
+       - Index: 5
+         Item: JRO_Falconer_Claw
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Talon_Of_Griffin
+             Amount: 5
+       - Index: 6
+         Item: JRO_Falconer_Glove
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Dragon_Canine
+             Amount: 30
+           - Index: 1
+             Item: Dragon_Scale
+             Amount: 1
+       - Index: 7
+         Item: JRO_Ghost_Pill
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Muramasa
+             Amount: 1
+           - Index: 1
+             Item: Chrome_Sword
+             Amount: 1
+           - Index: 2
+             Item: Chrome_Twohand_Sword
+             Amount: 1
+           - Index: 3
+             Item: Cardinal_Jewel_
+             Amount: 100
+       - Index: 7
+         Item: JRO_Conch
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Oriental_Lute
+             Amount: 1
+           - Index: 1
+             Item: Kakkung_
+             Amount: 1
+           - Index: 2
+             Item: Tiger_Skin_Panties
+             Amount: 200
+       - Index: 8
+         Item: JRO_Meteorite_Juchui
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Star_Dust_Blade
+             Amount: 1
+           - Index: 1
+             Item: Bloody_Iron_Ball
+             Amount: 1
+           - Index: 2
+             Item: Broken_Steel_Piece
+             Amount: 50
+           - Index: 3
+             Item: Mystery_Piece
+             Amount: 20
+           - Index: 4
+             Item: Wheel
+             Amount: 20
+       - Index: 9
+         Item: JRO_Eternal_Wand
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Star_Dust_Blade
+             Amount: 1
+           - Index: 1
+             Item: Destruction_Rod
+             Amount: 1
+           - Index: 2
+             Item: Broken_Steel_Piece
+             Amount: 1
+           - Index: 3
+             Item: Pocket_Watch__
+             Amount: 1
+           - Index: 4
+             Item: Needle_Of_Alarm
+             Amount: 365
+

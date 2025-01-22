@@ -1,0 +1,99 @@
+-	script	InstanceRecaller	-1,{
+ClearAllMemory:
+	// 離線時候的副本編號
+	InstanceRecaller_Id = 0;
+	// 離線時候的副本地圖名稱
+	InstanceRecaller_Map$ = "";
+	// 離線時候在地圖上的 X 坐標
+	InstanceRecaller_X = 0;
+	// 離線時候在地圖上的 Y 坐標
+	InstanceRecaller_Y = 0;
+	// 離線時的時間戳
+	InstanceRecaller_OfflineTime = 0;
+	// 離線時候的血量, 避免離線回來後自動復活
+	InstanceRecaller_LeftHP = false;
+	// 離線的時候隊長是誰
+	InstanceRecaller_PartyLeader = 0;
+	end;
+OnPCLogoutEvent:
+	if (getmapxy(.@map$,.@x,.@y,BL_PC) != 0) {
+		goto ClearAllMemory;	// 讀取坐標失敗, 清除記錄
+	}
+	
+	if (!instance_id(IM_PARTY)) {
+		goto ClearAllMemory;	// 不在副本裡面, 清除記錄
+	}
+	
+	if (!compare(.@map$, "#")) {
+		goto ClearAllMemory;	// 不在副本地圖中, 清除記錄
+	}
+	
+	if (getcharid(1) == 0) {
+		goto ClearAllMemory;	// 不在隊伍裡面, 清除記錄
+	}
+	
+	// 離線時候的副本編號
+	InstanceRecaller_Id = instance_id(IM_PARTY);
+	// 離線時候的副本地圖名稱
+	InstanceRecaller_Map$ = .@map$;
+	// 離線時候在地圖上的 X 坐標
+	InstanceRecaller_X = .@x;
+	// 離線時候在地圖上的 Y 坐標
+	InstanceRecaller_Y = .@y;
+	// 離線時的時間戳
+	InstanceRecaller_OfflineTime = gettimetick(2);
+	// 離線時候的血量, 避免離線回來後自動復活
+	InstanceRecaller_LeftHP = HP;
+	// 離線的時候隊長是誰
+	InstanceRecaller_PartyLeader = getpartyleader(getcharid(1), 2);
+	
+	end;
+OnPCLoginEvent:
+	sleep2 100;	// 進入遊戲後等 100 毫秒再處理
+	
+	if (!instance_id(IM_PARTY) || 
+		instance_id(IM_PARTY) != InstanceRecaller_Id || 
+		InstanceRecaller_Map$ == "" ) {
+		goto ClearAllMemory;	// 不在副本裡面, 清除記錄
+	}
+	
+	if (getcharid(1) == 0) {
+		goto ClearAllMemory;	// 不在隊伍裡面, 清除記錄
+	}
+	
+	if (InstanceRecaller_PartyLeader != getpartyleader(getcharid(1), 2)) {
+		goto ClearAllMemory;	// 隊長已經換人了, 清除記錄
+	}
+	
+	// 計算玩家已經離開遊戲的時間
+	.@leave_secs = gettimetick(2) - InstanceRecaller_OfflineTime;
+	
+	// 離線多長時間內可以自動回到副本
+	.@recall_secs = 60 * 3;
+	
+	if (.@leave_secs > .@recall_secs) {
+		goto ClearAllMemory;	// 超過時限了, 清除記錄
+	}
+	
+	warp InstanceRecaller_Map$, InstanceRecaller_X, InstanceRecaller_Y;
+
+	//禁止多開偵測
+	if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+	//允許多開名單
+	for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+	if(getcharip()==$@PartyWindowsows$[.@a]){
+	end; }}
+	dispbottom "檢測到副本地圖中有相同IP人物，自動傳送回首都";
+	warp "prontera",117,57;
+	end; }
+
+	if (InstanceRecaller_LeftHP == 0) {
+		// 離線的時候已經死亡, 立刻讓他死掉
+		percentheal -100, 0;
+	}
+
+
+
+	goto ClearAllMemory;	// 已經完成自動召回, 清除記錄
+	end;
+}

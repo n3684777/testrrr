@@ -1,0 +1,136 @@
+﻿//===================================
+// 施密特國王徽章附魔
+// =================================
+vdistrict1,56,13,6	script	施密特國王徽章附魔機器人	563,{
+
+	mes "[施密特國王徽章附魔機器人]";
+	mes "我可以在遺物裝備上附魔，您需要什麼服務呢?";
+	next;
+	switch(select("強化裝備:取消")){
+
+case 1:
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fakeyouc1,getequipcardid(.@is,0);
+	set @fakeyouc2,getequipcardid(.@is,1);
+	set @fakeyouc3,getequipcardid(.@is,2);
+	set @fakeyouc4,getequipcardid(.@is,3);
+	set @Osc_AD_Refine,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 32228) goto Osc_AD_net3;	//國王施密特的強韌徽章
+	if(@abd == 32229) goto Osc_AD_net3;	//國王施密特的神力徽章
+	if(@abd == 32230) goto Osc_AD_net3;	//國王施密特的強運徽章
+	if(@abd == 32231) goto Osc_AD_net3;	//國王施密特的鋼體徽章
+	if(@abd == 32232) goto Osc_AD_net3;	//國王施密特的強光徽章
+	if(@abd == 32233) goto Osc_AD_net3;	//國王施密特的蒼穹徽章
+
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你要附魔的裝備非指定的裝備，不能幫你附魔";
+	close;
+
+Osc_AD_net3:
+	if (@fakeyouc3 == 0) {
+	mes "[施密特國王徽章附魔機器人]";
+	mes "第3插槽還未附魔!";
+	close;
+	}
+	if (@fakeyouc2 > 0) {
+	mes "[施密特國王徽章附魔機器人]";
+	mes "第2插槽已經附魔!";
+	close;
+	}
+
+	mes "[施密特國王徽章附魔機器人]";
+	mes "需求材料：";
+	mes "血腥詛咒原石x50";
+	mes "受汙染的魔力x200";
+	mes "強力精華球x3";
+	mes "30,000,000Zeny";
+	mes "選擇你要強化的能力";
+	next;
+
+	switch(select("STR寶石:AGI寶石:VIT寶石:INT寶石:DEX寶石:LUK寶石:取消")){
+	case 1:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29588;
+	close;
+
+	case 2:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29587;
+	close;
+
+	case 3:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29591;
+	close;
+
+	case 4:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29590;
+	close;
+
+	case 5:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29589;
+	close;
+
+	case 6:
+	callfunc "Osc-AD3_2S",25740,50,6755,200,7925,3,30000000,29592;
+	close;
+
+	case 7:
+	close;
+	}
+case 2:
+	close;
+	}
+OnInit:
+	waitingroom "<施密特國王徽章>附魔機器人",0;
+	end;
+}
+
+
+//------------------------------------ 國王施密特的徽章 附魔
+function	script	Osc-AD3_2S	{
+	if(countitem(getarg(0)) < getarg(1)){
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你身上血腥詛咒原石不夠。";
+	close;
+	}
+	if(countitem(getarg(2)) < getarg(3)){
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你身上受汙染的魔力不夠。";
+	close;
+	}
+	if(countitem(getarg(4)) < getarg(5)){
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你身上強力精華球不夠。";
+	close;
+	}
+	if(zeny<getarg(6)){
+	mes "[施密特國王徽章附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	delitem @abd,1;
+	delitem getarg(0),getarg(1);
+	delitem getarg(2),getarg(3);
+	delitem getarg(4),getarg(5);
+	set zeny,zeny-getarg(6);
+	getitem2 @abd,1,1,@Osc_AD_Refine,0,@fakeyouc1,getarg(7),@fakeyouc3,@fakeyouc4;
+	close;
+}
+

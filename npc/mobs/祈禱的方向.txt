@@ -1,0 +1,115 @@
+﻿//============================================================
+//gw_fild01.rsw灰狼森林01#
+//=========================================================
+gw_fild01,0,0	monster	灰燼蝗蟲	21302,50
+gw_fild01,0,0	monster	灰燼	21303,70
+gw_fild01,0,0	monster	灰狼	21304,35
+//============================================================
+//gw_fild02.rsw#灰狼森林02# 
+//=========================================================
+gw_fild02,0,0	monster	灰燼	21303,15
+gw_fild02,0,0	monster	灰狼	21304,60
+gw_fild02,0,0	monster	風滾草波利	21305,25
+gw_fild02,0,0	monster	風火老鷹	21306,35
+gw_fild02,0,0	monster	幻影狼	21307,35
+
+//============================================================
+//oz_dun01.rsw#奧茲 迷宮1樓# 
+//=========================================================
+oz_dun01,0,0	monster	灰燼蟾蜍	21295,65
+oz_dun01,0,0	monster	煤炭怪	21296,70
+oz_dun01,0,0	monster	幽靈火花	21297,10
+
+//============================================================
+//oz_dun02.rsw#奧茲 迷宮2樓# 
+//=========================================================
+oz_dun02,0,0	monster	幽靈火花	21297,25
+oz_dun02,0,0	monster	火爪狼牙	21298,35
+oz_dun02,0,0	monster	熔岩波利	21299,25
+oz_dun02,0,0	monster	熔岩蟾蜍	21300,60
+oz_dun02,0,0,0,0	boss_monster	火焰狼牙	21301,1,600000,0,MVP_Points::on01
+
+//============================================================
+//ra_fild10.rsw#歐茲峽谷10# 
+//=========================================================
+ra_fild10,0,0	monster	捕蟲草	1781,5
+ra_fild10,0,0	monster	岩漿波利	1836,5
+ra_fild10,0,0	monster	灰狼寶寶	21324,50
+ra_fild10,0,0	monster	灰山羊	21323,60
+ra_fild10,0,0	monster	煤炭怪	21296,5
+
+//============================================================
+//ra_fild11.rsw#伊達平原11# 
+//=========================================================
+ra_fild11,0,0	monster	捕蟲草	1781,10
+ra_fild11,0,0	monster	灰狼寶寶	21324,50
+ra_fild11,0,0	monster	灰山羊	21323,70
+ra_fild11,0,0	monster	煤炭怪	21296,5
+
+
+
+
+//----------------------------- 傳點
+gw_fild01,41,103,0	warp	huiwolfField1	1,1,wolfvill,269,28
+wolfvill,274,25,0	warp	huiwolfField2	1,1,gw_fild01,45,103
+
+ra_fild11,20,292,0	warp	huiwolfField3	1,1,ra_fild10,380,294
+ra_fild10,382,294,0	warp	huiwolfField4	1,1,ra_fild11,25,292
+
+ra_fild10,177,174,0	warp	huiwolfField5	1,1,oz_dun01,284,168
+oz_dun01,23,187,0	warp	huiwolfField6	1,1,gw_fild01,268,337
+
+gw_fild01,272,337,0	warp	huiwolfField7	1,1,oz_dun01,23,194
+
+gw_fild01,136,8,0	warp	huiwolfField8	1,1,gw_fild02,122,390
+gw_fild02,122,393,0	warp	huiwolfField9	1,1,gw_fild01,136,14
+
+oz_dun01,284,164,0	script	#灰狼村1樓入口	45,2,2,{
+
+	if (BaseLevel < 150) {
+		mes "未滿150級.禁止進入!";
+		close;
+	}
+	warp "ra_fild10",177,170;
+	end;
+}
+
+
+oz_dun01,112,31,0	script	#灰狼村2樓入口	45,2,2,{
+
+	if (BaseLevel < 150) {
+		mes "未滿150級.禁止進入!";
+		close;
+	}
+	warp "oz_dun02",147,257;
+	end;
+}
+
+
+oz_dun02,147,261,0	script	#灰狼村2樓出口	45,2,2,{
+
+	if (BaseLevel < 150) {
+		mes "未滿150級.禁止進入!";
+		close;
+	}
+	warp "oz_dun01",112,35;
+	end;
+}
+
+
+//----------------------------- 地圖屬性
+wolfvill	mapflag	town
+	
+gw_fild01	mapflag	nomemo
+gw_fild02	mapflag	nomemo
+oz_dun01	mapflag	nomemo
+oz_dun02	mapflag	nomemo
+ra_fild10	mapflag	nomemo
+ra_fild11	mapflag	nomemo
+
+gw_fild01	mapflag	noicewall
+gw_fild02	mapflag	noicewall
+oz_dun01	mapflag	noicewall
+oz_dun02	mapflag	noicewall
+ra_fild10	mapflag	noicewall
+ra_fild11	mapflag	noicewall

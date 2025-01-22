@@ -1,0 +1,159 @@
+trinity,88,115,6	script	任務委托管理員#cor	10192,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 100)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000100以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("掃蕩生命體","掃蕩奧斯殘黨","討伐貝拉雷","討伐薩納雷","討伐朵洛爾","取消")){
+
+		case 1:
+			if(checkquest(17034,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17035,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17035,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17034;
+			if(checkquest(17035,PLAYTIME)==2){erasequest 17035;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(7867,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(7868,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(7868,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 7867;
+			if(checkquest(7868,PLAYTIME)==2){erasequest 7868;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(32112,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32113,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32113,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32112;
+			if(checkquest(32113,PLAYTIME)==2){erasequest 32113;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(32114,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32115,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32115,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32114;
+			if(checkquest(32115,PLAYTIME)==2){erasequest 32115;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(32116,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(32117,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(32117,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 32116;
+			if(checkquest(32117,PLAYTIME)==2){erasequest 32117;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			close;
+		}
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("掃蕩生命體","掃蕩奧斯殘黨","討伐貝拉雷","討伐薩納雷","討伐朵洛爾","取消")){
+
+		case 1:
+			if(checkquest(17034,HUNTING)==2 ) { 
+			dispbottom "掃蕩生命體任務回報完成!!";
+			erasequest 17034;
+			setquest 17035;
+			getitem 25723,2;
+			getitem 25669,5;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 2:
+			if(checkquest(7867,HUNTING)==2 ) { 
+			dispbottom "掃蕩奧斯殘黨任務回報完成!!";
+			erasequest 7867;
+			setquest 7868;
+			getitem 25723,2;
+			getitem 25669,5;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 3:
+			if(checkquest(32112,HUNTING)==2 ) { 
+			dispbottom "討伐貝拉雷任務回報完成!!";
+			erasequest 32112;
+			setquest 32113;
+			getitem 25723,2;
+			getitem 25669,5;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 4:
+			if(checkquest(32114,HUNTING)==2 ) { 
+			dispbottom "討伐薩納雷任務回報完成!!";
+			erasequest 32114;
+			setquest 32115;
+			getitem 25723,2;
+			getitem 25669,5;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 5:
+			if(checkquest(32116,HUNTING)==2 ) { 
+			dispbottom "討伐朵洛爾任務回報完成!!";
+			erasequest 32116;
+			setquest 32117;
+			getitem 25723,2;
+			getitem 25669,5;
+			getexp 300000,300000;
+			}
+			mes "[任務委托管理員]";
+			mes "你沒有完成的任務";
+			close;
+
+		case 6:
+			close;
+		}
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "幻覺顯現每日任務",0;
+	end;
+}
+

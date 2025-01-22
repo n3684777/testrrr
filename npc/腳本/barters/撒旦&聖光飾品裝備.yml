@@ -1,0 +1,454 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#撒旦&聖光飾品裝備
+   - Name: 撒旦&聖光飾品製作
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_01
+     Items:
+       - Index: 0
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_A
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_B
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_C
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_D
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_E
+             Amount: 1
+       - Index: 1
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_A
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_A
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_A
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_A
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_A
+             Amount: 1
+       - Index: 2
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_B
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_B
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_B
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_B
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_B
+             Amount: 1
+       - Index: 3
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_C
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_C
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_C
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_C
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_C
+             Amount: 1
+       - Index: 4
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_D
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_D
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_D
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_D
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_D
+             Amount: 1
+       - Index: 5
+         Item: Sin_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Shard_E
+             Amount: 1
+           - Index: 1
+             Item: Sin_Shard_E
+             Amount: 1
+           - Index: 2
+             Item: Sin_Shard_E
+             Amount: 1
+           - Index: 3
+             Item: Sin_Shard_E
+             Amount: 1
+           - Index: 4
+             Item: Sin_Shard_E
+             Amount: 1
+       - Index: 6
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_A
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_B
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_C
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_D
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_E
+             Amount: 1
+       - Index: 7
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_A
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_A
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_A
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_A
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_A
+             Amount: 1
+       - Index: 8
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_B
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_B
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_B
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_B
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_B
+             Amount: 1
+       - Index: 9
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_C
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_C
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_C
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_C
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_C
+             Amount: 1
+       - Index: 10
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_D
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_D
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_D
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_D
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_D
+             Amount: 1
+       - Index: 11
+         Item: Fate_Fragment
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Shard_E
+             Amount: 1
+           - Index: 1
+             Item: Fate_Shard_E
+             Amount: 1
+           - Index: 2
+             Item: Fate_Shard_E
+             Amount: 1
+           - Index: 3
+             Item: Fate_Shard_E
+             Amount: 1
+           - Index: 4
+             Item: Fate_Shard_E
+             Amount: 1
+       - Index: 12
+         Item: Sin_Ring_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 13
+         Item: Sin_Necklace_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 14
+         Item: Sin_Ring_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 15
+         Item: Sin_Necklace_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 16
+         Item: Sin_Ring_T
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 17
+         Item: Sin_Necklace_T
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 18
+         Item: Sin_Ring_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 19
+         Item: Sin_Necklace_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 20
+         Item: Sin_Ring_S
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 21
+         Item: Sin_Necklace_S
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 22
+         Item: Sin_Ring_O
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 23
+         Item: Sin_Necklace_O
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Sin_Fragment
+             Amount: 50
+       - Index: 24
+         Item: Shine_Ring_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 25
+         Item: Shine_Necklace_R
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 26
+         Item: Shine_Ring_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 27
+         Item: Shine_Necklace_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 28
+         Item: Shine_Ring_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 29
+         Item: Shine_Ring_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 30
+         Item: Shine_Necklace_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 31
+         Item: Shine_Ring_Z
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 32
+         Item: Shine_Necklace_Z
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 33
+         Item: Shine_Ring_S
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 34
+         Item: Shine_Necklace_S
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 35
+         Item: Shine_Ring_AQ
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50
+       - Index: 36
+         Item: Shine_Necklace_AQ
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Fate_Fragment
+             Amount: 50

@@ -1,0 +1,82 @@
+//自定義變量商城腳本版
+//腳本編寫：靈巧兒
+//腳本版本：V1.0 Bate
+//腳本版權：靈巧兒
+//技術支持QQ：429704119
+-	shop	Daog_Points_Shop	-1,512:-1 //生成商店，腳本名字需要和下面腳本中名字叫對應
+//腳本開始
+trinity,90,33,4	script	道館積分商店	564,{
+
+
+
+	message strcharinfo(0),"此商店只能使用[道館積分]進行交易."; //此處告訴玩家此商店使用什麼作為商店貨幣
+	dispbottom "您現在還有道館積分 [ "+#Gym_Points+" ] 點"; //有多少點數
+	callshop "Daog_Points_Shop",1; //開啟商店
+	npcshopattach "Daog_Points_Shop"; //關聯腳本
+	end;
+//購買事件
+OnBuyItem:
+	set .@i,0; //初始化購買個數為0
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(.Commodity)) {
+			if(.Commodity[.@j] == @bought_nameid[.@i]) {
+				set @itemcost, .Price[.@j] * @bought_quantity[.@i];
+				set @totalcost, @totalcost + @itemcost;
+				break; 
+			}
+			set .@j, .@j+1; 
+		}
+		set .@i, .@i+1; 
+	}
+	if (@totalcost > #Gym_Points) dispbottom "你沒用足夠的[ 道館積分 ]點.";
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "成功購買[ "+@bought_quantity[.@i]+" ]個[ "+getitemname(@bought_nameid[.@i])+" ]";
+			set .@i, .@i+1; 
+		}
+		//購買成功，扣除點數
+		set #Gym_Points,#Gym_Points - @totalcost; 
+		dispbottom "您消費了[ "+@totalcost+" ]點.還剩[ "+#Gym_Points+" ]點";
+	}
+	//初始化玩家變量
+	set @totalcost, 0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+	end;
+
+OnInit:
+//---------------------------------------------------
+	//waitingroom "道館積分商店",0;
+	//設置商品的ID
+	setarray .Commodity[0],61011,61010,61012,80089,50004,80003,70101,70102,70103,70104,70105,70106,	//特殊箱子
+	12103,6417,6423,7619,7620,6241,6240,6225,6226,6438,6439,6635,25375,102038,	//消耗物品
+	410079,490318,490088,28955,28951,28916,28921,20735,20745,20734,20747,32243,420087,400083,400084,400085,400086,400087,420007,420008,420009,32285,32286,32287,32288,490094,490095,490170,490173,490175,490191,490192,490198,32260,28567;	//裝備
+
+
+	//設置商品價格[對應商品ID]
+	setarray .Price[0],10,100,1000,40,40,300,40,60,80,100,150,150,	//特殊箱子
+	50,3,3,3,3,3,3,6,6,15,15,30,200,60,	//消耗物品
+	1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,500,500,500,500,500,500,500,500,500,1000,1000,1000,1000,1000,1000,1000,1500;	//裝備
+
+//---------------------------------------------------
+//初始化商店中物品
+	debugmes "道館積分商城加載中...";
+	set .@j,0;
+	if (getarraysize(.Commodity) != getarraysize(.Price))
+	{
+		debugmes "[錯誤],您設置的商品ID與商品價格不對應";
+		debugmes "[錯誤],商品ID共["+getarraysize(.Commodity)+"],商品價格["+getarraysize(.Price)+"]";
+		end;
+	}
+	while (.@j < getarraysize(.Commodity)) {
+		npcshopdelitem "Daog_Points_Shop",512;
+		npcshopadditem "Daog_Points_Shop",.Commodity[.@j],.Price[.@j];
+		set .@j,.@j+1; 
+	}
+	debugmes "【道館積分商城】商品"+getarraysize(.Commodity)+"個";
+	end;
+}
+

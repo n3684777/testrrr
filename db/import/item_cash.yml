@@ -1,0 +1,924 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Cash Database
+###########################################################################
+#
+# Item Cash Settings
+#
+###########################################################################
+# - Tab                     Cash shop tab. Available tabs are New, Hot, Limited, Rental, Permanent, Scrolls, Consumables, Other, Sale.
+#   Items:                  List of possible items.
+#     - Item                Item name.
+#       Price               Item cost in cash points (#CASHPOINTS).
+###########################################################################
+
+Header:
+  Type: ITEM_CASH_DB
+  Version: 1
+
+Body:
+  - Tab: New
+    Items:
+      - Item: Cash_Points_1
+        Price: 1
+      - Item: Cash_Points_10
+        Price: 10
+      - Item: Cash_Points_50
+        Price: 50
+      - Item: Cash_Points_100
+        Price: 100
+      - Item: Cash_Points_1000
+        Price: 1000
+
+      #轉蛋
+      - Item: Lunatic_Scroll_01
+        Price: 30
+      - Item: Lunatic_Scroll_02
+        Price: 30
+      - Item: Lunatic_Scroll_03
+        Price: 30
+      - Item: Lunatic_Scroll_04
+        Price: 30
+      - Item: Lunatic_Scroll_05
+        Price: 30
+      - Item: Lunatic_Scroll_06
+        Price: 30
+      - Item: Lunatic_Scroll_07
+        Price: 30
+      - Item: Lunatic_Scroll_08
+        Price: 30
+      - Item: Lunatic_Scroll_09
+        Price: 30
+      - Item: Lunatic_Scroll_10
+        Price: 30
+      - Item: Lunatic_Scroll_11
+        Price: 30
+      - Item: Lunatic_Scroll_12
+        Price: 30
+
+  - Tab: Hot
+    Items:
+      - Item: Change_Name_Card
+        Price: 1000
+      - Item: Change_Slot_Card
+        Price: 1000
+      - Item: Shadow_Refine_Hammer
+        Price: 20
+      - Item: Ancient_Hero_Bravery
+        Price: 20
+      - Item: Ancient_Hero_Wisdom
+        Price: 20
+      - Item: Great_Hero_Bravery
+        Price: 30
+      - Item: Great_Hero_Wisdom
+        Price: 30
+      - Item: Hero_LT_Refine_Melee
+        Price: 40
+      - Item: Hero_LT_Refine_Magic
+        Price: 40
+      - Item: Enchant_Ticket
+        Price: 30
+      - Item: Timeoverload_Power_TW
+        Price: 30
+      - Item: Twisted_Time_Key_TW
+        Price: 30
+      - Item: Mysterious_F_TW
+        Price: 30
+      - Item: God_Favor_TW
+        Price: 30
+      - Item: Dead_Soul_Aura
+        Price: 30
+      - Item: Hell_fire_D_Box
+        Price: 30
+      - Item: Force_of_Fullmoon
+        Price: 30
+      - Item: SunShine_Sand
+        Price: 30
+      - Item: Psy_Wind_Orb
+        Price: 30
+      - Item: C_Time_Crys
+        Price: 30
+      - Item: Lens_Craft_Stone
+        Price: 30
+      - Item: Joy_Of_Victory
+        Price: 30
+      - Item: Shadow_Att_Ddbox_TW
+        Price: 30
+      - Item: Shadow_Att_Ddbox2_TW
+        Price: 30
+      - Item: Shadow2_Op_Box_TW
+        Price: 30
+      - Item: S_Race_ElementMix
+        Price: 30
+      - Item: S_MixBox_ATT_ALLM_S
+        Price: 30
+      - Item: S_M_Mam_Ran_Box_TW
+        Price: 30
+      - Item: True_G_S_Rand_Box_TW
+        Price: 30
+      - Item: Absorb_S_Box_TW
+        Price: 30
+      - Item: R_B_S_Op_Box
+        Price: 30
+      - Item: FullTemp_S_Rand_Box_TW
+        Price: 30
+      - Item: FullPene_S_Rand_Box_TW
+        Price: 30
+      - Item: S_EXP_S_Box_TW
+        Price: 30
+      - Item: Du_S_RanOpt_Box_TW
+        Price: 30
+      - Item: Cl_S_RanOpt_Box_TW
+        Price: 30
+      - Item: S_Mega_Blitz_Box_TW
+        Price: 30
+      - Item: 21_Anni_Stone3_TW
+        Price: 40
+
+      #影子咒語
+      - Item: FullPenest_Shadow_Up
+        Price: 30
+      - Item: Reload_Shadow_Up
+        Price: 30
+      - Item: SpellCaster_Shadow_Up
+        Price: 30
+      - Item: Ex_Status_Shadow_Up
+        Price: 30
+      - Item: R_Bearers_Shadow_Up
+        Price: 30
+      - Item: True_GemShadow_Up
+        Price: 30
+      - Item: M_Blitz_Shadow_Up
+        Price: 30
+      - Item: Absorb_Shadow_Up
+        Price: 30
+      - Item: Mammoth_Shadow_Up
+        Price: 30
+      - Item: EXPShadow_Up
+        Price: 30
+      - Item: MagicalShadow_Up
+        Price: 30
+      - Item: InfinityShadow_Up
+        Price: 30
+      - Item: MajorAutoSpell_Up
+        Price: 30
+      - Item: Hasty_Up
+        Price: 30
+      - Item: PhysicalShadow_Up
+        Price: 30
+      - Item: PerfectSize_Up
+        Price: 30
+
+  #服飾
+  - Tab: Limited
+    Items:
+      #披肩
+      - Item: C_Swirling_Flame
+        Price: 500
+      - Item: C_Backside_Ribbon_Bell
+        Price: 500
+      - Item: C_Cat_Fork
+        Price: 500
+      - Item: C_Loli_Ruri_Moon
+        Price: 500
+      - Item: C_Sakura_Fes_TW
+        Price: 500
+      - Item: C_GiantCatBag_TW
+        Price: 500
+      - Item: C_Big_B_Rabbit
+        Price: 500
+      - Item: C_Giant_White_Rabbit
+        Price: 500
+
+      #頭上中下
+      - Item: C_Head_Item_45223
+        Price: 500
+      - Item: C_Head_Item_45224
+        Price: 500
+      - Item: C_Head_Item_45225
+        Price: 500
+      - Item: C_Head_Item_45226
+        Price: 500
+      - Item: C_Head_Item_45227
+        Price: 500
+      - Item: C_Head_Item_45228
+        Price: 500
+      - Item: C_Head_Item_45229
+        Price: 500
+      - Item: C_Head_Item_45230
+        Price: 500
+      - Item: C_Head_Item_45231
+        Price: 500
+      - Item: C_Head_Item_45232
+        Price: 500
+      - Item: C_Head_Item_45233
+        Price: 500
+      - Item: C_Head_Item_45234
+        Price: 500
+      - Item: C_Head_Item_45235
+        Price: 500
+      - Item: C_Head_Item_45236
+        Price: 500
+      - Item: C_Head_Item_45237
+        Price: 500
+      - Item: C_Head_Item_45238
+        Price: 500
+      - Item: C_Head_Item_45239
+        Price: 500
+      - Item: C_Head_Item_45240
+        Price: 500
+      - Item: C_Head_Item_45241
+        Price: 500
+      - Item: C_Head_Item_45242
+        Price: 500
+      - Item: C_Head_Item_45243
+        Price: 500
+      - Item: C_Head_Item_45244
+        Price: 500
+      - Item: C_Head_Item_45245
+        Price: 500
+      - Item: C_Head_Item_45246
+        Price: 500
+      - Item: C_Head_Item_45247
+        Price: 500
+      - Item: C_Head_Item_45248
+        Price: 500
+      - Item: C_Head_Item_45249
+        Price: 500
+      - Item: C_Head_Item_45250
+        Price: 500
+      - Item: C_Head_Item_45251
+        Price: 500
+      - Item: C_Head_Item_45252
+        Price: 500
+      - Item: C_Head_Item_45253
+        Price: 500
+
+      - Item: C_Head_Item_45213
+        Price: 500
+      - Item: C_Head_Item_45214
+        Price: 500
+      - Item: C_Head_Item_45215
+        Price: 500
+      - Item: C_Head_Item_45216
+        Price: 500
+      - Item: C_Head_Item_45217
+        Price: 500
+      - Item: C_Head_Item_45218
+        Price: 500
+      - Item: C_Head_Item_45219
+        Price: 500
+      - Item: C_Head_Item_45220
+        Price: 500
+      - Item: C_Head_Item_45221
+        Price: 500
+      - Item: C_Head_Item_45222
+        Price: 500
+
+      - Item: costume_01
+        Price: 500
+      - Item: costume_02
+        Price: 500
+      - Item: costume_03
+        Price: 500
+      - Item: costume_04
+        Price: 500
+      - Item: costume_05
+        Price: 500
+      - Item: costume_06
+        Price: 500
+      - Item: costume_07
+        Price: 500
+      - Item: costume_08
+        Price: 500
+      - Item: costume_09
+        Price: 500
+      - Item: costume_10
+        Price: 500
+      - Item: costume_11
+        Price: 500
+      - Item: costume_12
+        Price: 500
+      - Item: costume_13
+        Price: 500
+      - Item: costume_14
+        Price: 500
+      - Item: costume_15
+        Price: 500
+      - Item: costume_16
+        Price: 500
+      - Item: costume_17
+        Price: 500
+      - Item: costume_18
+        Price: 500
+      - Item: costume_19
+        Price: 500
+      - Item: costume_20
+        Price: 500
+      - Item: costume_21
+        Price: 500
+      - Item: costume_22
+        Price: 500
+      - Item: costume_23
+        Price: 500
+      - Item: costume_24
+        Price: 500
+      - Item: costume_25
+        Price: 500
+      - Item: costume_26
+        Price: 500
+      - Item: costume_27
+        Price: 500
+      - Item: costume_28
+        Price: 500
+      - Item: costume_29
+        Price: 500
+      - Item: costume_30
+        Price: 500
+      - Item: costume_31
+        Price: 500
+      - Item: costume_32
+        Price: 500
+      - Item: costume_33
+        Price: 500
+      - Item: costume_34
+        Price: 500
+      - Item: costume_35
+        Price: 500
+      - Item: costume_36
+        Price: 500
+      - Item: costume_37
+        Price: 500
+      - Item: costume_38
+        Price: 500
+      - Item: costume_39
+        Price: 500
+      - Item: costume_40
+        Price: 500
+
+      - Item: C_Head_Item_22243
+        Price: 500
+      - Item: C_Head_Item_22244
+        Price: 500
+      - Item: C_Head_Item_22245
+        Price: 500
+      - Item: C_Head_Item_22246
+        Price: 500
+      - Item: C_Head_Item_22247
+        Price: 500
+      - Item: C_Head_Item_22248
+        Price: 500
+      - Item: C_Head_Item_44601
+        Price: 500
+      - Item: C_Head_Item_23627
+        Price: 500
+      - Item: C_Head_Item_23962
+        Price: 500
+      - Item: C_Rabbit_Hopping
+        Price: 500
+      - Item: C_Head_Item_44431
+        Price: 500
+      - Item: C_Head_Item_44751
+        Price: 500
+      - Item: C_Tiger_WH
+        Price: 500
+      - Item: C_Tiger_BL
+        Price: 500
+      - Item: C_Jumbo_Rabbit
+        Price: 500
+      - Item: Black_Rabbit
+        Price: 500
+      - Item: C_Cinnamon2
+        Price: 500
+      - Item: C_Ragdoll
+        Price: 500
+      - Item: C_Usa_Pis
+        Price: 500
+      - Item: C_Head_Item_44549
+        Price: 500
+      - Item: C_Head_Item_44550
+        Price: 500
+      - Item: C_Head_Item_45005
+        Price: 500
+      - Item: C_Head_Item_44309
+        Price: 500
+      - Item: C_Head_Item_23866
+        Price: 500
+      - Item: C_Head_Item_23867
+        Price: 500
+      - Item: C_Head_Item_23868
+        Price: 500
+      - Item: C_Head_Item_23869
+        Price: 500
+      - Item: C_Head_Item_23870
+        Price: 500
+
+      - Item: Blinking_Eyes
+        Price: 500
+      - Item: C_Head_Item_44495
+        Price: 500
+      - Item: C_Head_Item_44447
+        Price: 500
+      - Item: C_Blinking_Eyes_Cocktai_BU
+        Price: 500
+      - Item: C_Blink_Eyes_Golden
+        Price: 500
+      - Item: C_Head_Item_44602
+        Price: 500
+      - Item: C_Head_Item_44426
+        Price: 500
+      - Item: C_Head_Item_23846
+        Price: 500
+      - Item: C_Head_Item_44487
+        Price: 500
+      - Item: C_Head_Item_44346
+        Price: 500
+      - Item: C_Head_Item_24088
+        Price: 500
+      - Item: C_Head_Item_44244
+        Price: 500
+      - Item: C_Head_Item_23796
+        Price: 500
+      - Item: C_Head_Item_23803
+        Price: 500
+      - Item: C_Head_Item_23804
+        Price: 500
+      - Item: C_Head_Item_23805
+        Price: 500
+      - Item: C_Head_Item_23806
+        Price: 500
+      - Item: C_Head_Item_23807
+        Price: 500
+      - Item: C_Head_Item_23808
+        Price: 500
+      - Item: C_Head_Item_23809
+        Price: 500
+      - Item: C_ManyStars_TW
+        Price: 500
+      - Item: C_Head_Item_44103
+        Price: 500
+      - Item: C_Head_Item_44137
+        Price: 500
+      - Item: C_Head_Item_44222
+        Price: 500
+      - Item: C_Head_Item_24098
+        Price: 500
+      - Item: C_Antique_Pipe_
+        Price: 500
+      - Item: C_Head_Item_22567
+        Price: 500
+      - Item: C_Head_Item_44348
+        Price: 500
+      - Item: C_Head_Item_44598
+        Price: 500
+      - Item: C_Head_Item_44322
+        Price: 500
+      - Item: C_Head_Item_44340
+        Price: 500
+      - Item: C_Exploding_Wave_Red
+        Price: 500
+      - Item: C_Head_Item_44415
+        Price: 500
+      - Item: C_Head_Item_44312
+        Price: 500
+      - Item: C_Head_Item_44242
+        Price: 500
+      - Item: C_Head_Item_44463
+        Price: 500
+      - Item: C_Head_Item_44432
+        Price: 500
+      - Item: C_Head_Item_44596
+        Price: 500
+      - Item: C_Guardian_Helm
+        Price: 500
+      - Item: C_Head_Item_22905
+        Price: 500
+      - Item: C_Head_Item_44597
+        Price: 500
+      - Item: C_Head_Item_44510
+        Price: 500
+      - Item: C_Head_Item_44513
+        Price: 500
+      - Item: C_Rabbit_Head_Dress
+        Price: 500
+      - Item: C_Head_Item_44571
+        Price: 500
+      - Item: C_Head_Item_23948
+        Price: 500
+      - Item: C_Cor_Core_Headset
+        Price: 500
+      - Item: C_Demons_Familiar
+        Price: 500
+      - Item: C_Baby_Penguin
+        Price: 500
+      - Item: C_Head_Item_44484
+        Price: 1000
+      - Item: C_Head_Item_24069
+        Price: 1000
+      - Item: C_Head_Item_44516
+        Price: 1000
+      - Item: C_Cons_Of_Poison
+        Price: 1000
+      - Item: C_Head_Item_44442
+        Price: 1000
+      - Item: C_Head_Item_44436
+        Price: 1000
+  #頭飾
+  - Tab: Rental
+    Items:
+      - Item: GoodnEvil_Circlet_DK
+        Price: 3500
+      - Item: GoodnEvil_Circlet_IG
+        Price: 3500
+      - Item: GoodnEvil_Circlet_AG
+        Price: 3500
+      - Item: GoodnEvil_Circlet_EM
+        Price: 3500
+      - Item: GoodnEvil_Circlet_CD
+        Price: 3500
+      - Item: GoodnEvil_Circlet_IQ
+        Price: 3500
+      - Item: GoodnEvil_Circlet_MT
+        Price: 3500
+      - Item: GoodnEvil_Circlet_BO
+        Price: 3500
+      - Item: GoodnEvil_Circlet_SHC
+        Price: 3500
+      - Item: GoodnEvil_Circlet_ABC
+        Price: 3500
+      - Item: GoodnEvil_Circlet_WH
+        Price: 3500
+      - Item: GoodnEvil_Circlet_TR
+        Price: 3500
+      - Item: GoodnEvil_Circlet_SS
+        Price: 3500
+      - Item: GoodnEvil_Circlet_SKE
+        Price: 3500
+      - Item: GoodnEvil_Circlet_SOA
+        Price: 3500
+      - Item: GoodnEvil_Circlet_HN
+        Price: 3500
+      - Item: GoodnEvil_Circlet_SH
+        Price: 3500
+      - Item: GoodnEvil_Circlet_NW
+        Price: 3500
+      - Item: GoodnEvil_Circlet_NW2
+        Price: 3500
+      - Item: GoodnEvil_Circlet_NW3
+        Price: 3500
+      - Item: GoodnEvil_Circlet_NW4
+        Price: 3500
+      - Item: GoodnEvil_Circlet_NW5
+        Price: 3500
+
+  #武器
+  - Tab: Permanent
+    Items:
+      - Item: Devil_Cursed_Sword
+        Price: 3500
+      - Item: Guardian_Saber
+        Price: 3500
+      - Item: Blood_Rapier
+        Price: 3500
+      - Item: Victory_Sword
+        Price: 3500
+      - Item: Devil_Guardian_Sword
+        Price: 3500
+      - Item: Underworld_Knife
+        Price: 3500
+      - Item: Holy_Light_Dagger
+        Price: 3500
+      - Item: Holy_Raise_Spear
+        Price: 3500
+      - Item: Sealed_Bible
+        Price: 3500
+      - Item: Darkness_Tablet
+        Price: 3500
+      - Item: Orign_Of_Life
+        Price: 3500
+      - Item: Doom_Bible
+        Price: 3500
+      - Item: Blessed_Bible
+        Price: 3500
+      - Item: Saint_Bringer
+        Price: 3500
+      - Item: Soul_Harvest
+        Price: 3500
+      - Item: Soul_Liberator
+        Price: 3500
+      - Item: Darkness_Foxtail_Model
+        Price: 3500
+      - Item: Lightforce_Foxtail_Wand
+        Price: 3500
+      - Item: Demonic_Claw
+        Price: 3500
+      - Item: Crime_Violine
+        Price: 3500
+      - Item: Light_Power_Harp
+        Price: 3500
+      - Item: Crime_Whip
+        Price: 3500
+      - Item: Light_Power_Spark
+        Price: 3500
+      - Item: Punish_Hall
+        Price: 3500
+      - Item: Execution_Great_Sword
+        Price: 3500
+      - Item: The_Reaper
+        Price: 3500
+      - Item: Shining_Light_Katar
+        Price: 3500
+      - Item: Divine_Buster
+        Price: 3500
+      - Item: Luppiter_Spear
+        Price: 3500
+      - Item: Devil_Wing_Staff
+        Price: 3500
+      - Item: Destiny_Staff
+        Price: 3500
+      - Item: Devil_Claw
+        Price: 3500
+      - Item: Humma_Brilliance
+        Price: 3500
+      - Item: Angel_Wing_Bow
+        Price: 3500
+      - Item: Dark_Angel_Ray_Bow
+        Price: 3500
+      - Item: Devils_Bullet
+        Price: 3500
+      - Item: Devil_Hunter
+        Price: 3500
+      - Item: Screaming_Rifle
+        Price: 3500
+      - Item: Last_Dawn
+        Price: 3500
+      - Item: Outlaw_Cursed_Shotgun
+        Price: 3500
+      - Item: Road_Of_Glory
+        Price: 3500
+      - Item: RG_5649
+        Price: 3500
+      - Item: Lighting_Splatter
+        Price: 3500
+      - Item: Devil_L_Launcher
+        Price: 3500
+      - Item: Justice_Bomber
+        Price: 3500
+      #英雄武器LT
+      - Item: Saint_Hall_LT
+        Price: 1500
+      - Item: Undine_Spear_K_LT
+        Price: 1500
+      - Item: Demon_Hunting_Bible_LT
+        Price: 1500
+      - Item: Light_Blade_LT
+        Price: 1500
+      - Item: Magic_Sword_LT
+        Price: 1500
+      - Item: Fatalist_LT
+        Price: 1500
+      - Item: Iron_Staff_LT
+        Price: 1500
+      - Item: Blue_Crystal_Staff_LT
+        Price: 1500
+      - Item: Shadow_Staff_K_LT
+        Price: 1500
+      - Item: Freezing_Rod_LT
+        Price: 1500
+      - Item: Iron_Nail_K_LT
+        Price: 1500
+      - Item: Ray_Knuckle_LT
+        Price: 1500
+      - Item: Sword_Of_Bluefire_LT
+        Price: 1500
+      - Item: Slate_Sword_LT
+        Price: 1500
+      - Item: Royal_Bow_K_LT
+        Price: 1500
+      - Item: Scalet_Dragon_L_Bow_LT
+        Price: 1500
+      - Item: Trumpet_Shell_K_LT
+        Price: 1500
+      - Item: Barb_Wire_K_LT
+        Price: 1500
+      - Item: Narcis_Bow_LT
+        Price: 1500
+      - Item: Avenger_LT
+        Price: 1500
+      - Item: Meteor_Striker_LT
+        Price: 1500
+      - Item: Blade_Katar_LT
+        Price: 1500
+      - Item: Shiver_Katar_K_LT
+        Price: 1500
+      - Item: Dragonic_Slayer_LT
+        Price: 1500
+      - Item: Oriental_Sword_LT
+        Price: 1500
+      - Item: Humma_Clear_LT
+        Price: 1500
+      - Item: Fog_Dew_Sword_LT
+        Price: 1500
+      - Item: Crimson_Rose_LT
+        Price: 1500
+      - Item: Master_Soul_Rifle_LT
+        Price: 1500
+      - Item: Demon_S_Shot_LT
+        Price: 1500
+      - Item: The_Black_Gatling_LT
+        Price: 1500
+      - Item: Golden_L_Launcher_LT
+        Price: 1500
+      - Item: MeawFoxtail_LT
+        Price: 1500
+      - Item: OneSkyOneSun_LT
+        Price: 1500
+      - Item: SoulWeight_LT
+        Price: 1500
+      - Item: Freedom_Stick_LT
+        Price: 1500
+      - Item: Blessed_Knife_LT
+        Price: 1500
+
+  #防具
+  - Tab: Scrolls
+    Items:
+      - Item: Greed_Clip
+        Price: 150
+      - Item: FateSin_Boots_CD
+        Price: 3500
+      - Item: FateSin_Boots_IQ
+        Price: 3500
+      - Item: FateSin_Boots_SOA
+        Price: 3500
+      - Item: FateSin_Boots_BO
+        Price: 3500
+      - Item: FateSin_Boots_DK
+        Price: 3500
+      - Item: FateSin_Boots_SH
+        Price: 3500
+      - Item: FateSin_Boots_SKE
+        Price: 3500
+      - Item: FateSin_Boots_WH
+        Price: 3500
+      - Item: FateSin_Boots_EM
+        Price: 3500
+      - Item: FateSin_Boots_MT
+        Price: 3500
+      - Item: FateSin_Boots_SHC
+        Price: 3500
+      - Item: FateSin_Boots_SS
+        Price: 3500
+      - Item: FateSin_Boots_ABC
+        Price: 3500
+      - Item: FateSin_Boots_TR
+        Price: 3500
+      - Item: FateSin_Boots_HN
+        Price: 3500
+      - Item: FateSin_Boots_IG
+        Price: 3500
+      - Item: FateSin_Boots_AG
+        Price: 3500
+      - Item: FateSin_Boots_NW
+        Price: 3500
+
+  #消耗品
+  - Tab: Consumables
+    Items:
+      - Item: Upg_Box1
+        Price: 20
+      - Item: Upg_Box2
+        Price: 20
+      - Item: Upg_Box3
+        Price: 20
+      - Item: Upg_Box4
+        Price: 20
+      - Item: Upg_Box5
+        Price: 20
+      - Item: Upg_Box6
+        Price: 20
+      - Item: Upg_Box7
+        Price: 20
+
+      - Item: Regeneration_Box10
+        Price: 10
+      - Item: Str_Dish_Box
+        Price: 5
+      - Item: Agi_Dish_Box
+        Price: 5
+      - Item: Int_Dish_Box
+        Price: 5
+      - Item: Dex_Dish_Box
+        Price: 5
+      - Item: Luk_Dish_Box
+        Price: 5
+      - Item: Vit_Dish_Box
+        Price: 5
+      - Item: Mental_Potion20_Box
+        Price: 10
+      - Item: Mental_Potion50_Box
+        Price: 20
+      - Item: Tyr's_Blessing20_Box
+        Price: 10
+      - Item: Tyr's_Blessing50_Box
+        Price: 20
+      - Item: Abrasive_Box5
+        Price: 5
+      - Item: Abrasive_Box10
+        Price: 8
+      - Item: Glass_Of_Illusion_Box5
+        Price: 5
+      - Item: Glass_Of_Illusion_Box10
+        Price: 8
+      - Item: CP_Weapon_Scroll_Box10
+        Price: 3
+
+  #其他
+  - Tab: Other
+    Items:
+      - Item: Item_Hateffect_93028
+        Price: 6000
+      - Item: Unknown_Item_93022
+        Price: 6000
+      - Item: MAgic_Star_Stone
+        Price: 10000
+      - Item: Robot_Heart_TW
+        Price: 10000
+      - Item: Special_Jawai
+        Price: 10000
+      - Item: 2023Seppay_07
+        Price: 10000
+      - Item: 2023Seppay_08
+        Price: 10000
+      - Item: Crimson_M_Petal
+        Price: 10000
+      - Item: Twisted_Love_TW
+        Price: 10000
+      - Item: C_Flowerpot_Mask
+        Price: 3000
+      - Item: Convex_Mirror_Box
+        Price: 10
+      - Item: Token_Of_Siegfried_Box
+        Price: 10
+      - Item: Bubble_Gum_Box
+        Price: 10
+      - Item: Max_Weight_Up_Scroll
+        Price: 20
+      - Item: Inventory_Ex
+        Price: 20
+      - Item: Blacksmith_Blessing
+        Price: 30
+      - Item: enriched_ethernium
+        Price: 3
+      - Item: hd_ethernium
+        Price: 5
+      - Item: HD_Etel_Carnium
+        Price: 7
+      - Item: enriched_etherdeocon
+        Price: 3
+      - Item: hd_etherdeocon
+        Price: 5
+      - Item: HD_Etel_Bradium
+        Price: 7
+      - Item: Enriched_Elunium_Box
+        Price: 20
+      - Item: Enriched_Oridecon_Box
+        Price: 20
+      - Item: HD_Oridecon_Box5
+        Price: 20
+      - Item: HD_Oridecon_Box10
+        Price: 40
+      - Item: HD_Eluniumn_Box5
+        Price: 20
+      - Item: HD_Eluniumn_Box10
+        Price: 40
+      - Item: HD_Bradium_5_Box
+        Price: 20
+      - Item: HD_Bradium_10_Box
+        Price: 40
+      - Item: HD_Carnium_5_Box
+        Price: 20
+      - Item: HD_Carnium_10_Box
+        Price: 40
+      - Item: Garderie_Fruit_Box4
+        Price: 12
+      - Item: Silvervine_Fruit_Box10
+        Price: 25
+      - Item: Garderie_Fruit_Box40
+        Price: 80

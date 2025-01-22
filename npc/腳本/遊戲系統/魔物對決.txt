@@ -1,0 +1,216 @@
+﻿trinity,62,127,4	script	魔物對決	10054,{
+	mes "[ 魔物對決 ]";
+	mes "- 活動狀態 : "+(getvariableofnpc(.GameState,"Mo_Start")==2?"準備中^000000 ":getvariableofnpc(.GameState,"Mo_Start")==3?"已開始^000000 ":"^888888尚未開始^000000");
+	mes "- 地圖人數 : "+getmapusers("gon_test")+"^000000";
+	mes "- 目前時間 : "+ gettimestr("%H:%M:%S",20)+"^000000";
+	mes "- 開放時間 : ";
+	mes "- 遊戲獎勵 : "+mesitemlink(61052)+" 1 個";
+	mes "- 遊戲獎勵 : "+mesitemlink(61007)+" 1 個";
+	next;
+
+	if(getgmlevel()>0) {
+	switch(select("- 前往魔物對決現場","- 倒數遊戲","- 開啟遊戲","- 關閉遊戲")){
+
+		case 1:
+		warp "gon_test",57,95;
+		close;
+
+		case 2:
+		donpcevent "Mo_Start::OnStandBy";
+		close;
+
+		case 3:
+		donpcevent "Mo_Start::OnStart";
+		close;
+
+		case 4:
+		donpcevent "Mo_Start::OnTheEnd";
+		close;
+		}
+	}
+
+
+	if(select("- 前往現場","- 取消對話") ==2)close;
+	warp "gon_test",57,95;
+
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > 0){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "小遊戲禁止多開!";
+		mes "檢測到小遊戲地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "trinity",50,120;
+		end; }
+
+	end;
+
+
+OnInit:
+	waitingroom "魔物對決",0;
+	end;
+}
+
+
+-	script	Mo_Start	-1,{
+//gon_test,0,0,0	script	Mo_Start	111,{
+	function mobid;
+end;
+
+OnClock1337:
+OnClock1817:
+OnClock2137:
+	announce "[ 魔物對決 ] 距離遊戲開始還剩 3 分鐘 想要參與的玩家趕快到 娛樂區",0;
+	end;
+
+OnClock1340:
+OnClock1820:
+OnClock2140:
+OnStandBy:
+	set .GameState,1;
+	set $Mob_PK,$Mob_PK+1;
+	sleep 6000;
+	donpcevent strnpcinfo(0)+"::OnStart";
+	end;
+
+OnStart:
+	//debugmes "01";
+	set .GameState,2;
+	killmonsterall "gon_test";
+	if(.i >= .Round){
+		donpcevent strnpcinfo(0)+"::OnTheEnd";
+		end;
+	}
+	setwall "gon_test",65,82,10,0,0,"Wall_A";
+	setwall "gon_test",50,82,10,0,0,"Wall_B";
+	set .MobGID_A,bg_monster(0,"gon_test",65,86,"--ja--",set(.Mob_A_ID,mobid()),strnpcinfo(0)+"::OnMobDead");
+	set .MobGID_B,bg_monster(0,"gon_test",50,86,"--ja--",set(.Mob_B_ID,mobid()),strnpcinfo(0)+"::OnMobDead");
+	setunitdata .MobGID_A,UMOB_AI,1;
+	enablenpc "Bet_A";
+	enablenpc "Bet_B";
+	enablenpc "#A";
+	enablenpc "#B";
+	setnpcdisplay("Bet_A",getmonsterinfo(.Mob_A_ID,0),.Mob_A_ID);
+	setnpcdisplay("Bet_B",getmonsterinfo(.Mob_B_ID,0),.Mob_B_ID);
+	delwaitingroom "Bet_A";
+	delwaitingroom "Bet_B";
+	donpcevent "Bet_A::OnCreateRoom";
+	donpcevent "Bet_B::OnCreateRoom";
+	mapannounce "gon_test","[ 第"+$Mob_PK+"輪 ] 第 "+set(.i,.i+1)+" 場 "+getmonsterinfo(.Mob_A_ID,0)+" vs "+getmonsterinfo(.Mob_B_ID,0)+" 請玩家在 "+(.BatTime/1000)+" 秒內下注",bc_map,0xFFFFB9;
+	sleep .BatTime; // 下注時間
+	disablenpc "Bet_A";
+	disablenpc "Bet_B";
+	disablenpc "#A";
+	disablenpc "#B";
+	mapannounce "gon_test","[ 第"+$Mob_PK+"輪 ] 魔物對決下注結束",bc_map,0xFFFFB9;
+	delwall "Wall_A";
+	delwall "Wall_B";
+	end;
+
+OnTheEnd:
+	debugmes "333";
+	set .i,0;
+	set .GameState,0;
+	//deletearray $@mob_id;
+	setarray $@mob_id,1634,1635,1636,1637,1638,1639;
+	killmonsterall "gon_test";
+	disablenpc "Bet_A";
+	disablenpc "Bet_B";
+	mapannounce "gon_test","[ 第"+$Mob_PK+"輪 ] 本次活動已結束 下次記得再參加",bc_map,0xFFFFB9;
+	sleep 3000;
+	mapwarp "gon_test","trinity",50,120;
+	end;
+
+
+OnMobDead:
+	sleep 1;
+	if(rid2name(.MobGID_A)=="(null)") set .Winner,.Mob_B_ID; else set .Winner,.Mob_A_ID;
+	mapannounce "gon_test","[ 第"+$Mob_PK+"輪 ] "+getmonsterinfo(.Winner,0)+" 獲勝 請下注他的 10 秒內領取 [ 獲勝寶箱 ] ",bc_map,0xFFFFB9;
+	if(.Winner) enablenpc "獲勝寶箱";
+	sleep .WaitTime; // 領取獎勵時間
+	set .Winner,0;
+	disablenpc "獲勝寶箱";
+	donpcevent strnpcinfo(0)+"::OnStart";
+	end;
+
+
+
+function mobid	{
+	while(1) if($@mob_id[set(.@i,rand(getarraysize($@mob_id)))] != 0) break;
+	set .@mob,getelementofarray($@mob_id,.@i);
+	set getelementofarray($@mob_id,.@i),0;
+	return .@mob;
+	end;
+}
+
+OnInit:
+// ======================================================================
+	setarray $@mob_id,1634,1635,1636,1637,1638,1639;
+	set .Round,10; // 3 回合
+	set .BatTime,10000;  // 下注時間 10 秒
+	set .WaitTime,20000; // 領獎時間
+	end;
+// ======================================================================
+}
+
+
+gon_test,64,94,5	script	Bet_A	100,{
+	if(getvariableofnpc(.GameState,"Mo_Start")) dispbottom "[ 魔物對決 ] 您下注於 "+getmonsterinfo(set(@mobid,getvariableofnpc(.Mob_A_ID,"Mo_Start")+0),0);
+	end;
+OnCreateRoom:
+	waitingroom getmonsterinfo(getvariableofnpc(.Mob_A_ID,"Mo_Start"),0),0;
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	end;
+}
+
+
+gon_test,50,94,4	script	Bet_B	100,{
+	if(getvariableofnpc(.GameState,"Mo_Start")) dispbottom "[ 魔物對決 ] 您下注於 "+getmonsterinfo(set(@mobid,getvariableofnpc(.Mob_B_ID,"Mo_Start")+0),0);
+	end;
+OnCreateRoom:
+	waitingroom getmonsterinfo(getvariableofnpc(.Mob_B_ID,"Mo_Start"),0),0;
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	end;
+}
+
+gon_test,57,103,5	script	獲勝寶箱	10005,{
+	if(@mobid == getvariableofnpc(.Winner,"Mo_Start") && @mobid && getvariableofnpc(.GameState,"Mo_Start")){
+
+	.@a = rand(1,1);
+	getitem 61007,2;
+	getitem 61052,.@a;
+
+	set @mobid,0;
+	dispbottom "[ 魔物對決 ] 恭喜您下對注囉！獲得 "+itemlink(61052)+" "+.@a+" 個 !！";
+	end;
+	}
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	waitingroom strnpcinfo(0),0;
+	end;
+}
+
+gon_test,64,94,5	duplicate(Bet_A)	#A	111
+gon_test,50,94,4	duplicate(Bet_B)	#B	111
+
+gon_test	mapflag	monster_noteleport
+gon_test	mapflag	nomobloot
+gon_test	mapflag	nomvploot
+
+
+
+

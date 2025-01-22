@@ -1,0 +1,483 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Package Database
+###########################################################################
+#
+# Item Package Settings
+#
+###########################################################################
+# - Item                       Item that triggers Item Package Selection.
+#   Groups:                    Groups that can be selected.
+#     - Group                  Group ID that can be selected (has to match the client's LUA file).
+#       Items:                 Items that will be given out.
+#         - Item               Item that will be given out.
+#           Amount             Amount of the item. (Default: 1)
+#                              To remove an item via import set amount to 0.
+#           RentalHours        Rental time in hours. (Default: 0)
+#           Refine             Refine level of the item. (Default: 0)
+#           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
+# - 觸發項目包選擇的項目項目。
+# Groups：可以選擇的組。
+#     - Group 可以選擇的組組 ID（必須與客戶端的 LUA 文件相匹配）。
+# Items：將被分發的物品。
+# - Item 將給出的項目。
+# Amount 物品的數量。 （默認值：1）
+# 要通過導入刪除項目，將 amount 設置為 0。
+# RentalHours 以小時為單位的出租時間。 （默認值：0）
+# Refine 項目的精煉等級。 （默認值：0）
+# RandomOptionGroup 將應用的隨機選項組的名稱。 （默認值：無）
+###########################################################################
+
+Header:
+  Type: ITEM_PACKAGE_DB
+  Version: 1
+
+Body:
+  - Item: Select_Example1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Cotton_Shirt
+            Refine: 7
+          - Item: Shoes
+            Refine: 5
+          - Item: Muffler
+            Refine: 3
+          - Item: Event_Pierrot_Nose
+            RentalHours: 24
+      - Group: 1
+        Items:
+          - Item: Red_Potion
+            Amount: 100
+          - Item: Orange_Potion
+            Amount: 50
+          - Item: White_Potion
+            Amount: 10
+
+#影子M職業自選箱
+  - Item: Shadow_M_Box
+    Groups:
+      - Group: 3
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_DK_Armor
+            Amount: 1
+          - Item: S_DK_Shoes
+            Amount: 1
+          - Item: S_DK_Earring
+            Amount: 1
+          - Item: S_DK_Pendant
+            Amount: 1
+      - Group: 4
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_IG_Armor
+            Amount: 1
+          - Item: S_IG_Shoes
+            Amount: 1
+          - Item: S_IG_Earring
+            Amount: 1
+          - Item: S_IG_Pendant
+            Amount: 1
+      - Group: 5
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_SHC_Armor
+            Amount: 1
+          - Item: S_SHC_Shoes
+            Amount: 1
+          - Item: S_SHC_Earring
+            Amount: 1
+          - Item: S_SHC_Pendant
+            Amount: 1
+      - Group: 6
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_ABC_Armor
+            Amount: 1
+          - Item: S_ABC_Shoes
+            Amount: 1
+          - Item: S_ABC_Earring
+            Amount: 1
+          - Item: S_ABC_Pendant
+            Amount: 1
+      - Group: 7
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_CD_Armor
+            Amount: 1
+          - Item: S_CD_Shoes
+            Amount: 1
+          - Item: S_CD_Earring
+            Amount: 1
+          - Item: S_CD_Pendant
+            Amount: 1
+      - Group: 8
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_IQ_Armor
+            Amount: 1
+          - Item: S_IQ_Shoes
+            Amount: 1
+          - Item: S_IQ_Earring
+            Amount: 1
+          - Item: S_IQ_Pendant
+            Amount: 1
+      - Group: 9
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_MT_Armor
+            Amount: 1
+          - Item: S_MT_Shoes
+            Amount: 1
+          - Item: S_MT_Earring
+            Amount: 1
+          - Item: S_MT_Pendant
+            Amount: 1
+      - Group: 10
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_BO_Armor
+            Amount: 1
+          - Item: S_BO_Shoes
+            Amount: 1
+          - Item: S_BO_Earring
+            Amount: 1
+          - Item: S_BO_Pendant
+            Amount: 1
+      - Group: 11
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_WH_Armor
+            Amount: 1
+          - Item: S_WH_Shoes
+            Amount: 1
+          - Item: S_WH_Earring
+            Amount: 1
+          - Item: S_WH_Pendant
+            Amount: 1
+      - Group: 12
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_TR_Armor
+            Amount: 1
+          - Item: S_TR_Shoes
+            Amount: 1
+          - Item: S_TR_Earring
+            Amount: 1
+          - Item: S_TR_Pendant
+            Amount: 1
+      - Group: 13
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_AG_Armor
+            Amount: 1
+          - Item: S_AG_Shoes
+            Amount: 1
+          - Item: S_AG_Earring
+            Amount: 1
+          - Item: S_AG_Pendant
+            Amount: 1
+      - Group: 14
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_EM_Armor
+            Amount: 1
+          - Item: S_EM_Shoes
+            Amount: 1
+          - Item: S_EM_Earring
+            Amount: 1
+          - Item: S_EM_Pendant
+            Amount: 1
+      - Group: 15
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_NW_Armor
+            Amount: 1
+          - Item: S_NW_Shoes
+            Amount: 1
+          - Item: S_NW_Earring
+            Amount: 1
+          - Item: S_NW_Pendant
+            Amount: 1
+      - Group: 16
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_SH_Armor
+            Amount: 1
+          - Item: S_SH_Shoes
+            Amount: 1
+          - Item: S_SH_Earring
+            Amount: 1
+          - Item: S_SH_Pendant
+            Amount: 1
+      - Group: 17
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_SS_Armor
+            Amount: 1
+          - Item: S_SS_Shoes
+            Amount: 1
+          - Item: S_SS_Earring
+            Amount: 1
+          - Item: S_SS_Pendant
+            Amount: 1
+      - Group: 18
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_SKE_Armor
+            Amount: 1
+          - Item: S_SKE_Shoes
+            Amount: 1
+          - Item: S_SKE_Earring
+            Amount: 1
+          - Item: S_SKE_Pendant
+            Amount: 1
+      - Group: 19
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_SOA_Armor
+            Amount: 1
+          - Item: S_SOA_Shoes
+            Amount: 1
+          - Item: S_SOA_Earring
+            Amount: 1
+          - Item: S_SOA_Pendant
+            Amount: 1
+      - Group: 20
+        Items:
+          - Item: S_Master_Weapon
+            Amount: 1
+          - Item: S_Master_Shield
+            Amount: 1
+          - Item: S_HN_Armor
+            Amount: 1
+          - Item: S_HN_Shoes
+            Amount: 1
+          - Item: S_HN_Earring
+            Amount: 1
+          - Item: S_HN_Pendant
+            Amount: 1
+
+#6000禮包
+  - Item: Unknown_Item_80074
+    Groups:
+      - Group: 21
+        Items:
+          - Item: Advanced_Weapon_11Up
+            Amount: 1
+          - Item: Advanced_Armor_11Up
+            Amount: 1
+
+
+#10000禮包
+  - Item: Unknown_Item_80075
+    Groups:
+      - Group: 23
+        Items:
+          - Item: Etel_Emperium_
+            Amount: 20
+          - Item: Advanced_Weapon_15Up
+            Amount: 1
+          - Item: Advanced_Armor_15Up
+            Amount: 1
+          - Item: Golden_Seal_Card
+            Amount: 1
+          - Item: Unknown_Item_80042
+            Amount: 1
+      - Group: 24
+        Items:
+          - Item: Etel_Emperium_
+            Amount: 20
+          - Item: Advanced_Weapon_15Up
+            Amount: 1
+          - Item: Advanced_Armor_15Up
+            Amount: 1
+          - Item: Golden_Seal_Card
+            Amount: 1
+          - Item: C_Head_Item_marin_2
+            Amount: 1
+
+#102102超時空結晶裝備寶箱
+  - Item: Unknown_Item_102102
+    Groups:
+      - Group: 101
+        Items:
+          - Item: WM_Job_Pick
+            Amount: 1
+      - Group: 102
+        Items:
+          - Item: Twin_Dragonic_Ring
+            Amount: 1
+      - Group: 103
+        Items:
+          - Item: Time_Jewel_Acc
+            Amount: 1
+      - Group: 104
+        Items:
+          - Item: Firm_Faith_Ring
+            Amount: 1
+      - Group: 105
+        Items:
+          - Item: RoyalGard_Seal_Ring
+            Amount: 1
+      - Group: 106
+        Items:
+          - Item: Mob_P_Crystal_Ring
+            Amount: 1
+      - Group: 107
+        Items:
+          - Item: Time_Thief_Earring
+            Amount: 1
+      - Group: 108
+        Items:
+          - Item: Curse_Magic_Ring
+            Amount: 1
+      - Group: 109
+        Items:
+          - Item: Old_Cart_Acc
+            Amount: 1
+      - Group: 110
+        Items:
+          - Item: LightOfCardinal
+            Amount: 1
+      - Group: 111
+        Items:
+          - Item: Armor_Drive_Wheel
+            Amount: 1
+      - Group: 112
+        Items:
+          - Item: WindHawk_Snip_Ring
+            Amount: 1
+
+
+#喵星人自選禮盒
+  - Item: Unknown_Item_81022
+    Groups:
+      - Group: 113
+        Items:
+          - Item: Jingle_Meow_EGG
+            Amount: 1
+      - Group: 114
+        Items:
+          - Item: Special_Meow_EGG
+            Amount: 1
+      - Group: 115
+        Items:
+          - Item: Pirate_Meow_EGG
+            Amount: 1
+      - Group: 116
+        Items:
+          - Item: Ninja_Meow_EGG
+            Amount: 1
+      - Group: 117
+        Items:
+          - Item: Machine_Meow_EGG
+            Amount: 1
+      - Group: 118
+        Items:
+          - Item: Puppet_Meow_EGG
+            Amount: 1
+      - Group: 119
+        Items:
+          - Item: Princess_Meow_EGG
+            Amount: 1
+      - Group: 120
+        Items:
+          - Item: Lightning_Meow_EGG
+            Amount: 1
+
+#四月寵物自選禮盒
+  - Item: Unknown_Item_81026
+    Groups:
+      - Group: 121
+        Items:
+          - Item: 88_Egg
+            Amount: 1
+      - Group: 122
+        Items:
+          - Item: 89_Egg
+            Amount: 1
+      - Group: 123
+        Items:
+          - Item: 90_Egg
+            Amount: 1
+      - Group: 124
+        Items:
+          - Item: 91_Egg
+            Amount: 1
+      - Group: 125
+        Items:
+          - Item: 92_Egg
+            Amount: 1
+
+
+
+

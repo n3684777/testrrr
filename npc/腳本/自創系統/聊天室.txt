@@ -1,0 +1,172 @@
+//------------------------ 自創傳點
+trinity,109,20,0	warp	trinity01	2,2,prt_fild08,170,372
+prt_fild08,170,378,0	warp	trinity01-2	2,2,trinity,109,25
+
+
+
+
+//------------------------ 指示牌
+trinity,101,33,4	script	自創副本	835,{end;
+OnInit:
+	waitingroom "←自創副本",0;
+	end;
+}
+
+
+
+//------------------------ 露天商店
+
+vdistrict,1,1,4	script	露天商店指示牌	835,{end;
+OnInit:
+	waitingroom "↖商店請對齊牌子↖",0;
+	end;
+}
+
+vdistrict,37,54,4	duplicate(露天商店指示牌)	露天商店指示牌#shop01	835,{end;
+vdistrict,29,54,4	duplicate(露天商店指示牌)	露天商店指示牌#shop02	835,{end;
+vdistrict,21,54,4	duplicate(露天商店指示牌)	露天商店指示牌#shop03	835,{end;
+vdistrict,13,54,4	duplicate(露天商店指示牌)	露天商店指示牌#shop04	835,{end;
+vdistrict,43,56,4	duplicate(露天商店指示牌)	露天商店指示牌#shop05	835,{end;
+vdistrict,43,64,4	duplicate(露天商店指示牌)	露天商店指示牌#shop06	835,{end;
+vdistrict,43,72,4	duplicate(露天商店指示牌)	露天商店指示牌#shop07	835,{end;
+vdistrict,43,80,4	duplicate(露天商店指示牌)	露天商店指示牌#shop08	835,{end;
+
+//------------------------ 
+vdistrict,1,1,4	script	露天商店指示牌#2	835,{end;
+OnInit:
+	waitingroom "↙商店請對齊牌子↙",0;
+	end;
+}
+
+vdistrict,37,45,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop11	835,{end;
+vdistrict,29,45,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop12	835,{end;
+vdistrict,21,45,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop13	835,{end;
+vdistrict,13,45,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop14	835,{end;
+vdistrict,43,43,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop15	835,{end;
+vdistrict,43,35,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop16	835,{end;
+vdistrict,43,27,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop17	835,{end;
+vdistrict,43,19,4	duplicate(露天商店指示牌#2)	露天商店指示牌#shop18	835,{end;
+
+
+
+//------------------------ 官方副本instance
+vdistrict1,37,54,4	script	官方副本指示牌#ins01	835,{end;
+OnInit:
+	waitingroom "↖EP13.1~EP14.3副本↖",0;
+	end;
+}
+vdistrict1,43,56,4	duplicate(官方副本指示牌#ins01)	官方副本指示牌#ins012	835,{end;
+
+
+vdistrict1,29,54,4	script	官方副本指示牌#ins02	835,{end;
+OnInit:
+	waitingroom "↖EP14.3~EP16.1副本",0;
+	end;
+}
+
+
+vdistrict1,21,54,4	script	官方副本指示牌#ins03	835,{end;
+OnInit:
+	waitingroom "↖EP16.2副本",0;
+	end;
+}
+
+
+vdistrict1,37,45,4	script	官方副本指示牌#ins04	835,{end;
+OnInit:
+	waitingroom "↙EP17.1~EP17.2副本",0;
+	end;
+}
+
+
+vdistrict1,29,45,4	script	官方副本指示牌#ins05	835,{end;
+OnInit:
+	waitingroom "↙EP18.1副本",0;
+	end;
+}
+
+
+vdistrict1,21,45,4	script	官方副本指示牌#ins06	835,{end;
+OnInit:
+	waitingroom "↙EP19.1~EP20副本",0;
+	end;
+}
+
+
+vdistrict1,43,64,4	script	官方副本指示牌#ins09	835,{end;
+OnInit:
+	waitingroom "↖EDDA特殊副本",0;
+	end;
+}
+
+
+//------------------------ 裝備製作區equip
+vdistrict1,56,54,4	script	早期裝備附魔	835,{end;
+OnInit:
+	waitingroom "↗早期裝備附魔",0;
+	end;
+}
+
+
+vdistrict1,64,54,4	script	各EP裝備附魔	835,{end;
+OnInit:
+	waitingroom "↗各EP裝備附魔",0;
+	end;
+}
+vdistrict1,72,54,4	duplicate(各EP裝備附魔)	裝備製作區指示牌#equ021	835,{end;
+
+
+vdistrict1,56,45,4	script	官方副本裝備附魔	835,{end;
+OnInit:
+	waitingroom "↘官方副本裝備附魔",0;
+	end;
+}
+vdistrict1,50,43,4	duplicate(官方副本裝備附魔)	官方副本裝備附魔#01	835,{end;
+
+
+vdistrict1,64,45,4	script	地區裝備附魔	835,{end;
+OnInit:
+	waitingroom "↘地區裝備附魔",0;
+	end;
+}
+vdistrict1,72,45,4	duplicate(地區裝備附魔)	地區裝備附魔#01	835,{end;
+
+
+vdistrict1,50,35,4	script	商城轉蛋裝備附魔#equ06	835,{end;
+OnInit:
+	waitingroom "↘商城轉蛋裝備附魔",0;
+	end;
+}
+
+
+vdistrict1,50,27,4	script	裝備附魔大躍進	835,{end;
+OnInit:
+	waitingroom "↘裝備附魔大躍進",0;
+	end;
+}
+vdistrict1,50,19,4	duplicate(裝備附魔大躍進)	裝備附魔大躍進#01	835,{end;
+
+
+vdistrict1,50,64,4	script	活動裝備附魔	835,{end;
+OnInit:
+	waitingroom "↗活動裝備附魔",0;
+	end;
+}
+
+
+
+//城鎮標籤
+prontera	mapflag	town
+//prontera	mapflag	autotrade	//可離線掛店
+//------------------------ 伺服器人數
+//prontera,156,161,3	script	伺服器時間	10256,{end;
+
+//OnInit:
+//	initnpctimer;
+//	OnTimer1000:
+//	stopnpctimer;
+//	showscript (gettime(6)<10?"0"+gettime(6):gettime(6))+"/"+(gettime(5)<10?"0"+gettime(5):gettime(5))+" "+(gettime(3)<10?"0"+gettime(3):gettime(3))+":"+(gettime(2)<10?"0"+gettime(2):gettime(2))+":"+(gettime(1)<10?"0"+gettime(1):gettime(1))+" ";
+//	initnpctimer;
+//	end;
+//}
+

@@ -1,0 +1,335 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#懺悔之墓裝備
+   - Name: 提亞拉#Armor01
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_F_TIARA
+     Items:
+       - Index: 0
+         Item: Sakray_Fury
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 10
+       - Index: 1
+         Item: Sakray_Fury2
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 20
+       - Index: 2
+         Item: Sakray_Regret
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 10
+       - Index: 3
+         Item: Sakray_Regret2
+         Stock: 0
+         Zeny: 150000
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 20
+       - Index: 4
+         Item: Gladius_Aegis_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 5
+         Item: Hasta_Aegis_Box
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 6
+         Item: Poenitentia_Ligula
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 7
+         Item: Poenitentia_Mucro
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 8
+         Item: Poenetentia_Dilacero
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 9
+         Item: Poenitentia_Liber
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 10
+         Item: Poenitentia_Scipio
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 11
+         Item: Poenitentia_Crystallum
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 12
+         Item: Poenitentia_Chorda
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 13
+         Item: Poenitentia_Flagellum
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 14
+         Item: Poenitentia_Clava
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 15
+         Item: Poenitentia_Pendulus
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 16
+         Item: Poenitentia_Ensis
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 17
+         Item: Poenitentia_Manus
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 18
+         Item: Poenitentia_Ascia
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 19
+         Item: Poenitentia_Catapulta
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 20
+         Item: Poenitentia_Termes
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 21
+         Item: Poenitentia_Virga
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 22
+         Item: Poenitentia_Tenon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 23
+         Item: Poenitentia_Nervus
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 24
+         Item: Poenetentia_Attendo
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 25
+         Item: Poenetentia_Vatia
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 26
+         Item: Poenitentia_Orbis
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 27
+         Item: Poenitentia_Sol
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 28
+         Item: Poenitentia_Jana
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 29
+         Item: Poenitentia_Radius
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 30
+         Item: Poenitentia_Ramus
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 31
+         Item: Poenitentia_Planta
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 32
+         Item: Poenitentia_Ferrum
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 33
+         Item: Poenitentia_Foramen
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 34
+         Item: Poenitentia_Penet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 35
+         Item: Poenitentia_Veloci
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 36
+         Item: Poenitentia_Ruina
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 37
+         Item: Poenitentia_Codex
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 38
+         Item: Poenitentia_Caestus
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+       - Index: 39
+         Item: Poenitentia_Ungula
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Mine_As
+             Amount: 700
+

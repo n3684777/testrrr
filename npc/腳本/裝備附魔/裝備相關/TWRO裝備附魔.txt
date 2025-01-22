@@ -1,0 +1,112 @@
+﻿vdistrict1,53,32,6	script	附魔精靈	661,{
+
+	mes "[附魔精靈]";
+	mes "你好呀~";
+	mes "我是負責幫特殊道具附魔的精靈";
+	mes "哪件裝備要附魔呢?";
+	next;
+	switch(select("鎧甲類:頭盔類(中):鞋子類:飾品類")){
+
+	case 1:
+		mes "[附魔精靈]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("時光超越湧現鎧甲-LT:月全蝕魔力外袍-LT:粗暴者龍影鎧甲-LT:深淵湖水咆嘯鎧甲-LT")){
+
+		case 1:
+		close2;
+		item_enchant 10003;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 10004;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 10009;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 10009;
+		end;
+
+		}
+
+	case 2:
+		mes "[附魔精靈]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("熾天使花冠:花園髮圈:柯杜威之耳:烏鴉天狗面具:賭徒之印")){
+
+		case 1:
+		close2;
+		item_enchant 10005;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 10005;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 10005;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 10005;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 10005;
+		end;
+		}
+
+
+	case 3:
+		mes "[附魔精靈]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("時光超越者之靴-LT:無名旅者重靴")){
+
+		case 1:
+		close2;
+		item_enchant 10001;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 10006;
+		end;
+
+		}
+
+
+	case 4:
+		mes "[附魔精靈]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("絕望的連通之環-LT")){
+
+		case 1:
+		close2;
+		item_enchant 10007;
+		end;
+
+		}
+
+	}
+
+OnInit:
+	waitingroom "TWRO裝備附魔",0;
+	end;	
+}
+
+
+
+

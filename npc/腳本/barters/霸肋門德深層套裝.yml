@@ -1,0 +1,353 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#霸肋門德深層裝備
+   - Name: 霸肋門德深層裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_TABLET
+     Items:
+       - Index: 1
+         Item: Flame_E_R_Armor
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Rune
+             Amount: 45
+           - Index: 1
+             Item: Bar_D_Ea_Rune
+             Amount: 45
+           - Index: 2
+             Item: Bar_D_Fl_Essence
+             Amount: 30
+           - Index: 3
+             Item: Bar_D_Ea_Essence
+             Amount: 30
+       - Index: 2
+         Item: Ice_S_R_Suits
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Rune
+             Amount: 45
+           - Index: 1
+             Item: Bar_D_St_Rune
+             Amount: 45
+           - Index: 2
+             Item: Bar_D_Ic_Essence
+             Amount: 30
+           - Index: 3
+             Item: Bar_D_St_Essence
+             Amount: 30
+       - Index: 3
+         Item: Soul_P_R_Robe
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Rune
+             Amount: 45
+           - Index: 1
+             Item: Bar_D_Pu_Rune
+             Amount: 45
+           - Index: 2
+             Item: Bar_D_So_Essence
+             Amount: 30
+           - Index: 3
+             Item: Bar_D_Pu_Essence
+             Amount: 30
+       - Index: 4
+         Item: Corrupt_P_R_Cloth
+         Stock: 0
+         Zeny: 1000000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Rune
+             Amount: 45
+           - Index: 1
+             Item: Bar_D_Po_Rune
+             Amount: 45
+           - Index: 2
+             Item: Bar_D_Co_Essence
+             Amount: 30
+           - Index: 3
+             Item: Bar_D_Po_Essence
+             Amount: 30
+
+#深層符文石兌換
+   - Name: 深層符文石兌換
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_EP17_CLEANER_W
+     Items:
+
+       - Index: 6
+         Item: Bar_D_Fl_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Energy
+             Amount: 10
+       - Index: 7
+         Item: Bar_D_Ea_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Energy
+             Amount: 10
+       - Index: 8
+         Item: Bar_D_Ic_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Energy
+             Amount: 10
+       - Index: 9
+         Item: Bar_D_St_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Energy
+             Amount: 10
+       - Index: 10
+         Item: Bar_D_So_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Energy
+             Amount: 10
+       - Index: 11
+         Item: Bar_D_Pu_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Energy
+             Amount: 10
+       - Index: 12
+         Item: Bar_D_Co_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Energy
+             Amount: 10
+       - Index: 13
+         Item: Bar_D_Po_Crystal
+         Stock: 0
+         Zeny: 30000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Energy
+             Amount: 10
+
+       - Index: 14
+         Item: Bar_D_Fl_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Crystal
+             Amount: 5
+       - Index: 15
+         Item: Bar_D_Ea_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Crystal
+             Amount: 5
+       - Index: 16
+         Item: Bar_D_Ic_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Crystal
+             Amount: 5
+       - Index: 17
+         Item: Bar_D_St_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Crystal
+             Amount: 5
+       - Index: 18
+         Item: Bar_D_So_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Crystal
+             Amount: 5
+       - Index: 19
+         Item: Bar_D_Pu_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Crystal
+             Amount: 5
+       - Index: 20
+         Item: Bar_D_Co_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Crystal
+             Amount: 5
+       - Index: 21
+         Item: Bar_D_Po_Rune
+         Stock: 0
+         Zeny: 50000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Crystal
+             Amount: 5
+
+       - Index: 22
+         Item: Bar_D_Fl_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Crystal
+             Amount: 10
+       - Index: 23
+         Item: Bar_D_Ea_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Crystal
+             Amount: 10
+       - Index: 24
+         Item: Bar_D_Ic_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Crystal
+             Amount: 10
+       - Index: 25
+         Item: Bar_D_St_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Crystal
+             Amount: 10
+       - Index: 26
+         Item: Bar_D_So_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Crystal
+             Amount: 10
+       - Index: 27
+         Item: Bar_D_Pu_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Crystal
+             Amount: 10
+       - Index: 28
+         Item: Bar_D_Co_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Crystal
+             Amount: 10
+       - Index: 29
+         Item: Bar_D_Po_Essence
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Crystal
+             Amount: 10
+
+       - Index: 30
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Fl_Crystal
+             Amount: 1
+       - Index: 31
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ea_Crystal
+             Amount: 1
+       - Index: 32
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Ic_Crystal
+             Amount: 1
+       - Index: 33
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_St_Crystal
+             Amount: 1
+       - Index: 34
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_So_Crystal
+             Amount: 1
+       - Index: 35
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Pu_Crystal
+             Amount: 1
+       - Index: 36
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Co_Crystal
+             Amount: 1
+       - Index: 37
+         Item: Unknown_Item_80083
+         Stock: 0
+         Zeny: 100000
+         RequiredItems:
+           - Index: 0
+             Item: Bar_D_Po_Crystal
+             Amount: 1
+
+

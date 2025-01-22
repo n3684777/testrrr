@@ -1,0 +1,766 @@
+
+
+function	script	BOSS_Map	{
+
+	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu	
+		"波利之王 Mastering",A0,
+                "藍瘋兔 Eclipse",A1,
+                "龍蠅 Dragon Fly",A2,
+                "蛙王 Toad",A3,
+                "幽靈波利 Ghostring",A4,
+                "天使波利 Angeling",A5,
+                "流浪之狼 Vagabond Wolf",A6,
+                "惡魔波利 Deviling",A7,
+                "迦利 Galion",A8,
+                "聖天使波利 Arc Angeling",A9,
+                "行刑者 Executioner",A10,
+                "半龍人 Mutant Dragonoid",A11,
+                "凱美拉 Chimera",A12,
+                "獸牙怪 Ogretooth",A13,
+                "獅鷲獸 Gryphon",A14,
+                "雙子星-S58 Gemini-S58",A15,
+                "鴞裊男爵 Owl Baron",A16,
+                "鴞裊首領 Owl Duke",A17,
+                "弒神者 Mysteltainn",A18,
+                "狂暴月夜貓 Cat o' Nine Tail",A19,
+                "慰勞者 Lady Solace",A20,
+                "迷幻之王 Dark Illusion",A21,
+                "代行刑者 Baroness of Retribution",A22,
+                "安息者 Mistress of Shelter",A23,
+                "弓箭手監護人魔物 Bow Master",A24,
+                "褐方體惡魔 Skeggiold",A25,
+                "狂暴蟻后 Maya Puple",A26,
+                "監視者 Dame of Sentinel",A27,
+                "黑方體惡魔 Skeggiold",A28,
+                "達納托斯的苦惱 Dolor of Thanatos",A29,
+                "達納托斯的悲哀 Maero of Thanatos",A30,
+                "火鳥 Kasa",A31,
+                "劍士監護人魔物 Sword Master",A32,
+                "漂流浪人 Byorgue (BOSS)",A33,
+                "行妖術者 Necromancer",A34,
+                "達納托斯的絕望 Despero of Thanatos",A35,
+                "莫內 Monemos",A36,
+                "三頭龍 Hydrolancer",A37,
+                "火蜥蝪 Salamander",A38,
+                "達納托斯的憎恨 Odium of Thanatos",A39,
+                "神射手 迪文 Shecil",A40,
+                "神工匠 哈沃得 Harword",A41,
+                "十字刺客 艾勒梅斯 Eremes",A42,
+                "神官 瑪嘉雷特 Magaleta",A43,
+                "騎士領主 賽依連 Seyren",A44,
+                "超魔導師 凱特莉娜 Katrinn",A45,
+                "巴基力 蘭特克力斯 Randgris Ghost",A46,
+                "艾斯恩魔女 ZHERLTHSH",A47,
+                "三角狂獅獸 Tendril Lion",A48,
+                "硬石猛瑪 Hardrock Mammoth",A49,
+                "杜尼爾 Duneyrr",A50,
+                "刷尾負鼠 Rata",A51;
+
+
+A0:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+	"波利之王(pay_fild04(10分)",B0,
+	"波利之王(prt_maze03(10分)",B1,
+        "波利之王(xmas_dun01(10分)",B2,
+        "波利之王(yuno_fild04(10分)",B3;
+
+B0:	warp "pay_fild04",0,0;	close;
+B1:	warp "prt_maze03",0,0;	close;
+B2:	warp "xmas_dun01",0,0;	close;
+B3:	warp "yuno_fild04",0,0;	close;
+		
+	
+
+
+A1:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "藍瘋兔(prt_fild02(10分)",B4,
+        "藍瘋兔(prt_maze03(10分)",B5;
+
+
+B4:	warp "prt_fild02",0,0;	close;
+B5:	warp "prt_maze03",0,0;	close;
+
+
+A2:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+      
+        "龍蠅(moc_fild18(10分)",B6;
+ 
+
+B6:	warp "moc_fild18",0,0;	close;
+
+
+
+A3:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "蛙王(cmd_fild03(10分)",B7,
+        "蛙王(gef_fild01(10分)",B8;
+
+
+
+B7:	warp "cmd_fild03",0,0;	close;
+B8:	warp "gef_fild01",0,0;	close;
+
+
+A4:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "幽靈波利(gld_dun04(10分)",B9,
+        "幽靈波利(pay_fild04(10分)",B10,
+        "幽靈波利(prt_maze03(10分)",B11,
+        "幽靈波利(treasure02(10分)",B12;
+
+
+B9:	warp "gld_dun04",0,0;	close;
+B10:	warp "pay_fild04",0,0;	close;
+B11:	warp "prt_maze03",0,0;	close;
+B12:	warp "treasure02",0,0;	close;
+
+
+A5:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "天使波利(pay_fild04(10分)",B13,
+        "天使波利(xmas_dun01(10分)",B14,
+        "天使波利(yuno_fild03(10分)",B15;
+
+
+B13:	warp "pay_fild04",26,165;	close;
+B14:	warp "xmas_dun01",0,0;	close;
+B15:	warp "yuno_fild03",0,0;	close;
+
+
+A6:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "流浪之狼(gld_dun01(10分)",B16,
+       "流浪之狼(prt_maze01(10分)",B18,
+       "流浪之狼(prt_maze03(10分)",B19;
+
+
+B16:	warp "gld_dun01",0,0;	close;
+B18:	warp "prt_maze01",0,0;	close;
+B19:	warp "prt_maze03",0,0;	close;
+
+
+A7:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "惡魔波利 (pay_fild04(10分)",B20,
+       "惡魔波利 (yuno_fild03(10分)",B21;
+
+
+B20:	warp "pay_fild04",0,0;	close;
+B21:	warp "yuno_fild03",0,0;	close;
+
+
+A8:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "迦利(ra_fild01)",B22,
+       "迦利(ra_fild02)",B23,
+       "迦利(ra_fild03)",B24,
+       "迦利(ra_fild04)",B25,
+       "迦利(ra_fild07)",B26,
+       "迦利(ra_fild10)",B27;
+
+
+B22:	warp "ra_fild01",0,0;	close;
+B23:	warp "ra_fild02",0,0;	close;
+B24:	warp "ra_fild03",0,0;	close;
+B25:	warp "ra_fild04",0,0;	close;
+B26:	warp "ra_fild07",0,0;	close;
+B27:	warp "ra_fild10",0,0;	close;
+
+
+
+A9:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+     
+       "聖天使波利(yuno_fild04(10分)",B28;
+
+
+B28:	warp "yuno_fild04",0,0;	close;
+
+
+A10:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+
+       "行刑者(gefenia01(10分)",B31,
+       "行刑者(gefenia02(10分)",B32,
+       "行刑者(gefenia04(10分)",B33,
+       "行刑者(gefenia03(10分)",B34;
+
+
+
+B31:	warp "gefenia01",0,0;	close;
+B32:	warp "gefenia02",0,0;	close;
+B33:	warp "gefenia04",0,0;	close;
+B34:	warp "gefenia03",0,0;	close;
+
+A11:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "半龍人(cmd_fild03(即時)",B35;
+
+
+B35:	warp "cmd_fild03",0,0;	close;
+
+
+
+A12:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       
+       "凱美拉(gl_cas02(10分*3隻)",B37;
+
+
+B37:	warp "gl_cas02",0,0;	close;
+
+
+
+A13:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+
+       "獸牙怪 (gefenia01(10分)",B41,
+       "獸牙怪 (gefenia02(10分)",B40,
+       "獸牙怪 (gefenia03(10分)",B42,
+       "獸牙怪 (gefenia04(10分)",B43,
+       "獸牙怪 (gl_cas02(10分)",B45;
+
+
+
+B41:	warp "gefenia01",0,0;	close;
+B40:	warp "gefenia02",0,0;	close;
+B42:	warp "gefenia03",0,0;	close;
+B43:	warp "gefenia04",0,0;	close;
+B45:	warp "gl_cas02",0,0;	close;
+
+
+A14:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "獅鷲獸(hu_fild02(10分*3隻)",B46;
+
+B46:	warp "hu_fild02",0,0;	close;
+
+
+A15:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "雙子星-S58 (lhz_dun01(10分)",B49,
+       "雙子星-S58 (lhz_dun02(10分*10隻)",B50;
+
+
+B49:	warp "lhz_dun01",0,0;	close;
+B50:	warp "lhz_dun02",0,0;	close;
+
+
+A16:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "鶚梟首領(gl_cas01(即時*6隻)",B51,
+       "鶚梟首領(gld_dun02(即時*3隻)",B52,
+       "鶚梟首領(tha_t04(即時*10隻)",B53,
+       "鶚梟首領(tha_t05(5分*20隻)",B54,
+       "鶚梟首領(tha_t06(5分*40隻)",B55;
+  
+
+B51:	warp "gl_cas01",0,0;	close;
+B52:	warp "gld_dun02",0,0;	close;
+B53:	warp "tha_t04",0,0;	close;
+B54:	warp "tha_t05",0,0;	close;
+B55:	warp "tha_t06",0,0;	close;
+
+
+A17:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "鴞裊首領(c_tower4(即時*30隻)",B56,
+       "鴞裊首領(gl_cas01(即時*20隻)",B57,
+       "鴞裊首領(tha_t04(即時*10隻)",B58,
+       "鴞裊首領(tha_t05(5分*80隻)",B59,
+       "鴞裊首領(tha_t06(5分*40隻)",B60;
+
+
+B56:	warp "c_tower4",0,0;	close;
+B57:	warp "gl_cas01",0,0;	close;
+B58:	warp "tha_t04",0,0;	close;
+B59:	warp "tha_t05",0,0;	close;
+B60:	warp "tha_t06",0,0;	close;
+
+
+
+A18:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+
+       "弒神者 (gl_cas02(10分)",B62,
+       "弒神者 (gl_knt02(10分)",B63,
+       "弒神者 (gefenia01(10分)",B64,
+       "弒神者 (gefenia02(10分)",B65,
+       "弒神者 (gefenia03(10分)",B66,
+       "弒神者 (gefenia04(10分)",B67;
+
+
+
+B62:	warp "gl_cas02",0,0;	close;
+B63:	warp "gl_knt02",0,0;	close;
+B64:	warp "gefenia01",0,0;	close;
+B65:	warp "gefenia02",0,0;	close;
+B66:	warp "gefenia03",0,0;	close;
+B67:	warp "gefenia04",0,0;	close;
+
+
+A19:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "狂暴月夜貓(pay_dun04(10分)",B68,
+       "狂暴月夜貓(gld_dun01(10分*3隻)",B69;
+
+
+B68:	warp "pay_dun04",0,0;	close;
+B69:	warp "gld_dun01",0,0;	close;
+
+
+A20:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "慰勞者(tha_t01(10分*4隻)",B70,
+       "慰勞者(tha_t07(5分*7隻)",B71,
+       "慰勞者(tha_t08(即時*5隻)",B72,
+       "慰勞者(tha_t09(10分*20隻)",B73,
+       "慰勞者(tha_t10(7分*5隻)",B74,
+       "慰勞者(tha_t11(7分*5隻)",B75,
+       "慰勞者(tha_t12(7分*5隻)",B76;
+
+
+
+B70:	warp "tha_t01",0,0;	close;
+B71:	warp "tha_t07",0,0;	close;
+B72:	warp "tha_t08",0,0;	close;
+B73:	warp "tha_t09",0,0;	close;
+B74:	warp "tha_t10",0,0;	close;
+B75:	warp "tha_t011",0,0;	close;
+B76:	warp "tha_t12",0,0;	close;
+
+
+A21:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "迷幻之王(gl_chyard(10分)",B77,
+       "迷幻之王(gld_dun04(10分)",B78;
+
+
+B77:	warp "gl_chyard",0,0;	close;
+B78:	warp "gld_dun04",0,0;	close;
+
+
+A22:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+
+       "代行刑者(tha_t07(即時*15隻)",B80,
+       "代行刑者(tha_t08(5分*20隻)",B81,
+       "代行刑者(tha_t09(7分*5隻)",B82,
+       "代行刑者(tha_t10(10分*20隻)",B83,
+       "代行刑者(tha_t11(7分*5隻)",B84,
+       "代行刑者(tha_t12(7分*5隻)",B85;
+
+
+B80:	warp "tha_t07",0,0;	close;
+B81:	warp "tha_t08",0,0;	close;
+B82:	warp "tha_t09",0,0;	close;
+B83:	warp "tha_t10",0,0;	close;
+B84:	warp "tha_t11",0,0;	close;
+B85:	warp "tha_t12",0,0;	close;
+
+
+A23:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "安息者(tha_t03(10分*4隻)",B86,
+       "安息者(tha_t07(5分*7隻)",B87,
+       "安息者(tha_t08(即時*5隻)",B88,
+       "安息者(tha_t09(7分*5隻)",B89,
+       "安息者(tha_t10(7分*5隻)",B90,
+       "安息者(tha_t11(10分*20隻)",B91,
+       "安息者(tha_t12(7分*5隻)",B92;
+
+B86:	warp "tha_t03",0,0;	close;
+B87:	warp "tha_t07",0,0;	close;
+B88:	warp "tha_t08",0,0;	close;
+B89:	warp "tha_t09",0,0;	close;
+B90:	warp "tha_t10",0,0;	close;
+B91:	warp "tha_t11",0,0;	close;
+B92:	warp "tha_t12",0,0;	close;
+
+
+A24:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "弓箭手監護人魔物(thor_v01)",B93,
+       "弓箭手監護人魔物(thor_v02)",B94,
+       "弓箭手監護人魔物(thor_v03)",B95;
+
+
+B93:	warp "thor_v01",0,0;	close;
+B94:	warp "thor_v02",0,0;	close;
+B95:	warp "thor_v03",0,0;	close;
+
+
+A25:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "褐方體惡魔 (odin_tem01)",B96,
+       "褐方體惡魔 (odin_tem02)",B97,
+       "褐方體惡魔 (odin_tem03)",B98;
+
+
+B96:	warp "odin_tem01",0,0;	close;
+B97:	warp "odin_tem02",0,0;	close;
+B98:	warp "odin_tem03",0,0;	close;
+
+
+A26:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "狂暴蟻后(anthell01(120分)",B99,
+       "狂暴蟻后(gld_dun03(10分*3隻)",B100;
+
+
+B99:	warp "anthell01",0,0;	close;
+B100:	warp "gld_dun03",0,0;	close;
+
+
+A27:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "監視者(tha_t04(10分*4隻)",B101,
+       "監視者(tha_t07(5分*7隻)",B102,
+       "監視者(tha_t08(即時*5隻)",B103,
+       "監視者(tha_t09(7分*5隻)",B104,
+       "監視者(tha_t10(7分*5隻)",B105,
+       "監視者(tha_t11(7分*5隻)",B106,
+       "監視者(tha_t12(10分*13隻)",B107;
+
+
+B101:	warp "tha_t04",0,0;	close;
+B102:	warp "tha_t07",0,0;	close;
+B103:	warp "tha_t08",0,0;	close;
+B104:	warp "tha_t09",0,0;	close;
+B105:	warp "tha_t10",0,0;	close;
+B106:	warp "tha_t11",0,0;	close;
+B107:	warp "tha_t12",0,0;	close;
+
+
+A28:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "黑方體惡魔(odin_tem01)",B108,
+       "黑方體惡魔(odin_tem02)",B109,
+       "黑方體惡魔(odin_tem03)",B110;
+
+
+B108:	warp "odin_tem01",0,0;	close;
+B109:	warp "odin_tem02",0,0;	close;
+B110:	warp "odin_tem03",0,0;	close;
+
+
+A29:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "達納托斯的苦惱 (tha_t05(即時*2隻)",B111,
+       "達納托斯的苦惱 (tha_t09(即時*1隻)",B112;
+
+
+B111:	warp "tha_t05",0,0;	close;
+B112:	warp "tha_t09",0,0;	close;
+
+
+
+A30:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "達納托斯的悲哀(tha_t06(即時*2隻)",B113,
+       "達納托斯的悲哀(tha_t10(即時*1隻)",B114;
+
+
+B113:	warp "tha_t06",0,0;	close;
+B114:	warp "tha_t10",0,0;	close;
+
+
+A31:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "火鳥(thor_v01)",B115,
+       "火鳥(thor_v03)",B116;
+
+
+B115:	warp "thor_v01",0,0;	close;
+B116:	warp "thor_v03",0,0;	close;
+
+
+A32:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "劍士監護人魔物(thor_v01)",B117,
+       "劍士監護人魔物(thor_v02)",B118,
+       "劍士監護人魔物(thor_v03)",B119;
+
+
+B117:	warp "thor_v01",0,0;	close;
+B118:	warp "thor_v02",0,0;	close;
+B119:	warp "thor_v03",0,0;	close;
+
+
+A33:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "漂流浪人(thor_v01)",B120,
+       "漂流浪人(thor_v02)",B121,
+       "漂流浪人(thor_v03)",B122;
+
+
+B120:	warp "thor_v01",0,0;	close;
+B121:	warp "thor_v02",0,0;	close;
+B122:	warp "thor_v03",0,0;	close;
+
+A34:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "行妖術者(abbey02)",B123,
+       "行妖術者(abbey03)",B124;
+
+
+B123:	warp "abbey02",0,0;	close;
+B124:	warp "abbey03",0,0;	close;
+
+A35:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "達納托斯的絕望(tha_t07(即時)",B125,
+       "達納托斯的絕望(tha_t11(即時)",B126;
+
+
+B125:	warp "tha_t07",0,0;	close;
+B126:	warp "tha_t11",0,0;	close;
+
+
+A36:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       
+       "莫內(juperos_02(20分鐘)",B127;
+
+
+
+B127:	warp "juperos_02",0,0;	close;
+
+
+A37:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       
+       "三頭龍(abyss_03) 50分鐘重生x3)",B128;
+
+
+
+B128:	warp "abyss_03",0,0;	close;
+
+
+A38:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "火蜥蝪(thor_v01)",B129,
+       "火蜥蝪(thor_v02)",B130,
+       "火蜥蝪(thor_v03)",B131;
+      
+
+
+B129:	warp "thor_v01",0,0;	close;
+B130:	warp "thor_v02",0,0;	close;
+B131:	warp "thor_v03",0,0;	close;
+
+
+A39:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+        menu
+       "達納托斯的憎恨(tha_t08(即時)",B132;
+      
+B132:	warp "tha_t12",0,0;	close;
+
+
+A40:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "神射手 迪文(lhz_dun03)即時重生)",B134;
+      
+
+
+B134:	warp "lhz_dun03",0,0;	close;
+
+
+A41:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "神工匠 哈沃得(lhz_dun03)即時重生)",B135;
+      
+
+B135:	warp "lhz_dun03",0,0;	close;
+
+
+A42:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "十字刺客 艾勒梅斯(lhz_dun03)即時重生)",B136;
+      
+
+B136:	warp "lhz_dun03",0,0;	close;
+
+
+A43:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "神官 瑪嘉雷特(lhz_dun03)即時重生)",B137;
+      
+B137:	warp "lhz_dun03",0,0;	close;
+
+
+A44:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "騎士領主 賽依連(lhz_dun03)即時重生)",B138;
+      
+
+
+B138:	warp "lhz_dun03",0,0;	close;
+
+A45:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "超魔導師 凱特莉娜(lhz_dun03)即時重生)",B139;
+      
+
+
+B139:	warp "lhz_dun03",0,0;	close;
+
+
+
+A46:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "巴基力 蘭特克力斯(10分鐘x2)",B141;
+        
+B141:	warp "odin_tem03",0,0;	close;
+
+
+A47:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+        "古城地下監獄2F(10分鐘)",B142;
+
+B142:	warp "gl_prison1",0,0;	close;
+
+
+
+A48:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "三角狂獅獸 (spl_fild03(10分*1隻)",B143;
+
+B143:	warp "spl_fild03",0,0;	close;
+
+
+
+A49:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "硬石猛瑪 (man_fild03(10分*1隻)",B144;
+
+B144:	warp "man_fild03",0,0;	close;
+
+
+
+A50:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "杜尼爾 (nyd_dun01(10分*2隻)",B145;
+
+B145:	warp "nyd_dun01",0,0;	close;
+
+
+A51:	mes "[傳送系統]";
+	mes "請選擇你要到達的地方:";
+	next;
+	menu
+       "刷尾負鼠 (nyd_dun01(10分*2隻)",B146;
+
+B146:	warp "nyd_dun01",0,0;	close;
+
+        end;
+}
+
+

@@ -1,0 +1,1807 @@
+
+-	script	掛機設置	-1,{
+end;
+
+// -------------------------------------------------- 設置 --------------------------------------------------
+OnInit:
+	// 禁止使用內掛的地圖列表
+	setarray $@bot_limit_map$[0],"prt_fild01";
+
+	// 允許自動使用道具的列表
+	setarray $@bot_auto_use_item_list[0],12202,12203,12204,12205,12206,12207;
+	
+	// 自動使用道具是否扣除(0不扣除,1扣除)
+	$@bot_auto_use_item_delete = 0;
+	
+	// 自動購買紅藍藥箭矢的道具列表同下方設定
+	
+	// 自動吃紅的ID列表
+	setarray $@bot_auto_item_hp[0], 501,   502,   503;
+	
+	// 自動吃藍的ID列表
+	setarray $@bot_auto_item_sp[0], 504,   505,   506;
+	
+	// 自動購買箭矢的ID列表
+	setarray $@bot_auto_arrow[0], 1750,   1751;
+	
+	// 回城地圖
+	$@Oro_Home_map$ = "prontera";
+
+	// 回城地圖坐標
+	setarray $@Oro_Home_map_xy[0], 155, 100;
+	
+	// 狀態獲得間隔(單位:秒)
+	$@bot_buff_time = 30;
+
+	// 狀態ID
+	setarray $@bot_buff_list[0], SC_BLESSING, SC_INCREASEAGI;
+	setarray $@bot_buff_level[0],         10,             10;
+	
+	// 自動拾取
+	setarray $@bot_loot_type_var[0], 1, 2, 3, 4, 5, 6, 7, 8, 10;
+	setarray $@bot_loot_type_name$[0], "恢復類", "可用類", "材料類", "防具類", "武器類", "卡片類", "寵物蛋類", "寵物裝備", "彈藥類";
+	
+	// 無怪瞬移可設置時間範圍
+	setarray $@bot_nomob_fly_time[0],3, 10;
+	
+	//掛機時顯示的等效ID
+	$@bot_view_id = 1006;
+	
+	// 瞬間移動是否消耗蒼蠅翅膀(1開啟,0關閉)
+	$@bot_fly_wing_enable = 1;
+	
+	// 搜索魔物範圍(1-9)
+	$@bot_search_range = 9;
+	// 最大上限
+	$@bot_search_range_max = 9;
+	
+	// 綁定@指令
+	bindatcmd "autoattack", "E_Oro_Bot::OnBotRun";
+
+	end;
+	
+/*
+OnPCOpenRouletteFilter:
+	processhalt;
+	doevent "E_Oro_Bot::OnBotRun";
+	end;
+*/	
+}
+
+
+function	script	F_bot_menu	{
+	function add_ids;
+	function del_ids;
+	function foot_menu;
+	function foot_menu2;
+	function foot_menu3;
+	function foot_menu4;
+	function foot_menu5;
+	function array_str2int;
+	callsub OnBotMenu;
+	end;
+
+OnBotMenu:
+	mes "歡迎使用 [^0066ff在線掛機^000000]";
+	.@select = select(!@bot_run?" -> 開始掛機":" -> 結束掛機",
+					!@bot_run?" -> 技能設置":"",
+					!@bot_run?" -> 參數設置":"",
+					!@bot_run?" -> 瞬移設置":"");
+	switch(.@select){
+	case 1:
+		doevent "E_Oro_Bot::OnBotMain";
+		break;
+	case 2:
+		clear;
+		callsub OnGenConfig;
+		break;
+	case 3:
+		clear;
+		callsub OnOtherConfig;
+		break;
+	case 4:
+		callsub OnFlyConfig;
+		break;
+	}
+	end;
+
+
+
+
+OnGenConfig:
+	mes "請設置技能使用相關參數.";
+	.@size = getarraysize(bot_buff_sk_list);
+	if(.@size){
+		.@buff_skill_count$ = .@size+"個技能";
+	}else{
+		.@buff_skill_count$ = "未設定";
+	}
+
+	if(bot_atk1_sk_id){
+		.@name$ = getskillinfo(SKI_DESCRIPTION, bot_atk1_sk_id);
+		.@atk_skill_msg$ = .@name$;
+	}else{
+		.@atk_skill_msg$ = "未設定";
+	}
+	if(bot_atk2_sk_id){
+		.@name$ = getskillinfo(SKI_DESCRIPTION, bot_atk2_sk_id);
+		.@atk_skill_msg2$ = .@name$;
+	}else{
+		.@atk_skill_msg2$ = "未設定";
+	}
+	.@size = getarraysize(bot_atk_sk_list);
+	if(.@size){
+		.@atk_skill_msg3$ = .@size+"個技能";
+	}else{
+		.@atk_skill_msg3$ = "未設定";
+	}
+	if(Oro_Bot_Atk_Mode == 1){
+		.@atk_mode_msg$ = "單一技能";
+	}else if(Oro_Bot_Atk_Mode == 2){
+		.@atk_mode_msg$ = "組合技能";
+	}else{
+		.@atk_mode_msg$ = "普通攻擊";
+	}
+
+	.@select = select("[01]攻擊模式[^008000"+.@atk_mode_msg$+"^000000]",
+					"[02]技能設置(單一)[^008000"+.@atk_skill_msg$+"^000000]",
+					"[03]技能設置(範圍)[^008000"+.@atk_skill_msg2$+"^000000]",
+					"[04]技能設置(輔助)[^008000"+.@buff_skill_count$+"^000000]",
+					"-------<<^FF8C00返回主菜單^000000>>-------");
+	switch(.@select){
+	case 1:
+		clear;
+		mes "設置攻擊模式";
+		.@s = select("單一技能","普通攻擊");
+		if( .@s == 1 ){
+			mes "- 已設定為: [^008000單一技能^000000]";
+			Oro_Bot_Atk_Mode = 1;
+		}else{
+			mes "- 已設定為: [^FF8C00普攻攻擊^000000]";
+			Oro_Bot_Atk_Mode = 0;
+		}
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnGenConfig;
+		break;
+	case 2:
+		clear;
+		mes "請設置單一攻擊技能";
+		callsub L_select_skill, "bot_atk1_sk_id", "單一攻擊";
+		if(!Oro_Bot_Atk_Mode){
+			if(bot_atk1_sk_id){
+				dispbottom "已自動切換成技能攻擊!!",0xFFC125;
+				Oro_Bot_Atk_Mode = 1;
+			}
+		}else{
+			if(!bot_atk1_sk_id){
+				dispbottom "已自動切換成普通攻擊!!",0xFFC125;
+				Oro_Bot_Atk_Mode = 0;
+			}
+		}
+		break;
+	case 3:
+		clear;
+		mes "請設置範圍攻擊技能";
+		callsub L_select_skill, "bot_atk2_sk_id", "範圍攻擊";
+		break;
+	case 4:
+		clear;
+		mes "請設置輔助技能";
+		callsub L_Show_Skill3, "bot_buff_sk_list", 4, 5;
+		break;
+
+	case 5:
+		callsub OnBotMenu;
+		break;
+	default:
+		mes "遇到錯誤,請報告給GM";
+		break;
+	}
+	close;
+
+L_select_skill:
+	clear;
+	.@var_name$ = getarg(0);
+	.@type_name$ = getarg(1);
+	.@var = getd(.@var_name$);
+	mes "========="+.@type_name$+"技能設置=========";
+	if(.@var){
+		.@sk_id = getd(.@var_name$);
+		.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+		mes "當前設置: ^B22222"+.@name$+"^000000";
+	}
+	.@select = select("選擇技能","清除設定","返回上級菜單");
+	if(.@select == 1){
+		callsub L_confirm_skill,.@var_name$,.@type_name$;
+	}else if(.@select == 2){
+		callsub L_reset_array, .@var_name$, 1;
+	}else{
+		clear;
+		callsub OnGenConfig;
+	}
+
+	return;
+
+L_confirm_skill:
+	.@var_name$ = getarg(0);
+	.@type_name$ = getarg(1);
+	.@var = getd(.@var_name$);
+	getskilllist();
+	.@size = getarraysize(@skilllist_id);
+	if(.@size){
+		.@menu$ = "";
+		// 生成菜單
+		for (.@i = 0; .@i < .@size; .@i++) {
+			.@sk_id = @skilllist_id[.@i];
+			if(.@sk_id != .@var){
+				.@sk_type = getskillinfo(SKI_SKILLTYPE, .@sk_id);
+				.@sk_target_type = getskillinfo(SKI_TARGETTYPE, .@sk_id);
+				if(.@sk_type == BF_WEAPON || .@sk_type == BF_MAGIC){
+					if(.@sk_target_type == INF_ATTACK_SKILL || .@sk_target_type == INF_GROUND_SKILL){
+						.@idx = getarraysize(.@sk_list);
+						.@sk_list[.@idx] = .@sk_id;
+					}
+				}
+			}
+		}
+		//.@sk_id = skilllist(.@sk_list);
+		
+		.@size = getarraysize(.@sk_list);
+		.@menu$ = "";
+		for(.@i = 0; .@i < .@size; .@i++){
+			.@x = .@i+1;
+			if(.@x < 10) 
+				.@m$ = "0"+.@x;
+			else
+				.@m$ = ""+.@x;
+			.@sk_name$ = getskillinfo(SKI_DESCRIPTION, .@sk_list[.@i]);
+			.@menu$ = .@menu$ +"[^B22222"+.@m$+"^000000] "+ .@sk_name$+":";
+		}
+		.@s_idx = select(.@menu$) - 1;
+		.@sk_id = .@sk_list[.@s_idx];
+		
+			clear;
+			setd(.@var_name$, .@sk_id);
+			.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+			mes "========="+.@type_name$+"技能設置=========";
+			mes "已設定為: [^A020F0"+.@name$+"^000000]";
+
+		.@select = select("重新選擇","返回上級菜單");
+		if(.@select == 1){
+			callsub L_confirm_skill,.@var_name$,.@skill_type,.@type_name$;
+		}else{
+			clear;
+			callsub OnGenConfig;
+		}
+	}
+	return;
+
+L_Show_Skill:
+	.@var_name$ = getarg(0);
+	.@skill_type = getarg(1);
+	.@skill_count = getarg(2);
+	.@size = getarraysize(getd(.@var_name$));
+	if(.@size) mes "當前已設置: ";
+	for (.@i = 0; .@i < .@size; .@i++) {
+		.@sk_id = getd(.@var_name$+"["+.@i+"]");
+		.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+		mes " 順序"+(.@i+1)+": ^FFA500"+.@name$+"^000000";
+	}
+
+	.@select = select("選擇技能","清除設定","返回上級菜單");
+	if(.@select == 1){
+		callsub L_confirm_skill2,.@var_name$,.@skill_type,.@skill_count;
+	}else if(.@select == 2){
+		callsub L_reset_array, "bot_atk_sk_list", 0;
+	}else{
+		clear;
+		callsub OnGenConfig;
+	}
+	return;
+
+L_confirm_skill2:
+	.@var_name$ = getarg(0);
+	.@skill_type = getarg(1);
+	.@skill_count = getarg(2);
+	getskilllist();
+	.@size = getarraysize(@skilllist_id);
+	
+	if(.@size){
+		.@menu$ = "";
+		deletearray .@sk_choose[0], getarraysize(.@sk_choose);
+		clear;
+		mes "=========組合技能設置=========";
+		// 生成菜單
+		for (.@x = 0; .@x < .@size; .@x++) {
+			.@sk_id = @skilllist_id[.@x];
+			.@idx_in = inarray(.@sk_choose,.@sk_id);
+			if(.@idx_in == -1){
+				.@sk_type = getskillinfo(SKI_SKILLTYPE, .@sk_id);
+				.@sk_target_type = getskillinfo(SKI_TARGETTYPE, .@sk_id);
+				if(.@sk_type && .@sk_target_type == .@skill_type){
+					.@idx = getarraysize(.@sk_list);
+					.@sk_list[.@idx] = .@sk_id;
+				}
+			}
+		}
+		for (.@i = 0; .@i < .@skill_count; .@i++) {
+			//.@sk_id = skilllist(.@sk_list);
+
+			.@size = getarraysize(.@sk_list);
+			.@menu$ = "";
+			for(.@h = 0; .@h < .@size; .@h++){
+				.@x = .@h+1;
+				if(.@x < 10) 
+					.@m$ = "0"+.@x;
+				else
+					.@m$ = ""+.@x;
+				.@sk_name$ = getskillinfo(SKI_DESCRIPTION, .@sk_list[.@h]);
+				.@menu$ = .@menu$ +"[^B22222"+.@m$+"^000000] "+ .@sk_name$+":";
+			}
+			.@s_idx = select(.@menu$) - 1;
+			.@sk_id = .@sk_list[.@s_idx];
+		
+				setd(.@var_name$+"["+.@i+"]", .@sk_id);
+				.@sk_choose[.@i] = .@sk_id;
+				.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+				mes " 順序"+(.@i+1)+": ^FFA500"+.@name$+"^000000";
+
+			.@select = select("繼續選擇","完成選擇","重新選擇","返回上級菜單");
+			if(.@select == 1){
+				
+			}else if(.@select == 2){
+				deletearray getd(.@var_name$+"[0]"), getarraysize(getd(.@var_name$));
+				copyarray getd(.@var_name$+"[0]"), .@sk_choose[0], getarraysize(.@sk_choose);
+				mes "設置完成!!";
+				mes "^777777點擊關閉返回上級菜單!!^000000";
+				close2;
+				callsub OnGenConfig;
+				break;
+			}else if(.@select == 3){
+				callsub L_confirm_skill2,.@var_name$, .@skill_type, .@skill_count;
+				break;
+			}else{
+				clear;
+				callsub OnGenConfig;
+				break;
+			}
+		}
+	}
+	return;
+	
+L_Show_Skill3:
+	.@var_name$ = getarg(0);
+	.@skill_type = getarg(1);
+	.@skill_count = getarg(2);
+	.@size = getarraysize(getd(.@var_name$));
+	if(.@size) mes "當前已設置: ";
+	for (.@i = 0; .@i < .@size; .@i++) {
+		.@sk_id = getd(.@var_name$+"["+.@i+"]");
+		.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+		mes " 技能"+(.@i+1)+": ^A020F0"+.@name$+"^000000";
+	}
+	.@select = select("選擇技能","清除設定","返回上級菜單");
+	if(.@select == 1){
+		callsub L_confirm_skill3,.@var_name$,.@skill_type,.@skill_count;
+	}else if(.@select == 2){
+		callsub L_reset_array, "bot_buff_sk_list", 1;
+	}else{
+		clear;
+		callsub OnGenConfig;
+	}
+	return;
+	
+L_reset_array:
+	.@var_name$ = getarg(0);
+	.@var_type = getarg(1,0);
+	if(.@var_type){
+		setd .@var_name$, 0;
+	}else{
+		deletearray getd(.@var_name$);
+	}
+	mes "清除完成!!";
+	return;
+
+L_confirm_skill3:
+	.@var_name$ = getarg(0);
+	.@skill_type = getarg(1);
+	.@skill_count = getarg(2);
+	getskilllist();
+	.@size = getarraysize(@skilllist_id);
+	
+	if(.@size){
+		.@menu$ = "";
+		deletearray .@sk_choose[0], getarraysize(.@sk_choose);
+		clear;
+		mes "=========BUFF技能設置=========";
+		// 生成菜單
+		for (.@x = 0; .@x < .@size; .@x++) {
+			.@sk_id = @skilllist_id[.@x];
+			.@idx_in = inarray(.@sk_choose,.@sk_id);
+			if(.@idx_in == -1){
+
+				.@target_type = getskillinfo(SKI_TARGETTYPE, .@sk_id);
+				.@dmg_flag = getskillinfo(SKI_DAMAGEFLAGS, .@sk_id);
+
+
+					if(.@dmg_flag == NK_SPLASH || .@dmg_flag == NK_SPLASHSPLIT){
+						if(.@target_type == INF_SELF_SKILL || .@target_type == INF_SUPPORT_SKILL){
+							.@idx = getarraysize(.@sk_list);
+							.@sk_list[.@idx] = .@sk_id;
+						}
+					}
+			}
+		}
+		for (.@i = 0; .@i < .@skill_count; .@i++) {
+			//.@sk_id = skilllist(.@sk_list);
+			.@size = getarraysize(.@sk_list);
+			.@menu$ = "";
+			for(.@h = 0; .@h < .@size; .@h++){
+				.@x = .@h+1;
+				if(.@x < 10) 
+					.@m$ = "0"+.@x;
+				else
+					.@m$ = ""+.@x;
+				.@sk_name$ = getskillinfo(SKI_DESCRIPTION, .@sk_list[.@h]);
+				.@menu$ = .@menu$ +"[^B22222"+.@m$+"^000000] "+ .@sk_name$+":";
+			}
+			.@s_idx = select(.@menu$) - 1;
+			.@sk_id = .@sk_list[.@s_idx];
+			
+				setd(.@var_name$+"["+.@i+"]", .@sk_id);
+				.@sk_choose[.@i] = .@sk_id;
+				.@name$ = getskillinfo(SKI_DESCRIPTION, .@sk_id);
+
+				mes " 技能"+(.@i+1)+": ^A020F0"+.@name$+"^000000";
+
+			.@select = select("繼續選擇","完成選擇","重新選擇","返回上級菜單");
+			if(.@select == 1){
+				
+			}else if(.@select == 2){
+				deletearray getd(.@var_name$+"[0]"), getarraysize(getd(.@var_name$));
+				copyarray getd(.@var_name$+"[0]"), .@sk_choose[0], getarraysize(.@sk_choose);
+				mes "設置完成!!";
+				mes "^777777點擊關閉返回上級菜單!!^000000";
+				close2;
+				callsub OnGenConfig;
+				break;
+			}else if(.@select == 3){
+				callsub L_confirm_skill2,.@var_name$, .@skill_type, .@skill_count;
+				break;
+			}else{
+				clear;
+				callsub OnGenConfig;
+				break;
+			}
+		}
+	}
+	return;
+
+// 其他設置
+OnOtherConfig:
+
+	mes "請設置掛機參數";
+	// 快速自動出售與購買顯示
+	.@sell_size = getarraysize(quick_sell_list);
+	if(Oro_Bot_Quick_buy && !Oro_Bot_Quick_sell){
+		.@quick_shop$ = "[^008C33購買|^777777出售^000000]";
+	}else if(!Oro_Bot_Quick_buy && Oro_Bot_Quick_sell){
+		.@quick_shop$ = "[^777777購買|^008C33出售^000000("+.@sell_size+"項)]";
+	}else if(!Oro_Bot_Quick_buy && !Oro_Bot_Quick_sell){
+		.@quick_shop$ = "[^B22222未設定^000000]";
+	}else{
+		.@quick_shop$ = "[^008C33購買|出售^000000("+.@sell_size+"項)]";
+	}
+	if(bot_loot_mode == 1){
+		if(bot_loot_mode_on_type == 1) .@loot_type$ = "[^008000類型^000000]";
+		if(bot_loot_mode_on_rate == 1) .@loot_type$ = .@loot_type$ + "[^008000掉率^000000("+bot_loot_per$+"%)]";
+	}else if(bot_loot_mode == 3){
+		.@loot_size = getarraysize(bot_loot_id_list);
+		.@loot_type$ = "[^008000"+.@loot_size+"項^000000]";
+	}else{
+		.@loot_type$ = "[^B22222未設定^000000]";
+	}
+	if(Oro_Bot_Use_Item){
+		.@autoitem_size = getarraysize(bot_auto_use_item_list);
+		if(.@autoitem_size){
+			.@autoitem$ = "[^008000"+.@autoitem_size+"項^000000]";
+		}else{
+			.@autoitem$ = "[^B22222未設定道具^000000]";
+		}
+	}else{
+		.@autoitem$ = "[^B22222未啟用^000000]";
+	}
+
+	if(bot_hp_sit_enable){
+		.@hp_msg$ = "[^008C33HP已開啟^000000]";
+	}else{
+		.@hp_msg$ = "[^008C33HP已關閉^000000]";
+	}
+	if(bot_sp_sit_enable){
+		.@sp_msg$ = "[^008C33SP已開啟^000000]";
+	}else{
+		.@sp_msg$ = "[^008C33SP已關閉^000000]";
+	}
+	.@hpsp_msg$ = .@hp_msg$+.@sp_msg$;
+	.@atk_size = getarraysize(bot_attack_id_list);
+	if(.@atk_size){
+		.@atk_list_msg$ = "[^008C33"+.@atk_size+"項^000000]";
+	}else{
+		.@atk_list_msg$ = "[^008C33攻擊全部^000000]";
+	}
+
+	if(Oro_Bot_Rec){
+		.@auto_res_msg$ = "[^008C33已啟用^000000]";
+	}else{
+		.@auto_res_msg$ = "[^B22222未開啟^000000]";
+	}
+	if(Oro_Bot_HP){
+		.@name$ = getitemname(bot_hp_item_id);
+		.@auto_hp_msg$ = "[^008C33"+.@name$+"^000000("+Oro_Bot_HP_Per+"%)]";
+	}else{
+		.@auto_hp_msg$ = "[^777777未設定^000000]";
+	}
+	if(Oro_Bot_SP){
+		.@name$ = getitemname(bot_sp_item_id);
+		.@auto_sp_msg$ = "[^008C33"+.@name$+"^000000("+Oro_Bot_SP_Per+"%)]";
+	}else{
+		.@auto_sp_msg$ = "[^777777未設定^000000]";
+	}
+	.@store_size = getarraysize(bot_storage_id_list);
+	if(.@store_size){
+		.@auto_store_msg$ = "[^008C33已設定^000000("+.@store_size+"項)]";
+	}else{
+		.@auto_store_msg$ = "[^777777未設定^000000]";
+	}
+
+	.@buy_size = getarraysize(bot_auto_buy_enable);
+	for( .@i = 0; .@i < .@buy_size; .@i++ ) {
+		if(bot_auto_buy_enable[.@i]) .@auto_buy_size++;
+	}
+	if(.@auto_buy_size){
+		.@auto_buy_msg$ = "[^008C33已設定^000000("+.@auto_buy_size+"項)]";
+	}else{
+		.@auto_buy_msg$ = "[^777777未設定^000000]";
+	}
+	
+	if(Oro_Bot_Quick_sell){
+		.@auto_sell_size = getarraysize(quick_sell_list);
+		.@auto_sell_msg$ = "[^008C33已設定^000000("+.@auto_sell_size+"項)]";
+	}else{
+		.@auto_sell_msg$ = "[^777777未設定^000000]";
+	}
+	
+	.@select = select("[01]攻擊列表"+.@atk_list_msg$,
+					"[02]自動拾取"+.@loot_type$,
+					"[03]自動吃紅"+.@auto_hp_msg$,
+					"[04]自動吃藍"+.@auto_sp_msg$,
+					"[05]不死之證"+.@auto_res_msg$,
+					"[06]自動購買"+.@auto_buy_msg$,
+					"[07]自動道具"+.@autoitem$,
+					"-------<<^FF8C00返回主菜單^000000>>-------");
+	switch(.@select){
+	case 1:
+		clear;
+		callsub OnAtkMobList;
+		break;
+	case 2:
+		clear;
+		callsub OnAutoLootConfig;
+		break;
+	case 3:
+		clear;
+		mes "自動吃紅設定!!";
+		if(Oro_Bot_HP){
+			mes "使用道具 : ^008B00已啟用^000000";
+		}else{
+			mes "使用道具 : ^B22222已關閉^000000";
+		}
+		.@sub_menu = select("關閉設置","設定道具","設定使用條件");
+		if(.@sub_menu == 1){
+			mes "請選擇要關閉的項目";
+			.@sub_menu2 = select("關閉使用道具","關閉使用技能","全部關閉");
+			if(.@sub_menu2 == 1){
+				Oro_Bot_HP = 0;
+				mes "已關閉使用道具!!";
+			}else if(.@sub_menu2 == 2){
+				Oro_Bot_HP_Skill = 0;
+				mes "已關閉使用技能!!";
+			}else{
+				Oro_Bot_HP = 0;
+				Oro_Bot_HP_Skill = 0;
+				mes "已全部關閉!!";
+			}
+		}else if(.@sub_menu == 2){
+			mes "設置HP恢復道具";
+			mes "請從下面選擇一項做為HP恢復道具";
+			// 生成菜單
+			.@menu$ ="";
+			for(.@i = 0; .@i < getarraysize($@bot_auto_item_hp); .@i++) {
+				.@item_name$[.@i] = getitemname($@bot_auto_item_hp[.@i]);
+				.@menu$ = .@menu$ + .@item_name$[.@i]+ ":";
+			}
+			.@idx = select(.@menu$) - 1;
+			.@var = $@bot_auto_item_hp[.@idx];
+			.@name$ = .@item_name$[.@idx];
+			mes "選擇[^B22222"+.@name$+"^000000]!!";
+			bot_hp_item_id = .@var;
+			Oro_Bot_HP = 1;
+			if(!Oro_Bot_HP_Per){
+				callsub L_set_hp_per;
+			}else{
+				mes "當HP[^FF8C77低於"+ Oro_Bot_HP_Per +"%時^000000]";
+			}
+			mes "使用[^FF8C77"+.@name$+"恢復HP^000000]";
+		}else{
+			callsub L_set_hp_per;
+		}
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnOtherConfig;
+		break;
+		
+	case 4:
+		clear;
+		mes "自動吃藍設定!!";
+		if(Oro_Bot_SP){
+			mes "使用道具 : ^008B00已啟用^000000";
+		}else{
+			mes "使用道具 : ^B22222已關閉^000000";
+		}
+		.@sub_menu = select("關閉此設置","設定");
+		if(.@sub_menu == 1){
+			Oro_Bot_SP = 0;
+			mes "已關閉自動吃藍!!";
+		}else{
+			mes "設置SP恢復道具";
+			mes "請從下面選擇一項做為SP恢復道具";
+			// 生成菜單
+			.@menu$ ="";
+			for(.@i = 0; .@i < getarraysize($@bot_auto_item_sp); .@i++) {
+				.@item_name$[.@i] = getitemname($@bot_auto_item_sp[.@i]);
+				.@menu$ = .@menu$ + .@item_name$[.@i]+ ":";
+			}
+			.@idx = select(.@menu$) - 1;
+			.@var = $@bot_auto_item_sp[.@idx];
+			.@name$ = .@item_name$[.@idx];
+			mes "選擇[^B22222"+.@name$+"^000000]!!";
+			bot_sp_item_id = .@var;
+			Oro_Bot_SP = 1;
+			.@ok = 0;
+			do{
+				mes "請輸入百分比";
+				input(.@per, 1, 99);
+				mes "百分比 : ^FF0000"+ .@per+"% ^000000";
+				if(select("重新輸入","輸入完成")==2){
+					Oro_Bot_SP_Per = .@per;
+					.@ok = 1;
+					break;
+				}else .@ok = 0;
+				.@i++;
+			}while(.@ok == 1);
+			clear;
+			mes "設定完成!!";
+			mes "當SP[^FF8C77低於"+ Oro_Bot_SP_Per+"%使用"+getitemname(bot_sp_item_id)+"^000000]";
+			mes "^777777點擊關閉,返回上級菜單^000000";
+		}
+		close2;
+		callsub OnOtherConfig;
+		break;
+	case 5:
+		clear;
+		mes "設置不死之證";
+		if( Oro_Bot_Rec == 1 ){
+			mes "已設定為: [^FF8C00關閉^000000]";
+			Oro_Bot_Rec = 0;
+		} else {
+			mes "已設定為: [^008000開啟^000000]";
+			Oro_Bot_Rec = 1;
+		}
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnOtherConfig;
+		break;
+
+	case 6:
+		clear;
+		callsub L_auto_buy_menu;
+		break;
+
+	case 7:
+		clear;
+		callsub L_auto_use_item;
+		break;
+
+	case 8:
+		clear;
+		callsub OnBotMenu;
+		break;		
+	default:
+		mes "遇到錯誤,請報告給GM";
+		break;
+	}
+	next;
+	foot_menu3();
+	return;
+
+// 自動購買菜單
+L_auto_buy_menu:
+		mes "自動購買設定";
+		if(bot_auto_buy_enable[0]){
+			.@msg1$ = "^008B00已啟用^000000";
+		}else{
+			.@msg1$ = "^B22222已關閉^000000";
+		}
+		if(bot_auto_buy_enable[1]){
+			.@msg2$ = "^008B00已啟用^000000";
+		}else{
+			.@msg2$ = "^B22222已關閉^000000";
+		}
+		if(bot_auto_buy_enable[2]){
+			.@msg3$ = "^008B00已啟用^000000";
+		}else{
+			.@msg3$ = "^B22222已關閉^000000";
+		}
+		if(bot_auto_buy_enable[3]){
+			.@msg4$ = "^008B00已啟用^000000";
+		}else{
+			.@msg4$ = "^B22222已關閉^000000";
+		}
+		.@s1 = select("[01]自動購買紅藥設定["+.@msg1$+"]",
+					"[02]自動購買藍藥設定["+.@msg2$+"]",
+					"[03]自動購買箭矢設定["+.@msg3$+"]",
+					"[04]自動購買蒼蠅翅膀設定["+.@msg4$+"]") - 1;
+		setarray .@name$[0], "HP道具","SP道具","箭矢","蒼蠅翅膀";
+		callsub L_auto_buy_config, .@s1, .@name$[.@s1];
+	return;
+
+// 自動購買設定
+L_auto_buy_config:
+	clear;
+	// 購買類型
+	.@type = getarg(0,0);
+	if(.@type == 0){
+		.@item_id = bot_hp_item_id;
+	}else if(.@type == 1){
+		.@item_id = bot_sp_item_id;
+	}else if(.@type == 2){
+		.@item_id = bot_arrow_item_id;
+	}else{
+		.@item_id = 601;
+	}
+	.@title$ = getarg(1,"未設定");
+	.@below_size = getd("bot_auto_buy_"+.@type+"[0]");
+	.@buy_size = getd("bot_auto_buy_"+.@type+"[1]");
+
+	mes "^0000FF"+.@title$+"^000000自動購買設定";
+	
+	if(bot_auto_buy_enable[.@type] && .@item_id && getiteminfo(.@item_id, ITEMINFO_TYPE) != -1){
+		mes "狀態: ^008B00已啟用^000000";
+		mes "當"+.@title$+"^0000FF("+getitemname(.@item_id)+")^000000不足"+.@below_size+"時,購入("+.@buy_size+")";
+	}else{
+		bot_auto_buy_enable[.@type] = 0;
+		mes "狀態: ^B22222未開啟^000000";
+	}
+	.@s = select("購買設定","啟用設定","關閉設定","-------<<^FF8C00返回上級菜單^000000>>-------");
+	switch(.@s){
+	case 1:
+		if(.@type == 2){
+			if(!bot_arrow_item_id){
+				.@s2 = select("選擇箭矢","");
+			}else{
+				.@s2 = select("選擇箭矢","繼續設定");
+			}
+			if(.@s2 == 1){
+				.@menu$ ="";
+				for(.@i = 0; .@i < getarraysize($@bot_auto_arrow); .@i++) {
+					.@item_name$[.@i] = getitemname($@bot_auto_arrow[.@i]);
+					.@menu$ = .@menu$ + .@item_name$[.@i]+ ":";
+				}
+				.@idx = select(.@menu$) - 1;
+				.@var = $@bot_auto_arrow[.@idx];
+				.@name$ = .@item_name$[.@idx];
+				mes "選擇[^B22222"+.@name$+"^000000]!!";
+				bot_arrow_item_id = .@var;
+			}
+		}
+		mes "請輸入低於多少個時購買";
+		mes "最多輸入50";
+		input(.@a, 0, 50);
+		if(!.@a){
+			mes "輸入: "+.@a;
+			mes "你取消了設定";
+			close;
+			end;
+		}
+		mes "請輸入每次購買的數量";
+		mes "最多輸入50";
+		input(.@b, 0, 50);
+		if(!.@b){
+			mes "輸入: "+.@b;
+			mes "你取消了設定";
+			close;
+			end;
+		}
+		setd "bot_auto_buy_"+.@type+"[0]", .@a;
+		setd "bot_auto_buy_"+.@type+"[1]", .@b;
+		mes "設定完成!!";
+		mes "當^0000FF"+.@title$+"^000000不足"+.@a+"時,購入("+.@b+")";
+		bot_auto_buy_enable[.@type] = 1;
+		break;
+	case 2:
+		if(!.@item_id || getiteminfo(.@item_id, ITEMINFO_TYPE) == -1){
+			mes "未設定道具, 暫時無法啟用!!";
+			break;
+		}
+		bot_auto_buy_enable[.@type] = 1;
+		mes "已啟用此設定!!";
+		break;
+	case 3:
+		bot_auto_buy_enable[.@type] = 0;
+		mes "已關閉此設定!!";
+		break;
+	case 4:
+		showscript "返回上級菜單!!",getcharid(3),SELF;
+		callsub L_auto_buy_menu;
+		break;		
+	}
+	next;
+	foot_menu5();
+	return;
+
+// 自動攻擊列表設置
+OnAtkMobList:
+	
+	callsub L_show_moblist;
+	mes "請選擇設定方式";
+	//next;
+	.@select = select("輸入攻擊序號","輸入排除序號","攻擊當前地圖所有魔物","輸入魔物ID","清除設定");
+	switch(.@select){
+	case 1:
+		callsub(L_set_atk_list, 1);
+		break;
+	case 2:
+		callsub(L_set_atk_list, 2);
+		break;
+	case 3:
+		deletearray bot_attack_id_list[0], getarraysize(bot_attack_id_list);
+		.@map_name$ = strcharinfo(3);
+		getmapspawns .@map_name$,SPA_ID|SPA_NUM;
+		.@size = $@spawn_count;
+		copyarray .@mob_id_list[0], $@spawn_mobid[0], .@size;
+		copyarray bot_attack_id_list[0], .@mob_id_list[0], .@size;
+		mes "保存了"+.@size+"個數據!!";
+		break;
+	case 4:
+		clear;
+		mes "<URL>查詢魔物ID請點我<INFO>http://ro321.com/</INFO></URL>";
+		callsub OnEditIDs, "bot_attack_id_list", "魔物", "設置攻擊指定魔物";
+		break;
+	case 5:
+		clear;
+		deletearray bot_attack_id_list;
+		mes "清除完成!!";
+		break;
+	}
+	foot_menu3();
+	return;
+	
+L_set_atk_list:
+	clear;
+	mes "請輸入對應序號";
+	.@mode = getarg(0);
+	.@map_name$ = strcharinfo(3);
+	getmapspawns .@map_name$,SPA_ID|SPA_NUM;
+	// 獲取當前地圖魔物信息
+	.@size = $@spawn_count;
+	copyarray .@mob_id_list[0], $@spawn_mobid[0], .@size;	
+		
+		.@i = 0;
+		do{
+			.@false = 0;
+			.@count = getarraysize(bot_attack_id_list);
+			if(.@count > .@size){
+				mes "列表上限為("+.@size+")";
+				mes "請確認後再操作!!";
+				break;
+			}
+
+			input .@input[.@i];
+			if(.@input[.@i] < 1){
+				mes "退出輸入!!";
+				break;
+			}
+			.@num = .@input[.@i];
+			if(.@num > .@size){
+				mes "請輸入正確的序號!!";
+				.@false = 1;
+			}
+			.@mob_idx = .@num - 1;
+			.@mob_id = .@mob_id_list[.@mob_idx];
+			.@mob_name$ = getmonsterinfo(.@mob_id, MOB_NAME);
+			mes "序號: [^D02090"+.@num+"^000000]^2E8B57"+.@mob_name$+"^000000";
+			.@idx = inarray(.@id_list, .@mob_id);
+			if(.@idx != -1){
+				.@false = 1;
+				mes "此魔物已存在於列表中!!";
+			}else{
+				.@idx = getarraysize(.@id_list);
+				.@id_list[.@idx] = .@mob_id;
+			}
+			if(.@false){
+				mes "是否重新輸入？";
+				.@s1 = select("重新輸入","取消");
+				if(.@s1 == 1){
+					.@s = 2;
+				}else
+					break;
+			}else{
+				.@s3 = select("繼續輸入","保存輸入");
+				if(.@s3 == 1)
+					.@i++;
+				else{
+					deletearray bot_attack_id_list[0], getarraysize(bot_attack_id_list);
+					if(.@mode == 1){
+						
+						.@count = getarraysize(.@id_list);
+						copyarray bot_attack_id_list[0], .@id_list[0], .@count;
+						mes "保存了"+.@count+"個數據!!";
+					}else{
+						.@size2 = getarraysize(.@id_list);
+						for(.@i = 0; .@i < .@size2; .@i++){
+							.@id = .@id_list[.@i];
+							.@idx2 = inarray(.@mob_id_list, .@id);
+							if(.@idx2 != -1){
+								deletearray .@mob_id_list[.@idx2], 1;
+							}
+						}
+						.@count = getarraysize(.@id_list);
+						.@count2 = getarraysize(.@mob_id_list);
+						copyarray bot_attack_id_list[0], .@mob_id_list[0], .@count2;
+						mes "排除了"+.@count+"個數據, 保存了"+.@count2+"個數據!!";
+					}
+					break;
+				}
+			}
+		}while(.@s = 2);
+		return;
+
+// 返回當前地圖的魔物
+L_show_moblist:
+	.@map_name$ = strcharinfo(3);
+	getmapspawns .@map_name$,SPA_ID|SPA_NUM;
+	// 獲取當前地圖魔物信息
+	.@count = $@spawn_count;
+	if(.@count){
+		mes "[當前地圖共有^B22222"+.@count+"^000000種魔物]";
+		copyarray .@mob_id[0], $@spawn_mobid[0], .@count;	
+
+		.@size = getarraysize(.@mob_id);
+
+		for (.@i = 0; .@i < .@size; .@i++) {
+			.@var = .@mob_id[.@i];
+			.@name$ = getmonsterinfo(.@var, MOB_NAME);
+			.@j = .@i+1;
+			.@msg$ = "[^B22222 "+.@j+"^000000] "+.@name$;
+
+			mes .@msg$;
+	
+		}
+		.@x = 1;
+		.@y = .@size;
+		.@msg$ = "";
+		for (.@i = 0; .@i < .@size; .@i++) {
+			.@var = .@mob_id[.@i];
+			.@name$ = getmonsterinfo(.@var, MOB_NAME);
+			.@len = getstrlen(.@name$);
+			if(.@len > 12) .@name$ = substr(.@name$, 0, 12)+"..";
+			.@j = .@i+1;
+			if(.@j < 10) 
+				.@index$ = " "+.@j;
+			else
+				.@index$ = ""+.@j;
+			.@msg$ = .@msg$ + sprintf("%-5s%-17s", "["+.@index$+"]", .@name$);
+	
+			if(.@y > 3){
+				if(.@x == 3){
+					dispbottom .@msg$,0xFFC125;
+					.@y -= .@x;
+					.@x = 0;
+					.@msg$ = "";
+				}
+				
+			}else{
+				if(.@x == .@y) dispbottom .@msg$,0xFFC125;
+			}
+			.@x++;
+		}
+	}
+	return;
+	
+L_set_hp_per:
+	mes "請輸入百分比";
+	.@ok = 0;
+	do{
+		input(.@per, 1, 99);
+		mes "百分比 : ^FF0000"+ .@per+"% ^000000";
+		if(select("重新輸入","輸入完成")==2){
+			Oro_Bot_HP_Per = .@per;
+			.@ok = 1;
+			break;
+		}else .@ok = 0;
+		.@i++;
+	}while(.@ok == 1);
+	clear;
+	mes "設定完成!!";
+	mes "當HP[^FF8C77低於"+ Oro_Bot_HP_Per+"%時^000000]";
+	return;
+
+	
+L_auto_use_item:
+		.@size = getarraysize(bot_auto_use_item_list);
+		if(Oro_Bot_Use_Item)
+			.@enable$ = "^9966EE已啟用^000000";
+		else
+			.@enable$ = "^B22222未啟用^000000";
+		if(.@size){
+			mes "[^B22222 已添加道具 ^000000]";
+			.@x = 1;
+			.@y = .@size;
+			for (.@i = 0; .@i < .@size; .@i++) {
+				.@var = bot_auto_use_item_list[.@i];
+				.@name$ = getitemname(.@var);
+				.@len = getstrlen(.@name$);
+				if(.@len > 10) .@name$ = substr(.@name$, 0, 9)+"..";
+				.@time$ = ""+bot_auto_use_time_list[.@i]+"s";
+				.@j = .@i+1;
+				if(.@j < 10) 
+					.@index$ = " "+.@j;
+				else
+					.@index$ = ""+.@j;
+				.@msg$ = sprintf("^B22222%-5s^000000^9966EE%-12s%-6s^000000", "["+.@index$+"]", .@name$, .@time$);
+				mes ""+.@msg$;
+			}
+		}
+		mes "當前狀態 : [ "+.@enable$+" ]";
+		mes "自動使用道具設定";
+		.@select = select("增加","刪除","清除","啟用|關閉");
+		.@size2 = getarraysize($@bot_auto_use_item_list);
+		.@size = getarraysize(bot_auto_use_item_list);
+		deletearray .@item_list[0], getarraysize(.@item_list);
+		copyarray .@item_list[0], $@bot_auto_use_item_list[0], .@size2;
+		if(.@select == 1){
+			if(.@size >= .@size2){
+				mes "已添加所有類型!!";
+			}else{
+				// 去除已存在的類別
+				for (.@i = 0; .@i < .@size; .@i++) {
+					.@var = bot_auto_use_item_list[.@i];
+					.@idx = inarray(.@item_list,.@var);	//查找數組下標
+					if(.@idx != -1) {
+						deletearray .@item_list[.@idx], 1;
+					}
+				}
+				// 生成菜單
+				deletearray .@menu$[0], getarraysize(.@menu$);
+				for(.@i = 0; .@i < getarraysize(.@item_list); .@i++) {
+					.@item_name$[.@i] = getitemname(.@item_list[.@i]);
+					.@menu$ = .@menu$ + .@item_name$[.@i]+ ":";
+				}
+				.@idx = select(.@menu$) - 1;
+				.@var = .@item_list[.@idx];
+				.@name$ = .@item_name$[.@idx];
+				.@size = getarraysize(bot_auto_use_item_list);
+				mes "選擇[^B22222"+.@name$+"^000000]!!";
+				mes "請輸入使用間隔時間(單位: 秒)";
+				input (.@time,0,3600);
+				if(.@time < 1){
+					mes "你取消了輸入!!";
+					return;
+				}
+				mes "設定[^B22222"+.@time+"秒^000000]!!";
+				bot_auto_use_item_list[.@size] = .@var;
+				bot_auto_use_time_list[.@size] = .@time;
+				mes "添加["+.@name$+"]!!";
+				dispbottom "[自動道具] : 添加["+.@name$+"]成功!!",0xFFFFFF;
+			}
+		}else if(.@select == 2){
+			if(!.@size){
+				mes "尚未添加任何物品!!";
+			}else{
+				// 生成菜單
+				deletearray .@menu$[0], getarraysize(.@menu$);
+				for(.@i = 0; .@i < .@size; .@i++) {
+					.@var = bot_auto_use_item_list[.@i];
+					.@name$ = getitemname(.@var);
+					.@menu$ = .@menu$ + .@name$+ ":";
+				}
+				.@idx = select(.@menu$) - 1;
+				.@item_id = bot_auto_use_item_list[.@idx];
+				.@item_name$ = getitemname(.@item_id);
+				mes "刪除[^B22222"+.@item_name$+"^000000]!!";
+				dispbottom "[自動道具] : 刪除["+.@item_name$+"]成功!!",0xFFFFFF;
+				deletearray bot_auto_use_item_list[.@idx],1;
+			}	
+		}else if(.@select == 3){
+			deletearray bot_auto_use_item_list[0],getarraysize(bot_auto_use_item_list);
+			dispbottom "[自動道具] : 已清除所有道具！！",0xFF0000;
+		}else if(.@select == 4){
+			if(Oro_Bot_Use_Item){
+				Oro_Bot_Use_Item = 0;
+				mes "- 已設定為: [^B22222不啟用^000000]";
+			}else{
+				Oro_Bot_Use_Item = 1;
+				mes "- 已設定為: [^008000啟用^000000]";	
+			}
+		}else{
+			mes "出現意外錯誤!!";
+		}
+	next;
+	foot_menu4();
+	return;
+
+
+// 自動拾取設置
+OnAutoLootConfig:
+	callsub L_show_loot;
+	mes "請選擇拾取設定方式";
+	.@select = select(sprintf("%-9s%-12s", "道具類型",(bot_loot_mode==1&&bot_loot_mode_on_type?"[^008000已啟用^000000]":"")),
+					sprintf("%-9s%-12s", "道具掉率",(bot_loot_mode==1&&bot_loot_mode_on_rate?"[^008000已啟用^000000]":"")),
+					"^8B008B返回上級菜單^000000",
+					"^FF8C00返回主菜單^000000");
+	switch(.@select){
+	case 1:
+		clear; callsub L_loot_1; break;
+	case 2:
+		clear; callsub L_loot_2; break;
+	case 3:
+		clear; callsub OnOtherConfig;break;
+	case 4:
+		clear; callsub OnBotMenu;break;
+	}
+	return;
+
+L_show_loot:
+	mes "[>>] 當前已啟用";
+	if(bot_loot_mode == 1){
+		if(bot_loot_mode_on_rate){
+			mes "[^B22222 掉率 ^000000] : ^008000低於(含) "+bot_loot_per$+"% ^000000";
+		}
+		if(bot_loot_mode_on_type){
+			.@size = getarraysize(bot_loot_types);
+			mes "[^B22222 類型 ^000000] : ";
+			.@x = 1;
+			.@y = .@size;
+			for (.@i = 0; .@i < .@size; .@i++) {
+				.@var = bot_loot_types[.@i];
+				.@idx = inarray($@bot_loot_type_var, .@var);
+				.@name$ = $@bot_loot_type_name$[.@idx];
+
+				.@len = getstrlen(.@name$);
+				if(.@len > 10) .@name$ = substr(.@name$, 0, 9)+"..";
+				.@j = .@i+1;
+				if(.@j < 10) 
+					.@index$ = " "+.@j;
+				else
+					.@index$ = ""+.@j;
+				.@msg$ = .@msg$ + sprintf("%-6s^FFA500%-8s^000000", "[^B22222"+.@index$+"^000000]", .@name$);
+		
+				if(.@y >= 2){
+					if(.@x == 2){
+						mes .@msg$;
+						.@y -= .@x;
+						.@x = 0;
+						.@msg$ = "";
+					}
+					
+				}else{
+					if(.@x == .@y) mes .@msg$;
+				}
+				.@x++;
+			}
+		}
+	}
+	if(bot_loot_mode == 3){
+		.@size = getarraysize(bot_loot_id_list);
+		.@x = 1;
+		.@y = .@size;
+		mes "[^B22222 道具編號 ^000000] : ^008000共 "+.@size+" 種 ^000000";
+		for (.@i = 0; .@i < .@size; .@i++) {
+			.@var = bot_loot_id_list[.@i];
+			.@name$ = getitemname(.@var);
+			.@len = getstrlen(.@name$);
+			if(.@len > 10) .@name$ = substr(.@name$, 0, 9)+"..";
+			.@j = .@i+1;
+			if(.@j < 10) 
+				.@index$ = " "+.@j;
+			else
+				.@index$ = ""+.@j;
+			.@msg$ = .@msg$ + sprintf("<ITEM>%18s<INFO>"+.@var+"</INFO></ITEM>^FFA500%-13s^000000", "[^B22222"+.@index$+"^000000]", .@name$);
+			if(.@y >= 2){
+				if(.@x == 2){
+					mes .@msg$;
+					.@y -= .@x;
+					.@x = 0;
+					.@msg$ = "";
+				}
+			}else{
+				if(.@x == .@y){
+					mes .@msg$;
+				}
+			}
+			.@x++;
+		}
+	}
+	return .@size;
+	
+
+//道具類型
+L_loot_1:
+	mes "根據道具類型設置自動拾取";
+	.@size = getarraysize(bot_loot_types);
+	if(.@size){
+		mes "[^B22222 類型 ^000000]";
+		.@x = 1;
+		.@y = .@size;
+		for (.@i = 0; .@i < .@size; .@i++) {
+			.@var = bot_loot_types[.@i];
+			.@idx = inarray($@bot_loot_type_var, .@var);
+			.@name$ = $@bot_loot_type_name$[.@idx];
+
+			.@len = getstrlen(.@name$);
+			if(.@len > 10) .@name$ = substr(.@name$, 0, 9)+"..";
+			.@j = .@i+1;
+			if(.@j < 10) 
+				.@index$ = " "+.@j;
+			else
+				.@index$ = ""+.@j;
+			.@msg$ = .@msg$ + sprintf("%-6s^FFA500%-8s^000000", "[^B22222"+.@index$+"^000000]", .@name$);
+	
+			if(.@y >= 2){
+				if(.@x == 2){
+					mes .@msg$;
+					.@y -= .@x;
+					.@x = 0;
+					.@msg$ = "";
+				}
+				
+			}else{
+				if(.@x == .@y) mes .@msg$;
+			}
+			.@x++;
+		}
+	}
+	.@size2 = getarraysize($@bot_loot_type_name$);
+	copyarray .@loot_types$[0], $@bot_loot_type_name$,.@size2;
+	copyarray .@types_var[0], $@bot_loot_type_var,.@size2;
+	.@select = select("增加","刪除","清除","啟用此配置","關閉此配置");
+	if(.@select == 1){
+		if(.@size >= .@size2){
+			mes "已添加所有類型!!";
+		}else{
+			// 去除已存在的類別
+			for (.@i = 0; .@i < .@size; .@i++) {
+				.@idx = inarray(.@types_var, bot_loot_types[.@i]);	//查找數組下標
+				if(.@idx != -1) {
+					deletearray .@types_var[.@idx], 1;
+					deletearray .@loot_types$[.@idx], 1;
+				}
+			}
+			// 生成菜單
+			deletearray .@menu$[0], getarraysize(.@menu$);
+			for(.@i = 0; .@i < getarraysize(.@loot_types$); .@i++) {
+				.@menu$ = .@menu$ + .@loot_types$[.@i]+.@types_var[.@i]+ ":";
+			}
+			.@idx = select(.@menu$) - 1;
+			.@var = .@types_var[.@idx];
+			.@name$ = .@loot_types$[.@idx];
+			.@size = getarraysize(bot_loot_types);
+			bot_loot_types[.@size] = .@var;
+			mes "添加["+.@name$+"]!!"+.@var;
+			dispbottom "[自動拾取] : 添加["+.@name$+"]道具成功!!",0xFFFFFF;
+		}
+	}else if(.@select == 2){
+		if(!.@size){
+			mes "尚未添加任何類型!!";
+		}else{
+			// 生成菜單
+			deletearray .@menu$[0], getarraysize(.@menu$);
+			for(.@i = 0; .@i < .@size; .@i++) {
+				.@idx = bot_loot_types[.@i] - 1;
+				.@type_name$ = $@bot_loot_type_name$[.@idx];
+				.@menu$ = .@menu$ + .@type_name$+ ":";
+			}
+			.@idx = select(.@menu$) - 1;
+			deletearray bot_loot_types[.@idx],1;
+			mes "刪除["+$@bot_loot_type_name$[.@idx]+"]!!";
+			dispbottom "[自動拾取] : 刪除["+$@bot_loot_type_name$[.@idx]+"]道具成功!!",0xFFFFFF;
+		}	
+	}else if(.@select == 3){
+		deletearray bot_loot_types[0],getarraysize(bot_loot_types);
+		dispbottom "[自動拾取] : 已清除所以道具類別！！",0xFF0000;
+	}else if(.@select == 4){
+		if(getarraysize(bot_loot_types)){
+			mes "啟用類型成功!!";
+			bot_loot_mode = 1;
+			bot_loot_mode_on_type = 1;
+		}else{
+			mes "啟用失敗, 尚未添加任何類型!!";
+		}
+	}else{
+		bot_loot_mode_on_type = 0;
+		mes "關閉類型成功!!";
+	}
+	next;
+	foot_menu();
+	return;
+
+
+//道具掉率
+L_loot_2:
+	mes "根據道具掉率設置自動拾取";
+	if(bot_loot_per) mes "[^B22222 掉率 ^000000] : ^008000低於(含) "+bot_loot_per$+"% ^000000";
+	.@select = select("設定拾取掉率","啟用此配置","關閉此配置");
+	if(.@select == 1){
+		mes "[!!]請輸入要撿取的物品掉落機率. ";
+		mes "(範圍：0.01 - 100)";
+		//input(.@per, 1, 100);
+		setarray .@str$[0], "0","1","2","3","4","5","6","7","8","9",".";
+		input .@per$;
+		.@size = getstrlen(.@per$);
+		if(.@size > 5) .@result = -1;
+		if(countstr(.@per$, ".") > 1) .@result = -1;
+		if(.@per$ == "00.00" || .@per$ == "0.00" || .@per$ == "00.0" || .@per$ == "0.0") .@result = -1;
+		if(.@size == 5){
+			.@sub_str$ = substr(.@per$, 2, 2);
+			if(.@sub_str$ != ".") .@result = -1;
+			.@sub_str$ = substr(.@per$, 0, 0);
+			if(.@sub_str$ == "0") .@result = -1;
+		}
+		for(.@i = 0; .@i < .@size; .@i++){
+			.@sub_str$ = substr(.@per$, .@i, .@i);
+			//dispbottom ""+.@sub_str$;
+			.@idx = inarray(.@str$, .@sub_str$);
+			if(.@idx == -1) {
+				.@result = -1;
+				break;
+			}
+		}
+		if(.@result == -1){
+			mes "輸入的內容不符合要求!!";
+			next;
+			foot_menu2();			
+			return;
+		}
+		mes "你輸入的是^8B008B"+.@per$+"^000000";
+		mes "設置完成!!";
+		mes "拾取掉落率低於(包含)"+.@per$+"%的道具!!";
+		dispbottom "[自動拾取] : 拾取掉落率低於(包含)"+.@per$+"%的道具!!",0xFF0000;
+		bot_loot_per$ = .@per$;
+	}if(.@select == 2){
+		if(bot_loot_per$ != ""){
+			mes "啟用掉率成功!!";
+			bot_loot_mode = 1;
+			bot_loot_mode_on_rate = 1;
+		}else{
+			mes "啟用失敗, 尚未設定掉率!!";
+		}	
+	}else{
+		bot_loot_mode_on_rate = 0;
+		mes "關閉掉率成功!!";
+	}
+	next;
+	foot_menu2();
+	return;
+
+
+OnEditIDs:
+	//clear;
+	// 變量名稱
+	.@var_name$ = getarg(0);
+	// 調用類型
+	.@type1$ =  getarg(1);
+	// 說明信息
+	.@type2$ =  getarg(2);
+	mes .@type2$;
+	.@select = select("01.增加"+.@type1$+"ID",
+					"02.刪除"+.@type1$+"ID",
+					"03.重置"+.@type1$+"ID",
+					"-------<<^FF8C00返回上級菜單^000000>>-------");
+	switch(.@select){
+	case 1:
+		add_ids(.@var_name$,"增加",.@type1$,10);
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnEditIDs, .@var_name$, .@type1$, .@type2$;
+		break;
+		
+	case 2:
+		del_ids(.@var_name$,"刪除",.@type1$);
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnEditIDs, .@var_name$, .@type1$, .@type2$;
+		break;
+		
+	case 3:
+		deletearray getd(.@var_name$+"[0]"), getarraysize(getd(.@var_name$));
+		mes "重置完成!!";
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnEditIDs, .@var_name$, .@type1$, .@type2$;
+		break;
+		
+	case 4:
+		clear;
+		callsub OnOtherConfig;
+		break;
+		
+	default:
+		mes "遇到錯誤,請報告給GM";
+		close2;
+		callsub OnOtherConfig;
+		break;
+	}
+	end;
+	
+
+	// 刪除ID
+	function	del_ids	{
+		.@var_name$ = getarg(0);
+		.@type1$ = getarg(1);
+		.@type2$ = getarg(2);
+		.@s = 0;
+		do{
+			clear;
+			.@size = getarraysize(getd(.@var_name$));
+			if(!.@size){
+				mes "暫無信息.";
+			}else{
+				mes "已設置的"+.@type2$+"列表如下.";
+				for(.@i = 0; .@i < .@size; .@i++){
+					.@id = getd(.@var_name$+"["+.@i+"]");
+					if(.@type2$ == "物品"){
+						.@name$ = getitemname(.@id);
+					}else{
+						.@name$ = getmonsterinfo(.@id, MOB_NAME);
+					}
+					mes "["+(.@i+1)+"]. "+.@name$+" ^000000";
+				}
+			}
+			if(select("輸入要"+.@type1$+"的編號","結束")==2) break;
+			clear;
+			mes "範圍(1 - "+.@size+")";
+			input(.@input, 1, .@size);
+			if(!.@input) break;
+			clear;
+			.@idx = .@input - 1;
+			.@id = getd(.@var_name$+"["+.@idx+"]");
+			if(.@type2$ == "物品"){
+				.@name$ = getitemname(.@id);
+			}else{
+				.@name$ = getmonsterinfo(.@id, MOB_NAME);
+			}
+			mes "你選擇的是";
+			mes "(^FF8C00"+.@input+"^000000)"+.@name$+" ^000000";
+			.@s = select("確認"+.@type1$,"重新輸入");
+			if(.@s == 1){
+				deletearray getd(.@var_name$+"["+.@idx+"]"), 1;
+				mes .@type1$+"成功!!";
+				.@s2 = select("繼續"+.@type1$,"結束");
+				if(.@s2 == 1){
+					.@s = 2;
+				}else break;
+			}
+		}while(.@s = 2);
+
+		return;
+	}
+	
+	// 增加ID
+	function	add_ids	{
+		.@var_name$ = getarg(0);
+		.@type1$ = getarg(1);
+		.@type2$ = getarg(2);
+		.@count = getarg(3);
+		.@i = 0;
+		do{
+			.@false = 0;
+			clear;
+			.@size = getarraysize(getd(.@var_name$));
+			if(.@size >= .@count){
+				mes "列表上限為("+.@count+")";
+				mes "請確認後再操作!!";
+				break;
+			}
+			mes "請輸入要"+.@type1$+"的"+.@type2$+"ID";
+			input .@input[.@i];
+			if(.@input[.@i] == 0){
+				mes "退出輸入!!";
+				break;
+			}
+			if(.@type2$ == "物品"){
+				.@type = getiteminfo(.@input[.@i], ITEMINFO_TYPE);
+				.@add_name$ = getitemname(.@input[.@i]);
+			}else{
+				.@type = getmonsterinfo(.@input[.@i], MOB_LV);
+				.@add_name$ = getmonsterinfo(.@input[.@i], MOB_NAME);
+			}	
+			if(.@type == -1){
+				mes "你輸入的"+.@type2$+"ID不存在!!";
+				.@false = 1;
+			}else{
+				.@add_id = .@input[.@i];
+				.@idx = inarray(getd(.@var_name$), .@add_id);
+				if(.@idx != -1){
+					.@false = 1;
+					mes .@type2$+"("+.@add_name$+")已存在於列表中!!";
+				}
+			}
+			if(.@false){
+				mes "是否重新輸入？";
+				.@s1 = select("重新輸入","取消");
+				if(.@s1 == 1){
+					.@s = 2;
+				}else
+					break;
+			}else{
+				if(.@type2$ == "物品"){
+					.@add_name$ = getitemname(.@add_id);
+				}else{
+					.@add_name$ = getmonsterinfo(.@add_id, MOB_NAME);
+				}
+				mes .@type2$+"信息 : ^80CC99"+ .@add_name$+" ^000000";
+				.@s2 = select("確定"+.@type1$,"退出");
+				if(.@s2 == 1){
+					.@size = getarraysize(getd(.@var_name$));
+					setd .@var_name$+"["+.@size+"]", .@add_id;
+					mes .@type1$+"完成!!";
+					.@s3 = select("繼續"+.@type1$,"退出");
+					if(.@s3 == 1)
+						.@i++;
+					else
+						break;
+				}else
+					break;
+			}
+		}while(.@s = 2);	
+		return;
+	}
+
+	// 自動拾取默認設定
+	function	default_loot_var	{
+		//拾取
+		if(bot_loot_mode == 1){
+			if(bot_loot_mode_on_type && !bot_loot_mode_on_rate){
+				if(getarraysize(bot_loot_types)){
+					
+					for(.@i = 0; .@i < getarraysize(bot_loot_types); .@i++) {
+						.@type = bot_loot_types[.@i];
+						if(.@type == 1) .@type = 0;
+						atcommand "@autoloottype +" + .@type;
+					}
+					atcommand "@autoloot 100";
+					dispbottom "[自動拾取]: 根據道具類型拾取, 拾取掉落率低於(包含) 100% 道具!!",0xFFFFFF;
+				}
+			}
+			if(bot_loot_mode_on_type && bot_loot_mode_on_rate){
+				if(getarraysize(bot_loot_types)){
+					
+					for(.@i = 0; .@i < getarraysize(bot_loot_types); .@i++) {
+						.@type = bot_loot_types[.@i];
+						if(.@type == 1) .@type = 0;
+						atcommand "@autoloottype +" + .@type;
+					}
+					atcommand "@autoloot  +"+bot_loot_per$;
+					dispbottom "[自動拾取]: 根據道具類型, 拾取掉落率低於(包含) "+bot_loot_per$+"% 道具!!",0xFFFFFF;
+				}			
+			}
+			if(!bot_loot_mode_on_type && bot_loot_mode_on_rate){
+					atcommand "@autoloot  +"+bot_loot_per$;
+					dispbottom "[自動拾取]: 拾取掉落率低於(包含) "+bot_loot_per$+"% 道具!!",0xFFFFFF;		
+			}
+		}
+		return;
+	}
+
+// 瞬移設定
+OnFlyConfig:
+	clear;
+	if(Oro_Bot_Fly_Time){
+		.@fly_time$ = "^B22222"+Oro_Bot_Fly_Time+"^000000秒";
+	}else{
+		.@fly_time$ = "^B22222未設定^000000";
+	}
+	if(Oro_Bot_Enemy_Size){
+		.@Enemy_Size$ = "^B22222"+Oro_Bot_Enemy_Size+"^000000個";
+	}else{
+		.@Enemy_Size$ = "^B22222未設定^000000";
+	}
+	if(getarraysize(bot_run_id_list)){
+		.@Run_Size$ = "^B22222"+getarraysize(bot_run_id_list)+"^000000個";
+	}else{
+		.@Run_Size$ = "^B22222未設定^000000";
+	}
+	mes "設置瞬移相關參數!!";
+
+	setarray .@select$[0],sprintf("%-10s%-10s", "無怪瞬移","["+.@fly_time$+"]"),
+						sprintf("%-10s%-10s", "圍攻瞬移","["+.@Enemy_Size$+"]"),
+						sprintf("%-10s%-10s", "躲怪瞬移","["+.@Run_Size$+"]"),
+						"-------<<^FF8C00返回主菜單^000000>>-------";
+	.@size = getarraysize(.@select$);
+	deletearray .@menu$[0], getarraysize(.@menu$);
+	for(.@i = 0; .@i < .@size; .@i++){
+		.@x = .@i+1;
+		if(.@x < 10) 
+			.@m$ = "0"+.@x;
+		else
+			.@m$ = ""+.@x;
+		.@menu$ = .@menu$ +"[^B22222"+.@m$+"^000000] "+ .@select$[.@i]+":";
+	}
+	.@select = select(.@menu$);
+	
+	switch(.@select){
+	case 1:
+		clear;
+		mes "設置無怪瞬移時間";
+		.@ok = 0;
+		do{
+			mes "請輸入時間,單位:秒";
+			mes "建議值: 8秒!!";
+			mes "輸入範圍(5-30).";
+			input(.@per, $@bot_nomob_fly_time[0], $@bot_nomob_fly_time[1]);
+			mes "輸入了 : ^FF0000"+ .@per+" ^000000";
+			if(select("重新輸入","輸入完成")==2){
+				Oro_Bot_Fly_Time = .@per;
+				.@ok = 1;
+				break;
+			}else .@ok = 0;
+			.@i++;
+		}while(.@ok == 1);
+		clear;
+		mes "已設定為: ";
+		mes "[^FF8C00"+Oro_Bot_Fly_Time+"秒未發現目標, 強制瞬移^000000]";
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnBotMenu;
+		break;
+	case 2:
+		.@ok = 0;
+		do{
+			mes "請輸入魔物數量";
+			input(.@mob_size, 0, 90000);
+			mes "魔物數量 : ^FF0000"+ .@mob_size+". ^000000";
+			if(select("重新輸入","輸入完成")==2){
+				Oro_Bot_Enemy_Size = .@mob_size;
+				.@ok = 1;
+				break;
+			}else .@ok = 0;
+			.@i++;
+		}while(.@ok == 1);
+		clear;
+		mes "已設定為: ";
+		mes "[^FF8C00圍攻數量達到"+Oro_Bot_Enemy_Size+", 強制瞬移^000000]";
+		mes "^777777點擊關閉,返回上級菜單^000000";
+		close2;
+		callsub OnBotMenu;
+		break;
+	case 3:
+		clear;
+		mes "<URL>查詢魔物ID請點我<INFO>http://ro321.com/</INFO></URL>";
+		callsub OnEditIDs, "bot_run_id_list", "魔物", "設置攻擊指定魔物";
+		break;
+	case 4:
+		clear;
+		callsub OnBotMenu;
+		break;
+	}
+	return;
+
+	function	foot_menu	{
+		.@s = select("[01]^8B008B繼續設置^000000",
+					"[02]^8B008B返回上級菜單^000000",
+					"[03]^FF8C00返回主菜單^000000");
+		clear;
+		if(.@s == 1) callsub L_loot_1;
+		if(.@s == 2) callsub OnAutoLootConfig;
+		if(.@s == 3) callsub OnBotMenu;
+		return;
+	}
+
+	function	foot_menu2	{
+		.@s = select("[01]^8B008B返回上級菜單^000000",
+					"[02]^FF8C00返回主菜單^000000");
+		clear;
+		if(.@s == 1) callsub OnAutoLootConfig;
+		if(.@s == 2) callsub OnBotMenu;
+		return;
+	}
+	
+	function	foot_menu3	{
+		.@s = select("[01]^8B008B返回上級菜單^000000",
+					"[02]^FF8C00返回主菜單^000000");
+		clear;
+		if(.@s == 1) callsub OnOtherConfig;
+		if(.@s == 2) callsub OnBotMenu;
+		return;
+	}
+
+	function	foot_menu4	{
+		.@s = select("[01]^8B008B繼續設置^000000",
+					"[02]^8B008B返回上級菜單^000000",
+					"[03]^FF8C00返回主菜單^000000");
+		clear;
+		if(.@s == 1) callsub L_auto_use_item;
+		if(.@s == 2) callsub OnOtherConfig;
+		if(.@s == 3) callsub OnBotMenu;
+		return;
+	}
+
+	function	foot_menu5	{
+		.@s = select("[01]^8B008B繼續設置^000000",
+					"[02]^8B008B返回上級菜單^000000",
+					"[03]^FF8C00返回主菜單^000000");
+		clear;
+		if(.@s == 1) callsub L_auto_buy_config;
+		if(.@s == 2) callsub L_auto_buy_menu;
+		if(.@s == 3) callsub OnBotMenu;
+		return;
+	}
+	
+	// 將固定格式的字符串數組轉換成數據型數組
+	function	array_str2int	{
+		deletearray getarg(2);
+		.@var$ = getarg(0);
+		.@symbol$ = getarg(1);
+		explode(.@result$, .@var$, .@symbol$);
+		.@count = getarraysize(.@result$);
+		if(.@count){
+			for(.@i = 0; .@i < .@count; .@i++)
+				.@int_list[.@i]  = atoi(.@result$[.@i]);
+			copyarray(getarg(2), .@int_list, getarraysize(.@int_list));
+		}		
+		return;
+	}
+}
+
+// 返回當前地圖魔物掉落物品
+function	script	F_map_mobdrops	{
+
+	.@map_name$ = getarg(0);
+	getmapspawns .@map_name$,SPA_ID|SPA_NUM;
+	// 獲取當前地圖魔物信息
+	.@count = @spawn_count;
+	if(.@count){
+		deletearray .@item[0],getarraysize(.@item);	
+		copyarray .@mob_id[0], @spawn_mobid[0], .@count;
+		copyarray .@mob_name$[0], @spawn_name$[0], .@count;
+		.@size = getarraysize(.@mob_id);
+		for (.@i = 0; .@i < .@size; .@i++){
+			getmobdrops(.@mob_id[.@i]);
+			.@count2 = $@MobDrop_count;
+			if(.@count2){
+				.@size2 = getarraysize(.@item);		
+				copyarray .@item[.@size2],$@MobDrop_item[0],.@count2;
+			}
+		}
+		.@size3 = getarraysize(.@item);
+		if(.@size3){
+			for (.@i = 0; .@i < .@size3; .@i++){
+				.@id = .@item[.@i];
+				.@count = countinarray(.@item, .@id);
+				//dispbottom ".@count"+.@count;
+				if(.@count > 1){
+					for (.@v = 0; .@v < (.@count - 1); .@v++){
+						.@idx = inarray(.@item, .@id);
+						//dispbottom ".@idx"+.@idx;
+						if(.@idx != -1) deletearray .@item[.@idx],1;
+					}
+				}
+				.@result$ = .@result$ + .@id + ":";
+			}
+			.@len = getstrlen(.@result$) - 2;
+			.@result$ = substr(.@result$, 0, .@len);
+		}
+	}
+	return .@result$;
+}

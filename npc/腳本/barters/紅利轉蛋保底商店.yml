@@ -1,0 +1,30 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+#紅利轉蛋(1)
+   - Name: 紅利轉蛋(1)
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Dual_SW_Cape
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70067
+             Amount: 800
+
+
+
+
+
+
+
+
+

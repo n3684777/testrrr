@@ -1,0 +1,1259 @@
+﻿trinity,119,127,4	script	任務委托管理員#wol	10379,{
+//------------------------------------------------等級限制
+	if ((BaseLevel < 170)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000170以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","回報任務","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("奧茲迷宮","無法入睡","使灰狼森林更安全","取消")){
+
+		case 1:
+		if (BaseLevel >= 170) {
+			if(checkquest(11739, PLAYTIME) == 2) {
+				erasequest 11739;
+			}
+			if(checkquest(11739, PLAYTIME) == 0 || checkquest(11739, PLAYTIME) == 1) {
+				mes "[梨亦]";
+				mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+				close;
+			}
+			switch( isbegin_quest(16549) ) {
+				case 0:
+					setquest 16549;
+					break;
+				case 1:
+					break;
+				case 2:
+					erasequest 16549;
+					setquest 16549;
+					break;
+			}
+			mes "石灰蟾蜍*20隻那麼就麻煩你囉~";
+			close;
+		}
+		else{
+			if(checkquest(11737, PLAYTIME) == 2) {
+				erasequest 11737;
+			}
+			if(checkquest(11737, PLAYTIME) == 0 || checkquest(11737, PLAYTIME) == 1) {
+				mes "[梨亦]";
+				mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+				close;
+			}
+			switch( isbegin_quest(11736) ) {
+				case 0:
+					setquest 11736;
+					break;
+				case 1:
+					break;
+				case 2:
+					erasequest 11736;
+					setquest 11736;
+					break;
+			}
+			mes "火焰狼*20隻那麼就麻煩你囉~";
+			close;;
+		}
+		end;
+
+		case 2:
+		if (isbegin_quest(16549) == 1 ){
+			mes "[帕吉]";
+			mes "無法重複接取任務。";
+			close;
+		}
+		if(checkquest(16550, PLAYTIME) == 2) {
+			erasequest 16550;
+		}
+		if(checkquest(16550, PLAYTIME) == 0 || checkquest(16550, PLAYTIME) == 1) {
+			mes "[帕吉]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		switch( isbegin_quest(16549) ) {
+			case 0:
+				setquest 16549;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest 16549;
+				setquest 16549;
+				break;
+		}
+		mes "替我清除30隻就好，麻煩你囉~";
+		close;
+		end;
+
+		case 3:
+		if (isbegin_quest(18086) == 1 ){
+			mes "[看門人]";
+			mes "無法重複接取任務。";
+			close;
+		}
+		if(checkquest(18087, PLAYTIME) == 2) {
+			erasequest 18087;
+		}
+		if(checkquest(18087, PLAYTIME) == 0 || checkquest(18087, PLAYTIME) == 1) {
+			mes "[看門人]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		switch( isbegin_quest(18086) ) {
+			case 0:
+				setquest 18086;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest 18086;
+				setquest 18086;
+				break;
+		}
+		mes "替我清除30隻就好，麻煩你囉~";
+		close;
+		end;
+
+		case 4:
+			close;
+		}
+
+
+	case 2:
+		mes "[任務委托管理員]";
+		mes "你想回報哪個任務呢?";
+		next;
+		switch(select("奧茲迷宮","無法入睡","使灰狼森林更安全","取消")){
+
+		case 1:
+		if (BaseLevel >= 170) {
+			if (isbegin_quest(16549) != 1 ){
+				mes "--你還沒接受任務--";
+				close;
+			}
+			if(checkquest(16549, HUNTING) != 2 ){
+				mes "--你還沒清除完成--";
+				close;
+			}
+			if(checkquest(11739, PLAYTIME) == 2) {
+				erasequest 11739;
+			}
+			if(checkquest(11739, PLAYTIME) == 0 || checkquest(11739, PLAYTIME) == 1) {
+				mes "[梨亦]";
+				mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+				close;
+			}
+			mes "[梨亦]";
+			mes "感謝你~這是你的獎勵。";
+			getitem 1000405,3;//紫水晶碎片
+			getexp 11588320,3000000;
+			set #Dop_reputation,#Dop_reputation+30;//名聲+30
+			dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+			setquest 11739;
+			erasequest 16549;
+		}
+		else{
+			if (isbegin_quest(11736) != 1 ){
+				mes "--你還沒接受任務--";
+				close;
+			}
+			if(checkquest(11736, HUNTING) != 2 ){
+				mes "--你還沒清除完成--";
+				close;
+			}
+			if(checkquest(11737, PLAYTIME) == 2) {
+				erasequest 11737;
+			}
+			if(checkquest(11737, PLAYTIME) == 0 || checkquest(11737, PLAYTIME) == 1) {
+				mes "[梨亦]";
+				mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+				close;
+			}
+			mes "[梨亦]";
+			mes "感謝你~這是你的獎勵。";
+			getitem 1000405,3;//紫水晶碎片
+			getexp 4364880,3000000;
+			set #Dop_reputation,#Dop_reputation+30;//名聲+30
+			dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+			setquest 11737;
+			erasequest 11736;
+		}
+		end;
+
+		case 2:
+		if (isbegin_quest(16549) != 1 ){
+			mes "--你還沒接受任務--";
+			close;
+		}
+		if(checkquest(16549, HUNTING) != 2 ){
+			mes "--你還沒清除完成--";
+			close;
+		}
+		if(checkquest(16550, PLAYTIME) == 2) {
+			erasequest 16550;
+		}
+		if(checkquest(16550, PLAYTIME) == 0 || checkquest(16550, PLAYTIME) == 1) {
+			mes "[特寧]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		mes "[特寧]";
+		mes "感謝你~這是你的獎勵。";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 10318080,3000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 16550;
+		erasequest 16549;
+		end;
+
+		case 3:
+		if (isbegin_quest(18086) != 1 ){
+			mes "--你還沒接受任務--";
+			close;
+		}
+		if(checkquest(18086, HUNTING) != 2 ){
+			mes "--你還沒清除完成--";
+			close;
+		}
+		if(checkquest(18087, PLAYTIME) == 2) {
+			erasequest 18087;
+		}
+		if(checkquest(18087, PLAYTIME) == 0 || checkquest(18087, PLAYTIME) == 1) {
+			mes "[特寧]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		mes "[特寧]";
+		mes "感謝你~這是你的獎勵。";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 9956480,3000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 18087;
+		erasequest 18086;
+		end;
+
+
+		case 4:
+			close;
+		}
+
+	case 3:
+		close;
+	}
+
+OnInit:
+	waitingroom "祈禱的方向每日任務",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+//= 灰狼之森每日任務
+gw_fild01,131,15,8	script	陷阱座標#DoP01	844,{
+	mes "陷阱的座標如下....";
+	viewpoint 1,173,59,1,0xFFFFFF;
+	viewpoint 1,165,81,2,0xFFFFFF;
+	viewpoint 1,90,115,3,0xFFFFFF;
+	viewpoint 1,53,224,4,0xFFFFFF;
+	viewpoint 1,63,265,5,0xFFFFFF;
+	viewpoint 1,159,210,6,0xFFFFFF;
+	viewpoint 1,240,156,7,0xFFFFFF;
+	viewpoint 1,230,65,8,0xFFFFFF;
+	viewpoint 1,298,109,9,0xFFFFFF;
+	viewpoint 1,273,156,10,0xFFFFFF;
+	viewpoint 1,255,239,11,0xFFFFFF;
+	viewpoint 1,282,289,12,0xFFFFFF;
+	viewpoint 1,245,345,13,0xFFFFFF;
+	viewpoint 1,180,310,14,0xFFFFFF;
+	viewpoint 1,96,301,15,0xFFFFFF;
+	close;
+}
+
+gw_fild01,173,59,8	script	陷阱#DoP01	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,165,81,8	script	陷阱#DoP02	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,90,115,8	script	陷阱#DoP03	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,53,224,8	script	陷阱#DoP04	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,63,265,8	script	陷阱#DoP05	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,159,210,8	script	陷阱#DoP06	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,240,156,8	script	陷阱#DoP07	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,230,65,8	script	陷阱#DoP08	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,298,109,8	script	陷阱#DoP09	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+	}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,273,156,8	script	陷阱#DoP10	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,255,239,8	script	陷阱#DoP11	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,282,289,8	script	陷阱#DoP12	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,245,345,8	script	陷阱#DoP13	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,180,310,8	script	陷阱#DoP14	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+gw_fild01,96,301,8	script	陷阱#DoP15	844,{
+	if (.var > gettimetick(2)){
+		mes "--陷阱內是空的，晚點再來看看吧..--";
+		close;
+	}
+	mes "--這裡有一個陷阱....--";
+	mes "--要取下獵物嗎？--";
+	next;
+	if (select( "好！", "不" ) == 2) {
+		close;
+		}
+	.var = gettimetick(2);
+	set .var,.var+rand(200,500);
+	if (rand(1,100) >35){
+		getitem rand(1000412,1000414),1;
+	}
+	else{
+		mes "--甚麼也沒有獵捕到。--";
+		close;
+	}
+	close;
+}
+//===============================================
+
+
+
+
+wolfvill,143,113,8	script	梨亦#DoP01	10379,{
+
+	mes "[梨亦]";
+	mes "可以麻煩你幫我清理奧茲迷宮嗎？";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+
+	case 2:
+
+	case 3:
+		end;
+	close;
+	}
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,147,97,3	script	帕吉#DoP01	10401,{
+	mes "[帕吉]";
+	mes "野外的火風獵鷹好恐怖喔..冒險家你能夠幫助我剷除他們嗎？";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+
+	case 2:
+
+	case 3:
+		end;
+	close;
+	}
+	
+}
+
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,61,170,8	script	菲特#DoP01	10399,{
+	mes "[菲特]";
+	mes "可以麻煩你去和幾位村名打聽幾個故事並記錄筆記嗎？";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+		if (isbegin_quest(16554) == 1 ){
+			mes "[菲特]";
+			mes "打聽到了嗎？";
+			close;
+		}
+		if(checkquest(16559, PLAYTIME) == 2) {
+			erasequest 16559;
+		}
+		if(checkquest(16559, PLAYTIME) == 0 || checkquest(16559, PLAYTIME) == 1) {
+			mes "[菲特]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		switch( isbegin_quest(16554) ) {
+			case 0:
+				setquest 16554;
+				setquest 16555;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest 16554;
+				setquest 16554;
+				erasequest 16555;
+				setquest 16555;
+				break;
+		}
+		mes "位置和記錄用筆記本這就發給你！麻煩你囉~";
+		//getitem 1000408,1;
+		viewpoint 1,184,110,1,0xFFFFFF;
+		close;
+		end;
+	case 2:
+		if (isbegin_quest(16558) == 1 ){
+			if(checkquest(16559, PLAYTIME) == 2) {
+				erasequest 16559;
+			}
+			if(checkquest(16559, PLAYTIME) == 0 || checkquest(16559, PLAYTIME) == 1) {
+				mes "[菲特]";
+				mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+				close;
+			}
+			mes "[菲特]";
+			mes "感謝你~這是你的獎勵。";
+			getitem 1000405,3;//紫水晶碎片
+			getexp 18252408,3000000;
+			set #Dop_reputation,#Dop_reputation+30;//名聲+30
+			dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+			setquest 16559;
+			erasequest 16554;
+			erasequest 16558;
+		}
+		else{
+			mes "[菲特]";
+			mes "恩？";
+			close;
+		}
+		end;
+	case 3:
+		end;
+	close;
+	}
+	
+}
+wolfvill,184,110,3	script	迪奈兒#DoP01	10398,{
+		if (isbegin_quest(16554) == 1 && isbegin_quest(16555) == 1){
+			viewpoint 2,184,110,1,0xFFFFFF;
+			mes "--迪奈兒告知了你故事。--";
+			next;
+			mes "--換去找艾彌拉吧！--";
+			viewpoint 1,110,218,1,0xFFFFFF;
+			setquest 16556;
+			erasequest 16555;
+			close;
+		}
+}
+wolfvill,110,218,3	script	艾彌拉#DoP01	10396,{
+		if (isbegin_quest(16554) == 1 && isbegin_quest(16556) == 1){
+			viewpoint 2,110,218,1,0xFFFFFF;
+			mes "--艾彌拉告知了你故事。--";
+			next;
+			mes "--換去找莎妮娜吧！--";
+			viewpoint 1,96,129,1,0xFFFFFF;
+			setquest 16557;
+			erasequest 16556;
+			close;
+		}
+}
+wolfvill,96,129,5	script	莎妮娜#DoP01	10394,{
+		if (isbegin_quest(16554) == 1 && isbegin_quest(16557) == 1){
+			viewpoint 2,96,129,1,0xFFFFFF;
+			mes "--莎妮娜告知了你故事。--";
+			setquest 16558;
+			erasequest 16557;
+			viewpoint 2,61,170,1,0xFFFFFF;
+			close;
+		}
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,117,119,8	script	斯卡尼亞#DoP01	10398,{
+	if (isbegin_quest(17512) == 1 ){
+		mes "[帕吉]";
+		mes "你去找它了嗎？";
+		close;
+	}
+	mes "[斯卡尼亞]";
+	mes "我的灰色魔羌走失了，你能幫我去找灰色魔羌一下嗎？";
+	next;
+	if (select( "好！", "不" ) == 1) {
+		if(checkquest(17516, PLAYTIME) == 2) {
+			erasequest 17516;
+		}
+		if(checkquest(17516, PLAYTIME) == 0 || checkquest(17516, PLAYTIME) == 1) {
+			mes "[帕吉]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		switch( isbegin_quest(17512) ) {
+			case 0:
+				setquest 17512;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest 17512;
+				setquest 17512;
+				break;
+		}
+		mes "[斯卡尼亞]";
+		mes "他應該在灰狼森林裡面，麻煩你了。";
+		close;
+	}
+	close;
+}
+gw_fild01,138,106,8	script	灰色魔羌#DoP01	21323,{
+	if (isbegin_quest(17512) != 1 ){
+			mes "--你看到一個受傷的山羊--";
+			close;
+		}
+	mes "[灰色魔羌]";
+	mes "--灰色魔羌看起來受傷了，要替斯卡尼亞照顧它嗎？--";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+		if (isbegin_quest(17514) == 1 ){
+			mes "--無法重複接取任務--";
+			close;
+		}
+		if(checkquest(17516, PLAYTIME) == 2) {
+			erasequest 17516;
+		}
+		if(checkquest(17516, PLAYTIME) == 0 || checkquest(17516, PLAYTIME) == 1) {
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		switch( isbegin_quest(17514) ) {
+			case 0:
+				setquest 17514;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest 17514;
+				setquest 17514;
+				break;
+		}
+		mes "--應該替灰色魔羌清除它周邊的灰燼就好了。--";
+		close;
+		end;
+
+	case 2:
+		if (isbegin_quest(17514) != 1 ){
+			mes "--你還沒接受任務--";
+			close;
+		}
+		if(checkquest(17514, HUNTING) != 2 ){
+			mes "--你還沒清除完成--";
+			close;
+		}
+		if(checkquest(17516, PLAYTIME) == 2) {
+			erasequest 17516;
+		}
+		if(checkquest(17516, PLAYTIME) == 0 || checkquest(17516, PLAYTIME) == 1) {
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		mes "[特寧]";
+		mes "感謝你~這是你的獎勵。";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 7769124,3000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 17516;
+		erasequest 17512;
+		erasequest 17514;
+		end;
+	case 3:
+		end;
+	close;
+	}
+	
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,103,230,3	script	沃爾#DoP01	10388,{
+	mes "[沃爾]";
+	mes "這邊的水源真的不是很夠，可以請你去找個淨水聖物，並到那邊的水桶替我濾出一桶水嗎？";
+	next;
+	switch(select("好的:繳交純淨水:離開")) {
+	case 1:
+		mes "[沃爾]";
+		mes "我把販售的商人位置發給你。";
+		viewpoint 1,103,141,1,0xFFFFFF;
+		end;
+	case 2:
+		if(checkquest(8694, PLAYTIME) == 2) {
+			erasequest 8694;
+		}
+		if(checkquest(8694, PLAYTIME) == 0 || checkquest(8694, PLAYTIME) == 1) {
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		if((countitem(1000411) < 1)) {
+			mes "[特寧]";
+			mes "^ff0000一桶淨水不足…^000000";
+			close;
+		}
+		delitem 1000411,1;
+		mes "[特寧]";
+		mes "感謝你！我這就把獎勵給你！";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 18252408,2000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 8694;
+		end;
+	case 3:
+		end;
+	close;
+	}
+	
+}
+wolfvill,104,235,8	script	水桶#DoP01	844,{
+	switch(select("使用淨水聖物濾水:離開")) {
+	case 1:
+		if(checkquest(8694, PLAYTIME) == 2) {
+			erasequest 8694;
+		}
+		if(checkquest(8694, PLAYTIME) == 0 || checkquest(8694, PLAYTIME) == 1) {
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		if((countitem(1000410) < 1)) {
+			mes "[特寧]";
+			mes "^ff0000淨水聖物不足…^000000";
+			close;
+		}
+		delitem 1000410,1;
+		getitem 1000411,1;
+		end;
+	case 2:
+		end;
+	close;
+	}
+	
+}
+-	shop	灰狼之村	-,1000410:550
+wolfvill,103,141,3	script	商人#wolfvill::ShopHH	10395,{
+callshop	"灰狼之村",1;	end;
+}
+
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,171,253,5	script	伊澤克爾#DoP01	10388,{
+	mes "[伊澤克爾]";
+	mes "可以請你收集 1 個"+getitemname(999)+"和 10 個"+getitemname(1000406)+"嗎？";
+	next;
+	switch(select("好的:繳交物品:離開")) {
+	case 1:
+		mes "[伊澤克爾]";
+		mes "那就麻煩你了，非常不尋常的水晶可以透過殲滅灰狼取得。";
+		end;
+	case 2:
+		if(checkquest(17509, PLAYTIME) == 2) {
+			erasequest 17509;
+		}
+		if(checkquest(17509, PLAYTIME) == 0 || checkquest(17509, PLAYTIME) == 1) {
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		if((countitem(999) < 1) || (countitem(1000406) < 10)) {
+			mes "[特寧]";
+			mes "^ff0000鋼鐵或非常不尋常的水晶不足…^000000";
+			close;
+		}
+		delitem 999,1;
+		delitem 1000406,10;
+		mes "[特寧]";
+		mes "感謝你！我這就把獎勵給你！";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 18252408,2000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 17509;
+		end;
+	case 3:
+		end;
+	close;
+	}
+	
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+gw_fild01,32,101,5	script	看門人#DoP01	881,{
+	mes "[看門人]";
+	mes "你願意幫我清除灰狼森林的怪物嗎？";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+
+	case 2:
+
+	case 3:
+		end;
+	close;
+	}
+	
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,155,236,5	script	吉歐#DoP01	4_M_TRAINEE,{
+
+		if(BaseLevel < 200) {
+			mes "[吉歐]";
+			mes "還是等到 Lv.200 後再來吧…"; 
+			close;
+		}
+
+	mes "[吉歐]";
+	mes "--你與吉歐對話--";
+	next;
+	switch(select("領取獎勵:離開")) {
+	case 1:
+		if(checkquest(3504, PLAYTIME) == 2) {
+			erasequest 3504;
+		}
+		if(checkquest(3504, PLAYTIME) == 0 || checkquest(3504, PLAYTIME) == 1) {
+			mes "[特寧]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		mes "[特寧]";
+		mes "感謝你~這是你的獎勵。";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 18252408,3000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 3504;
+		end;
+	case 2:
+		end;
+	close;
+	}
+	
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,70,135,8	script	瑞秋#DoP01	10401,{
+	mes "[瑞秋]";
+	mes "冒險家，你能夠幫我去摘取雙色花朵嗎？";
+	next;
+	switch(select("接受任務:回報任務:離開")) {
+	case 1:
+		if (isbegin_quest(5938) == 1 || isbegin_quest(5939) == 1 || isbegin_quest(5940) == 1 || isbegin_quest(5941) == 1){
+			mes "[瑞秋]";
+			mes "無法重複接取任務。";
+			close;
+		}
+		if (isbegin_quest(5936) == 1 ){
+			mes "--趕快去回報吧！--";
+			close;
+		}
+		if(checkquest(5937, PLAYTIME) == 2) {
+			erasequest 5937;
+		}
+		if(checkquest(5937, PLAYTIME) == 0 || checkquest(5937, PLAYTIME) == 1) {
+			mes "[瑞秋]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		setarray @questId[0],5938,5939,5940,5941;
+		set @quest,@questId[rand(0,3)];
+		switch( isbegin_quest(@quest) ) {
+			case 0:
+				setquest @quest;
+				break;
+			case 1:
+				break;
+			case 2:
+				erasequest @quest;
+				setquest @quest;
+				break;
+		}
+		mes "花朵就在旁邊，麻煩你囉~";
+		close;
+		end;
+	case 2:
+		if (isbegin_quest(5936) != 1 ){
+			mes "--你還沒接受任務或是還沒成功--";
+			close;
+		}
+		if(checkquest(5937, PLAYTIME) == 2) {
+			erasequest 5937;
+		}
+		if(checkquest(5937, PLAYTIME) == 0 || checkquest(5937, PLAYTIME) == 1) {
+			mes "[瑞秋]";
+			mes "^ff0000冷卻時間還沒過，所以請先休息吧。^000000";
+			close;
+		}
+		if((countitem(1000407) < 1)) {
+			mes "[特寧]";
+			mes "^ff0000雙色花不足…^000000";
+			close;
+		}
+		delitem 1000407,1;
+		mes "[瑞秋]";
+		mes "感謝你~這是你的獎勵。";
+		getitem 1000405,3;//紫水晶碎片
+		getexp 18252408,3000000;
+		set #Dop_reputation,#Dop_reputation+30;//名聲+30
+		dispbottom "[灰狼之森] 獎勵名聲積分30分，累積名聲積分為："+#Dop_reputation+"";
+		setquest 5937;
+		erasequest 5936;
+		end;
+	case 3:
+		end;
+	close;
+	}
+	
+}
+wolfvill,54,140,8	script	鮮豔的花朵#DoP01	10392,{
+	if (isbegin_quest(5938) == 1 ){
+		setarray @Type[0],40,2,50,2;
+		set @quest,5938;
+	}
+	else if (isbegin_quest(5939) == 1 ){
+		setarray @Type[0],30,4,40,4;
+		set @quest,5939;
+	}
+	else if (isbegin_quest(5940) == 1 ){
+		setarray @Type[0],20,6,30,6;
+		set @quest,5940;
+	}
+	else if (isbegin_quest(5941) == 1 ){
+		setarray @Type[0],10,8,20,8;
+		set @quest,5941;
+	}
+	else{
+		mes "--這裡有一朵鮮艷的花朵。--";
+		close;
+	}
+	mes "--要使用幾度角來取下呢？--";
+	next;
+	input .@Flower1;
+	if(.@Flower1 != @Type[0]){
+		mes "^ff0000花朵因為步驟錯誤分裂了。^000000";
+		close;
+	}
+	mes "--要拔出幾片葉片呢？--";
+	next;
+	input .@Flower2;
+	if(.@Flower2 != @Type[1]){
+		mes "^ff0000花朵因為步驟錯誤分裂了。^000000";
+		close;
+	}
+	mes "--要添加幾ml的水呢？--";
+	next;
+	input .@Flower3;
+	if(.@Flower3 != @Type[2]){
+		mes "^ff0000花朵因為步驟錯誤分裂了。^000000";
+		close;
+	}
+	mes "--要添加幾g的秘粉呢？--";
+	next;
+	input .@Flower4;
+	if(.@Flower4 != @Type[3]){
+		mes "^ff0000花朵因為步驟錯誤分裂了。^000000";
+		close;
+	}
+	mes "--成功獲得雙色花了！--";
+	getitem 1000407,1;
+	setquest 5936;
+	erasequest @quest;
+	close;
+}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//wolfvill,164,137,5	trader	物品與裝備兌換#DoP	10399,{
+//	end;
+	
+//OnInit:
+//	tradertype(NST_EXPANDED_BARTER);
+//	sellitem 450177, 0, -1, 1000405, 350;
+//	sellitem 450178, 0, -1, 1000405, 350;
+//	sellitem 480091, 0, -1, 1000405, 350;
+//	sellitem 480090, 0, -1, 1000405, 350;
+//	sellitem 470087, 0, -1, 1000405, 350;
+//	sellitem 470088, 0, -1, 1000405, 350;
+//	sellitem 490106, 0, -1, 1000405, 350;
+//	sellitem 490107, 0, -1, 1000405, 350;
+//	sellitem 490108, 0, -1, 1000405, 350;
+//	sellitem 490109, 0, -1, 1000405, 350;
+//	end;
+//OnBuyItem:
+//	end;
+//}
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+//===============================================
+wolfvill,167,135,3	script	灰狼村聲望管理員#DoP01	10397,{
+	mes "[灰狼村聲望管理員]";
+	mes "您目前的聲望等級為："+#Dop_Rank+"";
+	mes "您目前的聲望點數為："+#Dop_reputation+"";
+	mes "聲望等級5等以上後灰狼村的日常任務會額外獲得1個 紫晶碎片，別墅副本獎勵增加到10個 紫晶碎片。";
+	next;
+	switch(select("提升聲望等級:離開")) {
+	case 1:
+		set .@reputation,#Dop_reputation/1000;
+		if (.@reputation >= 5){set .@reputation,5;}
+		set #Dop_Rank,.@reputation;
+		mes "您新的聲望等級為："+#Dop_Rank+"";
+		end;
+	case 2:
+		end;
+	}
+	close;
+
+OnInit:
+	waitingroom "灰狼村聲望管理員",0;
+	end;
+}

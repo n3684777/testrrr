@@ -1,0 +1,763 @@
+
+vdistrict1,9,74,4	script	空中要塞侵入管理者	573,{
+
+	//副本任務獎勵
+	if(checkquest(32061,HUNTING)==2 ) { 
+	dispbottom "空中要塞侵入任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,rand(3,5);	//商城1點金幣
+	erasequest 32061; }
+
+	if(checkquest(14496,HUNTING)==2 ) {
+	mes"[科學家 爾尼]";
+	mes "這些物品就是要給你的獎勵!";
+	getitem 6919,20*$EP1601;	//榮譽之證
+	erasequest 14496;
+	close; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_26 < gettime(8) ){
+	set Instance_Bout_26,10;
+	set day_Instance_Bout_26,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_26 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[科學家 爾尼]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "空中要塞侵入";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[科學家 爾尼]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1601+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_26+"^000000 ]";
+	mes "副本獎勵：";
+	mes "榮譽之證x20";
+	mes "商城1點金幣x3~5";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 145) {
+			mes "[科學家 爾尼]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.145 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[科學家 爾尼]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[科學家 爾尼]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 145) {
+			mes "[科學家 爾尼]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.145 後再來吧…"; 
+			close;
+		}
+
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_26,Instance_Bout_26-1;
+
+			if(checkquest(14496,HUNTING)<0 ){setquest 14496;}
+			//副本任務
+			if(checkquest(32061,HUNTING)<0 ){setquest 32061;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "空中要塞侵入",0;
+	end;
+}
+
+
+//------------------------------空中要塞侵入事件
+1@sthb,0,0,0	script	空中要塞侵入事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@sthb");
+	'map_name$[1] = instance_mapname("1@sthc");
+	'map_name$[2] = instance_mapname("1@sthd");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("神秘的光#sth01");
+	disablenpc instance_npcname("神秘的光#sth02");
+	disablenpc instance_npcname("神秘的光#sth03");
+	disablenpc instance_npcname("神秘的光#sth04");
+	disablenpc instance_npcname("神秘的光#sth05");
+	disablenpc instance_npcname("神秘的光#sth06");
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth01");
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth02");
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth03");
+	disablenpc instance_npcname("神秘寶箱#sth01");
+	disablenpc instance_npcname("神秘寶箱#sth02");
+	disablenpc instance_npcname("神秘寶箱#sth03");
+	disablenpc instance_npcname("神秘寶箱#sth04");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth01");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth02");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth03");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth04");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth05");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth06");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth07");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth08");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth09");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth10");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth11");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth12");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth13");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth14");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth15");
+	disablenpc instance_npcname("空中要塞侵入傳送門#sth16");
+	//副本標籤
+	set 'CD_sth_0,0;
+	set 'CD_sth_1,0;
+	set 'CD_sth_2,0;
+	set 'CD_sth_3,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'sth_mob_01,8;
+	areamonster 'map_name$[0],48,75,48,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],55,75,55,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],62,75,62,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],48,61,48,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],55,61,55,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],62,61,62,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],48,67,48,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	areamonster 'map_name$[0],62,67,62,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	set 'sth_mob_01,'sth_mob_01-1;
+	if ('sth_mob_01>0) end;
+	set 'sth_mob_01,8;
+	areamonster 'map_name$[0],48,75,48,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],55,75,55,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],62,75,62,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],48,61,48,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],55,61,55,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],62,61,62,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],48,67,48,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	areamonster 'map_name$[0],62,67,62,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'sth_mob_01,'sth_mob_01-1;
+	if ('sth_mob_01>0) end;
+	set 'sth_mob_01,8;
+	areamonster 'map_name$[0],48,75,48,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],55,75,55,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],62,75,62,75,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],48,61,48,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],55,61,55,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],62,61,62,61,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],48,67,48,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],62,67,62,67,"--ja--",3476,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd4";
+	areamonster 'map_name$[0],62,67,62,67,"--ja--",3478,1;
+	end;
+
+	OnCcdd4:
+	set 'sth_mob_01,'sth_mob_01-1;
+	if ('sth_mob_01>0) end;
+	//-----一樓左側出怪
+	areamonster 'map_name$[0],49,85,49,85,"--ja--",3479,2;
+	areamonster 'map_name$[0],54,85,54,85,"--ja--",3477,2;
+	areamonster 'map_name$[0],38,85,38,85,"--ja--",3477,2;
+	areamonster 'map_name$[0],38,70,38,70,"--ja--",3480,2;
+	areamonster 'map_name$[0],38,50,38,50,"--ja--",3479,2;
+	areamonster 'map_name$[0],58,50,58,50,"--ja--",3477,2;
+	areamonster 'map_name$[0],83,50,83,50,"--ja--",3479,1;
+	areamonster 'map_name$[0],83,62,83,62,"--ja--",3477,2;
+	areamonster 'map_name$[0],83,70,83,70,"--ja--",3479,2;
+	areamonster 'map_name$[0],83,80,83,80,"--ja--",3480,2;
+	areamonster 'map_name$[0],83,88,83,88,"--ja--",3480,2;
+	areamonster 'map_name$[0],83,96,83,96,"--ja--",3477,2;
+	areamonster 'map_name$[0],74,96,74,96,"--ja--",3479,2;
+	areamonster 'map_name$[0],63,96,63,96,"--ja--",3477,2;
+	areamonster 'map_name$[0],49,96,49,96,"--ja--",3479,2;
+	areamonster 'map_name$[0],40,96,40,96,"--ja--",3477,2;
+	areamonster 'map_name$[0],28,96,28,96,"--ja--",3479,2;
+	areamonster 'map_name$[0],28,80,28,80,"--ja--",3477,2;
+	areamonster 'map_name$[0],28,80,28,80,"--ja--",3477,2;
+	areamonster 'map_name$[0],28,57,28,57,"--ja--",3478,1;
+	areamonster 'map_name$[0],26,41,26,41,"--ja--",3479,2;
+	areamonster 'map_name$[0],29,41,29,41,"--ja--",3480,2;
+	areamonster 'map_name$[0],45,41,45,41,"--ja--",3477,2;
+	areamonster 'map_name$[0],58,41,58,41,"--ja--",3479,2;
+	areamonster 'map_name$[0],69,41,69,41,"--ja--",3477,2;
+	areamonster 'map_name$[0],77,41,77,41,"--ja--",3477,2;
+	areamonster 'map_name$[0],91,41,91,41,"--ja--",3480,2;
+	areamonster 'map_name$[0],94,41,94,41,"--ja--",3480,2;
+	areamonster 'map_name$[0],94,56,94,56,"--ja--",3479,2;
+	areamonster 'map_name$[0],38,87,38,50,"--ja--",3477,1;
+	//-----二樓右側出怪
+	areamonster 'map_name$[0],210,59,210,59,"--ja--",3477,1;
+	areamonster 'map_name$[0],210,45,210,45,"--ja--",3477,1;
+	areamonster 'map_name$[0],210,37,210,37,"--ja--",3479,2;
+	areamonster 'map_name$[0],208,37,208,37,"--ja--",3477,1;
+	areamonster 'map_name$[0],194,37,194,37,"--ja--",3477,1;
+	areamonster 'map_name$[0],178,37,178,37,"--ja--",3479,2;
+	areamonster 'map_name$[0],165,37,165,37,"--ja--",3480,2;
+	areamonster 'map_name$[0],143,37,143,37,"--ja--",3480,2;
+	areamonster 'map_name$[0],143,55,143,55,"--ja--",3477,2;
+	areamonster 'map_name$[0],143,66,143,66,"--ja--",3479,2;
+	areamonster 'map_name$[0],143,75,143,75,"--ja--",3477,2;
+	areamonster 'map_name$[0],143,84,143,84,"--ja--",3478,1;
+	areamonster 'map_name$[0],142,94,142,94,"--ja--",3477,1;
+	areamonster 'map_name$[0],145,94,145,94,"--ja--",3480,2;
+	areamonster 'map_name$[0],156,95,156,95,"--ja--",3480,2;
+	areamonster 'map_name$[0],167,95,167,95,"--ja--",3479,2;
+	areamonster 'map_name$[0],177,95,177,95,"--ja--",3477,2;
+	areamonster 'map_name$[0],188,95,188,95,"--ja--",3479,2;
+	areamonster 'map_name$[0],198,94,198,94,"--ja--",3477,2;
+	areamonster 'map_name$[0],201,94,201,94,"--ja--",3479,2;
+	areamonster 'map_name$[0],199,81,199,81,"--ja--",3477,2;
+	areamonster 'map_name$[0],199,71,199,71,"--ja--",3477,1;
+	areamonster 'map_name$[0],199,61,199,61,"--ja--",3480,2;
+	areamonster 'map_name$[0],201,47,201,47,"--ja--",3480,2;
+	areamonster 'map_name$[0],198,47,198,47,"--ja--",3479,2;
+	areamonster 'map_name$[0],174,47,174,47,"--ja--",3477,1;
+	areamonster 'map_name$[0],156,47,156,47,"--ja--",3477,1;
+	areamonster 'map_name$[0],152,47,152,47,"--ja--",3479,2;
+	areamonster 'map_name$[0],153,63,153,63,"--ja--",3477,2;
+	areamonster 'map_name$[0],153,73,153,73,"--ja--",3479,2;
+	areamonster 'map_name$[0],152,83,152,83,"--ja--",3479,2;
+	areamonster 'map_name$[0],156,83,156,83,"--ja--",3480,2;
+	areamonster 'map_name$[0],160,84,160,84,"--ja--",3480,2;
+	areamonster 'map_name$[0],171,84,171,84,"--ja--",3477,1;
+	areamonster 'map_name$[0],180,84,180,84,"--ja--",3479,2;
+	areamonster 'map_name$[0],188,84,188,84,"--ja--",3477,1;
+	areamonster 'map_name$[0],191,84,191,84,"--ja--",3480,2;
+	areamonster 'map_name$[0],211,38,142,38,"--ja--",3478,1;
+	//-----神秘洞穴
+	enablenpc instance_npcname("神秘的光#sth01");
+	enablenpc instance_npcname("神秘的光#sth02");
+	enablenpc instance_npcname("神秘的光#sth03");
+	enablenpc instance_npcname("神秘的光#sth04");
+	enablenpc instance_npcname("神秘的光#sth05");
+	enablenpc instance_npcname("神秘的光#sth06");
+	enablenpc instance_npcname("史蒂芬·傑克·魔狼#sth01");
+	end;
+
+	OnCcdd01:
+	set 'sth_mob_1,'sth_mob_1-1;
+	if ('sth_mob_1>0) end;
+	enablenpc instance_npcname("神秘寶箱#sth01");
+	end;
+
+	OnCcdd02:
+	set 'sth_mob_2,'sth_mob_2-1;
+	if ('sth_mob_2>0) end;
+	enablenpc instance_npcname("神秘寶箱#sth02");
+	end;
+
+	OnCcdd03:
+	set 'sth_mob_3,'sth_mob_3-1;
+	if ('sth_mob_3>0) end;
+	enablenpc instance_npcname("神秘寶箱#sth03");
+	end;
+
+	OnCcdd04:
+	set 'sth_mob_4,'sth_mob_4-1;
+	if ('sth_mob_4>0) end;
+	enablenpc instance_npcname("神秘寶箱#sth04");
+	end;
+
+	OnCcdd05:
+	set 'sth_mob_5,'sth_mob_5-1;
+	if ('sth_mob_5>0) end;
+	areamonster 'map_name$[1],15,129,15,129,"--ja--",3475,1;
+	end;
+
+	OnCcdd06:
+	set 'sth_mob_6,'sth_mob_6-1;
+	if ('sth_mob_6>0) end;
+	areamonster 'map_name$[1],15,50,15,50,"--ja--",3474,1;
+	end;
+
+	OnCcdd08:
+	getitem 22848,1;
+	end;
+
+	OnCcdd09:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【空中要塞侵入】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"【副本公告】：地圖中間出現傳送點，進去那邊應該就可以離開這裡了!!",bc_all,0xD7BA98;
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth16");
+	end;
+}
+
+
+//------------------------------副本NPC
+1@sthb,64,67,4	script	史蒂芬·傑克·魔狼#sth00	10140,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_sth_0==1) {end;}
+	set 'CD_sth_0,1;
+	//unittalk getcharid(3),"這裡就是入侵普隆德拉怪物們的源頭...空中要塞的內部嗎...?";
+	//sleep 2000;
+	npctalk "有...入侵者.. 空中要塞..";
+	sleep 2000;
+	npctalk "趕快阻止入侵者... 對我.. 畢尤是..";
+	sleep 2000;
+	npctalk "小不點...人類.. 給我.. 滾開!";
+	sleep 2000;
+	npctalk "可是...我還沒玩夠呢!";
+	sleep 2000;
+	npctalk "嗚嗚... 嗚嗚...";
+	sleep 2000;
+	npctalk "嗚嗚..真是令人討厭的...臭蟲...";
+	sleep 2000;
+	instance_announce instance_id(1),"不死的...你們喔...守護吧...空中要塞..",14;
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth00");
+	areamonster 'map_name$[0],64,67,64,67,"--ja--",3484,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd1";
+	end;
+}
+
+
+1@sthb,64,67,4	script	史蒂芬·傑克·魔狼#sth01	10140,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_sth_1==1) {end;}
+	set 'CD_sth_1,1;
+	//unittalk getcharid(3),"看來那個巨怪扮演者空中要塞的重要角色...";
+	sleep 2000;
+	npctalk "要塞全部的手下... 去阻止入侵者.. 畢尤的.. 命令..";
+	sleep 2000;
+	//unittalk getcharid(3),"這裡到底在發生甚麼事呢?";
+	sleep 2000;
+	//unittalk getcharid(3),"先上去看看吧!一定能發現甚麼!";
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth13");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth14");
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth01");
+	end;
+}
+
+
+1@sthb,206,84,6	script	史蒂芬·傑克·魔狼#sth02	10140,{end;
+OnCcdd1:
+	sleep 6000;
+	npctalk "神聖的要塞... 入侵者..可惡..守護吧...";
+	end;
+}
+
+1@sthd,103,115,6	script	史蒂芬·傑克·魔狼#sth03	10140,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_sth_3==1) {end;}
+	set 'CD_sth_3,1;
+
+	mes "["+strcharinfo(0)+"]";
+	mes "這是最後嗎?那就是入侵普隆德拉的源頭吧?";
+	unittalk getcharid(3),"這是最後嗎?那就是入侵普隆德拉的源頭吧?";
+	next;
+	mes "[史蒂芬·傑克·魔狼]";
+	mes "冒險家都是一群..不怕死的蠢蛋...";
+	npctalk "冒險家都是一群..不怕死的蠢蛋...";
+	next;
+	mes "[史蒂芬·傑克·魔狼]";
+	mes "我必須執行..命令..畢尤的,,";
+	npctalk "我必須執行..命令..畢尤的,,";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "畢尤嗎..? 巨怪只是守護這裡的手下..僅是這樣而已嗎?";
+	unittalk getcharid(3),"畢尤嗎..? 巨怪只是守護這裡的手下..僅是這樣而已嗎?";
+	next;
+	mes "[史蒂芬·傑克·魔狼]";
+	mes "嗚嗚..嗚嗚嗚...";
+	npctalk " ";
+	mes "[史蒂芬·傑克·魔狼]";
+	mes "可惡的臭蟲..活者出不去..不朽的力量..我的體內..";
+	npctalk "可惡的臭蟲..活者出不去..不朽的力量..我的體內..";
+	mes "["+strcharinfo(0)+"]";
+	mes "首要之務是要消滅它";
+	unittalk getcharid(3),"首要之務是要消滅它";
+	instance_announce instance_id(1),"士兵們... 畢尤的..要塞..把他們粉身碎骨..我來出馬吧...殺光..全部..",14;
+	areamonster 'map_name$[2],103,115,103,115,"--ja--",3473,1,instance_npcname("空中要塞侵入事件1")+"::OnCcdd09";
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth03");
+	close;
+}
+
+
+//------------------------------ 神秘寶箱
+1@sthc,115,136,4	script	神秘寶箱#sth01	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@sth01,rand(1,100);
+	set .@sth02,rand(1,100);
+	set .@sth03,rand(1,100);
+	set .@sth04,rand(1,100);
+	set .@sth05,rand(1,100);
+	set .@sth06,rand(1,100);
+	if (.@sth01 <= 70) {getitem 984,1;}
+	if (.@sth02 <= 70) {getitem 985,1;}
+	if (.@sth03 <= 40) {getitem 607,1;}
+	if (.@sth04 <= 60) {getitem 608,1;}
+	if (.@sth05 <= 10) {getitem 616,1;}
+	if (.@sth06 <= 3) {getitem 12246,1;}
+	disablenpc instance_npcname("神秘寶箱#sth01");
+	end;
+}
+
+1@sthc,65,136,4	script	神秘寶箱#sth02	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@sth01,rand(1,100);
+	set .@sth02,rand(1,100);
+	set .@sth03,rand(1,100);
+	set .@sth04,rand(1,100);
+	set .@sth05,rand(1,100);
+	set .@sth06,rand(1,100);
+	if (.@sth01 <= 70) {getitem 984,1;}
+	if (.@sth02 <= 70) {getitem 985,1;}
+	if (.@sth03 <= 40) {getitem 607,1;}
+	if (.@sth04 <= 60) {getitem 608,1;}
+	if (.@sth05 <= 10) {getitem 616,1;}
+	if (.@sth06 <= 3) {getitem 12246,1;}
+	disablenpc instance_npcname("神秘寶箱#sth02");
+	end;
+}
+
+1@sthc,115,53,4	script	神秘寶箱#sth03	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@sth01,rand(1,100);
+	set .@sth02,rand(1,100);
+	set .@sth03,rand(1,100);
+	set .@sth04,rand(1,100);
+	set .@sth05,rand(1,100);
+	set .@sth06,rand(1,100);
+	if (.@sth01 <= 70) {getitem 984,1;}
+	if (.@sth02 <= 70) {getitem 985,1;}
+	if (.@sth03 <= 40) {getitem 607,1;}
+	if (.@sth04 <= 60) {getitem 608,1;}
+	if (.@sth05 <= 10) {getitem 616,1;}
+	if (.@sth06 <= 3) {getitem 12246,1;}
+	disablenpc instance_npcname("神秘寶箱#sth03");
+	end;
+}
+
+1@sthc,65,53,4	script	神秘寶箱#sth04	10005,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	specialeffect 10;
+	set .@sth01,rand(1,100);
+	set .@sth02,rand(1,100);
+	set .@sth03,rand(1,100);
+	set .@sth04,rand(1,100);
+	set .@sth05,rand(1,100);
+	set .@sth06,rand(1,100);
+	if (.@sth01 <= 70) {getitem 984,1;}
+	if (.@sth02 <= 70) {getitem 985,1;}
+	if (.@sth03 <= 40) {getitem 607,1;}
+	if (.@sth04 <= 60) {getitem 608,1;}
+	if (.@sth05 <= 10) {getitem 616,1;}
+	if (.@sth06 <= 3) {getitem 12246,1;}
+	disablenpc instance_npcname("神秘寶箱#sth04");
+	end;
+}
+
+
+//------------------------------ 隱藏門
+1@sthb,34,85,4	script	神秘的光#sth01	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_1,12;
+	areamonster 'map_name$[1],115,97,115,127,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd01";
+	areamonster 'map_name$[1],115,97,115,127,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd01";
+	areamonster 'map_name$[1],115,97,115,127,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd01";
+	disablenpc instance_npcname("神秘的光#sth01");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth01");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth02");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+1@sthb,84,99,4	script	神秘的光#sth02	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_2,12;
+	areamonster 'map_name$[1],65,97,65,127,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd02";
+	areamonster 'map_name$[1],65,97,65,127,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd02";
+	areamonster 'map_name$[1],65,97,65,127,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd02";
+	disablenpc instance_npcname("神秘的光#sth02");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth03");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth04");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+1@sthb,24,40,4	script	神秘的光#sth03	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_3,12;
+	areamonster 'map_name$[1],115,15,115,45,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd03";
+	areamonster 'map_name$[1],115,15,115,45,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd03";
+	areamonster 'map_name$[1],115,15,115,45,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd03";
+	disablenpc instance_npcname("神秘的光#sth03");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth05");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth06");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+1@sthb,206,80,4	script	神秘的光#sth04	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_4,12;
+	areamonster 'map_name$[1],65,15,65,45,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd04";
+	areamonster 'map_name$[1],65,15,65,45,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd04";
+	areamonster 'map_name$[1],65,15,65,45,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd04";
+	disablenpc instance_npcname("神秘的光#sth04");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth07");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth08");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+1@sthb,172,90,4	script	神秘的光#sth05	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_5,12;
+	areamonster 'map_name$[1],14,97,14,125,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd05";
+	areamonster 'map_name$[1],14,97,14,125,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd05";
+	areamonster 'map_name$[1],14,97,14,125,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd05";
+	disablenpc instance_npcname("神秘的光#sth05");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth09");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth10");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+1@sthb,177,51,4	script	神秘的光#sth06	10044,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+
+	mes "一道神秘的光";
+	mes "光源深處好像有個鑰匙孔?";
+	next;
+	menu "插入監獄鑰匙",-,"不要靠近",Ccdd01;
+
+	if (countitem(22848) < 1) {
+	mes "必須用監獄鑰匙才能打開！";
+	close; }
+
+	delitem 22848,1;
+	set 'sth_mob_6,12;
+	areamonster 'map_name$[1],15,17,15,47,"--ja--",3481,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd06";
+	areamonster 'map_name$[1],15,17,15,47,"--ja--",3482,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd06";
+	areamonster 'map_name$[1],15,17,15,47,"--ja--",3483,4,instance_npcname("空中要塞侵入事件1")+"::OnCcdd06";
+	disablenpc instance_npcname("神秘的光#sth06");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth11");
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth12");
+	close;
+
+	Ccdd01:
+	close;
+}
+
+
+
+//------------------------------觸發點
+1@sthb,210,97,0	script	#sth_event_1	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	enablenpc instance_npcname("空中要塞侵入傳送門#sth15");
+	enablenpc instance_npcname("史蒂芬·傑克·魔狼#sth02");
+	enablenpc instance_npcname("史蒂芬·傑克·魔狼#sth03");
+	donpcevent instance_npcname("史蒂芬·傑克·魔狼#sth02")+"::OnCcdd1";
+	disablenpc instance_npcname("#sth_event_1");
+	disablenpc instance_npcname("史蒂芬·傑克·魔狼#sth02");
+	end;
+}
+
+
+//------------------------------傳點資料
+1@sthb,34,85,0	warp	空中要塞侵入傳送門#sth01	2,2,1@sthc,115,93
+1@sthc,115,88,0	warp	空中要塞侵入傳送門#sth02	2,2,1@sthb,37,85
+1@sthb,84,99,0	warp	空中要塞侵入傳送門#sth03	2,2,1@sthc,65,93
+1@sthc,65,88,0	warp	空中要塞侵入傳送門#sth04	2,2,1@sthb,84,95
+1@sthb,24,40,0	warp	空中要塞侵入傳送門#sth05	2,2,1@sthc,115,12
+1@sthc,115,6,0	warp	空中要塞侵入傳送門#sth06	2,2,1@sthb,28,40
+1@sthb,206,80,0	warp	空中要塞侵入傳送門#sth07	2,2,1@sthc,65,12
+1@sthc,65,7,0	warp	空中要塞侵入傳送門#sth08	2,2,1@sthb,210,80
+1@sthb,172,90,0	warp	空中要塞侵入傳送門#sth09	2,2,1@sthc,15,93
+1@sthc,15,88,0	warp	空中要塞侵入傳送門#sth10	2,2,1@sthb,172,95
+1@sthb,177,51,0	warp	空中要塞侵入傳送門#sth11	2,2,1@sthc,15,12
+1@sthc,15,7,0	warp	空中要塞侵入傳送門#sth12	2,2,1@sthb,177,47
+1@sthb,73,70,0	warp	空中要塞侵入傳送門#sth13	2,2,1@sthb,73,75
+1@sthb,94,78,0	warp	空中要塞侵入傳送門#sth14	2,2,1@sthb,210,97
+1@sthb,189,57,0	warp	空中要塞侵入傳送門#sth15	2,2,1@sthd,103,72
+1@sthd,103,95,0	script	空中要塞侵入傳送門#sth16	45,2,2,{
+	end;
+OnTouch:
+	if(checkquest(32061,HUNTING)==2 ) { 
+	dispbottom "空中要塞侵入任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	callfunc "offical_instance_finish",38;
+	getitem 61006,rand(3,5);	//商城1點金幣
+	erasequest 32061;
+	}
+	if(checkquest(14496,HUNTING)==2 ) {
+	getitem 6919,20*$EP1601;	//榮譽之證
+	erasequest 14496;
+	}
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+
+//------------------------------地圖屬性
+1@sthb	mapflag	partylock
+1@sthb	mapflag	noteleport
+1@sthb	mapflag	nosave	SavePoint
+1@sthb	mapflag	nomemo
+1@sthb	mapflag	nobranch
+1@sthb	mapflag	noicewall
+1@sthb	mapflag	restricted	6
+
+1@sthc	mapflag	partylock
+1@sthc	mapflag	noteleport
+1@sthc	mapflag	nosave	SavePoint
+1@sthc	mapflag	nomemo
+1@sthc	mapflag	nobranch
+1@sthc	mapflag	noicewall
+1@sthc	mapflag	restricted	6
+
+1@sthd	mapflag	partylock
+1@sthd	mapflag	noteleport
+1@sthd	mapflag	nosave	SavePoint
+1@sthd	mapflag	nomemo
+1@sthd	mapflag	nobranch
+1@sthd	mapflag	noicewall
+1@sthd	mapflag	restricted	6
+

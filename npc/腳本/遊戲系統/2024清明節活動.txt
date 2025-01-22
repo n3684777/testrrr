@@ -1,0 +1,231 @@
+trinity,89,95,6	script	睲竊笆	930,{
+
+	mes "[睲竊笆]";
+	mes "蠢иΜ栋ㄇ臸计沮碞莉眔奔腳瞯糤50%篈瓳!";
+	mes "^ff0000Μ栋ぱ锤挂苂碞┾Ω贱纘^000000";
+	next;
+	switch(select("钡 睲竊ヴ叭","厨 睲竊ヴ叭","┾ 笆贱纘","")){
+
+	case 1:
+		.@questtime = checkquest(19067,PLAYTIME);
+		if(.@questtime == 2) erasequest 19067;
+		if(.@questtime == 0 || .@questtime == 1){
+			mes "[睲竊笆]";
+			mes "ヴ叭玱丁临叫玱丁挡ぇㄓти";
+			close;
+		}
+
+		if(checkquest(19081,HUNTING)>=0){mes "[睲竊笆]"; mes "眤竒钡闽ヴ叭~!"; close;}
+		setquest 19081;
+		mes "[睲竊笆]";
+		mes "ヴ叭钡ЧΘ";
+		close;
+
+	case 2:
+		if(checkquest(19081,HUNTING)==2 ) { 
+		erasequest 19081;
+		setquest 19067;
+		bonus_script "{ bonus2 bDropAddRace,RC_All,50; }",3600,512,1,EFST_NIGHTMARE;
+		}
+		mes "[睲竊笆]";
+		mes "⊿ΤЧΘヴ叭!";
+		close;
+
+	case 3:
+	net02:
+		if ((countitem(6011) > 0) && (countitem(6012) > 0) && (countitem(6013) > 0) && (countitem(6014) > 0) && (countitem(6015) > 0) ) {
+		delitem 6011,1;
+		delitem 6012,1;
+		delitem 6013,1;
+		delitem 6014,1;
+		delitem 6015,1;
+		set @pay,rand(1,10000);
+		if(@pay>0 && @pay<=100){
+		getitem 80003,1;
+		goto net01;
+		}
+		if(@pay>101 && @pay<=4000){
+		getitem F_rand(12767,12768,12794,12794),1;
+		goto net01;
+		}
+		if(@pay>=4001 && @pay<=9000){
+		getitem F_rand(14886,14608,23204,22819,22820,22821,100007,100008,100316,100317),3;
+		goto net01;
+		}
+		getitem F_rand(40424,40398,40399,20305,20297,40865,40864,20990,20613,480235),1;
+		//announce "[睲竊笆] 尺產 " + strcharinfo(0) + "┾笆繷耿!!",15;
+		goto net01;
+		}
+
+
+	mes "[睲竊笆]";
+	mes "计秖ぃì";
+	close; 
+
+	}
+
+	net01:
+		mes "[睲竊笆]";
+		mes "璶Ω┾盾?";
+		next;
+		switch(select("膥尿┾:")){
+		case 1:
+		goto net02;
+		case 2:
+		close;
+		}
+
+OnInit:
+	waitingroom "2024睲竊",0;
+	end;
+}
+
+
+//----------------------------------- 
+lasa_dun01,1,1,4	script	MOD_Points	-1,{
+
+on01:
+	if(rand(100)<10) getitem 6011,1;
+	if(rand(100)<10) getitem 6012,1;
+	if(rand(100)<10) getitem 6013,1;
+	if(rand(100)<10) getitem 6014,1;
+	if(rand(100)<10) getitem 6015,1;
+	end;
+}
+
+
+//----------------------------------- 偿┣
+ein_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_fild10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild00,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild12,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild13,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gef_fild14,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+lhz_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+lhz_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+lhz_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+mjolnir_12,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild12,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild13,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild14,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild15,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild16,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild17,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+moc_fild18,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+pay_fild11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild00,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild10,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+prt_fild11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+xmas_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+cmd_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild06,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild08,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild09,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild11,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+yuno_fild12,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ama_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+gon_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+um_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+um_fild02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+um_fild03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+um_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+nif_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+nif_fild02,0,0,0,0 	monster	步	20383,40,0,0,MOD_Points::on01
+lou_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+hu_fild01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+hu_fild04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+hu_fild05,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+hu_fild07,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+rockmi1,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+rockmi2,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+rockrdg1,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+rockrdg2,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+harboro2,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+sp_os,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+sp_rudus,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+sp_rudus2,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+sp_rudus3,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_pw01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_pw03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_pw02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_bath,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_2whs01,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_2whs02,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_lost,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ba_lib,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+abyss_04,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+ein_dun03,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+odin_past,0,0,0,0	monster	步	20383,40,0,0,MOD_Points::on01
+
+
+

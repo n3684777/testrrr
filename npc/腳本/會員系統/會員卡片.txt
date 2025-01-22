@@ -1,0 +1,82 @@
+-	script	 RouletteIcon	-1,{
+
+OnPCOpenRouletteFilter:
+	unlockcmd;
+	processhalt;
+	query_sql("SELECT last_ip FROM `login` WHERE account_id = "+getcharid(3)+"", .@LastIp$);
+	//set char_mac$,getcharmac;
+
+	mes "伺服器人數：^0088FF"+(getusers(1)+20)+"^000000人";
+	mes ""+gettime(7)+"年"+gettime(6)+"月"+gettime(5)+"日 "+gettime(3)+"點"+gettime(2)+"分"+gettime(1)+"秒";
+	mes "IP："+.@LastIp$+" ";
+	mes "："+getcharmac()+" ";
+	mes "商城點數：^0088FF"+#CASHPOINTS+"^000000";
+	mes "紅利點數：^0088FF"+#Dividend_Points+"^000000";
+	mes "遊戲積分：^0088FF"+#Game_Points+"^000000";
+	mes "官方副本積分：^0088FF"+#Instance_Points+"^000000";
+	mes "自創副本積分：^0088FF"+#Instance_S_Points+"^000000";
+	mes "MVP點數：^0088FF"+#MVP_Points+"^000000";
+	mes "世界BOSS積分：^0088FF"+#Worl_Boss_Points01+"^000000";
+	next;
+	switch(select("開啟內掛","廣播服務","隨身倉庫","記憶撿物","修理裝備","隱藏設定","狩獵任務擊殺提醒","卡點自救")) {
+
+	case 1:
+	callfunc "Oro_Bot";
+	end;
+
+	case 2:
+	callfunc "Megaphone";
+	end;
+
+	case 3:
+	switch(select("倉庫1服務","倉庫2服務","倉庫3服務")) {
+		case 1:
+		close2;
+		openstorage;
+		end;
+
+		case 2:
+		close2;
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+
+		case 3:
+		close2;
+		openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+		}
+
+	case 4:
+	callfunc "Autoloot";
+	end;
+
+	case 5:
+	callfunc "Rrc_Main_0";
+	end;
+
+	case 6:
+	callfunc "HIDE_MOD";
+	end;
+
+	case 7:
+	mes "[狩獵任務管理員]";
+	mes "擊殺提醒是否開啟";
+	next;
+	switch(select("開啟 擊殺提醒","關閉 擊殺提醒")){
+	case 1:
+	set #Message_Switch,1;
+	announce "擊殺提醒已開啟",bc_blue|bc_self;
+	close;
+	case 2:
+	set #Message_Switch,0;
+	announce "擊殺提醒已關閉",bc_blue|bc_self;
+	close;
+	}
+
+	case 8:
+	callfunc "self_help";
+	end;
+	}
+}
+
+

@@ -1,0 +1,165 @@
+/*
+腳本說明:
+防範多IP執行遊戲
+  1.可自定義哪些IP 可以幾開!!
+    給同宿舍福利!!
+  2.可線上直接修改 幾開...(方法 線上密頻打npc:Windows 即可修改)
+    PS:線上修改的，重開私服，重讀NPC 都會恢復原來腳本設定，永久特定用戶還是得在腳本做更新!! 
+*/
+
+-	script	遊戲多開IP限制	-1,{
+OnInit:
+//=======================IP限制設定=======================//
+//加入特定客戶。
+setarray $@Morewindows$[0],"127.0.0.12";
+
+//開放給特定客戶幾開，要對應上面特定用戶。
+setarray $@Windiwsnum[0],10;
+
+
+//非特定客戶 都只能幾開。
+set $@OtherWimdows,2;
+
+/*範例 今天我要設定 ip 200.200.200.101 開放給他6開
+就在$@Morewindows$陣列 新增 200.200.200.101
+然後在$@Windiwsnum陣列 新增 6 即可。*/
+//=======================================================//
+end;
+}
+
+-	script	遊戲多開IP	-1,{               //若您不習慣用 Windows 可改成你想要得，在npc:您更改後的名稱。
+
+OnWhisperGlobal:
+//function	script	IP多開控制	{
+    if(getgmlevel() < 80){mes "你無權使用這操作";close;}
+    mes "歡迎使用IP限制，線上修改!!";
+    mes "請選擇修改項目";
+    mes " ";
+    mes "^FF0000重新讀取NPC或是重開都會還原^000000";
+    next;
+    switch(select("特定客戶IP限制修改:無特定客戶IP修改:暫時增加特定客戶:特定用戶暫時移除:查詢目前設定:取消")){
+
+        case 1:
+                   mes "請輸入要改的IP!!";
+                   set .@Ip_GM_Control$,"";
+                   input .@Ip_GM_Control$;
+                   mes "IP: ^0000FF"+.@Ip_GM_Control$+"^000000";
+                   next;
+                   for(set .@b,0;.@b<getarraysize($@Morewindows$); set .@b,.@b+1){
+                       if(.@Ip_GM_Control$==$@Morewindows$[.@b]){ goto A1; end;}
+                     }
+                            mes "你輸入的IP不是特定用戶唷!!";
+                            mes "請確認在重新輸入。";
+                            close;
+                A1:
+                   mes "請輸入要更改的視窗數量!!";
+                   set .@Windows_GM_Control,"";
+                   input .@Windows_GM_Control;
+                   mes "您要將 "+.@Ip_GM_Control$+"";
+                   mes "從 ^FF0000"+$@Windiwsnum[.@b]+"^000000 開 -> ^0000FF"+.@Windows_GM_Control+"^000000 開?";
+                   menu "是",-;
+                   setarray $@Windiwsnum[.@b],.@Windows_GM_Control;
+                   mes "修改完成!!";    
+                   close;
+       case 2:
+                   mes "請輸入要改的數量窗口!!";
+                   set .@Windows_GM_Control,"";
+                   input .@Windows_GM_Control;
+                   mes "修改後將變成";
+                   mes "^FF0000"+$@OtherWimdows+"^000000 開 -> ^0000FF"+.@Windows_GM_Control+"^000000 開";
+                   menu "是",-;
+                   set $@OtherWimdows,.@Windows_GM_Control;    
+                   mes "修改完成!!";    
+                   close;
+       case 3:
+                   mes "請輸入要新增的特定客戶...";
+                   set .@New_Windows$,"";
+                   input .@New_Windows$;
+                   next;
+                   mes "請輸入要限定的窗數...";   
+                   set .@New_Windowsnum,"";
+                   input .@New_Windowsnum; 
+                   next;
+                   mes "請問您要將....";
+                   mes "IP: ^0000FF"+.@New_Windows$+"^000000";
+                   mes "限定 ^FF0000"+.@New_Windowsnum+"^000000 開。";
+                   menu "是",-;
+                   set $@Morewindows$[getarraysize($@morewindows$)],.@New_Windows$;
+                   set $@Windiwsnum[getarraysize($@windiwsnum)],.@New_Windowsnum;
+                   mes "新增成功!!";   
+                   close;
+       case 4:        
+                   mes "請問您要移除的特定用戶是!?";
+                   set .@Move_Windows$,"";
+                   input .@Move__Windows$;
+                   next;
+                   mes "你要移除的特定用戶...";
+                   mes "IP: ^0000FF"+.@Move__Windows$+"^000000";
+                   menu "是",-;
+                   for(set .@q,0;.@q<getarraysize($@morewindows$); set .@q,.@q+1){
+                      if(.@Move__Windows$==$@Morewindows$[.@q]){
+                           deletearray $@Morewindows$[.@q],1;
+                           deletearray $@Windiwsnum[.@q],1;
+                           mes "移除成功!!";
+                           close;
+                      } 
+                   }
+                            next;
+                            mes "你輸入的IP沒有在特定用戶唷!!";
+                            mes "請確認在重新輸入。";
+                            close;
+                     
+       case 5:
+                   mes "非特定用戶 ^FF0000"+$@OtherWimdows+"^000000 開。";
+                   for(set .@g,0;.@g<getarraysize($@Morewindows$); set .@g,.@g+1){
+                      mes "^7B68EE["+.@g+"]^000000IP ^0000FF"+$@Morewindows$[.@g]+"^000000 目前可 ^FF0000"+$@Windiwsnum[.@g]+"^000000 開。";
+                     } 
+                   close;
+       case 6:
+                  close;
+}
+end;
+
+OnPCLoginEvent:
+	//露天商店區
+	//if(strcharinfo(3)=="shopmap"){end;}
+	//if(isloggedin(getcharid(3))==3){ end;}
+
+	query_sql("SELECT last_ip FROM `login` WHERE account_id = "+getcharid(3)+"", .@LastIp$);
+        //檢查同IP帳號
+	query_sql("SELECT account_id FROM `login` WHERE last_ip = '"+.@LastIp$+"'", .@AccountId);
+	set $@MaxWimdows,$@OtherWimdows;
+
+        for(set .@a,0; .@a < getarraysize($@Morewindows$); set .@a,.@a+1){
+              if(.@LastIp$==$@Morewindows$[.@a]){
+                      set $@MaxWimdows,$@Windiwsnum[.@a];
+                      break;
+               }
+          }
+
+        //檢查同IP在線人數
+		for(set .@i ,0;.@i<getarraysize(.@AccountId);set .@i,.@i+1){
+		if(attachrid(.@AccountId[.@i])){
+		if(!checkVending()) set .@j,.@j+1;
+		}
+
+		   if(.@j>$@MaxWimdows){
+			mes "很抱歉，本伺服器不允許多開";
+			mes "玩家名稱: "+strcharinfo(0)+" 你的IP[^FF6600" + .@LastIp$ + "^000000]";
+			mes "同樣 IP，不可以超過 ^FF0000"+$@MaxWimdows+"^000000 開.";
+			mes "請確認窗口，謝謝!!!";
+			mes "^0000FF若是IP分享器多人相同IP情況，請聯繫GM為您驗證調整，謝謝。^000000";
+			sleep2(3000);
+			atcommand "@kick "+strcharinfo(0);
+			end;
+		}
+	}
+end;
+
+OnInit:
+cleararray $@Morewindows$,0,getarraysize($@Morewindows$);
+cleararray $@Windiwsnum,0,getarraysize($@Windiwsnum);
+end;
+}
+
+

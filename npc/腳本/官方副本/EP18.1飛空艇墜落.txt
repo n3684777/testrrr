@@ -1,0 +1,808 @@
+﻿
+vdistrict1,17,33,4	script	飛空艇墜落管理者	617,{
+
+	//副本任務獎勵
+	if(checkquest(32038,HUNTING)==2 ) { 
+	dispbottom "飛空艇墜落任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32038; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_41 < gettime(8) ){
+	set Instance_Bout_41,10;
+	set day_Instance_Bout_41,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_41 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[飛空艇墜落服務員]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "飛空艇墜落";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[飛空艇墜落服務員]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1801+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_41+"^000000 ]";
+	mes "副本獎勵：";
+	mes "伊米爾碎片";
+	mes "商城1點金幣x10";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 215) {
+			mes "[飛空艇墜落服務員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.215 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[飛空艇墜落服務員]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[飛空艇墜落服務員]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 215) {
+			mes "[飛空艇墜落服務員]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.215 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_41,Instance_Bout_41-1;
+
+			//副本任務
+			if(checkquest(32038,HUNTING)<0 ){setquest 32038;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "飛空艇墜落",0;
+	end;
+}
+
+
+//------------------------------飛空艇墜落事件
+1@mjo1,0,0,0	script	飛空艇墜落事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@mjo1");
+	'map_name$[1] = instance_mapname("1@mjo2");
+	//關閉NPC
+	disablenpc instance_npcname("愛麗絲#mjo01");
+	disablenpc instance_npcname("洛奇#mjo01");
+	disablenpc instance_npcname("莉迪亞#mjo02");
+	disablenpc instance_npcname("賽司#mjo02");
+	disablenpc instance_npcname("愛麗絲#mjo02");
+	disablenpc instance_npcname("洛奇#mjo02");
+	disablenpc instance_npcname("莉迪亞#mjo03");
+	disablenpc instance_npcname("賽司#mjo03");
+	disablenpc instance_npcname("愛麗絲#mjo03");
+	disablenpc instance_npcname("洛奇#mjo03");
+	//副本標籤
+	set 'CD_mjo_01,0;
+	set 'CD_mjo_02,0;
+	set 'CD_mjo_03,0;
+	set 'CD_mjo_04,0;
+	set 'CD_mjo_Quest01,0;
+	end;
+
+	OnCcdd1:
+	monster 'map_name$[1],0,0,"--ja--",20886,1,instance_npcname("飛空艇墜落事件1")+"::OnCcdd1";
+	end;
+
+	OnCcdd2:
+	monster 'map_name$[1],0,0,"--ja--",20887,1,instance_npcname("飛空艇墜落事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd3:
+	monster 'map_name$[1],0,0,"--ja--",20888,1,instance_npcname("飛空艇墜落事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd4:
+	monster 'map_name$[1],0,0,"--ja--",20889,1,instance_npcname("飛空艇墜落事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd5:
+	monster 'map_name$[1],0,0,"--ja--",20890,1,instance_npcname("飛空艇墜落事件1")+"::OnCcdd5";
+	end;
+
+	OnEnd01:
+	'win = 1;
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-Instance_Annal;
+	announce "【"+.@md_name$+"】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+
+//------------------------------ 第一區域 副本NPC
+1@mjo1,223,374,4	script	探險隊員#mjo01	4_M_SAGE_C,{
+
+	mes "[探險隊員]";
+	mes "你們是剛才墜落的飛行船上的乘客嗎?";
+	mes "飛行船上很多人都散落到這片原野上";
+	next;
+	mes "[探險隊員]";
+	mes "我剛才聽到下方傳來人的交談聲，可能是你們的同伴哦";
+	next;
+	mes "[探險隊員]";
+	mes "我是冒險團的隊員，我們在右邊的洞穴進行調查那邊的未知生物";
+	mes "有興趣的話可以過去探險哦";
+	close2;
+	end;
+}
+
+1@mjo1,71,344,6	script	裴陸船長#mjo01	873,{
+
+	if(checkquest(5915,PLAYTIME)>0){mes "[裴陸船長]"; mes "過一段時間再來找我吧!"; close;}
+	if('CD_mjo_Quest01==6) {
+	getitem 1000363,1;	//伊米爾碎片x1
+	setquest 5915;
+	mes "[裴陸船長]";
+	mes "非常感謝你們幫忙救治傷患，這個剛才魔物身上掉落的東西就送給你們了";
+	close;
+	}
+	mes "[裴陸船長]";
+	mes "到處都是散落的傷患...";
+	close;
+}
+
+
+1@mjo1,233,293,6	script	莉迪亞#mjo01	4_F_LYDIA,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mjo_02>0) end;
+	set 'CD_mjo_02,1;
+
+	npctalk "莉迪亞：好!!再走快一點魔法之都吉芬就快到了!!";
+	sleep 1000;
+	npctalk "莉迪亞：爸爸你看者吧!!我一定會找到藏在吉芬城的卡佩尼亞秘寶!!然後...";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk1";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk2";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk3";
+	sleep 1000;
+	npctalk "莉迪亞：賽司!!你說什麼?難道你不信我們艾修家的技術!!";
+	sleep 1000;
+	npctalk "莉迪亞：我們艾修家可是繼承寶物獵人的傳統，而且已經傳到第11代了!!";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk4";
+	sleep 1000;
+	npctalk "莉迪亞：其中第三代祖先發現了名為地獄入口的寶藏";
+	sleep 1000;
+	npctalk "莉迪亞：高祖父也發現有名的納坷拔王朝的秘寶!!";
+	sleep 1000;
+	npctalk "莉迪亞：之前傳到我爸爸那代 雖然因為賭博而花光所有財產..";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk5";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk6";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk7";
+	sleep 1000;
+	npctalk "莉迪亞：賽司難道你不相信我爸爸說的話?爸爸一輩子都在找卡佩尼亞秘寶!!直到最後也沒有放棄!!";
+	sleep 1000;
+	npctalk "莉迪亞：何況你不是外人，你這樣太過分了!";
+	sleep 1000;
+	npctalk "莉迪亞：爸爸!!我一定會把卡佩尼亞秘寶找出來的!!";
+	sleep 1000;
+	npctalk "莉迪亞：然後..用變賣他的錢每天讓一堆帥哥圍繞者我...";
+	sleep 1000;
+	npctalk "莉迪亞：阿!不對我是要完成爸爸未完成的心願!!";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk8";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk9";
+	sleep 1000;
+	npctalk "莉迪亞：太好了!!我們立刻出發吧!!";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk10";
+	sleep 1000;
+	npctalk "莉迪亞：賽司，怎麼啦?快走呀";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk11";
+	sleep 1000;
+	npctalk "莉迪亞：怎麼啦?你是不是真的走不動了?來我抱你";
+	sleep 500;
+	instance_announce 0, "樹林處來異常巨大的爆炸聲!!",bc_map,"0xFFFF00";
+	sleep 500;
+	npctalk "莉迪亞：哎呀!這是怎麼回事?賽司你沒事吧?";
+	sleep 1000;
+	npctalk "莉迪亞：啊!這是人手!?";
+	sleep 1000;
+	npctalk "莉迪亞：算了就當什麼也沒看到好了";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk12";
+	sleep 1000;
+	npctalk "莉迪亞：知道啦我看看就是了!!這是?";
+	sleep 1000;
+	npctalk "莉迪亞：安息吧...愛麗絲...雖然我們相處的時間很短...";
+	sleep 500;
+	enablenpc instance_npcname("愛麗絲#mjo01");
+	donpcevent instance_npcname("愛麗絲#mjo01")+"::OnTalk1";
+	sleep 500;
+	npctalk "莉迪亞：原來你又復活了?哈哈..";
+	sleep 500;
+	enablenpc instance_npcname("洛奇#mjo01");
+	donpcevent instance_npcname("洛奇#mjo01")+"::OnTalk1";
+	sleep 1000;
+	npctalk "莉迪亞：阿..我是不是在作夢?";
+	sleep 1000;
+	npctalk "莉迪亞：這是真的嗎?阿...好酷的眼神，強而有力的手臂!!";
+	sleep 1000;
+	npctalk "莉迪亞：我的夢中情人，就是他了!!";
+	sleep 1000;
+	npctalk "莉迪亞：喔小女子永遠是你的人~~";
+	sleep 500;
+	specialeffect 16;
+	donpcevent instance_npcname("愛麗絲#mjo01")+"::OnTalk2";
+	donpcevent instance_npcname("洛奇#mjo01")+"::OnTalk2";
+	donpcevent instance_npcname("賽司#mjo01")+"::OnTalk13";
+	disablenpc instance_npcname("莉迪亞#mjo01");
+	disablenpc instance_npcname("賽司#mjo01");
+	disablenpc instance_npcname("愛麗絲#mjo01");
+	disablenpc instance_npcname("洛奇#mjo01");
+	enablenpc instance_npcname("莉迪亞#mjo02");
+	enablenpc instance_npcname("愛麗絲#mjo02");
+	enablenpc instance_npcname("洛奇#mjo02");
+	enablenpc instance_npcname("賽司#mjo02");
+	end;
+}
+
+1@mjo1,230,290,6	script	賽司#mjo01	4_CAT,{end;
+
+OnTalk1:
+	npctalk "賽司：愛說笑";
+	end;
+OnTalk2:
+	npctalk "賽司：我真懷疑是誰發明這種莫名其妙的測量法";
+	end;
+OnTalk3:
+	npctalk "賽司：說實話我們甚至連這裡是什麼地方都不知道耶!";
+	end;
+
+OnTalk4:
+	npctalk "賽司：那又怎樣?";
+	end;
+
+OnTalk5:
+	npctalk "賽司：是阿，總之很了不起";
+	end;
+OnTalk6:
+	npctalk "賽司：可是我實在太累了，走不動了你自己去吧";
+	end;
+OnTalk7:
+	npctalk "賽司：打死我也不走了...";
+	end;
+
+OnTalk8:
+	npctalk "賽司：你在想甚麼我難道會不知道嗎!";
+	end;
+OnTalk9:
+	npctalk "賽司：好吧!就算我再讓你騙一次好了";
+	end;
+
+OnTalk10:
+	npctalk "賽司：!?";
+	end;
+
+OnTalk11:
+	npctalk "賽司：啊啊啊....";
+	end;
+
+OnTalk12:
+	npctalk "賽司：喂!莉迪亞!你應該看看人還有沒有得救吧!";
+	end;
+
+OnTalk13:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,236,290,1	script	愛麗絲#mjo01	4_F_IRIS,{end;
+
+OnTalk1:
+	specialeffect 16;
+	npctalk "愛麗絲：莉迪亞站住!!你竟然敢活埋我這個美少女!";
+	end;
+
+OnTalk2:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,236,292,6	script	洛奇#mjo01	4_M_ROKI2,{end;
+
+OnTalk1:
+	specialeffect 16;
+	npctalk "洛奇：你是誰?";
+	end;
+
+OnTalk2:
+	specialeffect 16;
+	end;
+}
+
+
+
+1@mjo1,96,200,6	script	莉迪亞#mjo02	4_F_LYDIA,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mjo_03>0) end;
+	set 'CD_mjo_03,1;
+
+	donpcevent instance_npcname("愛麗絲#mjo02")+"::OnTalk1";
+	sleep 1000;
+	npctalk "莉迪亞：對..因為普隆德拉和斯楚瓦爾茲共和國間有座險惡的山脈..";
+	sleep 1000;
+	donpcevent instance_npcname("賽司#mjo02")+"::OnTalk1";
+	sleep 1000;
+	donpcevent instance_npcname("愛麗絲#mjo02")+"::OnTalk2";
+	sleep 1000;
+	npctalk "莉迪亞：沒錯!!我就是這個意思";
+	sleep 1000;
+	donpcevent instance_npcname("愛麗絲#mjo02")+"::OnTalk3";
+	sleep 1000;
+	npctalk "莉迪亞：喂!!你到底走不走阿!?再不走我就不等你了!!";
+	sleep 1000;
+	donpcevent instance_npcname("愛麗絲#mjo02")+"::OnTalk4";
+	sleep 500;
+	specialeffect 16;
+	donpcevent instance_npcname("愛麗絲#mjo02")+"::OnTalk5";
+	donpcevent instance_npcname("洛奇#mjo02")+"::OnTalk1";
+	donpcevent instance_npcname("賽司#mjo02")+"::OnTalk2";
+	disablenpc instance_npcname("莉迪亞#mjo02");
+	disablenpc instance_npcname("賽司#mjo02");
+	disablenpc instance_npcname("愛麗絲#mjo02");
+	disablenpc instance_npcname("洛奇#mjo02");
+	enablenpc instance_npcname("莉迪亞#mjo03");
+	enablenpc instance_npcname("愛麗絲#mjo03");
+	enablenpc instance_npcname("洛奇#mjo03");
+	enablenpc instance_npcname("賽司#mjo03");
+	end;
+}
+
+1@mjo1,94,200,6	script	賽司#mjo02	4_CAT,{end;
+	mes "[賽司]";
+	mes "....";
+	close;
+
+OnTalk1:
+	npctalk "賽司：如果要走路直接越過山脈不太可能，所以只能繞過去";
+	end;
+OnTalk2:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,101,198,4	script	愛麗絲#mjo02	4_F_IRIS,{end;
+
+OnTalk1:
+	npctalk "愛麗絲：從這裡去斯楚瓦爾茲共和國一定要經過吉芬是吧?";
+	end;
+
+OnTalk2:
+	npctalk "愛麗絲：這麼說要去吉芬要再想其他方法囉";
+	end;
+OnTalk3:
+	npctalk "愛麗絲：那查爾斯跟潘立爾他們...";
+	end;
+OnTalk4:
+	npctalk "愛麗絲：你...";
+	end;
+
+OnTalk5:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,101,194,6	script	洛奇#mjo02	4_M_ROKI2,{end;
+
+OnTalk1:
+	specialeffect 16;
+	end;
+}
+
+
+1@mjo1,196,132,6	script	莉迪亞#mjo03	4_F_LYDIA,{
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mjo_04>0) end;
+	set 'CD_mjo_04,1;
+
+	donpcevent instance_npcname("愛麗絲#mjo03")+"::OnTalk1";
+	sleep 1000;
+	npctalk "莉迪亞：少裝了!你剛才不是還活繃亂跳的嗎!?";
+	sleep 1000;
+	donpcevent instance_npcname("愛麗絲#mjo03")+"::OnTalk2";
+	sleep 1000;
+	npctalk "莉迪亞：你...什麼意思?";
+	sleep 1000;
+	donpcevent instance_npcname("洛奇#mjo03")+"::OnTalk1";
+	sleep 1000;
+	donpcevent instance_npcname("愛麗絲#mjo03")+"::OnTalk3";
+	sleep 1000;
+	npctalk "莉迪亞：夠了!!好啦我背你就是了!!";
+	sleep 1000;
+	npctalk "莉迪亞：朋友受傷不能走路，我當然要幫助啊!!來!!我背妳!!";
+	sleep 1000;
+	donpcevent instance_npcname("洛奇#mjo03")+"::OnTalk2";
+	sleep 1000;
+	npctalk "莉迪亞：沒關係...我背就好...";
+	sleep 500;
+	specialeffect 16;
+	donpcevent instance_npcname("愛麗絲#mjo03")+"::OnTalk4";
+	donpcevent instance_npcname("洛奇#mjo03")+"::OnTalk3";
+	donpcevent instance_npcname("賽司#mjo03")+"::OnTalk1";
+	disablenpc instance_npcname("莉迪亞#mjo03");
+	disablenpc instance_npcname("賽司#mjo03");
+	disablenpc instance_npcname("愛麗絲#mjo03");
+	disablenpc instance_npcname("洛奇#mjo03");
+	instance_announce 0, "裴陸船長：誰能幫忙救治散落到各處的傷患!!",bc_map,"0xFFFF00";
+	end;
+}
+
+1@mjo1,194,131,6	script	賽司#mjo03	4_CAT,{end;
+
+OnTalk1:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,197,133,4	script	愛麗絲#mjo03	4_F_IRIS,{end;
+
+OnTalk1:
+	npctalk "愛麗絲：我走不動了..突然覺得好暈...";
+	end;
+OnTalk2:
+	npctalk "愛麗絲：你背我好不好?";
+	end;
+OnTalk3:
+	npctalk "愛麗絲：嗯..洛奇她剛才用大石頭砸...";
+	end;
+OnTalk4:
+	specialeffect 16;
+	end;
+}
+
+1@mjo1,201,131,4	script	洛奇#mjo03	4_M_ROKI2,{end;
+
+OnTalk1:
+	npctalk "洛奇：怎麼了?哪裡不舒服嗎?";
+	end;
+OnTalk2:
+	npctalk "洛奇：可以嗎?我們可能還要走很遠才會到";
+	end;
+OnTalk3:
+	specialeffect 16;
+	end;
+}
+
+
+
+1@mjo1,0,0,4	script	救治傷患::MJ_HEAL	4_ROPEPILE,{
+
+	if('CD_mjo_04==0) end;
+	message strcharinfo(0),"治療傷患中...移動視為取消";
+	progressbar "0x000000",3;
+	specialeffect 6;
+	sleep 200;
+	disablenpc instance_npcname(strnpcinfo(0));
+	set 'CD_mjo_Quest01,'CD_mjo_Quest01+1;
+	instance_announce 0, "救治了這名傷患，總共救治了 "+'CD_mjo_Quest01+" 名傷患",bc_map,"0xFFFF00";
+	if('CD_mjo_Quest01==6) {
+	instance_announce 0, "已經救治了 "+'CD_mjo_Quest01+" 名傷患回去左上角回報給裴陸船長吧",bc_map,"0xFFFF00";
+	end;
+	}
+	end;
+}
+
+1@mjo1,215,144,3	duplicate(MJ_HEAL)	受傷的旅客#mjo01	4_M_DIEMAN
+1@mjo1,257,156,3	duplicate(MJ_HEAL)	受傷的旅客#mjo02	4_TOWER_06
+1@mjo1,290,173,3	duplicate(MJ_HEAL)	受傷的旅客#mjo03	4_TOWER_08
+1@mjo1,165,143,3	duplicate(MJ_HEAL)	受傷的旅客#mjo04	4_TOWER_11
+1@mjo1,146,185,3	duplicate(MJ_HEAL)	受傷的旅客#mjo05	4_TOWER_13
+1@mjo1,135,210,3	duplicate(MJ_HEAL)	受傷的旅客#mjo06	4_TOWER_01
+1@mjo1,170,256,3	duplicate(MJ_HEAL)	受傷的旅客#mjo07	4_TOWER_03
+1@mjo1,152,282,3	duplicate(MJ_HEAL)	受傷的旅客#mjo08	4_M_LYINGDOG
+1@mjo1,248,258,3	duplicate(MJ_HEAL)	受傷的旅客#mjo09	4_M_DSTMANDEAD
+1@mjo1,251,205,3	duplicate(MJ_HEAL)	受傷的旅客#mjo10	4_M_LIEMAN
+
+
+//------------------------------ 第二區域 副本NPC
+1@mjo2,363,364,4	script	博士#mjo01	4_M_DOCTOR,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mjo_01>0) end;
+	mes "[博士]";
+	mes "這個洞窟有各種特殊的生物";
+	mes "我們在這邊採集這些生物的數據";
+	next;
+	mes "[博士]";
+	mes "你願意加入我們的冒險團幫我們採集那些生物嗎?";
+	next;
+	switch (select("加入冒險團:取消")) {
+
+	case 1:
+	mes "[博士]";
+	mes "非常感謝你們的協助，記得找旁邊的研究員簽屬報酬協議才會拿到報酬哦";
+	close2;
+	set 'CD_mjo_01,1;
+	monster 'map_name$[0],0,0,"--ja--",20886,50,instance_npcname("飛空艇墜落事件1")+"::OnCcdd1";
+	monster 'map_name$[1],0,0,"--ja--",20886,50,instance_npcname("飛空艇墜落事件1")+"::OnCcdd1";
+	monster 'map_name$[1],0,0,"--ja--",20887,60,instance_npcname("飛空艇墜落事件1")+"::OnCcdd2";
+	monster 'map_name$[1],0,0,"--ja--",20888,45,instance_npcname("飛空艇墜落事件1")+"::OnCcdd3";
+	monster 'map_name$[1],0,0,"--ja--",20889,60,instance_npcname("飛空艇墜落事件1")+"::OnCcdd4";
+	monster 'map_name$[1],0,0,"--ja--",20890,60,instance_npcname("飛空艇墜落事件1")+"::OnCcdd5";
+	end;
+
+	case 2:
+	close;
+	}
+}
+
+1@mjo2,356,367,6	script	研究員#mjo01	4_LGTSCIENCE,{
+
+	if(checkquest(5912,HUNTING)==2 ) { 
+	dispbottom "抓捕100隻怪物任務完成，以下是你的獎勵!!"; 
+	getitem 1000363,2;	//伊米爾碎片x2
+	erasequest 5912;	//刪除任務
+	if(quests_mjolv == 0){set quests_mjolv,1; }
+	}
+	if(checkquest(5913,HUNTING)==2 ) { 
+	dispbottom "抓捕200隻怪物任務完成，以下是你的獎勵!!"; 
+	getitem 1000363,5;	//伊米爾碎片x5
+	erasequest 5913;	//刪除任務
+	if(quests_mjolv == 1){set quests_mjolv,2; }
+	}
+	if(checkquest(5914,HUNTING)==2 ) { 
+	dispbottom "抓捕350隻怪物任務完成，以下是你的獎勵!!"; 
+	getitem 1000363,10;	//伊米爾碎片x10
+	erasequest 5914;	//刪除任務
+	}
+
+	mes "[研究員]";
+	mes "抓捕100隻怪物獎勵:<ITEM>伊米爾碎片<INFO>1000363</INFO></ITEM>x2";
+	mes "抓捕200隻怪物獎勵:<ITEM>伊米爾碎片<INFO>1000363</INFO></ITEM>x5";
+	mes "抓捕350隻怪物獎勵:<ITEM>伊米爾碎片<INFO>1000363</INFO></ITEM>x10";
+	mes "你想要接取抓捕多少隻怪物的任務?";
+	next;
+	switch (select("取消","抓捕100隻怪物",quests_mjolv>0?"抓捕200隻怪物":"",quests_mjolv>1?"抓捕350隻怪物":"")) {
+
+	case 1:
+		if(checkquest(5912)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5913)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5914)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		setquest 5912;
+		mes "[研究員]";
+		mes "任務接取完成";
+		close;
+
+	case 2:
+		if(checkquest(5912)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5913)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5914)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		setquest 5913;
+		mes "[研究員]";
+		mes "任務接取完成";
+		close;
+
+	case 3:
+		if(checkquest(5912)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5913)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		if(checkquest(5914)>0){mes "[研究員]"; mes "您已經接了抓捕任務了唷~!"; close;}
+		setquest 5914;
+		mes "[研究員]";
+		mes "任務接取完成";
+		close;
+
+	case 4:
+	close;
+	}
+}
+
+
+1@mjo2,355,355,6	script	學生#mjo01	4_M_SAGE_C,{
+
+	mes "[研究員]";
+	mes "我負責管理這個繩索";
+	mes "在這洞穴探險時只要拉動位於各處的繩索我就會把你們拉回這裡!";
+	next;
+	switch (select("顯示各處繩索情報:取消")) {
+
+	case 1:
+	viewpoint 1,178,370,1,0xffff00;
+	viewpoint 1,216,285,2,0xffff00;
+	viewpoint 1,113,342,3,0xffff00;
+	viewpoint 1,22,389,4,0xffff00;
+	viewpoint 1,37,287,5,0xffff00;
+	viewpoint 1,79,161,6,0xffff00;
+	viewpoint 1,26,26,7,0xffff00;
+	viewpoint 1,156,68,8,0xffff00;
+	viewpoint 1,237,79,9,0xffff00;
+	viewpoint 1,257,123,10,0xffff00;
+	viewpoint 1,325,71,11,0xffff00;
+	viewpoint 1,355,36,12,0xffff00;
+	viewpoint 1,354,120,13,0xffff00;
+	viewpoint 1,359,253,14,0xffff00;
+	viewpoint 1,221,218,15,0xffff00;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+1@mjo2,358,354,4	script	繩索::MJ_ROPEPILE	4_ROPEPILE,{
+
+	mes "[研究員]";
+	mes "你只要拉動繩索我就會把你們拉上來!";
+	next;
+	switch (select("返回營地:返回未知生物區:取消")) {
+
+	case 1:
+	warp 'map_name$[1],357,357;
+	close;
+
+	case 2:
+	warp 'map_name$[1],203,327;
+	close;
+
+	case 3:
+	close;
+	}
+}
+
+1@mjo2,178,370,3	duplicate(MJ_ROPEPILE)	繩索#mjo01	4_ROPEPILE
+1@mjo2,216,285,3	duplicate(MJ_ROPEPILE)	繩索#mjo02	4_ROPEPILE
+1@mjo2,113,342,3	duplicate(MJ_ROPEPILE)	繩索#mjo03	4_ROPEPILE
+1@mjo2,22,389,3	duplicate(MJ_ROPEPILE)	繩索#mjo04	4_ROPEPILE
+1@mjo2,37,287,3	duplicate(MJ_ROPEPILE)	繩索#mjo05	4_ROPEPILE
+1@mjo2,79,161,3	duplicate(MJ_ROPEPILE)	繩索#mjo06	4_ROPEPILE
+1@mjo2,26,26,3	duplicate(MJ_ROPEPILE)	繩索#mjo07	4_ROPEPILE
+1@mjo2,156,68,3	duplicate(MJ_ROPEPILE)	繩索#mjo08	4_ROPEPILE
+1@mjo2,237,79,3	duplicate(MJ_ROPEPILE)	繩索#mjo09	4_ROPEPILE
+1@mjo2,257,123,3	duplicate(MJ_ROPEPILE)	繩索#mjo10	4_ROPEPILE
+1@mjo2,325,71,3	duplicate(MJ_ROPEPILE)	繩索#mjo11	4_ROPEPILE
+1@mjo2,355,36,3	duplicate(MJ_ROPEPILE)	繩索#mjo12	4_ROPEPILE
+1@mjo2,354,120,3	duplicate(MJ_ROPEPILE)	繩索#mjo13	4_ROPEPILE
+1@mjo2,359,253,3	duplicate(MJ_ROPEPILE)	繩索#mjo14	4_ROPEPILE
+1@mjo2,221,218,3	duplicate(MJ_ROPEPILE)	繩索#mjo15	4_ROPEPILE
+
+1@mjo2,373,371,4	script	神秘幽靈#mjo01	4_SYS_MSG,{
+
+	mes "[神秘幽靈]";
+	mes "只給我55個伊米爾礦石";
+	mes "就能召喚出未知生物到北邊區域";
+	next;
+	switch (select("取消:放入伊米爾礦石")) {
+
+	case 1:
+	close;
+
+	case 2:
+	if (countitem(1000364)<55) {
+	mes "[神秘幽靈]";
+	mes "您身上的伊米爾礦石不足55個！";
+	close;	}
+	close2;
+	
+
+	delitem 1000364,55;
+	instance_announce 0, "北方區域傳出了奇異吼聲趕快過去查看吧",bc_map,"0xFFFF00";
+	monster 'map_name$[1],197,354,"--ja--",20891,1,instance_npcname("飛空艇墜落事件1")+"::OnEnd01";
+	end;
+	}
+}
+
+
+//------------------------------傳點資訊
+1@mjo1,219,382,0	script	傳送門#mjo01	45,2,2,{
+	end;
+OnTouch:
+	//副本任務獎勵
+	if(checkquest(32038,HUNTING)==2 ) { 
+	dispbottom "飛空艇墜落任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 61006,10;	//商城1點金幣
+	erasequest 32038; }
+	callfunc "offical_instance_finish",52;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+}
+
+
+1@mjo1,274,252,0	warp	傳送門#mjo02	2,2,1@mjo2,360,368
+1@mjo2,360,373,0	warp	傳送門#mjo03	2,2,1@mjo1,279,252
+
+
+//------------------------------ 地圖屬性
+1@mjo1	mapflag	partylock
+1@mjo1	mapflag	noteleport
+1@mjo1	mapflag	nosave	SavePoint
+1@mjo1	mapflag	nomemo
+1@mjo1	mapflag	nobranch
+1@mjo1	mapflag	noicewall
+1@mjo1	mapflag	restricted	6
+
+1@mjo2	mapflag	partylock
+1@mjo2	mapflag	noteleport
+1@mjo2	mapflag	nosave	SavePoint
+1@mjo2	mapflag	nomemo
+1@mjo2	mapflag	nobranch
+1@mjo2	mapflag	noicewall
+1@mjo2	mapflag	restricted	6
+
+
+

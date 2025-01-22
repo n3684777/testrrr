@@ -1,0 +1,462 @@
+﻿
+//function	script	Skill_Check	{
+bago_01,42,67,6	script	技能查詢	10083,{
+
+	mes "[技能查詢]";
+	mes "您要查詢幾轉職業的技能。";
+	next;
+	switch(select("三轉職業","四轉職業")) {
+
+case 1:
+	mes "[技能查詢]";
+	mes "請選擇您要查詢的三轉職業。";
+	next;
+	switch(select("盧恩騎士","皇家禁衛隊","咒術士","妖術師","基因學者","機械工匠","大主教","修羅","十字斬首者","魅影追蹤者","遊俠","宮廷樂師&浪姬舞者","拳皇","獵靈士","影狼&朧","反叛者","召喚師")) {
+
+	case 1:
+	Skill_Check1:
+	setarray .@skilllist[0],2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,5004,5005;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	//if(.@ret == 2001) dispbottom "技能名稱: 附魔之刃";
+	//dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check1;
+
+	case 2:
+	Skill_Check2:
+	setarray .@skilllist[0],2307,2308,2309,2310,2311,2312,2313,2314,2315,2316,2317,2318,2319,2320,2321,2322,2323,2324,2325,5013;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check2;
+
+	case 3:
+	Skill_Check3:
+	setarray .@skilllist[0],2201,2202,2203,2204,2205,2206,2207,2208,2209,2210,2211,2212,2213,2214,2216,2217,2222,2223,2224,2229,2230,2231,5012;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check3;
+
+	case 4:
+	Skill_Check4:
+	setarray .@skilllist[0],2443,2444,2445,2446,2447,2448,2449,2450,2451,2452,2453,2454,2455,2456,2457,2458,2459,2460,2461,2462,2463,2464,2465,2466,2467,2468,5008;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check4;
+
+	case 5:
+	Skill_Check5:
+	setarray .@skilllist[0],2474,2475,2476,2477,2478,2479,2480,2481,2482,2483,2485,2486,2490,2492,2493,2494,2495,2496,2497,5003;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check5;
+
+	case 6:
+	Skill_Check6:
+	setarray .@skilllist[0],2255,2256,2257,2258,2259,2260,2261,2262,2263,2264,2265,2266,2267,2268,2269,2270,2271,2272,2273,2274,2275,2276,2277,2278,2279,2280,2281,2282,2283,5006;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check6;
+
+	case 7:
+	Skill_Check7:
+	setarray .@skilllist[0],2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050,2051,2052,2053,2054,5011;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check7;
+
+	case 8:
+	Skill_Check8:
+	setarray .@skilllist[0],2326,2327,2328,2329,2330,2332,2333,2334,2335,2336,2337,2338,2339,2341,2342,2344,2345,2346,2347,2348,5009;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check8;
+
+	case 9:
+	Skill_Check9:
+	setarray .@skilllist[0],2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,5001;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check9;
+
+	case 10:
+	Skill_Check10:
+	setarray .@skilllist[0],2284,2285,2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296,2297,2298,2299,2300,2301,2302,2303,2304,5010;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check10;
+
+	case 11:
+	Skill_Check11:
+	setarray .@skilllist[0],2233,2234,2235,2236,2237,2238,2239,2240,2241,2242,2243,2244,2245,2246,2247,2248,2249,2250,2251,2252,2253,2254,5002;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check11;
+
+	case 12:
+	Skill_Check12:
+	setarray .@skilllist[0],2412,2413,2414,2417,2418,2419,2420,2421,2422,2423,2424,2425,2426,2427,2428,2429,2430,2431,2432,2433,2434,5007;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check12;
+
+	case 13:
+	Skill_Check13:
+	setarray .@skilllist[0],2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check13;
+
+	case 14:
+	Skill_Check14:
+	setarray .@skilllist[0],2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check14;
+
+	case 15:
+	Skill_Check15:
+	setarray .@skilllist[0],3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3029;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check15;
+
+	case 16:
+	Skill_Check16:
+	setarray .@skilllist[0],2552,2553,2554,2555,2556,2557,2558,2559,2560,2561,2562,2563,2564,2565,2566,2567;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check16;
+
+	case 17:
+	Skill_Check17:
+	setarray .@skilllist[0],5019,5020,5021,5022,5023,5024,5025,5026,5027,5028,5029,5031,5032,5033,5035,5036,5037,5038,5039,5040,5041,5044,5045,5046,5047,5048,5049,5050,5051,5052,5053,5054,5055,5056;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check17;
+
+	}
+
+case 2:
+	mes "[技能查詢]";
+	mes "請選擇您要查詢的四轉職業。";
+	next;
+	switch(select("盧恩龍爵","帝國聖衛軍","禁咒魔導士","元素支配者","生命締造者","機甲神匠","樞機主教","聖裁者","十字影武","深淵追蹤者","風鷹狩獵者",
+	"天籟頌者&月之舞靈","天帝","靈導士","不知火&蜃氣樓","夜衛隊","魂靈師","頂級初學者")) {
+
+	case 1:
+	Skill_Check01:
+	setarray .@skilllist[0],5201,5203,5204,5205,5206,5207,5208,5210,5211,5212,5213,6001;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check01;
+
+	case 2:
+	Skill_Check02:
+	setarray .@skilllist[0],5255,5256,5257,5258,5259,5260,5261,5262,5263,5264,5265,5266,5267;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check02;
+
+	case 3:
+	Skill_Check03:
+	setarray .@skilllist[0],5214,5215,5216,5217,5218,5220,5221,5222,5225,5227,5229,5230,5232,5233,5234,5235,5237;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check03;
+
+	case 4:
+	Skill_Check04:
+	setarray .@skilllist[0],5365,5366,5367,5368,5369,5370,5371,5372,5373,5374,5375,5376,5377,5378,5379,5380,5381;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check04;
+
+	case 5:
+	Skill_Check05:
+	setarray .@skilllist[0],5336,5337,5338,5339,5340,5341,5342,5343,5344,5345,5346,5347,5348,6005,6006;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check05;
+
+	case 6:
+	Skill_Check06:
+	setarray .@skilllist[0],5295,5296,5297,5298,5299,5300,5301,5302,5303,5304,5305,6002,6003,6004;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check06;
+
+	case 7:
+	Skill_Check07:
+	setarray .@skilllist[0],5268,5269,5271,5272,5273,5275,5276,5278,5279,5280,5281;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check07;
+
+	case 8:
+	Skill_Check08:
+	setarray .@skilllist[0],5238,5239,5240,5241,5242,5243,5244,5245,5246,5247,5248,5249,5250,5251,5252,5253,5254;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check08;
+
+	case 9:
+	Skill_Check09:
+	setarray .@skilllist[0],5285,5286,5287,5288,5289,5290,5291,5292,5293,5294;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check09;
+
+	case 10:
+	Skill_Check010:
+	setarray .@skilllist[0],5311,5312,5313,5314,5315,5316,5317,5318,5319,5320,5321,5322;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check010;
+
+	case 11:
+	Skill_Check011:
+	setarray .@skilllist[0],5323,5324,5325,5326,5327,5328,5329,5330,5331,5332,5333,5334,5335;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check011;
+
+	case 12:
+	Skill_Check012:
+	setarray .@skilllist[0],5349,5350,5351,5352,5353,5355,5356,5357,5358,5359,5360,5361,5362,5363,5364;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check012;
+
+	case 13:
+	Skill_Check013:
+	setarray .@skilllist[0],5463,5464,5465,5466,5467,5468,5469,5470,5471,5472,5473,5474,5475;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check013;
+
+	case 14:
+	Skill_Check014:
+	setarray .@skilllist[0],5416,5417,5418,5419,5420,5421,5422,5423,5424,5425,5426,5427,5428,5429,5430,5431,5432;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check014;
+
+	case 15:
+	Skill_Check015:
+	setarray .@skilllist[0],5476,5477,5478,5479,5480,5481,5482,5483,5484,5485,5486,5487,5488,5489,5490,5491,5492,5493,5494,5495;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check015;
+
+	case 16:
+	Skill_Check016:
+	setarray .@skilllist[0],5401,5402,5403,5404,5405,5406,5407,5408,5409,5410,5411,5412,5413,5414,5415;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check016;
+
+	case 17:
+	Skill_Check017:
+	setarray .@skilllist[0],5433,5434,5435,5436,5437,5438,5439,5440,5441,5442,5443,5444,5445,5446,5447,5448;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check017;
+
+	case 18:
+	Skill_Check018:
+	setarray .@skilllist[0],5449,5450,5451,5452,5453,5454,5455,5456,5457,5458,5459,5460,5461,5462;
+	.@ret = selectskill(.@skilllist);
+	if(.@ret == -1) close;
+	dispbottom "技能名稱: " + getskillinfo(SKI_NAME,.@ret,10);
+	dispbottom "變動詠唱時間: " + getskillinfo(SKI_CASTTIME,.@ret,10);
+	dispbottom "固定詠唱時間: " + getskillinfo(SKI_FIXEDCASTTIME,.@ret,10);
+	dispbottom "延遲時間: " + getskillinfo(SKI_AFTERCASTACTDELAY,.@ret,10);
+	dispbottom "冷卻時間: " + getskillinfo(SKI_COOLDOWN,.@ret,10);
+	goto Skill_Check018;
+	}
+}
+
+OnInit:
+	waitingroom "技能查詢",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+

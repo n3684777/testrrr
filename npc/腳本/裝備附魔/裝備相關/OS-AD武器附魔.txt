@@ -1,0 +1,10 @@
+﻿vdistrict1,59,34,6	script	OS-AD武器附魔	10183,{
+	item_enchant 33;
+	end;
+
+OnInit:
+	waitingroom "OS-AD武器附魔",0;
+	end;
+}
+
+

@@ -1,0 +1,146 @@
+﻿
+vdistrict1,59,26,6	script	善惡裝備附魔	10381,{
+
+	mes "[善惡裝備附魔]";
+	mes "請選擇你要附魔的裝備";
+	next;
+	switch(select("頭盔類(上):武器類:鞋子類")){
+
+	case 1:
+		mes "[善惡裝備附魔]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("善惡之盔")){
+
+		case 1:
+		close2;
+		item_enchant 67;
+		end;
+		}
+
+	case 2:
+		mes "[善惡裝備附魔]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("善行武器:惡行武器")){
+
+		case 1:
+		close2;
+		item_enchant 65;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 66;
+		end;
+		}
+
+	case 3:
+		mes "[善惡裝備附魔]";
+		mes "哪件裝備要附魔呢?";
+		next;
+		switch(select("善惡之靴(樞機主教):善惡之靴(聖裁者):善惡之靴(靈導士):善惡之靴(魂靈師):善惡之靴(盧恩龍爵):善惡之靴(生命締造者):善惡之靴(元素支配者):善惡之靴(風鷹狩獵者):善惡之靴(天帝):善惡之靴(機械神匠):善惡之靴(十字影武):善惡之靴(流浪忍者/疾風忍者):善惡之靴(深淵追跡者):善惡之靴(樂之舞靈&天籟頌者:善惡之靴(頂級初學者):善惡之靴(帝國聖衛軍):善惡之靴(禁咒魔導士):善惡之靴(夜行使))")){
+
+		case 1:
+		close2;
+		item_enchant 106;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 107;
+		end;
+
+		case 3:
+		close2;
+		item_enchant 108;
+		end;
+
+		case 4:
+		close2;
+		item_enchant 109;
+		end;
+
+		case 5:
+		close2;
+		item_enchant 110;
+		end;
+
+		case 6:
+		close2;
+		item_enchant 111;
+		end;
+
+
+		case 7:
+		close2;
+		item_enchant 114;
+		end;
+
+		case 8:
+		close2;
+		item_enchant 115;
+		end;
+
+		case 9:
+		close2;
+		item_enchant 116;
+		end;
+
+		case 10:
+		close2;
+		item_enchant 125;
+		end;
+
+		case 11:
+		close2;
+		item_enchant 126;
+		end;
+	//
+		case 12:
+		close2;
+		item_enchant 127;
+		end;
+
+		case 13:
+		close2;
+		item_enchant 129;
+		end;
+
+		case 14:
+		close2;
+		item_enchant 130;
+		end;
+
+		case 15:
+		close2;
+		item_enchant 131;
+		end;
+
+		case 16:
+		close2;
+		item_enchant 134;
+		end;
+
+		case 17:
+		close2;
+		item_enchant 135;
+		end;
+
+		case 18:
+		close2;
+		item_enchant 136;
+		end;
+
+
+
+		}
+
+	}
+OnInit:
+	waitingroom "善惡裝備附魔",0;
+	end;
+}
+
+
+

@@ -1,0 +1,908 @@
+/*
+= 腳本名:	<<服飾收藏倉庫版>>
+= 適用範圍:	熊貓RA
+= 作者:		人魚姬的思念 
+= QQ:		327945477
+conf\import\inter_server.yml
+   - ID: 3
+     Name: "時裝倉庫"
+     Table: costume_storage
+     Max: 600
+
+導入數據庫表	 
+costume_storage.sql	 
+*/
+
+
+function	script	Turn_page_costum	{
+	copyarray .@menuitemID[0],getarg(0),getarraysize(getarg(0));
+	.@menu_next$ = "^ff0000 - 下一頁^000000";
+	.@menu_return$ = "^ff0000 - 上一頁^000000";
+	//取傳入菜單列表數組長度
+	.@menuitemID_len=getarraysize(.@menuitemID);	
+	//取數組10的倍數
+	.@multiple=.@menuitemID_len/10;
+	//取數組除10的餘數
+	.@remainder=.@menuitemID_len%10;
+	//計算最大頁數
+	if(.@remainder>0){
+		.@pagescountmax=.@multiple+1;
+	}
+	else {
+		.@pagescountmax=.@multiple;	
+		}
+	.@pagescount++;
+	
+headpage:	
+	.@menu$="";
+	if(.@pagescount!=1){
+		.@menu$=.@menu$+.@menu_return$;
+	}	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+		//debugmes "2222";
+	
+	.@sel = select(.@menu$);
+		
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+	}	
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];
+	end;
+nextpage:
+	.@menu$="";
+	if(.@pagescount){
+		.@menu$=.@menu$+.@menu_return$;
+	}
+	
+	for(.@i = 0; .@i < (.@pagescount<.@pagescountmax ?10:.@remainder==0?10:.@remainder);
+	    .@i++) {
+		.@menu$ = .@menu$ + ": - " + getitemname(.@menuitemID[.@i+(.@pagescount-1)*10]);
+	}
+	
+	if(.@pagescount<.@pagescountmax )
+		.@menu$=.@menu$+":"+.@menu_next$;
+	
+	.@sel = select(.@menu$);
+	
+	if(.@sel == 1){
+		.@pagescount--;
+		if(.@pagescount!=1)goto nextpage;
+		goto headpage;
+		
+	}
+	
+	if(.@sel == 12){
+		.@pagescount++;
+		goto nextpage;
+		
+	}
+	return .@menuitemID[.@sel-2+(.@pagescount-1)*10];	
+	end;
+	
+}
+trinity,102,73,6	script	服飾收藏倉庫#	4_STAR_BOX_SCORE,{
+	disable_items;
+	
+L_Menu:
+	mes "[服飾收藏人員]";
+	mes "我正在搜集一些服飾..";
+	mes "只要你給我指定的服飾裝備";
+	mes "我可以賦予你一些能力加成唷~";
+	next;
+	mes "^0000CC你目前已收藏了^FF0000"+getarraysize(#pc_head_costom)+"^0000CC個服飾^000000";
+	mes "^0000CC披風:^FF0000"+getarraysize(#pc_head_costom_ROBE)+"^0000CC個服飾^000000";	
+	mes "^0000CC頭上:^FF0000"+getarraysize(#pc_head_costom_TOP)+"^0000CC個服飾^000000";	
+	mes "^0000CC頭中:^FF0000"+getarraysize(#pc_head_costom_MID)+"^0000CC個服飾^000000";	
+	mes "^0000CC頭下:^FF0000"+getarraysize(#pc_head_costom_BOTTOM)+"^0000CC個服飾^000000";			
+
+	next;
+		switch(select("開啟服飾倉庫:查看獲得能力:提取已收藏服飾外觀")) {
+	case 1:
+		openstorage2 3,STOR_MODE_GET|STOR_MODE_PUT;
+		end;
+	case 2:
+		// 設定查看可獲得能力說明
+		mes "[服飾收藏人員]";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 15 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+1%^000000";
+		mes "全體型抗性 ^FF0000+1%^000000、掉寶率 ^FF0000+2%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 30 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+2%^000000";
+		mes "全體型抗性 ^FF0000+2%^000000、掉寶率 ^FF0000+4%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 60 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+3%^000000";
+		mes "全體型抗性 ^FF0000+3%^000000、掉寶率 ^FF0000+6%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 100 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+4%^000000";
+		mes "全體型抗性 ^FF0000+4%^000000、掉寶率 ^FF0000+8%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 150 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+5%^000000";
+		mes "全體型抗性 ^FF0000+5%^000000、掉寶率 ^FF0000+10%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 250 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+6%^000000";
+		mes "全體型抗性 ^FF0000+6%^000000、掉寶率 ^FF0000+12%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 400 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+8%^000000";
+		mes "全體型抗性 ^FF0000+8%^000000、掉寶率 ^FF0000+14%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 600 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+10%^000000";
+		mes "全體型抗性 ^FF0000+10%^000000、掉寶率 ^FF0000+16%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 800 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+12%^000000";
+		mes "全體型抗性 ^FF0000+12%^000000、掉寶率 ^FF0000+18%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 900 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+14%^000000";
+		mes "全體型抗性 ^FF0000+14%^000000、掉寶率 ^FF0000+20%^000000";
+		mes "----------------------------------------";
+		mes "^0000CC收藏^FF0000 1000 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+16%^000000";
+		mes "全體型抗性 ^FF0000+16%^000000、掉寶率 ^FF0000+22%^000000";
+		mes "^0000CC收藏^FF0000 1200 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+20%^000000";
+		mes "全體型抗性 ^FF0000+18%^000000、掉寶率 ^FF0000+24%^000000";
+		mes "^0000CC收藏^FF0000 1500 ^0000CC件可獲得^000000：";
+		mes "近距離/遠距離/魔法傷害 ^FF0000+24%^000000";
+		mes "全體型抗性 ^FF0000+20%^000000、掉寶率 ^FF0000+26%^000000";
+
+
+		next;
+		goto L_Menu;
+
+	case 3:
+	mes "請選擇你要提取時裝外觀";
+		switch(select("披肩:頭上:頭中:頭下:恢復本來外觀")) {
+		case 1:
+			if(!getarraysize(#pc_head_costom_ROBE)){
+			mes "你沒有收藏";
+			close;
+			}
+			.@selecid = Turn_page_costum(#pc_head_costom_ROBE);
+			.@selectView = #pc_head_costom_ROBEVIEW[inarray(#pc_head_costom_ROBE,.@selecid)];
+			setlook LOOK_ROBE,.@selectView;
+			pc_ch_robe = .@selectView;
+			end;
+		case 2:
+			if(!getarraysize(#pc_head_costom_TOP)){
+			mes "你沒有收藏";
+			close;
+			}
+			.@selecid = Turn_page_costum(#pc_head_costom_TOP);
+			.@selectView = #pc_head_costom_TOPVIEW[inarray(#pc_head_costom_TOP,.@selecid)];
+			setlook 4,.@selectView;
+			pc_ch_top = .@selectView;
+			end;
+		case 3:
+			if(!getarraysize(#pc_head_costom_MID)){
+			mes "你沒有收藏";
+			close;
+			}
+			.@selecid = Turn_page_costum(#pc_head_costom_MID);
+			.@selectView = #pc_head_costom_MIDVIEW[inarray(#pc_head_costom_MID,.@selecid)];
+			setlook 5,.@selectView;
+			pc_ch_mid = .@selectView;
+			end;
+		case 4:
+			if(!getarraysize(#pc_head_costom_BOTTOM)){
+			mes "你沒有收藏";
+			close;
+			}
+			.@selecid = Turn_page_costum(#pc_head_costom_BOTTOM);
+			.@selectView = #pc_head_costom_BOTTOMVIEW[inarray(#pc_head_costom_BOTTOM,.@selecid)];
+			setlook 3,.@selectView;
+			pc_ch_bot = .@selectView;
+			end;
+		case 5:
+					.@topView = getiteminfo(getequipid(EQI_HEAD_TOP),11);
+					.@middiew = getiteminfo(getequipid(EQI_HEAD_MID),11);
+					.@bottomView = getiteminfo(getequipid(EQI_HEAD_LOW),11);
+					.@robeView = getiteminfo(getequipid(EQI_GARMENT),11);
+					
+					
+					if(.@topView == -1){ .@topView = getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP),11); }
+					if(.@middiew == -1){ .@middiew = getiteminfo(getequipid(EQI_COSTUME_HEAD_MID),11); }
+					if(.@bottomView == -1){ .@bottomView = getiteminfo(getequipid(EQI_COSTUME_HEAD_LOW),11); }
+					if(.@robeView == -1){ .@robeView = getiteminfo(getequipid(EQI_COSTUME_GARMENT),11); }
+					
+					if(.@topView == -1){ .@topView = 0; }
+					if(.@middiew == -1){ .@middiew = 0; }
+					if(.@bottomView == -1){ .@bottomView = 0; }
+					if(.@robeView == -1){ .@robeView = 0; }
+
+					setlook 4,.@topView;
+					setlook 5,.@middiew;
+					setlook 3,.@bottomView;
+					setlook LOOK_ROBE,.@robeView;
+					pc_ch_top = 0;
+					pc_ch_mid = 0;
+					pc_ch_bot = 0;
+					pc_ch_robe = 0;
+					end;
+		}
+
+	case 4:
+	if(costume_Boss == 0) {dispbottom "你沒有儲存的服飾幻裝0"; close;}
+	if(costume_Boss == 2) {dispbottom "你沒有儲存的服飾幻裝2"; close;}
+	set costume_Boss,2;
+	setlook 4,pc_ch_top_1;
+	setlook 5,pc_ch_mid_1;
+	setlook 3,pc_ch_bot_1;
+	setlook LOOK_ROBE,pc_ch_robe_1;
+
+	pc_ch_rob = ppc_ch_top_1;
+	pc_ch_mid = pc_ch_mid_1;
+	pc_ch_bot = pc_ch_bot_1;
+	pc_ch_robe = pc_ch_robe_1;
+	end;
+		}
+
+
+			.@selecid = Turn_page_costum(#pc_head_costom_ROBE);
+			.@selectView = #pc_head_costom_ROBEVIEW[inarray(#pc_head_costom_ROBE,.@selecid)];
+			setlook LOOK_ROBE,.@selectView;
+			pc_ch_robe = .@selectView;
+
+
+
+
+	end;
+OnPCStorageAddFilter:
+if(@storeitem_dst_storeid == 3){
+						.@selectId = @storeitem_src_nameid;
+						.@selectLoc = getiteminfo(.@selectId,5);
+						.@selectView = getiteminfo(.@selectId,11);
+						
+	if(.@selectLoc == 8192 ||.@selectLoc == 1024 ||.@selectLoc == 2048 ||.@selectLoc == 4096 ){
+	
+	if(.@selectView == 0){
+		processhalt;
+		dispbottom "這件服飾沒有外觀無法收藏";
+		end;
+		
+	}
+
+	.@max = getarraysize(#pc_head_costom);
+	if(.@max >= 1500){
+		processhalt;
+		dispbottom "你已經收藏1500件服飾";
+		end;
+	}
+
+	if(inarray(#pc_head_costom,.@selectId) != -1){
+		processhalt;
+		dispbottom "你已經收藏過這件服飾";
+		end;
+	}
+
+
+						if(.@selectLoc == 8192){	// 時裝披風
+							#pc_head_costom_ROBE[getarraysize(#pc_head_costom_ROBE)]=.@selectId;
+							#pc_head_costom_ROBEVIEW[getarraysize(#pc_head_costom_ROBEVIEW)]=.@selectView;
+						}
+						
+						if(.@selectLoc == 1024){	// 頭上
+							#pc_head_costom_TOP[getarraysize(#pc_head_costom_TOP)]=.@selectId;
+							#pc_head_costom_TOPVIEW[getarraysize(#pc_head_costom_TOPVIEW)]=.@selectView;
+						}
+						if(.@selectLoc == 2048){	// 頭中
+							#pc_head_costom_MID[getarraysize(#pc_head_costom_MID)]=.@selectId;
+							#pc_head_costom_MIDVIEW[getarraysize(#pc_head_costom_MIDVIEW)]=.@selectView;
+						}
+						if(.@selectLoc == 4096){	// 頭下
+							#pc_head_costom_BOTTOM[getarraysize(#pc_head_costom_BOTTOM)]=.@selectId;
+							#pc_head_costom_BOTTOMVIEW[getarraysize(#pc_head_costom_BOTTOMVIEW)]=.@selectView;
+						}
+
+	
+	
+	#pc_head_costom[getarraysize(#pc_head_costom)]=.@selectId;
+
+	
+
+recalculatestat;
+
+}
+ELSE {
+		processhalt;
+		dispbottom "這個無法存放";
+		end;
+
+}
+}
+end;
+OnPCStorageDelFilter:
+if(@removeitem_src_storeid == 3){
+
+	.@index = inarray(#pc_head_costom,@removeitem_src_nameid);
+	deletearray #pc_head_costom[.@index],1;
+	
+	
+	.@index = inarray(#pc_head_costom_ROBE,@removeitem_src_nameid);	
+	if(.@index !=-1){
+		deletearray #pc_head_costom_ROBE[.@index],1;
+		deletearray #pc_head_costom_ROBEVIEW[.@index],1;
+			if(!getarraysize(#pc_head_costom_ROBE)){
+				deletearray #pc_head_costom_ROBEVIEW;
+			}		
+	}
+	
+
+	.@index = inarray(#pc_head_costom_TOP,@removeitem_src_nameid);	
+	if(.@index !=-1){
+		deletearray #pc_head_costom_TOP[.@index],1;
+		deletearray #pc_head_costom_TOPVIEW[.@index],1;
+					if(!getarraysize(#pc_head_costom_TOP)){
+				deletearray #pc_head_costom_TOPVIEW;
+			}	
+	}
+	.@index = inarray(#pc_head_costom_MID,@removeitem_src_nameid);	
+	if(.@index !=-1){
+		deletearray #pc_head_costom_MID[.@index],1;
+		deletearray #pc_head_costom_MIDVIEW[.@index],1;
+							if(!getarraysize(#pc_head_costom_MID)){
+				deletearray #pc_head_costom_MIDVIEW;
+			}	
+	}
+	.@index = inarray(#pc_head_costom_BOTTOM,@removeitem_src_nameid);	
+	if(.@index !=-1){
+		deletearray #pc_head_costom_BOTTOM[.@index],1;
+		deletearray #pc_head_costom_BOTTOMVIEW[.@index],1;
+									if(!getarraysize(#pc_head_costom_BOTTOM)){
+				deletearray #pc_head_costom_BOTTOMVIEW;
+			}
+	}	
+
+recalculatestat;
+}
+end;
+
+
+
+OnPCStatCalcEvent:
+	if(getmapflag(strcharinfo(3),mf_gvg)) { end; }
+	// 決定各個裝備收藏的能力語法
+		freeloop(1);
+	for(.@i=0; .@i<getarraysize(#pc_head_costom); .@i++) {
+		switch(#pc_head_costom[.@i]) {
+		//特別時裝增加屬性能力ID
+		//紅利商店
+		case 47083:	//(服飾)翱翔永恆之翼(湛藍)
+		case 44760:	//(服飾)貓咪套裝(紅)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bPow,1;
+		bonus bPAtk,5;
+		break;
+		case 47084:	//(服飾)翱翔永恆之翼(青綠)
+		case 44761:	//(服飾)貓咪套裝(黑)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bSta,1;
+		bonus bPAtk,5;
+		break;
+		case 47085:	//(服飾)翱翔永恆之翼(降紫)
+		case 44762:	//(服飾)貓咪套裝(青)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bWis,1;
+		bonus bSMatk,5;
+		break;
+		case 47086:	//(服飾)翱翔永恆之翼(霓彩)
+		case 44763:	//(服飾)貓咪套裝(灰)
+		case 51280:	//(服飾)翱翔永恆之翼(淡粉)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bSpl,1;
+		bonus bSMatk,5;
+		break;
+		case 47087:	//(服飾)翱翔永恆之翼(嫣紅)
+		case 44764:	//(服飾)貓咪套裝(綠)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bCon,1;
+		bonus bPAtk,5;
+		break;
+		case 47088:	//(服飾)翱翔永恆之翼(蝶黃)
+		case 51279:	//(服飾)翱翔永恆之翼(淡紫)
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bCrt,1;
+		bonus bPAtk,5;
+		break;
+
+		case 47091:	//(服飾)閃耀永恆之翼
+		case 47092:	//(服飾)閃耀永恆之翼
+		case 47093:	//(服飾)閃耀永恆之翼
+		case 47094:	//(服飾)閃耀永恆之翼
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bCrt,1;
+		bonus bCRate,2;
+		break;
+
+		case 47095:	//(服飾)閃耀永恆之翼
+		case 47096:	//(服飾)閃耀永恆之翼
+		case 47097:	//(服飾)閃耀永恆之翼
+		case 47098:	//(服飾)閃耀永恆之翼
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bCritical,2;
+		bonus bCritAtkRate,3;
+		break;
+
+		case 40871:	//(服飾)墮天使羽翼
+		case 31568:	//(服飾)浮空的太極玉
+		case 44694:	//(服飾)慶典披風
+		case 44562:	//(服飾)貪吃咖波蛇
+		case 45197:	//(服飾)迪奧娜面罩
+		case 45198:	//(服飾)迪奧娜精靈
+		case 45199:	//(服飾)迪奧娜披肩
+		case 45200:	//(服飾)可莉面罩
+		case 45201:	//(服飾)可莉精靈
+		case 45202:	//(服飾)可莉披肩
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bCRate,1;
+		bonus bCritAtkRate,5;
+		break;
+
+		case 45203:	//(服飾)七七面罩
+		case 45204:	//(服飾)七七精靈
+		case 45205:	//(服飾)七七披肩
+		case 45206:	//(服飾)早柚面罩
+		case 45207:	//(服飾)早柚精靈
+		case 45208:	//(服飾)早柚披肩
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bSpl,1;
+		bonus2 bMagicAtkEle,Ele_All,2;
+		break;
+
+		case 45209:	//(服飾)瑤瑤面罩
+		case 45210:	//(服飾)瑤瑤精靈
+		case 45211:	//(服飾)瑤瑤披肩
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bPow,1;
+		bonus bLongAtkRate,2;
+		bonus bShortAtkRate,2;
+		break;
+
+		case 480423:	//(服飾)獨角獸的奇幻旅程
+		case 480429:	//(服飾)貓咪甜甜圈
+		case 480419:	//(服飾)電磁光劍
+		case 480420:	//(服飾)電磁步槍
+		case 480421:	//(服飾)防禦力場
+		bonus2 bDropAddRace,RC_All,2;
+		bonus bDelayrate,-4;
+		break;
+
+
+		//贊助商店
+		case 44796:	//(服飾)海賊王外袍
+		case 44797:	//(服飾)海賊王外袍
+		case 44798:	//(服飾)海賊王外袍
+		case 44799:	//(服飾)海賊王外袍
+		case 44800:	//(服飾)海賊王外袍
+		case 44801:	//(服飾)海賊王外袍
+		case 44267:	//(服飾)墨蛇君披巾
+		case 420046:	//(服飾)王室披風
+		case 44577:	//(服飾)尊貴的騎士披風
+		case 400081:	//(服飾)2020RTC頑皮鬼
+		bonus2 bDropAddRace,RC_All,3;
+		break;
+
+		case 40246:	//(服飾)狐尾女巫外袍(紅)
+		case 40247:	//(服飾)狐尾女巫外袍(粉)
+		case 40248:	//(服飾)狐尾女巫外袍(紫)
+		case 40249:	//(服飾)狐尾女巫外袍(灰)
+		case 40250:	//(服飾)狐尾女巫外袍(青)
+		case 40251:	//(服飾)狐尾女巫外袍(藍)
+		case 45264:	//(服飾)雪花飄飄(藍)
+		case 45265:	//(服飾)雪花飄飄(粉)
+		case 45266:	//(服飾)雪花飄飄(綠)
+		case 45267:	//(服飾)雪花飄飄(紫)
+		case 45268:	//(服飾)雪花飄飄(紅)
+		case 45269:	//(服飾)雪花飄飄(黃)
+		bonus bDelayrate,-3;
+		break;
+
+		case 20992:	//(服飾)伊甸仙之羽翼
+		case 480107:	//(服飾)亡者君王絕世雙劍
+		case 480318:	//(服飾)鳳凰聖劍
+		case 20588:	//(服飾)尼芙菲姆魔法掃帚
+		case 480288:	//(服飾)黑暗之王斗篷
+		case 480246:	//(服飾)巴基利長槍
+		case 480236:	//(服飾)古魔法書
+		bonus bLongAtkRate,5;
+		bonus bShortAtkRate,5;
+		bonus2 bMagicAtkEle,Ele_All,5;
+		break;
+
+		case 480407:	//(服飾)萊蒂西亞之翼
+		case 480361:	//(服飾)邪魂雙刃
+		case 480362:	//(服飾)九尾狐之尾(白)
+		case 480305:	//(服飾)教皇娃娃
+		case 20619:	//(服飾)森林傳說舞翼
+		bonus bCritical,10;
+		bonus bCRate,5;
+		bonus bCritAtkRate,15;
+		break;
+
+		case 51281:	//(服飾)炫光彩蝶(粉紅)
+		case 51282:	//(服飾)炫光彩蝶(粉藍)
+		case 20614:	//(服飾)啟海伊洛的毀滅科技
+		case 31978:	//(服飾)紅色火焰巨人
+		case 31979:	//(服飾)金色火焰巨人
+		bonus bDelayrate,-10;
+		bonus2 bDropAddRace,RC_All,10;
+		break;
+
+		case 400157:	//(服飾)占星術師的三角帽
+		case 31396:	//(服飾)魔導士連帽披肩
+		case 31832:	//(服飾)女巫的貓帽
+		case 31432:	//(服飾)飄浮魔冰
+		case 40270:	//(服飾)漂浮生存魔球
+		case 44204:	//(服飾)小鹿耳
+		case 20398:	//(服飾)尼芙菲姆兔帽
+		case 40417:	//(服飾)魔法貓咪禮帽
+		case 31951:	//(服飾)被寵壞的白貓
+		case 44318:	//(服飾)月之仙女羽衣
+		bonus2 bMagicAtkEle,Ele_All,3;
+		break;
+
+		case 45212:	//(服飾)阿拉斯加犬
+		case 410289:	//(服飾)寶貝幽暗夢魘
+		case 420237:	//(服飾)阿虎圍巾
+		bonus2 bAddClass,Class_Boss,2;
+		bonus2 bMagicAddClass,Class_Boss,2;
+		break;
+
+		case 31382:	//(服飾)喵咪大耳帽
+		case 31530:	//(服飾)大型德古拉角帽
+		case 15953:	//(服飾)泰式小吃餐車
+		case 19859:	//(服飾)天使羽翼
+		case 40317:	//(服飾)主天使的遺失物
+		case 40336:	//(服飾)熾天使的遺失物
+		bonus bLongAtkRate,2;
+		bonus bShortAtkRate,2;
+		break;
+
+		case 420222:	//(服飾)奉獻信仰光環
+		case 410242:	//(服飾)流浪者死神
+		case 45254:	//(服飾)光輝披肩
+		case 45255:	//(服飾)光輝頭盔
+		case 420262:	//(服飾)釋放之力(下)
+		bonus bMaxAP,20;
+		break;
+
+		case 44875:	//(服飾)好想吃甜點
+		case 420159:	//(服飾)魔力咒縛禁卡
+		case 400604:	//(服飾)黑喵蝴蝶結貝雷帽
+		case 44112:	//(服飾)修羅王的象徵
+		case 410201:	//(服飾)死亡骷髏
+		case 45194:	//(服飾)黑豹面罩
+		case 45195:	//(服飾)黑豹探測器
+		case 45196:	//(服飾)黑豹斗篷
+		bonus bCritAtkRate,4;
+		break;
+
+
+		//推廣服飾
+		case 410199:	//(服飾)午夜蠟燭
+		case 410240:	//(服飾)御神使白兔
+		case 420016:	//(服飾)神靈形代
+		case 44693:	//(服飾)冰雪披風
+		case 15838:	//(服飾)貝思波頭具
+		case 44317:	//(服飾)安格拉兔的意志
+		case 410029:	//(服飾)驚奇魔物蛋籃
+		case 45256:	//(服飾)星光毛線帽(藍)
+		case 45257:	//(服飾)星光毛線帽(綠)
+		case 45258:	//(服飾)星光毛線帽(粉)
+		case 45259:	//(服飾)星光毛線帽(紫)
+		case 45260:	//(服飾)星光披肩(藍)
+		case 45261:	//(服飾)星光披肩(綠)
+		case 45262:	//(服飾)星光披肩(粉)
+		case 45263:	//(服飾)星光披肩(紫)
+		bonus bSMatk,2;
+		bonus bPAtk,2; 
+		bonus bAddMaxWeight,1000;
+		break;
+
+
+		//紅利轉蛋(1)
+		case 20584:	//(服飾)巨大狐尾草
+		case 480320:	//(服飾)水鰭裝飾
+		case 480393:	//(服飾)藍月魔女之新月
+		case 480408:	//(服飾)大惡魔之翼
+		bonus2 bMagicAtkEle,Ele_All,2;
+		break;
+
+		case 410160:	//(服飾)魔術地球儀
+		case 410169:	//(服飾)妖狐
+		case 420165:	//(服飾)帳篷
+		case 31395:	//(服飾)仙境魔法書
+		case 20430:	//(服飾)魔王夢羅克的忠誠僕人
+		case 420234:	//(服飾)祭典攤位
+		case 40374:	//(服飾)墮落天使的遺失物
+		case 40396:	//(服飾)咪露貓帽
+		case 20317:	//(服飾)貓耳電子耳機
+		case 410055:	//(服飾)漂浮櫻花陽傘
+		bonus bSMatk,2;
+		bonus bPAtk,2; 
+		break;
+
+		case 40721:	//正義劍(服裝)
+		case 40722:	//神光劍(服裝)
+		case 40723:	//飲血劍(服裝)
+		case 40724:	//因陀羅(服裝)
+		case 40725:	//金龍杖(服裝)
+		case 40726:	//破魔斧(服裝)
+		bonus bBaseAtk,3;
+		bonus bMatk,3;
+		break;
+
+		//世界boss
+		case 20621:	//(服飾)汙染黑暗之王披風
+		bonus bPAtk,2;
+		bonus bSMatk,2;
+		bonus2 bAddClass,Class_Boss,3;
+		bonus2 bMagicAddClass,Class_Boss,3;
+		break;
+
+		//世界boss
+		case 480223:	//(服飾)妖刀村正
+		bonus2 bAddClass,Class_Boss,2;
+		bonus2 bMagicAddClass,Class_Boss,2;
+		break;
+
+		//世界boss
+		case 480295:	//(服飾)櫻花樹枝
+		case 480287:	//(服飾)奈里烏思娃娃
+		bonus bCastrate,-3; 
+		bonus bDelayrate,-3;
+		break;
+
+		//世界boss
+		case 480247:	//(服飾)超大天使波利後背包
+		bonus bCRate,1;
+		bonus bCritAtkRate,3;
+		break;
+
+
+		//道館頭飾(頭上)
+		case 40764:	//(服飾)RWC2008台灣區冠軍專屬頭飾
+		case 40765:	//(服飾)RWC2008台灣區亞軍專屬頭飾
+		case 40766:	//(服飾)RWC2008台灣區季軍專屬頭飾
+		case 40767:	//(服飾)RWC2011勝利之冠(冠軍)
+		case 40768:	//(服飾)RWC2011勝利之冠(亞軍)
+		case 40769:	//(服飾)RWC2011勝利之冠(季軍)
+		case 40770:	//(服飾)RWC2011勝利之冠
+		case 40771:	//(服飾)2012_RMSC冠軍的專屬頭飾
+		case 40772:	//(服飾)2012_RMSC亞軍的專屬頭飾
+		case 40773:	//(服飾)2012_RMSC季軍的專屬頭飾
+		case 40774:	//(服飾)2012 RMSC專屬紀念頭飾
+		case 40775:	//(服飾)RWC榮耀之冠(冠軍)
+		case 40776:	//(服飾)RWC榮耀之冠(亞軍)
+		case 40777:	//(服飾)RWC榮耀之冠(季軍)
+		case 40778:	//(服飾)RWC榮耀之冠
+		case 40779:	//(服飾)2017RTC冠軍象徵
+		case 40780:	//(服飾)2017RTC亞軍象徵
+		case 40781:	//(服飾)2017RTC季軍象徵
+		case 40782:	//(服飾)2017RTC象徵
+		case 40303:	//(服飾)地球
+		bonus bMaxAP,2;
+		bonus bAddMaxWeight,500;
+		break;
+
+
+		//道館頭飾(頭中)
+		case 40844:	//(服飾)守護精靈[嫣紅]
+		case 40845:	//(服飾)守護精靈[雪精靈]
+		case 40846:	//(服飾)守護精靈[巫女]
+		case 40848:	//(服飾)守護精靈[玫瑰精靈]
+		case 40849:	//(服飾)守護精靈[魔羊]
+		case 40850:	//(服飾)守護精靈[魔貓]
+		case 40851:	//(服飾)守護精靈[玫瑰]
+		case 40852:	//(服飾)守護精靈[小倩]
+		case 40853:	//(服飾)守護精靈[鬼女]
+		case 40854:	//(服飾)守護精靈[蒲公英]
+		case 40855:	//(服飾)守護精靈[魔女蜜菈]
+		case 40856:	//(服飾)守護精靈[魔女嘉莉]
+		case 40857:	//(服飾)守護精靈[魔法咩咩]
+		case 40858:	//(服飾)守護精靈[魔法酷貓]
+		case 40859:	//(服飾)守護精靈[魔法少年]
+		case 40860:	//(服飾)守護精靈[淘氣小惡魔]
+		case 40861:	//(服飾)守護精靈[四葉精靈]
+		case 40862:	//(服飾)守護精靈[獅鷲獸]
+
+		case 44838:	//(服飾)巨星榮耀
+		case 44851:	//(服飾)小鯨魚
+		case 44782:	//(服飾)動物家族
+		case 44742:	//(服飾)超級藍色鬥氣
+		case 44743:	//(服飾)超級黑色鬥氣
+		case 41780:	//(服飾)浮游砲甲式
+		case 41781:	//(服飾)浮游砲乙式
+		case 41782:	//(服飾)浮游砲
+		case 44802:	//(服飾)甜甜圈(粉)
+		case 44803:	//(服飾)甜甜圈(藍)
+		case 44804:	//(服飾)甜甜圈(紫)
+		case 44805:	//(服飾)甜甜圈(黃)
+		case 44806:	//(服飾)甜甜圈(綠)
+		case 44807:	//(服飾)甜甜圈(黑)
+		bonus bSMatk,1;
+		bonus bPAtk,1;
+		bonus bAddMaxWeight,500;
+		break;
+
+		//道館頭飾(頭下)
+		case 40656:	//(服飾)緞帶披風
+		case 40657:	//(服飾)緞帶披風(白)
+		case 40658:	//(服飾)緞帶披風(紅)
+		case 40659:	//(服飾)緞帶披風(紫)
+		case 40660:	//(服飾)緞帶披風(黃)
+		case 40661:	//(服飾)緞帶披風(黑)
+		case 40662:	//(服飾)緞帶披風(綠)
+		case 44653:	//(服飾)和風外袍(紅)
+		case 44654:	//(服飾)和風外袍(粉棕)
+		case 44655:	//(服飾)和風外袍(淡綠)
+		case 44656:	//(服飾)和風外袍(褐)
+		case 44657:	//(服飾)和風外袍(鵝黃)
+		bonus bSMatk,1;
+		bonus bPAtk,1;
+		bonus bCritAtkRate,1;
+		bonus bAddMaxWeight,500;
+		break;
+
+		//道館頭飾(頭下)
+		case 41707:	//(服飾)愛心氣球(紅)
+		case 41708:	//(服飾)愛心氣球(紫)
+		case 41709:	//(服飾)愛心氣球(黃)
+		case 41710:	//(服飾)愛心氣球(綠)
+		case 41711:	//(服飾)愛心氣球(藍)
+		case 44726:	//(服飾)蝶影紛紛(黃)
+		case 44727:	//(服飾)蝶影紛紛(紅)
+		case 44728:	//(服飾)蝶影紛紛(綠)
+		case 44729:	//(服飾)蝶影紛紛(藍)
+		case 44730:	//(服飾)蝶影紛紛(灰)
+		case 44731:	//(服飾)蝶影紛紛(粉)
+		bonus bSMatk,1;
+		bonus bPAtk,1;
+		bonus2 bMagicAddClass,Class_Boss,1;
+		bonus bAddMaxWeight,500;
+		break;
+
+
+
+
+
+		}
+	}
+		freeloop(0);
+
+
+	// 收藏幾件服飾的能力
+	.@max = getarraysize(#pc_head_costom);
+
+
+	if(.@max>=1500){
+	bonus bLongAtkRate,24;
+	bonus bShortAtkRate,24;
+	bonus2 bMagicAtkEle,Ele_All,24;
+	bonus2 bDropAddRace,RC_All,26;
+	end;
+	}
+	if(.@max>=1200){
+	bonus bLongAtkRate,20;
+	bonus bShortAtkRate,20;
+	bonus2 bMagicAtkEle,Ele_All,20;
+	bonus2 bDropAddRace,RC_All,24;
+	end;
+	}
+	if(.@max>=1000){
+	bonus bLongAtkRate,16;
+	bonus bShortAtkRate,16;
+	bonus2 bMagicAtkEle,Ele_All,16;
+	bonus2 bDropAddRace,RC_All,22;
+	end;
+	}
+	if(.@max>=900){
+	bonus bLongAtkRate,14;
+	bonus bShortAtkRate,14;
+	bonus2 bMagicAtkEle,Ele_All,14;
+	bonus2 bDropAddRace,RC_All,20;
+	end;
+	}
+	if(.@max>=800){
+	bonus bLongAtkRate,12;
+	bonus bShortAtkRate,12;
+	bonus2 bMagicAtkEle,Ele_All,12;
+	bonus2 bDropAddRace,RC_All,18;
+	end;
+	}
+	if(.@max>=600){
+	bonus bLongAtkRate,10;
+	bonus bShortAtkRate,10;
+	bonus2 bMagicAtkEle,Ele_All,10;
+	bonus2 bDropAddRace,RC_All,16;
+	end;
+	}
+	if(.@max>=400){
+	bonus bLongAtkRate,8;
+	bonus bShortAtkRate,8;
+	bonus2 bMagicAtkEle,Ele_All,8;
+	bonus2 bDropAddRace,RC_All,14;
+	end;
+	}
+	if(.@max>=250){
+	bonus bLongAtkRate,6;
+	bonus bShortAtkRate,6;
+	bonus2 bMagicAtkEle,Ele_All,6;
+	bonus2 bDropAddRace,RC_All,12;
+	end;
+	}
+	if(.@max>=150){
+	bonus bLongAtkRate,5;
+	bonus bShortAtkRate,5;
+	bonus2 bMagicAtkEle,Ele_All,5;
+	bonus2 bDropAddRace,RC_All,10;
+	end;
+	}
+	if(.@max>=100){
+	bonus bLongAtkRate,4;
+	bonus bShortAtkRate,4;
+	bonus2 bMagicAtkEle,Ele_All,4;
+	bonus2 bDropAddRace,RC_All,8;
+	end;
+	}
+	if(.@max>=60){
+	bonus bLongAtkRate,3;
+	bonus bShortAtkRate,3;
+	bonus2 bMagicAtkEle,Ele_All,3;
+	bonus2 bDropAddRace,RC_All,6;
+	end;
+	}
+	if(.@max>=30){
+	bonus bLongAtkRate,2;
+	bonus bShortAtkRate,2;
+	bonus2 bMagicAtkEle,Ele_All,2;
+	bonus2 bDropAddRace,RC_All,4;
+	end;
+	}
+	if(.@max>=2){
+	bonus bLongAtkRate,1;
+	bonus bShortAtkRate,1;
+	bonus2 bMagicAtkEle,Ele_All,1;
+	bonus2 bDropAddRace,RC_All,2;
+	end;
+	}
+	end;
+
+
+OnPCLoginEvent:
+	if(pc_ch_top > 0){
+	setlook 4,pc_ch_top;
+	}
+	if(pc_ch_mid > 0){
+	setlook 5,pc_ch_mid;
+	}
+	if(pc_ch_bot > 0){
+	setlook 3,pc_ch_bot;
+	}
+	if(pc_ch_robe > 0){
+	setlook LOOK_ROBE,pc_ch_robe;
+	}
+	end;
+
+
+Oninit:
+	waitingroom "服飾收藏倉庫",0;
+	//setarray .CollectionEquip[0],31717,31720;
+	end;
+}
+

@@ -1,0 +1,42 @@
+function	script	ChangeMaterial	{
+
+setarray main_id[0],2110002,7606,7582,7723;
+setarray reward_id[0],6909,6909,6909,6909;
+setarray reward_per_amount,2000,1000,500,100;
+
+setarray reward_id2[0],6909,6909,6909,6909; // 肂贱纘
+setarray reward_per_amount2,2000,0,0,0; // 肂贱纘癸埃计秖
+
+setarray multi[0],0,0,0,0;
+
+	for(.@i = 0; .@i < getarraysize(main_id); .@i++)
+	{
+			//	setarray main_amount[0],countitem(main_id[.@i]);
+		if(countitem(main_id[.@i]) >= reward_per_amount[.@i])
+		{
+			getitem reward_id[.@i],countitem(main_id[.@i])/reward_per_amount[.@i];
+			if(multi[.@i])
+			{
+				getitem reward_id2[.@i],countitem(main_id[.@i])/reward_per_amount2[.@i];
+			};
+			delitem main_id[.@i],countitem(main_id[.@i]) - countitem(main_id[.@i])%reward_per_amount[.@i];
+		}
+	}
+
+
+/*	if(countitem(7606) >= 5000){getitem 61050,countitem(7606)/5000;delitem 7606,countitem(7606) - countitem(7606)%5000;} // 瘆防祑刽锣传5000絚
+	if(countitem(61050) >= 3){getitem 6011,countitem(61050)/3;delitem 61050,countitem(61050) - countitem(61050)%3;} // 瘆刽絚传眎B
+
+	if(countitem(7582) >= 1000){getitem 61051,countitem(7582)/1000;delitem 7582,countitem(7582) - countitem(7582)%1000;} // 瘆腳1000传絚1000瘆腳
+	if(countitem(7723) >= 1000){getitem 61082,countitem(7723)/1000;delitem 7723,countitem(7723) - countitem(7723)%1000;} // 瘆苝1000传絚1000瘆苝
+
+	if(countitem(2110002) >= 5000){getitem 6909,countitem(2110002)/5000;delitem 2110002,countitem(2110002) - countitem(2110002)%5000;} // 豴法窰5000传聋豴法
+
+	if(countitem(4001) >= 1000){getitem 61051,countitem(4001)/1000;delitem 4001,countitem(4001) - countitem(4001)%1000;} // 猧╰传瘆腳1000絚
+	if(countitem(4004) >= 1000){getitem 61051,countitem(4004)/1000;delitem 4004,countitem(4004) - countitem(4004)%1000;} // 猧╰传瘆腳1000絚
+	if(countitem(4033) >= 1000){getitem 61051,countitem(4033)/1000;delitem 4033,countitem(4033) - countitem(4033)%1000;} // 猧╰传瘆腳1000絚
+	if(countitem(4196) >= 1000){getitem 61051,countitem(4196)/1000;delitem 4196,countitem(4196) - countitem(4196)%1000;} // 猧╰传瘆腳1000絚
+	if(countitem(4197) >= 1000){getitem 61051,countitem(4197)/1000;delitem 4197,countitem(4197) - countitem(4197)%1000;} // 猧╰传瘆腳1000絚
+*/	
+return;
+}

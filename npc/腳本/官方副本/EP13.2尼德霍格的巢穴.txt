@@ -1,0 +1,838 @@
+﻿//===== rAthena Script ======================================= 
+//= Nidhoggr's Nest
+//===== By: ================================================== 
+//= L0ne_W0lf, various sources
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Nidhoggr's Nest Instance
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Minor dialog updates.
+//= 1.2 No longer glitches when anyone but party leader talks to the first NPC.
+//= 1.3 Added 'instance_check_party' command to the script for proper checking if
+//=     the invoking party meets the requirements to join the Memorial Dungeon.
+//= 1.4 Cleaning. [Euphy]
+//= 1.5 Instance system rewrite. [Euphy]
+//= 1.6 Added GM management NPCs. [Euphy]
+//============================================================ 
+
+vdistrict1,25,66,4	script	尼德霍格的巢穴管理者	406,{
+
+OnStart:
+	//副本任務獎勵
+	if(checkquest(32017,HUNTING)==2 ) { 
+	dispbottom "尼德霍格的巢穴任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32017; }
+
+	//挑戰次數
+	if ( day_Instance_Bout_01 < gettime(8) ){
+	set Instance_Bout_01,10;
+	set day_Instance_Bout_01,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_01 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[尼德霍格的巢穴管理者]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "尼德霍格的巢穴";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[尼德霍格的巢穴管理者]";
+	mes "副本獎勵倍數[ 無 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_01+"^000000 ]";
+	mes "副本獎勵：";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 80) {
+			mes "[尼德霍格的巢穴管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.80 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[尼德霍格的巢穴管理者]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[尼德霍格的巢穴管理者]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 80) {
+			mes "[尼德霍格的巢穴管理者]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.80 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_01,Instance_Bout_01-1;
+
+			//副本任務
+			if(checkquest(32017,HUNTING)<0 ){setquest 32017;}
+			//禁止多開偵測
+			if(getsameipinfo(getcharip(), strcharinfo(3)) > 1){
+			//允許多開名單
+			for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+			if(getcharip()==$@PartyWindowsows$[.@a]){
+			end; }}
+			mes "道館跟副本禁止多開!";
+			mes "檢測到副本地圖中有相同IP人物";
+			mes "^777777提示：5秒後自動傳送回首都^000000";
+			sleep2 5000;
+			warp "prontera",138,120;
+			end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "尼德霍格的巢穴",0;
+	end;
+}
+
+
+// First floor
+//============================================================
+1@nyd,213,277,5	script	被殺害的天地樹利亞得#1F	437,5,5,{
+	if ('ins_nyd2 == 0) {
+		mes "一道微弱的光芒射在你的心上,你仿佛聽到一個聲音";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "一切都結束了,你趕快離開這裡吧";
+		next;
+		while(1) {
+			switch(select("你是誰?:你是什麼意思?")) {
+			case 1:
+				mes "[被殺害的天地樹利亞得]";
+				mes "我是妖精派的天地樹的守衛者.";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "你並不是妖精派的人,你怎能到達這裡";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "你快點離開這裡吧,這裡已經不安全了";
+				next;
+				break;
+			case 2:
+				mes "[被殺害的天地樹利亞得]";
+				mes "不知道什麼原因使得世界樹的力量減弱了";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "這已經不再是世界樹的守護者的地方了";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "暗黑的力量已經入侵了這裡,使得這裡變為邪惡怪物的巢穴了";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "現在邪惡的尼德霍格的影子在這裡肆虐者";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "趁現在還來得及,趕快逃出去並告訴妖精派的人這裡的情況";
+				next;
+				mes "[被殺害的天地樹利亞得]";
+				mes "我的靈魂已經被困這了,你是我現在唯一可以拜託的人了";
+				next;
+				set .@exit,1;
+			}
+			if (.@exit) break;
+		}
+		select("尼德霍格的影子?");
+		mes "[被殺害的天地樹利亞得]";
+			mes "本來的守護者尼德霍格並不在這";
+			next;
+			mes "[被殺害的天地樹利亞得]";
+			mes "他不知道什麼原因把他自己的影子留在這裡";
+			next;
+			mes "[被殺害的天地樹利亞得]";
+			mes "現在這裡只剩下邪惡並且發狂的尼德霍格的影子";
+			next;
+			mes "[被殺害的天地樹利亞得]";
+			mes "尼德霍格的影子不斷的吸取者天地樹的養分,使得世界樹即將要崩壞";
+			next;
+			mes "[被殺害的天地樹利亞得]";
+			mes "一旦尼德霍格的影子吸收完天地樹的養分,離開這裡到達外面的世界,將使得外面的世界陷入地獄之中";
+			next;
+			mes "[被殺害的天地樹利亞得]";
+			mes "你必須回去告訴他門,請他門想辦法解決這個危機";
+		next;
+		select("有沒有我可以作的事情?");
+		mes "[被殺害的天地樹利亞得]";
+		mes "以我門目前的實力是無法打敗他門的";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "不過如果是困住他的話,我們可能還做得到";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "你願意接受這個任務嗎? 這意味者接下來將面臨很多的挑戰?";
+		next;
+		if(select("就交給我吧:我無法接受") == 2)
+			close;
+		mes "[被殺害的天地樹利亞得]";
+		mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		if (is_party_leader() == true) {
+	mes "[被殺害的天地樹利亞得]";
+	mes "感謝你的幫忙,我將會用我的力量幫你開啟通往尼德霍格的巢穴的道路";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "往北邊走你將會看到一個瀑布,走進去即可到達尼德霍格的巢穴,但是將會啟動防禦機制";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "將所有的尼德霍格的衛兵都打倒吧,然後就能進入瀑布到達尼德霍格的巢穴並打倒尼德霍格的影子";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "你必須在30分鐘內打倒所有的敵人,才有辦法開啟瀑布中的通道";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "這30分鐘是我最大的極限了";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "你要小心,祝你順利";
+			'ins_nyd2 = ins_nyd2 = 1;
+			donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnEnable";
+			donpcevent instance_npcname("nyd_call_mon_1")+"::OnEnable";
+			close;
+		} else {
+		mes "[被殺害的天地樹利亞得]";
+		mes "感謝你的幫忙,我將會用我的力量幫你開啟通往尼德霍格的巢穴的道路";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "往北邊走你將會看到一個瀑布,走進去即可到達尼德霍格的巢穴,但是將會啟動防禦機";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "將所有的尼德霍格的衛兵都打倒吧,然後就能進入瀑布到達尼德霍格的巢穴並打倒尼德霍格的影子";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "你必須在30分鐘內打倒所有的敵人,才有辦法開啟瀑布中的通道";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "這30分鐘是我最大的極限了";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "你要小心,祝你順利";
+			close;
+		}
+	} else if ('ins_nyd2 == 1) {
+		mes "[被殺害的天地樹利亞得]";
+		mes "尼德霍格的巢穴的路徑就在北邊的瀑布,防禦的機制將會立即啟動";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "將所有的尼德霍格的衛兵都打倒吧,然後就能進入瀑布到達尼德霍格的巢穴並打倒尼德霍格的影子";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "門很快就會打開了,趕快打敗他門";
+		close;
+	} else if ('ins_nyd2 == 2) {
+		mes "[被殺害的天地樹利亞得]";
+		mes "尼德霍格的巢穴就在北邊瀑布裡面的通道";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "用你的力量打倒尼德霍格的影子吧";
+		next;
+		mes "[被殺害的天地樹利亞得]";
+		mes "這是我唯一能為你做的";
+		close;
+	} else {
+		mes "[被殺害的天地樹利亞得]";
+		mes "別想要玷污這個神聖的殿堂..離開吧";
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	}
+	end;
+
+OnTouch:
+	if ('ins_nyd2 == 0) {
+		mes "怎麼有個精靈族的少女在這";
+		next;
+		mes "這是怎回事,讓我門過去看看";
+		close;
+	}
+	end;
+
+OnInstanceInit: // Temporary fix for @reloadscript.
+	set 'ins_nyd2,0;
+	end;
+}
+
+1@nyd,1,1,0	script	nyd_call_mon_1	-1,{
+OnInstanceInit:
+	enablenpc instance_npcname("nyd_call_mon_1");
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+
+OnEnable:
+	set .@map$, instance_mapname("1@nyd");
+	monster .@map$,220,250,"尼德霍格的衛兵#1",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,220,252,"尼德霍格的衛兵#2",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,240,270,"尼德霍格的衛兵#3",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,240,272,"尼德霍格的衛兵#4",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,200,200,"尼德霍格的衛兵#5",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,210,210,"尼德霍格的衛兵#6",2020,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,225,265,"尼德霍格的衛兵#7",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,225,270,"尼德霍格的衛兵#8",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,245,235,"尼德霍格的衛兵#9",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,255,255,"尼德霍格的衛兵#10",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,225,245,"尼德霍格的衛兵#11",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	monster .@map$,230,280,"尼德霍格的衛兵#12",2021,1,instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	mapannounce .@map$, "尼德霍格的衛兵 : 保護守護者的聖地，把入侵者趕出去",bc_map,"0x00ff99";
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@nyd"),instance_npcname("nyd_call_mon_1")+"::OnMyMobDead";
+	disablenpc instance_npcname("nyd_call_mon_1");
+	end;
+
+OnMyMobDead:
+	set .@map$, instance_mapname("1@nyd");
+	set .@mob_dead_num,mobcount(.@map$, instance_npcname("nyd_call_mon_1")+"::OnMyMobDead");
+	if (.@mob_dead_num < 1) {
+		mapannounce .@map$, "尼德霍格的衛兵全部被打倒了！",bc_map,"0x00ff99";
+		donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnDisable";
+		donpcevent instance_npcname("nyd_to2f_warp")+"::OnEnable";
+		'ins_nyd2 = ins_nyd2 = 2;
+	}
+	end;
+}
+
+1@nyd,1,2,0	script	ins_nyd_1f_timer	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("ins_nyd_1f_timer");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("ins_nyd_1f_timer");
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("ins_nyd_1f_timer");
+	stopnpctimer;
+	killmonsterall instance_mapname("1@nyd");
+	end;
+
+OnTimer900000:
+	mapannounce instance_mapname("1@nyd"), "天地樹利亞得 : 剩下不多的時間了,請快點",bc_map,"0xFFFF00";
+	end;
+
+OnTimer1200000:
+	mapannounce instance_mapname("1@nyd"), "天地樹利亞得 : 我的力量開始消失了,請快點",bc_map,"0xFFFF00";
+	end;
+
+OnTimer1500000:
+	mapannounce instance_mapname("1@nyd"), "天地樹利亞得 : 我的力量已經到達極限了,請快點",bc_map,"0xFFFF00";
+	end;
+
+OnTimer1800000:
+	mapannounce instance_mapname("1@nyd"), "天地樹利亞得 : 你已經失敗了..我會用我剩餘的力量送你離開這裡",bc_map,"0xFFFF00";
+	end;
+
+OnTimer1830000:
+	mapannounce instance_mapname("1@nyd"), "尼德霍格的巢穴的挑戰失敗了",bc_map,"0xFFFF00";
+	end;
+
+OnTimer1850000:
+	donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnDisable";
+	donpcevent instance_npcname("nyd_call_mon_1")+"::OnDisable";
+	instance_warpall "mid_camp",310,150, instance_id();
+	stopnpctimer;
+	end;
+}
+
+1@nyd,195,320,0	script	nyd_to2f_warp	45,5,5,{
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("nyd_to2f_warp");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("nyd_to2f_warp");
+	end;
+
+OnTouch:
+	'ins_nyd2 = ins_nyd2 = 3;
+	warp instance_mapname("2@nyd"),200,10;
+	end;
+}
+
+1@nyd,1,1,0	script	ins_nyd1_spawn_mobs	-1,{
+OnInstanceInit:
+	set .@map$, instance_mapname("1@nyd");
+	monster .@map$,0,0,"異種神木怪",2019,40,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyTreeDead";
+	monster .@map$,0,0,"靈剋",2020,30,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyRhynDead";
+	monster .@map$,0,0,"妣拉",2021,30,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyPhyDead";
+	monster .@map$,0,0,"水精靈",2016,30,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyAquaDead";
+	monster .@map$,0,0,"黑暗捕蟲堇妖",2015,30,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyPingDead";
+	end;
+
+OnMyTreeDead:
+	monster instance_mapname("1@nyd"),0,0,"異種神木怪",2019,1,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyTreeDead";
+	end;
+
+OnMyRhynDead:
+	monster instance_mapname("1@nyd"),0,0,"靈剋",2020,1,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyRhynDead";
+	end;
+
+OnMyPhyDead:
+	monster instance_mapname("1@nyd"),0,0,"妣拉",2021,1,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyPhyDead";
+	end;
+
+OnMyAquaDead:
+	monster instance_mapname("1@nyd"),0,0,"水精靈",2016,1,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyAquaDead";
+	end;
+
+OnMyPingDead:
+	monster instance_mapname("1@nyd"),0,0,"黑暗捕蟲堇妖",2015,1,instance_npcname("ins_nyd1_spawn_mobs")+"::OnMyPingDead";
+	end;
+}
+
+// Second Floor
+//============================================================
+2@nyd,200,14,0	script	nyd_2f_enter	-1,6,6,{
+OnTouch_:
+	donpcevent instance_npcname("nyd_2f_enter_broad")+"::OnEnable";
+	disablenpc instance_npcname("nyd_2f_enter");
+	end;
+}
+
+2@nyd,1,1,0	script	nyd_2f_enter_broad	-1,{
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("nyd_2f_enter_broad");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("nyd_2f_enter_broad");
+	initnpctimer;
+	end;
+
+OnTimer12000:
+	mapannounce instance_mapname("2@nyd"), "尼德霍格的影子 : 我已經快要無法忍受了",bc_map,"0xFFFF00";
+	end;
+
+OnTimer15000:
+	mapannounce instance_mapname("2@nyd"), "尼德霍格的影子 : 我需要...我需要天地樹的力量",bc_map,"0xFFFF00";
+	end;
+
+OnTimer18000:
+	mapannounce instance_mapname("2@nyd"), "尼德霍格的影子 : 毀滅吧...所有的一切",bc_map,"0xFFFF00";
+	stopnpctimer;
+	disablenpc instance_npcname("nyd_2f_enter_broad");
+	end;
+}
+
+2@nyd,199,178,0	script	nyd_2f_ddr_control	-1,6,6,{
+OnTouch:
+	specialeffect2 EF_HOLYHIT;
+	mes "下面的石版,吹起了一陣奇怪的風";
+	next;
+	mes "奇妙的力量在你周圍開始形成,你周圍的環境改變了";
+	close2;
+	warp instance_mapname("2@nyd"),199,255;
+	end;
+}
+
+2@nyd,199,268,0	script	nyd_2f_boss_enter	-1,8,8,{
+OnTouch_:
+	if (is_party_leader() == true) {
+		donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnEnable";
+		disablenpc instance_npcname("nyd_2f_boss_enter");
+		end;
+	}
+	end;
+}
+
+2@nyd,2,2,0	script	nyd_2f_boss_enter_call	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("nyd_2f_boss_enter_call");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("nyd_2f_boss_enter_call");
+	set .@map$, instance_mapname("2@nyd");
+	monster .@map$,199,327,"尼德霍格的影子",2022,1,instance_npcname("nyd_2f_boss_enter_call")+"::OnMyMobDead";
+	mapannounce .@map$, "尼德霍格的影子 : 我會吞蝕掉你的全部...就連同天地樹的力量",bc_map,"0x00ff99";
+	//donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::Ongo";
+	initnpctimer;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("2@nyd"),instance_npcname("nyd_2f_boss_enter_call")+"::OnMyMobDead";
+	disablenpc instance_npcname("nyd_2f_boss_enter_call");
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+OnWarpColor:
+	set .@map$, instance_mapname("2@nyd");
+	switch(rand(1,4)) {
+	case 1:
+		mapannounce .@map$, "尼德霍格的影子 : 在這種混亂中..你的鮮血正式我所想要的",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_red")+"::OnEnable";
+		instance_warpall .@map$,115,278, instance_id();
+		end;
+	case 2:
+		mapannounce .@map$, "尼德霍格的影子 : 我將吸乾你們身上的每一滴血",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("nyd_2f_red")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_white")+"::OnEnable";
+		instance_warpall .@map$,115,373, instance_id();
+		end;
+	case 3:
+		mapannounce .@map$, "尼德霍格的影子 : 永恆只是一個虛假的假象",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("nyd_2f_red")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_yellow")+"::OnEnable";
+		instance_warpall .@map$,284,278, instance_id();
+		end;
+	case 4:
+		mapannounce .@map$, "尼德霍格的影子 : 我會讓你慢慢的痛苦的死去",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("nyd_2f_red")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_green")+"::OnEnable";
+		instance_warpall .@map$,284,374, instance_id();
+		end;
+	}
+	end;
+
+OnMyMobDead:
+	set .@map$, instance_mapname("2@nyd");
+	if (mobcount(.@map$,instance_npcname("nyd_2f_boss_enter_call")+"::OnMyMobDead") < 1) {
+		mapannounce .@map$, "尼德霍格的影子 : 天地樹利亞得...他的力量漸漸的在消失了...",bc_map,"0x00ff99";
+		donpcevent instance_npcname("被殺害的天地樹利亞得#2F")+"::OnEnable";
+		donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_boss_enter_logic")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_red_c")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_white_c")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_yellow_c")+"::OnDisable";
+		donpcevent instance_npcname("nyd_2f_green_c")+"::OnDisable";
+		'ins_nyd2 = ins_nyd2 = 4;
+		end;
+	}
+	end;
+}
+
+2@nyd,2,4,0	script	nyd_2f_boss_enter_logic	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("nyd_2f_boss_enter_logic");
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc instance_npcname("nyd_2f_boss_enter_logic");
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnWarpColor";
+	end;
+}
+
+2@nyd,202,324,5	script	被殺害的天地樹利亞得#2F	437,3,3,{
+	mes "[被殺害的天地樹利亞得]";
+	mes "感謝你,你是所有人類跟守護精靈族的救星";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "你打倒了尼德霍格的影子,但他並沒有消失只是再次的沉睡了而以";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "但是你已經為我門爭取的足夠的時間了";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "請回去找史波浪壯麗或是魔怒克的負責人領取獎賞吧";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "正如你所看到的這並不是守護精靈族或是邪派族引起的,而是由守護者尼德霍格他自己的陰影所引起的";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "守護者的暴走是由我們自己能力不足所引起的,你一定要告訴大家";
+	next;
+	mes "[被殺害的天地樹利亞得]";
+	mes "現在就讓我送你離開這裡吧.";
+	next;
+	switch(select("請送我出去:我想在四處看看")) {
+	case 1:
+	//副本任務獎勵
+	if(checkquest(32017,HUNTING)==2 ) { 
+	dispbottom "尼德霍格的巢穴任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",13;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32017; }
+		'ins_nyd2 = 0;
+		set ins_nyd,203;
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end;
+	case 2:
+		mes "[被殺害的天地樹利亞得]";
+		mes "你想離開時在來找我吧";
+		close;
+	}
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("被殺害的天地樹利亞得#2F");
+	end;
+
+OnEnable:
+	//出場公告時間
+	//set 'Instance_Miao,gettimetick(2)-Instance_Annal;
+	//announce "【尼德霍格的巢穴】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+	enablenpc instance_npcname("被殺害的天地樹利亞得#2F");
+	mapannounce instance_mapname("2@nyd"), "被殺害的天地樹利亞得 : 天地樹利亞得 : 你做得很好,請所有都到中間的光圈處",bc_map,"0x00ff99";
+	end;
+}
+
+2@nyd,115,278,0	script	nyd_2f_red	-1,5,5,{
+OnInstanceInit:
+	disablenpc();
+	end;
+
+OnEnable:
+	enablenpc();
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnEnable";
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnEnable";
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnEnable";
+	donpcevent instance_npcname(strnpcinfo(0)+"_c")+"::OnEnable";
+	initnpctimer;
+	end;
+
+OnDisable:
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnDisable";
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnDisable";
+	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnDisable";
+	disablenpc();
+	end;
+
+OnTouch:
+	if (compare(strnpcinfo(0),"red")) {
+		percentheal -50,0;
+		percentheal -30,0;
+		sc_start SC_BLEEDING,60000,0;
+	} else if (compare(strnpcinfo(0),"white")) {
+		percentheal -50,0;
+		sc_start SC_FREEZE,20000,0;
+	} else if (compare(strnpcinfo(0),"yellow")) {
+		percentheal 0,-50;
+		sc_start SC_SLEEP,20000,0;
+		sc_start SC_CONFUSION,60000,0;
+	} else if (compare(strnpcinfo(0),"green")) {
+		percentheal -50,-50;
+		sc_start SC_POISON,60000,0;
+	}
+	end;
+
+OnTimer10000:
+	disablenpc();
+	stopnpctimer;
+	end;
+}
+
+2@nyd,6,6,0	script	nyd_2f_red_c	-1,{
+OnInstanceInit:
+	disablenpc();
+	end;
+
+OnEnable:
+	enablenpc();
+	initnpctimer;
+	set .@map$, instance_mapname("2@nyd");
+	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	if (compare(strnpcinfo(0),"red")) {
+		monster .@map$,120,285,"尼德霍格的衛兵#1",2020,1,.@label$;
+		monster .@map$,119,286,"尼德霍格的衛兵#2",2020,1,.@label$;
+		monster .@map$,120,270,"尼德霍格的衛兵#3",2020,1,.@label$;
+		monster .@map$,119,269,"尼德霍格的衛兵#4",2021,1,.@label$;
+		monster .@map$,118,270,"尼德霍格的衛兵#5",2021,1,.@label$;
+	} else if (compare(strnpcinfo(0),"white")) {
+		monster .@map$,120,380,"尼德霍格的衛兵#1",2020,1,.@label$;
+		monster .@map$,119,381,"尼德霍格的衛兵#2",2020,1,.@label$;
+		monster .@map$,120,367,"尼德霍格的衛兵#3",2020,1,.@label$;
+		monster .@map$,119,366,"尼德霍格的衛兵#4",2021,1,.@label$;
+		monster .@map$,118,365,"尼德霍格的衛兵#5",2021,1,.@label$;
+	} else if (compare(strnpcinfo(0),"yellow")) {
+		monster .@map$,282,284,"尼德霍格的衛兵#1",2020,1,.@label$;
+		monster .@map$,283,283,"尼德霍格的衛兵#2",2020,1,.@label$;
+		monster .@map$,280,275,"尼德霍格的衛兵#3",2020,1,.@label$;
+		monster .@map$,281,276,"尼德霍格的衛兵#4",2021,1,.@label$;
+		monster .@map$,281,277,"尼德霍格的衛兵#5",2021,1,.@label$;
+	} else if (compare(strnpcinfo(0),"green")) {
+		monster .@map$,282,378,"尼德霍格的衛兵#1",2020,1,.@label$;
+		monster .@map$,283,377,"尼德霍格的衛兵#2",2020,1,.@label$;
+		monster .@map$,280,368,"尼德霍格的衛兵#3",2020,1,.@label$;
+		monster .@map$,281,368,"尼德霍格的衛兵#4",2021,1,.@label$;
+		monster .@map$,281,367,"尼德霍格的衛兵#5",2021,1,.@label$;
+	}
+	end;
+
+OnMyMobDead:
+	set .@map$, instance_mapname("2@nyd");
+	if (mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		mapannounce .@map$, "尼德霍格的影子 : You're not bad... but I will be your opponent this time.",bc_map,"0x00ff99";
+		donpcevent instance_npcname("nyd_2f_boss_enter_logic")+"::OnEnable";
+		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
+		end;
+	}
+	end;
+
+/*
+OnReset:	// Label not called.
+	killmonster instance_mapname("2@nyd"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
+	end;
+*/
+
+OnDisable:
+	stopnpctimer;
+	killmonster instance_mapname("2@nyd"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; //custom
+	donpcevent instance_npcname(substr(strnpcinfo(0),0,getstrlen(strnpcinfo(0))-3))+"::OnDisable";
+	disablenpc();
+	end;
+
+OnTimer180000:
+	killmonster instance_mapname("2@nyd"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	stopnpctimer;
+	donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnWarpColor";
+	end;
+}
+
+2@nyd,130,298,0	script	nyd_2f_red_warp1	-1,6,6,{
+OnInstanceInit:
+OnDisable:
+	disablenpc();
+	end;
+
+OnEnable:
+	enablenpc();
+	end;
+
+OnTouch:
+	if (compare(strnpcinfo(0),"red"))
+		warp instance_mapname("2@nyd"),115,278;
+	else if (compare(strnpcinfo(0),"white"))
+		warp instance_mapname("2@nyd"),115,373;
+	else if (compare(strnpcinfo(0),"yellow"))
+		warp instance_mapname("2@nyd"),284,278;
+	else if (compare(strnpcinfo(0),"green"))
+		warp instance_mapname("2@nyd"),284,374;
+	end;
+}
+2@nyd,142,296,0	duplicate(nyd_2f_red_warp1)	nyd_2f_red_warp2	-1,6,6
+2@nyd,145,283,0	duplicate(nyd_2f_red_warp1)	nyd_2f_red_warp3	-1,6,6
+
+2@nyd,115,373,0	duplicate(nyd_2f_red)	nyd_2f_white	-1,5,5
+2@nyd,6,7,0	duplicate(nyd_2f_red_c)	nyd_2f_white_c	-1
+2@nyd,127,354,0	duplicate(nyd_2f_red_warp1)	nyd_2f_white_warp1	-1,6,6,
+2@nyd,140,357,0	duplicate(nyd_2f_red_warp1)	nyd_2f_white_warp2	-1,6,6
+2@nyd,145,367,0	duplicate(nyd_2f_red_warp1)	nyd_2f_white_warp3	-1,6,6
+
+2@nyd,284,278,0	duplicate(nyd_2f_red)	nyd_2f_yellow	-1,5,5
+2@nyd,6,8,0	duplicate(nyd_2f_red_c)	nyd_2f_yellow_c	-1
+2@nyd,255,285,0	duplicate(nyd_2f_red_warp1)	nyd_2f_yellow_warp1	-1,6,6
+2@nyd,257,296,0	duplicate(nyd_2f_red_warp1)	nyd_2f_yellow_warp2	-1,6,6
+2@nyd,268,300,0	duplicate(nyd_2f_red_warp1)	nyd_2f_yellow_warp3	-1,6,6
+
+2@nyd,284,374,0	duplicate(nyd_2f_red)	nyd_2f_green	-1,5,5
+2@nyd,6,9,0	duplicate(nyd_2f_red_c)	nyd_2f_green_c	-1
+2@nyd,274,356,0	duplicate(nyd_2f_red_warp1)	nyd_2f_green_warp1	-1,6,6
+2@nyd,260,356,0	duplicate(nyd_2f_red_warp1)	nyd_2f_green_warp2	-1,6,6
+2@nyd,258,368,0	duplicate(nyd_2f_red_warp1)	nyd_2f_green_warp3	-1,6,6
+
+2@nyd,1,1,0	script	ins_nyd2_spawn_mobs	-1,{
+OnInstanceInit:
+	set .@map$, instance_mapname("2@nyd");
+	areamonster .@map$,20,12,380,172,"靈剋",2020,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
+	areamonster .@map$,20,12,380,172,"妣拉",2021,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
+	areamonster .@map$,20,12,380,172,"黑影幽靈",2023,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
+	areamonster .@map$,20,12,380,172,"黑暗捕蟲堇妖",2015,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
+	end;
+
+OnMyRhynDead:
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"靈剋",2020,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
+	end;
+
+OnMyPhyDead:
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"妣拉",2021,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
+	end;
+
+OnMyDarkshaDead:
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"黑影幽靈",2023,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
+	end;
+
+OnMyPingDead:
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"黑暗捕蟲堇妖",2015,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
+	end;
+}
+
+
+

@@ -1,0 +1,169 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#戰魂頭盔 不敗將軍
+   - Name: 戰魂頭盔製作
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 0
+         Item: Racing_Cap_MC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 1
+         Item: Racing_Cap_GN
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 2
+         Item: Racing_Cap_GC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 3
+         Item: Racing_Cap_SC
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 4
+         Item: Racing_Cap_WL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 5
+         Item: Racing_Cap_SO
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 6
+         Item: Racing_Cap_RK
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 7
+         Item: Racing_Cap_RG
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 8
+         Item: Racing_Cap_AB
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 9
+         Item: Racing_Cap_SR
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 10
+         Item: Racing_Cap_RA
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 11
+         Item: Racing_Cap_MI
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 12
+         Item: Racing_Cap_WA
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 13
+         Item: Racing_Cap_GS
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 14
+         Item: Racing_Cap_NJ
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 15
+         Item: Racing_Cap_SN
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 16
+         Item: Racing_Cap_SU
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 17
+         Item: Head_Item_19206
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+       - Index: 18
+         Item: Head_Item_19207
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 100
+
+
+

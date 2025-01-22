@@ -1,0 +1,343 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#仙境武器
+   - Name: 仙境武器兌換員
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_MAL_KAFRA
+     Items:
+       - Index: 0
+         Item: Booster_RandomOpt_P
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 3
+       - Index: 1
+         Item: Booster_RandomOpt_M
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 3
+       - Index: 2
+         Item: Booster_W_Up_3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 3
+         Item: Unknown_Item_100838
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 4
+         Item: IW_B_T_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 5
+         Item: HB_B_T_Spear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 6
+         Item: BC_B_Spear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 7
+         Item: PG_B_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 8
+         Item: PT_B_Axe
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 9
+         Item: AK_B_Mace
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 10
+         Item: AC_B_Club
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 11
+         Item: HS_T_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 12
+         Item: RC_B_Katar
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 13
+         Item: TB_B_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 14
+         Item: MF_B_Dagger
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 15
+         Item: CS_B_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 16
+         Item: CJ_B_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 17
+         Item: SB_B_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 18
+         Item: ES_B_Stick
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 19
+         Item: AN_B_Wand
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 20
+         Item: DD_B_Mace
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 21
+         Item: PS_B_Knuckle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 22
+         Item: CP_B_Knuckle
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 23
+         Item: AS_B_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 24
+         Item: SB_B_Bow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 25
+         Item: RS_B_Violin
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 26
+         Item: RS_B_Whip
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 27
+         Item: MV_B_Violin
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 28
+         Item: MV_B_Whip
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 29
+         Item: SP_B_Saber
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 30
+         Item: SI_B_Saber
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 31
+         Item: ML_B_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 32
+         Item: SS_B_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 33
+         Item: SP_B_Fox
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 34
+         Item: GB_B_Fox
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 35
+         Item: ES_B_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 36
+         Item: EC_B_Staff
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 37
+         Item: FCH_B_Huuma
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 38
+         Item: SN_B_Huuma
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 39
+         Item: DF_B_Revolver
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+       - Index: 40
+         Item: FR_B_Gatling
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Lv_Coin
+             Amount: 20
+

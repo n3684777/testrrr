@@ -1,0 +1,822 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#贊助服飾
+   - Name: 贊助服飾
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: Colorful_Butterfly_Pink
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 2
+         Item: Colorful_Butterfly_Blue
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 3
+         Item: C_Fairy_Of_Eden
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 4
+         Item: C_Kings_Twin_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 5
+         Item: C_Divine_Phoenix
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 6
+         Item: C_Nifl_Bloom
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 7
+         Item: C_Kyel_hyre_Ulti_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 8
+         Item: C_Dark_Lord_Cloak
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 9
+         Item: C_Ninetail_Tail_WH
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 10
+         Item: C_Leticia_Wing
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 11
+         Item: C_Evil_Double_Edged
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+
+       - Index: 12
+         Item: C_Valkyrie_Spear
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 13
+         Item: C_Big_Magic_Book
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 14
+         Item: C_Pope_Doll
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+       - Index: 15
+         Item: C_Phaya_Ploeng_Suriyan
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70129
+             Amount: 1
+
+
+
+
+       - Index: 21
+         Item: C_Head_Item_44599
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 22
+         Item: C_Sorcerer_Hood
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 22
+         Item: C_Head_Item_44341
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 23
+         Item: C_Head_Item_44119
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 24
+         Item: C_Flying_Angel
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 25
+         Item: C_Head_Item_44126
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 26
+         Item: C_Head_Item_45006
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 27
+         Item: C_Head_Item_45007
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 28
+         Item: C_Head_Item_44796
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 29
+         Item: C_Head_Item_44797
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 30
+         Item: C_Head_Item_44798
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 31
+         Item: C_Head_Item_44799
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 32
+         Item: C_Head_Item_44800
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 33
+         Item: C_Head_Item_44801
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 34
+         Item: C_Head_Item_chocolate
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 35
+         Item: C_Head_Item_icecream
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 36
+         Item: C_Head_Item_meet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 37
+         Item: C_Head_Item_Monster_Feed
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 38
+         Item: C_Head_Item_orange
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 39
+         Item: C_Head_Item_strawberry
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+#2/20
+       - Index: 40
+         Item: C_Head_Item_44267
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 41
+         Item: C_Head_Item_44128
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 42
+         Item: C_Head_Item_44577
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 43
+         Item: C_Head_Item_44486
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 44
+         Item: C_Head_Item_45000
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+
+       - Index: 45
+         Item: C_Luwmin_Ice
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 46
+         Item: C_Head_Item_24093
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 47
+         Item: C_Head_Item_44204
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 48
+         Item: C_Head_Item_23648
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 49
+         Item: C_Head_Item_23845
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 50
+         Item: C_Head_Item_23769
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+#3/1
+       - Index: 51
+         Item: C_Head_Item_44875
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 52
+         Item: C_Yesterday_Once_More
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+#3/16
+       - Index: 53
+         Item: c_ribbon_beret_b
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+#3/20
+       - Index: 54
+         Item: C_Head_Item_44112
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 55
+         Item: C_Head_Item_44998
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 56
+         Item: C_Head_Item_23706
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 57
+         Item: C_Head_Item_44547
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 58
+         Item: C_Head_Item_44318
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+
+       - Index: 59
+         Item: C_Head_Item_45194
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 60
+         Item: C_Head_Item_45195
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 61
+         Item: C_Head_Item_45196
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 62
+         Item: C_Head_Item_45212
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 63
+         Item: C_Head_Item_45189
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 64
+         Item: C_Head_Item_45187
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+#4/7
+       - Index: 65
+         Item: C_Head_Item_45254
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 66
+         Item: C_Head_Item_45255
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 67
+         Item: C_Head_Item_420262
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 68
+         Item: C_Head_Item_45264
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 69
+         Item: C_Head_Item_45265
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 70
+         Item: C_Head_Item_45266
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 71
+         Item: C_Head_Item_45267
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 72
+         Item: C_Head_Item_45268
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+       - Index: 73
+         Item: C_Head_Item_45269
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70128
+             Amount: 1
+
+#贊助特效石
+   - Name: 贊助特效石
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+#(頭上)
+       - Index: 1
+         Item: Unknown_Item_93011
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70132
+             Amount: 1
+       - Index: 2
+         Item: SNOW_POWDER
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70132
+             Amount: 1
+       - Index: 3
+         Item: Unknown_Item_93009
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70132
+             Amount: 1
+
+#(頭中)
+       - Index: 11
+         Item: Unknown_Item_93013
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70133
+             Amount: 1
+       - Index: 12
+         Item: rabbit_aura
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70133
+             Amount: 1
+       - Index: 13
+         Item: Unknown_Item_93001
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70133
+             Amount: 1
+
+#(頭下)
+       - Index: 21
+         Item: Unknown_Item_93010
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 22
+         Item: Unknown_Item_93002
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 23
+         Item: Unknown_Item_93003
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 24
+         Item: Unknown_Item_93004
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 25
+         Item: Unknown_Item_93005
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 26
+         Item: Unknown_Item_93006
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 27
+         Item: Unknown_Item_93008
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 28
+         Item: Unknown_Item_93012
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+       - Index: 29
+         Item: Unknown_Item_93019
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70134
+             Amount: 1
+
+#(披肩)
+       - Index: 32
+         Item: Unknown_Item_93015
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 33
+         Item: Unknown_Item_93016
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 34
+         Item: Unknown_Item_93017
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 35
+         Item: Unknown_Item_93018
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+
+       - Index: 36
+         Item: Unknown_Item_93020
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 37
+         Item: Unknown_Item_93021
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 38
+         Item: Unknown_Item_93023
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 39
+         Item: Unknown_Item_93024
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+
+       - Index: 40
+         Item: Item_Hateffect_93026
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 41
+         Item: Item_Hateffect_93027
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 42
+         Item: Item_Hateffect_93029
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+       - Index: 43
+         Item: Item_Hateffect_93030
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70135
+             Amount: 1
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,74 @@
+﻿
+vdistrict1,87,30,6	script	時序象限武器回收#Con1	10084,{
+
+	mes "[時序象限武器回收]";
+	switch(select("回收時序象限武器回收:取消")){
+
+	case 1:
+	doevent "時序象限武器回收#Con1::OnCallShop";
+	end;
+
+	case 2:
+	close;
+	}
+	
+
+OnCallShop:
+	//debugmes "02 "+.item_id+"  ";
+	disable_items;
+	callshop "Weapon_Shop",2;
+	npcshopattach "Weapon_Shop";
+	end;
+
+OnSellItem:
+	disable_items;
+	for ( .@i = 0; .@i < getarraysize(@sold_idx); .@i++ ){
+		if ( inarray(.item_id_1,getinventoryinfo(@sold_idx[.@i],0)) > -1 )
+		{
+
+				.@Recycleidx[getarraysize(.@Recycleidx)] = @sold_idx[.@i];
+
+		}
+	}
+
+	if ( !getarraysize(.@Recycleidx) )
+	{
+		mes "尚未找到可以被回收的時序象限武器回收.";
+		end;
+	}
+	
+	mes "本次可回收的時序象限武器回收如下.";
+	for ( .@i = 0; .@i < getarraysize(.@Recycleidx); .@i++ )
+		mes "^FF0000"+getitemname(getinventoryinfo(.@Recycleidx[.@i],0));
+	next;
+	select("確定回收");
+	if ( getarraysize(.@Recycleidx) % .RecycleNum != 0 )
+	{
+		mes "物品數量不足或過多。";
+		end;
+	}
+	.@Num = getarraysize(.@Recycleidx)/.RecycleNum;
+	for ( .@i = 0; .@i < getarraysize(.@Recycleidx); .@i++ )
+		delinventory .@Recycleidx[.@i],1;
+	for ( .@i = 0; .@i != .@Num; .@i++ ){
+	//debugmes "03 "+.item_id+"  ";
+
+		.@Index = 1;
+		getitem 80107,1;
+		}
+	specialeffect2 98;
+	end;
+
+
+
+Oninit:
+	waitingroom "時序象限武器回收",0;
+// 最低回收數量
+.RecycleNum = 1;
+//道具組ID
+setarray .item_id_1,600054,610064,610065,620037,630041,640049,640050,650046,650047,700092,700093,700094,810040,840032,500092,500093,500094,510139,530054,540079,540080,540081,540082,540083,550130,550131,550132,550133,550134,550135,560060,560061,570062,570063,580061,580062,590079,590080;
+	end;	
+}
+
+-	shop	Weapon_Shop	-,501:-1
+

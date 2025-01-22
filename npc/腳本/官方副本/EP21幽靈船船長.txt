@@ -1,0 +1,270 @@
+﻿//------------------------------地圖屬性
+1@wtgs	mapflag	partylock
+1@wtgs	mapflag	noteleport
+1@wtgs	mapflag	nosave	SavePoint
+1@wtgs	mapflag	nomemo
+1@wtgs	mapflag	nobranch
+1@wtgs	mapflag	noicewall
+1@wtgs	mapflag	restricted	6
+
+
+vdistrict1,36,36,6	script	邁倫#01	10529,{
+
+	//冷卻時間
+	.@playtime = checkquest(16823,PLAYTIME);
+	if(.@playtime == 2) erasequest 16823;
+	if(.@playtime == 0 || .@playtime == 1){
+		mes "[伊爾澤]";
+		mes "此副本冷卻時間還在，請冷卻時間結束之時再來找我。";
+		close;
+	}
+
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+		mes "此副本僅限隊長單人進入";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[邁倫]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "幽靈船船長";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+
+	mes "[邁倫]";
+	mes "副本獎勵：";
+	mes "^i[102947] ^i[1001618] ^i[1001250] ^i[1001034] ^i[1001663] ^i[1001660] ^i[1001657] ^i[1001654]";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 250) {
+			mes "[邁倫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.250 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[邁倫]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[邁倫]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set 'Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(!instance_id(IM_PARTY)){
+			mes "還未生成副本";
+			close;
+		}
+		if(BaseLevel < 250) {
+			mes "[邁倫]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.250 後再來吧…"; 
+			close;
+		}
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//任務
+			if(checkquest(16826) == -1) { setquest 16826; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "幽靈船船長",0;
+	end;
+}
+
+
+//------------------------------幽靈船船長事件
+1@wtgs,0,0,0	script	幽靈船船長事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map$ = instance_mapname("1@wtgs");
+	//隱藏NPC
+	disablenpc instance_npcname("Wtgs_Warp#01");
+	disablenpc instance_npcname("Wtgs_Warp#02");
+	disablenpc instance_npcname("Wtgs_Warp#03");
+	//disablenpc instance_npcname("Wtgs_Warp#04");
+	end;
+
+OnCcdd1:
+	set 'Wtgs_Mob_01,'Wtgs_Mob_01-1;
+	if ('Wtgs_Mob_01>0) end;
+	enablenpc instance_npcname("Wtgs_Warp#01");
+	set 'Wtgs_Mob_01,5;
+	areamonster 'map$,42,39,48,24,"--ja--",22369,5,instance_npcname("幽靈船船長事件1")+"::OnCcdd2";
+	instance_announce instance_id(1),"清理完畢，請移動至下一區",bc_all,0xD7BA98;
+	end;
+
+OnCcdd2:
+	set 'Wtgs_Mob_01,'Wtgs_Mob_01-1;
+	if ('Wtgs_Mob_01>0) end;
+	enablenpc instance_npcname("Wtgs_Warp#02");
+	set 'Wtgs_Mob_01,14;
+	areamonster 'map$,183,100,185,98,"--ja--",22369,3,instance_npcname("幽靈船船長事件1")+"::OnCcdd3";
+	areamonster 'map$,147,102,151,95,"--ja--",22369,4,instance_npcname("幽靈船船長事件1")+"::OnCcdd3";
+	areamonster 'map$,105,121,110,102,"--ja--",22369,7,instance_npcname("幽靈船船長事件1")+"::OnCcdd3";
+	instance_announce instance_id(1),"清理完畢，請移動至下一區",bc_all,0xD7BA98;
+	end;
+
+OnCcdd3:
+	set 'Wtgs_Mob_01,'Wtgs_Mob_01-1;
+	if ('Wtgs_Mob_01>0) end;
+	enablenpc instance_npcname("瑪里絲泰拉_巴特#02");
+	end;
+
+OnEnd:
+	'win = 1;
+	//出場公告時間
+	set 'Instance_Miao,gettimetick(2)-'Instance_Annal;
+	enablenpc instance_npcname("瑪里絲泰拉_巴特#03");
+	announce "【幽靈船船長】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+('Instance_Miao/60)+"分"+('Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	end;
+}
+
+//-------------------------- NPC
+1@wtgs,84,311,4	script	瑪里絲泰拉_巴特#01	10577,{
+
+	cutin "ep21_maristella03",1;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "目前還不清楚為什麼，已經消失的哈維爾船長再次出現了。";
+	npctalk "目前還不清楚為什麼，已經消失的哈維爾船長再次出現了。";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "我想我需要為可能再次發生的事情做好心理準備。";
+	npctalk "我想我需要為可能再次發生的事情做好心理準備。";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "不要放鬆警惕了，我們繼續前進吧。";
+	npctalk "不要放鬆警惕了，我們繼續前進吧。";
+	next;
+	cutin "ep21_maristella03",255;
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname(strnpcinfo(0));
+	//enablenpc instance_npcname("Wtgs_Warp#02");
+	set 'Wtgs_Mob_01,15;
+	areamonster 'map$,56,313,68,309,"--ja--",22369,6,instance_npcname("幽靈船船長事件1")+"::OnCcdd1";
+	areamonster 'map$,57,328,70,322,"--ja--",22369,4,instance_npcname("幽靈船船長事件1")+"::OnCcdd1";
+	areamonster 'map$,107,313,114,306,"--ja--",22369,5,instance_npcname("幽靈船船長事件1")+"::OnCcdd1";
+	end;
+
+}
+
+
+1@wtgs,107,113,4	script	瑪里絲泰拉_巴特#02	10577,{
+
+	cutin "ep21_maristella01",1;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "感覺我好像登上過這艄船過";
+	npctalk "感覺我好像登上過這艄船過";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "不過，感覺有點不舒服也是事實。為什麼我有這樣的感覺?";
+	npctalk "不過，感覺有點不舒服也是事實。為什麼我有這樣的感覺?";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "到處都能感受到一種無法用言語解釋的不自然";
+	npctalk "到處都能感受到一種無法用言語解釋的不自然";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "如果我們去船長室，能查出這種不自然的源頭嗎?我不確定，但不管怎樣，我們還是去船長室吧。";
+	npctalk "如果我們去船長室，能查出這種不自然的源頭嗎?我不確定，但不管怎樣，我們還是去船長室吧。";
+	next;
+	cutin "ep21_maristella01",255;
+	close2;
+
+	specialeffect 16;
+	disablenpc instance_npcname(strnpcinfo(0));
+
+	enablenpc instance_npcname("Wtgs_Warp#03");
+	areamonster 'map$,311,24,311,24,"--ja--",22372,1,instance_npcname("幽靈船船長事件1")+"::OnEnd";
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+//-----------------------------傳送門
+1@wtgs,122,318,0	warp	Wtgs_Warp#01	2,2,1@wtgs,36,29
+1@wtgs,60,29,0	warp	Wtgs_Warp#02	2,2,1@wtgs,215,110
+1@wtgs,105,110,0	warp	Wtgs_Warp#03	2,2,1@wtgs,294,15
+//1@wtgs,335,26,0	warp	Wtgs_Warp#04	2,2,jor_albe,191,180
+
+//-----------------------------獎勵
+1@wtgs,312,25,4	script	瑪里絲泰拉_巴特#03	10577,{
+
+	cutin "ep21_maristella01",1;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "經過戰鬥我想我更了解了，他不是哈維爾船長。";
+	npctalk "經過戰鬥我想我更了解了，他不是哈維爾船長。";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "雖然看起來很像哈維爾船長，但卻好像完全沒有理智。我確信你之前所說的事情並沒有發生。";
+	npctalk "雖然看起來很像哈維爾船長，但卻好像完全沒有理智。我確信你之前所說的事情並沒有發生。";
+	next;
+	mes "[瑪里絲泰拉_巴特]";
+	mes "我覺得有點不安，好了，我們出去吧。";
+	npctalk "我覺得有點不安，好了，我們出去吧。";
+	next;
+	cutin "ep21_maristella01",255;
+	getitem 1001618,10;	//魏格納商團交換證
+	if(checkquest(16826) >= 0) { erasequest 16826; setquest 16823; }
+	close2;
+
+	specialeffect 16;
+	//enablenpc instance_npcname("Wtgs_Warp#04");
+	disablenpc instance_npcname(strnpcinfo(0));
+	callfunc "offical_instance_finish",63;
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+

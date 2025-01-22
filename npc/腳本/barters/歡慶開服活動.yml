@@ -1,0 +1,176 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#歡慶開服活動
+   - Name: 歡慶開服活動
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 4_F_LAPERM
+     Items:
+       - Index: 1
+         Item: HOSANGTO_PET_Egg
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 2
+         Item: Poring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 3
+         Item: Marin_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 4
+         Item: Drops_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 5
+         Item: Santa_Poring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 6
+         Item: Poporing_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 7
+         Item: Metalring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 8
+         Item: Devilring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 10
+         Item: Angelring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 11
+         Item: Ghostring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 12
+         Item: Arch_Angelring_Balloon
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+
+       - Index: 13
+         Item: C_Pretty_Rabbit_Hood_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 14
+         Item: C_Black_Cat_Hood_kr
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 15
+         Item: C_Squirrel_Ear_Hat_Kr
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 16
+         Item: C_Black_Moon_Cat_kr
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+
+       - Index: 17
+         Item: C_School_Bag_RD_E
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 18
+         Item: C_School_Bag_BL
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 19
+         Item: C_School_Bag_BU
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+       - Index: 20
+         Item: C_School_Bag_PU
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_6674
+             Amount: 5
+
+
+
+
+
+
+
+

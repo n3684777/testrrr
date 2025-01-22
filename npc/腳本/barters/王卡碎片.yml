@@ -1,0 +1,1244 @@
+﻿
+Header:
+  Type: BARTER_DB
+  Version: 1
+  
+Body:
+
+#王卡碎片
+   - Name: 王卡碎片#1
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 2_DROP_MACHINE
+     Items:
+       - Index: 1
+         Item: Phreeoni_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94001
+             Amount: 100
+       - Index: 2
+         Item: Eddga_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94002
+             Amount: 100
+       - Index: 3
+         Item: Moonlight_Flower_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94003
+             Amount: 100
+       - Index: 4
+         Item: Dracula_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94004
+             Amount: 100
+       - Index: 5
+         Item: Orc_Load_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94005
+             Amount: 100
+       - Index: 6
+         Item: Drake_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94006
+             Amount: 100
+       - Index: 7
+         Item: Doppelganger_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94007
+             Amount: 100
+       - Index: 8
+         Item: Orc_Hero_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94008
+             Amount: 100
+       - Index: 9
+         Item: Osiris_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94009
+             Amount: 100
+       - Index: 10
+         Item: Berzebub_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94010
+             Amount: 100
+
+       - Index: 11
+         Item: Maya_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94011
+             Amount: 100
+       - Index: 12
+         Item: Baphomet_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94012
+             Amount: 100
+       - Index: 13
+         Item: Pharaoh_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94013
+             Amount: 100
+       - Index: 14
+         Item: Dark_Lord_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94014
+             Amount: 100
+       - Index: 15
+         Item: Amon_Ra_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94015
+             Amount: 100
+       - Index: 16
+         Item: Incant_Samurai_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94016
+             Amount: 100
+       - Index: 17
+         Item: Lord_Of_Death_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94017
+             Amount: 100
+       - Index: 18
+         Item: Tao_Gunka_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94018
+             Amount: 100
+       - Index: 19
+         Item: Turtle_General_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94019
+             Amount: 100
+       - Index: 20
+         Item: Knight_Windstorm_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94020
+             Amount: 100
+
+       - Index: 21
+         Item: Garm_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94021
+             Amount: 100
+       - Index: 22
+         Item: Dark_Snake_Lord_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94022
+             Amount: 100
+       - Index: 23
+         Item: Rsx_0806_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94023
+             Amount: 100
+       - Index: 24
+         Item: B_Ygnizem_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94024
+             Amount: 100
+       - Index: 25
+         Item: B_Seyren_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94025
+             Amount: 100
+       - Index: 26
+         Item: B_Eremes_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94026
+             Amount: 100
+       - Index: 27
+         Item: B_Harword_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94027
+             Amount: 100
+       - Index: 28
+         Item: B_Magaleta_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94028
+             Amount: 100
+       - Index: 29
+         Item: B_Katrinn_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94029
+             Amount: 100
+       - Index: 30
+         Item: B_Shecil_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94030
+             Amount: 100
+
+       - Index: 31
+         Item: Bacsojin_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94031
+             Amount: 100
+       - Index: 32
+         Item: Apocalips_H_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94032
+             Amount: 100
+       - Index: 33
+         Item: Lady_Tanee_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94033
+             Amount: 100
+       - Index: 34
+         Item: Detale_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94034
+             Amount: 100
+       - Index: 35
+         Item: Thanatos_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94035
+             Amount: 100
+       - Index: 36
+         Item: Kiel_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94036
+             Amount: 100
+       - Index: 37
+         Item: Randgris_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94037
+             Amount: 100
+       - Index: 38
+         Item: Gloom_Under_Night_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94038
+             Amount: 100
+       - Index: 39
+         Item: Ktullanux_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94039
+             Amount: 100
+       - Index: 40
+         Item: Atroce_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94040
+             Amount: 100
+
+       - Index: 41
+         Item: Ifrit_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94041
+             Amount: 100
+       - Index: 42
+         Item: Fallen_Bishop_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94042
+             Amount: 100
+       - Index: 43
+         Item: Q_Scaraba_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94043
+             Amount: 100
+       - Index: 44
+         Item: Gold_Q_Scaraba_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94044
+             Amount: 100
+       - Index: 45
+         Item: Leak_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94045
+             Amount: 100
+       - Index: 46
+         Item: Kraken_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94046
+             Amount: 100
+       - Index: 47
+         Item: Giant_Octopus_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94047
+             Amount: 100
+       - Index: 48
+         Item: Morocc_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94048
+             Amount: 100
+       - Index: 49
+         Item: DAEHYON_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94049
+             Amount: 100
+       - Index: 50
+         Item: GIOIA_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94050
+             Amount: 100
+
+       - Index: 51
+         Item: PYURIEL_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94051
+             Amount: 100
+       - Index: 52
+         Item: KADES_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94052
+             Amount: 100
+       - Index: 53
+         Item: Timeholder_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94053
+             Amount: 100
+       - Index: 54
+         Item: Grave_Amon_Ra_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94054
+             Amount: 100
+       - Index: 55
+         Item: Big_Eggring_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94055
+             Amount: 100
+       - Index: 56
+         Item: Sorcerer_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94056
+             Amount: 100
+       - Index: 57
+         Item: Chen_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94057
+             Amount: 100
+       - Index: 58
+         Item: Minstrel_Alphoccio_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94058
+             Amount: 100
+       - Index: 59
+         Item: GuillotineCross_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94059
+             Amount: 100
+       - Index: 60
+         Item: Archbishop_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94060
+             Amount: 100
+
+       - Index: 61
+         Item: Ranger_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94061
+             Amount: 100
+       - Index: 62
+         Item: Mechanic_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94062
+             Amount: 100
+       - Index: 63
+         Item: Warlock_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94063
+             Amount: 100
+       - Index: 64
+         Item: RuneKnight_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94064
+             Amount: 100
+       - Index: 65
+         Item: RoyalGuard_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94065
+             Amount: 100
+       - Index: 66
+         Item: Genetic_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94066
+             Amount: 100
+       - Index: 67
+         Item: ShadowChaser_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94067
+             Amount: 100
+       - Index: 68
+         Item: Wanderer_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94068
+             Amount: 100
+       - Index: 69
+         Item: AngerMoonlight_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94069
+             Amount: 100
+       - Index: 70
+         Item: Ill_Dracula_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94070
+             Amount: 100
+
+       - Index: 71
+         Item: AwakenKtullanux_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94071
+             Amount: 100
+       - Index: 72
+         Item: OminousTurtleG_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94072
+             Amount: 100
+       - Index: 73
+         Item: Boitata_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94073
+             Amount: 100
+       - Index: 74
+         Item: Venom_Kimera_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94074
+             Amount: 100
+       - Index: 75
+         Item: Gopinich_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94075
+             Amount: 100
+       - Index: 76
+         Item: Mechaspider_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94076
+             Amount: 100
+       - Index: 77
+         Item: Shining_T_Bear_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94077
+             Amount: 100
+       - Index: 78
+         Item: Ancient_Tao_Gunka_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94078
+             Amount: 100
+       - Index: 79
+         Item: Ancient_W_Deffend_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94079
+             Amount: 100
+       - Index: 80
+         Item: R48_85_BESTIA_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94080
+             Amount: 100
+
+       - Index: 81
+         Item: Chaos_Baphomet_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94081
+             Amount: 100
+       - Index: 82
+         Item: Firm_Muspell_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94082
+             Amount: 100
+       - Index: 83
+         Item: Polluted_Spi_Q_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94083
+             Amount: 100
+       - Index: 84
+         Item: Polluted_Dark_L_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94084
+             Amount: 100
+       - Index: 85
+         Item: Jungoliant_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94085
+             Amount: 100
+       - Index: 86
+         Item: REGINLEIF_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94086
+             Amount: 100
+       - Index: 87
+         Item: INGRID_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94087
+             Amount: 100
+       - Index: 88
+         Item: BONE_DETALE_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94088
+             Amount: 100
+       - Index: 89
+         Item: Redpepper_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94089
+             Amount: 100
+       - Index: 90
+         Item: Pitaya_Boss_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94090
+             Amount: 100
+
+       - Index: 91
+         Item: ILL_Abysmal_Witch_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94091
+             Amount: 100
+       - Index: 92
+         Item: ILL_Kraken_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94092
+             Amount: 100
+       - Index: 93
+         Item: EP18_Burning_Fang_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94093
+             Amount: 100
+       - Index: 94
+         Item: ILL_Maya_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94094
+             Amount: 100
+       - Index: 95
+         Item: Death_Witch_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94095
+             Amount: 100
+       - Index: 96
+         Item: The_One_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94096
+             Amount: 100
+       - Index: 97
+         Item: R001-Bestia_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94097
+             Amount: 100
+       - Index: 98
+         Item: aegis_300297
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94098
+             Amount: 100
+       - Index: 99
+         Item: Ultra_Limacina_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94099
+             Amount: 100
+       - Index: 100
+         Item: Gaia_Pol_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94100
+             Amount: 100
+
+       - Index: 101
+         Item: Renire_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94101
+             Amount: 100
+       - Index: 102
+         Item: aegis_300473
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94102
+             Amount: 100
+       - Index: 103
+         Item: aegis_300474
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94103
+             Amount: 100
+
+
+#王卡碎片2
+   - Name: 王卡碎片#2
+     Map: prontera
+     X: 1
+     Y: 1
+     Direction: SouthEast
+     Sprite: 2_DROP_MACHINE
+     Items:
+       - Index: 104
+         Item: Nidhogg_Shadow_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94104
+             Amount: 100
+       - Index: 105
+         Item: Nahtzigger_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94105
+             Amount: 100
+       - Index: 106
+         Item: Weird_Coelacanth_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94106
+             Amount: 100
+       - Index: 107
+         Item: Dark_Coelacanth_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94107
+             Amount: 100
+       - Index: 108
+         Item: Mutant_Coelacanth_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94108
+             Amount: 100
+       - Index: 109
+         Item: Violent_Coelacanth_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94109
+             Amount: 100
+       - Index: 110
+         Item: Clown_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94110
+             Amount: 100
+
+       - Index: 111
+         Item: Professor_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94111
+             Amount: 100
+       - Index: 112
+         Item: Champion_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94112
+             Amount: 100
+       - Index: 113
+         Item: Creator_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94113
+             Amount: 100
+       - Index: 114
+         Item: Stalker_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94114
+             Amount: 100
+       - Index: 115
+         Item: Paladin_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94115
+             Amount: 100
+       - Index: 116
+         Item: Gypsy_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94116
+             Amount: 100
+       - Index: 117
+         Item: Bangungot_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94117
+             Amount: 100
+       - Index: 118
+         Item: Bakonawa_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94118
+             Amount: 100
+       - Index: 119
+         Item: Buwaya_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94119
+             Amount: 100
+       - Index: 120
+         Item: Amdarais_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94120
+             Amount: 100
+
+       - Index: 121
+         Item: AmdaraisH_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94121
+             Amount: 100
+       - Index: 122
+         Item: CorruptionRoot_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94122
+             Amount: 100
+       - Index: 123
+         Item: CorruptionRootH_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94123
+             Amount: 100
+       - Index: 124
+         Item: Sarah_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94124
+             Amount: 100
+       - Index: 125
+         Item: IFN_Osiris_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94125
+             Amount: 100
+       - Index: 126
+         Item: IFN_Eddga_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94126
+             Amount: 100
+       - Index: 127
+         Item: IFN_Phreeoni_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94127
+             Amount: 100
+       - Index: 128
+         Item: IFN_OrcHero_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94128
+             Amount: 100
+       - Index: 129
+         Item: IFN_Tao_Gunka_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94129
+             Amount: 100
+       - Index: 130
+         Item: AncientKingGroza_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94130
+             Amount: 100
+
+       - Index: 131
+         Item: Evil_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94131
+             Amount: 100
+       - Index: 132
+         Item: Cutie_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94132
+             Amount: 100
+       - Index: 133
+         Item: Faceworm_Q_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94133
+             Amount: 100
+       - Index: 134
+         Item: EL_A17T_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94134
+             Amount: 100
+       - Index: 135
+         Item: Miguel_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94135
+             Amount: 100
+       - Index: 136
+         Item: C_Himel_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94136
+             Amount: 100
+       - Index: 137
+         Item: C_Amdarais_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94137
+             Amount: 100
+       - Index: 138
+         Item: AS_RAGGED_GOLEM_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94138
+             Amount: 100
+       - Index: 139
+         Item: Redpepper_H_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94139
+             Amount: 100
+       - Index: 140
+         Item: Silva_Papilia_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94140
+             Amount: 100
+
+       - Index: 141
+         Item: Gran_Papilia_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94141
+             Amount: 100
+       - Index: 142
+         Item: SAKRAY_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94142
+             Amount: 100
+       - Index: 143
+         Item: TIARA_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94143
+             Amount: 100
+       - Index: 144
+         Item: aegis_300266
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94144
+             Amount: 100
+       - Index: 145
+         Item: Broken_Memory_of_Thanatos_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94145
+             Amount: 100
+       - Index: 146
+         Item: Simulation_Juncea_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94146
+             Amount: 100
+       - Index: 147
+         Item: Aquila_Card
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94147
+             Amount: 100
+       - Index: 148
+         Item: aegis_300472
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94148
+             Amount: 100
+       - Index: 149
+         Item: aegis_300471
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_94149
+             Amount: 100
+
+
+
+
+
+
+
+
+
+
+
+
+

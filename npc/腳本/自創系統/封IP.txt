@@ -1,0 +1,47 @@
+
+//200,Unknown_Item_,封IP,11,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "封IP"; },{},{}
+
+function	script	封IP	{
+
+	if (getgmlevel()<10) end;
+	
+	switch(select("以角色名稱封號:以帳號形式封號")) {
+	case 1:
+		mes "請輸入角色名稱:";
+		input .@name$;
+		query_sql "SELECT `char_id`,`account_id`,`name` FROM `char` WHERE `name` = '"+escape_sql(.@name$)+"'", .@char_id,.@account_id,.@name$;
+		if (!.@account_id) {
+			mes "^FF0000     並沒有此角色名稱.";
+			close;
+		}
+		break;
+	case 2:
+		mes "請輸入帳號ID:";
+		input .@userid$;
+		query_sql "SELECT `account_id`,`userid` FROM `login` WHERE `userid` = '"+escape_sql(.@userid$)+"'", .@account_id,.@userid$;
+		if (!.@account_id) {
+			mes "^FF0000     並沒有此帳號存在.";
+			close;
+		}
+		break;
+	}
+	
+	query_sql "SELECT `last_ip` FROM `login` WHERE `account_id`="+.@account_id, .@last_ip$;
+//	mes "請輸入封號的原因:";
+//	input .@reason$;
+//	next;
+	
+	if (.@char_id)	mes "封掉角色 ^FF0000" + .@name$ + "^000000 ?";
+	else			mes "封掉帳號 ID ^FF0000" + .@userid$ + "^000000 ?";
+	mes "IP =^0000FF " + .@last_ip$ + "^000000";
+//	mes "原因 =^0000FF " + .@reason$ + "^000000";
+	mes " ";
+	if(select("否:是, 封掉這IP")==1) close;
+	
+	if (.@char_id)	atcommand "@block "+.@name$;
+	else			query_sql "UPDATE `login` SET `state`=5 WHERE `account_id`="+.@account_id;
+	query_sql "INSERT INTO `ipbanlist`(`list`,`btime`,`reason`) VALUES('"+.@last_ip$+"',NOW(),'("+.@name$+.@userid$+") "+.@reason$+"')";
+	
+	mes "成功封號!";
+	close;
+}

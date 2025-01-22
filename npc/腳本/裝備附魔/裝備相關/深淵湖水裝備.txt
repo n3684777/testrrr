@@ -1,0 +1,34 @@
+﻿
+vdistrict1,76,33,6	script	深淵湖水裝備	4_F_08,{
+
+	mes "[深淵湖水裝備]";
+	mes "請選擇你要的服務";
+	next;
+	switch (select("裝備製作:取消")) {
+
+	case 1:
+	close2;
+	callshop "藍髮荷德";
+	end;
+
+	case 2:
+	close;
+
+	}
+
+OnInit:
+	waitingroom "深淵湖水裝備",0;
+	end;
+}
+
+
+
+
+
+
+
+
+
+
+
+

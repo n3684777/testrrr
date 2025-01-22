@@ -1,0 +1,1636 @@
+vdistrict1,18,81,4	script	拜歐斯島管理者	406,{
+
+	//副本任務獎勵
+	if(checkquest(32035,HUNTING)==2 ) { 
+	dispbottom "拜歐斯島任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32035; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_12 < gettime(8) ){
+	set Instance_Bout_12,10;
+	set day_Instance_Bout_12,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_12 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[次元裂痕]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "拜歐斯島";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[次元裂痕]";
+
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_12+"^000000 ]";
+	mes "副本獎勵：";
+	mes "勇者之證x1";
+	mes "勇士的戰利品x1";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[次元裂痕]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[次元裂痕]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 140) {
+			mes "[次元裂痕]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.140 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_12,Instance_Bout_12-1;
+
+			//副本任務
+			if(checkquest(32035,HUNTING)<0 ){setquest 32035;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "拜歐斯島",0;
+	end;
+}
+
+
+//------------------------------ 幽靈皇宮事件
+1@dth1,0,0,0	script	拜歐斯島1	-1,{
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@dth1");
+	'map_name$[1] = instance_mapname("1@dth2");
+	'map_name$[2] = instance_mapname("1@dth3");
+	//副本標籤
+	setd "$@CD_bios_1"+instance_id(),0;
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnInstanceInit";
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnInstanceInit";
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnInstanceInit";
+	donpcevent instance_npcname("?????#ep14bs_st")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stchat")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmob")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmobc")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmoba")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmobd")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmobe")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stcmobf")+"::OnInstanceInit";
+	donpcevent instance_npcname("#bioswarp1")+"::OnInstanceInit";
+	donpcevent instance_npcname("#bioswarp2")+"::OnInstanceInit";
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnInstanceInit";
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnInstanceInit";
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnInstanceInit";
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnInstanceInit";
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#1bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#2bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#3bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#4bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#5bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#6bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#7bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#8bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#9bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#10bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#11bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#12bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#13bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#14bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#15bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#16bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#17bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#18bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#19bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#20bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#21bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#22bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#23bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("邪骸獸人#24bios3_")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stchatb")+"::OnInstanceInit";
+	donpcevent instance_npcname("#ep14bs_stchatr")+"::OnInstanceInit";
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本開始!!",bc_all,0xD7BA98;
+	end;
+}
+
+
+
+//------------------------------------------------------
+1@dth1,67,97,6	script	布利得#ep14bs_st	468,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnEnable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("布利得#ep14bs_st");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("布利得#ep14bs_st");
+	end;
+OnChat1:
+	npctalk "除了我們之外，有其他人也進來過這裡阿...";
+	end;
+OnChat2:
+	npctalk "你也是為了阻止魔王夢羅克的復活，而進來這裡的嗎?";
+	end;
+OnChat3:
+	npctalk "我是來自帕洛德拉的布利得，這一位是潔斯!我們是四處飄泊伸張正義的勇士!";
+	end;
+OnChat4:
+	npctalk "嘿 潔斯 你也來介紹一下自己阿";
+	end;
+OnChat8:
+	npctalk "他雖然在別人面前很安靜沉默，但只有我們兩個人的時候，話會變得很多...喔齁齁";
+	end;
+OnChat10:
+	npctalk "因為聽到下面那老人說夢羅克正在復活，只能進來看看了 但是...";
+	end;
+OnChat11:
+	npctalk "什麼阿 這裡怎麼..? 不過是用手碰了一下黃色種子，突然間出現了這樣的景色...";
+	end;
+OnChat12:
+	npctalk "現在是正在天上飛嗎? 到底這是怎麼回事...";
+	end;
+OnChat17:
+	npctalk "哼!如果害怕死亡的話，自己就不應該來這種地方!";
+	end;
+OnChat18:
+	npctalk "不知道是從哪跑出來的傢伙，我們要先殺了你!";
+	end;
+OnChat21:
+	npctalk "什麼阿 那傢伙! 要使魔王夢羅克復活的就是那傢伙嗎?";
+	end;
+OnChat22:
+	npctalk "追那傢伙吧!潔斯 快點!";
+	end;
+}
+
+
+1@dth1,71,97,4	script	潔斯#ep14bs_st	467,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnEnable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("潔斯#ep14bs_st");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("潔斯#ep14bs_st");
+	end;
+OnChat5:
+	npctalk "......";
+	end;
+OnChat6:
+	npctalk "...在這邊...";
+	end;
+OnChat7:
+	npctalk "......";
+	end;
+OnChat9:
+	npctalk "不要說些沒用的廢話...";
+	end;
+OnChat14:
+	npctalk "...!!! 是誰在那?";
+	end;
+OnChat23:
+	npctalk "......該死的";
+	end;
+OnChat24:
+	npctalk "...我討厭跑...";
+	end;
+}
+1@dth1,74,94,4	script	死神安庫#ep14bs_st	3029,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("死神安庫#ep14bs_st");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("死神安庫#ep14bs_st");
+	end;
+OnChat15:
+	npctalk "喀喀喀...這裡是我製造出的幻想空間「拜歐斯島」";
+	end;
+OnChat16:
+	npctalk "將成為夢羅克大人祭品的人類們，你們自己走到這個地方來，你們都不怕死嗎?";
+	end;
+OnChat19:
+	npctalk "不需要這樣自投羅網來提早你們的死亡時間，都是些微不足道的人類... ";
+	end;
+OnChat20:
+	npctalk "我要好好的看著你們在這裡臨死掙扎的模樣 喀喀喀喀.....";
+	end;
+}
+
+1@dth1,74,94,4	script	?????#ep14bs_st	111,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("?????#ep14bs_st")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("?????#ep14bs_st");
+	end;
+OnDisable:
+	disablenpc instance_npcname("?????#ep14bs_st");
+	end;
+OnChat13:
+	npctalk "喀喀喀喀..... 你們很好奇這裡是哪裡吧?";
+	end;
+}
+
+
+
+1@dth1,56,94,0	script	#ep14bs_stchat	-1,5,5,{
+	end;
+OnTouch:
+	donpcevent instance_npcname("#ep14bs_stchat")+"::OnEnable";
+	end;
+OnInstanceInit:
+	enablenpc instance_npcname("#ep14bs_stchat");
+	end;
+
+OnEnable:
+//	enablenpc instance_npcname("#ep14bs_stchat");
+	initnpctimer;
+	donpcevent instance_npcname("#ep14bs_stchat")+"::OnDisable";
+	end;
+
+
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stchat");
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat1";
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat2";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat3";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat4";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat5";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat6";
+	end;
+OnTimer7000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat7";
+	end;
+OnTimer8000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat8";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat9";
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat10";
+	end;
+OnTimer11000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat11";
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat12";
+	end;
+OnTimer13000:
+	donpcevent instance_npcname("?????#ep14bs_st")+"::OnEnable";
+	donpcevent instance_npcname("?????#ep14bs_st")+"::OnChat13";
+	end;
+OnTimer14000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat14";
+	end;
+OnTimer15000:
+	donpcevent instance_npcname("?????#ep14bs_st")+"::OnDisable";
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnEnable";
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnChat15";
+	end;
+OnTimer16000:
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnChat16";
+	end;
+OnTimer17000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat17";
+	end;
+OnTimer18000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat18";
+	end;
+OnTimer19000:
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnChat19";
+	end;
+OnTimer20000:
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnChat20";
+	end;
+OnTimer21000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat21";
+	end;
+OnTimer22000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnChat22";
+	donpcevent instance_npcname("死神安庫#ep14bs_st")+"::OnDisable";
+	end;
+OnTimer23000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat23";
+	end;
+OnTimer24000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnChat24";
+	end;
+OnTimer25000:
+	donpcevent instance_npcname("布利得#ep14bs_st")+"::OnDisable";
+	end;
+OnTimer26000:
+	donpcevent instance_npcname("潔斯#ep14bs_st")+"::OnDisable";
+	instance_announce 0, "<副本公告> 清除掉地圖上的敵人後就會出現通往下個區域的傳點",bc_map,"0xFFFF00";
+	stopnpctimer;
+	end;
+
+}
+//Control MOB
+//====================
+1@dth2,56,94,0	script	#ep14bs_stcmoba	-1,5,5,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmoba")+"::OnDisable";
+	end;
+OnTouch:
+	initnpctimer;
+	donpcevent instance_npcname("#ep14bs_stcmoba")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmoba");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmoba");
+	end;
+OnTimer2000:
+	instance_announce 0, "副本公告> 清除掉地圖上的敵人後就會出現通往下個區域的傳點",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("#ep14bs_stcmobb")+"::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+
+1@dth1,0,0,0	script	#ep14bs_stcmob	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmob")+"::OnEnable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmob");
+	donpcevent instance_npcname("#ep14bs_stcmob")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmob");
+	end;
+OnRespawn:
+	setd "$@Dth_mob_01"+instance_id(1),70;
+	areamonster 'map_name$[0],98,40,250,171,"獸人嬰兒",3010,18,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],98,40,250,171,"沙漠幼狼",3011,18,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],98,40,250,171,"吸血蝙蝠",3012,11,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],150,170,161,160,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],150,170,161,160,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],150,170,161,160,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],289,115,327,92,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],289,115,327,92,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],289,115,327,92,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],219,156,232,139,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],219,156,232,139,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	areamonster 'map_name$[0],219,156,232,139,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],201,169,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],274,104,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],164,79,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],163,45,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],131,47,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],127,171,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],131,47,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],131,47,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],93,94,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],93,94,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],210,100,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],197,102,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],185,142,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],250,146,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],247,142,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],209,51,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],212,54,"吸血蝙蝠",3012,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],234,59,"沙漠幼狼",3011,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	monster 'map_name$[0],249,78,"獸人嬰兒",3010,1,instance_npcname("#ep14bs_stcmob")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	setd "$@Dth_mob_01"+instance_id(1),getd("$@Dth_mob_01"+instance_id(1))-1;
+	instance_announce 0, "<副本公告> 拜歐斯島上還有 "+getd("$@Dth_mob_01"+instance_id(1))+" 個怪物尚未消滅",bc_map,"0xFFFF00";
+	if(getd("$@Dth_mob_01"+instance_id(1))==10) { instance_announce 0, "<副本公告> 拜歐斯島上還有10個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==5) { instance_announce 0, "<副本公告> 拜歐斯島上還有5個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==1) { instance_announce 0, "<副本公告> 拜歐斯島上還有1個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==0) {
+		instance_announce 0, "<副本公告> 已消滅所有的怪了,請前往3點鐘方向的傳點!.",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("#bioswarp1")+"::OnEnable";
+		donpcevent instance_npcname("#ep14bs_stcmobb")+"::OnEnable";
+		donpcevent instance_npcname("#ep14bs_stcmoba")+"::OnEnable";
+		donpcevent instance_npcname("#ep14bs_stcmob")+"::OnDisable";
+	}
+	end;
+}
+1@dth2,0,0,0	script	#ep14bs_stcmobb	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmobb")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmobb");
+	donpcevent instance_npcname("#ep14bs_stcmobb")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmobb");
+	end;
+OnRespawn:
+	setd "$@Dth_mob_01"+instance_id(1),70;
+	areamonster 'map_name$[1],98,40,250,171,"獸人戰士",3013,18,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],98,40,250,171,"沙漠之狼",3014,18,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],98,40,250,171,"劍魚",3015,11,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],150,170,161,160,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],150,170,161,160,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],150,170,161,160,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],289,115,327,92,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],289,115,327,92,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],289,115,327,92,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],219,156,232,139,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],219,156,232,139,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	areamonster 'map_name$[1],219,156,232,139,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],201,169,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],274,104,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],164,79,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],163,45,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],131,47,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],127,171,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],131,47,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],131,47,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],93,94,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],93,94,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],210,100,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],197,102,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],185,142,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],250,146,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],247,142,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],209,51,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],212,54,"劍魚",3015,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],234,59,"沙漠之狼",3014,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	monster 'map_name$[1],249,78,"獸人戰士",3013,1,instance_npcname("#ep14bs_stcmobb")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	setd "$@Dth_mob_01"+instance_id(1),getd("$@Dth_mob_01"+instance_id(1))-1;
+	if(getd("$@Dth_mob_01"+instance_id(1))==10) { instance_announce 0, "<副本公告> 拜歐斯島上還有10個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==5) { instance_announce 0, "<副本公告> 拜歐斯島上還有5個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==1) { instance_announce 0, "<副本公告> 拜歐斯島上還有1個怪物尚未消滅",bc_map,"0xFFFF00"; }
+	if(getd("$@Dth_mob_01"+instance_id(1))==0) {
+		instance_announce 0, "<副本公告> 已消滅所有的怪了,請前往3點鐘方向的傳點!.",bc_map,"0xFFFF00";
+		donpcevent instance_npcname("#bioswarp2")+"::OnEnable";
+		enablenpc instance_npcname("#ep14bs_stchatb");
+		donpcevent instance_npcname("布利得#bios3_00q")+"::OnEnable";
+		donpcevent instance_npcname("潔斯#bios3_00q")+"::OnEnable";
+	}
+	end;
+}
+1@dth3,0,0,0	script	#ep14bs_stcmobc	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmobc")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmobc");
+	donpcevent instance_npcname("#ep14bs_stcmobc")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmobc");
+	end;
+OnRespawn:
+	setd "$@Dth_mob_01"+instance_id(1),24;
+	monster 'map_name$[2],62,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],64,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],66,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],68,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],72,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],74,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],76,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],78,80,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],62,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],64,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],66,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],68,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],72,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],74,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],76,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],78,93,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],62,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],64,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],66,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],68,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],72,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],74,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],76,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	monster 'map_name$[2],78,85,"邪骸獸人",3016,1,instance_npcname("#ep14bs_stcmobc")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	setd "$@Dth_mob_01"+instance_id(1),getd("$@Dth_mob_01"+instance_id(1))-1;
+	if(getd("$@Dth_mob_01"+instance_id(1))==0) {
+	initnpctimer;
+	}
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat31";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat32";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("#ep14bs_stcmobd")+"::OnEnable";
+	stopnpctimer;
+	donpcevent instance_npcname("#ep14bs_stcmobc")+"::OnDisable";
+	end;
+	
+}
+1@dth3,0,0,0	script	#ep14bs_stcmobd	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmobd")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmobd");
+	donpcevent instance_npcname("#ep14bs_stcmobd")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmobd");
+	end;
+OnRespawn:
+	setd "$@Dth_mob_01"+instance_id(1),24;
+	monster 'map_name$[2],62,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],64,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],66,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],68,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],72,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],74,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],76,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],78,80,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],62,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],64,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],66,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],68,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],72,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],74,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],76,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],78,93,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],62,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],64,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],66,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],68,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],72,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],74,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],76,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	monster 'map_name$[2],78,85,"畢萊特",3017,1,instance_npcname("#ep14bs_stcmobd")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	setd "$@Dth_mob_01"+instance_id(1),getd("$@Dth_mob_01"+instance_id(1))-1;
+	if(getd("$@Dth_mob_01"+instance_id(1))==0) {
+	initnpctimer;
+	}
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat33";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat34";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("#ep14bs_stcmobe")+"::OnEnable";
+	stopnpctimer;
+	donpcevent instance_npcname("#ep14bs_stcmobd")+"::OnDisable";
+	end;
+}
+1@dth3,0,0,0	script	#ep14bs_stcmobe	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmobe")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmobe");
+	donpcevent instance_npcname("#ep14bs_stcmobe")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmobe");
+	end;
+OnRespawn:
+	setd "$@Dth_mob_01"+instance_id(1),24;
+	monster 'map_name$[2],62,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],64,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],66,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],68,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],72,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],74,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],76,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],78,80,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],62,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],64,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],66,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],68,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],72,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],74,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],76,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],78,93,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],62,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],64,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],66,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],68,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],72,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],74,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],76,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	monster 'map_name$[2],78,85,"邪骸食人魚",3018,1,instance_npcname("#ep14bs_stcmobe")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	setd "$@Dth_mob_01"+instance_id(1),getd("$@Dth_mob_01"+instance_id(1))-1;
+	if(getd("$@Dth_mob_01"+instance_id(1))==0) {
+	initnpctimer;
+	}
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat35";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat36";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat37";
+	end;
+OnTimer7000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnDisable";
+	donpcevent instance_npcname("#ep14bs_stcmobf")+"::OnEnable";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat38";
+	donpcevent instance_npcname("#ep14bs_stchatr")+"::OnEnable";
+	stopnpctimer;
+	donpcevent instance_npcname("#ep14bs_stcmobe")+"::OnDisable";
+	end;
+}
+
+1@dth3,0,0,0	script	#ep14bs_stcmobf	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stcmobf")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stcmobf");
+	donpcevent instance_npcname("#ep14bs_stcmobf")+"::OnRespawn";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stcmobf");
+	end;
+OnRespawn:
+	monster 'map_name$[2],70,67,"死神安庫",3029,1,instance_npcname("#ep14bs_stcmobf")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【拜歐斯島】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+
+	setd "$@CD_bios_1"+instance_id(),1;
+	set .@callnum,1;
+	set .@f_mob_num,mobcount("1@dth3",instance_npcname("#ep14bs_stcmobf")+"::OnMyMobDead");
+	set .@mob_dead_num,.@callnum - .@f_mob_num;
+	if (.@mob_dead_num == 1) {
+		donpcevent instance_npcname("#ep14bs_stchatr")+"::OnDisable2";
+		initnpctimer;
+	}
+	end;
+
+OnTimer1000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnEnable";
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat43";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat44";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat45";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnDisable";
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnDisable";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnEnable";
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnEnable";
+	end;
+OnTimer7000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnDisable";
+	end;
+OnTimer8000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat46";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat47";
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat48";
+	end;
+OnTimer11000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat49";
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat50";
+	end;
+OnTimer13000:
+	set .npcrdeadp,1;
+	set .npcMvPkill,.npcrdeadp+1;
+	stopnpctimer;
+	donpcevent instance_npcname("#ep14bs_stcmobf")+"::OnDisable";
+	end;
+}
+
+1@dth1,291,103,0	script	#bioswarp1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#bioswarp1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#bioswarp1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#bioswarp1");
+	end;
+OnTouch:
+	warp 'map_name$[1],17,93;
+	end;
+}
+1@dth2,291,103,0	script	#bioswarp2	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#bioswarp2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#bioswarp2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#bioswarp2");
+	end;
+OnTouch:
+	warp 'map_name$[2],45,68;
+	end;
+}
+1@dth3,64,74,6	script	布利得#bios3_00q	468,{
+
+	if (getd("$@CD_bios_1"+instance_id())==0) {end;}
+		mes "[布利得]";
+		mes "無意間得到了這二個物品";
+		mes "這個和你很相配，就送給給你吧";
+		next;
+		mes "[布利得]";
+		mes "快點逃離這個感覺很不好的地方吧!!";
+
+		//副本任務獎勵
+		if(checkquest(32035,HUNTING)==2 ) { 
+		dispbottom "拜歐斯之島任務完成，以下是你的獎勵!!"; 
+		callfunc "offical_instance_finish",24;
+		set #Instance_Points,#Instance_Points+10;	//副本積分+10
+		dispbottom "副本積分+10";
+		dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+		getitem 6684,1*$EP1501; //勇者之證
+		getitem 22537,1*$EP1501; //勇士的戰利品
+		erasequest 32035; }
+		warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+		end;
+
+
+OnInstanceInit:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("布利得#bios3_00q");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("布利得#bios3_00q");
+	end;
+OnChat1:
+	npctalk "你還真行居然可以進到這裡來，當我進入這座迷宮的瞬間，就已經完全迷了路了";
+	end;
+OnChat2:
+	npctalk "如果沒有潔斯的話，說不定就永遠都無法從這裏出去了...謝謝啦 潔斯!";
+	end;
+OnChat4:
+	npctalk "有一點很奇怪?";
+	end;
+OnChat7:
+	npctalk "亨恩...確實是如此";
+	end;
+OnChat8:
+	npctalk "剛開始像是較小的傢伙出現，但隨著時間漸漸的變成較大的傢伙了";
+	end;
+OnChat9:
+	npctalk "但但是 這是為什麼? 這並不會成為什麼大問題啊?";
+	end;
+OnChat13:
+	npctalk "又是你這傢伙啊!";
+	end;
+OnChat17:
+	npctalk "吵死了惡魔傢伙! 我沒空理你這個不起眼的小角色!";
+	end;
+OnChat18:
+	npctalk "我直接讓你消失吧!";
+	end;
+OnChat46:
+	npctalk "喔  阿!!!終於 身體可以動了!";
+	end;
+OnChat48:
+	npctalk "呼...那個叫死神的傢伙，他的魔力強大到我和潔斯幾乎無法招架的地步了";
+	end;
+OnChat49:
+	npctalk "如果不是你 我肯定是只能毫無反抗力的被攻擊了";
+	end;
+OnChat50:
+	npctalk "我要送給你一個禮物，如果你準備好要接受了就跟我說吧";
+	end;
+}
+1@dth3,72,74,4	script	潔斯#bios3_00q	467,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("潔斯#bios3_00q");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("潔斯#bios3_00q");
+	end;
+OnChat3:
+	npctalk "......有一點很奇怪...";
+	end;
+OnChat5:
+	npctalk "...在來到這裡的途中遇到的怪物們隨著時間的經過，我感覺到他們慢慢長大了...";
+	end;
+OnChat6:
+	npctalk "剛開始只是個小不點，之後在見就變成大人的模樣...";
+	end;
+OnChat10:
+	npctalk "這個嘛....這次又會用什麼樣的模樣出現呢 只能好奇了";
+	end;
+OnChat11:
+	npctalk "下次會用更加長大後的模樣出現嗎，還是會成為我們想像不到的模樣出現呢..";
+	end;
+OnChat47:
+	npctalk "嘖...我的力量就只能是這樣而已...真是令人氣憤...";
+	end;
+}
+
+
+1@dth3,64,74,6	script	布利得#bios3_00f	663,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("布利得#bios3_00f");
+	specialeffect EF_FIREHIT;
+	end;
+OnDisable:
+	specialeffect EF_ICECRASH;
+	hideonnpc instance_npcname("布利得#bios3_00f");
+	end;
+OnChat21:
+	npctalk "該死....不死者們蜂擁而來!!";
+	end;
+OnChat28:
+	npctalk "身體動不了，無法戰鬥!?";
+	end;
+OnChat29:
+	npctalk "還不想死阿!嗚阿阿阿!";
+	end;
+OnChat31:
+	npctalk "你真的很了不起!全部都擊退了嗎?";
+	end;
+OnChat33:
+	npctalk "我說這次是真的全部都擊退了吧?";
+	end;
+OnChat36:
+	npctalk "卑鄙無恥的傢伙! 打鬥時綁住對方的腳這就是你的方式嗎!正正當當的一決勝負吧!";
+	end;
+OnChat38:
+	npctalk "真該死...我的身體....";
+	end;
+OnChat40:
+	npctalk "膽小的傢伙!正正當當的迎面對決吧!!";
+	end;
+OnChat41:
+	npctalk "喔....什麼忙也幫不上 對不起...";
+	end;
+}
+1@dth3,72,74,4	script	潔斯#bios3_00f	662,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("潔斯#bios3_00f");
+	specialeffect EF_FIREHIT;
+	end;
+OnDisable:
+	specialeffect EF_ICECRASH;
+	hideonnpc instance_npcname("潔斯#bios3_00f");
+	end;
+OnChat22:
+	npctalk "...!! 我也是一樣...身體在地板上...!";
+	end;
+OnChat30:
+	npctalk "......嘖......";
+	end;
+OnChat32:
+	npctalk "...這些傢伙都還是一直蜂擁過來...小心阿!";
+	end;
+OnChat34:
+	npctalk "...很遺憾的像是發瘋的樣子，這些傢伙們再次蜂擁而上了!";
+	end;
+OnChat39:
+	npctalk "那個叫做安庫的傢伙...我感到了危險，不知道會使用什麼不尋常的招術，先在這裡躲起來吧!";
+	end;
+OnChat42:
+	npctalk "...嘖...我的力量就只能是...";
+	end;
+}
+1@dth3,70,67,4	script	死神安庫#bios3_00q	3029,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("死神安庫#bios3_00q");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("死神安庫#bios3_00q");
+	end;
+OnChat12:
+	npctalk "喀喀喀...你們之中還是有聰明的傢伙在阿";
+	end;
+OnChat14:
+	npctalk "接下來會是什麼樣的傢伙出現呢 真是好奇?";
+	end;
+OnChat15:
+	npctalk "這次輪到怎麼殺也殺不死的不死之身軍團出來了!";
+	donpcevent instance_npcname("邪骸獸人#1bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#2bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#3bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#4bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#5bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#6bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#7bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#8bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#9bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#10bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#11bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#12bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#13bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#14bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#15bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#16bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#17bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#18bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#19bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#20bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#21bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#22bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#23bios3_")+"::OnEnable";
+	donpcevent instance_npcname("邪骸獸人#24bios3_")+"::OnEnable";
+	specialeffect EF_READYPORTAL;
+	end;
+OnChat16:
+	npctalk "喀喀喀...出來吧 我的手下們!";
+	end;
+OnChat19:
+	npctalk "不...吵的人是你";
+	end;
+OnChat20:
+	npctalk "我要讓你知道，當你動彈不得的時候，那種慢慢接近的恐懼是什麼感覺!";
+	specialeffect EF_STORMGUST;
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnDisable";
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnDisable";
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnEnable";
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnEnable";
+	end;
+OnChat23:
+	npctalk "比奧斯島上 流逝的時間 意味著人生";
+	end;
+OnChat24:
+	npctalk "你們在這裡經歷的白天到日落的期間  我的部下們就成長了 ";
+	end;
+OnChat25:
+	npctalk "而且 到晚上的現在 已經進化成最終的模樣了 這就是置之死地後的模樣!";
+	end;
+OnChat26:
+	npctalk "然而 這也表示著你們經歷死亡的時間即將到來了";
+	end;
+OnChat27:
+	npctalk "這是你們感受死亡恐怖的時間啊!!喀喀喀喀喀...";
+	//2segundos despues
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnDisable";
+	end;
+OnChat35:
+	npctalk "我似乎太小看你們了，沒想到我的部下們會這麼容易被你們打敗";
+	end;
+OnChat37:
+	npctalk "真是愚蠢的人類... 居然還有力氣說話阿，這次我親手送你們去死!";
+	end;
+OnChat43:
+	npctalk "原來這麼強大阿...人類...";
+	end;
+OnChat44:
+	npctalk "但是 我的目的已經達成了...不要以為這就是結束了";
+	end;
+OnChat45:
+	npctalk "距離夢羅克大人的復活只剩下沒多少時間了，喀喀喀...死亡的恐怖總有一天會降臨在你們身上的...";
+	end;
+}
+1@dth3,70,67,4	script	#ep14bs_stchatb	-1,6,6,{
+	end;
+OnTouch:
+	donpcevent instance_npcname("#ep14bs_stchatb")+"::OnEnable";
+	sleep2 41000;
+	npcskill "NPC_WIDEFREEZE",5,99,150;
+	end;
+
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stchatb")+"::OnDisable";
+	end;
+OnEnable:
+	initnpctimer;
+	donpcevent instance_npcname("#ep14bs_stchatb")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stchatb");
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat1";
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat2";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat3";
+	end;
+OnTimer4000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat4";
+	end;
+OnTimer5000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat5";
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat6";
+	end;
+OnTimer7000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat7";
+	end;
+OnTimer8000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat8";
+	end;
+OnTimer9000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat9";
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat10";
+	end;
+OnTimer11000:
+	donpcevent instance_npcname("潔斯#bios3_00q")+"::OnChat11";
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnEnable";
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat12";
+	end;
+OnTimer13000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat13";
+	end;
+OnTimer14000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat14";
+	end;
+OnTimer15000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat15";
+	end;
+OnTimer16000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat16";
+	end;
+OnTimer17000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat17";
+	end;
+OnTimer18000:
+	donpcevent instance_npcname("布利得#bios3_00q")+"::OnChat18";
+	end;
+OnTimer19000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat19";
+	end;
+OnTimer20000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat20";
+	end;
+OnTimer21000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat21";
+	end;
+OnTimer22000:
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat22";
+	end;
+OnTimer23000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat23";
+	end;
+OnTimer24000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat24";
+	end;
+OnTimer25000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat25";
+	end;
+OnTimer26000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat26";
+	end;
+OnTimer27000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnChat27";
+	donpcevent instance_npcname("邪骸獸人#1bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#2bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#3bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#4bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#5bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#6bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#7bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#8bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#9bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#10bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#11bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#12bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#13bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#14bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#15bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#16bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#17bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#18bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#19bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#20bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#21bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#22bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#23bios3_")+"::OnDisable";
+	donpcevent instance_npcname("邪骸獸人#24bios3_")+"::OnDisable";
+	donpcevent instance_npcname("#ep14bs_stcmobc")+"::OnEnable";
+	end;
+OnTimer28000:
+	donpcevent instance_npcname("死神安庫#bios3_00q")+"::OnDisable";
+	end;
+OnTimer29000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat28";
+	end;
+OnTimer30000:
+	donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat29";
+	end;
+OnTimer31000:
+	donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat30";
+	stopnpctimer;
+	end;
+}
+1@dth3,0,0,0	script	#ep14bs_stchatr	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#ep14bs_stchatr")+"::OnDisable";
+	end;
+OnEnable:
+	enablenpc instance_npcname("#ep14bs_stchatr");
+	initnpctimer;
+	end;
+OnDisable:
+	disablenpc instance_npcname("#ep14bs_stchatr");
+	end;
+OnDisable2:
+	stopnpctimer;
+	disablenpc instance_npcname("#ep14bs_stchatr");
+	end;
+OnReplay:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@chat_ran,rand(1,3);
+	if (.@chat_ran == 1) {
+		donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat38";
+		end;
+	}
+	else if (.@chat_ran == 2) {
+		donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat40";
+		end;
+	}
+	else if (.@chat_ran == 3) {
+		donpcevent instance_npcname("布利得#bios3_00f")+"::OnChat41";
+		end;
+	}
+OnTimer6000:
+	set .@chat_ran,rand(1,3);
+	if (.@chat_ran == 1) {
+		donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat34";
+		end;
+	}
+	else if (.@chat_ran == 2) {
+		donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat39";
+		end;
+	}
+	else if (.@chat_ran == 3) {
+		donpcevent instance_npcname("潔斯#bios3_00f")+"::OnChat42";
+		end;
+	}
+OnTimer50000:
+	stopnpctimer;
+	donpcevent instance_npcname("#ep14bs_stchatr")+"::OnReplay";
+	end;
+}
+
+1@dth3,62,80,3	script	邪骸獸人#1bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#1bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#1bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#1bios3_");
+	end;
+}
+1@dth3,64,80,3	script	邪骸獸人#2bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#2bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#2bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#2bios3_");
+	end;
+}
+1@dth3,66,80,3	script	邪骸獸人#3bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#3bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#3bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#3bios3_");
+	end;
+}
+1@dth3,68,80,3	script	邪骸獸人#4bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#4bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#4bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#4bios3_");
+	end;
+}
+1@dth3,72,80,3	script	邪骸獸人#5bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#5bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#5bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#5bios3_");
+	end;
+}
+1@dth3,74,80,3	script	邪骸獸人#6bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#6bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#6bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#6bios3_");
+	end;
+}
+1@dth3,76,80,3	script	邪骸獸人#7bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#7bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#7bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#7bios3_");
+	end;
+}
+1@dth3,78,80,3	script	邪骸獸人#8bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#8bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#8bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#8bios3_");
+	end;
+}
+1@dth3,62,93,3	script	邪骸獸人#9bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#9bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#9bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#9bios3_");
+	end;
+}
+1@dth3,64,93,3	script	邪骸獸人#10bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#10bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#10bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#10bios3_");
+	end;
+}
+1@dth3,66,93,3	script	邪骸獸人#11bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#11bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#11bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#11bios3_");
+	end;
+}
+1@dth3,68,93,3	script	邪骸獸人#12bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#12bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#12bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#12bios3_");
+	end;
+}
+1@dth3,72,93,3	script	邪骸獸人#13bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#13bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#13bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#13bios3_");
+	end;
+}
+1@dth3,74,93,3	script	邪骸獸人#14bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#14bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#14bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#14bios3_");
+	end;
+}
+1@dth3,76,93,3	script	邪骸獸人#15bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#15bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#15bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#15bios3_");
+	end;
+}
+1@dth3,78,93,3	script	邪骸獸人#16bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#16bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#16bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#16bios3_");
+	end;
+}
+1@dth3,62,85,3	script	邪骸獸人#17bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#17bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#17bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#17bios3_");
+	end;
+}
+1@dth3,64,85,3	script	邪骸獸人#18bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#18bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#18bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#18bios3_");
+	end;
+}
+1@dth3,66,85,3	script	邪骸獸人#19bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#19bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#19bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#19bios3_");
+	end;
+}
+1@dth3,68,85,3	script	邪骸獸人#20bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#20bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#20bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#20bios3_");
+	end;
+}
+1@dth3,72,85,3	script	邪骸獸人#21bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#21bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#21bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#21bios3_");
+	end;
+}
+1@dth3,74,85,3	script	邪骸獸人#22bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#22bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#22bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#22bios3_");
+	end;
+}
+1@dth3,76,85,3	script	邪骸獸人#23bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#23bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#23bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#23bios3_");
+	end;
+}
+
+1@dth3,78,85,3	script	邪骸獸人#24bios3_	3016,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("邪骸獸人#24bios3_")+"::OnDisable";
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("邪骸獸人#24bios3_");
+	end;
+OnDisable:
+	hideonnpc instance_npcname("邪骸獸人#24bios3_");
+	end;
+}
+
+
+//------------------------------地圖屬性
+1@dth1	mapflag	partylock
+1@dth1	mapflag	noteleport
+1@dth1	mapflag	nosave	SavePoint
+1@dth1	mapflag	nomemo
+1@dth1	mapflag	nobranch
+1@dth1	mapflag	noicewall
+1@dth1	mapflag	restricted	6
+
+1@dth2	mapflag	partylock
+1@dth2	mapflag	noteleport
+1@dth2	mapflag	nosave	SavePoint
+1@dth2	mapflag	nomemo
+1@dth2	mapflag	nobranch
+1@dth2	mapflag	noicewall
+1@dth2	mapflag	restricted	6
+
+1@dth3	mapflag	partylock
+1@dth3	mapflag	noteleport
+1@dth3	mapflag	nosave	SavePoint
+1@dth3	mapflag	nomemo
+1@dth3	mapflag	nobranch
+1@dth3	mapflag	noicewall
+1@dth3	mapflag	restricted	6
+
+

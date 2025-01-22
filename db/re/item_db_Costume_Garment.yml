@@ -1,0 +1,2606 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+#贊助服飾
+  - Id: 51281
+    AegisName: Colorful_Butterfly_Pink
+    Name: (服飾)炫光彩蝶(粉紅)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 301
+#贊助服飾
+  - Id: 51282
+    AegisName: Colorful_Butterfly_Blue
+    Name: (服飾)炫光彩蝶(粉藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 302
+#紅利積分商店
+  - Id: 51279
+    AegisName: Wing_Of_Angel_Move1
+    Name: (服飾)翱翔永恆之翼(淡紫)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 303
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 51280
+    AegisName: Wing_Of_Angel_Move2
+    Name: (服飾)翱翔永恆之翼(粉紅)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 304
+    Script: |
+      bonus bSpeedRate,50;
+#305
+  - Id: 47072
+    AegisName: C_Turtle_Shell
+    Name: (服飾)龜仙人的龜殼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 304
+    Script: |
+      hateffect(HAT_EF_RO_247,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_RO_247,false);
+      
+#紅利積分商店
+  - Id: 47083
+    AegisName: YC_blue
+    Name: (服飾)翱翔永恆之翼(湛藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 306
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 47084
+    AegisName: YC_green
+    Name: (服飾)翱翔永恆之翼(青綠)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 307
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 47085
+    AegisName: YC_purple
+    Name: (服飾)翱翔永恆之翼(降紫)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 308
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 47086
+    AegisName: YC_rainbow
+    Name: (服飾)翱翔永恆之翼(霓彩)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 309
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 47087
+    AegisName: YC_red
+    Name: (服飾)翱翔永恆之翼(嫣紅)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 310
+    Script: |
+      bonus bSpeedRate,50;
+#紅利積分商店
+  - Id: 47088
+    AegisName: YC_yellow
+    Name: (服飾)翱翔永恆之翼(蝶黃)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 311
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47089
+    AegisName: DM_GA01
+    Name: (服飾)禰豆子
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 312
+  - Id: 47090
+    AegisName: DM_GA02
+    Name: (服飾)音柱日輪刀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 313
+  - Id: 47091
+    AegisName: hanabi_wing_blue
+    Name: (服飾)閃耀永恆之翼(淡藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 314
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47092
+    AegisName: hanabi_wing_gray
+    Name: (服飾)閃耀永恆之翼(深藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 315
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47093
+    AegisName: hanabi_wing_green
+    Name: (服飾)閃耀永恆之翼(翠綠)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 316
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47094
+    AegisName: hanabi_wing_orange
+    Name: (服飾)閃耀永恆之翼(橘黃)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 317
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47095
+    AegisName: hanabi_wing_pink
+    Name: (服飾)閃耀永恆之翼(粉紅)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 318
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47096
+    AegisName: hanabi_wing_purple
+    Name: (服飾)閃耀永恆之翼(紫紅)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 319
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47097
+    AegisName: hanabi_wing_purple2
+    Name: (服飾)閃耀永恆之翼(深紫)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 320
+    Script: |
+      bonus bSpeedRate,50;
+  - Id: 47098
+    AegisName: hanabi_wing_starryskyblue
+    Name: (服飾)閃耀永恆之翼(星空藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 321
+    Script: |
+      bonus bSpeedRate,50;
+#服飾特效披肩
+  - Id: 20538
+    AegisName: C_Magic_Circle_Rainbow
+    Name: (服飾)七彩六芒星
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_MAGICCIRCLERAINBOW,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_MAGICCIRCLERAINBOW,false);
+#每周頭飾
+  - Id: 20537
+    AegisName: C_Maple_Which_Falls_Rd
+    Name: (服飾)秋風落紅葉眼罩
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,false);
+#每周頭飾
+  - Id: 20547
+    AegisName: C_Ghost_Effect
+    Name: (服飾)巨大白幽靈之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_GHOST_EFFECT,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_GHOST_EFFECT,false);
+#
+  - Id: 20532
+    AegisName: DOUBLEGUMGANG
+    Name: (服飾)紅焰的爆裂波動
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_DOUBLEGUMGANG,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_DOUBLEGUMGANG,false);
+#每周頭飾
+  - Id: 20524
+    AegisName: C_Shining_Angel_Wings
+    Name: (服飾)光芒的天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_SHINING_ANGEL_WING,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_SHINING_ANGEL_WING,false);
+#每周頭飾
+  - Id: 20548
+    AegisName: Costume_Popping_Poring_Aura
+    Name: (服飾)泡泡波利池
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_POPPING_PORING_AURA,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_POPPING_PORING_AURA,false);
+#4/6活動
+  - Id: 480131
+    AegisName: C_Swirling_Flame
+    Name: (服飾)火焰漩渦
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_Swirling_Flame,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Swirling_Flame,false);
+#
+  - Id: 20544
+    AegisName: C_Unknown_Item_20544
+    Name: (服飾)滿城盡下黃金雨
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect HAT_EF_GOLD_SHOWER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GOLD_SHOWER,false;
+##幻之魔法轉蛋
+  - Id: 20535
+    AegisName: C_Digital_Space
+    Name: (服飾)魔幻數位空間
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_DIGITAL_SPACE,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_DIGITAL_SPACE,false);
+#
+  - Id: 20515
+    AegisName: C_Magic_Circle
+    Name: (服飾)六芒星陣
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_MAGICCIRCLE,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_MAGICCIRCLE,false);
+#推廣商店
+  - Id: 20519
+    AegisName: C_Full_BloomCherry_Tree
+    Name: (服飾)櫻花滿滿
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,false);
+#龍族來襲
+  - Id: 20522
+    AegisName: C_Blessings_Of_Soul
+    Name: (服飾)喵族靈魂的祝福
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false);
+#服飾製作
+  - Id: 20531
+    AegisName: C_Invisible_Muffler
+    Name: (服飾)慰勞者隱形披肩
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      autobonus3 "{ active_transform 1703,10000; }",1000,10000,"NV_FIRSTAID","{ specialeffect2 EF_POTION_BERSERK; }";
+#服飾製作
+  - Id: 20765
+    AegisName: C_Archangel_Wing
+    Name: (服飾)永恆之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 1
+#服飾製作
+  - Id: 20512
+    AegisName: C_BAG_OF_ADVENTURER
+    Name: (服飾)冒險家背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 2
+#服飾製作
+  - Id: 20764
+    AegisName: C_Fallen_Angel_Wing
+    Name: (服飾)墮天使之翼
+    Type: Armor
+    Defense: 18
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 3
+#消耗品合成箱
+  - Id: 20763
+    AegisName: C_AMISTR_BAG1
+    Name: (服飾)艾咪斯可魯包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 4
+#
+  - Id: 20802
+    AegisName: AmistrBag_Teleport
+    Name: 瞬移的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "AL_TELEPORT",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20803
+    AegisName: AmistrBag_Heal
+    Name: 治癒的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "AL_HEAL",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+#
+  - Id: 20804
+    AegisName: AmistrBag_Greed
+    Name: 貪婪的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "BS_GREED",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20805
+    AegisName: AmistrBag_Incagi
+    Name: 加速的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "AL_INCAGI",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20806
+    AegisName: AmistrBag_Magnum
+    Name: 怒爆的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "SM_MAGNUM",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20807
+    AegisName: AmistrBag_Endure
+    Name: 霸體的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "SM_ENDURE",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20808
+    AegisName: AmistrBag_Sight
+    Name: 火狩的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "MG_SIGHT",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+  - Id: 20809
+    AegisName: AmistrBag_Concentrate
+    Name: 心神凝聚的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "AC_CONCENTRATION",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+#
+  - Id: 20811
+    AegisName: AmistrBag_Hiding
+    Name: 隱匿的艾咪斯可魯背包
+    Type: Armor
+    View: 4
+    Buy: 300000
+    Weight: 200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 4
+    Script: |
+      bonus bAllStats,1;
+      .@r = getrefine();
+      skill "TF_HIDING",1;
+      bonus2 bExpAddRace,RC_All,.@r/2;
+      bonus2 bDropAddRace,RC_All,.@r/2;
+      if (.@r>8) {
+         bonus bSPGainValue,3;
+         bonus bLongSPGainValue,3;
+         bonus bMagicSPGainValue,3;
+      }
+      if (.@r>11) {
+         bonus bNoCastCancel;
+      }
+
+#服飾製作
+  - Id: 20727
+    AegisName: C_Love_Dad_Wings_2012
+    Name: (服飾)光輝黃金羽翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 5
+#消耗品合成箱
+  - Id: 20737
+    AegisName: C_Kirin_Wing
+    Name: (服飾)麒麟之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 6
+#服飾製作
+  - Id: 20746
+    AegisName: C_Rudra_Wing
+    Name: (服飾)熾天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 8
+#
+  - Id: 20761
+    AegisName: C_Happiness_Wings_
+    Name: (活動專用)(服飾)幸福之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 9
+#服飾製作
+  - Id: 20762
+    AegisName: C_Devil_Wing_
+    Name: (服飾)撒旦之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 10
+#消耗品合成箱
+  - Id: 20501
+    AegisName: C_MechanicWing_
+    Name: (服飾)機匠智慧之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 11
+#消耗品合成箱
+  - Id: 20502
+    AegisName: C_DevilWing_
+    Name: (服飾)小惡魔翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 12
+#消耗品合成箱
+  - Id: 20504
+    AegisName: C_Cupid_Wing_Pink_
+    Name: (服飾)粉紅邱比特翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 14
+#消耗品合成箱
+  - Id: 20505
+    AegisName: C_Cupid_Wing_Skyblue_
+    Name: (服飾)天藍邱比特翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 15
+#服飾製作
+  - Id: 20507
+    AegisName: C_Poring_Bag_
+    Name: (服飾)波利背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 16
+#每周頭飾
+  - Id: 20509
+    AegisName: C_Wings_of_Uriel
+    Name: (服飾)烏列爾翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 17
+#
+  - Id: 20826
+    AegisName: Angel_feather
+    Name: (服飾)[JRO]天使翅膀披巾
+    Type: Armor
+    Weight: 200
+    Defense: 18
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 18
+#消耗品合成箱
+  - Id: 20510
+    AegisName: C_SwordWing
+    Name: (服飾)劍聖羽翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 19
+#消耗品合成箱
+  - Id: 20587
+    AegisName: C_Light_Darkness_Wing
+    Name: (服飾)光明與黑暗之翼
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 20
+#消耗品合成箱
+  - Id: 20511
+    AegisName: C_Blue_Fairy_Wing
+    Name: (服飾)精靈藍蝴蝶翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 21
+#消耗品合成箱
+  - Id: 20513
+    AegisName: C_EXE_Backpack
+    Name: (服飾)探險家背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 22
+#小遊戲積分
+  - Id: 20514
+    AegisName: C_Thanatos_Sword_
+    Name: (服飾)魔劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 23
+    Script: |
+      autobonus3 "{ active_transform 1708,10000; }",1000,10000,"NV_FIRSTAID","{ specialeffect2 EF_POTION_BERSERK; }";
+#每周頭飾
+  - Id: 20516
+    AegisName: C_Wings_of_Michael
+    Name: (服飾)邁克爾天使翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 24
+#商城販售
+  - Id: 20517
+    AegisName: C_GiantCatBag_TW
+    Name: (服飾)超大貓咪後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 25
+#消耗品合成箱
+  - Id: 20521
+    AegisName: C_BlackCatBag
+    Name: (服飾)黑色貓咪背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 26
+#消耗品合成箱
+  - Id: 20518
+    AegisName: C_Gerhard_Von_Devi_Bag
+    Name: (服飾)蓋\勒哈里特小惡魔背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 27
+#消耗品合成箱
+  - Id: 20529
+    AegisName: C_2018_RTC_Cape_TW
+    Name: (服飾)2018-RTC紀念斗篷
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 28
+#2018_RTC_Cape1_TW = 29, 2018-RTC冠軍斗篷
+#2018_RTC_Cape2_TW = 30, 2018-RTC亞軍斗篷
+#2018_RTC_Cape3_TW = 31, 2018-RTC季軍斗篷
+#2018_RTC_Cape4_TW = 32, 2018-RTC紀念斗篷
+#服飾製作
+  - Id: 20525
+    AegisName: C_Bloody_Wing
+    Name: (服飾)血腥之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 33
+#服飾製作
+  - Id: 20526
+    AegisName: C_BlueAngeling_Wing
+    Name: (服飾)藍聖天使翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 34
+#消耗品合成箱
+  - Id: 20527
+    AegisName: C_PinkButterfly_Wing
+    Name: (服飾)精靈粉蝴蝶翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 35
+#消耗品合成箱
+  - Id: 20528
+    AegisName: C_GoldButterfly_Wing
+    Name: (服飾)金黃蝴蝶翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 36
+#事前預約活動
+  - Id: 20530
+    AegisName: C_Wings_of_Gabriel
+    Name: (服飾)加百列翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 37
+#C_PinkButterfly_Wing_T = 38, 可以取代
+#每周頭飾
+  - Id: 20573
+    AegisName: Violet_Halo_
+    Name: (服飾)闇紫之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 39
+#缺黨 CherryFesRibbon = 40, 特效
+#缺黨 SnackParty = 41, 可以取代
+#消耗品合成箱
+  - Id: 20541
+    AegisName: C_AngelRibbonWing
+    Name: (服飾)天使緞帶羽翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 42
+#BlackBearBackpack = 43, 可替代
+#消耗品合成箱
+  - Id: 20543
+    AegisName: C_Halloween_Poring_Bag
+    Name: (服飾)南瓜波利背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 44
+#小遊戲積分
+  - Id: 20545
+    AegisName: C_Chrismas_Tree
+    Name: (服飾)聖誕展翅之翼
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 45
+#商城販售6/16
+  - Id: 20546
+    AegisName: C_Backside_Ribbon_Bell
+    Name: (服飾)聖誕鈴噹蝴蝶結
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 46
+#消耗品合成箱
+  - Id: 20570
+    AegisName: C_HeartChocoBag
+    Name: (服飾)情人巧克後背包
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 47
+#消耗品合成箱
+  - Id: 20571
+    AegisName: C_Valkyrie_Wing
+    Name: (服飾)巴基力羽翼
+    Type: Armor
+    View: 48
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect HAT_EF_C_VALKYRIE_WING,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_VALKYRIE_WING,false;
+#Archangel_Wing = 49, 永恆之翼
+#小遊戲積分
+  - Id: 20572
+    AegisName: C_WingOfHeart
+    Name: (服飾)守候永恆愛之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 50
+#消耗品合成箱
+  - Id: 20574
+    AegisName: C_School_Bag_RD
+    Name: (服飾)女學生書包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 51
+#歡慶開服活動
+  - Id: 20595
+    AegisName: C_School_Bag_RD_E
+    Name: (服飾)學生書包(紅)
+    Type: Armor
+    View: 51
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#歡慶開服活動
+  - Id: 20575
+    AegisName: C_School_Bag_BL
+    Name: (服飾)學生書包(黑)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 52
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#商城販售6/16
+  - Id: 20576
+    AegisName: C_Cat_Fork
+    Name: (服飾)喵罐罐餐\叉
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 53
+#消耗品合成箱
+  - Id: 20577
+    AegisName: C_Balloon_Wing
+    Name: (服飾)蝶翼氣球
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 54
+#每周服飾
+  - Id: 31737
+    AegisName: C_Wings_Of_Lucifer
+    Name: (服飾)露西法翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 55
+#每周服飾
+  - Id: 20578
+    AegisName: C_Wings_Of_Raguel
+    Name: (服飾)拉貴爾翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 56
+#每周服飾
+  - Id: 20579
+    AegisName: C_Wings_Of_Raphael
+    Name: (服飾)拉斐爾翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 57
+#消耗品合成箱
+  - Id: 20987
+    AegisName: C_Heart_Wing_Backpack
+    Name: (服飾)天使背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 58
+#C_Soldier_Backpack = 59, 無物品可替代 20581
+#消耗品合成箱
+  - Id: 20582
+    AegisName: C_T_Bear_Bag
+    Name: (服飾)熊熊背包
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 60
+#
+  - Id: 480069
+    AegisName: Wing_Of_Angel_Move
+    Name: (活動專用)(服飾)翱翔永恆之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 61
+#小遊戲積分
+  - Id: 51284
+    AegisName: Wing_Of_Angel_Move_
+    Name: (服飾)翱翔永恆之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 61
+#紅利轉蛋(1)
+  - Id: 20584
+    AegisName: C_Big_Foxtail
+    Name: (服飾)巨大狐尾草
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 62
+#消耗品合成箱
+  - Id: 20585
+    AegisName: C_Ru_Bear_Bag
+    Name: (服飾)棕熊背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 63
+#商城販售6/16
+  - Id: 20586
+    AegisName: C_Loli_Ruri_Moon
+    Name: (服飾)銀月魔女的新月
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 64
+#贊助服飾
+  - Id: 20588
+    AegisName: C_Nifl_Bloom
+    Name: (服飾)尼芙菲姆魔法掃帚
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 65
+#消耗品合成箱
+  - Id: 20589
+    AegisName: C_Gimmick_One_Feather
+    Name: (服飾)絡繰機械羽毛
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 66
+#消耗品合成箱
+  - Id: 20590
+    AegisName: C_Evil_Druid_Cross
+    Name: (服飾)闇神官的十字架
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 67
+#消耗品合成箱
+  - Id: 20591
+    AegisName: C_Bow_On_the_Back
+    Name: (服飾)箭族後背弓
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 68
+#商城販售6/16
+  - Id: 480052
+    AegisName: C_Sakura_Fes_TW
+    Name: (服飾)櫻之祭典緞帶
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 69
+#消耗品合成箱
+  - Id: 20592
+    AegisName: C_Santa_Backpack
+    Name: (服飾)聖誕老公公禮物包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 70
+#消耗品合成箱
+  - Id: 20593
+    AegisName: C_Ice_Wing
+    Name: (服飾)冰霜之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 71
+#消耗品合成箱
+  - Id: 480055
+    AegisName: Wing_Of_Angel_Move_RD
+    Name: (服飾)湘妃熾天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 72
+#
+  - Id: 480056
+    AegisName: Wing_Of_Angel_Move_BK
+    Name: (活動專用)(服飾)深淵墮天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 73
+#小遊戲積分
+  - Id: 51285
+    AegisName: Wing_Of_Angel_Move_BK_
+    Name: (服飾)深淵墮天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 73
+#Wing_Of_Angel_Move_RB = 74,
+#活動獎勵
+  - Id: 480058
+    AegisName: Wing_Of_Angel_Move_GD
+    Name: (服飾)光輝天使之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 75
+#第三期綿綿島服飾
+  - Id: 20594
+    AegisName: C_Big_Ribbon_Cloak
+    Name: (服飾)超大蝴蝶結披風
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 76
+#Wing_Of_Angel_Move_DG = 77,
+#Wing_Of_Angel_Move_GR = 78,
+#第二期綿綿島服飾
+  - Id: 20597
+    AegisName: C_Evil_Scythe
+    Name: (服飾)伊芙戰技巨型之鐮
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 79
+#第二期綿綿島服飾
+  - Id: 20598
+    AegisName: C_GiantCatBag_JP_BL
+    Name: (服飾)超大貓咪後背包(黑)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 80
+##消耗品合成箱
+  - Id: 20596
+    AegisName: C_BlackBear_Back_TW
+    Name: (服飾)台灣黑熊背包
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 81
+#消耗品合成箱
+  - Id: 480071
+    AegisName: Calabash
+    Name: (服飾)古代吉祥葫蘆
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 82
+#小遊戲積分
+  - Id: 20599
+    AegisName: C_Sakura_Wing
+    Name: (服飾)櫻花展翅
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 83
+#
+  - Id: 20602
+    AegisName: C_Seraphim_Wing_TW
+    Name: (服飾)熾天使神話之翼
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 84
+#世界BOSS
+  - Id: 20603
+    AegisName: C_Papilio_Ulysses_Feather
+    Name: (服飾)尤利西斯蝴蝶展翅
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 85
+#商城販售
+  - Id: 20604
+    AegisName: C_Blessed_Veil
+    Name: (服飾)純白婚紗
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 86
+#RO大盜
+  - Id: 20605
+    AegisName: C_Leaf_Umbrella
+    Name: (服飾)童話葉傘
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 87
+#每周頭飾
+  - Id: 480082
+    AegisName: C_Sandalphon_Wing_TW
+    Name: (服飾)聖德芬翅膀
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 88
+#小遊戲
+  - Id: 480086
+    AegisName: C_CAPOO_Bag_TW
+    Name: (服飾)咖波包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 89
+#
+  - Id: 20612
+    AegisName: C_Ten_G_Shield_TW
+    Name: (服飾)雙十守護者之盾
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 90
+#每周頭飾 8月4日
+  - Id: 20607
+    AegisName: C_Baldr_Wing_TW
+    Name: (服飾)巴爾德神話之翼
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 91
+#小遊戲積分
+  - Id: 20988
+    AegisName: C_Mechanical_Butterfly
+    Name: (服飾)機械蝴蝶翅膀
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 92
+#6月1日每周頭飾
+  - Id: 20989
+    AegisName: C_Mainspring_Screw
+    Name: (服飾)機動發條
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 93
+#清明節活動
+  - Id: 20990
+    AegisName: C_Rotating_Gears
+    Name: (服飾)旋轉齒輪
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect HAT_EF_GEARWHEEL,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GEARWHEEL,false;
+#贊助服飾
+  - Id: 20992
+    AegisName: C_Fairy_Of_Eden
+    Name: (服飾)伊甸仙之羽翼
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 95
+#
+  - Id: 410006
+    AegisName: C_Sudden_Wealth_TW
+    Name: (服飾)財源滾滾
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect HAT_EF_C_SUDDEN_WEALTH_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_SUDDEN_WEALTH_TW,false;
+#超新星轉蛋
+  - Id: 480093
+    AegisName: C_Scepter
+    Name: (服飾)謳歌引導權杖
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 97
+#商城販售
+  - Id: 480095
+    AegisName: C_Giant_White_Rabbit
+    Name: (服飾)超大白兔後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 98
+#dc推廣獎勵
+  - Id: 480096
+    AegisName: C_Put_On_Coat
+    Name: (服飾)羽織外套
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 99
+#
+  - Id: 480097
+    AegisName: C_Snow_Powder
+    Name: (服飾)冰雪粉末氣息
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect HAT_EF_SNOW_POWDER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_SNOW_POWDER,false;
+#清明節活動
+  - Id: 20613
+    AegisName: C_Wing_Of_Spider
+    Name: (服飾)後背大蜘蛛
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 101
+#贊助服飾
+  - Id: 20614
+    AegisName: C_Kyel_hyre_Ulti_TW
+    Name: (服飾)啟海伊洛的毀滅科技
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 102
+    Script: |
+      hateffect HAT_EF_C_Kyel_hyre_Ulti_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Kyel_hyre_Ulti_TW,false;
+#商城販售
+  - Id: 480108
+    AegisName: C_Poring_Basket
+    Name: (服飾)波利採藥籃
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 103
+#贊助服飾
+  - Id: 480107
+    AegisName: C_Kings_Twin_Sword
+    Name: (服飾)亡者君王絕世雙劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 104
+#歡慶開服活動
+  - Id: 20615
+    AegisName: C_School_Bag_BU
+    Name: (服飾)學生書包(藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 105
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#
+  - Id: 480111
+    AegisName: C_Flower_Wing
+    Name: (服飾)櫻花綻放羽翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 106
+#
+  - Id: 480110
+    AegisName: C_Adventure_Cat_Bag
+    Name: (服飾)登山冒險後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 107
+#消耗品合成箱
+  - Id: 480117
+    AegisName: C_Elec_Guitar_Of_Phen
+    Name: (服飾)劍魚電吉他
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 108
+#3/30活動
+  - Id: 480126
+    AegisName: C_Giant_Shark
+    Name: (服飾)超大鯊魚後背娃娃
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 109
+#
+  - Id: 480119
+    AegisName: C_Niflheim_Key
+    Name: (服飾)尼芙菲姆的鑰匙
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 110
+#神之追隨者轉蛋
+  - Id: 480121
+    AegisName: Striking_Mikoshi
+    Name: (服飾)無雙神輿
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 111
+#
+  - Id: 480122
+    AegisName: C_Samba_Carnival
+    Name: (服飾)森巴狂歡羽
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 112
+#
+  - Id: 480123
+    AegisName: aegis_480123
+    Name: (服飾)尼德霍格神話之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 113
+#
+  - Id: 480118
+    AegisName: C_G_DaeHyon_Sword_TW
+    Name: (服飾)將軍大賢偃月刀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 114
+#小遊戲商店 7/24
+  - Id: 480127
+    AegisName: C_Hooked_Straw_Hat
+    Name: (服飾)出遊稻草帽
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 115
+#
+  - Id: 480129
+    AegisName: C_Triple_Ice_Cream
+    Name: (服飾)冰淇淋三重奏
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 116
+#
+  - Id: 480130
+    AegisName: C_Beer_Server
+    Name: (服飾)啤酒服務
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 117
+#
+  - Id: 480137
+    AegisName: C_Filir_Bag
+    Name: (服飾)飛里樂背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 118
+#歡慶開服活動
+  - Id: 20616
+    AegisName: C_School_Bag_PU
+    Name: (服飾)學生書包(紫)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 119
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#
+  - Id: 480152
+    AegisName: C_Spoon_Fork_Set
+    Name: (服飾)喵族專用餐具組
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 121
+#C_Vietnam_flag_hood = 122,
+#
+  - Id: 480158
+    AegisName: C_Lunatic_Bag
+    Name: (服飾)瘋兔背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 123
+#
+  - Id: 480167
+    AegisName: C_Heart_Stick_Choco
+    Name: (服飾)情人愛心巧克力棒棒糖
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 124
+#
+  - Id: 480169
+    AegisName: C_Diabolic_Rock_Guitar
+    Name: (服飾)魔王搖滾電吉他
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 125
+#
+  - Id: 480168
+    AegisName: C_Melody_Wing
+    Name: (服飾)旋律鋼琴之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 126
+#
+  - Id: 480176
+    AegisName: C_Blue_Rose_Garden
+    Name: (服飾)藍玫瑰園藝剪刀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 127
+#
+  - Id: 480177
+    AegisName: C_Clutch_Bouquet
+    Name: (服飾)文藝花束
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 128
+#第一期綿綿島服飾
+  - Id: 480181
+    AegisName: C_Pitaya_G_Bag
+    Name: (服飾)頑皮火龍果養殖背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 129
+#消耗品合成箱
+  - Id: 480187
+    AegisName: C_Wedding_Ribbon
+    Name: (服飾)婚宴蝴蝶結
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 130
+#神之追隨者轉蛋
+  - Id: 480189
+    AegisName: C_Valkyrie_Curse_blight
+    Name: (服飾)墮落女武神之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 131
+#第一期綿綿島服飾
+  - Id: 480190
+    AegisName: C_2022RTC_V_Coat4_
+    Name: (服飾)2022RTC紀念勝利大衣
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 132
+#商城販售
+  - Id: 20618
+    AegisName: C_Big_B_Rabbit
+    Name: (服飾)超大黑兔後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 133
+#3/24魔物攻城
+  - Id: 480205
+    AegisName: C_Astra_Blessing
+    Name: (服飾)阿斯特拉祝福
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_C_Astra_Blessing,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Astra_Blessing,false);
+  - Id: 480203
+    AegisName: C_Magic_Circle_TW
+    Name: (服飾)魔力星陣
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_Magiccircle_Blue_TW,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_Magiccircle_Blue_TW,false);
+#伊斯加爾特轉蛋
+  - Id: 480204
+    AegisName: C_Back_Ribbon_Bell_BU
+    Name: (服飾)聖誕鈴噹蝴蝶結(藍)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 135
+#RO20周年活動
+  - Id: 480198
+    AegisName: C_20th_Anniversary_Wing
+    Name: (服飾)20週年紀念之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 136
+    Script: |
+      bonus bFixedCast,-500;
+#小遊戲商店
+  - Id: 480207
+    AegisName: C_Traveller_Bag
+    Name: (服飾)旅行者背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 137
+#
+  - Id: 480201
+    AegisName: C_Guardian_Angelwing
+    Name: (服飾)守護天使翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 138
+#
+  - Id: 480199
+    AegisName: C_Guardian_Wingdeco
+    Name: (服飾)守護神話天使翅膀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 139
+#
+  - Id: 480202
+    AegisName: C_Guardian_Butterwing
+    Name: (服飾)守護蝴蝶展翅
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 140
+#141
+#142
+#143
+#145
+#小遊戲商店
+  - Id: 480221
+    AegisName: C_Ninetail_Tail
+    Name: (服飾)九尾狐之尾
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 145
+#小遊戲商店
+  - Id: 480222
+    AegisName: C_J_Umbrella
+    Name: (服飾)日本和傘
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 146
+#世界boss
+  - Id: 480223
+    AegisName: _C_Muranyasa
+    Name: (服飾)妖刀村正
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 147
+#清明節活動
+  - Id: 480235
+    AegisName: C_Diabolic_Friend
+    Name: (服飾)麻吉小惡魔
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 148
+#贊助服飾
+  - Id: 480236
+    AegisName: C_Big_Magic_Book
+    Name: (服飾)古魔法書
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 149
+#贊助服飾
+  - Id: 20619
+    AegisName: C_Phaya_Ploeng_Suriyan
+    Name: (服飾)森林傳說舞翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 150
+#151
+#
+  - Id: 480380
+    AegisName: C_160LV_Mechanic_Gold
+    Name: (服飾)新春光環
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_160LV_MECHANIC_GOLD,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_MECHANIC_GOLD,false);
+#
+  - Id: 480243
+    AegisName: C_JP_EV16
+    Name: (服飾)大耳狗喜拿背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 152
+#
+  - Id: 480244
+    AegisName: C_JP_EV17
+    Name: (服飾)王冠大耳狗喜拿背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 153
+#贊助服飾
+  - Id: 480246
+    AegisName: C_Valkyrie_Spear
+    Name: (服飾)巴基利長槍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 154
+#世界boss
+  - Id: 480247
+    AegisName: C_Giant_Angeling
+    Name: (服飾)超大天使波利後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 155
+#
+  - Id: 480252
+    AegisName: C_Mystical_Wing
+    Name: (服飾)神秘大天使羽翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 156
+#
+  - Id: 480258
+    AegisName: C_Rainbow_Shell
+    Name: (服飾)彩虹蝸牛殼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 157
+#C_Katana_TenguMaster = 158
+#Day_of_the_Dead = 159  480228#Day_of_the_Dead 夜勝魔斗篷
+#Huse_Luk_R_Wing = 160 強運緞帶羽翼
+#強殖裝甲轉蛋
+  - Id: 480279
+    AegisName: C_Poring_Syringe
+    Name: (服飾)波利注射器
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 161
+#熾天之花轉蛋
+  - Id: 480280
+    AegisName: C_Big_Ribbon_Cloak_WH
+    Name: (服飾)超大白色蝴蝶款式
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 162
+#強殖裝甲轉蛋
+  - Id: 480282
+    AegisName: C_Ancient_Dragon_Spear
+    Name: (服飾)古代龍之長矛
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 163
+#贊助服飾
+  - Id: 480288
+    AegisName: C_Dark_Lord_Cloak
+    Name: (服飾)黑暗之王斗篷
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 164
+#世界BOSS
+  - Id: 480289
+    AegisName: C_Moonlight_Bell
+    Name: (服飾)月夜貓金鐘
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 165
+#世界BOSS
+  - Id: 480290
+    AegisName: C_Lord_Of_Death_Shield
+    Name: (服飾)死亡騎士盾牌
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 166
+#
+  - Id: 480298
+    AegisName: C_MCircle_Wonderland
+    Name: (服飾)奇蹟仙境
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_rabbit_aura,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_rabbit_aura,false);
+#星雲轉蛋
+  - Id: 480296
+    AegisName: C_Sakura_Fubuki
+    Name: (服飾)櫻吹雪
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_c_sakura_fubuki,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_c_sakura_fubuki,false);
+#世界boss
+  - Id: 480295
+    AegisName: C_Sakura_Branch
+    Name: (服飾)櫻花樹枝
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 167
+#168
+#熾天之花轉蛋
+  - Id: 480297
+    AegisName: Lop_Bunny_Cloak
+    Name: (服飾)垂耳兔斗篷
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 169
+#世界boss
+  - Id: 480287
+    AegisName: C_Skia_Doll
+    Name: (服飾)奈里烏思娃娃
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 170
+#贊助服飾
+  - Id: 480305
+    AegisName: C_Pope_Doll
+    Name: (服飾)教皇娃娃
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 171
+#天佑祈福轉蛋
+  - Id: 480310
+    AegisName: C_Giant_Mad_Bunny
+    Name: (服飾)瘋狂兔寶寶後背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 172
+#天佑祈福轉蛋
+  - Id: 480311
+    AegisName: C_Key_To_Happiness
+    Name: (服飾)幸福鑰匙
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 173
+#C_Songkran_Watergun = 174 (服飾)士兵背包
+#世界BOSS
+  - Id: 20621
+    AegisName: C_Dark_Lord_Manteau
+    Name: (服飾)汙染黑暗之王披風
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 175
+    Script: |
+      hateffect(HAT_EF_C_Dark_Lord_Cloak,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_C_Dark_Lord_Cloak,false);
+#光輝天翼轉蛋
+  - Id: 480315
+    AegisName: C_Milky
+    Name: (服飾)銀河劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 176
+#光輝天翼轉蛋
+  - Id: 480316
+    AegisName: C_Labrys
+    Name: (服飾)雙頭巨斧
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 177
+#贊助服飾
+  - Id: 480318
+    AegisName: C_Divine_Phoenix
+    Name: (服飾)鳳凰聖劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 178
+    Script: |
+      bonus bSpeedRate,50;
+#紅利轉蛋(1)
+  - Id: 480320
+    AegisName: C_Aqua_Fin_Decoration
+    Name: (服飾)水之精靈裝飾
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 179
+#EP20不死之人
+  - Id: 480286
+    AegisName: Serpent_Shadow
+    Name: (服飾)蛇神的幻影
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
+    Script: |
+      hateffect(HAT_EF_SERPENT_SHADOW,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_SERPENT_SHADOW,false);
+#2023RTC_S_Robe1 = 181 2023ROS冠軍spark斗篷
+#2023RTC_S_Robe2 = 182 2023ROS亞軍spark斗篷
+#2023RTC_S_Robe3 = 183 2023ROS季軍spark斗篷
+#
+  - Id: 480329
+    AegisName: 2023RTC_S_Robe4
+    Name: (服飾)2023ROS決戰spark斗篷
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 184
+#
+  - Id: 480330
+    AegisName: C_Vietnam_flag_hood_JP
+    Name: (服飾)英雄斗篷
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 185
+#魔物攻城
+  - Id: 480335
+    AegisName: c_surf_board_poring
+    Name: (服飾)波利衝浪板
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 186
+#
+  - Id: 480336
+    AegisName: c_forest_s_vacation
+    Name: (服飾)森林捕蟲組合
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 187
+#
+  - Id: 480337
+    AegisName: c_rifle
+    Name: (服飾)叛亂者步槍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 188
+#魔物攻城
+  - Id: 480344
+    AegisName: C_HDP_Scythe
+    Name: (服飾)高密度鐮刀
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 189
+#
+  - Id: 480360
+    AegisName: C_Big_Shuriken
+    Name: (服飾)巨大手裡劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 190
+#贊助服飾
+  - Id: 480361
+    AegisName: C_Evil_Double_Edged
+    Name: (服飾)邪魂雙刃
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 191
+#贊助服飾
+  - Id: 480362
+    AegisName: C_Ninetail_Tail_WH
+    Name: (服飾)九尾狐之尾(白)
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 192
+#Rox好想兔活動
+  - Id: 480363
+    AegisName: C_Big_Hosangto
+    Name: (服飾)超大好想兔
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 193
+#
+  - Id: 480368
+    AegisName: C_Big_Lollipop
+    Name: (服飾)巨大棒棒糖
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 194
+#啟海伊洛轉蛋
+  - Id: 480376
+    AegisName: C_Rata_Tail
+    Name: (服飾)拉塔托斯克尾巴
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 195
+#第三期綿綿島服飾
+  - Id: 480377
+    AegisName: C_Cat_Doll_WH
+    Name: (服飾)白色布偶貓玩偶
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 196
+#
+  - Id: 20625
+    AegisName: C_ROS2023_Cape_1
+    Name: (服飾)2023ROS冠軍披風
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 197
+#
+  - Id: 20626
+    AegisName: C_ROS2023_Cape_2
+    Name: (服飾)2023ROS紀念披風
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 198
+#紅利轉蛋(2)
+  - Id: 480393
+    AegisName: C_Loli_Ruri_Moon_B
+    Name: (服飾)藍月魔女之新月
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 199
+#風神轉蛋
+  - Id: 480394
+    AegisName: C_Big_Usagi_Bag
+    Name: (服飾)超大粉紅兔兔
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 200
+#寶石轉蛋
+  - Id: 480395
+    AegisName: C_Big_Piske_Bag
+    Name: (服飾)超大P助
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 201
+#3/29活動
+  - Id: 480405
+    AegisName: SantaTeddyBear
+    Name: (服飾)聖誕泰迪熊背包
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 202
+#贊助服飾
+  - Id: 480407
+    AegisName: C_Leticia_Wing
+    Name: (服飾)萊蒂西亞之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 203
+#紅利轉蛋(2)
+  - Id: 480408
+    AegisName: GreatDevilWing2
+    Name: (服飾)大惡魔之翼
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 204
+#S_G_Manteau_LT_TW = 205,
+#
+  - Id: 480411
+    AegisName: C_Rabbit_Tail
+    Name: (服飾)白兔尾巴
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 206
+#紅利商店
+  - Id: 480419
+    AegisName: C_Cyber_Sword
+    Name: (服飾)電磁光劍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 207
+#紅利商店
+  - Id: 480420
+    AegisName: C_Cyber_Rifle
+    Name: (服飾)電磁步槍
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 208
+#紅利商店
+  - Id: 480421
+    AegisName: C_Defense_Shield
+    Name: (服飾)防禦力場
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 209
+#
+  - Id: 480422
+    AegisName: C_Power_Cable
+    Name: (服飾)充電線
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 210
+#紅利商店
+  - Id: 480423
+    AegisName: C_Unicorn_Fan_trav
+    Name: (服飾)獨角獸的奇幻旅程
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 211
+#紅利商店
+  - Id: 480429
+    AegisName: C_Cat_Donut_TW
+    Name: (服飾)貓咪甜甜圈
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 212
+#
+  - Id: 480430
+    AegisName: C_Sakura_Rod
+    Name: (服飾)盛開的櫻花
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 213
+#
+  - Id: 480431
+    AegisName: C_Sweet_Flower_Garden
+    Name: (服飾)甜蜜的花園
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 214
+#
+  - Id: 480432
+    AegisName: C_Glass_Rose_Garden
+    Name: (服飾)玻璃玫瑰園
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 215
+
+
+
+
+
+
+
+

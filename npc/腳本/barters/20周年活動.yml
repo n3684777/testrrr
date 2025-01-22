@@ -1,0 +1,86 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#20周年活動
+   - Name: 包孚
+     Map: prt_fild08
+     X: 141
+     Y: 361
+     Direction: SouthEast
+     Sprite: 4_EP16_WOLF
+     Items:
+       - Index: 0
+         Item: C_Head_Item_44968
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 300
+       - Index: 1
+         Item: etel_topaz
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 100
+       - Index: 1
+         Item: etel_skyblue_jewel
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 100
+       - Index: 2
+         Item: blessed_etel_dust
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 160
+       - Index: 3
+         Item: Guarantee_Armor_7Up
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 200
+       - Index: 4
+         Item: Guarantee_Weapon_7Up
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 200
+       - Index: 5
+         Item: Battle_Manual100
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 100
+       - Index: 6
+         Item: Zelunium
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Evt_20th_Invasion
+             Amount: 50
+       - Index: 6
+         Item: Evt_20th_Invasion
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_1001008
+             Amount: 10

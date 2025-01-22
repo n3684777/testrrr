@@ -1,0 +1,221 @@
+trinity,117,77,4	script	新手教學員#new02	10348,{
+
+	mes "[新手教學員]";
+	mes "新手冒險家啊，你需要什麼服務呢?";
+	next;
+	menu "申請經驗&掉寶加倍",L_ko5,"推薦練等地點",L_map,"推薦賺錢方式",L_ko1,"領取 新手服飾",L_ko2,getgmlevel()>=90?"GM在線設置":"",L_GM,"取消",L_ko00;
+
+L_ko1:
+	mes "[新手教學員]";
+	mes "^0000ff新手升級教學^000000";
+	mes "98級以下玩家可以找區域傳送→官方副本→挑戰波利村副本，可以快速升級並且有機率取得世界之星鑽石賣商店可以獲得大量Zeny";
+//	mes "二轉後有一定實力可以找區域傳送員傳送到伊甸園，在那邊可以接取到王家狩獵任務跟伊甸狩獵任務";
+//	mes "伊甸狩獵任務可以獲得伊甸園硬幣，可以用來製作各種伊甸園裝備!";
+	next;
+	mes "[新手教學員]";
+	mes "^0000ff新手賺錢教學^000000";
+	mes "傳送服務→洞穴及原野地圖→【35】巴西→瀑布內的洞窟";
+	mes "打亞拉指定撿取永恆玫瑰(748)、水晶鏡子(747)";
+	close;
+
+L_ko2:
+	if ( Costume_Equip == 1 ) {
+	mes "[新手教學員]";
+	mes "你已經領取過新手活動服飾了";
+	close;
+	}
+	set Costume_Equip,1;
+	getitem 44690,1; // (服飾)踏春熊熊帽
+	getitem 44689,1; // (服飾)捕蟲網
+	close;
+
+L_ko3:
+	if(Boost_Up == 1 ){
+	dispbottom "新手教學員:你已經取得過(服飾)幸福之翼";
+	close;
+	}
+	set Boost_Up,1;
+	getitem 20761,1; //(服飾)幸福之翼
+	close;
+	end;
+
+L_ko4:
+	if(countitem(80013) > 0){
+	mes "[新手教學員]";
+	mes "你身上有經有會員卡片";
+	close;
+	}
+	getitem 80013,1; // 會員卡片
+	mes "[新手教學員]";
+	mes "這個會員卡片請好好保管";
+	close;
+	end;
+
+L_ko5:
+	if ($Battle == 0) goto Battle0;
+	mes "[新手輔助員]";
+	mes "已經給你加倍的祝福了！";
+	sc_start SC_EXPBOOST,1800000,50;
+	sc_start SC_ITEMBOOST,1800000,100;
+	close;
+
+
+L_ko6:
+	if(Potion_B == 2 ){
+	dispbottom "新手教學員:你已經取得過新手藥水";
+	close;
+	}
+	set Potion_B,2;
+	getitem 70113,1; //新手藥水
+	close;
+	end;
+
+L_map:
+	mes "[新手教學員]";
+	mes "我是新手教學員";
+	mes "我可以傳送你到各個練功場所哦";
+	mes "請選擇你要到達的地方吧";
+	next;
+	switch(select("新手訓練場 (1-30)","獸人地下洞窟 1樓 (40-80)","克雷斯特漢姆古城 修道院 (80-100)","諾可羅德 2樓 (110-150)","深淵湖水地下洞穴4F (160~)")) {
+
+	case 1: warp "new_2-3",95,170; close;
+	case 2: warp "orcsdun01",0,0; close;
+	case 3: warp "gl_church",0,0; close;
+	case 4: warp "mag_dun02",0,0; close;
+	case 5: warp "abyss_04",0,0; close;
+	}
+
+L_GM:
+	mes "[新手輔助員]";
+	mes "GM大人你好";
+	mes "你想變更什麼設定";
+	mes " ";
+	next;
+	switch(select("關閉經驗加倍","開放經驗加倍")) {
+	case 1:
+	mes "[新手輔助員]";
+	mes "經驗加倍已關閉";
+	donpcevent strnpcinfo(0)+"::OnClock1500";
+	close;
+	case 2:
+	mes "[新手輔助員]";
+	mes "經驗加倍已開放";
+	donpcevent strnpcinfo(0)+"::OnClock1800";
+	close;
+	}
+
+Battle0:
+	mes "[新手輔助員]";
+	mes "申請時間還沒到請在下列時間申請：";
+	mes "^ff0000１２：００～１５：００^000000";
+	mes "^ff0000１８：００～２３：００^000000";
+	close;
+
+L_ko00:
+	mes "[新手教學員]";
+	mes "有問題都可以來找我喔！";
+	close;
+
+//----------------------------- 活動時間設定
+OnClock1200:
+	set $Battle,1;
+	announce "[新手教學員] 經驗值&掉落率加倍祝福已經開放了,需要服務的玩家請來找我！",0;
+	end;
+
+OnClock1500:
+	set $Battle,0;
+	announce "[新手教學員] 經驗值&掉落率加倍祝福已經關閉了,下次開放時間：１８：００",0;
+	end;
+OnClock1800:
+	set $Battle,1;
+	announce "[新手教學員] 經驗值&掉落率加倍祝福已經開放了,需要服務的玩家請來找我！",0;
+	end;
+OnClock2300:
+	set $Battle,0;
+	announce "[新手教學員] 經驗值&掉落率加倍祝福已經關閉了,需要服務的玩家請來找我！",0;
+	end;
+
+
+//----------------------------- 聊天室
+OnInit:
+	waitingroom "新手教學",0;
+	end;
+}
+
+
+//-----------------------------------------打怪區
+new_2-3,95,174,4	script	新手教學員#1	421,{
+
+	if(new_Job == 0 ){
+	savepoint "trinity",112,75;
+	set new_Job,1;
+	warp "trinity",112,75;
+	end;
+	}
+
+	mes "[新手教學員]";
+	mes "您好我是新手教學員";
+	mes "你想要前往首都嗎?";
+	next;
+	menu "返回首都",L_koko1,"取消",L_koko2;
+
+L_koko1:
+	warp "trinity",112,75;
+	end;
+
+L_koko2:
+	mes "[新手教學員]";
+	mes "隨時想去首都可以來找我喔！";
+	close;
+
+OnClock0000:
+	killmonsterall "new_2-3";
+	end;
+OnClock0200:
+	killmonsterall "new_2-3";
+	end;
+OnClock0400:
+	killmonsterall "new_2-3";
+	end;
+OnClock0600:
+	killmonsterall "new_2-3";
+	end;
+OnClock0800:
+	killmonsterall "new_2-3";
+	end;
+OnClock1000:
+	killmonsterall "new_2-3";
+	end;
+OnClock1200:
+	killmonsterall "new_2-3";
+	end;
+OnClock1400:
+	killmonsterall "new_2-3";
+	end;
+OnClock1600:
+	killmonsterall "new_2-3";
+	end;
+OnClock1800:
+	killmonsterall "new_2-3";
+	end;
+OnClock2000:
+	killmonsterall "new_2-3";
+	end;
+OnClock2200:
+	killmonsterall "new_2-3";
+	end;
+OnClock2300:
+	killmonsterall "new_2-3";
+	end;
+}
+
+//----------------------------------------------------------------
+new_2-3,0,0,0,0	monster	波利		1002,300,0,0,0
+new_2-3,0,0,0,0	monster	土波利		1113,150,0,0,0
+
+new_2-3	mapflag	nobranch
+new_2-3	mapflag	noicewall
+new_2-3	mapflag	nomemo
+new_2-3	mapflag	noloot
+new_2-3	mapflag	noteleport
+

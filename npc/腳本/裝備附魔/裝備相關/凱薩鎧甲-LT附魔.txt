@@ -1,0 +1,20 @@
+﻿vdistrict1,71,14,4	script	凱薩鎧甲-LT附魔	562,{
+
+	mes "[凱薩鎧甲-LT附魔]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("附魔 凱薩鎧甲-LT:取消")){
+
+	case 1:
+	close2;
+	item_enchant 10002;
+	end;
+
+	case 2:
+	close;
+	}
+
+OnInit:
+	waitingroom "凱薩鎧甲-LT附魔",0;
+	end;	
+}

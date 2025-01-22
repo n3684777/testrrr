@@ -1,0 +1,802 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#特殊物品
+   - Name: 特殊物品
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Ymir_Heart_P_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+#光輝天翼轉蛋
+   - Name: 光輝天翼轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Temporal_Boots_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Temporal_Armor_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Temporal_Cape_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Temporal_Ring_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Ring_Of_Nature_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 6
+         Item: Temporal_Sapling_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+
+#天佑祈福轉蛋
+   - Name: 天佑祈福轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Faith_Of_Yggdrasil
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Thanatos_Sword
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Manteau_Of_Guardsman_1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Manteau_Of_Guardsman_2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Bloody_Knight_Shield
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+#熾天之花轉蛋
+   - Name: 熾天之花轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Unknown_Item_44997
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Head_Item_420194
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Fire_big_god_boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Wine_Shoes
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Personal_sandals
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+#強殖裝甲轉蛋
+   - Name: 強殖裝甲轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Fake_Alloy_Pot
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Unknown_Item_470120
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Titan_Shield_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Alice_Pillow
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Arquien's_Necklace
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+#神之追隨者轉蛋
+   - Name: 神之追隨者轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Ghost_Fire_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Moaning_of_EvilSpirits
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Noname_Ad_Shoes_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Agenda_Shoes_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Unknown_Item_490245
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+#寶石轉蛋
+   - Name: 寶石轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Evil_Purgatory_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Q_Scaraba_Crown
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Phoenix_Muffler
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+             
+       - Index: 4
+         Item: Ten_G_Shield_TW_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 5
+         Item: Devil_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 6
+         Item: Elemental_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 7
+         Item: Destroy_World_Boots
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+#風神轉蛋
+   - Name: 風神轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Ullr_Bracelet
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Leo_Shoes_J
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: C_2022RTC_V_Coat4
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+             
+       - Index: 4
+         Item: Ear_OF_Bloody
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 5
+         Item: Grisly_Soul
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 6
+         Item: Ear_OF_Abyss
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 7
+         Item: Pisces_Manteau_J
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+#啟海伊洛轉蛋
+   - Name: 啟海伊洛轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Kyel_hyre_Ulti_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Violent_D_S_Armor_LT
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Abbys_L_H_Armor_LT
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+             
+       - Index: 4
+         Item: Sealed_Ring_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 5
+         Item: BlueDragonRing_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 6
+         Item: Anel_do_Rei_Abissal
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 7
+         Item: Unknown_Item_32245
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+#幻之魔法轉蛋
+   - Name: 幻之魔法轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Head_Item_23765
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Giant_Mad_Bunny_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Cel_Design_Pendant
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Fallen_Seraphim_ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: HYOUSENSOU_Page
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 6
+         Item: HUUJIN_Page
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+       - Index: 7
+         Item: Imperfect_Temp_Acc
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 8
+         Item: Nob_Lib_Shield
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 9
+         Item: Head_Item_420064
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 10
+         Item: Protect_cloth
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 11
+         Item: Feather_Beret_WH
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+#超新星轉蛋
+   - Name: 超新星轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: 2023Seppay_02
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: 2023Seppay_03
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: 2023Seppay_04
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: 2023Seppay_05
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: 2023Seppay_06
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+       - Index: 6
+         Item: 20th_Anniversary_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 7
+         Item: 20th_Anniversary_Hat_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 8
+         Item: Unknown_Item_490389
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 9
+         Item: Subject_Cape_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+
+#伊斯加爾特轉蛋
+   - Name: 伊斯加爾特轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Glacier_Helm_1
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Glacier_Helm_2
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Glacier_Helm_3
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: JRO_Little_Abyss_Dragon_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+       - Index: 6
+         Item: Demon_God‘s Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 7
+         Item: Imperial_Ring
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 8
+         Item: Walk_Of_DarkVoid
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+       - Index: 9
+         Item: Golden_Angel_Wing_TW
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+
+
+#星雲轉蛋
+   - Name: 星雲轉蛋
+     Map: prt_in
+     X: 1
+     Y: 1
+     Direction: SouthWest
+     Sprite: 4_4JOB_MAURA
+     Items:
+       - Index: 1
+         Item: Signet_Of_Star_
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 2
+         Item: Head_Item_420328
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 3
+         Item: Head_Item_420330
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 4
+         Item: Undead_Seal_Rose
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+       - Index: 5
+         Item: Ground_Seal_Rose
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 350
+
+       - Index: 6
+         Item: JP_EV17
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Unknown_Item_70026
+             Amount: 200
+
+
+
+
+
+
+
+
+
+
+
+
+

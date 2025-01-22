@@ -1,0 +1,80 @@
+function	script	gs01	{
+			cleararray @itemlst[1],0,128;
+			cleararray @itemnum[1],0,128;
+	mes "[迷失的靈魂]";
+	mes "親愛的"+strcharinfo(0)+"";
+	mes "^FF0000請確定你只有一樣材料!!^000000";
+	mes "^FF0000並且你的材料都不能裝備起來^000000";
+	mes "^FF0000多餘的材料都可能被系統回收^000000";
+	mes "請選擇你要製作的裝備";
+	next;
+	switch(select("+0究極神威之翼:+1究極神威之翼:+2究極神威之翼:+3究極神威之翼:+4究極神威之翼:+5究極神威之翼:+6究極神威之翼:+7究極神威之翼:+8究極神威之翼:+9究極神威之翼:+10究極神威之翼")){
+
+	case 1:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],0;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 2:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],1;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 3:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],2;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 4:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],3;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 5:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],4;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 6:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],5;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 7:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],6;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 8:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],7;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 9:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],8;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 10:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],9;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	case 11:
+	setarray @itemlst[0],29016;
+	setarray @Refining[0],10;
+	setarray @itemnum[0],1;
+	next;
+	callfunc "gs",22452,10000000;
+	}
+}

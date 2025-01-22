@@ -1,0 +1,65 @@
+function	script	Idcard_LV3	{
+
+	mes "[會員服務]";
+	mes "請選擇你要開啟的黃金會員卡片輔助狀態";
+	next;
+	switch(select(Idcard_LV3_01>0?"奧丁之神力 (^0000ff開啟^000000)":"奧丁之神力 (關閉)",
+	Idcard_LV3_02>0?"黃金抵抗藥水 (^0000ff開啟^000000)":"黃金抵抗藥水 (關閉)",
+	"輔助狀態全開")) {
+
+	case 1:
+		mes "[會員服務]";
+		mes "輔助狀態-奧丁之神力";
+		next;
+		switch(select("開啟","關閉")) {
+		case 1: set Idcard_LV3_01,1; close;
+		case 2: set Idcard_LV3_01,0; close;
+		}
+
+	case 2:
+		mes "[會員服務]";
+		mes "輔助狀態-黃金抵抗藥水";
+		next;
+		switch(select("開啟","關閉")) {
+		case 1: set Idcard_LV3_02,1; close;
+		case 2: set Idcard_LV3_02,0; close;
+		}
+
+
+	case 3:
+		set Idcard_LV3_01,1;
+		set Idcard_LV3_02,1;
+		close;
+	}
+}
+
+
+//-----------------------------------
+function	script	Idcard_LV2	{
+
+	mes "[會員服務]";
+	mes "請選擇你要開啟的白銀會員卡片輔助狀態";
+	next;
+	switch(select(Idcard_LV2_01>0?"奧丁之神力 (^0000ff開啟^000000)":"奧丁之神力 (關閉)",
+	"輔助狀態全開")) {
+
+	case 1:
+		mes "[會員服務]";
+		mes "輔助狀態-奧丁之神力";
+		next;
+		switch(select("開啟","關閉")) {
+		case 1: set Idcard_LV2_01,1; close;
+		case 2: set Idcard_LV2_01,0; close;
+		}
+
+
+	case 2:
+		set Idcard_LV2_01,1;
+		close;
+	}
+}
+
+
+
+
+

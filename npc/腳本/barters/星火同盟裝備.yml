@@ -1,0 +1,70 @@
+﻿Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+
+#星火同盟裝備 施特拉世
+   - Name: 星火同盟裝備
+     Map: map03
+     X: 1
+     Y: 1
+     Direction: South
+     Sprite: 4_M_TATIO
+     Items:
+       - Index: 0
+         Item: Debate_Jacket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 1000
+       - Index: 1
+         Item: Compromise_Jacket
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 1000
+       - Index: 2
+         Item: Mercenary_Ring_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 1000
+       - Index: 3
+         Item: Mercenary_Ring_B
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 1000
+       - Index: 4
+         Item: Mercenary_Ring_A
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 2300
+       - Index: 5
+         Item: C_Head_Item_22541
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 2300
+       - Index: 5
+         Item: C_Head_Item_22540
+         Stock: 0
+         Zeny: 0
+         RequiredItems:
+           - Index: 0
+             Item: Schwartz's_Honor_Token
+             Amount: 2300

@@ -1,0 +1,1570 @@
+vdistrict1,76,66,6	script	艾琉米那	4_EP17_ELYUMINA,{
+
+	mes "[艾琉米那]";
+	mes "只要給我各種改造裝置";
+	mes "我就可以幫你合成到各種幻象防具上";
+	next;
+	switch(select("裝備製作:模組兌換(活動版本):進行附魔(官方版本):進行附魔(活動版本)")){
+
+case 1:
+	close2;
+	callshop "幻象裝備製作";
+	end;
+
+case 2:
+	close2;
+	callshop "EP17.1模組#01";
+	end;
+
+case 3:
+	mes "[艾琉米那]";
+	mes "進行強化需要消耗1個對應的改造模組";
+	mes "你確定要進行嗎?";
+
+	if (getequipisequiped(0) == 0) set .@strRetPart1$,"裝飾品左-[無法裝置]";
+	else set .@strRetPart1$,getequipname(0);
+	if (getequipisequiped(1) == 0) set .@strRetPart2$,"裝飾品右-[無法裝置]";
+	else set .@strRetPart2$,getequipname(1);
+	if (getequipisequiped(2) == 0) set .@strRetPart3$,"鞋子-[無法裝置]";
+	else set .@strRetPart3$,getequipname(2);
+	if (getequipisequiped(3) == 0) set .@strRetPart4$,"披肩-[無法裝置]";
+	else set .@strRetPart4$,getequipname(3);
+	if (getequipisequiped(7) == 0) set .@strRetPart8$,"盔甲-[無法裝置]";
+	else set .@strRetPart8$,getequipname(7);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @fake_OS_1,getequipcardid(.@is,0);
+	set @fake_OS_2,getequipcardid(.@is,1);
+	set @fake_OS_3,getequipcardid(.@is,2);
+	set @fake_OS_4,getequipcardid(.@is,3);
+	set @Refine_OS,getequiprefinerycnt(.@is);
+	if(countitem(@abd)>1){
+	mes "[艾琉米那]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes"你沒物品怎麼附魔";
+	close;
+	}
+
+	if(@abd == 15376) goto OS__net1; //幻象機甲A型
+	if(@abd == 15377) goto OS__net1; //幻象機甲B型
+
+	if(@abd == 20933) goto OS__net2; //幻象推進翼A型
+	if(@abd == 20934) goto OS__net2; //幻象推進翼B型
+
+	if(@abd == 22196) goto OS__net3; //幻象戰靴A型
+	if(@abd == 22197) goto OS__net3; //幻象戰靴B型
+
+	if(@abd == 32210) goto OS__net4; //幻象戰鬥晶片L
+	if(@abd == 32208) goto OS__net4; //幻象助推器L
+
+	if(@abd == 32209) goto OS__net5; //幻象戰鬥晶片R
+	if(@abd == 32207) goto OS__net5; //幻象助推器R
+
+	mes "[艾琉米那]";
+	mes "我只會幫你附魔幻影地圖相關裝備";
+	close;
+
+OS__net1:
+	mes "[艾琉米那]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+
+		countitem(25687)>=1?"改造模組(ATK)":"",
+		countitem(25688)>=1?"改造模組(MATK)":"",
+		countitem(25689)>=1?"改造模組(Archer)":"",
+
+		countitem(25693)>=1?"改造模組(Delay)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_A3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_A3",25671,29528,rand(1,100);
+
+		case 4: callfunc "fumoOS_A2",25687,29534,rand(1,100);
+		case 5: callfunc "fumoOS_A2",25688,29535,rand(1,100);
+		case 6: callfunc "fumoOS_A2",25689,29536,rand(1,100);
+
+		case 7: callfunc "fumoOS_A1",25693,29540,rand(1,100);
+		}
+
+	case 2:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25687)>=1?"改造模組(ATK)":"",
+		countitem(25688)>=1?"改造模組(MATK)":"",
+		countitem(25689)>=1?"改造模組(Archer)":"",
+		countitem(25693)>=1?"改造模組(Delay)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_B3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_B3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_B2",25687,29534,rand(1,100);
+		case 5: callfunc "fumoOS_B2",25688,29535,rand(1,100);
+		case 6: callfunc "fumoOS_B2",25689,29536,rand(1,100);
+		case 7: callfunc "fumoOS_B1",25693,29540,rand(1,100);
+		}
+
+	case 3:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25687)>=1?"改造模組(ATK)":"",
+		countitem(25688)>=1?"改造模組(MATK)":"",
+		countitem(25689)>=1?"改造模組(Archer)":"",
+		countitem(25693)>=1?"改造模組(Delay)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_C3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_C3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_C2",25687,29534,rand(1,100);
+		case 5: callfunc "fumoOS_C2",25688,29535,rand(1,100);
+		case 6: callfunc "fumoOS_C2",25689,29536,rand(1,100);
+		case 7: callfunc "fumoOS_C1",25693,29540,rand(1,100);
+		}
+	}
+
+OS__net2:
+	mes "[艾琉米那]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25690)>=1?"改造模組(ASPD)":"",
+		countitem(25691)>=1?"改造模組(Cast)":"",
+		countitem(25692)>=1?"改造模組(CRI)":"",
+		countitem(25695)>=1?"改造模組(Above)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_D3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_D3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_D2",25690,29537,rand(1,100);
+		case 5: callfunc "fumoOS_D2",25691,29538,rand(1,100);
+		case 6: callfunc "fumoOS_D2",25692,29539,rand(1,100);
+		case 7: callfunc "fumoOS_D1",25695,29542,rand(1,100);
+		}
+
+	case 2:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25690)>=1?"改造模組(ASPD)":"",
+		countitem(25691)>=1?"改造模組(Cast)":"",
+		countitem(25692)>=1?"改造模組(CRI)":"",
+		countitem(25695)>=1?"改造模組(Above)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_E3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_E3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_E2",25690,29537,rand(1,100);
+		case 5: callfunc "fumoOS_E2",25691,29538,rand(1,100);
+		case 6: callfunc "fumoOS_E2",25692,29539,rand(1,100);
+		case 7: callfunc "fumoOS_E1",25695,29542,rand(1,100);
+		}
+
+	case 3:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25690)>=1?"改造模組(ASPD)":"",
+		countitem(25691)>=1?"改造模組(Cast)":"",
+		countitem(25692)>=1?"改造模組(CRI)":"",
+		countitem(25695)>=1?"改造模組(Above)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_F3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_F3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_F2",25690,29537,rand(1,100);
+		case 5: callfunc "fumoOS_F2",25691,29538,rand(1,100);
+		case 6: callfunc "fumoOS_F2",25692,29539,rand(1,100);
+		case 7: callfunc "fumoOS_F1",25695,29542,rand(1,100);
+		}
+	}
+
+OS__net3:
+	mes "[艾琉米那]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25684)>=1?"改造模組(MHP)":"",
+		countitem(25685)>=1?"改造模組(MSP)":"",
+		countitem(25686)>=1?"改造模組(Heal)":"",
+		countitem(25694)>=1?"改造模組(Fix)":"",
+		countitem(25700)>=1?"改造模組(L_Vit)":"",
+		countitem(25701)>=1?"改造模組(L_INT)":"",
+		countitem(25702)>=1?"改造模組(L_DEX)":"",
+		countitem(25703)>=1?"改造模組(L_STR)":"",
+		countitem(25704)>=1?"改造模組(L_AGI)":"",
+		countitem(25705)>=1?"改造模組(L_LUK)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_G3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_G3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_G2",25684,29531,rand(1,100);
+		case 5: callfunc "fumoOS_G2",25685,29530,rand(1,100);
+		case 6: callfunc "fumoOS_G2",25686,29533,rand(1,100);
+		case 7: callfunc "fumoOS_G1_1",25694,29541,rand(1,100);
+		case 8: callfunc "fumoOS_G1_2",25700,29547,rand(1,100);
+		case 9: callfunc "fumoOS_G1_2",25701,29548,rand(1,100);
+		case 10: callfunc "fumoOS_G1_2",25702,29549,rand(1,100);
+		case 11: callfunc "fumoOS_G1_2",25703,29550,rand(1,100);
+		case 12: callfunc "fumoOS_G1_2",25704,29551,rand(1,100);
+		case 13: callfunc "fumoOS_G1_2",25705,29552,rand(1,100);
+		}
+
+	case 2:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25684)>=1?"改造模組(MHP)":"",
+		countitem(25685)>=1?"改造模組(MSP)":"",
+		countitem(25686)>=1?"改造模組(Heal)":"",
+		countitem(25694)>=1?"改造模組(Fix)":"",
+		countitem(25700)>=1?"改造模組(L_Vit)":"",
+		countitem(25701)>=1?"改造模組(L_INT)":"",
+		countitem(25702)>=1?"改造模組(L_DEX)":"",
+		countitem(25703)>=1?"改造模組(L_STR)":"",
+		countitem(25704)>=1?"改造模組(L_AGI)":"",
+		countitem(25705)>=1?"改造模組(L_LUK)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_H3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_H3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_H2",25684,29531,rand(1,100);
+		case 5: callfunc "fumoOS_H2",25685,29530,rand(1,100);
+		case 6: callfunc "fumoOS_H2",25686,29533,rand(1,100);
+		case 7: callfunc "fumoOS_H1_1",25694,29541,rand(1,100);
+		case 8: callfunc "fumoOS_H1_2",25700,29547,rand(1,100);
+		case 9: callfunc "fumoOS_H1_2",25701,29548,rand(1,100);
+		case 10: callfunc "fumoOS_H1_2",25702,29549,rand(1,100);
+		case 11: callfunc "fumoOS_H1_2",25703,29550,rand(1,100);
+		case 12: callfunc "fumoOS_H1_2",25704,29551,rand(1,100);
+		case 13: callfunc "fumoOS_H1_2",25705,29552,rand(1,100);
+		}
+
+	case 3:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25670)>=1?"改造模組(DEF)":"",
+		countitem(25671)>=1?"改造模組(MDEF)":"",
+		countitem(25684)>=1?"改造模組(MHP)":"",
+		countitem(25685)>=1?"改造模組(MSP)":"",
+		countitem(25686)>=1?"改造模組(Heal)":"",
+		countitem(25694)>=1?"改造模組(Fix)":"",
+		countitem(25700)>=1?"改造模組(L_Vit)":"",
+		countitem(25701)>=1?"改造模組(L_INT)":"",
+		countitem(25702)>=1?"改造模組(L_DEX)":"",
+		countitem(25703)>=1?"改造模組(L_STR)":"",
+		countitem(25704)>=1?"改造模組(L_AGI)":"",
+		countitem(25705)>=1?"改造模組(L_LUK)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_I3",25670,29527,rand(1,100);
+		case 3: callfunc "fumoOS_I3",25671,29528,rand(1,100);
+		case 4: callfunc "fumoOS_I2",25684,29531,rand(1,100);
+		case 5: callfunc "fumoOS_I2",25685,29530,rand(1,100);
+		case 6: callfunc "fumoOS_I2",25686,29533,rand(1,100);
+		case 7: callfunc "fumoOS_I1_1",25694,29541,rand(1,100);
+		case 8: callfunc "fumoOS_I1_2",25700,29547,rand(1,100);
+		case 9: callfunc "fumoOS_I1_2",25701,29548,rand(1,100);
+		case 10: callfunc "fumoOS_I1_2",25702,29549,rand(1,100);
+		case 11: callfunc "fumoOS_I1_2",25703,29550,rand(1,100);
+		case 12: callfunc "fumoOS_I1_2",25704,29551,rand(1,100);
+		case 13: callfunc "fumoOS_I1_2",25705,29552,rand(1,100);
+		}
+	}
+
+OS__net4:
+	mes "[艾琉米那]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25676)>=1?"改造模組(Int)":"",
+		countitem(25677)>=1?"改造模組(Dex)":"",
+
+		countitem(25679)>=1?"改造模組(HealSP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓":"",
+
+		countitem(25697)>=1?"改造模組(Soul)":"",
+		countitem(25699)>=1?"改造模組(M_Soul)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_J3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_J3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_J3",25676,4712,rand(1,100);
+		case 5: callfunc "fumoOS_J3",25677,4722,rand(1,100);
+
+		case 6: callfunc "fumoOS_J2",25679,29532,rand(1,100);
+
+		case 7: callfunc "fumoOS_J11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_J11",25682,4866,rand(1,100);
+		case 9: callfunc "fumoOS_J12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_J12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_J13",25697,29544,rand(1,100);
+		case 12: callfunc "fumoOS_J13",25699,29546,rand(1,100);
+		}
+
+	case 2:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25676)>=1?"改造模組(Int)":"",
+		countitem(25677)>=1?"改造模組(Dex)":"",
+		countitem(25679)>=1?"改造模組(HealSP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓":"",
+
+		countitem(25697)>=1?"改造模組(Soul)":"",
+		countitem(25699)>=1?"改造模組(M_Soul)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_K3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_K3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_K3",25676,4712,rand(1,100);
+		case 5: callfunc "fumoOS_K3",25677,4722,rand(1,100);
+		case 6: callfunc "fumoOS_K2",25679,29532,rand(1,100);
+
+		case 7: callfunc "fumoOS_K11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_K11",25682,4866,rand(1,100);
+		case 9: callfunc "fumoOS_K12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_K12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_K13",25697,29544,rand(1,100);
+		case 12: callfunc "fumoOS_K13",25699,29546,rand(1,100);
+		}
+
+	case 3:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25676)>=1?"改造模組(Int)":"",
+		countitem(25677)>=1?"改造模組(Dex)":"",
+		countitem(25679)>=1?"改造模組(HealSP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓":"",
+
+		countitem(25697)>=1?"改造模組(Soul)":"",
+		countitem(25699)>=1?"改造模組(M_Soul)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_L3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_L3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_L3",25676,4712,rand(1,100);
+		case 5: callfunc "fumoOS_L3",25677,4722,rand(1,100);
+		case 6: callfunc "fumoOS_L2",25679,29532,rand(1,100);
+
+		case 7: callfunc "fumoOS_L11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_L11",25682,4866,rand(1,100);
+		case 9: callfunc "fumoOS_L12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_L12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_L13",25697,29544,rand(1,100);
+		case 12: callfunc "fumoOS_L13",25699,29546,rand(1,100);
+		}
+	}
+
+OS__net5:
+	mes "[艾琉米那]";
+	mes "你想要附魔哪個插槽";
+	next;
+	switch(select("附魔第二插槽:附魔第三插槽:附魔第四插槽")){
+
+	case 1:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25674)>=1?"改造模組(Str)":"",
+		countitem(25675)>=1?"改造模組(Agi)":"",
+		countitem(25678)>=1?"改造模組(HealHP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓)":"",
+
+		countitem(25696)>=1?"改造模組(Life)":"",
+		countitem(25698)>=1?"改造模組(M_Heal)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_O3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_O3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_O3",25674,4702,rand(1,100);
+		case 5: callfunc "fumoOS_O3",25675,4732,rand(1,100);
+		case 6: callfunc "fumoOS_O2",25678,29529,rand(1,100);
+
+		case 7: callfunc "fumoOS_O11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_O11",25682,4866,rand(1,100);
+		case 9: callfunc "fumoOS_O12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_O12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_O13",25696,29543,rand(1,100);
+		case 12: callfunc "fumoOS_O13",25698,29545,rand(1,100);
+		}
+
+	case 2:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25674)>=1?"改造模組(Str)":"",
+		countitem(25675)>=1?"改造模組(Agi)":"",
+		countitem(25678)>=1?"改造模組(HealHP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓)":"",
+
+		countitem(25696)>=1?"改造模組(Life)":"",
+		countitem(25698)>=1?"改造模組(M_Heal)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_P3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_P3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_P3",25674,4702,rand(1,100);
+		case 5: callfunc "fumoOS_P3",25675,4732,rand(1,100);
+		case 6: callfunc "fumoOS_P2",25678,29529,rand(1,100);
+
+		case 7: callfunc "fumoOS_P11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_P11",25682,4866,rand(1,100);
+		case 9: callfunc "fumoOS_P12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_P12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_P13",25696,29543,rand(1,100);
+		case 12: callfunc "fumoOS_P13",25698,29545,rand(1,100);
+		}
+
+	case 3:
+		mes "[MARS_01]";
+		mes "你想要附魔上哪個功能?";
+		next;
+		switch(select(
+		"取消",
+		countitem(25672)>=1?"改造模組(Vit)":"",
+		countitem(25673)>=1?"改造模組(Luk)":"",
+		countitem(25674)>=1?"改造模組(Str)":"",
+		countitem(25675)>=1?"改造模組(Agi)":"",
+		countitem(25678)>=1?"改造模組(HealHP)":"",
+
+		countitem(25680)>=1?"改造模組(魔力)":"",
+		countitem(25682)>=1?"改造模組(致命)":"",
+		countitem(25681)>=1?"改造模組(攻擊速度)":"",
+		countitem(25683)>=1?"改造模組(名弓)":"",
+
+		countitem(25696)>=1?"改造模組(Life)":"",
+		countitem(25698)>=1?"改造模組(M_Heal)":""
+		)) {
+		case 1: close;
+		case 2: callfunc "fumoOS_Q3",25672,4742,rand(1,100);
+		case 3: callfunc "fumoOS_Q3",25673,4752,rand(1,100);
+		case 4: callfunc "fumoOS_Q3",25674,4702,rand(1,100);
+		case 5: callfunc "fumoOS_Q3",25675,4732,rand(1,100);
+		case 6: callfunc "fumoOS_Q2",25678,29529,rand(1,100);
+
+		case 7: callfunc "fumoOS_Q11",25680,4826,rand(1,100);
+		case 8: callfunc "fumoOS_Q11",25682,4866,rand(1,100);
+
+		case 9: callfunc "fumoOS_Q12",25681,4881,rand(1,100);
+		case 10: callfunc "fumoOS_Q12",25683,4836,rand(1,100);
+
+		case 11: callfunc "fumoOS_Q13",25696,29543,rand(1,100);
+		case 12: callfunc "fumoOS_Q13",25698,29545,rand(1,100);
+		}
+	}
+
+case 4:
+	mes "[MARS_01]";
+	mes "請選擇你要附魔的幻象裝備位置";
+	next;
+	switch(select("身體:斗篷:鞋子:飾品右:飾品左:取消")){
+
+	case 1:
+	close2;
+	item_enchant 34;
+	end;
+
+	case 2:
+	close2;
+	item_enchant 39;
+	end;
+
+	case 3:
+	close2;
+	item_enchant 40;
+	end;
+
+	case 4:
+	close2;
+	item_enchant 42;
+	end;
+
+	case 5:
+	close2;
+	item_enchant 43;
+	end;
+
+	case 6:
+	close;
+	}
+
+
+}
+OnInit:
+	waitingroom "幻象裝備",0;
+	end;
+}
+
+
+//-------------------------------- 鎧甲附魔2S
+function	script	fumoOS_A3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_A2	{
+	if ((@fake_OS_3 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_A1	{
+	if (@fake_OS_3==29540||@fake_OS_3==29541||@fake_OS_3==29542||@fake_OS_3==29543||@fake_OS_3==29544||@fake_OS_3==29545||@fake_OS_3==29546||@fake_OS_4==29540||@fake_OS_4==29541||@fake_OS_4==29542||@fake_OS_4==29543||@fake_OS_4==29544||@fake_OS_4==29545||@fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 鎧甲附魔3S
+function	script	fumoOS_B3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_B2	{
+	if ((@fake_OS_2 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_B1	{
+	if (@fake_OS_2==29540||@fake_OS_2==29541||@fake_OS_2==29542||@fake_OS_2==29543||@fake_OS_2==29544||@fake_OS_2==29545||@fake_OS_2==29546||@fake_OS_4==29540||@fake_OS_4==29541||@fake_OS_4==29542||@fake_OS_4==29543||@fake_OS_4==29544||@fake_OS_4==29545||@fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 鎧甲附魔4S
+function	script	fumoOS_C3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_C2	{
+	if ((@fake_OS_2 + @fake_OS_3) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_C1	{
+	if (@fake_OS_2==29540||@fake_OS_2==29541||@fake_OS_2==29542||@fake_OS_2==29543||@fake_OS_2==29544||@fake_OS_2==29545||@fake_OS_2==29546||@fake_OS_3==29540||@fake_OS_3==29541||@fake_OS_3==29542||@fake_OS_3==29543||@fake_OS_3==29544||@fake_OS_3==29545||@fake_OS_3==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+
+//-------------------------------- 披肩附魔2S
+function	script	fumoOS_D3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_D2	{
+	if ((@fake_OS_3 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_D1	{
+	if (@fake_OS_3==29540||@fake_OS_3==29541||@fake_OS_3==29542||@fake_OS_3==29543||@fake_OS_3==29544||@fake_OS_3==29545||@fake_OS_3==29546||@fake_OS_4==29540||@fake_OS_4==29541||@fake_OS_4==29542||@fake_OS_4==29543||@fake_OS_4==29544||@fake_OS_4==29545||@fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 披肩附魔3S
+function	script	fumoOS_E3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_E2	{
+	if ((@fake_OS_2 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_E1	{
+	if (@fake_OS_2==29540||@fake_OS_2==29541||@fake_OS_2==29542||@fake_OS_2==29543||@fake_OS_2==29544||@fake_OS_2==29545||@fake_OS_2==29546||@fake_OS_4==29540||@fake_OS_4==29541||@fake_OS_4==29542||@fake_OS_4==29543||@fake_OS_4==29544||@fake_OS_4==29545||@fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 披肩附魔4S
+function	script	fumoOS_F3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_F2	{
+	if ((@fake_OS_2 + @fake_OS_3) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_F1	{
+	if (@fake_OS_2==29540||@fake_OS_2==29541||@fake_OS_2==29542||@fake_OS_2==29543||@fake_OS_2==29544||@fake_OS_2==29545||@fake_OS_2==29546||@fake_OS_3==29540||@fake_OS_3==29541||@fake_OS_3==29542||@fake_OS_3==29543||@fake_OS_3==29544||@fake_OS_3==29545||@fake_OS_3==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+
+//-------------------------------- 長靴附魔2S
+function	script	fumoOS_G3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_G2	{
+	if ((@fake_OS_3 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_G1_1	{
+	if ((@fake_OS_3) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+	if ((@fake_OS_4) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+function	script	fumoOS_G1_2	{
+	if (@fake_OS_3==29547||@fake_OS_3==29548||@fake_OS_3==29549||@fake_OS_3==29550||@fake_OS_3==29551||@fake_OS_3==29552||@fake_OS_4==29547||@fake_OS_4==29548||@fake_OS_4==29549||@fake_OS_4==29550||@fake_OS_4==29551||@fake_OS_4==29552 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000傳說級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 長靴附魔3S
+function	script	fumoOS_H3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_H2	{
+	if ((@fake_OS_2 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_H1_1	{
+	if ((@fake_OS_2) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+	if ((@fake_OS_4) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_H1_2	{
+	if (@fake_OS_2==29547||@fake_OS_2==29548||@fake_OS_2==29549||@fake_OS_2==29550||@fake_OS_2==29551||@fake_OS_2==29552||@fake_OS_4==29547||@fake_OS_4==29548||@fake_OS_4==29549||@fake_OS_4==29550||@fake_OS_4==29551||@fake_OS_4==29552 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000傳說級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 長靴附魔4S
+function	script	fumoOS_I3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_I2	{
+	if ((@fake_OS_2 + @fake_OS_3) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_I1_1	{
+	if ((@fake_OS_2) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+	if ((@fake_OS_3) == 29541) {
+	mes "[艾琉米那]";
+	mes "^ff0000Fix狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_I1_2	{
+	if (@fake_OS_2==29547||@fake_OS_2==29548||@fake_OS_2==29549||@fake_OS_2==29550||@fake_OS_2==29551||@fake_OS_2==29552||@fake_OS_3==29547||@fake_OS_3==29548||@fake_OS_3==29549||@fake_OS_3==29550||@fake_OS_3==29551||@fake_OS_3==29552 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000傳說級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+
+
+//-------------------------------- 裝飾品L 2S
+function	script	fumoOS_J3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_J2	{
+	if ((@fake_OS_3 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_J11	{
+	if ( @fake_OS_3==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_J12	{
+	if ( @fake_OS_3==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_J13	{
+	if ( @fake_OS_3==29544 || @fake_OS_3==4836 || @fake_OS_4==29546 || @fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 裝飾品L 3S
+function	script	fumoOS_K3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_K2	{
+	if ((@fake_OS_2 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_K11	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_K12	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_K13	{
+	if (@fake_OS_2==29544 || @fake_OS_2==29546 || @fake_OS_4==29544 || @fake_OS_4==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 裝飾品L 4S
+function	script	fumoOS_L3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_L2	{
+	if ((@fake_OS_2 + @fake_OS_3) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_L11	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_3==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_L12	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_3==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_L13	{
+	if ( @fake_OS_2==29544 || @fake_OS_2==29546 || @fake_OS_3==29544 || @fake_OS_3==29546 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+
+//-------------------------------- 裝飾品R 2S
+function	script	fumoOS_O3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_O2	{
+	if ((@fake_OS_3 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_O11	{
+	if ( @fake_OS_3==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_O12	{
+	if ( @fake_OS_3==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_O13	{
+	if (@fake_OS_3==29543 || @fake_OS_3==29545 || @fake_OS_4==29543 || @fake_OS_4==29545) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,getarg(1),@fake_OS_3,@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 裝飾品R 3S
+function	script	fumoOS_P3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_P2	{
+	if ((@fake_OS_2 + @fake_OS_4) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_P11	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_P12	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_4==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+function	script	fumoOS_P13	{
+	if ( @fake_OS_2==29543 || @fake_OS_2==29545|| @fake_OS_4==29543 || @fake_OS_4==29545 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,getarg(1),@fake_OS_4;
+	close;
+}
+
+
+//-------------------------------- 裝飾品R 4S
+function	script	fumoOS_Q3	{
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_Q2	{
+	if ((@fake_OS_2 + @fake_OS_3) == getarg(1)*2 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000相同狀態已經超過二個了^000000";
+	close; }
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_Q11	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_3==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_Q12	{
+	if ( @fake_OS_2==getarg(1) || @fake_OS_3==getarg(1) ) {
+	mes "[艾琉米那]";
+	mes "^ff0000這個狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+function	script	fumoOS_Q13	{
+	if ( @fake_OS_2==29543 || @fake_OS_2==29545 || @fake_OS_3==29543 || @fake_OS_3==29545 ) {
+	mes "[艾琉米那]";
+	mes "^ff0000特殊級狀態只能存在一個^000000";
+	close; }
+
+	if(countitem(getarg(0))<1){
+	mes "[MARS_01]";
+	mes "你身上沒有對應的改造模組";
+	close; }
+	unequip (.@is);
+	delitem @abd,1;
+	delitem getarg(0),1;
+	getitem2 @abd,1,1,@Refine_OS,0,@fake_OS_1,@fake_OS_2,@fake_OS_3,getarg(1);
+	close;
+}
+
+

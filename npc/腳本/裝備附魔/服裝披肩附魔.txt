@@ -1,0 +1,318 @@
+
+vdistrict1,83,42,6	script	雷斯查德	614,{
+
+	mes "[雷斯查德]";
+	mes "歡迎光臨，時尚魔石!!";
+	mes "我是能將空虛肩膀變成動感肩飾的雷斯查德";
+	next;
+	mes "[雷斯查德]";
+	mes "若帶來^FF0000服裝披肩類^000000和^FF0000披肩類專用石^000000的話，就能幫你升級喔!";
+	mes "這是尋找我提昇樸素外表方法時，發現的辦法!";
+	mes "^FF0000附魔費用10萬RO幣^000000";
+	mes "^FF0000有30%的機率失敗，但裝備不會消失^000000";
+	mes "^FF0000標註(披肩)的是附魔第1插槽^000000";
+	mes "^FF0000標註(雙重)的是附魔第2插槽^000000";
+	next;
+	switch(select("附魔服裝(披肩):結束對話。")){
+
+case 1:
+	mes "[雷斯查德]";
+	mes "你確定要附魔嗎?";
+	if (getequipisequiped(13) == 0) set .@strRetPart14$,"披肩(服裝)-[無法裝置]";
+	else set .@strRetPart14$,getequipname(13);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$,.@strRetPart8$,.@strRetPart9$,.@strRetPart10$,.@strRetPart11$,.@strRetPart12$,.@strRetPart13$,.@strRetPart14$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @Cave_App1,getequipcardid(.@is,0);
+	set @Cave_App2,getequipcardid(.@is,1);
+	set @Cave_App3,getequipcardid(.@is,2);
+	set @Cave_App4,getequipcardid(.@is,3);
+	set @Refine_Appa,getequiprefinerycnt(.@is);
+
+	if(countitem(@abd)>1){
+	mes "[雷斯查德]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[雷斯查德]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+
+	mes "[阿維爾 道旭]";
+	mes "你想要強化哪種魔石?";
+	next;
+	menu 
+	countitem(60147)>=1?"神速石(披肩)(3S)":"",Mag60147,
+	countitem(60145)>=1?"掉寶率石(披肩)(3S)":"",Mag60145,
+
+	countitem(6908)>=1?"ASPD石(披肩)":"",Mag6908,
+	countitem(6963)>=1?"HP吸收石(披肩)":"",Mag6963,
+	countitem(6964)>=1?"SP吸收石(披肩)":"",Mag6964,
+	countitem(25067)>=1?"詠唱石(披肩)":"",Mag25067,
+	countitem(25170)>=1?"次等詠唱石(披肩)":"",Mag25170,
+	countitem(25302)>=1?"二刀連擊石(披肩)":"",Mag25302,
+	countitem(25303)>=1?"暴擊石(披肩)":"",Mag25303,
+	countitem(25306)>=1?"變動詠唱石(披肩)":"",Mag25306,
+
+	countitem(25412)>=1?"修羅石(披肩)":"",Mag25412,
+	countitem(25416)>=1?"遊俠石(披肩)":"",Mag25416,
+	countitem(25420)>=1?"妖術師石(披肩)":"",Mag25420,
+	countitem(25448)>=1?"盧恩騎士石(披肩)":"",Mag25448,
+	countitem(25449)>=1?"基因學者石(披肩)":"",Mag25449,
+	countitem(25456)>=1?"咒術師石(披肩)":"",Mag25456,
+	countitem(25493)>=1?"魅影追蹤者石(披肩)":"",Mag25493,
+	countitem(25497)>=1?"機械工匠石(披肩)":"",Mag25497,
+	countitem(25501)>=1?"舞者樂師石(披肩)":"",Mag25501,
+	countitem(25709)>=1?"大主教石(披肩)":"",Mag25709,
+	countitem(25713)>=1?"皇家禁衛軍石(披肩)":"",Mag25713,
+	countitem(25717)>=1?"十字斬首者石(披肩)":"",Mag25717,
+
+	countitem(25797)>=1?"修羅石II(披肩)":"",Mag25797,
+	countitem(25801)>=1?"妖術師石II(披肩)":"",Mag25801,
+	countitem(25805)>=1?"魅影追縱者石II(披肩)":"",Mag25805,
+	countitem(25842)>=1?"獵靈士石(披肩)":"",Mag25842,
+	countitem(25849)>=1?"拳皇石(披肩)":"",Mag25849,
+	countitem(25853)>=1?"日影忍者石(披肩)":"",Mag25853,
+	countitem(25854)>=1?"月影忍者石(披肩)":"",Mag25854,
+	countitem(25858)>=1?"反叛者石(披肩)":"",Mag25858,
+	countitem(25862)>=1?"喵族石(披肩)":"",Mag25862,
+	countitem(1000011)>=1?"遊俠石II(披肩)":"",Mag1000011,
+	countitem(1000015)>=1?"機械工匠石II(披肩)":"",Mag1000015,
+	countitem(1000019)>=1?"大主教石II(披肩)":"",Mag1000019,
+	countitem(1000213)>=1?"咒術師石II(披肩)":"",Mag1000213,
+	countitem(1000217)>=1?"皇家禁衛軍石II(披肩)":"",Mag1000217,
+	countitem(1000221)>=1?"十字斬首者石II(披肩)":"",Mag1000221,
+	countitem(1000296)>=1?"盧恩騎士石II(披肩)":"",Mag1000296,
+	countitem(1000300)>=1?"基因學者石II(披肩)":"",Mag1000300,
+	countitem(1000304)>=1?"浪姬舞者/宮廷樂師石II(披肩)":"",Mag1000304,
+
+	countitem(1000520)>=1?"ASPD石(雙重)":"",Mag1000520,
+	countitem(1000521)>=1?"次等詠唱石(雙重)":"",Mag1000521,
+	countitem(1000522)>=1?"變動詠唱石(雙重)":"",Mag1000522,
+	countitem(1000523)>=1?"廣域石(雙重)":"",Mag1000523,
+	countitem(1000524)>=1?"近距離石(雙重)":"",Mag1000524,
+	countitem(1000525)>=1?"SP吸收石(雙重)":"",Mag1000525,
+	countitem(1000526)>=1?"HP吸收石(雙重)":"",Mag1000526,
+	countitem(1000527)>=1?"魔法力石(雙重)":"",Mag1000527,
+	countitem(1000675)>=1?"重裝石(雙重)":"",Mag1000675,
+	countitem(1000676)>=1?"創意石(雙重)":"",Mag1000676,
+	countitem(1000855)>=1?"暴擊石(雙重)":"",Mag1000855,
+	countitem(1000856)>=1?"CON石(雙重)":"",Mag1000856,
+	countitem(1000921)>=1?"咒語石(雙重)":"",Mag1000921,
+	countitem(1000922)>=1?"法術魔法攻擊石(披肩)":"",Mag1000922,
+	countitem(1001053)>=1?"近戰石(披肩)":"",Mag1001053,
+	countitem(1001054)>=1?"廣域石(披肩)":"",Mag1001054,
+	countitem(1001055)>=1?"POW石(雙重)":"",Mag1001055,
+
+	countitem(1001171)>=1?"抗性防禦石(披肩)":"",Mag1001171,
+	countitem(1001172)>=1?"抗性石(雙重)":"",Mag1001172,
+	countitem(1001322)>=1?"神鬼郎石(披肩)":"",Mag1001322,
+	countitem(1001323)>=1?"不知火石(披肩)":"",Mag1001323,
+	countitem(1001324)>=1?"十字影武石(披肩)":"",Mag1001324,
+	countitem(1001325)>=1?"樞機主教石(披肩)":"",Mag1001325,
+	countitem(1001326)>=1?"進階超級初心者石(披肩)":"",Mag1001326,
+
+	countitem(1001419)>=1?"天帝石(披肩)":"",Mag1001419,
+	countitem(1001420)>=1?"元素支配者石(披肩)":"",Mag1001420,
+	countitem(1001421)>=1?"機甲神匠石(披肩)":"",Mag1001421,
+	countitem(1001487)>=1?"深淵追跡者(披肩)":"",Mag1001487,
+	countitem(1001488)>=1?"天籟頌者&樂之舞靈(披肩)":"",Mag1001488,
+	countitem(1001489)>=1?"終極初學者(披肩)":"",Mag1001489,
+
+	"取消",no;
+	Mag60147: callfunc "fumoGarmentA3",60147,60722,100000,rand(1,100); end;
+	Mag60145: callfunc "fumoGarmentA3",60145,60720,100000,rand(1,100); end;
+
+	Mag6908: callfunc "fumoGarmentA1",6908,4807,100000,rand(1,100); end;
+	Mag6963: callfunc "fumoGarmentA1",6963,4992,100000,rand(1,100); end;
+	Mag6964: callfunc "fumoGarmentA1",6964,4993,100000,rand(1,100); end;
+	Mag25067: callfunc "fumoGarmentA1",25067,29056,100000,rand(1,100); end;
+	Mag25170: callfunc "fumoGarmentA1",25170,29154,100000,rand(1,100); end;
+	Mag25302: callfunc "fumoGarmentA1",25302,29362,100000,rand(1,100); end;
+	Mag25303: callfunc "fumoGarmentA1",25303,29361,100000,rand(1,100); end;
+	Mag25306: callfunc "fumoGarmentA1",25306,29358,100000,rand(1,100); end;
+
+	Mag25412: callfunc "fumoGarmentA1",25412,29426,100000,rand(1,100); end;
+	Mag25416: callfunc "fumoGarmentA1",25416,29431,100000,rand(1,100); end;
+	Mag25420: callfunc "fumoGarmentA1",25420,29435,100000,rand(1,100); end;
+	Mag25448: callfunc "fumoGarmentA1",25448,29463,100000,rand(1,100); end;
+	Mag25449: callfunc "fumoGarmentA1",25449,29467,100000,rand(1,100); end;
+	Mag25456: callfunc "fumoGarmentA1",25456,29471,100000,rand(1,100); end;
+	Mag25493: callfunc "fumoGarmentA1",25493,29480,100000,rand(1,100); end;
+	Mag25497: callfunc "fumoGarmentA1",25497,29484,100000,rand(1,100); end;
+	Mag25501: callfunc "fumoGarmentA1",25501,29488,100000,rand(1,100); end;
+	Mag25709: callfunc "fumoGarmentA1",25709,29516,100000,rand(1,100); end;
+	Mag25713: callfunc "fumoGarmentA1",25713,29520,100000,rand(1,100); end;
+	Mag25717: callfunc "fumoGarmentA1",25717,29524,100000,rand(1,100); end;
+
+	Mag25797: callfunc "fumoGarmentA1",25797,29427,100000,rand(1,100); end;
+	Mag25801: callfunc "fumoGarmentA1",25801,29614,100000,rand(1,100); end;
+	Mag25805: callfunc "fumoGarmentA1",25805,29618,100000,rand(1,100); end;
+	Mag25842: callfunc "fumoGarmentA1",25842,29654,100000,rand(1,100); end;
+	Mag25849: callfunc "fumoGarmentA1",25849,29658,100000,rand(1,100); end;
+	Mag25853: callfunc "fumoGarmentA1",25853,29662,100000,rand(1,100); end;
+	Mag25854: callfunc "fumoGarmentA1",25854,29663,100000,rand(1,100); end;
+	Mag25858: callfunc "fumoGarmentA1",25858,29667,100000,rand(1,100); end;
+	Mag25862: callfunc "fumoGarmentA1",25862,29671,100000,rand(1,100); end;
+	Mag1000011: callfunc "fumoGarmentA1",1000011,310003,100000,rand(1,100); end;
+	Mag1000015: callfunc "fumoGarmentA1",1000015,310007,100000,rand(1,100); end;
+	Mag1000019: callfunc "fumoGarmentA1",1000019,310011,100000,rand(1,100); end;
+	Mag1000213: callfunc "fumoGarmentA1",1000213,310180,100000,rand(1,100); end;
+	Mag1000217: callfunc "fumoGarmentA1",1000217,310184,100000,rand(1,100); end;
+	Mag1000221: callfunc "fumoGarmentA1",1000221,310188,100000,rand(1,100); end;
+	Mag1000296: callfunc "fumoGarmentA1",1000296,310257,100000,rand(1,100); end;
+	Mag1000300: callfunc "fumoGarmentA1",1000300,310261,100000,rand(1,100); end;
+	Mag1000304: callfunc "fumoGarmentA1",1000304,310265,100000,rand(1,100); end;
+
+	Mag1000520: callfunc "fumoGarmentA2",1000520,310654,100000,rand(1,100); end;
+	Mag1000521: callfunc "fumoGarmentA2",1000521,310658,100000,rand(1,100); end;
+	Mag1000522: callfunc "fumoGarmentA2",1000522,310659,100000,rand(1,100); end;
+	Mag1000523: callfunc "fumoGarmentA2",1000523,310660,100000,rand(1,100); end;
+	Mag1000524: callfunc "fumoGarmentA2",1000524,310661,100000,rand(1,100); end;
+	Mag1000525: callfunc "fumoGarmentA2",1000525,310663,100000,rand(1,100); end;
+	Mag1000526: callfunc "fumoGarmentA2",1000526,310662,100000,rand(1,100); end;
+	Mag1000527: callfunc "fumoGarmentA2",1000527,310667,100000,rand(1,100); end;
+	Mag1000675: callfunc "fumoGarmentA2",1000675,311014,100000,rand(1,100); end;
+	Mag1000676: callfunc "fumoGarmentA2",1000676,311015,100000,rand(1,100); end;
+	Mag1000855: callfunc "fumoGarmentA2",1000855,311354,100000,rand(1,100); end;
+	Mag1000856: callfunc "fumoGarmentA2",1000856,311355,100000,rand(1,100); end;
+	Mag1000921: callfunc "fumoGarmentA2",1000921,311425,100000,rand(1,100); end;
+	Mag1000922: callfunc "fumoGarmentA1",1000922,311426,100000,rand(1,100); end;
+	Mag1001053: callfunc "fumoGarmentA1",1001053,311469,100000,rand(1,100); end;
+	Mag1001054: callfunc "fumoGarmentA1",1001054,311470,100000,rand(1,100); end;
+	Mag1001055: callfunc "fumoGarmentA2",1001055,311471,100000,rand(1,100); end;
+
+	Mag1001171: callfunc "fumoGarmentA1",1001171,311924,100000,rand(1,100); end;
+	Mag1001172: callfunc "fumoGarmentA2",1001172,311925,100000,rand(1,100); end;
+	Mag1001322: callfunc "fumoGarmentA1",1001322,312398,100000,rand(1,100); end;
+	Mag1001323: callfunc "fumoGarmentA1",1001323,312399,100000,rand(1,100); end;
+	Mag1001324: callfunc "fumoGarmentA1",1001324,312400,100000,rand(1,100); end;
+	Mag1001325: callfunc "fumoGarmentA1",1001325,312401,100000,rand(1,100); end;
+	Mag1001326: callfunc "fumoGarmentA1",1001326,312402,100000,rand(1,100); end;
+
+	Mag1001419: callfunc "fumoGarmentA1",1001419,312476,100000,rand(1,100); end;
+	Mag1001420: callfunc "fumoGarmentA1",1001420,312477,100000,rand(1,100); end;
+	Mag1001421: callfunc "fumoGarmentA1",1001421,312478,100000,rand(1,100); end;
+	Mag1001487: callfunc "fumoGarmentA1",1001487,312692,100000,rand(1,100); end;
+	Mag1001488: callfunc "fumoGarmentA1",1001488,312693,100000,rand(1,100); end;
+	Mag1001489: callfunc "fumoGarmentA1",1001489,312694,100000,rand(1,100); end;
+
+
+
+case 2:
+	mes "[雷斯查德]";
+	mes "你要再看看嗎";
+	close;
+	}
+
+no:
+	mes "[雷斯查德]";
+	mes "我們還有很多其他服務，請多多利用";
+	close;
+OnInit:
+	waitingroom "服裝披肩附魔",0;
+	end;
+}
+
+
+//-------------------------- 附魔(披肩) 1S
+function	script	fumoGarmentA1	{
+	if(countitem(getarg(0))<1){
+	mes "[雷斯查德]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[雷斯查德]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	unequip (.@is);
+	if(getarg(3)<=100){
+	dispbottom "雷斯查德:成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_App,0,getarg(1),@Cave_App2,@Cave_App3,@Cave_App4;
+	specialeffect 154;
+	close;
+	} 
+	dispbottom "雷斯查德:附魔失敗了!對應的魔石消失了!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_App,0,0,@Cave_App2,@Cave_App3,@Cave_App4;
+	specialeffect 155;
+	close;
+}
+
+//-------------------------- 附魔(雙重) 2S
+function	script	fumoGarmentA2	{
+	if(countitem(getarg(0))<1){
+	mes "[雷斯查德]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[雷斯查德]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "雷斯查德:成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_App,0,@Cave_App1,getarg(1),@Cave_App3,@Cave_App4;
+	specialeffect 154;
+	close;
+}
+
+//-------------------------- 特殊附魔(披肩) 3S
+function	script	fumoGarmentA3	{
+	if(countitem(getarg(0))<1){
+	mes "[雷斯查德]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[雷斯查德]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "雷斯查德:成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_App,0,@Cave_App1,@Cave_App2,getarg(1),@Cave_App4;
+	specialeffect 154;
+	close;
+}
+
+
+//-------------------------- 特殊附魔(披肩) 4S
+function	script	fumoGarmentA4	{
+	if(countitem(getarg(0))<1){
+	mes "[雷斯查德]";
+	mes "你身上沒有對應的附魔石!";
+	close;
+	}
+	if(zeny<getarg(2)){
+	mes "[雷斯查德]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	dispbottom "雷斯查德:成功的為這個裝備賦予了能力值!";
+	delitem getarg(0),1;
+	set zeny,zeny-getarg(2);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@Refine_App,0,@Cave_App1,@Cave_App2,@Cave_App3,getarg(1);
+	specialeffect 154;
+	close;
+}
+
+
+
+

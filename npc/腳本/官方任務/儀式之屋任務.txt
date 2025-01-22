@@ -1,0 +1,162 @@
+// Heine
+prt_cas_q,21,83,3	script	¥±¨½¼w¨½§ÆS.®ü¯I#ep16	4_EP16_STOLZ,{
+	if (banquet_main_quest < 2) {
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "How disrespectful of you to enter without permission.";
+		mes "Get out of here now.";
+		close3;
+	}
+	if (banquet_main_quest == 2) {
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Please, calm down.";
+		close;
+	}
+	if (banquet_main_quest < 17) {
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Why don't you enjoy the banquet?";
+		mes "Nyhill went to the Banquet Hall too.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "He didn't make a good first impression, but he is not a bad kid...";
+		mes "He is just...";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Well, I guess I shouldn't talk more.";
+		close3;
+	}
+	if (banquet_main_quest == 17) {
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "You are here at last.";
+		mes "The archduke has been waiting for you.";
+		close3;
+	}
+	if (banquet_main_quest == 18) {
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Nillem said he would visit your room after making all preparations. You may wait in your room.";
+		mes "We are counting on you.";
+		close3;
+	}
+	if (banquet_main_quest < 25)
+		end;
+	if (banquet_main_quest == 25) {
+		switch( checkquest(7706,PLAYTIME) ) {
+		case -1:
+			end;
+		case 0:
+		case 1:
+			cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+			mes "[¥±¨½¼w¨½§Æ]";
+			mes "I have heard the story from my father.";
+			mes "I have received the approval for you to access the Past Memories of the Royal Family freely.";
+			next;
+			mes "[¥±¨½¼w¨½§Æ]";
+			mes "Let's talk about the Past Memories of the Royal Family tomorrow";
+			mes "Since you must be tired going through all the trouble today.";
+			close3;
+		case 2:
+			erasequest 7706;// Nillem Is Not Almighty
+			banquet_main_quest = 26;
+			break;
+		}
+	}
+	switch( checkquest(7706,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Are you going back to that place?";
+		mes "Nillem has told me.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "That it is difficult for him to connect multiple times since he is just a human after all.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "I appreciate your efforts for the royal family.";
+		mes "But don't push yourself too hard.";
+		close3;
+	case 2:
+		erasequest 7706;// Nillem Is Not Almighty
+		break;
+	}
+	switch( checkquest(7705,HUNTING) ) {
+	case -1:
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "You are here, just in time.";
+		mes "Are you going there again today?";
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		next;
+		if (select( "Yes.", "No." ) == 2) {
+			mes "[¥±¨½¼w¨½§Æ]";
+			mes "I see.";
+			mes "...Oh, do you know what Nyhill is doing?";
+			next;
+			mes "[¥±¨½¼w¨½§Æ]";
+			mes ".....Never mind.";
+			mes "He must be staying quietly since he has been sentenced to disciplinary confinement.";
+			next;
+			mes "[¥±¨½¼w¨½§Æ]";
+			mes "Then, good bye.";
+			close3;
+		}
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Sorry about all the trouble.";
+		mes "I hope it works this time.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Please save the piece of Imir Heart from Valkyrie.";
+		setquest 7705;// Hope You Cannot Let Go
+		close3;
+	case 0:
+	case 1:
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "...I know it is almost impossible to change the past.";
+		mes "But there is no other way.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "We need to try everything we can do.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "While you are on a mission down there, we are proceeding with the investigation.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "We are searching for the lead to the intruders.";
+		mes "Let's play our parts well.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Nillem must be waiting for you.";
+		mes "Please do your best as always.";
+		close3;
+	case 2:
+		cutin "ep16_¥±¨½¼w¨½§Æ_stolz_heine",1;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "You are back.";
+		mes "Is it the same this time?";
+		mes "I suppose so.";
+		mes "But, I really don't think all the efforts will go wasted.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "Thank you very much.";
+		mes "Someday, when you need the power of our family,";
+		mes "We will be on your side no matter what.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "That is all we can give you for now as the reward.";
+		mes "I am sorry that we cannot offer you more.";
+		mes "I'll make sure there is no inconvenience to you while living in the palace.";
+		next;
+		mes "[¥±¨½¼w¨½§Æ]";
+		mes "See you tomorrow then.";
+		setquest 7706;// Nillem Is Not Almighty
+		erasequest 7705;// Hope You Cannot Let Go
+		getitem 6919,10;// Honor Token
+		getexp 400000,400000;
+		close3;
+	}
+}

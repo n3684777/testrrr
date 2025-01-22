@@ -1,0 +1,2739 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id              Quest ID.
+#   Title           Quest title.
+#   TimeLimit       Amount of time before the quest expires. (Default: 0)
+#                   Use a number following by "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+#                   Specify with "+" for how long until the quest expires.
+#                   Specify without "+" for the exact time the quest expires using "d" (optional), [0-23]"h" (required), [0-59]"mn" (optional), [0-59]"s" (optional) format.
+#                   Please note the number before "d" only shift the exact timer to the given day(s).
+#   Targets:        Quest objective target. (Default: null)
+#                   The target can be a couple of node Mob/Count or of Id/Race/Size/Element/MinLevel/MaxLevel.
+#                   If Mob is supplied, Count is required and the other fields are ignored.
+#                   If Id is supplied, at least one other field of Race/Size/Element/MinLevel/MaxLevel is required.
+#                   If Id is supplied, Count is required for each new entry.
+#     - Mob         Monster to kill (aegis monster name).
+#       Count       Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id          Unique target index for the quest Id. Requires a positive number.
+#       Race        Monster race target (default All). Valid races are Angel, Brute, DemiHuman, Demon, Dragon, Fish, Formless, Insect, Plant, Undead, All.
+#       Size        Monster size target (default All). Valid sizes are Small, Medium, Large, All.
+#       Element     Monster element target (default All). Valid elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
+#       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel    Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location    Map name where kills are counted. (Default any location)
+#                   On normal maps only kills of permanently spawned monsters increase the counter.
+#                   On instance maps all monster kills increase the counter.
+#       MapName     Displayed map name in quest UI. (Default: empty string)
+#   Drops:          Quest item drop targets. (Default: null)
+#     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item        Item to drop.
+#       Count       Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate        Item drop rate. (10000 = 100%)
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Body:
+  - Id: 14495
+    Title: 儀式之間
+    Targets:
+      - Mob: BIJOU
+        Count: 1
+  - Id: 14496
+    Title: 空中要塞
+    Targets:
+      - Mob: AS_RAGGED_GOLEM
+        Count: 1
+  - Id: 8527
+    Title: 遞延保險：經驗值卡片和變異晶片
+    Targets:
+      - Mob: STEP
+        Count: 50
+  - Id: 16390
+    Title: 遠征之旅-冷卻時間
+    TimeLimit: 4h
+  - Id: 16392
+    Title: 遠征之旅-完成
+  - Id: 16393
+    Title: 遠征之旅-劍士實驗室
+  - Id: 16394
+    Title: 遠征之旅-服侍實驗室
+  - Id: 16395
+    Title: 遠征之旅-盜賊實驗室
+  - Id: 16396
+    Title: 遠征之旅-法師實驗室
+  - Id: 16397
+    Title: 遠征之旅-商人實驗室
+  - Id: 16398
+    Title: 遠征之旅-弓箭手實驗室
+  - Id: 16399
+    Title: 探險之旅
+  - Id: 16400
+    Title: 戰鬥之旅
+    Targets:
+      - Mob: MD_ED_YGNIZEM
+        Count: 1
+  - Id: 12495
+    Title: 危險的挑戰
+    Targets:
+      - Mob: MD_C_AMDARAIS
+        Count: 1
+  - Id: 12496
+    Title: 危險的挑戰
+    Targets:
+      - Mob: MD_C_HEMEL
+        Count: 1
+  - Id: 12493
+    Title: 挑戰的後果
+    TimeLimit: +2h
+  - Id: 16378
+    Title: 擊殺昆蟲型怪
+    Targets:
+      - Mob: MANTIS
+        Count: 30
+  - Id: 16379
+    Title: 擊殺昆蟲型怪-等候
+    TimeLimit: 4h
+  - Id: 16380
+    Title: 擊殺動物型怪
+    Targets:
+      - Mob: SAVAGE
+        Count: 30
+  - Id: 16381
+    Title: 擊殺動物型怪-等候
+    TimeLimit: 4h
+  - Id: 16382
+    Title: 擊殺魚貝類怪
+    Targets:
+      - Mob: OBEAUNE
+        Count: 30
+  - Id: 16383
+    Title: 擊殺魚貝類怪-等候
+    TimeLimit: 4h
+  - Id: 16384
+    Title: 擊殺龍族怪
+    Targets:
+      - Mob: PETIT_
+        Count: 30
+  - Id: 16385
+    Title: 擊殺龍族怪-等候
+    TimeLimit: 4h
+  - Id: 32094
+    Title: 清掃污水處理廠
+    Targets:
+      - Mob: EP17_2_VENENUM3
+        Count: 44
+      - Mob: EP17_2_CRAMP
+        Count: 44
+      - Mob: EP17_2_WATERFALL
+        Count: 44
+  - Id: 32095
+    Title: 清掃污水處理廠-等候
+    TimeLimit: 4h
+  - Id: 32096
+    Title: 第一魔力發電廠清掃
+    Targets:
+      - Mob: EP17_2_BELLARE3
+        Count: 44
+      - Mob: EP17_2_DOLOR3
+        Count: 44
+      - Mob: EP17_2_PLASMA_Y
+        Count: 44
+  - Id: 32097
+    Title: 第一魔力發電廠清掃-等候
+    TimeLimit: 4h
+  - Id: 32098
+    Title: 陪火龍果玩
+    Targets:
+      - Mob: EP17_2_PITAYA_R
+        Count: 20
+  - Id: 32099
+    Title: 陪火龍果玩
+    Targets:
+      - Mob: EP17_2_PITAYA_Y
+        Count: 20
+  - Id: 32100
+    Title: 陪火龍果玩
+    Targets:
+      - Mob: EP17_2_PITAYA_B
+        Count: 20
+  - Id: 32101
+    Title: 陪火龍果玩
+    Targets:
+      - Mob: EP17_2_PITAYA_V
+        Count: 20
+  - Id: 32102
+    Title: 陪火龍果玩
+    Targets:
+      - Mob: EP17_2_PITAYA_G
+        Count: 20
+  - Id: 32103
+    Title: 陪火龍果玩-等候
+    TimeLimit: 4h
+  - Id: 32104
+    Title: 桑拿打掃中
+    Targets:
+      - Mob: EP17_2_MARC
+        Count: 15
+      - Mob: EP17_2_PIRANHA
+        Count: 15
+  - Id: 32105
+    Title: 桑拿打掃中-等候
+    TimeLimit: 4h
+  - Id: 32106
+    Title: 擊殺終極書蟲
+    Targets:
+      - Mob: EP17_2_BOOKWORM
+        Count: 20
+  - Id: 32107
+    Title: 擊殺終極書蟲-等候
+    TimeLimit: 4h
+  - Id: 32108
+    Title: 終極書號
+    Targets:
+      - Mob: EP17_2_ROAMING_SPLBOOK
+        Count: 20
+  - Id: 32109
+    Title: 終極書號-等候
+    TimeLimit: 4h
+  - Id: 32110
+    Title: 清理倉庫
+    Targets:
+      - Mob: EP17_2_HEART_HUNTE_HR
+        Count: 40
+      - Mob: EP17_2_BETA_GUARDS_NG
+        Count: 40
+  - Id: 32111
+    Title: 清理倉庫-等候
+    TimeLimit: 4h
+  - Id: 18024
+    Title: 收集備用零件
+  - Id: 18025
+    Title: 收集備用零件-等候
+    TimeLimit: 4h
+  - Id: 11638
+    Title: 廢鐵回收
+  - Id: 11639
+    Title: 終極廢鐵回收-等候
+    TimeLimit: 4h
+  - Id: 17376
+    Title: 熱池與冷池之間
+    Targets:
+      - Mob: EP17_2_BETA_CLEANER_A
+        Count: 10
+      - Mob: EP17_2_BETA_CLEANER_B
+        Count: 10
+  - Id: 17377
+    Title: 熱池與冷池之間-等候
+    TimeLimit: 4h
+  - Id: 3390
+    Title: 虛幻派灑下的洋芋晶片
+  - Id: 3391
+    Title: 虛幻派灑下的洋芋晶片-等候
+    TimeLimit: 4h
+  - Id: 16431
+    Title: 擊殺席瓦帕皮利亞
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
+  - Id: 16432
+    Title: 擊殺席瓦帕皮利亞-等候
+    TimeLimit: 4h
+  - Id: 16433
+    Title: 擊殺格蘭帕皮利亞
+    Targets:
+      - Mob: MD_GRAN_PAPILIA
+        Count: 1
+  - Id: 16434
+    Title: 擊殺格蘭帕皮利亞-等候
+    TimeLimit: 4h
+  - Id: 16435
+    Title: 探查園丁
+  - Id: 16436
+    Title: 探查園丁-等候
+    TimeLimit: 4h
+  - Id: 16437
+    Title: 水上花園一般
+  - Id: 16438
+    Title: 水上花園困難
+  - Id: 16439
+    Title: 水上花園-等候
+    TimeLimit: 4h
+  - Id: 12499
+    Title: 擊殺紅椒-卡帕
+    Targets:
+      - Mob: MD_REDPEPPER
+        Count: 1
+  - Id: 12500
+    Title: 擊殺紅椒-蘭達
+    Targets:
+      - Mob: MD_REDPEPPER_H
+        Count: 1
+  - Id: 32155
+    Title: 被遺忘的飼育場
+    Targets:
+      - Mob: MD_PITAYA_BOSS
+        Count: 1
+  - Id: 18022
+    Title: 嗨!斯威蒂
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 18023
+    Title: 嗨!斯威蒂-等候
+    TimeLimit: 4h
+  - Id: 18024
+    Title: 收集核心
+  - Id: 18025
+    Title: 收集核心-等候
+    TimeLimit: 4h
+  - Id: 17416
+    Title: 9樓的怪物
+    Targets:
+      - Mob: CROW_DUKE
+        Count: 20
+      - Mob: CROW_BARON
+        Count: 20
+  - Id: 17422
+    Title: 9樓的怪物-冷卻時間
+    TimeLimit: 4h
+  - Id: 17417
+    Title: 10樓的怪物
+    Targets:
+      - Mob: VOID_MIMIC
+        Count: 15
+      - Mob: BOOK_OF_DEATH
+        Count: 15
+      - Mob: ELDEST
+        Count: 15
+  - Id: 17423
+    Title: 10樓的怪物-冷卻時間
+    TimeLimit: 4h
+  - Id: 17418
+    Title: 11樓的怪物
+    Targets:
+      - Mob: EMPATHIZER
+        Count: 15
+      - Mob: HAPPY_GIVER
+        Count: 15
+  - Id: 17424
+    Title: 11樓的怪物-冷卻時間
+    TimeLimit: 4h
+  - Id: 17420
+    Title: 12樓的怪物
+    Targets:
+      - Mob: THA_ANGER
+        Count: 15
+      - Mob: THA_HORROR
+        Count: 15
+  - Id: 17425
+    Title: 12樓的怪物-冷卻時間
+    TimeLimit: 4h
+  - Id: 7820
+    Title: 蜜糖土波利殺無赦
+    Targets:
+      - Mob: E_SWEETS_DROPS
+        Count: 10
+  - Id: 7841
+    Title: 蜜糖土波利殺無赦-冷卻時間
+    TimeLimit: 4h
+  - Id: 7821
+    Title: 還我被偷走的可可豆
+  - Id: 7842
+    Title: 還我被偷走的可可豆-冷卻時間
+    TimeLimit: 4h
+  - Id: 7671
+    Title: 幫我找找我的羊
+  - Id: 7672
+    Title: 羊在那的證明
+    Targets:
+      - Mob: LITTLE_GOLDPORING
+        Count: 30
+  - Id: 11393
+    Title: 製作2015新年帽
+  - Id: 30031
+    Title: 調查魔神之塔
+    Targets:
+      - Mob: MM_EVIL_SHADOW1
+        Count: 10
+      - Mob: MM_EVIL_SHADOW2
+        Count: 10
+      - Mob: MM_EVIL_SHADOW3
+        Count: 10
+  - Id: 32007
+    Title: 龐哈得博士的委託
+    Targets:
+      - Mob: MM_M_GIGAN1
+        Count: 1
+  - Id: 50501
+    Title: 消滅安東尼奧
+    Targets:
+      - Mob: XM_ANTONIO
+        Count: 1
+  - Id: 50502
+    Title: 消滅席琳基米
+    Targets:
+      - Mob: XM_CELINE_KIMI
+        Count: 1
+  - Id: 50503
+    Title: 恐怖玩具工廠
+  - Id: 30011
+    Title: 萬聖節活動任務一
+    Targets:
+      - Mob: JAKK
+        Count: 100
+  - Id: 30012
+    Title: 萬聖節活動任務二
+    Targets:
+      - Mob: LUDE
+        Count: 100
+  - Id: 30013
+    Title: 萬聖節活動任務三
+    Targets:
+      - Mob: QUVE
+        Count: 100
+  - Id: 30014
+    Title: 萬聖節活動任務四
+    Targets:
+      - Mob: WHISPER
+        Count: 100
+  - Id: 31001
+    Title: 狩獵活動任務(一)
+    TimeLimit: +2h
+    Targets:
+      - Mob: SIROMA
+        Count: 150
+      - Mob: SNOWIER
+        Count: 150
+      - Mob: GAZETI
+        Count: 100
+  - Id: 31002
+    Title: 狩獵活動任務(二)
+    TimeLimit: +2h
+    Targets:
+      - Mob: FERUS_
+        Count: 150
+      - Mob: ACIDUS_
+        Count: 150
+      - Mob: FERUS
+        Count: 100
+  - Id: 31003
+    Title: 狩獵活動任務(三)
+    TimeLimit: +2h
+    Targets:
+      - Mob: VANBERK
+        Count: 150
+      - Mob: ISILLA
+        Count: 150
+      - Mob: ECHIO
+        Count: 100
+  - Id: 31004
+    Title: 狩獵活動任務(四)
+    TimeLimit: +2h
+    Targets:
+      - Mob: ASSULTER
+        Count: 150
+      - Mob: FREEZER
+        Count: 150
+      - Mob: PERMETER
+        Count: 100
+  - Id: 31005
+    Title: 狩獵活動任務(五)
+    TimeLimit: +2h
+    Targets:
+      - Mob: ALARM
+        Count: 150
+      - Mob: CLOCK
+        Count: 150
+      - Mob: PUNK
+        Count: 100
+  - Id: 31006
+    Title: 狩獵活動任務(六)
+    TimeLimit: +2h
+    Targets:
+      - Mob: ZOMBIE_SLAUGHTER
+        Count: 150
+      - Mob: RAGGED_ZOMBIE
+        Count: 150
+      - Mob: BANSHEE
+        Count: 120
+  - Id: 31007
+    Title: 狩獵活動任務(七)
+    TimeLimit: +2h
+    Targets:
+      - Mob: COMODO
+        Count: 160
+      - Mob: BANASPATY
+        Count: 160
+      - Mob: BUTOIJO
+        Count: 120
+  - Id: 31008
+    Title: 狩獵活動任務(八)
+    TimeLimit: +2h
+    Targets:
+      - Mob: BUNGISNGIS
+        Count: 170
+      - Mob: ENGKANTO
+        Count: 130
+      - Mob: JEJELING
+        Count: 100
+  - Id: 31009
+    Title: 狩獵活動任務(九)
+    TimeLimit: +2h
+    Targets:
+      - Mob: HORN_SCARABA
+        Count: 140
+      - Mob: HORN_SCARABA2
+        Count: 140
+      - Mob: ANTLER_SCARABA
+        Count: 130
+  - Id: 31010
+    Title: 狩獵活動任務(十)
+    TimeLimit: +2h
+    Targets:
+      - Mob: DIMIK_1
+        Count: 150
+      - Mob: DIMIK_2
+        Count: 150
+      - Mob: DIMIK_3
+        Count: 150
+  - Id: 32001
+    Title: 海底神殿調查任務
+    Targets:
+      - Mob: MERMAN
+        Count: 50
+      - Mob: STROUF
+        Count: 50
+      - Mob: DEVIACE
+        Count: 1
+  - Id: 32002
+    Title: 訓鷹獵人任務(一)
+    Targets:
+      - Mob: GREEN_IGUANA
+        Count: 150
+  - Id: 32003
+    Title: 訓鷹獵人任務(二)
+    Targets:
+      - Mob: GRYPHON
+        Count: 3
+  - Id: 32004
+    Title: 訓鷹獵人任務(三)
+    Targets:
+      - Mob: MUTANT_DRAGON
+        Count: 10
+  - Id: 32008
+    Title: 波利競技場出入限制
+    TimeLimit: +2h
+  - Id: 32009
+    Title: 波兔村守衛戰
+  - Id: 32010
+    Title: 成功防守波兔村的證明
+  - Id: 30033
+    Title: 啟動控制裝置蒐集
+  - Id: 30034
+    Title: 啟動控制裝置蒐集冷卻時間
+    TimeLimit: +2h
+  - Id: 30035
+    Title: 凝集的能量蒐集
+  - Id: 30036
+    Title: 凝集的能量蒐集冷卻時間
+    TimeLimit: +2h
+  - Id: 30037
+    Title: 提交每日成果報告
+  - Id: 30038
+    Title: 提交每日成果報告冷卻時間
+    TimeLimit: +2h
+  - Id: 30039
+    Title: 威爾斯隧道怪物討伐
+    Targets:
+      - Mob: RECON_ROBOT
+        Count: 10
+  - Id: 30040
+    Title: 威爾斯隧道怪物討伐冷卻時間
+    TimeLimit: +2h
+  - Id: 30041
+    Title: 威爾斯中央廣場怪物討伐
+    Targets:
+      - Mob: REPAIR_ROBOT
+        Count: 15
+  - Id: 30042
+    Title: 威爾斯中央廣場怪物討伐冷卻時間
+    TimeLimit: +2h
+  - Id: 30043
+    Title: 研究大樓的錄音帶蒐集
+  - Id: 30044
+    Title: 研究大樓的錄音帶蒐集冷卻時間
+    TimeLimit: +2h
+  - Id: 30045
+    Title: 實驗大樓的錄音帶蒐集
+  - Id: 30046
+    Title: 實驗大樓的錄音帶蒐集冷卻時間
+    TimeLimit: +2h
+  - Id: 30047
+    Title: 使命!綠惡靈之霧討伐
+    Targets:
+      - Mob: CENERE_G
+        Count: 30
+  - Id: 30048
+    Title: 使命!綠惡靈之霧討伐冷卻時間
+    TimeLimit: +2h
+  - Id: 30049
+    Title: 使命!修復機器人Ⅱ決鬥
+    Targets:
+      - Mob: REPAIR_ROBOT_T
+        Count: 30
+  - Id: 30050
+    Title: 使命!修復機器人Ⅱ決鬥冷卻時間
+    TimeLimit: +2h
+  - Id: 30051
+    Title: 使命!鐵甲蟲收集
+  - Id: 30052
+    Title: 使命!鐵甲蟲收集冷卻時間
+    TimeLimit: +2h
+  - Id: 30071
+    Title: 亡者之丘討伐任務
+    Targets:
+      - Mob: GLD_DARK_SHADOW
+        Count: 600
+      - Mob: GLD_DARK_FRAME
+        Count: 200
+      - Mob: GLD_DARK_PRIEST
+        Count: 200
+  - Id: 30072
+    Title: 戰士之路討伐任務
+    Targets:
+      - Mob: GLD_KOBOLD_1
+        Count: 300
+      - Mob: GLD_KOBOLD_2
+        Count: 300
+      - Mob: GLD_KOBOLD_3
+        Count: 300
+  - Id: 30073
+    Title: 英雄之淚討伐任務
+    Targets:
+      - Mob: ANGRA_MANTIS
+        Count: 500
+      - Mob: KILLER_MANTIS
+        Count: 500
+  - Id: 30074
+    Title: 遠古之風討伐任務
+    Targets:
+      - Mob: SKELETON_GENERAL
+        Count: 500
+      - Mob: AM_MUT
+        Count: 250
+      - Mob: GAJOMART
+        Count: 250
+  - Id: 30075
+    Title: 四怨將討伐任務
+    Targets:
+      - Mob: AB_GIOIA
+        Count: 1
+      - Mob: AB_DAEHYON
+        Count: 1
+      - Mob: AB_KADES
+        Count: 1
+  - Id: 32118
+    Title: 討伐無名的劍士
+    Targets:
+      - Mob: MD_ED_B_YGNIZEM
+        Count: 3
+  - Id: 32119
+    Title: 討伐無名的劍士-冷卻時間
+    TimeLimit: 4h
+  - Id: 32120
+    Title: 討伐無名的服侍
+    Targets:
+      - Mob: MD_ED_EREND
+        Count: 3
+  - Id: 32121
+    Title: 討伐無名的服侍-冷卻時間
+    TimeLimit: 4h
+  - Id: 32122
+    Title: 討伐無名的商人
+    Targets:
+      - Mob: MD_ED_ARMAIA
+        Count: 3
+  - Id: 32123
+    Title: 討伐無名的商人-冷卻時間
+    TimeLimit: 4h
+  - Id: 17034
+    Title: 掃蕩生命體
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 20
+  - Id: 17035
+    Title: 掃蕩生命體-冷卻時間
+    TimeLimit: 4h
+  - Id: 7867
+    Title: 掃蕩奧斯殘黨
+    Targets:
+      - Mob: EP17_1_BELLARE1
+        Count: 15
+      - Mob: EP17_1_SANARE1
+        Count: 15
+  - Id: 7868
+    Title: 掃蕩奧斯殘黨-冷卻時間
+    TimeLimit: 4h
+  - Id: 5862
+    Title: 早晨子的故事
+  - Id: 5863
+    Title: 早晨子的故事-冷卻時間
+    TimeLimit: 4h
+  - Id: 32112
+    Title: 討伐貝拉雷
+    Targets:
+      - Mob: EP17_1_BELLARE1
+        Count: 20
+      - Mob: EP17_1_BELLARE2
+        Count: 10
+  - Id: 32113
+    Title: 討伐貝拉雷-冷卻時間
+    TimeLimit: 4h
+  - Id: 32114
+    Title: 討伐薩納雷
+    Targets:
+      - Mob: EP17_1_SANARE1
+        Count: 20
+      - Mob: EP17_1_SANARE2
+        Count: 10
+  - Id: 32115
+    Title: 討伐薩納雷-冷卻時間
+    TimeLimit: 4h
+  - Id: 32116
+    Title: 討伐朵洛爾
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 20
+      - Mob: EP17_1_DOLOR2
+        Count: 10
+  - Id: 32117
+    Title: 討伐朵洛爾-冷卻時間
+    TimeLimit: 4h
+  - Id: 30076
+    Title: 反叛軍的軍事基地
+    Targets:
+      - Mob: EP16_2_H_HUNTER_EV
+        Count: 1
+  - Id: 30077
+    Title: 反叛軍的軍事基地-冷卻
+  - Id: 30078
+    Title: 維爾納中央研究所
+    Targets:
+      - Mob: EP16_2_MM_CUTIE
+        Count: 1
+  - Id: 30079
+    Title: 維爾納中央研究所-冷卻
+  - Id: 30053
+    Title: 不死的軍團兵清除
+    Targets:
+      - Mob: IMMOTAL_CORPS
+        Count: 30
+  - Id: 30054
+    Title: 不死的軍團兵清除冷卻時間
+    TimeLimit: 4h
+  - Id: 30055
+    Title: 蘇生的衛兵清除
+    Targets:
+      - Mob: ZOMBIE_GUARD
+        Count: 30
+  - Id: 30056
+    Title: 蘇生的衛兵清除冷卻時間
+    TimeLimit: 4h
+  - Id: 30057
+    Title: 幫忙救助居民
+  - Id: 30058
+    Title: 幫忙救助居民冷卻時間
+    TimeLimit: 4h
+  - Id: 30059
+    Title: 傳遞警備隊長的命令
+  - Id: 30060
+    Title: 傳遞警備隊長的命令冷卻時間
+    TimeLimit: 4h
+  - Id: 32081
+    Title: 雙11狩獵活動
+    Targets:
+      - Mob: SUCCUBUS
+        Count: 10
+      - Mob: INCUBUS
+        Count: 10
+  - Id: 32082
+    Title: 狩獵獨角飛馬
+    Targets:
+      - Mob: CORNUS
+        Count: 30
+  - Id: 32083
+    Title: 狩獵獨角飛馬-冷卻時間
+    TimeLimit: 4h
+  - Id: 32084
+    Title: 狩獵那迦
+    Targets:
+      - Mob: NAGA
+        Count: 30
+  - Id: 32085
+    Title: 狩獵那迦-冷卻時間
+    TimeLimit: 4h
+  - Id: 32086
+    Title: 狩獵魯修拉黃蜂
+    Targets:
+      - Mob: LUCIOLA_VESPA
+        Count: 30
+  - Id: 32087
+    Title: 狩獵魯修拉黃蜂-冷卻時間
+    TimeLimit: 4h
+  - Id: 32088
+    Title: 狩獵黑暗捕蟲堇妖
+    Targets:
+      - Mob: PINGUICULA_D
+        Count: 30
+  - Id: 32089
+    Title: 狩獵黑暗捕蟲堇妖-冷卻時間
+    TimeLimit: 4h
+  - Id: 32090
+    Title: 狩獵捕蟲堇妖
+    Targets:
+      - Mob: PINGUICULA
+        Count: 30
+  - Id: 32091
+    Title: 狩獵捕蟲堇妖-冷卻時間
+    TimeLimit: 4h
+  - Id: 32092
+    Title: 狩獵鈽鐳巨人
+    Targets:
+      - Mob: BRADIUM_GOLEM
+        Count: 20
+  - Id: 32093
+    Title: 鈽鐳巨人-冷卻時間
+    TimeLimit: 4h
+  - Id: 32129
+    Title: 闇●十字斬首者
+    Targets:
+      - Mob: V_EREMES
+        Count: 200
+  - Id: 32130
+    Title: 闇●十字斬首者-冷卻時間
+    TimeLimit: 4h
+  - Id: 32131
+    Title: 闇●大主教
+    Targets:
+      - Mob: V_MAGALETA
+        Count: 200
+  - Id: 32132
+    Title: 闇●大主教-冷卻時間
+    TimeLimit: 4h
+  - Id: 32133
+    Title: 闇●咒術士
+    Targets:
+      - Mob: V_KATRINN
+        Count: 200
+  - Id: 32134
+    Title: 闇●咒術士-冷卻時間
+    TimeLimit: 4h
+  - Id: 32135
+    Title: 闇●遊俠
+    Targets:
+      - Mob: V_SHECIL
+        Count: 200
+  - Id: 32136
+    Title: 闇●遊俠-冷卻時間
+    TimeLimit: 4h
+  - Id: 32137
+    Title: 闇●機械工匠
+    Targets:
+      - Mob: V_HARWORD
+        Count: 200
+  - Id: 32138
+    Title: 闇●機械工匠-冷卻時間
+    TimeLimit: 4h
+  - Id: 32139
+    Title: 闇●盧恩騎士
+    Targets:
+      - Mob: V_SEYREN
+        Count: 200
+  - Id: 32140
+    Title: 闇●盧恩騎士-冷卻時間
+    TimeLimit: 4h
+  - Id: 32141
+    Title: 闇●皇家禁衛隊
+    Targets:
+      - Mob: V_RANDEL
+        Count: 200
+  - Id: 32142
+    Title: 闇●皇家禁衛隊-冷卻時間
+    TimeLimit: 4h
+  - Id: 32143
+    Title: 闇●基因學者
+    Targets:
+      - Mob: V_FLAMEL
+        Count: 200
+  - Id: 32144
+    Title: 闇●基因學者-冷卻時間
+    TimeLimit: 4h
+  - Id: 32145
+    Title: 闇●妖術師
+    Targets:
+      - Mob: V_CELIA
+        Count: 200
+  - Id: 32146
+    Title: 闇●妖術師-冷卻時間
+    TimeLimit: 4h
+  - Id: 32147
+    Title: 闇●修羅
+    Targets:
+      - Mob: V_CHEN
+        Count: 200
+  - Id: 32148
+    Title: 闇●修羅-冷卻時間
+    TimeLimit: 4h
+  - Id: 32149
+    Title: 闇●魅影追蹤者
+    Targets:
+      - Mob: V_GERTIE
+        Count: 200
+  - Id: 32150
+    Title: 闇●魅影追蹤者-冷卻時間
+    TimeLimit: 4h
+  - Id: 32151
+    Title: 闇●宮廷樂師
+    Targets:
+      - Mob: V_ALPHOCCIO
+        Count: 200
+  - Id: 32152
+    Title: 闇●宮廷樂師-冷卻時間
+    TimeLimit: 4h
+  - Id: 32153
+    Title: 闇●浪姬舞者
+    Targets:
+      - Mob: V_TRENTINI
+        Count: 200
+  - Id: 32154
+    Title: 闇●浪姬舞者-冷卻時間
+    TimeLimit: 4h
+  - Id: 294001
+    Title: 其實我一直都在
+    Targets:
+      - Mob: PORING
+        Count: 50
+  - Id: 294002
+    Title: 諸神競技場
+    Targets:
+      - Mob: RAYDRIC
+        Count: 50
+  - Id: 294003
+    Title: 口袋情人夢
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 50
+  - Id: 294004
+    Title: 歡迎來到夢幻之島
+    Targets:
+      - Mob: MEDUSA
+        Count: 50
+  - Id: 294005
+    Title: 前往華麗金屬
+    Targets:
+      - Mob: BOW_GUARDIAN
+        Count: 30
+  - Id: 294006
+    Title: 仰望夢想
+    Targets:
+      - Mob: OBSERVATION
+        Count: 30
+  - Id: 294007
+    Title: 櫻之花嫁
+    Targets:
+      - Mob: BLOOD_BUTTERFLY
+        Count: 30
+  - Id: 294008
+    Title: 黑色派對
+    Targets:
+      - Mob: FACEWORM_DARK
+        Count: 4
+  - Id: 294009
+    Title: 不要露出悲傷的表情，笑吧
+    Targets:
+      - Mob: MAGALETA
+        Count: 30
+  - Id: 294010
+    Title: 新時代的來臨
+    Targets:
+      - Mob: KNIGHT_OF_ABYSS
+        Count: 30
+  - Id: 294011
+    Title: 信仰之都
+    Targets:
+      - Mob: ECHIO
+        Count: 30
+  - Id: 294012
+    Title: 榮耀的勇士
+    Targets:
+      - Mob: CHEN
+        Count: 30
+  - Id: 294013
+    Title: 虛幻的奧克尼爾
+    Targets:
+      - Mob: CORNUS
+        Count: 30
+  - Id: 294014
+    Title: 聖轉試煉
+    Targets:
+      - Mob: ELVIRA
+        Count: 1
+  - Id: 294015
+    Title: 愛吃章魚的貓
+    Targets:
+      - Mob: MD_GIANT_OCTOPUS
+        Count: 1
+  - Id: 294016
+    Title: 從不支配人類的巨人們
+    Targets:
+      - Mob: BRADIUM_GOLEM
+        Count: 1
+  - Id: 294017
+    Title: 要是能重來
+    Targets:
+      - Mob: LOST_DRAGON
+        Count: 1
+  - Id: 294018
+    Title: 說出你的願望
+    Targets:
+      - Mob: CENERE
+        Count: 30
+  - Id: 294019
+    Title: 魔王再臨
+    Targets:
+      - Mob: EP14_MORS_BOSSB
+        Count: 1
+  - Id: 294020
+    Title: 穿越時空的鞋跟
+    Targets:
+      - Mob: CHARLESTON3
+        Count: 1
+  - Id: 294021
+    Title: 英雄之宴
+    Targets:
+      - Mob: BIJOU
+        Count: 1
+  - Id: 294022
+    Title: 尋回特拉葛洛麗雅
+    Targets:
+      - Mob: EP16_2_MM_CUTIE
+        Count: 1
+  - Id: 294023
+    Title: 顯現之虛幻
+    Targets:
+      - Mob: MD_MIGUEL
+        Count: 1
+  - Id: 294024
+    Title: 仙境傳說生日快樂
+  - Id: 294025
+    Title: 讓我們一起繼續守候
+
+  - Id: 32158
+    Title: 基本區域
+    Targets:
+      - Mob: FABRE
+        Count: 10
+  - Id: 32159
+    Title: 斐揚區域
+    TimeLimit: +5mn
+    Targets:
+      - Mob: SPORE
+        Count: 10
+      - Mob: ROCKER
+        Count: 10
+      - Mob: WORM_TAIL
+        Count: 10
+  - Id: 32160
+    Title: 普隆德拉下水道
+    TimeLimit: +5mn
+    Targets:
+      - Mob: THIEF_BUG_
+        Count: 30
+      - Mob: THIEF_BUG__
+        Count: 30
+      - Mob: POISON_SPORE
+        Count: 20
+  - Id: 32161
+    Title: 廢礦洞穴
+    TimeLimit: +5mn
+    Targets:
+      - Mob: MARTIN
+        Count: 30
+      - Mob: SKEL_WORKER
+        Count: 30
+      - Mob: GIEARTH
+        Count: 10
+  - Id: 32162
+    Title: 伊斯魯德海底洞穴
+    TimeLimit: +5mn
+    Targets:
+      - Mob: SWORD_FISH
+        Count: 30
+      - Mob: MERMAN
+        Count: 30
+      - Mob: STROUF
+        Count: 30
+  - Id: 32163
+    Title: 斐揚洞穴
+    TimeLimit: +5mn
+    Targets:
+      - Mob: MUNAK
+        Count: 30
+      - Mob: BON_GUN
+        Count: 30
+      - Mob: SOHEE
+        Count: 40
+  - Id: 32164
+    Title: 艾爾帕蘭鐘塔
+    TimeLimit: +5mn
+    Targets:
+      - Mob: CLOCK
+        Count: 20
+      - Mob: PUNK
+        Count: 20
+      - Mob: RIDEWORD
+        Count: 20
+  - Id: 32165
+    Title: 烏龜島洞穴
+    TimeLimit: +5mn
+    Targets:
+      - Mob: PERMETER
+        Count: 20
+      - Mob: FREEZER
+        Count: 30
+      - Mob: HEATER
+        Count: 30
+  - Id: 32166
+    Title: 優沛擂斯廢墟
+    TimeLimit: +5mn
+    Targets:
+      - Mob: VENATU_1
+        Count: 30
+      - Mob: VENATU_2
+        Count: 30
+      - Mob: VENATU_3
+        Count: 30
+  - Id: 32167
+    Title: 馬來港地區
+    TimeLimit: +5mn
+    Targets:
+      - Mob: BUNGISNGIS
+        Count: 30
+      - Mob: ENGKANTO
+        Count: 30
+      - Mob: WAKWAK
+        Count: 30
+  - Id: 32168
+    Title: 幻影冰洞穴
+    TimeLimit: +10mn
+    Targets:
+      - Mob: ILL_GAZETI
+        Count: 30
+      - Mob: ILL_SNOWIER
+        Count: 30
+      - Mob: ILL_GAZETI
+        Count: 30
+  - Id: 32169
+    Title: 夢魘的克雷斯特漢姆古城2F
+    TimeLimit: +10mn
+    Targets:
+      - Mob: NG_WANDER_MAN
+        Count: 50
+      - Mob: NG_RIDEWORD
+        Count: 20
+  - Id: 32170
+    Title: 艾爾帕蘭夢魘鐘塔
+    TimeLimit: +10mn
+    Targets:
+      - Mob: BIG_BELL
+        Count: 60
+      - Mob: OWL_VISCOUNT
+        Count: 1
+      - Mob: OWL_MARQUEES
+        Count: 1
+  - Id: 32171
+    Title: 克雷斯特漢姆 深淵地 1樓
+    TimeLimit: +10mn
+    Targets:
+      - Mob: ICE_GHOST_H
+        Count: 20
+      - Mob: FLAME_GHOST_H
+        Count: 20
+      - Mob: RAYDRIC_H
+        Count: 20
+  - Id: 32172
+    Title: 艾音貝赫礦山4樓
+    TimeLimit: +10mn
+    Targets:
+      - Mob: PORCELLIO_W
+        Count: 20
+      - Mob: ABYSSMAN
+        Count: 20
+      - Mob: JEWELIANT
+        Count: 10
+  - Id: 32173
+    Title: 新手任務-等候
+    TimeLimit: +1mn
+  - Id: 293211
+    Title: 救贖受詛咒的烈士
+    Targets:
+      - Mob: ZOMBIE_GUARD
+        Count: 30
+  - Id: 293212
+    Title: 救贖受詛咒的烈士-等候
+    TimeLimit: +20mn
+  - Id: 293213
+    Title: 排除舊時代的偏執者
+    Targets:
+      - Mob: HYEGUN
+        Count: 30
+  - Id: 293214
+    Title: 排除舊時代的偏執者-等候
+    TimeLimit: +20mn
+  - Id: 293215
+    Title: 消滅潛藏的影武者
+    Targets:
+      - Mob: FRUS
+        Count: 30
+  - Id: 293216
+    Title: 消滅潛藏的影武者-等候
+    TimeLimit: +20mn
+  - Id: 293217
+    Title: 擊倒效忠舊時代的隱者
+    Targets:
+      - Mob: ILL_ASSULTER
+        Count: 30
+  - Id: 293218
+    Title: 擊倒效忠舊時代的隱者-等候
+    TimeLimit: +20mn
+  - Id: 293219
+    Title: 破壞無感情的偵查者
+    Targets:
+      - Mob: EXPLORATION_ROVER
+        Count: 30
+  - Id: 293220
+    Title: 破壞無感情的偵查者-等候
+    TimeLimit: +20mn
+  - Id: 293221
+    Title: 再次安息復甦的死者
+    Targets:
+      - Mob: N_ANCIENT_MUMMY
+        Count: 30
+  - Id: 293222
+    Title: 再次安息復甦的死者-等候
+    TimeLimit: +20mn
+  - Id: 293223
+    Title: 解放資本下的壓迫者
+    Targets:
+      - Mob: ILL_PITMAN
+        Count: 30
+  - Id: 293224
+    Title: 解放資本下的壓迫者-等候
+    TimeLimit: +20mn
+  - Id: 293225
+    Title: 斬斷未了的怨念
+    Targets:
+      - Mob: DULLAHAN
+        Count: 30
+  - Id: 293226
+    Title: 斬斷未了的怨念-等候
+    TimeLimit: +20mn
+  - Id: 293227
+    Title: 掃蕩黑夜裡的惡夢
+    Targets:
+      - Mob: BANSHEE
+        Count: 30
+  - Id: 293228
+    Title: 掃蕩黑夜裡的惡夢-等候
+    TimeLimit: +20mn
+  - Id: 293229
+    Title: 阻止妄想真理的偏執者
+    Targets:
+      - Mob: RAWREL
+        Count: 30
+  - Id: 293230
+    Title: 阻止妄想真理的偏執者-等候
+    TimeLimit: +20mn
+  - Id: 293231
+    Title: 等了一輩子的誓約
+    Targets:
+      - Mob: SEYREN
+        Count: 30
+  - Id: 293232
+    Title: 等了一輩子的誓約-等候
+    TimeLimit: +20mn
+
+  - Id: 16465
+    Title: 斬斷因緣
+    Targets:
+      - Mob: MD_SAKRAY
+        Count: 1
+  - Id: 16466
+    Title: 斬斷因緣-等候
+    TimeLimit: +1mn
+  - Id: 16467
+    Title: 淚流滿面
+    Targets:
+      - Mob: MD_TIARA
+        Count: 1
+  - Id: 16468
+    Title: 淚流滿面-等候
+    TimeLimit: +1mn
+  - Id: 16469
+    Title: 破碎的記憶
+  - Id: 16470
+    Title: 破碎的記憶-等候
+    TimeLimit: +1mn
+  - Id: 16471
+    Title: 破碎的過去
+  - Id: 16472
+    Title: 破碎的過去-等候
+    TimeLimit: +1mn
+  - Id: 32011
+    Title: 魔物終結塔討伐任務
+    Targets:
+      - Mob: NAGHT_SIEGER
+        Count: 1
+  - Id: 32012
+    Title: 章魚洞穴討伐任務
+    Targets:
+      - Mob: MD_GIANT_OCTOPUS
+        Count: 1
+  - Id: 32013
+    Title: 封印的神殿討伐任務
+    Targets:
+      - Mob: BAPHOMET_I
+        Count: 1
+  - Id: 32014
+    Title: 週五副本討伐任務
+    Targets:
+      - Mob: MD_LICH_LORD_160
+        Count: 1
+  - Id: 32015
+    Title: 獸人的記憶討伐任務
+    Targets:
+      - Mob: ORK_HERO
+        Count: 1
+  - Id: 32016
+    Title: 遠征之旅討伐任務
+    Targets:
+      - Mob: MD_ED_YGNIZEM
+        Count: 1
+  - Id: 32017
+    Title: 尼德霍格的巢穴討伐任務
+    Targets:
+      - Mob: S_NYDHOG
+        Count: 1
+  - Id: 32018
+    Title: 邪心獵人軍事基地討伐任務
+    Targets:
+      - Mob: EP16_2_H_HUNTER_EV
+        Count: 1
+  - Id: 32019
+    Title: 食月暴龍湖討伐任務
+    Targets:
+      - Mob: BAKONAWA_1
+        Count: 1
+  - Id: 32020
+    Title: 拜歐斯島討伐任務
+    Targets:
+      - Mob: GRIM_REAPER_ANKOU
+        Count: 1
+  - Id: 32021
+    Title: 噩夢死神討伐任務
+    Targets:
+      - Mob: BANGUNGOT_1
+        Count: 1
+  - Id: 32022
+    Title: 克雷斯特漢姆挑戰模式討伐任務
+    Targets:
+      - Mob: MD_C_AMDARAIS
+        Count: 1
+  - Id: 32023
+    Title: 霧林迷宮討伐任務
+    Targets:
+      - Mob: LOST_DRAGON
+        Count: 1
+  - Id: 32024
+    Title: 死亡之塔討伐任務
+    Targets:
+      - Mob: MD_THANATOS
+        Count: 1
+  - Id: 32079
+    Title: 死亡之塔討伐任務
+    Targets:
+      - Mob: MD_BROKEN_THANATOS
+        Count: 1
+  - Id: 32025
+    Title: 寶箱巨鱷討伐任務
+    Targets:
+      - Mob: BUWAYA
+        Count: 1
+  - Id: 32026
+    Title: 舊克雷斯特漢姆[挑戰模式]討伐任務
+    Targets:
+      - Mob: MD_C_HEMEL
+        Count: 1
+  - Id: 32027
+    Title: 舊克雷斯特漢姆古城討伐任務
+    Targets:
+      - Mob: MG_AMDARAIS
+        Count: 1
+  - Id: 32028
+    Title: 維爾納研究所中樞室討伐任務1
+    Targets:
+      - Mob: EP16_2_MM_CUTIE
+        Count: 1
+  - Id: 32030
+    Title: 維爾納研究所中樞室討伐任務2
+    Targets:
+      - Mob: E16_2_SEYREN
+        Count: 1
+  - Id: 32029
+    Title: 驚駭森靈巢穴討伐任務1
+    Targets:
+      - Mob: FACEWORM_QUEEN
+        Count: 1
+
+  - Id: 32031
+    Title: 吉芬魔法大賽討伐任務
+    Targets:
+      - Mob: GEFFEN_FENRIR
+        Count: 1
+  - Id: 32033
+    Title: 幽靈皇宮討伐任務
+    Targets:
+      - Mob: TORTUROUS_REDEEMER
+        Count: 1
+  - Id: 32035
+    Title: 拜歐斯之島討伐任務
+    Targets:
+      - Mob: GRIM_REAPER_ANKOU
+        Count: 1
+  - Id: 32037
+    Title: 飛空艇襲擊討伐任務
+    Targets:
+      - Mob: E1_FELOCK
+        Count: 1
+  - Id: 32038
+    Title: 飛空艇墜落討伐任務
+    Targets:
+      - Mob: MD_AIRBOAT_LEECH
+        Count: 1
+  - Id: 32039
+    Title: 恐怖玩具工廠討伐任務
+    Targets:
+      - Mob: XM_CELINE_KIMI
+        Count: 1
+  - Id: 32040
+    Title: 克雷斯特漢姆的沒落[困難]討伐任務
+    Targets:
+      - Mob: GH_KING_SCHMIDT_H
+        Count: 1
+  - Id: 32000
+    Title: 克雷斯特漢姆的沒落[普通]討伐任務
+    Targets:
+      - Mob: GH_KING_SCHMIDT_N
+        Count: 1
+  - Id: 32041
+    Title: 莎拉的記憶討伐任務
+    Targets:
+      - Mob: IRENE_ELDER
+        Count: 1
+  - Id: 32042
+    Title: 水上花園(普通)討伐任務
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
+  - Id: 32044
+    Title: 水上花園(困難)討伐任務
+    Targets:
+      - Mob: MD_GRAN_PAPILIA
+        Count: 1
+  - Id: 32043
+    Title: 摩洛斯洞穴討伐任務
+    Targets:
+      - Mob: EP14_MORS_EVENT
+        Count: 1
+  - Id: 32045
+    Title: 潘利爾與莎拉討伐任務
+    Targets:
+      - Mob: MM_SARAH
+        Count: 1
+  - Id: 32046
+    Title: 隱藏的花園(普通)討伐任務
+    Targets:
+      - Mob: MD_REDPEPPER
+        Count: 1
+  - Id: 32047
+    Title: 噩夢吉特巴討伐任務
+    Targets:
+      - Mob: GRAND_PERE
+        Count: 1
+  - Id: 32048
+    Title: 隱藏的花園(困難)討伐任務
+    Targets:
+      - Mob: MD_REDPEPPER_H
+        Count: 1
+  - Id: 32049
+    Title: 魔神之塔討伐任務
+    Targets:
+      - Mob: MM_EVIL_FANATICS
+        Count: 1
+  - Id: 32050
+    Title: 被遺忘的飼育場討伐任務
+    Targets:
+      - Mob: MD_PITAYA_BOSS
+        Count: 1
+  - Id: 32051
+    Title: 魔神殿討伐任務
+    Targets:
+      - Mob: MM_MOROCC_ADT
+        Count: 1
+  - Id: 32052
+    Title: 暗夜吉芬鬥技場討伐任務
+    Targets:
+      - Mob: GEFFEN_FENRIR_N
+        Count: 1
+  - Id: 32053
+    Title: 查爾斯頓工廠討伐任務
+    Targets:
+      - Mob: CHARLESTON3
+        Count: 1
+  - Id: 32054
+    Title: 嘿!斯威蒂討伐任務
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 32055
+    Title: 夢魘副本討伐任務
+    Targets:
+      - Mob: MG_AMDARAIS_H
+        Count: 1
+  - Id: 32056
+    Title: 討伐任務
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 32057
+    Title: 最後的房間討伐任務
+    Targets:
+      - Mob: T_W_O
+        Count: 1
+  - Id: 32058
+    Title: 最後的房間討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32059
+    Title: 無限空間討伐任務
+    Targets:
+      - Mob: MIN_TAO_GUNKA
+        Count: 1
+  - Id: 32060
+    Title: 無限空間討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32061
+    Title: 空中要塞討伐任務
+    Targets:
+      - Mob: AS_RAGGED_GOLEM
+        Count: 1
+  - Id: 32062
+    Title: 空中要塞討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32063
+    Title: 儀式之間討伐任務
+    Targets:
+      - Mob: BIJOU
+        Count: 1
+  - Id: 32064
+    Title: 儀式之間討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32065
+    Title: 正午的弦月討伐任務
+    Targets:
+      - Mob: KTULLANUX
+        Count: 1
+  - Id: 32066
+    Title: 正午的弦月討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32067
+    Title: 第二次搜查歐斯討伐任務
+    Targets:
+      - Mob: MD_MIGUEL
+        Count: 1
+  - Id: 32068
+    Title: 第二次搜查歐斯討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32069
+    Title: 柯爾記憶迷宮討伐任務
+    Targets:
+      - Mob: MD_EL_A17T
+        Count: 1
+  - Id: 32070
+    Title: 柯爾記憶迷宮討伐任務冷卻時間
+    TimeLimit: +2h
+  - Id: 32071
+    Title: 星座之塔討伐任務
+    Targets:
+      - Mob: MD_BETELGEUSE
+        Count: 1
+  - Id: 32072
+    Title: 欺詐別墅(普通)討伐任務
+    Targets:
+      - Mob: EP18_MD_DEMI_FREYJA_R
+        Count: 1
+  - Id: 32073
+    Title: 欺詐別墅(困難)討伐任務
+    Targets:
+      - Mob: EP18_MD_DEMI_FREYJA_L
+        Count: 1
+  - Id: 32074
+    Title: 悔恨之墓討伐任務
+    Targets:
+      - Mob: MD_SAKRAY
+        Count: 1
+
+  - Id: 32075
+    Title: 冰凍之海討伐任務
+    Targets:
+      - Mob: EP20_FALLENANGEL
+        Count: 1
+  - Id: 32076
+    Title: 不死之人討伐任務
+    Targets:
+      - Mob: EP20_BOSS_LASGAND
+        Count: 1
+  - Id: 32077
+    Title: 星座之塔討伐任務2
+    Targets:
+      - Mob: MD_NAGHT_SIEGER
+        Count: 1
+
+  - Id: 3504
+    Title: 觀察氣氛-等候
+    TimeLimit: 4h
+  - Id: 5934
+    Title: 採集訓練(1)
+  - Id: 5935
+    Title: 採集訓練(2)
+  - Id: 5936
+    Title: 採集訓練(3)
+  - Id: 5937
+    Title: 採集一半的花朵-等待中
+    TimeLimit: 4h
+  - Id: 5938
+    Title: 採集一半的花朵
+  - Id: 5939
+    Title: 採集一半的花朵
+  - Id: 5940
+    Title: 採集一半的花朵
+  - Id: 5941
+    Title: 採集一半的花朵
+  - Id: 8688
+    Title: 今日感謝的食物
+  - Id: 8689
+    Title: 今日感謝的食物-等待中
+    TimeLimit: 4h
+  - Id: 8694
+    Title: 淨水採購-等待中
+    TimeLimit: 4h
+  - Id: 11736
+    Title: 掃蕩生命體
+    Targets:
+      - Mob: EP18_HOT_MOLAR
+        Count: 30
+  - Id: 11737
+    Title: 奧茲迷宮 1樓-等待中
+    TimeLimit: 4h
+  - Id: 11738
+    Title: 奧茲迷宮 2樓 (200lv)
+    Targets:
+      - Mob: EP18_BURNING_FANG
+        Count: 30
+  - Id: 11739
+    Title: 奧茲迷宮 2樓-等待中
+    TimeLimit: 4h
+  - Id: 16549
+    Title: 無法入睡
+    Targets:
+      - Mob: EP18_FIREWIND_KITE
+        Count: 30
+  - Id: 16550
+    Title: 無法入睡-等待中
+    TimeLimit: 4h
+  - Id: 16554
+    Title: 故事記錄
+  - Id: 16555
+    Title: 迪奈兒的故事
+  - Id: 16556
+    Title: 阿米拉的故事
+  - Id: 16557
+    Title: 莎妮娜的故事
+  - Id: 16558
+    Title: 回報故事
+  - Id: 16559
+    Title: 故事記錄-等待中
+    TimeLimit: 4h
+  - Id: 17509
+    Title: 供應短缺-等待中
+    TimeLimit: 4h
+  - Id: 17512
+    Title: 尋找灰色魔羌
+  - Id: 17514
+    Title: 意想不到的牧羊人
+    Targets:
+      - Mob: EP18_ASHRING
+        Count: 20
+  - Id: 17516
+    Title: 意想不到的牧羊人-等待中
+    TimeLimit: 4h
+  - Id: 18086
+    Title: 使灰狼森林更安全
+    Targets:
+      - Mob: EP18_ASHRING
+        Count: 30
+  - Id: 18087
+    Title: 使灰狼森林更安全-等待中
+    TimeLimit: 4h
+  - Id: 12520
+    Title: 聖域淨化
+    TimeLimit: +2h
+  - Id: 12519
+    Title: 聖域淨化1
+    TimeLimit: +2h
+
+  - Id: 5912
+    Title: 抓捕100隻怪物
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: 1@mjo2
+        MinLevel: 230
+  - Id: 5913
+    Title: 抓捕200隻怪物
+    Targets:
+      - Id: 1
+        Count: 200
+        Location: 1@mjo2
+        MinLevel: 230
+  - Id: 5914
+    Title: 抓捕350隻怪物
+    Targets:
+      - Id: 1
+        Count: 350
+        Location: 1@mjo2
+        MinLevel: 230
+  - Id: 5915
+    Title: 救治傷患-冷卻時間
+    TimeLimit: +2h
+
+  #官方副本入場冷卻時間
+  - Id: 30101
+    Title: 欺詐別墅(普通)
+  #    TimeLimit: +2h
+  - Id: 30102
+    Title: 欺詐別墅(困難)
+  #    TimeLimit: +2h
+  - Id: 12514
+    Title: 進出塔的後遺症
+    TimeLimit: +2h
+  - Id: 15050
+    Title: 記憶迷宮副本：飛空艇襲擊
+    TimeLimit: +2h
+
+  - Id: 300591
+    Title: 朱希婭模擬作戰
+  #    TimeLimit: +2h
+  - Id: 300590
+    Title: 飛空艇破壞行動
+  #    TimeLimit: +2h
+  - Id: 300592
+    Title: 亂蛇巢穴
+  #    TimeLimit: +2h
+
+  #官方副本入場冷卻時間
+  - Id: 34001
+    Title: 週五副本-冷卻時間
+    TimeLimit: +3mn
+  - Id: 34002
+    Title: 週末副本-冷卻時間
+    TimeLimit: +1mn
+  - Id: 34003
+    Title: 正午的弦月-冷卻時間
+    TimeLimit: +2h
+  - Id: 34004
+    Title: 遠征的旅途-冷卻時間
+    TimeLimit: +2h
+  - Id: 34005
+    Title: 克雷斯特漢姆的沒落[劇情模式]-冷卻時間
+    TimeLimit: +2h
+  - Id: 34006
+    Title: 克雷斯特漢姆的沒落[普通模式]-冷卻時間
+    TimeLimit: +2h
+  - Id: 34007
+    Title: 克雷斯特漢姆的沒落[困難模式]-冷卻時間
+    TimeLimit: +2h
+  - Id: 34008
+    Title: 食月暴龍湖-冷卻時間
+    TimeLimit: +2h
+  - Id: 34009
+    Title: 噩夢死神-冷卻時間
+    TimeLimit: +2h
+  - Id: 34010
+    Title: 寶箱巨鱷-冷卻時間
+    TimeLimit: +2h
+  - Id: 34011
+    Title: 舊克雷斯特漢姆古城-冷卻時間
+    TimeLimit: +2h
+  - Id: 34012
+    Title: 幽靈皇宮-冷卻時間
+    TimeLimit: +2h
+  - Id: 34013
+    Title: 魔神之塔-冷卻時間
+    TimeLimit: +2h
+  - Id: 34014
+    Title: 吉芬魔法大賽-冷卻時間
+    TimeLimit: +2h
+  - Id: 34015
+    Title: 拜歐斯島-冷卻時間
+    TimeLimit: +2h
+  - Id: 34016
+    Title: 摩洛斯洞穴-冷卻時間
+    TimeLimit: +2h
+  - Id: 34017
+    Title: 魔神殿-冷卻時間
+    TimeLimit: +2h
+  - Id: 34018
+    Title: 噩夢吉特巴-冷卻時間
+    TimeLimit: +2h
+  - Id: 34019
+    Title: 夢饜副本-冷卻時間
+    TimeLimit: +2h
+  - Id: 34020
+    Title: 國王鞋跟-冷卻時間
+    TimeLimit: +2h
+  - Id: 34021
+    Title: 無限空間-冷卻時間
+    TimeLimit: +2h
+  - Id: 34022
+    Title: 空中要塞侵入-冷卻時間
+    TimeLimit: +2h
+  - Id: 34023
+    Title: 儀式之間-冷卻時間
+    TimeLimit: +2h
+  - Id: 34024
+    Title: 邪心獵人軍事基地-冷卻時間
+    TimeLimit: +2h
+  - Id: 34025
+    Title: 中樞室-冷卻時間
+    TimeLimit: +2h
+  - Id: 34026
+    Title: 第二次搜查歐斯-冷卻時間
+    TimeLimit: +2h
+  - Id: 34027
+    Title: 柯爾記憶迷宮-冷卻時間
+    TimeLimit: +2h
+  - Id: 34028
+    Title: 祕密花園(普通)-冷卻時間
+    TimeLimit: +2h
+  - Id: 34029
+    Title: 克雷斯特漢姆挑戰模式-冷卻時間
+    TimeLimit: +2h
+  - Id: 34030
+    Title: 死亡之塔-冷卻時間
+    TimeLimit: +2h
+  - Id: 34031
+    Title: 水上花園(普通)-冷卻時間
+    TimeLimit: +2h
+  - Id: 34032
+    Title: 水上花園(困難)-冷卻時間
+    TimeLimit: +2h
+  - Id: 34033
+    Title: 祕密花園(困難)-冷卻時間
+    TimeLimit: +2h
+  - Id: 34034
+    Title: 被遺忘的飼育場-冷卻時間
+    TimeLimit: +2h
+  - Id: 34035
+    Title: 嘿!斯威蒂-冷卻時間
+    TimeLimit: +2h
+  - Id: 34036
+    Title: 暗夜吉芬鬥技場-冷卻時間
+    TimeLimit: +2h
+  - Id: 34037
+    Title: 悔恨之墓-冷卻時間
+    TimeLimit: +2h
+  - Id: 34038
+    Title: 飛空艇墜落-冷卻時間
+    TimeLimit: +2h
+
+  #自創副本入場冷卻時間
+  - Id: 300180
+    Title: 夢幻秘境-冷卻時間
+    TimeLimit: +4h
+  - Id: 33001
+    Title: 魔物要塞-冷卻時間
+    TimeLimit: +2h
+  - Id: 33002
+    Title: 虛像奧克尼勒-冷卻時間
+    TimeLimit: +2h
+  - Id: 33003
+    Title: 魔Q的祕寶-冷卻時間
+    TimeLimit: +2h
+  - Id: 33004
+    Title: 鬼屋歷險-冷卻時間
+    TimeLimit: +2h
+  - Id: 33005
+    Title: 赫拉神殿-冷卻時間
+    TimeLimit: +2h
+  - Id: 33006
+    Title: 平行次元新危機-冷卻時間
+    TimeLimit: +2h
+  - Id: 33007
+    Title: 黑夜裡的修道院-冷卻時間
+    TimeLimit: +2h
+
+  #2022浪漫春櫻季
+  - Id: 19067
+    Title: 新手任務-冷卻時間
+    TimeLimit: +3s
+
+  - Id: 19080
+    Title: 晁白溪的委託Lv1
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Earth
+        MinLevel: 50
+  - Id: 19081
+    Title: 晁白溪的委託Lv2
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Earth
+        MinLevel: 100
+  - Id: 19082
+    Title: 晁白溪的委託Lv3
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Earth
+        MinLevel: 150
+  - Id: 19083
+    Title: 晁白溪的委託Lv4
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Earth
+        MinLevel: 200
+
+  #爆米花嘉年華
+  - Id: 16772
+    Title: 爆米花嘉年華，熱情如火!
+
+  - Id: 16337
+    Title: 黃金蜜玉米
+    Targets:
+      - Mob: MILD_IMP
+        Count: 3
+      - Mob: MILD_EXPLOSION
+        Count: 3
+  - Id: 16338
+    Title: 黃金蜜玉米-等候
+    TimeLimit: +1h
+
+  - Id: 16339
+    Title: 晁白溪的委託-等待
+    TimeLimit: +1h
+
+  - Id: 16340
+    Title: 克魯德火山
+  - Id: 16341
+    Title: 克魯德火山-等候
+    TimeLimit: +1h
+
+  - Id: 16343
+    Title: 養身藥草
+  - Id: 16344
+    Title: 養身藥草-等候
+    TimeLimit: +1h
+
+  - Id: 19088
+    Title: 晁白溪的委託Lv1
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Fire
+        MinLevel: 50
+  - Id: 19089
+    Title: 晁白溪的委託Lv2
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Fire
+        MinLevel: 100
+  - Id: 19090
+    Title: 晁白溪的委託Lv3
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Fire
+        MinLevel: 150
+  - Id: 19091
+    Title: 晁白溪的委託Lv4
+    Targets:
+      - Id: 1
+        Count: 100
+        Element: Fire
+        MinLevel: 200
+
+  - Id: 19112
+    Title: 新手任務Lv1
+    Targets:
+      - Id: 1
+        Count: 100
+        MinLevel: 50
+  - Id: 19113
+    Title: 新手任務Lv2
+    Targets:
+      - Id: 1
+        Count: 100
+        MinLevel: 100
+  - Id: 19114
+    Title: 新手任務Lv3
+    Targets:
+      - Id: 1
+        Count: 100
+        MinLevel: 150
+  - Id: 19115
+    Title: 新手任務Lv4
+    Targets:
+      - Id: 1
+        Count: 100
+        MinLevel: 200
+
+  #RO20周年活動
+  - Id: 293356
+    Title: 20周年活動-等候
+    TimeLimit: 4h
+  - Id: 293357
+    Title: 傳說拉開序幕
+    Targets:
+      - Mob: PORING
+        Count: 30
+      - Mob: LUNATIC
+        Count: 30
+      - Mob: FABRE
+        Count: 30
+  - Id: 293358
+    Title: 愛情競技場
+    Targets:
+      - Mob: SWORD_GUARDIAN
+        Count: 30
+  - Id: 293359
+    Title: 口袋情人
+  - Id: 293360
+    Title: 傾城之戰
+  - Id: 293361
+    Title: 夢想天空
+    Targets:
+      - Mob: CENDRAWASIH
+        Count: 30
+  - Id: 293362
+    Title: 櫻之花嫁
+  - Id: 293363
+    Title: 黑色派對
+  - Id: 293364
+    Title: P.S你今天微笑了嗎?
+  - Id: 293365
+    Title: 新世代的誕生
+    Targets:
+      - Mob: YGNIZEM
+        Count: 30
+  - Id: 293366
+    Title: 聖域拉赫
+    Targets:
+      - Mob: NECROMANCER
+        Count: 30
+  - Id: 293367
+    Title: 榮耀戰場
+    Targets:
+      - Mob: SHECIL
+        Count: 30
+  - Id: 293368
+    Title: 聖戰黑幕
+  - Id: 293369
+    Title: 新仙境傳說
+  - Id: 293370
+    Title: 勇闖貓咪島
+    Targets:
+      - Mob: POT_DOFLE
+        Count: 30
+  - Id: 293371
+    Title: 彩虹時光機
+    Targets:
+      - Mob: ANTIQUE_BOOK
+        Count: 30
+  - Id: 293372
+    Title: 精靈的三個願望
+    Targets:
+      - Mob: PRAY_GIVER
+        Count: 30
+  - Id: 293373
+    Title: 惡夢覺醒
+    Targets:
+      - Mob: MOROCC_2
+        Count: 30
+  - Id: 293374
+    Title: 夢幻秘境
+    Targets:
+      - Mob: EXCAVATOR_ROBOT
+        Count: 30
+  - Id: 293375
+    Title: 幻色童話
+    Targets:
+      - Mob: BIJOU
+        Count: 1
+  - Id: 293376
+    Title: 星火同盟
+    Targets:
+      - Mob: EP16_2_MM_CUTIE
+        Count: 1
+  - Id: 293377
+    Title: 虛幻浮現
+    Targets:
+      - Mob: MD_MIGUEL
+        Count: 1
+  - Id: 293378
+    Title: 賢者遺跡
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 293379
+    Title: 豪傑四起
+  - Id: 293380
+    Title: 仙境傳說生日快樂
+  - Id: 293381
+    Title: 讓我們一起繼續守候
+  - Id: 12569
+    Title: 區域淨化
+    Targets:
+      - Mob: 20TH_EVENT_LOLI_RURI
+        Count: 10
+  - Id: 12570
+    Title: 區域淨化
+    Targets:
+      - Mob: 20TH_EVENT_GIBBET
+        Count: 10
+  - Id: 12571
+    Title: 區域淨化
+    Targets:
+      - Mob: 20TH_EVENT_HYLOZOIST
+        Count: 10
+  - Id: 12572
+    Title: 區域淨化
+    Targets:
+      - Mob: 20TH_EVENT_MURDERER
+        Count: 10
+  - Id: 12573
+    Title: 裂縫淨化
+    Targets:
+      - Mob: 20TH_EVENT_CORPS
+        Count: 5
+  - Id: 12574
+    Title: 區域淨化(危險)
+    Targets:
+      - Mob: 20TH_EVENT_CO_CMDER
+        Count: 1
+  - Id: 12575
+    Title: 斬斷根源
+    Targets:
+      - Mob: 20TH_EVENT_HEMEL
+        Count: 1
+
+  - Id: 12576
+    Title: 捐贈已充足
+    TimeLimit: 4h
+  - Id: 12577
+    Title: 區域淨化-等候
+    TimeLimit: 4h
+  - Id: 12578
+    Title: 裂縫淨化-等候
+    TimeLimit: 4h
+  - Id: 12579
+    Title: 區域淨化(危險)-等候
+    TimeLimit: 4h
+  - Id: 12580
+    Title: 斬斷根源-等候
+    TimeLimit: 4h
+  - Id: 12581
+    Title: 次元暈眩
+    TimeLimit: +2h
+
+  #各等級屬性怪任務
+  - Id: 32174
+    Title: LV50無屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Neutral
+        MinLevel: 50
+  - Id: 32175
+    Title: LV50水屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Water
+        MinLevel: 50
+  - Id: 32176
+    Title: LV50地屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Earth
+        MinLevel: 50
+  - Id: 32177
+    Title: LV50火屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Fire
+        MinLevel: 50
+  - Id: 32178
+    Title: LV50風屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Wind
+        MinLevel: 50
+  - Id: 32179
+    Title: LV50毒屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Poison
+        MinLevel: 50
+  - Id: 32180
+    Title: LV50聖屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Holy
+        MinLevel: 50
+  - Id: 32181
+    Title: LV50暗屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Dark
+        MinLevel: 50
+  - Id: 32182
+    Title: LV50念屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Ghost
+        MinLevel: 50
+  - Id: 32183
+    Title: LV50不死屬性怪驅除
+    Targets:
+      - Id: 1
+        Count: 50
+        Element: Undead
+        MinLevel: 50
+
+  #天賦系統
+  - Id: 33021
+    Title: 天賦官方副本任務
+  - Id: 33022
+    Title: 天賦自創副本任務
+  - Id: 43001
+    Title: 天賦狩獵任務(一般)
+    Targets:
+      - Id: 1
+        Count: 100
+        MinLevel: 200
+  - Id: 43002
+    Title: 天賦狩獵任務(首領)
+  - Id: 43003
+    Title: 天賦道館任務
+
+  - Id: 293384
+    Title: 血的教訓
+  - Id: 293385
+    Title: 魔法殘片
+  - Id: 293386
+    Title: 基勘特斯的低語
+  - Id: 293387
+    Title: 凝結的物質
+  - Id: 293388
+    Title: 死者甦醒
+  - Id: 293389
+    Title: 魔力泉源
+  - Id: 293390
+    Title: 科技零件
+  - Id: 293391
+    Title: ROS補給品支援-等候
+    TimeLimit: 4h
+
+  #湯麵節
+  - Id: 14716
+    Title: 傳說中的多拉島-冷卻時間
+    TimeLimit: +4h
+
+  - Id: 14698
+    Title: 番茄湯麵
+  - Id: 14699
+    Title: 活動是一天一次
+    TimeLimit: +4h
+
+  - Id: 14700
+    Title: 精華部分
+    Targets:
+      - Mob: E_MD_NYAILO
+        Count: 1
+  - Id: 14701
+    Title: 活動是一天一次
+    TimeLimit: +4h
+
+  - Id: 14702
+    Title: 西瓜香涼扇
+  - Id: 14703
+    Title: 活動是一天一次
+    TimeLimit: +4h
+
+  - Id: 293393
+    Title: 好想兔的委託 - 等待
+    TimeLimit: +1h
+  - Id: 293394
+    Title: 好想兔的委託
+    Targets:
+      - Mob: LUNATIC
+        Count: 30
+  - Id: 293395
+    Title: 好想兔的委託
+    Targets:
+      - Mob: DR_LUNATIC
+        Count: 30
+  - Id: 293396
+    Title: 好想兔的委託
+    Targets:
+      - Mob: SPRING_RABBIT
+        Count: 30
+  - Id: 293397
+    Title: 好想兔的委託
+    Targets:
+      - Mob: HYLOZOIST
+        Count: 30
+
+  - Id: 293401
+    Title: 月的委託
+    Targets:
+      - Id: 1
+        Count: 500
+        MinLevel: 100
+  - Id: 293402
+    Title: 月的委託 - 等待
+    TimeLimit: +1h
+
+  #EP20
+  - Id: 71017
+    Title: 不死之人(普通)
+    TimeLimit: +24h
+  - Id: 71018
+    Title: 不死之人(困難)
+    TimeLimit: +24h
+  - Id: 71019
+    Title: 冰凍之海
+    TimeLimit: +24h
+  # 任務魔物掉落設定
+  #    Drops:
+  #      - Mob: BAPHOMET
+  #        Item: Mana_crystal
+  #       Rate: 10000
+  # 卡片升級任務
+  - Id: 70000
+    Title: 卡片升級任務(俄塞里斯#等級1)
+    Targets:
+      - Mob: OSIRIS
+        Count: 15
+  - Id: 70001
+    Title: 卡片升級任務(俄塞里斯#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70002
+    Title: 卡片升級任務(巴風特#等級1)
+    Targets:
+      - Mob: BAPHOMET
+        Count: 15
+  - Id: 70003
+    Title: 卡片升級任務(死靈#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70004
+    Title: 卡片升級任務(死靈#等級1)
+    Targets:
+      - Mob: DOPPELGANGER
+        Count: 15
+  - Id: 70005
+    Title: 卡片升級任務(死靈#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70006
+    Title: 卡片升級任務(蜂后#等級1)
+    Targets:
+      - Mob: MISTRESS
+        Count: 15
+  - Id: 70007
+    Title: 卡片升級任務(蜂后#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70008
+    Title: 卡片升級任務(黃金蟲#等級1)
+    Targets:
+      - Mob: GOLDEN_BUG
+        Count: 15
+  - Id: 70009
+    Title: 卡片升級任務(黃金蟲#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70010
+    Title: 卡片升級任務(獸人英雄#等級1)
+    Targets:
+      - Mob: ORK_HERO
+        Count: 15
+  - Id: 70011
+    Title: 卡片升級任務(獸人英雄#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70012
+    Title: 卡片升級任務(海盜之王#等級1)
+    Targets:
+      - Mob: DRAKE
+        Count: 15
+  - Id: 70013
+    Title: 卡片升級任務(海盜之王#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70014
+    Title: 卡片升級任務(虎王#等級1)
+    Targets:
+      - Mob: EDDGA
+        Count: 15
+  - Id: 70015
+    Title: 卡片升級任務(虎王#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70016
+    Title: 卡片升級任務(蟻后#等級1)
+    Targets:
+      - Mob: MAYA
+        Count: 15
+  - Id: 70017
+    Title: 卡片升級任務(蟻后#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70018
+    Title: 卡片升級任務(月夜貓#等級1)
+    Targets:
+      - Mob: MOONLIGHT
+        Count: 15
+  - Id: 70019
+    Title: 卡片升級任務(月夜貓#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70020
+    Title: 卡片升級任務(法老王#等級1)
+    Targets:
+      - Mob: PHARAOH
+        Count: 15
+  - Id: 70021
+    Title: 卡片升級任務(法老王#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70022
+    Title: 卡片升級任務(皮里恩#等級1)
+    Targets:
+      - Mob: PHREEONI
+        Count: 15
+  - Id: 70023
+    Title: 卡片升級任務(皮里恩#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70024
+    Title: 卡片升級任務(獸人酋長#等級1)
+    Targets:
+      - Mob: ORC_LORD
+        Count: 15
+  - Id: 70025
+    Title: 卡片升級任務(獸人酋長#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70026
+    Title: 卡片升級任務(冰暴騎士#等級1)
+    Targets:
+      - Mob: KNIGHT_OF_WINDSTORM
+        Count: 15
+  - Id: 70027
+    Title: 卡片升級任務(冰暴騎士#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70028
+    Title: 卡片升級任務(卡崙#等級1)
+    Targets:
+      - Mob: GARM
+        Count: 15
+  - Id: 70029
+    Title: 卡片升級任務(卡崙#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70030
+    Title: 卡片升級任務(黑暗之王#等級1)
+    Targets:
+      - Mob: DARK_LORD
+        Count: 15
+  - Id: 70031
+    Title: 卡片升級任務(黑暗之王#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70032
+    Title: 卡片升級任務(烏龜將軍#等級1)
+    Targets:
+      - Mob: TURTLE_GENERAL
+        Count: 15
+  - Id: 70033
+    Title: 卡片升級任務(烏龜將軍#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70034
+    Title: 卡片升級任務(死靈騎士#等級1)
+    Targets:
+      - Mob: LORD_OF_DEATH
+        Count: 15
+  - Id: 70035
+    Title: 卡片升級任務(死靈騎士#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70036
+    Title: 卡片升級任務(德古拉伯爵#等級1)
+    Targets:
+      - Mob: DRACULA
+        Count: 15
+  - Id: 70037
+    Title: 卡片升級任務(德古拉伯爵#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70038
+    Title: 卡片升級任務(墨蛇君#等級1)
+    Targets:
+      - Mob: DARK_SNAKE_LORD
+        Count: 15
+  - Id: 70039
+    Title: 卡片升級任務(墨蛇君#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70040
+    Title: 卡片升級任務(元靈武士#等級1)
+    Targets:
+      - Mob: INCANTATION_SAMURAI
+        Count: 15
+  - Id: 70041
+    Title: 卡片升級任務(元靈武士#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70042
+    Title: 卡片升級任務(古埃及王#等級1)
+    Targets:
+      - Mob: AMON_RA
+        Count: 15
+  - Id: 70043
+    Title: 卡片升級任務(古埃及王#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70044
+    Title: 卡片升級任務(塔奧群卡#等級1)
+    Targets:
+      - Mob: TAO_GUNKA
+        Count: 15
+  - Id: 70045
+    Title: 卡片升級任務(塔奧群卡#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70046
+    Title: 卡片升級任務(RSX-0806#等級1)
+    Targets:
+      - Mob: RSX_0806
+        Count: 15
+  - Id: 70047
+    Title: 卡片升級任務(RSX-0806#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70048
+    Title: 卡片升級任務(白素貞#等級1)
+    Targets:
+      - Mob: BACSOJIN_
+        Count: 15
+  - Id: 70049
+    Title: 卡片升級任務(白素貞#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70050
+    Title: 卡片升級任務(貝思波#等級1)
+    Targets:
+      - Mob: APOCALIPS_H
+        Count: 15
+  - Id: 70051
+    Title: 卡片升級任務(貝思波#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70052
+    Title: 卡片升級任務(嗒妮小姐#等級1)
+    Targets:
+      - Mob: LADY_TANEE
+        Count: 15
+  - Id: 70053
+    Title: 卡片升級任務(嗒妮小姐#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70054
+    Title: 卡片升級任務(魔劍士 達納托斯的記憶#等級1)
+    Targets:
+      - Mob: THANATOS
+        Count: 15
+  - Id: 70055
+    Title: 卡片升級任務(魔劍士 達納托斯的記憶#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70056
+    Title: 卡片升級任務(迪塔勒泰晤勒斯#等級1)
+    Targets:
+      - Mob: DETALE
+        Count: 15
+  - Id: 70057
+    Title: 卡片升級任務(迪塔勒泰晤勒斯#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70058
+    Title: 卡片升級任務(齊爾-D-01#等級1)
+    Targets:
+      - Mob: KIEL_
+        Count: 15
+  - Id: 70059
+    Title: 卡片升級任務(齊爾-D-01#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70060
+    Title: 卡片升級任務(巴基力 蘭特克力斯#等級1)
+    Targets:
+      - Mob: RANDGRIS
+        Count: 15
+  - Id: 70061
+    Title: 卡片升級任務(巴基力 蘭特克力斯#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70062
+    Title: 卡片升級任務(幽暗夢魘#等級1)
+    Targets:
+      - Mob: GLOOMUNDERNIGHT
+        Count: 15
+  - Id: 70063
+    Title: 卡片升級任務(幽暗夢魘#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70064
+    Title: 卡片升級任務(水晶龍#等級1)
+    Targets:
+      - Mob: KTULLANUX
+        Count: 15
+  - Id: 70065
+    Title: 卡片升級任務(水晶龍#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70066
+    Title: 卡片升級任務(阿特羅斯#等級1)
+    Targets:
+      - Mob: ATROCE
+        Count: 15
+  - Id: 70067
+    Title: 卡片升級任務(阿特羅斯#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70068
+    Title: 卡片升級任務(伊夫利特#等級1)
+    Targets:
+      - Mob: IFRIT
+        Count: 15
+  - Id: 70069
+    Title: 卡片升級任務(伊夫利特#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70070
+    Title: 卡片升級任務(墮落大神官#等級1)
+    Targets:
+      - Mob: FALLINGBISHOP
+        Count: 15
+  - Id: 70071
+    Title: 卡片升級任務(墮落大神官#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70072
+    Title: 卡片升級任務(貝雷傑#等級1)
+    Targets:
+      - Mob: BEELZEBUB_
+        Count: 15
+  - Id: 70073
+    Title: 卡片升級任務(貝雷傑#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70074
+    Title: 卡片升級任務(青冠龍#等級1)
+    Targets:
+      - Mob: GOPINICH
+        Count: 15
+  - Id: 70075
+    Title: 卡片升級任務(青冠龍#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70076
+    Title: 卡片升級任務(魔神夢羅克#等級1)
+    Targets:
+      - Mob: MOROCC_
+        Count: 15
+  - Id: 70077
+    Title: 卡片升級任務(魔神夢羅克#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70078
+    Title: 卡片升級任務(波伊塔塔#等級1)
+    Targets:
+      - Mob: BOITATA
+        Count: 15
+  - Id: 70079
+    Title: 卡片升級任務(波伊塔塔#等級1)-等候
+    TimeLimit: +24h
+  - Id: 70080
+    Title: 卡片升級任務(女王甲蟲#等級1)
+    Targets:
+      - Mob: QUEEN_SCARABA
+        Count: 15
+  - Id: 70081
+    Title: 卡片升級任務(女王甲蟲#等級1)-等候
+    TimeLimit: +24h
+  # - Id: 70036
+  #   Title: 卡片升級任務(紅椒#等級1)
+  #   Targets:
+  #     - Mob: MD_REDPEPPER
+  #       Count: 15
+  # - Id: 70037
+  #   Title: 卡片升級任務(紅椒#等級1)-等候
+  #   TimeLimit: +24h
+  # - Id: 70038
+  #   Title: 卡片升級任務(死靈騎士#等級1)
+  #   Targets:
+  #     - Mob: MD_REDPEPPER_H
+  #       Count: 15
+  # - Id: 70039
+  #   Title: 卡片升級任務(死靈騎士#等級1)-等候
+  #   TimeLimit: +24h
+
+  - Id: 80000
+    Title: 服飾大雜燴任務
+    Targets:
+      - Id: 1
+        Count: 300
+  - Id: 80001
+    Title: 服飾大雜燴任務-等候
+    TimeLimit: +12h
+  - Id: 80002
+    Title: 寵物蛋抽抽樂箱任務
+    Targets:
+      - Id: 1
+        Count: 300
+  - Id: 80003
+    Title: 寵物抽抽樂箱任務-等候
+    TimeLimit: +12h

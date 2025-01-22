@@ -1,0 +1,458 @@
+//================================================//
+//==腳本作者 : 陳小修 (SkyTwo)		Eathena
+//==更新日期 : 西元 2009/06/17		　　Script
+//==腳本版號 : 繁體中文 Ver 3.1 正式版
+//==腳本名稱 : 客服專員
+//==腳本出處 : http://www.srogm.com/index.php
+//==
+//==各位大哥大姐轉載請保留以上，萬分感激。
+//================================================//
+
+function	script	GS_Warp_System	{
+
+	switch(select("城鎮傳送 - "+$@GSCW_Zeny+" z","洞穴傳送 - "+$@GSDW_Zeny+" z","原野傳送 - "+$@GSFW_Zeny+" z","城堡傳送 - "+$@GSGW_Zeny+" z")) {
+	case 1:
+		if ( Zeny >= $@GSCW_Zeny ) {
+			callfunc "City_Warp";
+		}
+		break;
+	case 2:
+		if ( Zeny >= $@GSDW_Zeny ) {
+			callfunc "Dungeon_Warp";
+		}
+		break;
+	case 3:
+		if ( Zeny >= $@GSFW_Zeny ) {
+			callfunc "Field_Warp";
+		}
+		break;
+	case 4:
+		if ( Zeny >= $@GSGW_Zeny ) {
+			callfunc "GuildCastle_Warp";
+		}
+		break;
+	}
+	mes $@GameService_Str$;
+	mes "您身上擁有的金錢不足，";
+	mes "將無法繼續使用此服務！";
+	close;
+}
+
+//================================================//
+
+function	script	City_Warp	{
+
+	setarray .@Warp_CN$[1],"艾爾貝塔　","艾爾帕蘭　","天津町　　","哎喲泰雅　","克魔島　　","艾音布羅克","吉芬　　　","毀葛　　　","依斯魯得島","里希塔樂鎮","龍之城　　","夢羅克　　","尼芙菲姆　","斐揚　　　","普隆德拉　","拉赫　　　","菲音斯　　","薑餅城　　","朱諾　　　","抓哇咿　　";
+	setarray .@Warp_M$[1],"alberta","aldebaran","amatsu","ayothaya","comodo","einbroch","geffen","hugel","izlude","lighthalzen","louyang","morocc","niflheim","payon","prontera","rachel","veins","xmas_fild01","yuno","jawaii";
+	setarray .@Warp_MX[1],117,168,197,149,193,240,121,95,128,214,216,165,49,172,167,115,205,78,158,130;
+	setarray .@Warp_MY[1],56,112,83,71,148,200,147,43,105,311,40,255,146,101,68,125,102,68,39,265;
+	set .@Size,getarraysize(.@Warp_CN$);
+	mes $@GameService_Str$;
+	mes "^FF0000No^000000　^0000FFCitied Name^000000";
+	mes "^FF0000 0^000000　^0000FF取消^000000";
+	for ( set @i,1; @i < 10; set @i,@i+1 ) {
+		mes "^FF0000 "+@i+"^000000　^0000FF"+.@Warp_CN$[@i]+"^000000　["+getmapusers(.@Warp_M$[@i])+"]";
+	}
+	for ( set @i,10; @i < .@Size; set @i,@i+1 ) {
+		mes "^FF0000"+@i+"^000000　^0000FF"+.@Warp_CN$[@i]+"^000000　["+getmapusers(.@Warp_M$[@i])+"]";
+	}
+	next;
+	input @Warp;
+	if ( @Warp < 1 ) {
+		close;
+	}
+	if ( @Warp > (.@Size-1) ) {
+		callfunc "City_Warp";
+	}
+	if ( getmapusers(.@Warp_M$[@Warp]) >= 0 ) {
+		set zeny,zeny - $@GSCW_Zeny;
+		warp .@Warp_M$[@Warp],.@Warp_MX[@Warp],.@Warp_MY[@Warp];
+	} else {
+		callfunc "City_Warp";
+	}
+	close;
+}
+
+//================================================//
+
+function	script	Dungeon_Warp	{
+
+	setarray .@Warp_DN$[1],"修道院","深淵湖水 地下洞穴","艾爾帕蘭 鐘塔","塌塌米 迷宮","螞蟻 地獄 密穴","古代神殿 迷宮","克魔島 洞穴","礦山洞穴","葛帔尼亞","吉芬 地下 密穴","克雷斯特漢姆古城","崑崙 洞穴","冰洞穴","史芬克斯 密穴","海底 洞窟","優配擂斯 洞穴","機械人型工廠","生體實驗 研究所","龍之城 洞穴","熔岩 密穴","妙勒尼 廢棄礦場","金字塔 迷宮","莫斯科比亞 洞穴","奧丁神殿","獸人地下洞窟","斐揚 洞穴","迷藏森林","普隆德拉 地下水道","神殿 聖域","達納托斯 塔台","托爾火山 洞穴","沉沒之船 密穴","烏龜島 密穴","汶巴拉 洞穴","玩具工廠倉庫","地下工會 密穴";
+	set .@Size,getarraysize(.@Warp_DN$);
+	mes $@GameService_Str$;
+	mes "^FF0000No^000000　^0000FFDungeons Name^000000";
+	mes "^FF0000 0^000000　^0000FF取消^000000";
+	for ( set @i,1; @i < 10; set @i,@i+1 ) {
+		mes "^FF0000 "+@i+"^000000　^0000FF"+.@Warp_DN$[@i]+"^000000";
+	}
+	for ( set @i,10; @i < .@Size; set @i,@i+1 ) {
+		mes "^FF0000"+@i+"^000000　^0000FF"+.@Warp_DN$[@i]+"^000000";
+	}
+	next;
+	input @Warp;
+	switch(@Warp) {
+	case 0:
+		close;
+	case 1:
+		//修道院
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"abbey01","abbey02","abbey03";
+		setarray .@Warp_MX[1],51,149,119;
+		setarray .@Warp_MY[1],12,11,8;
+		break;
+	case 2:
+		//深淵湖水 地下洞穴
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"abyss_01","abyss_02","abyss_03";
+		setarray .@Warp_MX[1],264,275,116;
+		setarray .@Warp_MY[1],271,270,27;
+		break;
+	case 3:
+		//艾爾帕蘭 鐘塔
+		set @Warp,select("地上樓層 1樓","地上樓層 2樓","地上樓層 3樓","地上樓層 4樓","地下樓層 1樓","地下樓層 2樓","地下樓層 3樓","地下樓層 4樓");
+		setarray .@Warp_M$[1],"c_tower1","c_tower2","c_tower3","c_tower4","alde_dun01","alde_dun02","alde_dun03","alde_dun04";
+		setarray .@Warp_MX[1],199,268,65,74,297,43,18,80;
+		setarray .@Warp_MY[1],159,26,147,19,25,24,267,276;
+		break;
+	case 4:
+		//塌塌米 迷宮
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"ama_dun01","ama_dun02","ama_dun03";
+		setarray .@Warp_MX[1],229,33,120;
+		setarray .@Warp_MY[1],10,40,12;
+		break;
+	case 5:
+		//螞蟻 地獄 密穴
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"anthell01","anthell02";
+		setarray .@Warp_MX[1],35,34;
+		setarray .@Warp_MY[1],262,263;
+		break;
+	case 6:
+		//古代神殿 迷宮
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"ayo_dun01","ayo_dun02";
+		setarray .@Warp_MX[1],275,279;
+		setarray .@Warp_MY[1],18,150;
+		break;
+	case 7:
+		//克魔島 洞穴
+		set @Warp,select("西邊 洞穴 加露","北邊 洞穴 盧安達","東邊 洞穴 馬吾");
+		setarray .@Warp_M$[1],"beach_dun","beach_dun2","beach_dun3";
+		setarray .@Warp_MX[1],266,154,281;
+		setarray .@Warp_MY[1],67,25,56;
+		break;
+	case 8:
+		//礦山洞穴
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"ein_dun01","ein_dun02";
+		setarray .@Warp_MX[1],22,292;
+		setarray .@Warp_MY[1],14,290;
+		break;
+	case 9:
+		//葛帔尼亞
+		set @Warp,select("第1區","第2區","第3區","第4區");
+		setarray .@Warp_M$[1],"gefenia01","gefenia02","gefenia03","gefenia04";
+		setarray .@Warp_MX[1],199,20,145,283;
+		setarray .@Warp_MY[1],266,175,30,95;
+		break;
+	case 10:
+		//吉芬 地下 密穴
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓");
+		setarray .@Warp_M$[1],"gef_dun00","gef_dun01","gef_dun02","gef_dun03";
+		setarray .@Warp_MX[1],104,115,106,203;
+		setarray .@Warp_MY[1],99,236,132,200;
+		break;
+	case 11:
+		//克雷斯特漢姆古城
+		set @Warp,select("克雷斯特漢姆","地上樓層 1樓","地上樓層 2樓","騎士團1樓","騎士團2樓","地下公墓","地下水道1區","地下水道2區","地下水道3區","地下水道4區","修道院","樓梯密穴","地下洞窟1區","地下洞窟2區","地下監獄1樓","地下監獄2樓");
+		setarray .@Warp_M$[1],"glast_01","gl_cas01","gl_cas02","gl_knt01","gl_knt02","gl_chyard","gl_sew01","gl_sew02","gl_sew03","gl_sew04","gl_church","gl_step","gl_dun01","gl_dun02","gl_prison","gl_prison1";
+		setarray .@Warp_MX[1],370,199,104,150,157,147,258,29,171,68,156,12,133,224,14,150;
+		setarray .@Warp_MY[1],304,29,25,15,287,15,255,270,283,277,7,7,271,274,70,14;
+		break;
+	case 12:
+		//崑崙 洞穴
+		set @Warp,select("西王母神殿","神仙的圍棋臺","武陵道院");
+		setarray .@Warp_M$[1],"gon_dun01","gon_dun02","gon_dun03";
+		setarray .@Warp_MX[1],153,17,68;
+		setarray .@Warp_MY[1],48,113,9;
+		break;
+	case 13:
+		//冰洞穴
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"ice_dun01","ice_dun02","ice_dun03";
+		setarray .@Warp_MX[1],157,151,149;
+		setarray .@Warp_MY[1],15,139,24;
+		break;
+	case 14:
+		//史芬克斯 密穴
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓","第5樓");
+		setarray .@Warp_M$[1],"in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5";
+		setarray .@Warp_MX[1],288,149,80,10,100;
+		setarray .@Warp_MY[1],9,81,189,222,99;
+		break;
+	case 15:
+		//海底 洞窟
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓","第5樓");
+		setarray .@Warp_M$[1],"iz_dun00","iz_dun01","iz_dun02","iz_dun03","iz_dun04";
+		setarray .@Warp_MX[1],108,41,236,32,26;
+		setarray .@Warp_MY[1],88,37,204,63,27;
+		break;
+	case 16:
+		//優配擂斯 洞穴
+		set @Warp,select("廢墟","廢墟","中心部");
+		setarray .@Warp_M$[1],"juperos_01","juperos_02","jupe_core";
+		setarray .@Warp_MX[1],53,36,149;
+		setarray .@Warp_MY[1],247,59,17;
+		break;
+	case 17:
+		//機械人型工廠
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"kh_dun01","kh_dun02";
+		setarray .@Warp_MX[1],15,40;
+		setarray .@Warp_MY[1],217,195;
+		break;
+	case 18:
+		//生體實驗 研究所
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"lhz_dun01","lhz_dun02","lhz_dun03";
+		setarray .@Warp_MX[1],149,153,140;
+		setarray .@Warp_MY[1],288,19,133;
+		break;
+	case 19:
+		//龍之城 洞穴
+		set @Warp,select("王陵","王陵 內部","審良宮");
+		setarray .@Warp_M$[1],"lou_dun01","lou_dun02","lou_dun03";
+		setarray .@Warp_MX[1],218,285,165;
+		setarray .@Warp_MY[1],195,18,38;
+		break;
+	case 20:
+		//熔岩 密穴
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"mag_dun01","mag_dun02";
+		setarray .@Warp_MX[1],126,47;
+		setarray .@Warp_MY[1],68,30;
+		break;
+	case 21:
+		//妙勒尼 廢棄礦場
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"mjo_dun01","mjo_dun02","mjo_dun03";
+		setarray .@Warp_MX[1],52,381,308;
+		setarray .@Warp_MY[1],17,343,262;
+		break;
+	case 22:
+		//金字塔 迷宮
+		set @Warp,select("地上樓層 1樓","地上樓層 2樓","地上樓層 3樓","地上樓層 4樓","地下樓層 1樓","地下樓層 2樓");
+		setarray .@Warp_M$[1],"moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06";
+		setarray .@Warp_MX[1],192,10,100,12,94,192;
+		setarray .@Warp_MY[1],9,192,92,18,96,10;
+		break;
+	case 23:
+		//莫斯科比亞 洞穴
+		set @Warp,select("森林洞穴","深森林洞穴","深淵森林洞穴");
+		setarray .@Warp_M$[1],"mosk_dun01","mosk_dun02","mosk_dun03";
+		setarray .@Warp_MX[1],189,165,32;
+		setarray .@Warp_MY[1],45,30,135;
+		break;
+	case 24:
+		//奧丁神殿
+		set @Warp,select("第1區","第2區","第3區");
+		setarray .@Warp_M$[1],"odin_tem01","odin_tem02","odin_tem03";
+		setarray .@Warp_MX[1],100,28,247;
+		setarray .@Warp_MY[1],146,180,40;
+		break;
+	case 25:
+		//獸人地下洞窟
+		set @Warp,select("第1樓","第2樓");;
+		setarray .@Warp_M$[1],"orcsdun01","orcsdun02";
+		setarray .@Warp_MX[1],32,21;
+		setarray .@Warp_MY[1],170,185;
+		break;
+	case 26:
+		//斐揚 洞穴
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓","第5樓");
+		setarray .@Warp_M$[1],"pay_dun00","pay_dun01","pay_dun02","pay_dun03","pay_dun04";
+		setarray .@Warp_MX[1],21,19,19,155,43;
+		setarray .@Warp_MY[1],183,33,63,159,40;
+		break;
+	case 27:
+		//迷藏森林
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"prt_maze01","prt_maze02","prt_maze03";
+		setarray .@Warp_MX[1],99,93,182;
+		setarray .@Warp_MY[1],31,20,88;
+		break;
+	case 28:
+		//普隆德拉 地下水道
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓");
+		setarray .@Warp_M$[1],"prt_sewb1","prt_sewb2","prt_sewb3","prt_sewb4";
+		setarray .@Warp_MX[1],131,19,180,100;
+		setarray .@Warp_MY[1],247,19,169,92;
+		break;
+	case 29:
+		//神殿 聖域
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓","第5樓");
+		setarray .@Warp_M$[1],"ra_san01","ra_san02","ra_san03","ra_san04","ra_san05";
+		setarray .@Warp_MX[1],139,213,119,119,150;
+		setarray .@Warp_MY[1],136,275,283,110,282;
+		break;
+	case 30:
+		//達納托斯 塔台
+		set @Warp,select("第1樓","第2樓","第3樓","第4樓","第5樓","第6樓","第7樓","第8樓","第9樓","第10樓","第11樓","第12樓","塔頂");
+		setarray .@Warp_M$[1],"tha_t01","tha_t02","tha_t03","tha_t04","tha_t05","tha_t06","tha_t07","tha_t08","tha_t09","tha_t10","tha_t11","tha_t12","thana_boss";
+		setarray .@Warp_MX[1],149,149,217,60,62,206,30,28,20,155,50,115,135;
+		setarray .@Warp_MY[1],38,130,163,142,8,11,166,43,96,100,17,16,125;
+		break;
+	case 31:
+		//托爾火山 洞穴
+		set @Warp,select("第1樓","第2樓","第3樓");
+		setarray .@Warp_M$[1],"thor_v01","thor_v02","thor_v03";
+		setarray .@Warp_MX[1],21,78,35;
+		setarray .@Warp_MY[1],229,203,262;
+		break;
+	case 32:
+		//沉沒之船
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"treasure01","treasure02";
+		setarray .@Warp_MX[1],69,102;
+		setarray .@Warp_MY[1],24,27;
+		break;
+	case 33:
+		//烏龜島 密穴
+		set @Warp,select("烏龜島","密穴","良龜村","舊良宮","地下 沼澤地帶");
+		setarray .@Warp_M$[1],"tur_dun01","tur_dun02","tur_dun03","tur_dun04","tur_dun05";
+		setarray .@Warp_MX[1],161,148,132,100,25;
+		setarray .@Warp_MY[1],34,264,189,192,25;
+		break;
+	case 34:
+		//汶巴拉 洞穴
+		set @Warp,select("木工所","異界通路");
+		setarray .@Warp_M$[1],"um_dun01","um_dun02";
+		setarray .@Warp_MX[1],42,52;
+		setarray .@Warp_MY[1],30,22;
+		break;
+	case 35:
+		//玩具工廠倉庫
+		set @Warp,select("第1樓","第2樓");
+		setarray .@Warp_M$[1],"xmas_dun01","xmas_dun02";
+		setarray .@Warp_MX[1],205,131;
+		setarray .@Warp_MY[1],16,130;
+		break;
+	case 36:
+		//地下工會 密穴
+		set @Warp,select("斐楊 工會密穴","艾爾帕蘭 工會密穴","普隆德拉 工會密穴","吉芬 工會密穴");
+		setarray .@Warp_M$[1],"gld_dun01","gld_dun02","gld_dun03","gld_dun04";
+		setarray .@Warp_MX[1],119,155,205,42;
+		setarray .@Warp_MY[1],19,165,30,230;
+		break;
+	default:
+		callfunc "Dungeon_Warp";
+	}
+	if ( getmapusers(.@Warp_M$[@Warp]) >= 0 ) {
+		set zeny,zeny - $@GSDW_Zeny;
+		warp .@Warp_M$[@Warp],.@Warp_MX[@Warp],.@Warp_MY[@Warp];
+	} else {
+		callfunc "Dungeon_Warp";
+	}
+	close;
+}
+
+//================================================//
+
+function	script	Field_Warp	{
+
+	setarray .@Warp_FN$[1],"虎蜥人　　","獸人戰士　","蝸牛　　　","獸人女戰士","哥布靈　　","犬妖　　　","獸人戰士長","綠變色龍　","金屬波利　","米糕　　　","沙漠幼狼　","大嘴鳥　　","長老樹精　","巨石怪　　","毒蛇　　　","泥人　　　","蚯蚓　　　","摩卡　　　","蠍子　　　","狼　　　　","波利　　　","毒魔菇　　","森靈　　　","長老樹精　","大腳熊　　","土人　　　","九尾狐　　","曼陀羅魔花","溜溜猴　　","蝗蟲　　　","小野豬　　","野豬　　　","希爾隊長　","石頭波利　","苗娃佩瑞絲","黑蛇　　　","草精　　　","沙妖　　　","松鼠　　　","畢帝特地龍","畢帝特飛龍","蜂兵　　　","艾吉歐蜈蚣","瓢蟲　　　","螳螂　　　","鍬形蟲　　","艾斯蜘蛛　","噬人花　　","獵蠅　　　";
+	setarray .@Warp_M$[1],"cmd_fild03","gef_fild02","gef_fild09","gef_fild10","gef_fild11","gef_fild12","gef_fild14","hu_fild03","lhz_fild01","lou_fild01","moc_fild01","moc_fild02","moc_fild03","moc_fild11","moc_fild13","moc_fild16","moc_fild17","moc_fild18","moc_fild20","pay_fild02","pay_fild04","pay_fild05","pay_fild06","pay_fild07","pay_fild09","pay_fild10","pay_fild11","prt_fild02","prt_fild03","prt_fild07","prt_fild09","prt_fild10","ra_fild05","ra_fild08","um_fild03","ve_fild07","yuno_fild05","yuno_fild06","mjolnir_01","mjolnir_02","mjolnir_03","mjolnir_04","mjolnir_05","mjolnir_06","mjolnir_08","mjolnir_09","mjolnir_10","mjolnir_11","mjolnir_12";
+	set .@Size,getarraysize(.@Warp_FN$);
+	mes $@GameService_Str$;
+	mes "^FF0000No^000000　^0000FFField Name^000000";
+	mes "^FF0000 0^000000　^0000FF取消^000000";
+	for ( set @i,1; @i < 10; set @i,@i+1 ) {
+		mes "^FF0000 "+@i+"^000000　^0000FF"+.@Warp_FN$[@i]+" 區域^000000　["+getmapusers(.@Warp_M$[@i])+"]";
+	}
+	for ( set @i,10; @i < .@Size; set @i,@i+1 ) {
+		mes "^FF0000"+@i+"^000000　^0000FF"+.@Warp_FN$[@i]+" 區域^000000　["+getmapusers(.@Warp_M$[@i])+"]";
+	}
+	next;
+	input @Warp;
+	if ( @Warp == 0 ) {
+		close;
+	}
+	if ( @Warp > (.@Size-1) ) {
+		callfunc "Field_Warp";
+	}
+	if ( getmapusers(.@Warp_M$[@Warp]) >= 0 ) {
+		set zeny,zeny - $@GSFW_Zeny;
+		warp .@Warp_M$[@Warp],0,0;
+	} else {
+		callfunc "Field_Warp";
+	}
+	close;
+}
+
+//================================================//
+
+function	script	GuildCastle_Warp	{
+
+	setarray .@Warp_GN$[1],"露依納","咘哩妥利亞","青林湖泊","巴基力雷恩","尼它堆","發菲依雅";
+	set .@Size,getarraysize(.@Warp_GN$);
+	mes $@GameService_Str$;
+	mes "^FF0000No^000000　^0000FFGuildCastle Name^000000";
+	mes "^FF0000 0^000000　^0000FF取消^000000";
+	for ( set @i,1; @i < .@Size; set @i,@i+1 ) {
+		mes "^FF0000 "+@i+"^000000　^0000FF"+.@Warp_GN$[@i]+"^000000";
+	}
+	next;
+	input @Warp;
+	switch(@Warp) {
+	case 0:
+		close;
+	case 1:
+		set @Warp,select("娜易修番斯塔引","乎汗修番佳烏","紐藍貝勒克","布勒刺布勒克","羅探布勒克");
+		set .@Warp_M$,"alde_gld";
+		setarray .@Warp_MX[1],45,95,142,239,264;
+		setarray .@Warp_MY[1],83,249,85,242,90;
+		break;
+	case 2:
+		set @Warp,select("雷普立溫","耀布力格","易司那普","培勒格","眉撒絲達刺");
+		set .@Warp_M$,"gef_fild13";
+		setarray .@Warp_MX[1],150,308,74,193,305;
+		setarray .@Warp_MY[1],50,240,287,278,87;
+		break;
+	case 3:
+		set @Warp,select("明亭","天壇","佛影","紅樓","竹林峴");
+		set .@Warp_M$,"pay_gld";
+		setarray .@Warp_MX[1],121,295,317,140,204;
+		setarray .@Warp_MY[1],233,116,293,160,266;
+		break;
+	case 4:
+		set @Warp,select("克林希特","斯般希特","拉茲立克斯","司葵古","關德");
+		set .@Warp_M$,"prt_gld";
+		setarray .@Warp_MX[1],134,240,153,111,208;
+		setarray .@Warp_MY[1],65,128,137,240,240;
+		break;
+	case 5:
+		set @Warp,select("喜民","安得郎克","畢得布萊因","何料德","思凱提樂尼");
+		set .@Warp_M$,"sch_gld";
+		setarray .@Warp_MX[1],293,288,97,137,71;
+		setarray .@Warp_MY[1],100,252,196,90,315;
+		break;
+	case 6:
+		set @Warp,select("馬勒杜","希樂","霍倫","吉本","巴拿迪斯");
+		set .@Warp_M$,"aru_gld";
+		setarray .@Warp_MX[1],158,83,68,299,292;
+		setarray .@Warp_MY[1],272,47,155,345,107;
+		break;
+	default:
+		callfunc "GuildCastle_Warp";
+	}
+	if ( getmapusers(.@Warp_M$) >= 0 ) {
+		set zeny,zeny - $@GSGW_Zeny;
+		warp .@Warp_M$,.@Warp_MX[@Warp],.@Warp_MY[@Warp];
+	} else {
+		callfunc "GuildCastle_Warp";
+	}
+	close;
+}
+
+//================================================//

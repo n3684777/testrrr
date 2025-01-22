@@ -1,0 +1,68 @@
+﻿# This file is a part of rAthena.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##########################################################################
+#	- ID                       (數值型別) 倉庫的唯一編號, 用於 'openstorage2' 指令碼指令, 這樣地圖伺服器才知道應該打開哪個倉庫.
+#	  Name                     (字串型別) 倉庫的名稱, 這個名稱會顯示在客戶端倉庫視窗的標題欄中.
+#	  Table                    (字串型別) 此倉庫對應的數據庫表名稱. 附加數據表的格式與自帶的 storage 表一樣.
+#	  Type                     (字串型別) 倉庫對應 STORAGE_DB, 揹包對應 INVENTORY_DB, 省略預設為 STORAGE_DB
+#	  Max                      (數值型別) *可選* 用來設定倉庫能存放的物品種類上限. 若未設定的話, 則會採用原始碼中 MAX_STORAGE 宏定
+###########################################################################
+# To access the premium storage, use script command 'openstorage2'.
+# If more premium storages are added, copy the structure of the storage table and match the table name in this config.
+# The 'Max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
+###########################################################################
+
+Header:
+  Type: INTER_SERVER_DB
+  Version: 1
+
+Body:
+  - ID: 0
+    Name: "個人倉庫"
+    Table: storage
+  - ID: 1
+    Name: "個人倉庫2"
+    Table: storage2
+    Type: STORAGE_DB
+    Max: 2000
+
+  - ID: 2
+    Name: "個人倉庫3"
+    Table: storage3
+    Type: STORAGE_DB
+    Max: 2000
+
+  - ID: 3
+    Name: "時裝倉庫"
+    Table: costume_storage
+    Max: 2000
+
+  - ID: 4
+    Name: "卡片倉庫"
+    Table: Card_storage
+    Max: 2000
+
+  - ID: 5
+    Name: "寵物倉庫"
+    Table: petegg_storage
+    Max: 2000
+
+
+Footer:
+  Imports:
+    - Path: conf/import/inter_server.yml

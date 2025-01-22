@@ -1,0 +1,167 @@
+﻿trinity,121,125,4	script	任務委托管理員#jor	10461,{
+
+//------------------------------------------------等級限制
+	if ((BaseLevel < 200)) {
+	mes "[任務委托管理員]";
+	mes "這任務限等級 ^ff0000200以上^000000 才能觀看";
+	close;
+	}
+
+	mes "[任務委托管理員]";
+	mes "你想要接取還是回報任務呢?";
+	mes "每天凌晨零點任務都會重置";
+	next;
+	switch(select("接取任務","所有任務回報","取消")){
+
+	case 1:
+		mes "[任務委托管理員]";
+		mes "你想接取哪個任務呢?";
+		next;
+		switch(select("無聲回答的例子(2)","軟軟的山珍海味(8)","打倒墮落天使冰蝸牛!(10)","清除蛇神的根(5)","打倒深根洞窟的魔物(8)","打倒蛇神的根1F的魔物(8)","打倒蛇神的根2F的魔物(8)","取消")){
+
+		case 1:
+			if(checkquest(8845,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(8844,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(8844,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 8845;
+			if(checkquest(8844,PLAYTIME)==2){erasequest 8844;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 2:
+			if(checkquest(8855,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(8856,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(8856,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 8855;
+			if(checkquest(8856,PLAYTIME)==2){erasequest 8856;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 3:
+			if(checkquest(11949,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(11950,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(11950,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 11949;
+			if(checkquest(11950,PLAYTIME)==2){erasequest 11950;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 4:
+			if(checkquest(17710,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(17711,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(17711,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 17710;
+			if(checkquest(17711,PLAYTIME)==2){erasequest 17711;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 5:
+			if(checkquest(18234,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(18235,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(18235,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 18234;
+			if(checkquest(18235,PLAYTIME)==2){erasequest 18235;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 6:
+			if(checkquest(18236,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(18237,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(18237,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 18236;
+			if(checkquest(18237,PLAYTIME)==2){erasequest 18237;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 7:
+			if(checkquest(18238,HUNTING)>=0){mes "[任務委托管理員]"; mes "您已經接了這個任務了唷~!"; close;}
+			if(checkquest(18239,PLAYTIME)==0){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			if(checkquest(18239,PLAYTIME)==1){mes "[任務委托管理員]"; mes "你今天已經接取過這個任務了"; close;}
+			setquest 18238;
+			if(checkquest(18239,PLAYTIME)==2){erasequest 18239;}
+			mes "[任務委托管理員]";
+			mes "任務接取完成";
+			close;
+
+		case 8:
+			close;
+		}
+
+	case 2:
+		if(checkquest(8845,HUNTING)>0) {
+		if (countitem(1001244)>=10 ) {
+		erasequest 8845;
+		setquest 8844;
+		delitem 1001244,10;
+		getitem 1001217,2;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		dispbottom "無聲回答的例子 任務回報完成!!";
+		}
+		}
+
+		if(checkquest(8855,HUNTING)==2) {
+		getitem 1001217,8;	//神聖的貓鬍鬚
+		erasequest 8855;
+		setquest 8856;
+		getexp 5000000,5000000;
+		dispbottom "軟軟的山珍海味 任務回報完成!!";
+		}
+
+		if(checkquest(11949,HUNTING)==2 ) { 
+		dispbottom "打倒墮落天使冰蝸牛! 任務回報完成!!";
+		erasequest 11949;
+		setquest 11950;
+		getitem 1001217,10;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		}
+
+		if(checkquest(17710,HUNTING)==2 ) { 
+		dispbottom "打倒墮落天使冰蝸牛! 任務回報完成!!";
+		erasequest 17710;
+		setquest 17711;
+		getitem 1001217,5;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		}
+
+		if(checkquest(18234,HUNTING)==2 ) { 
+		dispbottom "打倒深根洞窟的魔物 任務回報完成!!";
+		erasequest 18234;
+		setquest 18235;
+		getitem 1001217,8;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		}
+
+		if(checkquest(18236,HUNTING)==2 ) { 
+		dispbottom "打倒蛇神的根1F的魔物 任務回報完成!!";
+		erasequest 18236;
+		setquest 18237;
+		getitem 1001217,8;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		}
+
+		if(checkquest(18238,HUNTING)==2 ) { 
+		dispbottom "打倒蛇神的根2F的魔物 任務回報完成!!";
+		erasequest 18238;
+		setquest 18239;
+		getitem 1001217,8;	//神聖的貓鬍鬚
+		getexp 5000000,5000000;
+		}
+
+		mes "[任務委托管理員]";
+		mes "已完成的任務處理完畢";
+		close;
+
+	case 3:
+		close;
+	}
+OnInit:
+	waitingroom "不死之人每日任務",0;
+	end;
+}
+

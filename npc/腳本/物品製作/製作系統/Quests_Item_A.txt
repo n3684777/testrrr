@@ -1,0 +1,334 @@
+//====================================================//
+//====================================================//
+//==製作人 : 陳小修 (SkyTwo) 　　　　　　Eathena　　==//
+//==更新日期 : 西元 2008/06/03　　　　　　　Script　==//
+//==腳本版號 : 繁體中文 v1.0 正式版　　　　　　　　 ==//
+//==腳本名稱 : 製作系統　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==腳本出處 : http://srogm.no-ip.info/forum　　　　==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==資料來源 : 台灣仙境傳說官方網站　　　　　　　　 ==//
+//==　　　　　 天野幻境　　　　　　　　　　　　　　 ==//
+//==　　　　　　　　　　　　　　　　　　　　　　　　==//
+//==各位大哥大姐轉載請保留以上，萬分感激。　　　　　==//
+//====================================================//
+//====================================================//
+
+function	script	Quests_Doll	{
+
+	mes "[製作系統]";
+	mes "^FF0000瘋兔^000000　　可換　　　^0000FF柺杖糖 1^000000 個";
+	mes "^FF0000波利^000000　　可換　^0000FF頻果^000000or^0000FF糖果 1^000000 個";
+	mes "^FF0000蒼蠅^000000　　可換　　　^0000FF柺杖糖 1^000000 個";
+	mes "^FF0000巴風特^000000　可換　　　^0000FF萬能藥 5^000000 個";
+	mes "^FF0000俄塞里斯^000000可換^0000FF瑪絲黛拉果實 2^000000 個";
+	mes "^FF0000搖滾蝗蟲^000000可換　　　^0000FF香蕉汁 7^000000 個";
+	mes "^FF0000魔菇^000000　　可換　　　　^0000FF薑餅 5^000000 個";
+	mes "^FF0000溜溜猴^000000　可換　　^0000FF天地樹芽 1^000000 個";
+	mes "^FF0000狸貓^000000　　可換　　　^0000FF小蛋糕 3^000000 個";
+	next;
+	switch(select("用 ^FF0000瘋兔娃娃^000000 換取","用 ^FF0000波利娃娃^000000 換取",
+			"用 ^FF0000蒼蠅娃娃^000000 換取","用 ^FF0000巴風特娃娃^000000 換取",
+			"用 ^FF0000俄塞里斯娃娃^000000 換取","用 ^FF0000搖滾蝗蟲娃娃^000000 換取",
+			"用 ^FF0000魔菇娃娃^000000 換取","用 ^FF0000溜溜猴娃娃^000000 換取",
+			"用 ^FF0000狸貓娃娃^000000 換取")) {
+case 1:
+	if ( countitem (740) < 1 )
+	{	dispbottom "您的瘋兔娃娃數量不足";	close;	}
+	delitem 740,1;
+	getitem 530,1;
+	close;
+case 2:
+	if ( countitem (741) < 1 )
+	{	dispbottom "您的波利娃娃數量不足";	close;	}
+	delitem 741,1;
+	set @GetItem,rand(1,2);
+	if ( @GetItem == 1 ) getitem 512,1;
+	if ( @GetItem == 2 ) getitem 529,1;
+	close;
+case 3:
+	if ( countitem (742) < 1 )
+	{	dispbottom "您的蒼蠅娃娃數量不足";	close;	}
+	delitem 742,1;
+	getitem 530,1;
+	close;
+case 4:
+	if ( countitem (750) < 1 )
+	{	dispbottom "您的巴風特娃娃數量不足";	close;	}
+	delitem 750,1;
+	getitem 525,5;
+	close;
+case 5:
+	if ( countitem (751) < 1 )
+	{	dispbottom "您的俄塞里斯娃娃數量不足";	close;	}
+	delitem 751,1;
+	getitem 522,2;
+	close;
+case 6:
+	if ( countitem (752) < 1 )
+	{	dispbottom "您的搖滾蝗蟲娃娃數量不足";	close;	}
+	delitem 752,1;
+	getitem 532,7;
+	close;
+case 7:
+	if ( countitem (743) < 1 )
+	{	dispbottom "您的魔菇娃娃數量不足";	close;	}
+	delitem 743,1;
+	getitem 538,5;
+	close;
+case 8:
+	if ( countitem (753) < 1 )
+	{	dispbottom "您的溜溜猴娃娃數量不足";	close;	}
+	delitem 753,1;
+	getitem 608,1;
+	close;
+case 9:
+	if ( countitem (754) < 1 )
+	{	dispbottom "您的狸貓娃娃數量不足";	close;	}
+	delitem 754,1;
+	getitem 539,3;
+	close;	}
+}
+
+//====================================================//
+
+function	script	Quests_Red	{
+
+	mes "[製作系統]";
+	mes "製作 ^0000FF紅色藥水^000000 所需材料如下：";
+	mes "材料 ^FF0000樹根　　　　 6^000000 個";
+	mes "　或 ^FF0000傑勒比結晶　10^000000 個";
+	mes "　或 ^FF0000毛　　　　　10^000000 個";
+	mes "　或 ^FF0000蛹殼　　　　 6^000000 個";
+	mes "　或 ^FF0000羽毛　　　　 7^000000 個";
+	mes "　或 ^FF0000堅硬外殼　　 5^000000 個";
+	mes "　或 ^FF0000昆蟲外殼　　 1^000000 個";
+	mes "　";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	switch(select("用 ^FF0000樹根^000000 換取","用 ^FF0000傑勒比結晶^000000 換取",
+			"用 ^FF0000毛^000000 換取","用 ^FF0000蛹殼^000000 換取",
+			"用 ^FF0000羽毛^000000 換取","用 ^FF0000堅硬外殼^000000 換取",
+			"用 ^FF0000昆蟲外殼^000000 換取")) {
+case 1:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (902) < 6 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 902,.@input * 6;
+	getitem 501,.@input;
+	close;
+case 2:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (909) < 10 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 909,.@input * 10;
+	getitem 501,.@input;
+	close;
+case 3:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (914) < 10 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 914,.@input * 10;
+	getitem 501,.@input;
+	close;
+case 4:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (915) < 6 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 915,.@input * 6;
+	getitem 501,.@input;
+	close;
+case 5:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (916) < 7 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 916,.@input * 7;
+	getitem 501,.@input;
+	close;
+case 6:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (935) < 5 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 935,.@input * 5;
+	getitem 501,.@input;
+	close;
+case 7:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (955) < .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 955,.@input;
+	getitem 501,.@input;
+	close;	}
+}
+
+//====================================================//
+
+
+function	script	Quests_Stone	{
+
+	mes "[製作系統]";
+	mes "^FF0000火靈原石 8^000000 顆 可換取";
+	mes "^0000FF水靈原石^000000 或";
+	mes "^0000FF風靈原石^000000 或";
+	mes "^0000FF土靈原石^000000";
+	next;
+	mes "[製作系統]";
+	mes "^FF0000水靈原石 8^000000 顆 可換取";
+	mes "^0000FF火靈原石^000000 或";
+	mes "^0000FF風靈原石^000000 或";
+	mes "^0000FF土靈原石^000000";
+	next;
+	mes "[製作系統]";
+	mes "^FF0000風靈原石 8^000000 顆 可換取";
+	mes "^0000FF火靈原石^000000 或";
+	mes "^0000FF水靈原石^000000 或";
+	mes "^0000FF土靈原石^000000";
+	next;
+	mes "[製作系統]";
+	mes "^FF0000土靈原石  8^000000 顆 可換取";
+	mes "^0000FF火靈原石^000000 或";
+	mes "^0000FF水靈原石^000000";
+	mes "^FF0000土靈原石 12^000000 顆 可換取";
+	mes "^0000FF風靈原石^000000";
+	next;
+	switch(select("用 ^FF0000火靈原石 8 ^000000顆 換取","用 ^FF0000水靈原石 8 ^000000顆 換取",
+			"用 ^FF0000風靈原石 8 ^000000顆 換取","用 ^FF0000土靈原石 8 ^000000顆 換取",
+			"用 ^FF0000土靈原石 12 ^000000顆 換取")) {
+case 1:
+	if ( countitem (994) < 8 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 994,8;
+	set @gi,rand(3);
+	if (@gi ==0) getitem 995,1;
+	if (@gi ==1) getitem 996,1;
+	if (@gi ==2) getitem 997,1;
+	close;
+case 2:
+	if ( countitem (995) < 8 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 995,8;
+	set @gi,rand(3);
+	if (@gi ==0) getitem 994,1;
+	if (@gi ==1) getitem 996,1;
+	if (@gi ==2) getitem 997,1;
+	close;
+case 3:
+	if ( countitem (996) < 8 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 996,8;
+	set @gi,rand(3);
+	if (@gi ==0) getitem 994,1;
+	if (@gi ==1) getitem 995,1;
+	if (@gi ==2) getitem 997,1;
+	close;
+case 4:
+	if ( countitem (997) < 8 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 997,8;
+	set @gi,rand(2);
+	if (@gi ==0) getitem 994,1;
+	if (@gi ==1) getitem 995,1;
+	close;
+case 5:
+	if ( countitem (997) < 12 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 997,12;
+	getitem 996,1;
+	close;	}
+}
+
+//====================================================//
+
+function	script	Quests_Gemstone	{
+
+	mes "[製作系統]";
+	mes "換取 ^0000FF黃色魔力礦石^000000 所需材料如下：";
+	mes "材料 ^FF0000紅色魔力礦石 2^000000 顆";
+
+	mes "換取 ^0000FF紅色魔力礦石^000000 所需材料如下：";
+	mes "材料 ^FF0000藍色魔力礦石 2^000000 顆";
+
+	mes "換取 ^0000FF藍色魔力礦石^000000 所需材料如下：";
+	mes "材料 ^FF0000黃色魔力礦石 2^000000 顆";
+	mes "　";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	switch(select("換取 ^0000FF黃色魔力礦石^000000",
+			"換取 ^0000FF紅色魔力礦石^000000",
+			"換取 ^0000FF藍色魔力礦石^000000")) {
+case 1:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (716) < 2 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 716,.@input * 2;
+	getitem 715,.@input;
+	close;
+case 2:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (717) < 2 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 717,.@input * 2;
+	getitem 716,.@input;
+	close;
+case 3:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (715) < 2 * .@input )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 715,.@input * 2;
+	getitem 717,.@input;
+	close;	}
+}
+
+//====================================================//
+
+function	script	Quests_Gemstone_2	{
+
+	mes "[製作系統]";
+	mes "換取 ^0000FF鋁^000000 所需材料如下：";
+	mes "材料 ^FF0000鋁原石 5^000000 顆";
+	mes "換取 ^0000FF神之金屬^000000 所需材料如下：";
+	mes "材料 ^FF0000神之金屬原石  5^000000 顆";
+	mes "　";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	switch(select("換取 ^0000FF鋁^000000","換取 ^0000FF神之金屬^000000")) {
+case 1:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (757) < .@input * 5 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 757,.@input * 5;
+	getitem 985,.@input;
+	close;
+case 2:
+	input .@input;
+	if ( .@input < 1  || .@input > 100 )
+	{	dispbottom "您輸入的數量不正確!!";	close;	}
+	if ( countitem (756) < .@input * 5 )
+	{	dispbottom "抱歉您身上的物品不足!!";	close;	}
+	delitem 756,.@input * 5;
+	getitem 984,.@input;
+	close;	}	}
+
+//====================================================//

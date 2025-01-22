@@ -1,0 +1,20 @@
+﻿
+	-	script	狩獵專精	-1,{
+OnPCStatCalcEvent:
+	if(getmapflag(strcharinfo(3),mf_gvg)) { end; }
+	//首領專精
+	if(#Mob_Quest_Boss> 0){ bonus2 bAddClass,Class_Boss,#Mob_Quest_Boss*2; bonus2 bMagicAddClass,Class_Boss,#Mob_Quest_Boss*2; }
+	//種族專精
+	if(#Mob_Quest_Formless >0){ bonus2 bAddRace,RC_Formless,#Mob_Quest_Formless*4; bonus2 bMagicAddRace,RC_Formless,#Mob_Quest_Formless*4; }
+	if(#Mob_Quest_Undead >0){ bonus2 bAddRace,RC_Undead,#Mob_Quest_Undead*4; bonus2 bMagicAddRace,RC_Undead,#Mob_Quest_Undead*4; }
+	if(#Mob_Quest_Brute >0){ bonus2 bAddRace,RC_Brute,#Mob_Quest_Brute*4; bonus2 bMagicAddRace,RC_Brute,#Mob_Quest_Brute*4; }
+	if(#Mob_Quest_Plant >0){ bonus2 bAddRace,RC_Plant,#Mob_Quest_Plant*4; bonus2 bMagicAddRace,RC_Plant,#Mob_Quest_Plant*4; }
+	if(#Mob_Quest_Insect >0){ bonus2 bAddRace,RC_Insect,#Mob_Quest_Insect*4; bonus2 bMagicAddRace,RC_Insect,#Mob_Quest_Insect*4; }
+	if(#Mob_Quest_Fish >0){ bonus2 bAddRace,RC_Fish,#Mob_Quest_Insect*4; bonus2 bMagicAddRace,RC_Fish,#Mob_Quest_v*4; }
+	if(#Mob_Quest_Demons >0){ bonus2 bAddRace,RC_Demon,#Mob_Quest_Demon*4; bonus2 bMagicAddRace,RC_Demon,#Mob_Quest_Demon*4; }
+	if(#Mob_Quest_DemiHuman  >0){ bonus2 bAddRace,RC_DemiHuman,#Mob_Quest_DemiHuman *4; bonus2 bMagicAddRace,RC_DemiHuman,#Mob_Quest_DemiHuman *4; }
+	if(#Mob_Quest_Angel >0){ bonus2 bAddRace,RC_Angel,#Mob_Quest_Angel*4; bonus2 bMagicAddRace,RC_Angel,#Mob_Quest_Angel*4; }
+	if(#Mob_Quest_Dragon >0){ bonus2 bAddRace,RC_Dragon,#Mob_Quest_Dragon*4; bonus2 bMagicAddRace,RC_Dragon,#Mob_Quest_Dragon*4; }
+	end;
+}
+

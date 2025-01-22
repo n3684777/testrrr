@@ -1,0 +1,883 @@
+//= The Last Room Instance 'Episode 15.1'  (jRO Servers)
+//===== By: ================================================== 
+//= pengc2010
+//===== Current Version: ===================================== 
+//= 1.0 (Chinese version)
+//===== Compatible With: ===================================== 
+//= Hercules
+//===== Additional Comments: ================================= 
+//= [AEGIS Playing Conversion]
+//= Translated Korean Texts [pengc2010]
+//= 1.0 First Version, quest part is not completed [pengc2010]
+//============================================================
+//============================================================
+// Instance Entrance
+//============================================================
+vdistrict1,18,65,4	script	最後的房間管理者	4_M_BLUEMAN,{ //616
+
+	//副本任務獎勵
+	if(checkquest(32057,HUNTING)==2 ) { 
+	dispbottom "最後的房間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32057; }
+
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_24 < gettime(8) ){
+	set Instance_Bout_24,10;
+	set day_Instance_Bout_24,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_24 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[馬可伊瑟]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "最後的房間";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[馬可伊瑟]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_24+"^000000 ]";
+	mes "副本獎勵：";
+	mes "完整的機械零件x1";
+	mes "重力安全裝置x1";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 150) {
+			mes "[馬可伊瑟]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.150 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[馬可伊瑟]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[馬可伊瑟]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 150) {
+			mes "[馬可伊瑟]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.150 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_24,Instance_Bout_24-1;
+
+			//副本任務
+			if(checkquest(32057,HUNTING)<0 ){setquest 32057;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+	
+OnInit:
+	waitingroom "最後的房間",0;
+	end;
+}
+
+
+//=================================================================
+// Instance Start
+//=================================================================
+
+1@uns,145,32,5	script	阿魯普奧守衛#tlr1	4_M_BLACKMAN,{//615
+	mes "[阿魯普奧守衛]";
+	mes "這邊也是...到處都是奇怪的痕跡。";
+	mes "到底是什麼樣的重型機械造成的？";
+	cutin "bu_alp3.bmp", 2;
+	close2;
+	cutin "",255;
+	end;
+
+}
+
+1@uns,145,37,3	script	塔瑪林#tlr1	4_M_TAMARIN,{//10027
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "貝莉蒂...你沒事吧？";
+	mes "我在這裡照看她，你們先走吧";
+	close2;
+	cutin "",255;
+	end;
+}
+
+1@uns,143,36,3	script	貝莉蒂#tlr1	4_F_BERRYTEA,{//10078
+	if('TLR_QUE) {
+		cutin "EP15_2_brt_6", 2;
+		mes "[貝莉蒂]";
+		mes "頭... ...";
+		mes "要裂開了...呃！";
+		close2;
+		cutin "",255;
+		end;
+	}
+	if(getpartyleader(getcharid(1)) != strcharinfo(0)) {
+		mes "請等待隊長觸發劇情。";
+		close;
+	}
+	.@map$ = instance_mapname("1@uns");
+	cutin "EP15_2_brt_6",2;
+	mes "[貝莉蒂]";
+	mes "晤... ...";
+	mes "突然感覺不太舒服...";
+	npctalk "晤... ...突然感覺不太舒服...";
+	next;
+	mes "[貝莉蒂]";
+	mes "頭... ...";
+	mes "要裂開了...呃！";
+	npctalk "頭... ...要裂開了...呃！";
+	next;
+	mes "[貝莉蒂]";
+	mes "晤... ...";
+	npctalk "晤... ...";
+	next;
+	cutin "bu_du5",2;
+	mes "[迪利安]";
+	mes "喂~ 大姐！";
+	mes "你怎麼啦？";
+	npctalk "喂~ 大姐！你怎麼啦？",instance_npcname("迪利安#tlr1");
+	next;
+	cutin "EP15_2_brt_7",2;
+	mes "[貝莉蒂]";
+	mes "呃... 不行...";
+	npctalk "呃... 不行...";
+	next;
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "貝莉蒂...你沒事吧？";
+	npctalk "貝莉蒂...你沒事吧？",instance_npcname("塔瑪林#tlr1");
+	next;
+	cutin "EP15_2_brt_6",2;
+	mes "[貝莉蒂]";
+	mes "還是... 先休息一下吧...";
+	npctalk "還是... 先休息一下吧...";
+	next;
+	cutin "bu_du1",2;
+	mes "[迪利安]";
+	mes "看來大姐你還是在這裡等我們回來吧。";
+	npctalk "看來大姐你還是在這裡等我們回來吧。",instance_npcname("迪利安#tlr1");
+	next;
+	cutin "EP15_2_brt_4",2;
+	mes "[貝莉蒂]";
+	mes "不用...";
+	mes "我會追上你們的，";
+	mes "你們就先過去吧。";
+	npctalk "不用...我會追上你們的，你們就先過去吧。";
+	next;
+	donpcevent instance_npcname("#tlrcontrol1") + "::OnStart";
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "這裡就先交給我吧。";
+	mes "你也快跟上迪利安他們，我們晚些時候匯合。";
+	npctalk "這裡就先交給我吧。你也快跟上迪利安他們，我們晚些時候匯合。",instance_npcname("塔瑪林#tlr1");
+	close2;
+	cutin "",255;
+	end;
+	
+}
+
+1@uns,142,38,5	script	迪利安#tlr1	4_M_REDMAN,{//628
+	cutin "bu_du2", 2;
+	mes "[迪利安]";
+	mes "不用怕！跟在我後面很安全的。";
+	close2;
+	cutin "",255;
+	end;
+}
+
+1@uns,142,39,5	script	麥吉絲汀#tlr1	4_F_PINKWOMAN,{//628
+	cutin "bu_maggi4", 2;
+	mes "[麥吉絲汀]";
+	mes "這個房間好可怕...";
+	close2;
+	cutin "",255;
+	end;
+}
+
+1@uns,139,41,3	script	馬可伊瑟#tlr1	4_M_BLUEMAN,{//616
+	mes "[馬可伊瑟]";
+	mes "這個地方，感覺不對勁...";
+	mes "大家前進時一定要小心啊。";
+	cutin "bu_mark4.bmp", 0;
+	close2;
+	cutin "",255;
+	end;
+}
+
+1@uns,0,0,0	script	#tlrcontrol1	-1,{
+		end;
+	OnStart:
+		hideonnpc instance_npcname("馬可伊瑟#tlr1");
+		hideonnpc instance_npcname("迪利安#tlr1");
+		hideonnpc instance_npcname("麥吉絲汀#tlr1");
+		hideonnpc instance_npcname("阿魯普奧守衛#tlr1");
+		hideonnpc instance_npcname("塔瑪林#tlr1");
+		hideonnpc instance_npcname("貝莉蒂#tlr1");
+		'TLR_QUE = 1;
+		initnpctimer;
+		end;
+		
+	OnTimer1000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 警告！警告！",bc_map,0xFF0000;
+		end;
+
+	OnTimer3000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 第一區域發現入侵者，請即刻離開。",bc_map,0xFF0000;
+		end;
+
+	OnTimer6000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 侵入者無視警報，判斷有害。",bc_map,0xFF0000;
+		end;
+		
+	OnTimer8000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 啟動防衛系統。",bc_map,0xFF0000;
+		end;
+
+	OnTimer10000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 防衛系統啟動完畢。",bc_map,0xFF0000;
+		donpcevent instance_npcname("#tlrmob1")+"::OnStart";
+		end;
+
+	OnTimer13000:
+		stopnpctimer;
+		mapannounce instance_mapname("1@uns"),"系統信息 : 入口已經完全關閉，侵入者肅清開始。",bc_map,0xFF0000;
+		end;
+		
+	OnInstanceInit:
+		'TLR_QUE = 0;
+		end;
+}
+
+
+1@uns,0,0,0	script	#tlrmob1	-1,{
+		end;
+	OnStart:
+		.@map$ = instance_mapname("1@uns");
+		.@label$ = instance_npcname("#tlrmob1") + "::OnMobDead";
+		areamonster .@map$,124,49,132,67,"--ja--",3251,4,.@label$;
+		areamonster .@map$,124,49,132,67,"--ja--",3252,4,.@label$;
+		areamonster .@map$,100,52,51,101,"--ja--",3251,12,.@label$;
+		areamonster .@map$,100,52,51,101,"--ja--",3252,12,.@label$;
+		monster .@map$,41,46,"--ja--",3253,1,instance_npcname("#tlrmob1")+"::OnSysMSG";
+		'TLR_MOB1 = 32;
+		end;
+		
+	OnSysMSG:
+		end;
+		
+	OnMobDead:
+		'TLR_MOB1 -= 1;
+		if('TLR_MOB1)
+			end;
+		mapannounce instance_mapname("1@uns"),"系統信息 : 檢測到防衛系統異常，系統暫時待機。",bc_map,0xFF0000;
+		enablenpc instance_npcname("塔瑪林#tlr2");
+		end;
+}
+
+1@uns,87,129,3	script	塔瑪林#tlr2	4_M_TAMARIN,{//10027
+	if('TLR_QUE > 1) {
+		cutin "EP143_TASMI", 2;
+		mes "[塔瑪林]";
+		mes "從這邊的通道走。";
+		close2;
+		cutin "",255;
+		end;
+	}
+	if(getpartyleader(getcharid(1)) != strcharinfo(0)) {
+		mes "請等待隊長觸發劇情。";
+		close;
+	}
+	.@map$ = instance_mapname("1@uns");
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "哈...哈...";
+	mes "貝莉蒂她...突然...";
+	mes "站起來就跑了...";
+	npctalk "哈...哈...貝莉蒂她...突然...站起來就跑了...";
+	next;
+	mes "[塔瑪林]";
+	mes "完全追不上她...";
+	mes "...哈...哈...";
+	npctalk "完全追不上她...哈...哈...";
+	sleep2 1000;
+	mapannounce instance_mapname("1@uns"),"系統信息 : 檢測到不明物體從第一區域向第二區域移動。",bc_map,0xFF0000;
+	next;
+	mes "[塔瑪林]";
+	mes "難道是貝莉蒂...";
+	mes "已經到第二區了？";
+	npctalk "難道是貝莉蒂...已經到第二區了？";
+	sleep2 1000;
+	mapannounce instance_mapname("1@uns"),"系統信息 : 啟動緊急應對程序。",bc_map,0xFF0000;
+	next;
+	mes "[塔瑪林]";
+	mes "我們快點去找貝莉蒂吧。";
+	npctalk "我們快點去找貝莉蒂吧。";
+	next;
+	mes "[塔瑪林]";
+	mes "從這邊的通道走。";
+	npctalk "從這邊的通道走。";
+	enablenpc instance_npcname("#tlrwarp1");
+	for(.@i = 1; .@i <= 12; .@i++)
+		enablenpc instance_npcname("#tlrtrap"+.@i);
+	'TLR_QUE = 2;
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("塔瑪林#tlr2");
+		disablenpc instance_npcname("#tlrwarp1");
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+		end;
+}
+
+1@uns,100,121,0	warp	#tlrwarp1	1,1,1@uns,144,111
+
+1@uns,158,94,0	script	#tlrtrap1	HIDDEN_WARP_NPC,3,3,{
+	OnTouch_:
+		hideonnpc instance_npcname(strnpcinfo(0));
+		getmapxy(.@map$,.@x,.@y,1,instance_npcname(strnpcinfo(0)));
+		areamonster .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"--ja--",3251,2;
+		areamonster .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"--ja--",3252,2;		
+		mapannounce instance_mapname("1@uns"),"系統信息 : 確認第二區域入侵者，開始排除。",bc_map,0xFF0000;
+		disablenpc instance_npcname(strnpcinfo(0));
+		end;
+}
+
+1@uns,164,97,0	duplicate(#tlrtrap1)	#tlrtrap2	HIDDEN_WARP_NPC,3,3
+1@uns,170,97,0	duplicate(#tlrtrap1)	#tlrtrap3	HIDDEN_WARP_NPC,3,3
+1@uns,189,97,0	duplicate(#tlrtrap1)	#tlrtrap4	HIDDEN_WARP_NPC,3,3
+1@uns,194,95,0	duplicate(#tlrtrap1)	#tlrtrap5	HIDDEN_WARP_NPC,3,3
+1@uns,198,96,0	duplicate(#tlrtrap1)	#tlrtrap6	HIDDEN_WARP_NPC,3,3
+1@uns,216,91,0	duplicate(#tlrtrap1)	#tlrtrap7	HIDDEN_WARP_NPC,3,3
+1@uns,224,81,0	duplicate(#tlrtrap1)	#tlrtrap8	HIDDEN_WARP_NPC,3,3
+1@uns,227,73,0	duplicate(#tlrtrap1)	#tlrtrap9	HIDDEN_WARP_NPC,3,3
+1@uns,227,68,0	duplicate(#tlrtrap1)	#tlrtrap10	HIDDEN_WARP_NPC,3,3
+1@uns,219,63,0	duplicate(#tlrtrap1)	#tlrtrap11	HIDDEN_WARP_NPC,3,3
+1@uns,201,60,0	duplicate(#tlrtrap1)	#tlrtrap12	HIDDEN_WARP_NPC,3,3
+
+
+1@uns,224,29,3	script	貝莉蒂#tlr2	4_F_BERRYTEA,{//10078
+	cutin "EP15_2_brt_6", 2;
+	mes "[貝莉蒂]";
+	mes "晤... 這裡是...";
+	mes "我為什麼會在這裡？...";
+	next;
+	mes "[貝莉蒂]";
+	mes "頭... 快裂開了...";
+	mes "這個房間，一直有什麼聲音...";
+	next;
+	if(select("進入最後的房間","留在這裡") == 2) {
+		close2;
+		cutin "",255;
+		end;
+	}
+	cutin "EP15_2_brt_7", 2;
+	mes "[貝莉蒂]";
+	mes "必須要盡快...";
+	close2;
+	cutin "",255;
+	setquest 11380;
+	if (instance_mapname("1@uns") !="")
+		warp instance_mapname("1@uns"),241,256;
+	end;
+}
+
+1@uns,242,254,3	script	貝莉蒂#tlr3	4_F_BERRYTEA,{//10078
+	if(getpartyleader(getcharid(1)) != strcharinfo(0)) {
+		mes "請等待隊長觸發劇情。";
+		close;
+	}
+	.@map$ = instance_mapname("1@uns");
+	cutin "P15_2_brt_7",2;
+	mes "[貝莉蒂]";
+	mes "終於...回來了啊...";
+	mes "真的回來了...";
+	close2;
+	cutin "",255;
+	donpcevent instance_npcname("#tlrfinal1")+"::OnStart";
+	hideonnpc instance_npcname("貝莉蒂#tlr3");
+	disablenpc instance_npcname("貝莉蒂#tlr3");
+	enablenpc instance_npcname("貝莉蒂#tlr4");
+	end;
+}
+
+1@uns,0,0,0	script	#tlrfinal1	-1,{
+		end;
+	OnStart:
+		initnpctimer;
+		end;
+	OnTimer3000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 主控室發現入侵者。",bc_map,0xFF0000;
+		end;
+	OnTimer6000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 所有系統的優先級強制變更。",bc_map,0xFF0000;
+		end;
+	OnTimer9000:
+		mapannounce instance_mapname("1@uns"),"系統信息 : 以排除主控室入侵者為最高優先事項，全部系統進入戰鬥模式。",bc_map,0xFF0000;
+		end;
+	OnTimer12000:
+		stopnpctimer;
+		.@map$ = instance_mapname("1@uns");
+		.@label$ = instance_npcname("#tlrfinal1")+"::OnSysMSG";
+		mapannounce .@map$,"系統信息 : 請無關人員迅速撤離。",bc_map,0xFF0000;
+		areamonster .@map$,232,256,259,274,"--ja--",3253,5,.@label$;
+		'TLR_SYSMSG = 5;
+		end;
+		
+	OnSysMSG:
+		'TLR_SYSMSG -= 1;
+		if('TLR_SYSMSG)
+			end;
+		donpcevent instance_npcname("貝莉蒂#tlr4")+"::OnStart";
+		end;
+		
+}
+
+1@uns,245,265,3	script	貝莉蒂#tlr4	4_F_BERRYTEA,{//10078
+		cutin "EP15_2_brt_7", 2;
+		mes "[貝莉蒂]";
+		mes "......";
+		close2;
+		cutin "",255;
+		end;
+	OnStart:
+		initnpctimer;
+		enablenpc instance_npcname("系統信息#tlr4");
+		end;
+	OnTimer1000:
+		npctalk "防衛系統出現嚴重錯誤。",instance_npcname("系統信息#tlr4");
+		mapannounce instance_mapname("1@uns"),"系統信息 : 防衛系統出現嚴重錯誤。",bc_map,0xFF0000;
+		end;
+	
+	OnTimer3000:
+		npctalk ".....";
+		end;
+		
+	OnTimer6000:
+		npctalk "排除...控制模式...變更";
+		specialeffect 432;
+		sleep 1000;
+		specialeffect 94;
+		sleep 1000;
+		specialeffect 52;
+		sleep 500;
+		specialeffect 30;
+		sleep 1500;
+		npctalk "控制...確認...";
+		end;
+		
+	OnTimer13000:
+		npctalk "開始構築輔助系統...構築完成";
+		end;
+	OnTimer16000:
+		npctalk "最高優先級設定...輔助系統確認啟動。";
+		end;
+	OnTimer18000:
+		stopnpctimer;
+		specialeffect 514;
+		specialeffect 94;
+		sleep 1500;
+		for(.@i = 0; .@i < 3; .@i++) {
+			specialeffect 238;
+			sleep 500;
+		}
+		sleep 2000;
+		donpcevent instance_npcname("#tlrfinal2") + "::OnStart";
+		end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("貝莉蒂#tlr4");
+		end;
+}
+
+1@uns,246,266,3	script	系統信息#tlr4	4_SYS_MSG,{//10083
+		end;
+	OnInstanceInit:
+		disablenpc instance_npcname("系統信息#tlr4");
+		end;
+}
+
+
+
+
+
+1@uns,0,0,0	script	#tlrfinal2	-1,{
+	end;
+	OnStart:
+		.@map$ = instance_mapname("1@uns");
+		disablenpc instance_npcname("貝莉蒂#tlr4");
+		disablenpc instance_npcname("系統信息#tlr4");
+		areamonster .@map$,232,256,259,274,"--ja--",3254,1,"#tlrfinal2::OnBossDead";
+		end;
+
+	OnBossDead:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【最後的房間】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下挑戰成功",bc_all,0xD7BA98;
+
+		'TLR_FINALSYS[0] = 0;
+		stopnpctimer;
+		mapannounce instance_mapname("1@uns"),"系統信息 : 侵入者排除失敗，空間限制解除。",bc_map,0xFF0000;
+		for(.@i = 1; .@i <= 4; .@i++)
+			donpcevent instance_npcname("#tlrsysmsg"+.@i)+"::OnEnd";
+		enablenpc instance_npcname("阿魯普奧守衛#tlrend");
+		enablenpc instance_npcname("塔瑪林#tlrend");
+		enablenpc instance_npcname("貝莉蒂#tlrend");
+		enablenpc instance_npcname("麥吉絲汀#tlrend");
+		enablenpc instance_npcname("迪利安#tlrend");
+		enablenpc instance_npcname("馬可伊瑟#tlrend");
+		end;
+}
+
+
+
+1@uns,0,0,0	script	#tlrsysmsg1	-1,{
+		end;
+	OnTimer180000:
+		stopnpctimer;
+	OnStart:
+		'TLR_FINALSYS[1] = monster(instance_mapname("1@uns"),264,265,"--ja--",3253,1,instance_npcname("#tlrsysmsg1")+"::OnSysMSG");
+		end;
+	OnSysMSG:
+		'TLR_FINALSYS[1] = 0;
+		initnpctimer;
+		end;
+		
+	OnEnd:
+		stopnpctimer;
+		if('TLR_FINALSYS[1])
+			mobremove 'TLR_FINALSYS[1];
+		end;
+}
+
+1@uns,0,0,0	script	#tlrsysmsg2	-1,{
+		end;
+	OnTimer180000:
+		stopnpctimer;
+	OnStart:
+		'TLR_FINALSYS[2] = monster(instance_mapname("1@uns"),245,279,"--ja--",3253,1,instance_npcname("#tlrsysmsg2")+"::OnSysMSG");
+		end;
+	OnSysMSG:
+		'TLR_FINALSYS[2] = 0;
+		initnpctimer;
+		end;
+		
+	OnEnd:
+		stopnpctimer;
+		if('TLR_FINALSYS[2])
+			mobremove 'TLR_FINALSYS[2];
+		end;
+}
+
+1@uns,0,0,0	script	#tlrsysmsg3	-1,{
+		end;
+	OnTimer180000:
+		stopnpctimer;
+	OnStart:
+		'TLR_FINALSYS[3] = monster(instance_mapname("1@uns"),226,265,"--ja--",3253,1,instance_npcname("#tlrsysmsg3")+"::OnSysMSG");
+		end;
+	OnSysMSG:
+		'TLR_FINALSYS[3] = 0;
+		initnpctimer;
+		end;
+
+	OnEnd:
+		stopnpctimer;
+		if('TLR_FINALSYS[3])
+			mobremove 'TLR_FINALSYS[3];
+		end;
+
+}
+
+1@uns,0,0,0	script	#tlrsysmsg4	-1,{
+		end;
+	OnTimer180000:
+		stopnpctimer;
+	OnStart:
+		'TLR_FINALSYS[4] = monster(instance_mapname("1@uns"),245,252,"--ja--",3253,1,instance_npcname("#tlrsysmsg4")+"::OnSysMSG");
+		end;
+	OnSysMSG:
+		'TLR_FINALSYS[4] = 0;
+		initnpctimer;
+		end;
+
+	OnEnd:
+		stopnpctimer;
+		if('TLR_FINALSYS[4])
+			mobremove 'TLR_FINALSYS[4];
+		end;
+}
+
+
+
+1@uns,236,258,5	script	阿魯普奧守衛#tlrend	4_M_BLACKMAN,{//615
+	cutin "bu_alp3.bmp", 2;
+	mes "[阿魯普奧守衛]";
+	mes "噓...有什麼聲音！";
+	close2;
+	cutin "",255;
+	end;
+
+	OnInstanceInit:
+		disablenpc instance_npcname("阿魯普奧守衛#tlrend");
+		end;
+}
+
+1@uns,244,255,3	script	塔瑪林#tlrend	4_M_TAMARIN,{//10027
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "貝莉蒂是怎麼了？";
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("塔瑪林#tlrend");
+		end;
+}
+
+1@uns,242,255,3	script	貝莉蒂#tlrend	4_F_BERRYTEA,{//10078
+	cutin "bu_du5", 2;
+	mes "[迪利安]";
+	mes "大姐~！";
+	mes "突然是怎麼了？你沒事吧？";
+	npctalk "大姐~突然是怎麼了？你沒事吧？",instance_npcname("迪利安#tlrend");
+	next;
+	cutin "EP143_TASMI",2;
+	mes "[塔瑪林]";
+	mes "貝莉蒂，冷靜下來。";
+	npctalk "貝莉蒂，先冷靜下來。",instance_npcname("塔瑪林#tlrend");
+	next;
+	cutin "bu_mark4.bmp", 0;
+	mes "[馬可伊瑟]";
+	mes "大家沒事吧？我這就給你們治療。";
+	npctalk "大家沒事吧？我這就給你們治療。",instance_npcname("馬可伊瑟#tlrend");
+	next;
+	cutin "EP15_2_brt_4", 2;
+	mes "[貝莉蒂]";
+	mes "呃...好...好難受...";
+	npctalk "呃...好...好難受....";
+	next;
+	cutin "EP15_2_brt_4", 2;
+	mes "[貝莉蒂]";
+	mes "咦？你們...";
+	mes "怎麼一臉凝重的表情啊？出什麼事了？";
+	npctalk "咦？你們...怎麼一臉凝重的表情啊？出什麼事了？";
+	next;
+	cutin "bu_du3", 2;
+	mes "[迪利安]";
+	mes "你在說什麼呢大姐~？";
+	mes "出什麼事了？這應該是我們要問的吧...";
+	npctalk "你在說什麼呢大姐~？出什麼事了？這應該是我們要問的吧...",instance_npcname("迪利安#tlrend");
+	next;
+	cutin "EP15_2_brt_4", 2;
+	mes "[貝莉蒂]";
+	mes "什麼意思？";
+	npctalk "什麼意思？";
+	next;
+	mes "[貝莉蒂]";
+	mes "話說回來，這裡是什麼地方？";
+	npctalk "話說回來，這裡是什麼地方？";
+	next;
+	cutin "EP143_TAHUK",2;
+	mes "[塔瑪林]";
+	mes "貝莉蒂...難道你都不記得了？";
+	npctalk "貝莉蒂...難道你都不記得了？",instance_npcname("塔瑪林#tlrend");
+	next;
+	cutin "EP15_2_brt_1", 2;
+	mes "[貝莉蒂]";
+	mes "呃...我們來到地下設施，然後我突然頭疼得像要裂開一樣...";
+	npctalk "呃...我們來到地下設施，然後我突然頭疼得像要裂開一樣...";
+	next;
+	cutin "EP15_2_brt_5", 2;
+	mes "[貝莉蒂]";
+	mes "然後回過神來，就在這裡了...";
+	npctalk "然後回過神來，就在這裡了...";
+	next;
+	cutin "bu_du5", 2;
+	mes "[迪利安]";
+	mes "那~？";
+	mes "剛剛為什麼要攻擊我們啊？";
+	npctalk "那~？剛剛為什麼要攻擊我們啊？",instance_npcname("迪利安#tlrend");
+	next;
+	cutin "bu_alp3", 2;
+	mes "[阿魯普奧守衛]";
+	mes "現在應該沒有閒聊的時間吧？";
+	npctalk "現在應該沒有閒聊的時間吧？",instance_npcname("阿魯普奧守衛#tlrend");
+	next;
+	cutin "bu_du5", 2;
+	mes "[迪利安]";
+	mes "但是...剛剛！";
+	npctalk "但是...剛剛！",instance_npcname("迪利安#tlrend");
+	next;
+	cutin "bu_alp1", 2;
+	mes "[阿魯普奧守衛]";
+	mes "聽不見周圍的聲音麼？有什麼東西向這裡靠近了！";
+	npctalk "聽不見周圍的聲音麼？有什麼東西向這裡靠近了！",instance_npcname("阿魯普奧守衛#tlrend");
+	next;
+	cutin "EP143_TAHUK",2;
+	mes "[塔瑪林]";
+	mes "說起來，地面好像在微微震動。";
+	npctalk "說起來，地面好像在微微震動。",instance_npcname("塔瑪林#tlrend");
+	next;
+	cutin "bu_maggi4", 2;
+	mes "[麥吉絲汀]";
+	mes "嗚...搖得好厲害...";
+	npctalk "嗚...搖得好厲害...",instance_npcname("麥吉絲汀#tlrend");
+	next;
+	cutin "bu_alp2", 2;
+	mes "[阿魯普奧守衛]";
+	mes "繼續留在這裡可能很危險，我們先出去吧。";
+	npctalk "繼續留在這裡可能很危險，我們先出去吧。",instance_npcname("阿魯普奧守衛#tlrend");
+	next;
+	cutin "bu_mark4.bmp", 0;
+	mes "[馬可伊瑟]";
+	mes "說..說得對，冒險者們，先帶著貝莉蒂先出去吧，我們隨後就到。";
+	npctalk "說..說得對，冒險者們，先帶著貝莉蒂先出去吧，我們隨後就到。",instance_npcname("馬可伊瑟#tlrend");
+	close2;
+	cutin "",255;
+	//副本任務獎勵
+	if(checkquest(32057,HUNTING)==2 ) { 
+	dispbottom "最後的房間任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32057; 
+	callfunc "offical_instance_finish",36;
+	}
+
+	if(checkquest(11380,HUNTING) == 2) {
+		getitem 6827,1; //完整的機械零件
+		getitem 6828,1; //重力安全裝置
+		erasequest 11380;
+	}
+	if(checkquest(11379,PLAYTIME) == 1) {
+		completequest 11379;
+	}
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("貝莉蒂#tlrend");
+		end;
+}
+
+1@uns,244,255,5	script	迪利安#tlrend	4_M_REDMAN,{//628
+	cutin "bu_du2", 2;
+	mes "[迪利安]";
+	mes "大姐好奇怪啊。";
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("迪利安#tlrend");
+		end;
+}
+
+1@uns,245,255,5	script	麥吉絲汀#tlrend	4_F_PINKWOMAN,{//628
+	cutin "bu_maggi1", 2;
+	mes "[麥吉絲汀]";
+	mes "剛剛好危險...";
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("麥吉絲汀#tlrend");
+		end;
+}
+
+1@uns,242,257,5	script	馬可伊瑟#tlrend	4_M_BLUEMAN,{//616
+	cutin "bu_mark4.bmp", 0;
+	mes "[馬可伊瑟]";
+	mes "這個地方不對勁...";
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInstanceInit:
+		disablenpc instance_npcname("馬可伊瑟#tlrend");
+		end;
+}
+
+//----------------------------------------地圖屬性
+1@uns	mapflag	partylock
+1@uns	mapflag	noteleport
+1@uns	mapflag	nosave	SavePoint
+1@uns	mapflag	nomemo
+1@uns	mapflag	nobranch
+1@uns	mapflag	noicewall
+1@uns	mapflag	restricted	6
+
+
+
+

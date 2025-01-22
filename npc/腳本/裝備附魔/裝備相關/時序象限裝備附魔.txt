@@ -1,0 +1,1601 @@
+﻿vdistrict1,81,36,6	script	時序象限裝備附魔#Dimen01	4_EP17_TABLET,{
+
+	mes "[時序象限裝備附魔]";
+	mes "請選擇你要的服務";
+	next;
+	switch(select("裝備製作:物品兌換:進行附魔:升階附魔:回收 時序武器箱子:前往霸肋門德環境生態圈深層2階")){
+
+	case 1:
+	close2;
+	callshop "時序象限頭冠";
+	end;
+
+	case 2:
+	close2;
+	callshop "時序象限物品兌換";
+	end;
+
+	case 3:
+		mes "[時序象限裝備附魔附魔]";
+		mes "請選擇你要附魔的裝備";
+		next;
+		switch(select("時序象限頭冠:時序象限武器:取消")){
+
+		case 1:
+		close2;
+		item_enchant 132;
+		end;
+
+		case 2:
+		close2;
+		item_enchant 133;
+		end;
+
+		case 3:
+		close;
+		}
+
+	case 4:
+	mes "[時序象限裝備附魔]";
+	mes "你想要進行附魔等級升階嗎?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	@itemid = getequipid(.@is);
+	@refine_cnt = getequiprefinerycnt(.@is);
+	@card0 = getequipcardid(.@is, 0);
+	@card1 = getequipcardid(.@is, 1);
+	@card2 = getequipcardid(.@is, 2);
+	@card3 = getequipcardid(.@is, 3);
+	@randomop1 = getequiprandomoption(.@is,0,ROA_ID);
+	@randomop2 = getequiprandomoption(.@is,1,ROA_ID);
+	@randomop3 = getequiprandomoption(.@is,2,ROA_ID);
+	@randomop4 = getequiprandomoption(.@is,3,ROA_ID);
+	@randomop5 = getequiprandomoption(.@is,4,ROA_ID);
+	@randomopval1 = getequiprandomoption(.@is,0,ROA_VALUE);
+	@randomopval2 = getequiprandomoption(.@is,1,ROA_VALUE);
+	@randomopval3 = getequiprandomoption(.@is,2,ROA_VALUE);
+	@randomopval4 = getequiprandomoption(.@is,3,ROA_VALUE);
+	@randomopval5 = getequiprandomoption(.@is,4,ROA_VALUE);
+	setarray @RDMOPT[0],@randomop1,@randomop2,@randomop3,@randomop4,@randomop5;
+	setarray @VALUE[0],@randomopval1,@randomopval2,@randomopval3,@randomopval4,@randomopval5;
+	setarray @Param[0],0;	
+	@enclvl = getinventoryinfo(getequipidx(.@is),28);
+
+	if(countitem(@itemid)>1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[時序象限裝備附魔]";
+	mes "你沒物品怎麼升階";
+	close;
+	}
+	if(@itemid== 400529) goto Time_DM_net;	//時序象限頭冠(盧恩騎士)
+	if(@itemid== 400530) goto Time_DM_net;	//時序象限頭冠(皇家禁衛軍)
+	if(@itemid== 400531) goto Time_DM_net;	//時序象限頭冠(機械工匠)
+	if(@itemid== 400532) goto Time_DM_net;	//時序象限頭冠(基因學者)
+	if(@itemid== 400533) goto Time_DM_net;	//時序象限頭冠(十字斬首者)
+	if(@itemid== 400534) goto Time_DM_net;	//時序象限頭冠(魅影追蹤者)
+	if(@itemid== 400535) goto Time_DM_net;	//時序象限頭冠(大主教)
+	if(@itemid== 400536) goto Time_DM_net;	//時序象限頭冠(修羅)
+	if(@itemid== 400537) goto Time_DM_net;	//時序象限頭冠(咒術士)
+	if(@itemid== 400538) goto Time_DM_net;	//時序象限頭冠(妖術師)
+	if(@itemid== 400539) goto Time_DM_net;	//時序象限頭冠(遊俠)
+	if(@itemid== 400540) goto Time_DM_net;	//時序象限頭冠(宮廷樂師與浪跡舞者)
+	if(@itemid== 400541) goto Time_DM_net;	//時序象限頭冠(拳皇)
+	if(@itemid== 400542) goto Time_DM_net;	//時序象限頭冠(獵靈士)
+	if(@itemid== 400543) goto Time_DM_net;	//時序象限頭冠(叛亂者)
+	if(@itemid== 400544) goto Time_DM_net;	//時序象限頭冠(朧)
+	if(@itemid== 400545) goto Time_DM_net;	//時序象限頭冠(影狼)
+	if(@itemid== 400546) goto Time_DM_net;	//時序象限頭冠(超級初學者)
+
+	mes "[時序象限裝備附魔]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+Time_DM_net:
+	if(@card3 == 0) goto Time_DM_net1;
+	if(@card2 == 0) goto Time_DM_net2;
+	if(@card1 == 0) goto Time_DM_net3;
+	//附魔Lv2
+	if(@card1 == 312749) goto Time_DM_net1_2;
+	if(@card1 == 312719) goto Time_DM_net2_2;
+	if(@card1 == 312729) goto Time_DM_net3_2;
+	if(@card1 == 312739) goto Time_DM_net4_2;
+	if(@card1 == 312759) goto Time_DM_net5_2;
+	if(@card1 == 312769) goto Time_DM_net6_2;
+	if(@card1 == 312779) goto Time_DM_net7_2;
+	if(@card1 == 312789) goto Time_DM_net8_2;
+	//附魔Lv3
+	if(@card1 == 312750) goto Time_DM_net1_3;
+	if(@card1 == 312720) goto Time_DM_net2_3;
+	if(@card1 == 312730) goto Time_DM_net3_3;
+	if(@card1 == 312740) goto Time_DM_net4_3;
+	if(@card1 == 312760) goto Time_DM_net5_3;
+	if(@card1 == 312770) goto Time_DM_net6_3;
+	if(@card1 == 312780) goto Time_DM_net7_3;
+	if(@card1 == 312790) goto Time_DM_net8_3;
+	//附魔Lv4
+	if(@card1 == 312751) goto Time_DM_net1_4;
+	if(@card1 == 312721) goto Time_DM_net2_4;
+	if(@card1 == 312731) goto Time_DM_net3_4;
+	if(@card1 == 312741) goto Time_DM_net4_4;
+	if(@card1 == 312761) goto Time_DM_net5_4;
+	if(@card1 == 312771) goto Time_DM_net6_4;
+	if(@card1 == 312781) goto Time_DM_net7_4;
+	if(@card1 == 312791) goto Time_DM_net8_4;
+	//附魔Lv5
+	if(@card1 == 312752) goto Time_DM_net1_5;
+	if(@card1 == 312722) goto Time_DM_net2_5;
+	if(@card1 == 312732) goto Time_DM_net3_5;
+	if(@card1 == 312742) goto Time_DM_net4_5;
+	if(@card1 == 312762) goto Time_DM_net5_5;
+	if(@card1 == 312772) goto Time_DM_net6_5;
+	if(@card1 == 312782) goto Time_DM_net7_5;
+	if(@card1 == 312792) goto Time_DM_net8_5;
+	//附魔Lv6
+	if(@card1 == 312753) goto Time_DM_net1_6;
+	if(@card1 == 312723) goto Time_DM_net2_6;
+	if(@card1 == 312733) goto Time_DM_net3_6;
+	if(@card1 == 312743) goto Time_DM_net4_6;
+	if(@card1 == 312763) goto Time_DM_net5_6;
+	if(@card1 == 312773) goto Time_DM_net6_6;
+	if(@card1 == 312783) goto Time_DM_net7_6;
+	if(@card1 == 312793) goto Time_DM_net8_6;
+	//附魔Lv7
+	if(@card1 == 312754) goto Time_DM_net1_7;
+	if(@card1 == 312724) goto Time_DM_net2_7;
+	if(@card1 == 312734) goto Time_DM_net3_7;
+	if(@card1 == 312744) goto Time_DM_net4_7;
+	if(@card1 == 312764) goto Time_DM_net5_7;
+	if(@card1 == 312774) goto Time_DM_net6_7;
+	if(@card1 == 312784) goto Time_DM_net7_7;
+	if(@card1 == 312794) goto Time_DM_net8_7;
+	//附魔Lv8
+	if(@card1 == 312755) goto Time_DM_net1_8;
+	if(@card1 == 312725) goto Time_DM_net2_8;
+	if(@card1 == 312735) goto Time_DM_net3_8;
+	if(@card1 == 312745) goto Time_DM_net4_8;
+	if(@card1 == 312765) goto Time_DM_net5_8;
+	if(@card1 == 312775) goto Time_DM_net6_8;
+	if(@card1 == 312785) goto Time_DM_net7_8;
+	if(@card1 == 312795) goto Time_DM_net8_8;
+	//附魔Lv9
+	if(@card1 == 312756) goto Time_DM_net1_9;
+	if(@card1 == 312726) goto Time_DM_net2_9;
+	if(@card1 == 312736) goto Time_DM_net3_9;
+	if(@card1 == 312746) goto Time_DM_net4_9;
+	if(@card1 == 312766) goto Time_DM_net5_9;
+	if(@card1 == 312776) goto Time_DM_net6_9;
+	if(@card1 == 312786) goto Time_DM_net7_9;
+	if(@card1 == 312796) goto Time_DM_net8_9;
+	//附魔Lv10
+	if(@card1 == 312757) goto Time_DM_net1_10;
+	if(@card1 == 312727) goto Time_DM_net2_10;
+	if(@card1 == 312737) goto Time_DM_net3_10;
+	if(@card1 == 312747) goto Time_DM_net4_10;
+	if(@card1 == 312767) goto Time_DM_net5_10;
+	if(@card1 == 312777) goto Time_DM_net6_10;
+	if(@card1 == 312787) goto Time_DM_net7_10;
+	if(@card1 == 312797) goto Time_DM_net8_10;
+	mes "[時序象限裝備附魔]";
+	mes "已經無法在付魔了!!";
+	close;
+
+Time_DM_net1:
+	mes "[時序象限裝備附魔]";
+	mes "我只會幫2s附魔進行升階!!";
+	close;
+
+Time_DM_net2:
+	mes "[時序象限裝備附魔]";
+	mes "我只會幫2s附魔進行升階!!";
+	close;
+
+Time_DM_net3:
+	mes "[時序象限裝備附魔]";
+	mes "我只會幫2s附魔進行升階!!";
+	close;
+
+Time_DM_net1_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312750,312749;
+	}
+
+Time_DM_net2_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312720,312719;
+	}
+
+Time_DM_net3_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312730,312729;
+	}
+
+Time_DM_net4_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312740,312739;
+	}
+
+Time_DM_net5_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312760,312759;
+	}
+
+Time_DM_net6_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312770,312769;
+	}
+
+Time_DM_net7_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312780,312779;
+	}
+
+Time_DM_net8_2:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv1^000000";
+	mes "成功機率：^ff000080%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x5";
+	mes "你是否要進行升階";
+	next;
+	switch(select("我要升階")){
+	case 1:
+	callfunc "Time_DM_enchant02",5,80,312790,312789;
+	}
+
+Time_DM_net1_3:
+	mes "[時序象限裝備附魔]";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312751,312750;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312751,312749;
+	}
+
+Time_DM_net2_3:
+	mes "目前等級：^0000ffLv2^000000";
+	mes "[時序象限裝備附魔]";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312721,312720;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312721,312719;
+	}
+
+Time_DM_net3_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312731,312730;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312731,312729;
+	}
+
+Time_DM_net4_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312741,312740;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312741,312739;
+	}
+
+Time_DM_net5_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312761,312760;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312761,312759;
+	}
+
+Time_DM_net6_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312771,312770;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312771,312769;
+	}
+
+Time_DM_net7_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312781,312780;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312781,312779;
+	}
+
+Time_DM_net8_3:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv2^000000";
+	mes "成功機率：^ff000065%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x10";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",10,65,312791,312790;
+	case 2:
+	callfunc "Time_DM_enchant02",10,65,312791,312789;
+	}
+
+Time_DM_net1_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312752,312751;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312752,312750;
+	}
+	
+Time_DM_net2_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312722,312721;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312722,312720;
+	}
+
+Time_DM_net3_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312732,312731;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312732,312730;
+	}
+
+Time_DM_net4_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312742,312741;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312742,312740;
+	}
+
+Time_DM_net5_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312762,312761;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312762,312760;
+	}
+
+Time_DM_net6_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312772,312771;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312772,312770;
+	}
+
+Time_DM_net7_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312782,312781;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312782,312780;
+	}
+
+Time_DM_net8_4:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv3^000000";
+	mes "成功機率：^ff000050%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x20";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",20,50,312792,312791;
+	case 2:
+	callfunc "Time_DM_enchant02",20,50,312792,312790;
+	}
+
+Time_DM_net1_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312753,312752;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312753,312751;
+	}
+
+Time_DM_net2_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312723,312722;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312723,312721;
+	}
+
+Time_DM_net3_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312733,312732;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312733,312731;
+	}
+
+Time_DM_net4_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312743,312742;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312743,312741;
+	}
+
+Time_DM_net5_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312763,312762;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312763,312761;
+	}
+
+Time_DM_net6_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312773,312772;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312773,312771;
+	}
+
+Time_DM_net7_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312783,312782;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312783,312781;
+	}
+
+Time_DM_net8_5:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv4^000000";
+	mes "成功機率：^ff000035%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x35";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",35,35,312793,312792;
+	case 2:
+	callfunc "Time_DM_enchant02",35,35,312793,312791;
+	}
+
+Time_DM_net1_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312754,312753;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312754,312752;
+	}
+
+Time_DM_net2_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312724,312723;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312724,312722;
+	}
+
+Time_DM_net3_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312734,312733;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312734,312732;
+	}
+
+Time_DM_net4_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312744,312743;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312744,312742;
+	}
+
+Time_DM_net5_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312764,312763;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312764,312762;
+	}
+
+Time_DM_net6_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312774,312773;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312774,312772;
+	}
+
+Time_DM_net7_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312784,312783;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312784,312782;
+	}
+
+Time_DM_net8_6:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv5^000000";
+	mes "成功機率：^ff000025%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x55";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",55,25,312794,312793;
+	case 2:
+	callfunc "Time_DM_enchant02",55,25,312794,312792;
+	}
+
+Time_DM_net1_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312755,312754;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312755,312753;
+	}
+
+Time_DM_net2_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312725,312724;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312725,312723;
+	}
+
+Time_DM_net3_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312735,312734;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312735,312733;
+	}
+
+Time_DM_net4_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312745,312744;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312745,312743;
+	}
+
+Time_DM_net5_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312765,312764;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312765,312763;
+	}
+
+Time_DM_net6_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312775,312774;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312775,312773;
+	}
+
+Time_DM_net7_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312785,312784;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312785,312783;
+	}
+
+Time_DM_net8_7:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv6^000000";
+	mes "成功機率：^ff000020%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x80";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",80,20,312795,312794;
+	case 2:
+	callfunc "Time_DM_enchant02",80,20,312795,312793;
+	}
+
+Time_DM_net1_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312756,312755;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312756,312754;
+	}
+
+Time_DM_net2_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312726,312725;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312726,312724;
+	}
+
+Time_DM_net3_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312736,312735;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312736,312734;
+	}
+
+Time_DM_net4_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312746,312745;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312746,312744;
+	}
+
+Time_DM_net5_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312766,312765;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312766,312764;
+	}
+
+Time_DM_net6_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312776,312775;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312776,312774;
+	}
+
+Time_DM_net7_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312786,312785;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312786,312784;
+	}
+
+Time_DM_net8_8:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv7^000000";
+	mes "成功機率：^ff000010%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x110";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",110,10,312796,312795;
+	case 2:
+	callfunc "Time_DM_enchant02",110,10,312796,312794;
+	}
+
+Time_DM_net1_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312757,312756;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312757,312755;
+	}
+
+Time_DM_net2_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312727,312726;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312727,312725;
+	}
+
+Time_DM_net3_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312737,312736;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312737,312735;
+	}
+
+Time_DM_net4_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312747,312746;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312747,312745;
+	}
+
+Time_DM_net5_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312767,312766;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312767,312765;
+	}
+
+Time_DM_net6_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312777,312776;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312777,312775;
+	}
+
+Time_DM_net7_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312787,312786;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312787,312785;
+	}
+
+Time_DM_net8_9:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv8^000000";
+	mes "成功機率：^ff00007%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x145";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",145,7,312797,312796;
+	case 2:
+	callfunc "Time_DM_enchant02",145,7,312797,312795;
+	}
+
+Time_DM_net1_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312758,312757;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312758,312756;
+	}
+
+Time_DM_net2_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312728,312727;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312728,312726;
+	}
+
+Time_DM_net3_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312738,312737;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312738,312736;
+	}
+
+Time_DM_net4_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312748,312747;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312748,312746;
+	}
+
+Time_DM_net5_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312768,312767;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312768,312766;
+	}
+
+Time_DM_net6_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312778,312777;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312778,312776;
+	}
+
+Time_DM_net7_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312788,312787;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312788,312786;
+	}
+
+Time_DM_net8_10:
+	mes "[時序象限裝備附魔]";
+	mes "目前等級：^0000ffLv9^000000";
+	mes "成功機率：^ff00005%^000000";
+	mes "消耗材料：<ITEM>時空魔法符<INFO>1001556</INFO></ITEM>x185";
+	mes "使用^33cc33時序象限祝福礦石^000000可以防止失敗時候附魔等級退階";
+	mes "你是否要使用?";
+	next;
+	switch(select("我要使用:不要使用")){
+	case 1:
+	if(countitem(70131)<1){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時序象限祝福礦石不足!";
+	close; }
+	callfunc "Time_DM_enchant01",185,5,312798,312797;
+	case 2:
+	callfunc "Time_DM_enchant02",185,5,312798,312796;
+	}
+
+	case 5:
+	mes"[時序象限裝備附魔]";
+	mes "你現在持有 ^009933"+(countitem(70034))+"^000000 個時序武器箱子";
+	mes "請輸入您想回收的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	mes "^ff0000取消請數量輸入0^000000";
+	next;
+	set @input,0;
+	input @input,0,100;
+	if(@input == 0){ close; }
+	if(@input > 100 ) {
+	mes"[維爾岡德]";
+	mes "您輸入的數量不正確！";
+	close;
+	end;
+	}
+
+	if(countitem(70034) <@input){
+	mes"[維爾岡德]";
+	mes"你少於輸入的箱子不能兌換";
+	close;
+	}
+
+	delitem 70034,@input;
+	getitem 80107,@input;
+	close;
+
+
+	case 6:
+	warp "bl_depth2",0,0;
+	close;
+	}
+
+
+OnInit:
+	waitingroom "時序象限裝備附魔",0;
+	end;
+}
+
+
+//----------------------------------公式
+function	script	Time_DM_enchant01	{
+
+	if(countitem(1001556)<getarg(0)){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時空魔法符不足!";
+	close;
+	}
+
+	delitem 70131,1;
+	delitem 1001556,getarg(0);
+	delitem @itemid,1;
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= getarg(1))) {
+	dispbottom "附魔成功，附魔等級提升了!";
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(2), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close; }
+	dispbottom "附魔失敗，好險有使用時序象限祝福礦石附魔等級沒有變動!";
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(3), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 155;
+	close;
+}
+
+
+function	script	Time_DM_enchant02	{
+
+	if(countitem(1001556)<getarg(0)){
+	mes "[時序象限裝備附魔]";
+	mes "你身上時空魔法符不足!";
+	close;
+	}
+	
+	delitem 1001556,getarg(0);
+	delitem @itemid,1;
+	set .@Gh_ran,rand(1,100);
+	if ((.@Gh_ran > 0) && (.@Gh_ran <= getarg(1))) {
+	dispbottom "附魔成功，附魔等級提升了!";
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(2), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 154;
+	close; }
+	dispbottom "附魔失敗，好險有使用時序象限祝福礦石附魔等級沒有變動!";
+	getitem4 @itemid, 1, 1, @refine_cnt, 0, @card0, getarg(3), @card2, @card3,@enclvl, @RDMOPT, @VALUE, @Param;
+	specialeffect 155;
+	close;
+}
+

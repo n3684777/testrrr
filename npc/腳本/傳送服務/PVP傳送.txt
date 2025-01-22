@@ -1,0 +1,101 @@
+//------------------------------PVP場傳送 sc_end SC_DANCEWITHWUG;	//消除與狼共舞狀態
+trinity,102,41,6	script	PVP競技場接待員	105,{
+
+	set .@mapcount_1,getmapusers("pvp_y_8-1");
+	set .@mapcount_2,getmapusers("pvp_y_8-2");
+	set .@mapcount_3,getmapusers("pvp_y_7-2");
+	while(1) {
+	switch(select("普隆德拉PvP [ "+.@mapcount_1+" / 128 ]^ff0000(禁止攻擊他人)^000000:依斯魯得島PvP [ "+.@mapcount_2+" / 128 ]^ff0000(可任意攻擊他人)^000000:依斯魯得島GvG [ "+.@mapcount_3+" / 128 ]^ff0000(禁止攻擊他人)^000000")) {
+
+	case 1:
+		callsub S_CheckPVPRoom,@mapcount_1,"pvp_y_8-1";
+		break;
+
+	case 2:
+	switch( select("單人進入:隊長整隊進入")) {
+
+		case 1:
+		callsub S_CheckPVPRoom,@mapcount_1,"pvp_y_8-2";
+		break;
+
+		case 2:
+		setd "$@GVG_Partyh1",getcharid(1);
+		mapannounce "pvp_y_8-2","隊長 "+strcharinfo(0)+" 所帶領的 "+getpartyname(getd("$@GVG_Partyh1")) +" 隊伍進入了",bc_map,"0xFFCE00";
+		callsub S_CheckPVPRoom2,@mapcount_1,"pvp_y_8-2";
+		break;
+		}
+
+	case 3:
+	switch( select("單人進入:隊長整隊進入")) {
+
+		case 1:
+		callsub S_CheckPVPRoom,@mapcount_1,"pvp_y_7-2";
+		break;
+
+		case 2:
+		setd "$@GVG_Partyh2",getcharid(1);
+		mapannounce "pvp_y_7-2","隊長 "+strcharinfo(0)+" 所帶領的 "+getpartyname(getd("$@GVG_Partyh2")) +" 隊伍進入了",bc_map,"0xFFCE00";
+		callsub S_CheckPVPRoom2,@mapcount_1,"pvp_y_7-2";
+		break;
+		}
+	}
+	}
+
+
+S_CheckPVPRoom:
+	warp getarg(1),0,0; 
+	end;
+
+S_CheckPVPRoom2:
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) {
+	mes "對不起，只有隊長可以整隊傳送。";
+	close;
+	}
+	switch(rand(1,7)){
+	case 1:
+		warpparty getarg(1),127,251,getcharid(1);
+		end;
+	case 2:
+		warpparty getarg(1),195,210,getcharid(1);
+		end;
+	case 3:
+		warpparty getarg(1),205,162,getcharid(1);
+		end;
+	case 4:
+		warpparty getarg(1),127,57,getcharid(1);
+		end;
+	case 5:
+		warpparty getarg(1),50,98,getcharid(1);
+		end;
+	case 6:
+		warpparty getarg(1),52,166,getcharid(1);
+		end;
+	case 7:
+		warpparty getarg(1),64,208,getcharid(1);
+		end;
+		}
+
+OnInit:
+	waitingroom "PVP競技場接待員",0;
+	end;
+}
+
+
+//-------------- 地圖屬性
+//-------------- 禁止使用不死證
+pvp_y_8-1	mapflag	notoken
+pvp_y_8-2	mapflag	notoken
+//pvp_y_7-2	mapflag	notoken
+
+//-------------- GVG場地
+pvp_y_7-2	mapflag	gvg
+
+//-------------- 
+//prontera,156,178,4	duplicate(PVP競技場接待員)	PVP競技場接待員#pro6	105	//中
+prontera,283,199,4	duplicate(PVP競技場接待員)	PVP競技場接待員#pro1	105	//東
+prontera,28,199,4	duplicate(PVP競技場接待員)	PVP競技場接待員#pro2	105	//西
+prontera,164,47,4	duplicate(PVP競技場接待員)	PVP競技場接待員#pro3	105	//南
+prontera,174,327,4	duplicate(PVP競技場接待員)	PVP競技場接待員#pro4	105	//北
+amatsu,102,136,6	duplicate(PVP競技場接待員)	PVP競技場接待員#ama1	105	//
+gonryun,167,116,4	duplicate(PVP競技場接待員)	PVP競技場接待員#gon1	105	//
+

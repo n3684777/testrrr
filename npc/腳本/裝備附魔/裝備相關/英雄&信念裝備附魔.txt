@@ -1,0 +1,35 @@
+﻿
+vdistrict1,59,26,6	script	阿基奈特	10154,{
+
+	mes "[阿基奈特]";
+	mes "請選擇你要附魔的裝備";
+	next;
+	switch(select("英雄徽章:英雄戰鞋-LT:信念意志頭盔")){
+
+	case 1:
+	close2;
+	item_enchant 20;
+	end;
+
+	case 2:
+	close2;
+	item_enchant 21;
+	end;
+
+	case 3:
+	close2;
+	item_enchant 25;
+	end;
+
+
+	}
+
+OnInit:
+	waitingroom "英雄&信念裝備附魔",0;
+	end;
+}
+
+
+
+
+

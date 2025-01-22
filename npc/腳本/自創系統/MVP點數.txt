@@ -1,0 +1,10 @@
+lasa_dun01,1,1,4	script	MVP_Points	-1,{
+
+on01:
+	set #MVP_Points,#MVP_Points+rand(2,5);
+	dispbottom "目前MVP點數 "+#MVP_Points+"";
+	end;
+}
+
+
+

@@ -1,0 +1,753 @@
+
+vdistrict1,21,62,4	script	國王鞋跟管理者	923,{
+
+	//副本任務獎勵
+	if(checkquest(32053,HUNTING)==2 ) { 
+	dispbottom "國王鞋跟任務完成，以下是你的獎勵!!"; 
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	erasequest 32053; }
+	menu "副本相關",Ccdd1,"兌換物品",Ccdd2;
+
+Ccdd1:
+OnStart:
+	//挑戰次數
+	if ( day_Instance_Bout_21 < gettime(8) ){
+	set Instance_Bout_21,10;
+	set day_Instance_Bout_21,gettime(8);	//一年中的一天
+	end; }
+	if (Instance_Bout_21 < 1) {
+		mes "挑戰次數不足";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@p_name$,getpartyname(.@party_id);
+
+	if (!.@party_id) {
+		mes "[麥格納屯博士]";
+		mes "你的隊伍成員呢?";
+		close;
+	}
+	
+	.@md_name$ = "國王鞋跟";
+	
+	if (getcharid(0) == getpartyleader(.@party_id,2))
+		set @menu$, "創建"+.@md_name$+":進入"+.@md_name$;
+	else
+		set @menu$, ":進入"+.@md_name$;
+		
+	mes "[麥格納屯博士]";
+	mes "副本獎勵倍數[ ^0000FF"+$EP1501+"^000000 ]";
+	mes "挑戰剩餘次數[ ^FF0000"+Instance_Bout_21+"^000000 ]";
+	mes "副本獎勵：";
+	mes "金色卡片";
+	mes "壞掉的引擎x2";
+	mes "查理斯頓零件x3";
+	mes "大型廢鐵x3";
+	mes "老舊油桶x3";
+	mes "官方副本積分x10";
+	mes "你想要幹嘛呢？";
+	next;
+	.@i = select(@menu$)-1;
+	switch(.@i) {
+	case 0:
+		if(BaseLevel < 160) {
+			mes "[麥格納屯博士]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+		
+		if (instance_create(.@md_name$) < 0) {
+			mes "[麥格納屯博士]";
+			mes "隊伍名稱: "+.@p_name$;
+			mes "隊伍隊長: "+strcharinfo(0);
+			mes "^0000ff"+.@md_name$+" ^000000- 創建失敗!";
+			close;
+		}
+
+		mapannounce strnpcinfo(4),"隊伍 "+getpartyname(.@party_id)+" 準備挑戰【"+.@md_name$+"】副本！",bc_map,"0x33ea91";	
+		mes "[麥格納屯博士]";
+		mes ""+.@md_name$+"已經創立了～";
+		mes "請選擇^0066CC進入"+.@md_name$+"^000000。";
+		
+		.@iid = instance_id(IM_PARTY);
+		set getinstancevar('party_id, .@iid), getcharid(1);
+		//入場記錄時間
+		set Instance_Annal,gettimetick(2);
+		close;
+	case 1:
+		if(BaseLevel < 160) {
+			mes "[麥格納屯博士]";
+			mes "裡面是很危險的…"; 
+			mes "還是等到 Lv.160 後再來吧…"; 
+			close;
+		}
+	//入場結束
+	if ( getinstancevar('Win,instance_id(IM_PARTY)) ) {
+	mes "副本已經開始了，無法再次進入。";
+	close;
+	}
+		switch(instance_enter(.@md_name$)) {
+		case IE_OTHER:
+			mes "不明錯誤。";
+			close;
+		case IE_NOINSTANCE:
+			mes .@md_name$+" 副本不存在。";
+			mes "隊長尚未申請記憶迷宮。";
+			close;
+		case IE_NOMEMBER:
+			mes "只有申請 "+.@md_name$+" 副本的隊員才可以進入。";
+			close;
+		case IE_OK:
+			//mapannounce strnpcinfo(4),"隊伍 " + getpartyname(.@party_id) + " 裡的勇者 " + strcharinfo(0) + " 開始進行【"+.@md_name$+"】副本了",bc_map,"0x00ff99";			
+			//扣除挑戰次數
+			set Instance_Bout_21,Instance_Bout_21-1;
+
+			//副本任務
+			if(checkquest(32053,HUNTING)<0 ){setquest 32053;}
+		//禁止多開偵測
+		if(getsameipinfo(getcharip(), strcharinfo(3)) > $Windows){
+		//允許多開名單
+		for(set .@a,0; .@a < getarraysize($@PartyWindowsows$); set .@a,.@a+1){
+		if(getcharip()==$@PartyWindowsows$[.@a]){
+		end; }}
+		mes "道館跟副本禁止多開!";
+		mes "檢測到副本地圖中有相同IP人物";
+		mes "^777777提示：3秒後自動傳送回首都^000000";
+		sleep2 3000;
+		warp "prontera",102,118;
+		end; }
+			close;
+		}
+	}
+	close;
+
+Ccdd2:
+	mes "[麥格納屯博士]";
+	mes "^0000ff金色卡片^00000050張可換成^0000ff老舊油桶^0000001個";
+	mes "請輸入您想兌換的數量。";
+	mes "數量：Min 1 個，Max 100 個！";
+	next;
+	set @input,0;
+	input @input;
+	if ( @input < 1 || @input > 100 ) {
+	mes "[麥格納屯博士]";
+	mes "您輸入的數量不正確！";
+	close;	}
+	if ( countitem(25627)<@input*50 ) {
+	mes "[麥格納屯博士]";
+	mes "金色卡片數量不足";
+	close;	}
+	delitem 25627,@input*50;
+	getitem 6962,@input;
+	close;
+
+OnInit:
+	waitingroom "國王鞋跟",0;
+	end;
+}
+
+
+//------------------------------國王鞋跟事件
+1@mcd,0,0,0	script	國王鞋跟事件1	-1,{
+
+OnInstanceInit:
+	//創建副本地圖
+	'map_name$[0] = instance_mapname("1@mcd");
+	//關閉部分NPC和傳送門
+	disablenpc instance_npcname("利維坦#mcd02");
+	disablenpc instance_npcname("利維坦#mcd03");
+	disablenpc instance_npcname("利維坦#mcd04");
+	disablenpc instance_npcname("利維坦#mcd05");
+	disablenpc instance_npcname("紀子#mcd02");
+	disablenpc instance_npcname("紀子#mcd03");
+	disablenpc instance_npcname("紀子#mcd04");
+	disablenpc instance_npcname("紀子#mcd05");
+	disablenpc instance_npcname("卡片產生#mcd02");
+	disablenpc instance_npcname("告示牌#mcd02");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd01");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd02");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd03");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd04");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd05");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd06");
+	disablenpc instance_npcname("國王鞋跟傳送門#mcd07");
+	//副本標籤
+	set 'CD_mcd_01,0;
+	set 'CD_mcd_02,0;
+	set 'CD_mcd_03,0;
+	set 'CD_mcd_04,0;
+	//副本開始關閉入場
+	sleep 60000;
+	'win = 1;
+	instance_announce instance_id(1),"副本關閉入場!!",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd1:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	instance_announce 0, "請消滅所有的推助器，這張卡從召換推助器中重組",bc_map,"0xFFFF33";
+	donpcevent instance_npcname("卡片產生#mcd01")+"::OnItem01";
+	set 'mcd_Mob_01,8;
+	areamonster 'map_name$[0],138,158,144,150,"限定推助器A",3126,8,instance_npcname("國王鞋跟事件1")+"::OnCcdd2";
+	end;
+
+	OnCcdd2:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	instance_announce 0, "請消滅所有的推助器，這張卡從召換推助器中重組",bc_map,"0xFFFF33";
+	donpcevent instance_npcname("卡片產生#mcd01")+"::OnItem01";
+	set 'mcd_Mob_01,8;
+	areamonster 'map_name$[0],114,157,119,144,"限定推助器A",3126,8,instance_npcname("國王鞋跟事件1")+"::OnCcdd3";
+	end;
+
+	OnCcdd3:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	instance_announce 0, "請消滅所有的推助器，這張卡從召換推助器中重組",bc_map,"0xFFFF33";
+	donpcevent instance_npcname("卡片產生#mcd01")+"::OnItem01";
+	set 'mcd_Mob_01,8;
+	areamonster 'map_name$[0],140,149,144,141,"限定推助器A",3126,8,instance_npcname("國王鞋跟事件1")+"::OnCcdd4";
+	end;
+
+	OnCcdd4:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	instance_announce 0, "請消滅所有的推助器，這張卡從召換推助器中重組",bc_map,"0xFFFF33";
+	donpcevent instance_npcname("卡片產生#mcd01")+"::OnItem01";
+	set 'mcd_Mob_01,8;
+	areamonster 'map_name$[0],116,157,117,145,"限定推助器A",3126,8,instance_npcname("國王鞋跟事件1")+"::OnCcdd5";
+	end;
+
+	OnCcdd5:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	set 'mcd_Mob_01,8;
+	donpcevent instance_npcname("卡片產生#mcd01")+"::OnItem01";
+	disablenpc instance_npcname("利維坦#mcd01");
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd01");
+	enablenpc instance_npcname("利維坦#mcd02");
+	enablenpc instance_npcname("紀子#mcd02");
+	instance_announce instance_id(1),"期間限定購展包 潘麗爾的瀏海 的卡片已重組完畢",bc_all,0xD7BA98;
+	sleep 2000;
+	instance_announce instance_id(1),"利維坦：人類，往下面有通往外面的路，我們在那邊見吧",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd6:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"資源推助器已確認回收，現在剩下的資源推助器是"+'mcd_Mob_01+"張",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	instance_announce 0, "所有資源推助器已回收，可在合成室確認。",bc_map,"0x00FF00";
+	disablenpc instance_npcname("利維坦#mcd02");
+	disablenpc instance_npcname("紀子#mcd02");
+
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd02");
+	enablenpc instance_npcname("利維坦#mcd03");
+	enablenpc instance_npcname("紀子#mcd03");
+	viewpoint 2,184,189,1,0xffffff;
+	viewpoint 2,211,180,2,0xffffff;
+	viewpoint 2,130,68,3,0xffffff;
+	viewpoint 2,126,89,4,0xffffff;
+	viewpoint 2,85,224,5,0xffffff;
+	viewpoint 2,57,106,6,0xffffff;
+	viewpoint 1,141,199,7,0xffffff;
+	end;
+
+	OnCcdd7:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	set 'mcd_Mob_01,4;
+	areamonster 'map_name$[0],140,217,147,210,"免費配送卡片",3128,4,instance_npcname("國王鞋跟事件1")+"::OnCcdd8";
+	end;
+
+	OnCcdd8:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	set 'mcd_Mob_01,4;
+	areamonster 'map_name$[0],140,217,147,210,"免費配送卡片",3128,4,instance_npcname("國王鞋跟事件1")+"::OnCcdd9";
+	end;
+
+	OnCcdd9:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	set 'mcd_Mob_01,4;
+	areamonster 'map_name$[0],140,217,147,210,"免費配送卡片",3128,4,instance_npcname("國王鞋跟事件1")+"::OnCcdd10";
+	end;
+
+	OnCcdd10:
+	set 'mcd_Mob_01,'mcd_Mob_01-1;
+	instance_announce instance_id(1),"【副本公告】：還剩下"+'mcd_Mob_01+"只怪物",bc_all,0xD7BA98;
+	if ('mcd_Mob_01>0) end;
+	viewpoint 1,281,183,8,0xffffff;
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd03");
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd04");
+	areamonster 'map_name$[0],281,183,281,183,"Beta版推助器",3127,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd11";
+	areamonster 'map_name$[0],112,236,130,230,"免費配送卡片",3128,4;
+	areamonster 'map_name$[0],222,203,231,194,"免費配送卡片",3128,4;
+	areamonster 'map_name$[0],276,189,287,176,"免費配送卡片",3128,6;
+	instance_announce instance_id(1),"滋滋滋...開始召喚第1梯次的Beta版啟動器",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd11:
+	viewpoint 2,281,183,8,0xffffff;
+	viewpoint 1,240,30,9,0xffffff;
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd05");
+	areamonster 'map_name$[0],240,30,240,30,"Beta版推助器",3127,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd12";
+	areamonster 'map_name$[0],232,180,228,101,"免費配送卡片",3128,10;
+	areamonster 'map_name$[0],208,79,208,79,"免費配送卡片",3128,4;
+	areamonster 'map_name$[0],194,66,194,66,"免費配送卡片",3128,4;
+	areamonster 'map_name$[0],175,55,175,55,"免費配送卡片",3128,4;
+	areamonster 'map_name$[0],163,49,118,49,"免費配送卡片",3128,10;
+	areamonster 'map_name$[0],85,55,95,47,"免費配送卡片",3128,3;
+	areamonster 'map_name$[0],111,32,221,27,"免費配送卡片",3128,20;
+	areamonster 'map_name$[0],234,35,245,24,"免費配送卡片",3128,6;
+	instance_announce instance_id(1),"拆開了Beta版啟動器的封印",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"第2梯次Beta版啟動器已經召喚完畢，請玩家移動",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd12:
+	viewpoint 2,240,30,9,0xffffff;
+	viewpoint 1,34,185,10,0xffffff;
+	areamonster 'map_name$[0],29,194,34,185,"Beta版推助器",3127,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd13";
+	areamonster 'map_name$[0],76,57,98,50,"免費配送卡片",3128,10;
+	areamonster 'map_name$[0],49,83,57,78,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],26,67,41,52,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],38,106,38,84,"免費配送卡片",3128,8;
+	areamonster 'map_name$[0],30,100,30,193,"免費配送卡片",3128,20;
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd06");
+	instance_announce instance_id(1),"拆開了Beta版啟動器的封印，稀有:拿者香蕉的猴子",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"第3梯次Beta版啟動器已經召喚完畢，請玩家移動",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd13:
+	viewpoint 2,240,30,10,0xffffff;
+	viewpoint 1,16,283,11,0xffffff;
+	areamonster 'map_name$[0],16,283,31,268,"Beta版推助器",3127,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd14";
+	areamonster 'map_name$[0],48,232,52,220,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],41,251,41,233,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],34,245,34,262,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],16,283,31,268,"免費配送卡片",3128,5;
+	enablenpc instance_npcname("國王鞋跟傳送門#mcd07");
+	instance_announce instance_id(1),"拆開了Beta版啟動器的封印，稀有:流星熊 博卡諾亞",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"第4梯次Beta版啟動器已經召喚完畢，請玩家移動",bc_all,0xD7BA98;
+	end;
+
+	OnCcdd14:
+	viewpoint 2,16,283,11,0xffffff;
+	viewpoint 1,127,277,12,0xffffff;
+	areamonster 'map_name$[0],41,250,41,233,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],47,229,66,229,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],70,243,90,243,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],97,256,146,247,"免費配送卡片",3128,10;
+	enablenpc instance_npcname("利維坦#mcd04");
+	enablenpc instance_npcname("紀子#mcd04");
+	instance_announce instance_id(1),"拆開了Beta版啟動器的封印，稀有:圖書館鑰匙",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"滋滋滋....請前往....移動",bc_all,0xD7BA98;
+	end;
+
+
+	OnCcdd15:
+	//出場公告時間
+	set Instance_Miao,gettimetick(2)-getd("Instance_Annal"+instance_id(1));
+	announce "【核心記憶】：隊伍 ["+strcharinfo(1)+"] 在隊長『"+getpartyleader(getcharid(1),0)+"』帶領下，消耗"+(Instance_Miao/60)+"分"+(Instance_Miao%60)+"秒挑戰成功",bc_all,0xD7BA98;
+	instance_announce instance_id(1),"舊擴展包復刻版查理斯頓的錯誤遺物的卡片已經重組完畢",bc_all,0xD7BA98;
+	disablenpc instance_npcname("紀子#mcd04");
+	disablenpc instance_npcname("利維坦#mcd04");
+	enablenpc instance_npcname("利維坦#mcd05");
+	enablenpc instance_npcname("紀子#mcd05");
+	enablenpc instance_npcname("卡片產生#mcd02");
+	enablenpc instance_npcname("告示牌#mcd02");
+	donpcevent instance_npcname("卡片產生#mcd02")+"::OnItem01";
+
+	sleep 1000;
+	instance_announce instance_id(1),"可惜了，未開出超級稀有",bc_all,0xD7BA98;
+	sleep 1000;
+	npctalk "下次要使用別的編碼", instance_npcname("紀子#mcd05", instance_id());
+	sleep 1000;
+	npctalk "你...!這都是你的詭計吧!", instance_npcname("利維坦#mcd05", instance_id());
+	sleep 1000;
+	donpcevent instance_npcname("卡片產生#mcd02")+"::OnItem01";
+	sleep 1000;
+	npctalk "沒關係，已發現的系統缺失共有3141519種，你也不會無聊的", instance_npcname("紀子#mcd05", instance_id());
+	sleep 1000;
+	npctalk "還有我會記住", instance_npcname("紀子#mcd05", instance_id());
+	sleep 1000;
+	npctalk "紀子!", instance_npcname("利維坦#mcd05", instance_id());
+	sleep 1000;
+	npctalk "你果然是我的知己", instance_npcname("紀子#mcd05", instance_id());
+	sleep 1000;
+	donpcevent instance_npcname("卡片產生#mcd02")+"::OnItem01";
+	npctalk "我才不是你的知己!", instance_npcname("利維坦#mcd05", instance_id());
+	end;
+}
+
+//------------------------------相關NPC
+1@mcd,135,150,4	script	利維坦#mcd01	10053,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mcd_01>0) end;
+	set 'CD_mcd_01,1;
+
+	mes "[利維坦]";
+	mes "我本來要召換期間限定推助器，卻跑出人類來了，太過分了吧?";
+	npctalk "我本來要召換期間限定推助器，卻跑出人類來了，太過分了吧?";
+	next;
+	mes "[利維坦]";
+	mes "看來抓他也撈不到卡片吧!";
+	npctalk "看來抓他也撈不到卡片吧!";
+	next;
+	mes "[利維坦]";
+	mes "我投入了大量的金錢....若是召換到不會掉落卡片的東西";
+	npctalk "我投入了大量的金錢....若是召換到不會掉落卡片的東西";
+	next;
+	mes "[利維坦]";
+	mes "我要在選一次推助器，我要你們做實驗";
+	npctalk "我要在選一次推助器，我要你們做實驗";
+	next;
+	mes "[利維坦]";
+	mes "喂!你們想活命的話，趕快做事";
+	npctalk "喂!你們想活命的話，趕快做事";
+	next;
+	mes "[利維坦]";
+	mes "我是利維坦 音格麗塔。巴希莉黃金屋的二元論者";
+	npctalk "我是利維坦 音格麗塔。巴希莉黃金屋的二元論者";
+	close2;
+	set 'mcd_Mob_01,8;
+	areamonster 'map_name$[0],114,157,119,144,"限定推助器A",3126,8,instance_npcname("國王鞋跟事件1")+"::OnCcdd1";
+	sleep 1000;
+	instance_announce instance_id(1),"起動一般推助器深淵的雷神腰帶擴展包召喚命令。",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"請消滅所有的推助器，這張卡從召喚推助器中重組。",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"請注意安全，若召喚者死亡時會停止召喚。",bc_all,0xD7BA98;
+	end;
+}
+
+
+1@mcd,129,158,3	script	卡片產生#mcd01	111,{end;
+	OnItem01:
+	//金色卡片
+	getmapxy(.@m$, .@x, .@y, BL_NPC);
+	for(set .@i,0; .@i<32; set .@i,.@i+1)
+	makeitem 25627,1,.@m$,rand(124,134),rand(144,155);
+	end;
+}
+
+
+1@mcd,127,289,3	script	卡片產生#mcd02	111,{end;
+	OnItem01:
+	//金色卡片
+	getmapxy(.@m$, .@x, .@y, BL_NPC);
+	for(set .@i,0; .@i<32; set .@i,.@i+1)
+	makeitem 25627,1,.@m$,rand(122,282),rand(133,272);
+	end;
+}
+
+
+1@mcd,127,129,6	script	利維坦#mcd02	10053,{
+	if (getpartyleader(getcharid(1),2)!=getcharid(0)) end;
+	if ('CD_mcd_02>0) end;
+	set 'CD_mcd_02,1;
+	npctalk "紀子，你到底想幹嘛?";
+	sleep 1000;
+	instance_announce instance_id(1),"二元論者進入了資原採集區了。",bc_all,0xD7BA98;
+	sleep 1000;
+	npctalk "雖然不是我帶來的，但人數這麼多的話.....", instance_npcname("紀子#mcd02", instance_id());
+	sleep 1000;
+	npctalk "收集資原後選Bela版推助器如何?", instance_npcname("紀子#mcd02", instance_id());
+	sleep 1000;
+	npctalk "哇!那個不錯耶!";
+	set 'mcd_Mob_01,6;
+	monster 'map_name$[0],10,0,"變異晶片",3125,80;
+	areamonster 'map_name$[0],100,113,158,103,"變異晶片",3125,10;
+	areamonster 'map_name$[0],168,180,176,119,"變異晶片",3125,10;
+	areamonster 'map_name$[0],158,195,89,182,"變異晶片",3125,10;
+	areamonster 'map_name$[0],90,180,83,120,"變異晶片",3125,10;
+	areamonster 'map_name$[0],155,124,170,112,"變異晶片",3125,5;
+	areamonster 'map_name$[0],87,184,104,175,"變異晶片",3125,5;
+	areamonster 'map_name$[0],184,185,191,175,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],213,181,216,167,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],123,65,140,66,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],130,93,141,79,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],70,215,64,204,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],64,95,71,87,"免費配送卡片",3128,5;
+	areamonster 'map_name$[0],184,189,184,189,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],211,180,211,180,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],130,68,130,68,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],126,89,126,89,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],85,224,85,224,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	areamonster 'map_name$[0],57,106,57,106,"資源推助器",3126,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd6";
+	sleep 1000;
+	instance_announce instance_id(1),"請注意安全",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"可以採集要用於卡片的資原。",bc_all,0xD7BA98;
+	end;
+}
+
+1@mcd,132,129,4	script	紀子#mcd02	10054,{ end; }
+
+
+1@mcd,120,129,4	script	告示牌#mcd01	835,{
+	mes "-- 發現有個告示牌 --";
+	mes "-- 雖是看不懂的文字 --";
+	next;
+	mes "召喚室的推助器和啟動器召喚原理是重現該召喚室的固有位置，也就是生存在第一個座標上的生物或啟動設備的樣子。";
+	next;
+	mes "實務上非重視分子單位，我們善良的國王鞋跟秉持者一貫的良心來經營。";
+	next;
+	mes "所以不包含有智慧的生物及啟動設備。";
+	next;
+	mes "可能有部分為移除乾淨的野生生物和啟動設備留在召喚室。";
+	mes "相關情況會視為遞延遊戲而發送獎勵，現在就去申請吧!";
+	next;
+	switch(select("確認申請合獎勵內容","取消")){
+
+	case 1:
+	mes "該召喚室理的^ff0000經驗值卡片^000000和野生的^ff0000變異晶片^000000共存者";
+	mes "雖說變異晶片不會咬人或施毒，但若妨礙遊戲進行時可以除掉。";
+	next;
+	mes "召喚室的頂尖區在重組舊擴展包復刻版之前，若消滅^ff0000經驗值卡片^000000和野生的^ff0000變異晶片^00000050隻以上時";
+	mes "就認定為遞延遊戲，由退場告示牌發送獎勵";
+	//副本任務
+	if(checkquest(8527,HUNTING) < 0){setquest 8527;}
+	viewpoint 1,184,189,1,0xffffff;
+	viewpoint 1,211,180,2,0xffffff;
+	viewpoint 1,130,68,3,0xffffff;
+	viewpoint 1,126,89,4,0xffffff;
+	viewpoint 1,85,224,5,0xffffff;
+	viewpoint 1,57,106,6,0xffffff;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+1@mcd,125,213,4	script	利維坦#mcd03	10053,{ end; }
+
+
+1@mcd,116,215,6	script	紀子#mcd03	10054,{
+	if ('CD_mcd_03>0) end;
+	set 'CD_mcd_03,1;
+
+	mes "[紀子]";
+	mes "小不點們來啦!";
+	npctalk "小不點們來啦!";
+	next;
+	mes "[紀子]";
+	mes "這裡就是合成室，那個利維坦也未曾用過。";
+	npctalk "這裡就是合成室，那個利維坦也未曾用過。";
+	next;
+	mes "[利維坦]";
+	mes "哼哼!";
+	npctalk "哼哼!", instance_npcname("利維坦#mcd03", instance_id());
+	next;
+	mes "[紀子]";
+	mes "我兩已達成共識，你們收集資原也辛苦了，所以決定不會傷害你們。";
+	npctalk "我兩已達成共識，你們收集資原也辛苦了，所以決定不會傷害你們。";
+	next;
+	mes "[紀子]";
+	mes "不過照原劇本從這裡起是利維坦的試煉...我會嘗試一下駭人行為。";
+	npctalk "不過照原劇本從這裡起是利維坦的試煉...我會嘗試一下駭人行為。";
+	next;
+	mes "[紀子]";
+	mes "在國王鞋跟中控室合成的Beta版推助器看來是由利維坦處理...";
+	npctalk "在國王鞋跟中控室合成的Beta版推助器看來是由利維坦處理...";
+	next;
+	mes "[紀子]";
+	mes "殲滅Beta版推助器後沿者操控機器人後面的牆壁上去，最後要重現查理斯頓的錯誤遺物復刻版活動。";
+	npctalk "殲滅Beta版推助器後沿者操控機器人後面的牆壁上去，最後要重現查理斯頓的錯誤遺物復刻版活動。";
+	next;
+	mes "[利維坦]";
+	mes "紀子，你到底欠我多少人情，如此積極地幫我呢? 我們的關係有這麼好過嗎?";
+	npctalk "紀子，你到底欠我多少人情，如此積極地幫我呢? 我們的關係有這麼好過嗎?", instance_npcname("利維坦#mcd03", instance_id());
+	next;
+	mes "[紀子]";
+	mes "應該是從前世吧?";
+	npctalk "應該是從前世吧?";
+	next;
+	mes "[紀子]";
+	mes "開玩笑滴";
+	npctalk "開玩笑滴";
+	next;
+	mes "[利維坦]";
+	mes "哈哈...大家聽到了吧!那要開始囉!";
+	npctalk "哈哈...大家聽到了吧!那要開始囉!", instance_npcname("利維坦#mcd03", instance_id());
+	next;
+	mes "[紀子]";
+	mes "很好，駭入成功了。";
+	npctalk "很好，駭入成功了。";
+	close2;
+	viewpoint 2,141,199,7,0xffffff;
+	set 'mcd_Mob_01,4;
+	areamonster 'map_name$[0],140,217,147,210,"免費配送卡片",3128,4,instance_npcname("國王鞋跟事件1")+"::OnCcdd7";
+	instance_announce instance_id(1),"由於回收了所有的資原推助器....準備要合成Beta版推助器",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"復刻成功了。",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"請注意安全!",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"稀有等級以上的卡片會直接發送至召喚者的背包裡",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"Beta版卡片是...",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"超級稀有是最高等級",bc_all,0xD7BA98;
+	sleep 1000;
+	instance_announce instance_id(1),"滋滋滋.....開始召喚第1梯次的Beta起動器",bc_all,0xD7BA98;
+	end;
+}
+
+
+1@mcd,122,277,6	script	紀子#mcd04	10054,{ end; }
+
+
+1@mcd,133,277,4	script	利維坦#mcd04	10053,{
+	if ('CD_mcd_04>0) end;
+	set 'CD_mcd_04,1;
+
+	mes "[利維坦]";
+	mes "紀子，若駭入被發現怎辦?";
+	npctalk "紀子，若駭入被發現怎辦?";
+	next;
+	mes "[紀子]";
+	mes "沒看到告示牌嗎?我還以為你知道呢!";
+	npctalk "沒看到告示牌嗎?我還以為你知道呢!", instance_npcname("紀子#mcd04", instance_id());
+	next;
+	mes "[利維坦]";
+	mes "告示牌?我沒看到耶!";
+	npctalk "告示牌?我沒看到耶!";
+	next;
+	mes "[紀子]";
+	mes "除告示牌外，入場時還有同意過條款等等，想必你也沒仔細看吧!";
+	npctalk "除告示牌外，入場時還有同意過條款等等，想必你也沒仔細看吧!", instance_npcname("紀子#mcd04", instance_id());
+	next;
+	mes "[利維坦]";
+	mes "原來你騙我，而且在我製作的召喚室裡!";
+	npctalk "原來你騙我，而且在我製作的召喚室裡!";
+	next;
+	mes "[紀子]";
+	mes "別太擔心，只要不被發現就能安全過關";
+	npctalk "別太擔心，只要不被發現就能安全過關", instance_npcname("紀子#mcd04", instance_id());
+	next;
+	mes "[利維坦]";
+	mes "你!!";
+	npctalk "你!!";
+	next;
+	mes "[紀子]";
+	mes "若要召喚查理斯頓需要稀有以上卡片四張，但你手氣總是很差，所以才助你來這裡的";
+	npctalk "若要召喚查理斯頓需要稀有以上卡片四張，但你手氣總是很差，所以才助你來這裡的", instance_npcname("紀子#mcd04", instance_id());
+	next;
+	mes "[紀子]";
+	mes "我的意圖很單純，將會出現你在眼前，放上卡片的祭壇";
+	npctalk "我的意圖很單純，將會出現你在眼前，放上卡片的祭壇", instance_npcname("紀子#mcd04", instance_id());
+	next;
+	mes "[紀子]";
+	mes "為時已晚，你必須召喚查理斯頓....";
+	npctalk "為時已晚，你必須召喚查理斯頓....", instance_npcname("紀子#mcd04", instance_id());
+	close2;
+	areamonster 'map_name$[0],127,277,127,277,"查理斯頓",3124,1,instance_npcname("國王鞋跟事件1")+"::OnCcdd15";
+	instance_announce instance_id(1),"啟動舊擴展包復刻版查理斯頓的錯誤遺物召喚命令",bc_all,0xD7BA98;
+	sleep 1000;
+	npctalk "查理斯頓好久不見，沒想到還能見到你";
+	sleep 1000;
+	npctalk "反正卡片都是我的", instance_npcname("紀子#mcd04", instance_id());
+	sleep 1000;
+	instance_announce instance_id(1),"請注意安全，若召喚者死亡時會停止召喚",bc_all,0xD7BA98;
+	sleep 1000;
+	npctalk "駭入之前希望別被發現", instance_npcname("紀子#mcd04", instance_id());
+	sleep 1000;
+	npctalk "是你駭入的阿";
+	sleep 1000;
+	instance_announce instance_id(1),"稀有等級以上的卡片會直接發送至召喚者的背包裡",bc_all,0xD7BA98;
+	end;
+}
+
+
+1@mcd,133,277,4	script	利維坦#mcd05	10053,{ end; }
+
+
+1@mcd,128,277,4	script	告示牌#mcd02	835,{
+	mes "你要回報遞延保險：經驗值卡片和變異晶片的任務嗎?";
+	next;
+	switch(select("回報任務","取消")){
+
+	case 1:
+	//副本任務獎勵
+	if(checkquest(8527,HUNTING)==2 ) { 
+	getexp 1200000,360000;
+	getitem 6750,2*$EP1501; //壞掉的引擎
+	erasequest 8527; }
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+
+//------------------------------ 領獎NPC
+1@mcd,122,277,6	script	紀子#mcd05	10054,{
+
+	mes "[紀子]";
+	mes "我會告訴你活者回去的方法，只要你一手按者自己的左肩，另一手按者你的鼻子..";
+	next;
+	mes "[紀子]";
+	mes "再閉上你的眼睛，心理想者回家，這樣就能回去了";
+	mes "你想回去嗎?";
+	next;
+	switch (select("回去:不回去")) {
+	case 1:
+//------------------------------冷卻時間
+
+	//副本任務獎勵
+	if(checkquest(32053,HUNTING)==2 ) { 
+	dispbottom "查爾斯頓工廠任務完成，以下是你的獎勵!!"; 
+	callfunc "offical_instance_finish",33;
+	set #Instance_Points,#Instance_Points+10;	//副本積分+10
+	dispbottom "副本積分+10";
+	dispbottom "目前副本積分 ^0000ff"+#Instance_Points+"^000000 點";
+	getitem 6752,3*$EP1501; //查理斯頓零件
+	getitem 6961,3*$EP1501; //大型廢鐵
+	getitem 6962,3*$EP1501; //老舊油桶
+	erasequest 32053; }
+	warp $Instance_MA$,$Instance_MAP_X,$Instance_MAP_Y;
+	close;
+
+	case 2:
+	close;
+	}
+}
+
+//------------------------------ 傳點資訊
+1@mcd,130,134,0	warp	國王鞋跟傳送門#mcd01	1,1,1@mcd,129,127
+1@mcd,141,199,0	warp	國王鞋跟傳送門#mcd02	1,1,1@mcd,139,206
+1@mcd,104,219,0	warp	國王鞋跟傳送門#mcd03	1,1,1@mcd,102,230
+1@mcd,211,195,0	warp	國王鞋跟傳送門#mcd04	1,1,1@mcd,218,211
+1@mcd,111,48,0	warp	國王鞋跟傳送門#mcd05	1,1,1@mcd,104,50
+1@mcd,64,66,0	warp	國王鞋跟傳送門#mcd06	1,1,1@mcd,57,72
+1@mcd,41,204,0	warp	國王鞋跟傳送門#mcd07	1,1,1@mcd,45,213
+
+//------------------------------地圖屬性
+1@mcd	mapflag	partylock
+1@mcd	mapflag	noteleport
+1@mcd	mapflag	nosave	SavePoint
+1@mcd	mapflag	nomemo
+1@mcd	mapflag	nobranch
+1@mcd	mapflag	noicewall
+1@mcd	mapflag	restricted	6
+

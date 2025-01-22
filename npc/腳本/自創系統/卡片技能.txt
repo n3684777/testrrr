@@ -1,0 +1,8 @@
+function	script	skill_Card	{
+    .@sk_Name$ = getarg(0);
+    //setarray sk_id[0],
+    set sk_maxLv,getskillinfo(SKI_MAXLEVEL,.@sk_Name$,1);
+    dispbottom sk_maxLv+"dispbottom";
+    skill .@sk_Name$,maxLv;
+return sk_maxLv;
+}

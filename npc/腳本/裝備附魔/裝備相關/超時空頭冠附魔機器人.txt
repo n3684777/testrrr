@@ -1,0 +1,1550 @@
+﻿vdistrict1,68,9,6	script	超時空頭冠附魔機器人	563,{
+
+	mes "[超時空頭冠附魔機器人]";
+	mes "請選擇你要進行的服務";
+	next;
+	switch(select("進行附魔:取消")){
+
+case 1:
+	mes "[超時空頭冠附魔機器人]";
+	mes "你想要要付魔哪個時間頭冠?";
+	if (getequipisequiped(6) == 0) set .@strRetPart7$,"頭上-[無法裝置]";
+	else set .@strRetPart7$,getequipname(6);
+	set .@is,select(.@strRetPart1$,.@strRetPart2$,.@strRetPart3$,.@strRetPart4$,.@strRetPart5$,.@strRetPart6$,.@strRetPart7$)-1;
+
+	next;
+	set @abd,getequipid(.@is);
+	set @He_ex_Slots1,getequipcardid(.@is,0);
+	set @He_ex_Slots2,getequipcardid(.@is,1);
+	set @He_ex_Slots3,getequipcardid(.@is,2);
+	set @He_ex_Slots4,getequipcardid(.@is,3);
+	set @He_ex_Refine,getequiprefinerycnt(.@is);
+	if(countitem(@abd)>1){
+	mes "[超時空頭冠附魔機器人]";
+	mes "你身上有同樣的物品，為了防止附魔發生不必要的錯誤，請只留一件在身上。";
+	close;
+	}
+	if(getequipisequiped(.@is) == 0){
+	mes "[超時空頭冠附魔機器人]";
+	mes "你沒物品怎麼附魔";
+	close;
+	}
+	if(@abd == 19474) goto He_ex_net;	//時間頭冠(盧恩騎士)
+	if(@abd == 19475) goto He_ex_net;	//時間頭冠(皇家禁衛軍)
+	if(@abd == 19476) goto He_ex_net;	//時間頭冠(機械工匠)
+	if(@abd == 19477) goto He_ex_net;	//時間頭冠(基因學者)
+	if(@abd == 19478) goto He_ex_net;	//時間頭冠(十字斬首者)
+	if(@abd == 19479) goto He_ex_net;	//時間頭冠(魅影追蹤者)
+	if(@abd == 19480) goto He_ex_net;	//時間頭冠(大主教)
+	if(@abd == 19481) goto He_ex_net;	//時間頭冠(修羅)
+	if(@abd == 19482) goto He_ex_net;	//時間頭冠(咒術士)
+	if(@abd == 19483) goto He_ex_net;	//時間頭冠(妖術師)
+	if(@abd == 19484) goto He_ex_net;	//時間頭冠(遊俠)
+	if(@abd == 19485) goto He_ex_net;	//時間頭冠(宮廷樂師與浪跡舞者)
+	if(@abd == 19486) goto He_ex_net;	//時間頭冠(拳皇)
+	if(@abd == 19487) goto He_ex_net;	//時間頭冠(獵靈士)
+	if(@abd == 19488) goto He_ex_net;	//時間頭冠(叛亂者)
+	if(@abd == 19489) goto He_ex_net;	//時間頭冠(朧)
+	if(@abd == 19490) goto He_ex_net;	//時間頭冠(影狼)
+	if(@abd == 19491) goto He_ex_net;	//時間頭冠(超級初學者)
+	if(@abd == 19492) goto He_ex_net;	//時間頭冠(召喚師)
+	mes "[超時空頭冠附魔機器人]";
+	mes "你這個裝備無法付魔哦!";
+	close;
+
+He_ex_net:
+	mes "[超時空頭冠附魔機器人]";
+	mes "我只能對第二洞進行強化";
+	mes "你想要進行哪種附魔操作";
+	next;
+	switch(select("第二洞特殊附魔:第二洞特殊附魔升階:取消")){
+
+	case 1:
+		if(@He_ex_Slots4 == 0){
+		mes "[超時空頭冠附魔機器人]";
+		mes "第四洞尚未附魔";
+		close;
+		}
+		if(@He_ex_Slots3 == 0){
+		mes "[超時空頭冠附魔機器人]";
+		mes "第三洞尚未附魔";
+		close;
+		}
+		mes "[超時空頭冠附魔機器人]";
+		mes "需求材料：";
+		mes "超時空魔力x20";
+		mes "強力精華球x3";
+		mes "5,000,000Zeny";
+		mes "選擇你要強化的能力";
+		next;
+		switch(select("霸氣:魔精:銳氣:精弓:金剛:博愛:不屈:取消")){
+
+		case 1:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29061;
+		close;
+
+		case 2:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29071;
+		close;
+
+		case 3:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29081;
+		close;
+
+		case 4:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29091;
+		close;
+
+		case 5:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29101;
+		close;
+
+		case 6:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29111;
+		close;
+
+		case 7:
+		callfunc "fumo_Time_S2",25866,20,7925,3,5000000,29111;
+		close;
+
+
+		case 8:
+		close;
+		}
+
+	case 2:
+		mes "[超時空頭冠附魔機器人]";
+		mes "LV1->LV2需求材料：";
+		mes "超時空魔力x40";
+		mes "5,000,000Zeny";
+		mes " ";
+		mes "LV2->LV3需求材料：";
+		mes "超時空魔力x60";
+		mes "8,000,000Zeny";
+		mes " ";
+		mes "LV3->LV4需求材料：";
+		mes "超時空魔力x80";
+		mes "10,000,000Zeny";
+		mes " ";
+		mes "LV4->LV5需求材料：";
+		mes "超時空魔力x100";
+		mes "15,000,000Zeny";
+		mes " ";
+		mes "LV5->LV6需求材料：";
+		mes "超時空魔力x120";
+		mes "20,000,000Zeny";
+		mes " ";
+		mes "LV6->LV7需求材料：";
+		mes "超時空魔力x160";
+		mes "25,000,000Zeny";
+		mes " ";
+		mes "LV7->LV8需求材料：";
+		mes "超時空魔力x200";
+		mes "30,000,000Zeny";
+		mes " ";
+		mes "LV8->LV9需求材料：";
+		mes "超時空魔力x280";
+		mes "40,000,000Zeny";
+		mes " ";
+		mes "LV9->LV10需求材料：";
+		mes "超時空魔力x600";
+		mes "100,000,000Zeny";
+		mes "你要繼續附魔升階嗎?";
+		next;
+		switch(select("取消:繼續附魔升階")){
+		case 1:
+		close;
+
+		case 2:
+			if(@He_ex_Slots2 == 0){
+			mes "[超時空頭冠附魔機器人]";
+			mes "第二洞尚未附魔";
+			close;
+			}
+		}
+	//附魔Lv2
+		if(@He_ex_Slots2 == 29061) goto He_ex_net1_2;
+		if(@He_ex_Slots2 == 29071) goto He_ex_net2_2;
+		if(@He_ex_Slots2 == 29081) goto He_ex_net3_2;
+		if(@He_ex_Slots2 == 29091) goto He_ex_net4_2;
+		if(@He_ex_Slots2 == 29101) goto He_ex_net5_2;
+		if(@He_ex_Slots2 == 29111) goto He_ex_net6_2;
+		if(@He_ex_Slots2 == 29706) goto He_ex_net7_2;
+
+	//附魔Lv3
+		if(@He_ex_Slots2 == 29062) goto He_ex_net1_3;
+		if(@He_ex_Slots2 == 29072) goto He_ex_net2_3;
+		if(@He_ex_Slots2 == 29082) goto He_ex_net3_3;
+		if(@He_ex_Slots2 == 29092) goto He_ex_net4_3;
+		if(@He_ex_Slots2 == 29102) goto He_ex_net5_3;
+		if(@He_ex_Slots2 == 29112) goto He_ex_net6_3;
+		if(@He_ex_Slots2 == 29707) goto He_ex_net7_3;
+	//附魔Lv4
+		if(@He_ex_Slots2 == 29063) goto He_ex_net1_4;
+		if(@He_ex_Slots2 == 29073) goto He_ex_net2_4;
+		if(@He_ex_Slots2 == 29083) goto He_ex_net3_4;
+		if(@He_ex_Slots2 == 29093) goto He_ex_net4_4;
+		if(@He_ex_Slots2 == 29103) goto He_ex_net5_4;
+		if(@He_ex_Slots2 == 29113) goto He_ex_net6_4;
+		if(@He_ex_Slots2 == 29708) goto He_ex_net7_4;
+	//附魔Lv5
+		if(@He_ex_Slots2 == 29064) goto He_ex_net1_5;
+		if(@He_ex_Slots2 == 29074) goto He_ex_net2_5;
+		if(@He_ex_Slots2 == 29084) goto He_ex_net3_5;
+		if(@He_ex_Slots2 == 29094) goto He_ex_net4_5;
+		if(@He_ex_Slots2 == 29104) goto He_ex_net5_5;
+		if(@He_ex_Slots2 == 29114) goto He_ex_net6_5;
+		if(@He_ex_Slots2 == 29709) goto He_ex_net7_5;
+	//附魔Lv6
+		if(@He_ex_Slots2 == 29065) goto He_ex_net1_6;
+		if(@He_ex_Slots2 == 29075) goto He_ex_net2_6;
+		if(@He_ex_Slots2 == 29085) goto He_ex_net3_6;
+		if(@He_ex_Slots2 == 29095) goto He_ex_net4_6;
+		if(@He_ex_Slots2 == 29105) goto He_ex_net5_6;
+		if(@He_ex_Slots2 == 29115) goto He_ex_net6_6;
+		if(@He_ex_Slots2 == 29710) goto He_ex_net7_6;
+	//附魔Lv7
+		if(@He_ex_Slots2 == 29066) goto He_ex_net1_7;
+		if(@He_ex_Slots2 == 29076) goto He_ex_net2_7;
+		if(@He_ex_Slots2 == 29086) goto He_ex_net3_7;
+		if(@He_ex_Slots2 == 29096) goto He_ex_net4_7;
+		if(@He_ex_Slots2 == 29106) goto He_ex_net5_7;
+		if(@He_ex_Slots2 == 29116) goto He_ex_net6_7;
+		if(@He_ex_Slots2 == 29711) goto He_ex_net7_7;
+	//附魔Lv8
+		if(@He_ex_Slots2 == 29067) goto He_ex_net1_8;
+		if(@He_ex_Slots2 == 29077) goto He_ex_net2_8;
+		if(@He_ex_Slots2 == 29087) goto He_ex_net3_8;
+		if(@He_ex_Slots2 == 29097) goto He_ex_net4_8;
+		if(@He_ex_Slots2 == 29107) goto He_ex_net5_8;
+		if(@He_ex_Slots2 == 29117) goto He_ex_net6_8;
+		if(@He_ex_Slots2 == 29712) goto He_ex_net7_8;
+	//附魔Lv9
+		if(@He_ex_Slots2 == 29068) goto He_ex_net1_9;
+		if(@He_ex_Slots2 == 29078) goto He_ex_net2_9;
+		if(@He_ex_Slots2 == 29088) goto He_ex_net3_9;
+		if(@He_ex_Slots2 == 29098) goto He_ex_net4_9;
+		if(@He_ex_Slots2 == 29108) goto He_ex_net5_9;
+		if(@He_ex_Slots2 == 29118) goto He_ex_net6_9;
+		if(@He_ex_Slots2 == 29713) goto He_ex_net7_9;
+
+	//附魔Lv10
+		if(@He_ex_Slots2 == 29069) goto He_ex_net1_10;
+		if(@He_ex_Slots2 == 29079) goto He_ex_net2_10;
+		if(@He_ex_Slots2 == 29089) goto He_ex_net3_10;
+		if(@He_ex_Slots2 == 29099) goto He_ex_net4_10;
+		if(@He_ex_Slots2 == 29109) goto He_ex_net5_10;
+		if(@He_ex_Slots2 == 29119) goto He_ex_net6_10;
+		if(@He_ex_Slots2 == 29714) goto He_ex_net7_10;
+
+		mes "[時空頭冠附魔機器人]";
+		mes "其他階段尚未開放付魔!!";
+		close;
+	}
+
+case 2:
+	close;
+
+}
+
+
+He_ex_net1_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29062,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29072,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29082,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29092,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29102,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29112,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+
+He_ex_net7_2:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29707,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net1_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29063,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29073,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29083,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29093,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29103,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_3:
+	if(countitem(25866)<60){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<8000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,60;
+	delitem @abd,1;
+	set zeny,zeny-8000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29113,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_3:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29708,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net1_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29064,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29074,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29084,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29094,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29104,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_4:
+	if(countitem(25866)<80){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<10000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,80;
+	delitem @abd,1;
+	set zeny,zeny-10000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29114,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_4:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29709,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+
+He_ex_net1_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29065,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29075,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29085,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29095,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29105,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_5:
+	if(countitem(25866)<100){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<15000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,100;
+	delitem @abd,1;
+	set zeny,zeny-15000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29115,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_5:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29710,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+
+He_ex_net1_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29066,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29076,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29086,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29096,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29106,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_6:
+	if(countitem(25866)<120){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<20000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,120;
+	delitem @abd,1;
+	set zeny,zeny-20000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29116,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_6:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29711,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net1_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29067,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29077,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29087,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29097,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29107,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_7:
+	if(countitem(25866)<160){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<25000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,160;
+	delitem @abd,1;
+	set zeny,zeny-25000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29117,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_7:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29712,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+
+He_ex_net1_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29068,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29078,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29088,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29098,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29108,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_8:
+	if(countitem(25866)<200){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<30000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,200;
+	delitem @abd,1;
+	set zeny,zeny-30000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29118,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_8:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29713,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+
+
+He_ex_net1_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29069,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29079,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29089,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29099,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29109,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_9:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<40000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,280;
+	delitem @abd,1;
+	set zeny,zeny-40000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29119,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_9:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29714,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net1_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29070,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net2_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29080,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net3_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29090,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net4_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29100,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net5_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29110,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net6_10:
+	if(countitem(25866)<280){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<100000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,600;
+	delitem @abd,1;
+	set zeny,zeny-100000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29120,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+He_ex_net7_10:
+	if(countitem(25866)<40){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足!";
+	close;
+	}
+	if(zeny<5000000){
+	mes "[時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+	mes "[時空頭冠附魔機器人]";
+	mes "附魔成功!";
+	delitem 25866,40;
+	delitem @abd,1;
+	set zeny,zeny-5000000;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,29715,@He_ex_Slots3,@He_ex_Slots4;
+	specialeffect 154;
+	close;
+
+
+OnInit:
+	waitingroom "<超時空頭冠>附魔機器人",0;
+	end;
+}
+
+//-------------------------------------附魔狀態
+function	script	fumo_Time_S2	{
+
+	if(countitem(getarg(0)) < getarg(1)){
+	mes "[超時空頭冠附魔機器人]";
+	mes "你身上超時空魔力不足";
+	close;
+	}
+	if(countitem(getarg(2)) < getarg(3)){
+	mes "[超時空頭冠附魔機器人]";
+	mes "你身上時間的強力精華球";
+	close;
+	}
+	if(zeny < getarg(4)){
+	mes "[超時空頭冠附魔機器人]";
+	mes "你身上的RO幣不夠!";
+	close;
+	}
+
+	mes "[超時空頭冠附魔機器人]";
+	mes "第三階段附魔成功!";
+	delitem getarg(0),getarg(1);
+	delitem getarg(2),getarg(3);
+	set zeny,zeny-getarg(4);
+	delitem @abd,1;
+	getitem2 @abd,1,1,@He_ex_Refine,0,@He_ex_Slots1,getarg(5),@He_ex_Slots3,@He_ex_Slots4;
+	close;
+}
+
+

@@ -1,0 +1,9 @@
+﻿#時間裂隙武器
+  - Id: 103308
+    AegisName: Time_Gap_Refine_Hammer
+    Name: 時間裂隙武器精煉鎚
+    Type: DelayConsume
+    Script: |
+      item_reform();
+
+
